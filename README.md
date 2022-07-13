@@ -17,6 +17,7 @@
 ## Visuals - 视觉效果
 ![Capture-1](./VisualCapture/Capture-1.png)
 ![Capture-2](./VisualCapture/Capture-2.png)
+![Capture-2](./VisualCapture/Capture-3.gif)
 ## Support - 支持
 可在 GitHub 中提交 issues 来取得支持和帮助
 ## Demo - 实例程序
