@@ -114,6 +114,10 @@ public:
 		return nullptr;
 	}
 
+public:
+	VSignal<> InFocus;
+	VSignal<> LosedFocus;
+
 private:
 	/*
 	 * Generated Functional:
@@ -385,6 +389,8 @@ protected:
 					UpdateObject();
 					LosedMouseFocus();
 
+					LosedFocus.Emit();
+
 					return false;
 				}
 
@@ -404,6 +410,8 @@ protected:
 				SetGlobalFocusID(Kernel()->GlobalID);
 
 				GotMouseFocus();
+
+				InFocus.Emit();
 			}
 
 			if (ResourceMessage->GetType() == VMessageType::MouseClickedMessage) {
@@ -434,6 +442,8 @@ protected:
 			SetGlobalFocusID(L"");
 
 			LosedMouseFocus();
+
+			LosedFocus.Emit();
 
 			return false;
 		}

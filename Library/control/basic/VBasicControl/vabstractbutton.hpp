@@ -16,7 +16,7 @@ public:
 	 * Signal System
 	*/
 	VSignal<> ButtonPushed;
-	VSignal<> ButtonInFocus;
+	VSignal<> ButtonLeftDown;
 
 public:
 	/*
@@ -40,7 +40,7 @@ public:
 		case VMouseClickedFlag::Down: {
 			LeftClickedDown();
 
-			ButtonInFocus.Emit();
+			ButtonLeftDown.Emit();
 
 			break;
 		}
