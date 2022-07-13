@@ -381,6 +381,16 @@ public:
 			FlushBatchDraw();
 		}
 	}
+
+	void Move(int X, int Y) override {
+		MoveWindow(GetWinID(), X, Y, GetWidth(), GetHeight(), FALSE);
+	}
+	void Resize(int Width, int Height) override {
+		RECT Rect;
+		GetWindowRect(GetWinID(), &Rect);
+		
+		MoveWindow(GetWinID(), Rect.left, Rect.top, Width, Height, true);
+	}
 };
 
 VLIB_END_NAMESPACE
