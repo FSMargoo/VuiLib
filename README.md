@@ -4,7 +4,9 @@
 ### Requirements - 必要条件
 * x64 编译
 * Windows Vista and up
-* C11  and up
+* C11 and up
+* EasyX2021730 and up
+* Gdiplus1.1 and up
 ### Steps - 安装过程
 1. 找到你的 VS 的 include 路径（例如 C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include)。
 2. 将 Library 中的文件全部复制到你的 include 路径，安装完成。
