@@ -11,8 +11,9 @@
 ## Features - 特点
 * 基于 EasyX 和 Gdiplus，编译出的程序体积极小。
 * 库文件简单，开包即用。
-* 可用于写些打发时间的小程序
-* 自带一个美观的 UI 样式
+* 可用于写些打发时间的小程序。
+* 自带一个美观的 UI 样式。
+* 自带一个信号槽系统，整个 UI 由事件驱动。
 ## Visuals - 视觉效果
 ![Capture-1](./VisualCapture/Capture-1.png)
 ![Capture-2](./VisualCapture/Capture-2.png)
