@@ -319,7 +319,7 @@ public:
 	*/
 
 	VMainWindow(int Width, int Height, VApplication* Parent, bool Sizble = true) : VUIObject(Parent) {
-		Resize(Width, Height);
+		VUIObject::Resize(Width, Height);
 
 		Theme = static_cast<VWidgetTheme*>(SearchThemeFromParent(VWIDGET_THEME));
 
@@ -344,7 +344,7 @@ public:
 				Win32Resized = false;
 
 				EasyXWindowResize(ResizedWidth, ResizedHeight);
-				Resize(ResizedWidth, ResizedHeight);
+				VUIObject::Resize(ResizedWidth, ResizedHeight);
 
 				SizeOnChange.Emit(ResizedWidth, ResizedHeight);
 
