@@ -41,14 +41,16 @@ public:
  * The Native Theme
 */
 
-#define VPUSHBUTTON_THEME    1
-#define VTEXTLABEL_THEME     2
-#define VWIDGET_THEME        3
-#define VBLURLABEL_THEME     4
-#define VIMAGELABEL_THEME    5
-#define VICONBUTTON_THEME    6
-#define VSCROLLBAR_THEME     7
-#define VSCROLLBUTTON_THEME  8
+#define VPUSHBUTTON_THEME				1
+#define VTEXTLABEL_THEME                2
+#define VWIDGET_THEME                   3
+#define VBLURLABEL_THEME                4
+#define VIMAGELABEL_THEME               5
+#define VICONBUTTON_THEME               6
+#define VSCROLLBAR_THEME                7
+#define VSCROLLBUTTON_THEME             8
+#define VINTERACTIVETEXTLABEL_THEME     9
+#define VLINEEDITOR_THEME              10
 
 class VWidgetTheme : public VTheme {
 public:
@@ -139,6 +141,35 @@ public:
 
 	short GetThemeType() override {
 		return VTEXTLABEL_THEME;
+	}
+};
+
+class VInteractiveTextLabelTheme : public VNativeLabelTheme {
+public:
+	VFontFormat* FontFormat;
+	VColor       CursorColor;
+
+public:
+	VInteractiveTextLabelTheme() {
+		TextColor = VColor(255, 255, 255, 119);
+		BackgroundColor = VColor(0, 0, 0, 0);
+		LineColor = VColor(0, 0, 0, 0);
+
+		CursorColor = VColor(255, 255, 255, 150);
+
+		Radius = { 0, 0 };
+
+		FontFamily = new VFontFamily(L"微软雅黑");
+		FontSize = 16;
+
+		FontFormat = new VFontFormat;
+
+		FontFormat->SetAlignment(VStringAlignment::AlignmentNear);
+		FontFormat->SetLineAlignment(VStringAlignment::AlignmentNear);
+	}
+
+	short GetThemeType() override {
+		return VINTERACTIVETEXTLABEL_THEME;
 	}
 };
 
@@ -312,6 +343,58 @@ public:
 
 	short GetThemeType() override {
 		return VIMAGELABEL_THEME;
+	}
+};
+
+class VLineEditorTheme : public VNativeLabelTheme {
+public:
+	VColor OnHoverBackgroundColor;
+	VColor OnHoverLineColor;
+	VColor OnHoverTextColor;
+
+	VColor OnClickedBackgroundColor;
+	VColor OnClickedLineColor;
+	VColor OnClickedTextColor;
+
+	VColor CurrentLineColor;
+	VColor CurrentBackgroundColor;
+	VColor CurrentTextColor;
+
+	VFontFormat* CacheFormat;
+
+	VColor CursorColor;
+
+public:
+	VLineEditorTheme() : VNativeLabelTheme() {
+		BackgroundColor = VColor(67, 67, 67, 255);
+		LineColor = VColor(67, 67, 67, 255);
+		TextColor = VColor(255, 255, 255, 150);
+
+		OnHoverBackgroundColor = VColor(67, 67, 67, 255);
+		OnHoverLineColor = VColor(67, 67, 67, 255);
+		OnHoverTextColor = VColor(126, 126, 126, 255);
+
+		OnClickedBackgroundColor = VColor(67, 67, 67, 255);
+		OnClickedLineColor = VColor(98, 100, 167, 255);
+		OnClickedTextColor = VColor(255, 255, 255, 255);
+
+		CursorColor = VColor(255, 255, 255, 150);
+
+		Radius = { 10, 10 };
+
+		CurrentLineColor = LineColor;
+		CurrentBackgroundColor = BackgroundColor;
+		CurrentTextColor = TextColor;
+
+		CacheFormat = new VFontFormat();
+
+		FontFamily = new VFontFamily(L"微软雅黑");
+		FontSize = 16;
+	}
+
+public:
+	short GetThemeType() override {
+		return VLINEEDITOR_THEME;
 	}
 };
 

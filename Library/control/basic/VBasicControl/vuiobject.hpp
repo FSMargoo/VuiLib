@@ -12,9 +12,9 @@
 
 #include "vtheme.hpp"
 
-#include <vector>
-
 VLIB_BEGIN_NAMESPACE
+
+#include <vector>
 
 /* Pre-Declared VUIObject FOr VUIObjectKernel */
 class VUIObject;
@@ -131,6 +131,17 @@ private:
 		}
 
 		return LocalID;
+	}
+
+protected:
+	/*
+	 * SetGlobalIMEPosition virtual Functional:
+	 *	@description  : Call the Widget to Set Global IME Position
+	*/
+	virtual void SetGlobalIMEPosition(int X, int Y) {
+		if (Parent() != nullptr) {
+			return Parent()->SetGlobalIMEPosition(X, Y);
+		}
 	}
 
 protected:
@@ -532,7 +543,11 @@ public:
 		case VMessageType::IMECharMessage: {
 			auto IMEMessage = static_cast<VIMECharMessage*>(Message);
 
-			return IMECharInputed(IMEMessage->IMEChar);
+			if (IMECharInputed(IMEMessage->IMEChar) == false) {
+				SendMessageToChild(IMEMessage);
+			}
+
+			break;
 		}
 		case VMessageType::RepaintMessage: {
 			auto RepaintMesage = static_cast<VRepaintMessage*>(Message);
@@ -574,7 +589,11 @@ public:
 		case VMessageType::KeyClickedMessage: {
 			auto KeyMessage = static_cast<VKeyClickedMessage*>(Message);
 
-			return CheckDown(KeyMessage);
+			if (CheckDown(KeyMessage) == false) {
+				SendMessageToChild(KeyMessage);
+			}
+
+			break;
 		}
 		case VMessageType::FreeResourceMessage: {
 			if (ObjectCanvas != nullptr) {
@@ -597,6 +616,8 @@ public:
 			return false;
 		}
 		}
+
+		return false;
 	}
 
 	/*

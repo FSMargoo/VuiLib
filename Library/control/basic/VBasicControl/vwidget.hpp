@@ -11,11 +11,14 @@
 
 #include <map>
 
+#pragma comment(lib, "Imm32.lib")
+
 VLIB_BEGIN_NAMESPACE
 
 WNDPROC VOriginWindowProcessFunctional;
 std::function<void(HWND, int, int)> VMainWindowResizeProcess;
 std::map<HWND, VPoint>              VMainWindowMaxInfoMessage;
+std::map<HWND, VPoint>              VMainWindowIMEPositionInfo;
 
 /*
  * VMainWindowProcess Functional:
@@ -58,6 +61,30 @@ LRESULT VMainWindowProcess(HWND Handle, UINT Message, WPARAM wParameter, LPARAM 
 		}
 
 		return DefWindowProc(Handle, Message, wParameter, lParameter);
+	}
+	case WM_IME_COMPOSITION: {
+		if (VMainWindowIMEPositionInfo.find(Handle) != VMainWindowIMEPositionInfo.end()) {
+			HIMC IMCHandle = ImmGetContext(Handle);
+
+			if (IMCHandle) {
+				COMPOSITIONFORM Composition;
+				Composition.dwStyle = CFS_POINT;
+				Composition.ptCurrentPos.x = VMainWindowIMEPositionInfo[Handle].x;
+				Composition.ptCurrentPos.y = VMainWindowIMEPositionInfo[Handle].y;
+
+				LOGFONT Font;
+
+				gettextstyle(&Font);
+
+				_tcscpy_s(Font.lfFaceName, L"微软雅黑");
+
+				Font.lfQuality = PROOF_QUALITY;
+
+				ImmAssociateContext(Handle, IMCHandle);
+				ImmSetCompositionFont(IMCHandle, &Font);
+				ImmSetCompositionWindow(IMCHandle, &Composition);
+			}
+		}
 	}
 	}
 
@@ -103,6 +130,17 @@ public:
 		MinimalHeight = Height;
 
 		VMainWindowMaxInfoMessage.insert(std::pair<HWND, VPoint>(GetWinID(), { MinimalWidth, MinimalHeight }));
+	}
+
+	/*
+	 * SetGlobalIMEPosition override Functional
+	*/
+	void SetGlobalIMEPosition(int X, int Y) {
+		if (VMainWindowIMEPositionInfo.find(GetWinID()) != VMainWindowIMEPositionInfo.end()) {
+			VMainWindowIMEPositionInfo.erase(GetWinID());
+		}
+
+		VMainWindowIMEPositionInfo.insert(std::pair<HWND, VPoint>(GetWinID(), { X, Y }));
 	}
 
 private:
@@ -365,6 +403,7 @@ public:
 				RepaintMessageStack.clear();
 
 				VGdiplus::Graphics     FlushGraphics(GetImageHDC());
+
 				FlushGraphics.DrawImage(ObjectCanvas->GetNativeImage(), 0, 0);
 
 				VFreeSourceMessage  GcMessage;

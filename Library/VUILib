@@ -7,3 +7,4 @@
 #include "control/basic/VBasicControl/viconbutton.hpp"
 #include "control/basic/VBasicControl/vanimation.hpp"
 #include "control/basic/VBasicControl/vcontrolgroup.hpp"
+#include "./control/basic/VBasicControl/vlineeditor.hpp"

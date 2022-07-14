@@ -89,7 +89,7 @@ public:
 			return ResultEvent;
 		}
 		case WM_CHAR: {
-			VIMECharMessage* obj_message = new VIMECharMessage(EasyxMessage.ch);
+			ResultEvent = new VIMECharMessage(EasyxMessage.ch);
 
 			return ResultEvent;
 		}
@@ -146,6 +146,8 @@ private:
 		ThemeList.push_back(new VIconButtonTheme());
 		ThemeList.push_back(new VScrollBarTheme());
 		ThemeList.push_back(new VScrollButtonTheme());
+		ThemeList.push_back(new VInteractiveTextLabelTheme());
+		ThemeList.push_back(new VLineEditorTheme());
 	}
 
 protected:

@@ -14,5 +14,7 @@
     <ClInclude Include="vtextlabel.hpp" />
     <ClInclude Include="vcontrolgroup.hpp" />
     <ClInclude Include="vanimation.hpp" />
+    <ClInclude Include="vinteractivetextlabel.hpp" />
+    <ClInclude Include="vlineeditor.hpp" />
   </ItemGroup>
 </Project>

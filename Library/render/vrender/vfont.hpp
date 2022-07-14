@@ -176,7 +176,7 @@ public:
 			VGdiplus::PointF(0.f, 0.f), Format->GetNativeFontFormat());
 		StringPath.GetBounds(&StringRect);
 
-		return static_cast<int>(StringRect.Height);
+		return static_cast<int>(StringRect.Y + StringRect.Height);
 	}
 	/*
 	 * GetWidth Functional:
@@ -193,7 +193,7 @@ public:
 			VGdiplus::PointF(0.f, 0.f), Format->GetNativeFontFormat());
 		StringPath.GetBounds(&StringRect);
 
-		return static_cast<int>(StringRect.Width);
+		return static_cast<int>(StringRect.Width + StringRect.X);
 	}
 };
 

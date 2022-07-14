@@ -27,6 +27,11 @@ private:
 	VMemoryPtr<VGdiplus::Graphics> NativeGraphics;
 
 public:
+	VGdiplus::Graphics* GetNativeGraphics() {
+		return NativeGraphics.get();
+	}
+
+public:
 	/*
 	 * Build up Functional
 	*/
@@ -35,9 +40,13 @@ public:
 		switch (TargetDevice->GetDeviceType()) {
 		case VPaintbleType::HDCPainter: {
 			NativeGraphics.reset(new VGdiplus::Graphics(TargetDevice->GetTargetHDC()));
+
+			break;
 		}
 		case VPaintbleType::ImagePainter: {
 			NativeGraphics.reset(new VGdiplus::Graphics(TargetDevice->GetTargetBitmap()));
+
+			break;
 		}
 		}
 
@@ -57,7 +66,7 @@ public:
 	void FillRectangle(VPen* Pen, VBasicBrush* Brush, VRect  Rect) {
 		NativeGraphics->FillRectangle(Brush->GetNativeBrush(), Rect.ToGdiplusRect());
 
-		Rect.Offset(Pen->GetThinkness(), Pen->GetThinkness(), -Pen->GetThinkness(), -Pen->GetThinkness());
+		Rect.Offset(1, 1, -1, -1);
 
 		NativeGraphics->DrawRectangle(Pen->GetNativePen(), Rect.ToGdiplusRect());
 	}
@@ -71,7 +80,7 @@ public:
 	void FillEllipse(VPen* Pen, VBasicBrush* Brush, VRect  Rect) {
 		NativeGraphics->FillEllipse(Brush->GetNativeBrush(), Rect.ToGdiplusRect());
 
-		Rect.Offset(Pen->GetThinkness(), Pen->GetThinkness(), -Pen->GetThinkness(), -Pen->GetThinkness());
+		Rect.Offset(1, 1, -1, -1);
 
 		NativeGraphics->DrawEllipse(Pen->GetNativePen(), Rect.ToGdiplusRect());
 	}
@@ -135,9 +144,10 @@ public:
 		NativeGraphics->FillPath(Brush->GetNativeBrush(), &FillRectanglePath);
 	}
 	void FillRoundedRectangle(VPen* Pen, VBasicBrush* Brush, VRect  Rect, VPoint Radius) {
-		Rect.Offset(Pen->GetThinkness(), Pen->GetThinkness(), -Pen->GetThinkness(), -Pen->GetThinkness());
-
 		SolidRoundedRectangle(Brush, Rect, Radius);
+
+		Rect.Offset(1, 1, -1, -1);
+
 		DrawRoundedRectangle(Pen, Rect, Radius);
 	}
 

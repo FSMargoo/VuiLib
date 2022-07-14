@@ -9,13 +9,12 @@
 #define WINVER 0x550
 
 #include <graphics.h>
-#include <string>
 
-#ifndef _WIN64
+/* #ifndef _WIN64
 #	error This version of VLib only supports the x64 platform (English)
 #	error 该版本的 VLib 只支持 x64 平台 (简体中文)
 #	error 該版本的 VLib 只支持 x64 平臺 (繁體中文)
-#endif
+#endif */
 
 #pragma comment(lib, "gdiplus.lib")
 
@@ -44,6 +43,8 @@
 #endif
 
 VLIB_BEGIN_NAMESPACE
+
+#include <string>
 
 /* Gdiplus defiiton in VLib */
 namespace VGdiplus {
