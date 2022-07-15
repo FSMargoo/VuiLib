@@ -140,6 +140,14 @@ public:
 			AnimationTimer.Start(16);
 		}
 	}
+	void GotMouseFocus() override {
+		HCURSOR ArrowCursor = LoadCursor(NULL, IDC_IBEAM);
+		SetClassLongPtr(GetParentWindowHandle(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+	}
+	void LosedMouseFocus() override {
+		HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+		SetClassLongPtr(GetParentWindowHandle(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+	}
 
 	void OnPaint(VCanvas* Canvas) override {
 		VPen           Border(Theme->CurrentLineColor);
@@ -203,6 +211,13 @@ public:
 			VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
 
 			MouseX = MouseMoveMessage->MousePosition.x;
+
+			if (UserInteractiving == true) {
+				if (MouseMoveMessage->MousePosition.InsideRect(Surface()->Rect) == false) {
+					HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+					SetClassLongPtr(GetParentWindowHandle(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+				}
+			}
 
 			break;
 		}

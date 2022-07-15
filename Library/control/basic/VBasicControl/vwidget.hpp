@@ -143,6 +143,13 @@ public:
 		VMainWindowIMEPositionInfo.insert(std::pair<HWND, VPoint>(GetWinID(), { X, Y }));
 	}
 
+	/*
+	 * GetParentWindowHandle override Functional:
+	*/
+	HWND GetParentWindowHandle() override {
+		return GetWinID();
+	}
+
 private:
 	VTimer                        FpsTimer;
 

@@ -82,6 +82,19 @@ protected:
 	VRect GetRegoin() {
 		return SurfaceRegion();
 	}
+
+protected:
+	/*
+	 * GetParentWindowHandle Functional:
+	 *	@description : Get the Parent Window's Handle
+	*/
+	virtual HWND GetParentWindowHandle() {
+		if (Parent() != nullptr) {
+			return Parent()->GetParentWindowHandle();
+		}
+
+		return NULL;
+	}
 	
 public:
 	/*
