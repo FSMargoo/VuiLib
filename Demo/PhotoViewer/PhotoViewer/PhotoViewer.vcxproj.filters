@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="PVWidget.hpp" />
+    <ClInclude Include="PVApplication.hpp" />
+    <ClInclude Include="PVSoftware.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PhotoViewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\pv\software.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="vuilib">
+      <UniqueIdentifier>{34b6700a-756c-4e4d-b3a3-59caaf2ae270}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

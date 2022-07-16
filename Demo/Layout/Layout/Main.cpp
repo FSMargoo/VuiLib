@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////
 //        LayoutDemo
-// 描述 : 这是利用 VMainWindow 的 Size 信号
-//		 来实现 layout 自动布局的 Demo 演示
+// 描述 : 此 Demo 演示 VLib 中的 VLayout 控件实现自动
+//		 布局的功能
 //
 #include "../../../Library/VUILib"
 
@@ -10,6 +10,9 @@ private:
 	// 控件
 	VPushButton* PushButton;
 	VTextLabel*  TextLabel;
+
+	VLayout*     PushButtonLayout;
+	VLayout*     TextLabelLayout;
 
 private:
 	// 初始化 UI
@@ -22,19 +25,19 @@ private:
 		TextLabel->SetAlignment(VStringAlignment::AlignmentCenter);
 	}
 
-	// Layout 布局
-	void Layout(int, int) {
-		PushButton->Move(GetWidth() / 2 - PushButton->GetWidth() / 2, GetHeight() / 2 - PushButton->GetHeight() / 2 + 80);
-		TextLabel->Move(GetWidth() / 2 - TextLabel->GetWidth() / 2, GetHeight() / 2 - TextLabel->GetHeight() / 2 - 40);
-	}
-
 public:
 	LayoutWidget(VApplication* App, int Width, int Height) : VMainWindow(Width, Height, App, true) {
 		InitUI();
-		Layout(0, 0);
 
-		// 绑定信号，实现自动布局
-		SizeOnChange.Connect(this, &LayoutWidget::Layout);
+		// 初始化 Layout 布局控件
+		PushButtonLayout = new VLayout(PushButton, this);
+		TextLabelLayout  = new VLayout(TextLabel, this);
+
+		PushButtonLayout->SetVerticalLayoutMode(VLayoutMode::LayoutModePercent);
+		PushButtonLayout->SetVerticalLayoutPercent(0.6);
+
+		TextLabelLayout->SetVerticalLayoutMode(VLayoutMode::LayoutModePercent);
+		TextLabelLayout->SetVerticalLayoutPercent(0.5);
 	}
 };
 
