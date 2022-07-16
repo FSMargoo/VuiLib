@@ -128,8 +128,10 @@ public:
 	}
 
 public:
-	VSignal<> InFocus;
-	VSignal<> LosedFocus;
+	VSignal<>         InFocus;
+	VSignal<>         LosedFocus;
+	VSignal<int, int> SizeChanged;
+	VSignal<int, int> PositionChanged;
 
 private:
 	/*
@@ -775,6 +777,8 @@ public:
 		OldRect.FusionRect(Surface()->Rect);
 
 		Update(OldRect);
+
+		SizeChanged.Emit(Width, Height);
 	}
 	void Resize(VSize Size) {
 		Resize(Size.x, Size.y);
@@ -792,6 +796,8 @@ public:
 
 		Update();
 		Update(OldRect);
+
+		PositionChanged.Emit(X, Y);
 	}
 	void Move(VPoint Point) {
 		Move(Point.x, Point.y);

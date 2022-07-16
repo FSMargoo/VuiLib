@@ -8,3 +8,4 @@
 #include "control/basic/VBasicControl/vanimation.hpp"
 #include "control/basic/VBasicControl/vcontrolgroup.hpp"
 #include "./control/basic/VBasicControl/vlineeditor.hpp"
+#include "control/basic/VBasicControl/vlayout.hpp"
