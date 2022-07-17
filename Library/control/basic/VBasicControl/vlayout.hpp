@@ -30,7 +30,7 @@ private:
 	VLayoutMode  VerticalLayoutMode;
 	VLayoutMode  HorizontalLayoutMode;
 
-	double       VerticalLayoutPercent   = 0.f;
+	double       VerticalLayoutPercent = 0.f;
 	double       HorziontalLayoutPercent = 0.f;
 
 	int          RelativeX = 0;
@@ -95,12 +95,12 @@ private:
 			break;
 		}
 		case VLayoutMode::LayoutModeRelativeTop: {
-			NewX = RelativeY;
+			NewY = RelativeY;
 
 			break;
 		}
 		case VLayoutMode::LayoutModeRelativeBottom: {
-			NewX = Height - RelativeY;
+			NewY = Height - RelativeY;
 
 			break;
 		}
@@ -161,8 +161,8 @@ public:
 		TargetWidget->SizeOnChange.Connect(this, &VLayout::TargetWindowSizeChanged);
 		Parent->SizeChanged.Connect(this, &VLayout::ParentSizeChanged);
 
-		VerticalLayoutMode      = VLayoutMode::LayoutModeCenter;
-		HorizontalLayoutMode    = VLayoutMode::LayoutModeCenter;
+		VerticalLayoutMode = VLayoutMode::LayoutModeCenter;
+		HorizontalLayoutMode = VLayoutMode::LayoutModeCenter;
 	}
 
 	void SetVerticalLayoutMode(VLayoutMode Mode) {
