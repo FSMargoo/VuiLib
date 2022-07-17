@@ -213,6 +213,20 @@ public:
 
 		NativeAttributes->SetColorMatrix(&ColorMatrix);
 	}
+
+	/*
+	 * IsValidBitmap static Functional:
+	 *	@description  : Judge a File is Bitmap or not
+	*/
+	static bool IsValidBitmap(std::wstring FilePath) {
+		VGdiplus::Bitmap Bitmap(FilePath.c_str());
+
+		if (Bitmap.GetLastStatus() == VGdiplus::Ok) {
+			return true;
+		}
+
+		return false;
+	}
 };
 
 VLIB_END_NAMESPACE
