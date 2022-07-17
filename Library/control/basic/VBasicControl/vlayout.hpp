@@ -80,7 +80,7 @@ private:
 			break;
 		}
 		case VLayoutMode::LayoutModeRelative: {
-			NewY = Height - RelativeY;
+			NewY = RelativeY;
 
 			break;
 		}
