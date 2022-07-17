@@ -30,6 +30,11 @@ public:
 	VSignal<> UnlockedFocus;
 
 public:
+	VFocusLockHelper(VUIObject* Parent) : VUIObject(Parent) {
+		
+	}
+
+public:
 	void MouseLeftClicked(VMouseClickedFlag ClickedFlag) override {
 		switch (ClickedFlag) {
 		case VMouseClickedFlag::Down: {
