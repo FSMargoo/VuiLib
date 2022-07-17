@@ -16,7 +16,8 @@ VLIB_BEGIN_NAMESPACE
 */
 enum class VLayoutMode {
 	LayoutModeCenter, LayoutModeFar, LayoutModePercent,
-	LayoutModeRelative, LayoutModeRelativeBottom, LayoutModeRelativeTop
+	LayoutModeRelative, LayoutModeRelativeBottom, LayoutModeRelativeTop,
+	LayoutModeMiddleOffset
 };
 
 /*
@@ -30,11 +31,14 @@ private:
 	VLayoutMode  VerticalLayoutMode;
 	VLayoutMode  HorizontalLayoutMode;
 
-	double       VerticalLayoutPercent = 0.f;
+	double       VerticalLayoutPercent   = 0.f;
 	double       HorziontalLayoutPercent = 0.f;
 
 	int          RelativeX = 0;
 	int          RelativeY = 0;
+
+	int          XMiddleOffset = 0;
+	int          YMiddleOffset = 0;
 
 private:
 	void TargetWindowSizeChanged(int Width, int Height) {
@@ -72,6 +76,11 @@ private:
 
 			break;
 		}
+		case VLayoutMode::LayoutModeMiddleOffset: {
+			NewX = Width / 2 - Parent()->GetWidth() / 2 + XMiddleOffset;
+
+			break;
+		}
 		}
 		switch (VerticalLayoutMode) {
 		case VLayoutMode::LayoutModeCenter: {
@@ -101,6 +110,11 @@ private:
 		}
 		case VLayoutMode::LayoutModeRelativeBottom: {
 			NewY = Height - RelativeY;
+
+			break;
+		}
+		case VLayoutMode::LayoutModeMiddleOffset: {
+			NewY = Height / 2 - Parent()->GetHeight() / 2 + YMiddleOffset;
 
 			break;
 		}
@@ -161,8 +175,8 @@ public:
 		TargetWidget->SizeOnChange.Connect(this, &VLayout::TargetWindowSizeChanged);
 		Parent->SizeChanged.Connect(this, &VLayout::ParentSizeChanged);
 
-		VerticalLayoutMode = VLayoutMode::LayoutModeCenter;
-		HorizontalLayoutMode = VLayoutMode::LayoutModeCenter;
+		VerticalLayoutMode      = VLayoutMode::LayoutModeCenter;
+		HorizontalLayoutMode    = VLayoutMode::LayoutModeCenter;
 	}
 
 	void SetVerticalLayoutMode(VLayoutMode Mode) {
@@ -194,6 +208,17 @@ public:
 	}
 	void SetRelativeY(int Y) {
 		RelativeY = Y;
+
+		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
+	}
+	
+	void SetXMiddleOffset(int XOffset) {
+		XMiddleOffset = XOffset;
+
+		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
+	}
+	void SetYMiddleOffset(int YOffset) {
+		YMiddleOffset = YOffset;
 
 		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
 	}
