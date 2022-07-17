@@ -16,7 +16,7 @@ VLIB_BEGIN_NAMESPACE
 */
 enum class VLayoutMode {
 	LayoutModeCenter, LayoutModeFar, LayoutModePercent,
-	LayoutModeRelative
+	LayoutModeRelative, LayoutModeRelativeBottom, LayoutModeRelativeTop
 };
 
 /*
@@ -62,6 +62,16 @@ private:
 
 			break;
 		}
+		case VLayoutMode::LayoutModeRelativeTop: {
+			NewX = RelativeX;
+
+			break;
+		}
+		case VLayoutMode::LayoutModeRelativeBottom: {
+			NewX = Width - RelativeX;
+
+			break;
+		}
 		}
 		switch (VerticalLayoutMode) {
 		case VLayoutMode::LayoutModeCenter: {
@@ -81,6 +91,16 @@ private:
 		}
 		case VLayoutMode::LayoutModeRelative: {
 			NewY = RelativeY;
+
+			break;
+		}
+		case VLayoutMode::LayoutModeRelativeTop: {
+			NewX = RelativeY;
+
+			break;
+		}
+		case VLayoutMode::LayoutModeRelativeBottom: {
+			NewX = Height - RelativeY;
 
 			break;
 		}
