@@ -15,7 +15,8 @@ VLIB_BEGIN_NAMESPACE
  *	@description : The Mode of Layout
 */
 enum class VLayoutMode {
-	LayoutModeCenter, LayoutModeFar, LayoutModePercent
+	LayoutModeCenter, LayoutModeFar, LayoutModePercent,
+	LayoutModeRelative
 };
 
 /*
@@ -31,6 +32,9 @@ private:
 
 	double       VerticalLayoutPercent   = 0.f;
 	double       HorziontalLayoutPercent = 0.f;
+
+	int          RelativeX = 0;
+	int          RelativeY = 0;
 
 private:
 	void TargetWindowSizeChanged(int Width, int Height) {
@@ -53,6 +57,11 @@ private:
 
 			break;
 		}
+		case VLayoutMode::LayoutModeRelative: {
+			NewX = Width - RelativeX;
+
+			break;
+		}
 		}
 		switch (VerticalLayoutMode) {
 		case VLayoutMode::LayoutModeCenter: {
@@ -67,6 +76,11 @@ private:
 		}
 		case VLayoutMode::LayoutModePercent: {
 			NewY = Height * VerticalLayoutPercent;
+
+			break;
+		}
+		case VLayoutMode::LayoutModeRelative: {
+			NewY = Height - RelativeY;
 
 			break;
 		}
@@ -149,6 +163,17 @@ public:
 	}
 	void SetHorziontalLayoutPercent(double Percent) {
 		HorziontalLayoutPercent = Percent;
+
+		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
+	}
+
+	void SetRelativeX(int X) {
+		RelativeX = X;
+
+		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
+	}
+	void SetRelativeY(int Y) {
+		RelativeY = Y;
 
 		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
 	}
