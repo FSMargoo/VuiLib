@@ -38,6 +38,18 @@ public:
 			VAssertBox(L"Error! Can't Get the Native Theme Of VPushButton");
 		}
 	}
+	VIconButton(VUIObject* Parent, VImage* Icon) : VAbstractButton(Parent),
+		TextColor(0.1, VInterpolatorType::AccelerateInterpolator),
+		BackgroundColor(0.1, VInterpolatorType::AccelerateInterpolator),
+		LineColor(0.1, VInterpolatorType::AccelerateInterpolator) {
+		Theme = new VIconButtonTheme(*(static_cast<VIconButtonTheme*>(SearchThemeFromParent(VICONBUTTON_THEME))));
+
+		if (VUnlikely(Theme == nullptr)) {
+			VAssertBox(L"Error! Can't Get the Native Theme Of VIconButton");
+		}
+
+		SetIcon(Icon);
+	}
 
 	/*
 	 * OnPaint override Functional
