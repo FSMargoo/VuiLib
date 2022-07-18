@@ -222,6 +222,19 @@ public:
 
 		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
 	}
+
+	int GetRelativeX() const {
+		return RelativeX;
+	}
+	int GetRelativeY() const {
+		return RelativeY;
+	}
+	int GetXMiddleOffset() const {
+		return XMiddleOffset;
+	}
+	int GetYMiddleOffset() const {
+		return YMiddleOffset;
+	}
 };
 
 VLIB_END_NAMESPACE
