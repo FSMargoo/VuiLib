@@ -794,6 +794,8 @@ public:
 		Surface()->Rect.right = X + Width;
 		Surface()->Rect.bottom = Y + Height;
 
+		OldRect.Offset(-1, -1, 1, 1);
+
 		Update();
 		Update(OldRect);
 
