@@ -17,7 +17,7 @@
 VLIB_BEGIN_NAMESPACE
 
 enum class VVMLParserStatus {
-	Ok, Error
+	Ok, Error, Failed
 };
 
 struct VMLParserError {
@@ -131,7 +131,10 @@ private:
 		return Value;
 	}
 
-	int BaseLine = 0;
+	int  BaseLine = 0;
+
+private:
+	bool FileExist = true;
 
 public:
 	VVMLParser(std::wstring VMLString, VVMLParserParseMode VMLParserMode = VVMLParserParseMode::FromString, int Line = 0) {
@@ -143,7 +146,18 @@ public:
 			break;
 		}
 		case VVMLParserParseMode::FromFile: {
-			ParserLexical = new seal_lexical(VVMLParserHelper::ReadFromFile(VMLString));
+			if (VVMLParserHelper::FileExist(VMLString) == true) {
+				ParserLexical = new seal_lexical(VVMLParserHelper::ReadFromFile(VMLString));
+				BaseLine = Line;
+			}
+			else {
+				FileExist = false;
+			}
+
+			break;
+		}
+		default: {
+			ParserLexical = new seal_lexical(VMLString);
 			BaseLine = Line;
 
 			break;
@@ -153,6 +167,13 @@ public:
 
 	VVMLParserResult ParseVML() {
 		VVMLParserResult ParseResult;
+
+		if (FileExist == false) {
+			ThrowError(&ParseResult, L"Target File Dosen't Exsit");
+			ParseResult.ParserStatus = VVMLParserStatus::Failed;
+
+			return ParseResult;
+		}
 
 		seal_lexical_type_info::_lexical_token_type Token;
 
