@@ -437,6 +437,21 @@ public:
 		
 		MoveWindow(GetWinID(), Rect.left, Rect.top, Width, Height, true);
 	}
+
+	void SetTitle(std::wstring Title) {
+		SetWindowText(GetWinID(), Title.c_str());
+	}
+
+	void SetSizble(bool Sizble) {
+		if (Sizble == true) {
+			SetWindowLong(GetHWnd(), GWL_STYLE, GetWindowLong(GetHWnd(), GWL_STYLE) | (WS_MAXIMIZEBOX));
+			SetWindowLong(GetHWnd(), GWL_STYLE, (GetWindowLong(GetHWnd(), GWL_STYLE) | WS_THICKFRAME));
+		}
+		else {
+			SetWindowLong(GetHWnd(), GWL_STYLE, GetWindowLong(GetHWnd(), GWL_STYLE) ^ (WS_MAXIMIZEBOX));
+			SetWindowLong(GetHWnd(), GWL_STYLE, (GetWindowLong(GetHWnd(), GWL_STYLE) ^ (WS_THICKFRAME)));
+		}
+	}
 };
 
 VLIB_END_NAMESPACE

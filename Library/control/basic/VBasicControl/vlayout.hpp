@@ -31,7 +31,7 @@ private:
 	VLayoutMode  VerticalLayoutMode;
 	VLayoutMode  HorizontalLayoutMode;
 
-	double       VerticalLayoutPercent   = 0.f;
+	double       VerticalLayoutPercent = 0.f;
 	double       HorziontalLayoutPercent = 0.f;
 
 	int          RelativeX = 0;
@@ -175,8 +175,8 @@ public:
 		TargetWidget->SizeOnChange.Connect(this, &VLayout::TargetWindowSizeChanged);
 		Parent->SizeChanged.Connect(this, &VLayout::ParentSizeChanged);
 
-		VerticalLayoutMode      = VLayoutMode::LayoutModeCenter;
-		HorizontalLayoutMode    = VLayoutMode::LayoutModeCenter;
+		VerticalLayoutMode = VLayoutMode::LayoutModeCenter;
+		HorizontalLayoutMode = VLayoutMode::LayoutModeCenter;
 	}
 
 	void SetVerticalLayoutMode(VLayoutMode Mode) {
@@ -211,7 +211,7 @@ public:
 
 		TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
 	}
-	
+
 	void SetXMiddleOffset(int XOffset) {
 		XMiddleOffset = XOffset;
 

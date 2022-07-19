@@ -7,6 +7,7 @@
 #pragma once
 
 #pragma warning(disable : 4267)
+#pragma warning(disable : 26451)
 
 #include "vuiobject.hpp"
 #include "../../../basic/vbasic/vtimer.hpp"

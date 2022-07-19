@@ -95,7 +95,7 @@ protected:
 
 		return NULL;
 	}
-	
+
 public:
 	/*
 	 * ObjectCanvas Variable:
@@ -568,10 +568,10 @@ public:
 			auto RepaintMesage = static_cast<VRepaintMessage*>(Message);
 
 			if (RepaintMesage->DirtyRectangle.Overlap(Surface()->Rect) &&
-				(Parent()->IsApplication() == true ? true : 
+				(Parent()->IsApplication() == true ? true :
 					Parent()->GetRegoin().
-						OffsetRV(Parent()->GetX(), Parent()->GetY())
-						->Overlap(Parent()->SurfaceRect()))
+					OffsetRV(Parent()->GetX(), Parent()->GetY())
+					->Overlap(Parent()->SurfaceRect()))
 				) {
 				if (ObjectCanvas != nullptr) {
 					delete ObjectCanvas;

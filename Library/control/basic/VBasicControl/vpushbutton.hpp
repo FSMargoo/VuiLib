@@ -87,6 +87,17 @@ public:
 	*/
 	void SetPlaneText(std::wstring PlaneText) {
 		Theme->PlaneString = PlaneText;
+
+		Update();
+	}
+	/*
+	 * SetTextSize Functional:
+	 *	@description  : Set the Button Font's Size
+	*/
+	void SetTextSize(int Size) {
+		Theme->FontSize = Size;
+
+		Update();
 	}
 
 	void CheckFrame() override {

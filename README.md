@@ -15,6 +15,9 @@
 * 可用于写些打发时间的小程序。
 * 自带一个美观的 UI 样式。
 * 自带一个信号槽系统，整个 UI 由事件驱动。
+* 可使用 VML 构建界面，实现前后端分离
+## VML Helper - VML 语言帮助
+详见目录下 VMLanguageHelper.md
 ## Visuals - 视觉效果
 ![Capture-1](./VisualCapture/Capture-1.png)
 ![Capture-2](./VisualCapture/Capture-2.png)

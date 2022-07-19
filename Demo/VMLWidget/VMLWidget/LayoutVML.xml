@@ -1,0 +1,10 @@
+<!-- 创建一个窗口 -->
+<MainWindow Type="VMainWindow" Width="1113" Height="680" Title="TestVLayoutLanguage">
+    <!-- 创建一个 PushButton -->
+    <PushButton Type="VPushButton" Width="500" Height="100" Text="由 VML 创建\nCreated By VML\nVML Demo">
+        <!-- 为按钮设置 Layout 布局 -->
+        <Layout Type="VLayout" VerticalLayoutMode="LayoutModeCenter"
+                               HorizontalLayoutMode="LayoutModeCenter">
+        </Layout>
+    </PushButton>
+</MainWindow>
