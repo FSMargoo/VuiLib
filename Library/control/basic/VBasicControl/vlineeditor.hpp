@@ -24,7 +24,8 @@ private:
 	int                CursorX = 0;
 
 	bool               UserInteractiving = false;
-	bool               ShowCursor = false;
+	bool               ShowCursor        = false;
+	bool               UserIMETyping     = false;
 
 	VColorInterpolator BackgroundColor;
 	VColorInterpolator LineColor;
@@ -64,6 +65,7 @@ private:
 
 	void EndType() {
 		UserInteractiving = false;
+		UserIMETyping     = false;
 
 		UnlockGlobalFocusID();
 
@@ -179,8 +181,10 @@ public:
 		}
 
 		int CursorY = GetHeight() / 2 - TextHeight / 2;
-
-		SetGlobalIMEPosition(GetX() + TextWidth, GetY() + TextHeight);
+		
+		if (UserIMETyping == true) {
+			SetGlobalIMEPosition(GetX() + TextWidth, GetY() + TextHeight);
+		}
 
 		if (ShowCursor == true) {
 			Device.SolidRectangle(&CursorBrush,
@@ -197,13 +201,20 @@ public:
 					MouseClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
 					MouseClickedMessage->MousePosition.InsideRect(Surface()->Rect) == false) {
 
-					SetGlobalIMEPosition(0, 0);
+					SetGlobalIMEPosition(-1, -1);
 
 					EndType();
 				}
 			}
 
 			MouseX = MouseClickedMessage->MousePosition.x;
+
+			break;
+		}
+		case VMessageType::KillFocusMessage: {
+			SetGlobalIMEPosition(-1, -1);
+
+			EndType();
 
 			break;
 		}
@@ -261,6 +272,8 @@ public:
 		}
 		case VMessageType::IMECharMessage: {
 			if (UserInteractiving == true) {
+				UserIMETyping = true;
+
 				VIMECharMessage* IMEMessage = static_cast<VIMECharMessage*>(Message);
 
 				if (IMEMessage->IMEChar == L'\r') {

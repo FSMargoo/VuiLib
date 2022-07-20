@@ -18,7 +18,9 @@ VLIB_BEGIN_NAMESPACE
 WNDPROC VOriginWindowProcessFunctional;
 std::function<void(HWND, int, int)> VMainWindowResizeProcess;
 std::map<HWND, VPoint>              VMainWindowMaxInfoMessage;
+std::function<void(HWND)>           VMainWindowLosedUserFocusMessage;
 std::map<HWND, VPoint>              VMainWindowIMEPositionInfo;
+std::map<HWND, bool>                VMainIMETpying;
 
 /*
  * VMainWindowProcess Functional:
@@ -66,6 +68,10 @@ LRESULT VMainWindowProcess(HWND Handle, UINT Message, WPARAM wParameter, LPARAM 
 		if (VMainWindowIMEPositionInfo.find(Handle) != VMainWindowIMEPositionInfo.end()) {
 			HIMC IMCHandle = ImmGetContext(Handle);
 
+			if (VMainIMETpying.find(Handle) != VMainIMETpying.end()) {
+				VMainIMETpying.insert( { Handle, true } );
+			}
+
 			if (IMCHandle) {
 				COMPOSITIONFORM Composition;
 				Composition.dwStyle = CFS_POINT;
@@ -86,6 +92,22 @@ LRESULT VMainWindowProcess(HWND Handle, UINT Message, WPARAM wParameter, LPARAM 
 			}
 		}
 	}
+	case WM_IME_CHAR: {
+ 		VMainIMETpying[Handle] = false;
+
+		break;
+	}
+	case WM_KILLFOCUS: {
+		if (VMainWindowIMEPositionInfo[Handle].x == -1 &&
+			VMainWindowIMEPositionInfo[Handle].y == -1 ||
+			VMainIMETpying[Handle] == false) {
+			if (VMainWindowLosedUserFocusMessage != NULL) {
+				VMainWindowLosedUserFocusMessage(Handle);
+			}
+		}
+
+		break;
+	}
 	}
 
 	return VOriginWindowProcessFunctional(Handle, Message, wParameter, lParameter);
@@ -105,8 +127,20 @@ private:
 	HWND                          WindowHandle;
 
 private:
-	int MinimalWidth = 0;
+	int MinimalWidth  = 0;
 	int MinimalHeight = 0;
+
+private:
+	void WindowLosedFocusMessage(HWND Handle) {
+		if (Handle == GetWinID()) {
+			UnlockGlobalFocusID();
+
+			VKillFocusMessage* KillFocusMessage = new VKillFocusMessage;
+			SendMessageToChild(KillFocusMessage, false);
+
+			delete KillFocusMessage;
+		}
+	}
 
 public:
 	/*
@@ -252,6 +286,10 @@ private:
 
 		VMainWindowResizeProcess = std::bind(&VMainWindow::VMainWindowResize, this,
 			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+
+		VMainWindowLosedUserFocusMessage = std::bind(&VMainWindow::WindowLosedFocusMessage, this,
+			std::placeholders::_1);
+
 	}
 
 	/*
@@ -264,6 +302,10 @@ private:
 		InitWindowStyle(Sizble);
 
 		return Handle;
+	}
+
+	void InitIME() {
+		SetGlobalIMEPosition(-1, -1);
 	}
 
 protected:
@@ -365,7 +407,6 @@ public:
 
 	VMainWindow(int Width, int Height, VApplication* Parent, bool Sizble = true) : VUIObject(Parent) {
 		VUIObject::Resize(Width, Height);
-
 		Theme = static_cast<VWidgetTheme*>(SearchThemeFromParent(VWIDGET_THEME));
 
 		if (VUnlikely(VCoreApplication::Instance() == nullptr)) {
@@ -376,6 +417,7 @@ public:
 
 		InitKernel();
 		WindowHandle = InitWindow(Width, Height, Sizble);
+		InitIME();
 
 		Update(Surface()->Rect);
 	}

@@ -76,6 +76,12 @@ public:
 
 				break;
 			}
+			case VMessageType::KillFocusMessage: {
+				LockHelperInFocus = false;
+				UnlockedFocus.Emit();
+
+				break;
+			}
 			}
 		}
 	}

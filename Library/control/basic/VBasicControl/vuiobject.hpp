@@ -626,7 +626,14 @@ public:
 
 			return false;
 		}
+		case VMessageType::KillFocusMessage: {
+			if (GetGlobalFocusID() == Kernel()->GlobalID) {
+				LosedMouseFocus();
+				LosedFocus.Emit();
+			}
 
+			return true;
+		}
 		default: {
 			return false;
 		}
