@@ -31,7 +31,7 @@ enum class VVMLPropertyType {
 
 struct VVMLPropertyValue {
 	std::wstring	 PropertyName     = L"";
-
+								      
 	VVMLPropertyType PropertyType     = VVMLPropertyType::IntValue;
 
 	int				 PropertyAsInt    = 0;
@@ -92,7 +92,7 @@ private:
 		if (String == L"false") {
 			VVMLPropertyValue Value;
 			Value.PropertyAsBool = false;
-			Value.PropertyType	 = VVMLPropertyType::BooleanValue;
+			Value.PropertyType  = VVMLPropertyType::BooleanValue;
 
 			return Value;
 		}
@@ -115,7 +115,7 @@ private:
 
 		switch (Type) {
 		case VVMLPropertyType::IntValue: {
-			Value.PropertyAsInt	   = _wtoi(String.c_str());
+			Value.PropertyAsInt = _wtoi(String.c_str());
 			break;
 		}
 		case VVMLPropertyType::StringValue: {
@@ -134,7 +134,7 @@ private:
 	int  BaseLine = 0;
 
 private:
-	bool IsFileExist = true;
+	bool FileExist = true;
 
 public:
 	VVMLParser(std::wstring VMLString, VVMLParserParseMode VMLParserMode = VVMLParserParseMode::FromString, int Line = 0) {
@@ -151,7 +151,7 @@ public:
 				BaseLine = Line;
 			}
 			else {
-				IsFileExist = false;
+				FileExist = false;
 			}
 
 			break;
@@ -168,8 +168,8 @@ public:
 	VVMLParserResult ParseVML() {
 		VVMLParserResult ParseResult;
 
-		if (IsFileExist == false) {
-			ThrowError(&ParseResult, L"Target File Dosen't Exsit");
+		if (FileExist == false) {
+			ParseResult.ErrorInfo.push_back({ L"Target File Doesenot Exsits!", 0 });
 			ParseResult.ParserStatus = VVMLParserStatus::Failed;
 
 			return ParseResult;
@@ -222,7 +222,7 @@ public:
 
 				break;
 			}
-			
+
 			if (ParseResult.Nodes.find(Token.token_string) != ParseResult.Nodes.end()) {
 				ThrowError(&ParseResult, L"The VML Node \"" + Token.token_string + L"\" Already Exists!");
 
@@ -231,7 +231,7 @@ public:
 
 			VVMLNode NewNode;
 			NewNode.NodeTag = Token.token_string;
-			
+
 			bool EndFlag = false;
 
 			std::wstring PropertyName;
@@ -269,7 +269,7 @@ public:
 					return ParseResult;
 				}
 
-				auto Property         = ToPropertyValue(Token.token_string);
+				auto Property = ToPropertyValue(Token.token_string);
 				Property.PropertyName = PropertyName;
 
 				NewNode.NodeValue.insert(std::pair<std::wstring, VVMLPropertyValue>(PropertyName,

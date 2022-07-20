@@ -29,11 +29,11 @@
 //        lexical_token [var]
 //        
 //        _lexical_token [struct]
-typedef struct _lexical_info{
+typedef struct _lexical_info {
 	// lexical traverses the subscripts of the source string
 	se_int lexical_index = 0;
 	// read the line relative to the code
-	se_int lexical_line  = 0;
+	se_int lexical_line = 0;
 
 	// lexical temporarily stored script code to be interpreted
 	std::wstring lexical_code;
@@ -171,8 +171,8 @@ public:
 					// If there is a continuous
 					if (core_info.lexical_index < core_info.lexical_code.size() &&
 						(core_info.lexical_code[core_info.lexical_index] == '=' ||
-						 core_info.lexical_code[core_info.lexical_index] == '>' ||
-						 core_info.lexical_code[core_info.lexical_index] == '<'
+							core_info.lexical_code[core_info.lexical_index] == '>' ||
+							core_info.lexical_code[core_info.lexical_index] == '<'
 							)
 						) {
 						++core_info.lexical_index;
@@ -389,7 +389,7 @@ public:
 
 					break;
 				}
-				
+
 				// Processing comments
 				if (core_info.lexical_code[core_info.lexical_index] == '/') {
 					core_info.lexical_token.token_string = core_info.lexical_code[core_info.lexical_index];
@@ -424,7 +424,7 @@ public:
 					break;
 				}
 
-				if (_MACRO_IS_NUMBER_(core_info.lexical_code[core_info.lexical_index]) == true && 
+				if (_MACRO_IS_NUMBER_(core_info.lexical_code[core_info.lexical_index]) == true &&
 					core_info.lexical_token.cache_token != UNKNOW_TOKEN) {
 					core_info.lexical_token.cache_token = CONST_NUMBER;
 				}
@@ -569,8 +569,8 @@ public:
 		else if (core_info.lexical_token.token_string == L"namespace") {
 			core_info.lexical_token.cache_token = NAMESPACE_TOKEN;
 		}
-		else if (core_info.lexical_token.token_string == L"true" || 
-				 core_info.lexical_token.token_string == L"false") {
+		else if (core_info.lexical_token.token_string == L"true" ||
+			core_info.lexical_token.token_string == L"false") {
 			core_info.lexical_token.cache_token = CONST_BOOLEAN;
 		}
 

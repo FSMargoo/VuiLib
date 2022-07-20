@@ -14,7 +14,7 @@
 VLIB_BEGIN_NAMESPACE
 
 struct VVMLObject {
-	VUIObject*   UIObject = nullptr;
+	VUIObject* UIObject = nullptr;
 	std::wstring VMLID;
 
 	std::vector<VVMLObject*> ChildrenObjects;
@@ -37,11 +37,11 @@ struct VVMLWidgetVMLObjectList {
 class VVMLFinder {
 private:
 	std::vector<VVMLObject*> ObjectList;
-	VVMLObject*              OriginObject;
+	VVMLObject* OriginObject;
 
 public:
 	VVMLFinder(VVMLObject* Object, std::vector<VVMLObject*> List) {
-		ObjectList   = List;
+		ObjectList = List;
 		OriginObject = Object;
 	}
 
@@ -69,13 +69,12 @@ public:
 		return OriginObject != nullptr;
 	}
 
-	template<class Type=VUIObject>
+	template<class Type = VUIObject>
 	Type* Get() {
 		return static_cast<Type*>(OriginObject->UIObject);
 	}
 
-	operator VUIObject*()
-	{
+	operator VUIObject* () {
 		return OriginObject->UIObject;
 	}
 
@@ -121,14 +120,14 @@ public:
 						VVMLVPushButtonBuilder Builder(PushButton, Element.second.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
-							Result.Status        = VVMLWidgetVMLLoadStats::Failed;
+							Result.Status = VVMLWidgetVMLLoadStats::Failed;
 							Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Builed Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
 
 							return Result;
 						}
 					}
 					if (ElementProperty.PropertyAsString == L"VImageLabel") {
-						VImageLabel*			ImageLabel = new VImageLabel(nullptr, UIParent);
+						VImageLabel* ImageLabel = new VImageLabel(nullptr, UIParent);
 						VMLObject->UIObject = ImageLabel;
 
 						VVMLContronBuildStatus  BuildStatus;
@@ -142,7 +141,7 @@ public:
 						}
 					}
 					if (ElementProperty.PropertyAsString == L"VTextLabel") {
-						VTextLabel*			   TextLabel = new VTextLabel(UIParent, L"");
+						VTextLabel* TextLabel = new VTextLabel(UIParent, L"");
 						VMLObject->UIObject = TextLabel;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -156,7 +155,7 @@ public:
 						}
 					}
 					if (ElementProperty.PropertyAsString == L"VBlurLabel") {
-						VBlurLabel*			   BlurLabel = new VBlurLabel(UIParent);
+						VBlurLabel* BlurLabel = new VBlurLabel(UIParent);
 						VMLObject->UIObject = BlurLabel;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -170,7 +169,7 @@ public:
 						}
 					}
 					if (ElementProperty.PropertyAsString == L"VIconButton") {
-						VIconButton*		   IconButton = new VIconButton(UIParent);
+						VIconButton* IconButton = new VIconButton(UIParent);
 						VMLObject->UIObject = IconButton;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -198,7 +197,7 @@ public:
 						}
 					}
 					if (ElementProperty.PropertyAsString == L"VLayout") {
-						VLayout*			   Layout = new VLayout(UIParent, this);
+						VLayout* Layout = new VLayout(UIParent, this);
 						VMLObject->UIObject = Layout;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -278,4 +277,4 @@ public:
 	}
 };
 
-VLIB_END_NAMESPACE 
+VLIB_END_NAMESPACE

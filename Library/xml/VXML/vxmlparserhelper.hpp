@@ -23,10 +23,10 @@ public:
 
 	}
 
-	static std::wstring ReadFromFile(std::wstring FilePath,
+	static std::wstring ReadFromFile(std::wstring FilePath, 
 		VVMLDocumentEncoding DocumentEncoding = VVMLDocumentEncoding::UTF8) {
 		std::ifstream FileStream(FilePath);
-
+		
 		std::string TempLine;
 		std::string TotalFile;
 
@@ -54,7 +54,7 @@ public:
 		return L"Unknown File";
 	}
 	static bool         FileExist(std::wstring FilePath) {
-		return (_waccess(FilePath.c_str(), 04) == -1);
+		return (_waccess(FilePath.c_str(), 04) != -1);
 	}
 };
 
