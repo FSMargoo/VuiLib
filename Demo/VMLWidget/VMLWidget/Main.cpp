@@ -18,7 +18,14 @@ int main() {
 	VVMLParser    Parser(L"./LayoutVML.xml", VVMLParserParseMode::FromFile);
 
 	// 解析 VML 后显示 VML 界面
-	VMLWidget->LoadVML(Parser.ParseVML());
+	auto Result = VMLWidget->LoadVML(Parser.ParseVML());
+
+	// 检查 VML 导入情况
+	if (Result.Status != VVMLWidgetVMLLoadStats::Ok) {
+		MessageBox(GetHWnd(), Result.FailedMessage.c_str(), L"We are Sorry that VML Loaded Error", MB_OK + 16);
+
+		return -1;
+	}
 
 	// 链接 VML 层的 Button 的信号
 	((VPushButton*)((VUIObject*)(*VMLWidget)[L"MainWindow"][L"PushButton"]))->ButtonPushed.Connect(VMLButtonOnClicked);

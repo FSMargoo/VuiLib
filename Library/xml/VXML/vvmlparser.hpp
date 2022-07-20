@@ -134,7 +134,7 @@ private:
 	int  BaseLine = 0;
 
 private:
-	bool FileExist = true;
+	bool IsFileExist = true;
 
 public:
 	VVMLParser(std::wstring VMLString, VVMLParserParseMode VMLParserMode = VVMLParserParseMode::FromString, int Line = 0) {
@@ -151,7 +151,7 @@ public:
 				BaseLine = Line;
 			}
 			else {
-				FileExist = false;
+				IsFileExist = false;
 			}
 
 			break;
@@ -168,7 +168,7 @@ public:
 	VVMLParserResult ParseVML() {
 		VVMLParserResult ParseResult;
 
-		if (FileExist == false) {
+		if (IsFileExist == false) {
 			ThrowError(&ParseResult, L"Target File Dosen't Exsit");
 			ParseResult.ParserStatus = VVMLParserStatus::Failed;
 
