@@ -758,7 +758,7 @@ protected:
 		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
 
 		for (auto& ElementProperty : PropertyValueList) {
-			if (ElementProperty.first == L"TargetX") {
+			if (ElementProperty.first == L"TargetWidth") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
 					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
 					BuildStatus->FailedReason = L"\"TargetWidth\" Property Must Match the Type \"Int\"";
@@ -768,7 +768,7 @@ protected:
 
 				TargetWidth = ElementProperty.second.PropertyAsInt;
 			}
-			if (ElementProperty.first == L"TargetY") {
+			if (ElementProperty.first == L"TargetHeight") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
 					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
 					BuildStatus->FailedReason = L"\"TargetHeight\" Property Must Match the Type \"Int\"";

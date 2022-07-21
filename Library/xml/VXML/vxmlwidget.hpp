@@ -94,7 +94,7 @@ public:
 			std::wstring ASTError;
 
 			for (auto& ErrorString : VMLAstTree.ErrorInfo) {
-				ASTError.append(ErrorString.ErrorString + L"At Line (" + std::to_wstring(ErrorString.Line)) + L")\n";
+				ASTError.append(ErrorString.ErrorString + L"At Line (" + std::to_wstring(ErrorString.Line) + L")\n");
 			}
 
 			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree\nAST Error : \n" + ASTError };

@@ -17,12 +17,12 @@ void PlayPositionAnimation() {
 	PositionAnimation->Start();
 }
 void PlayGeomteryAnimation() {
-	GeomteryAnimationButton->Resize(280, 100);
-	AlphaAnimation->Start();
+	GeomteryAnimationButton->Resize(0, 0);
+	GeomteryAnimation->Start();
 }
 void PlayAlphaAnimation() {
 	AlphaAnimationButton->SetTransparency(0);
-	GeomteryAnimation->Start();
+	AlphaAnimation->Start();
 }
 
 int main() {
@@ -48,7 +48,9 @@ int main() {
 	GeomteryAnimation       = VMLWidget[L"MainWindow"][L"GeomteryAnimationButton"][L"Animation"].Get<VGeomteryAnimation>();
 
 	// °ó¶¨ÐÅºÅ²Û
-
+	PositionAnimationButton->ButtonPushed.Connect(PlayPositionAnimation);
+	AlphaAnimationButton->ButtonPushed.Connect(PlayAlphaAnimation);
+	GeomteryAnimationButton->ButtonPushed.Connect(PlayGeomteryAnimation);
 
 	return VMLAnimationDemo->Exec();
 }
