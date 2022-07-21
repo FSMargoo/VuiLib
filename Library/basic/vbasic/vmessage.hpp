@@ -15,10 +15,10 @@ VLIB_BEGIN_NAMESPACE
  *	@description  : Describe The Type Of Message
 */
 enum VMessageType {
-	UnknowMessage,     MouseMoveMessage,  MouseClickedMessage,
-	KeyClickedMessage, RepaintMessage,    GetRepaintAeraMessage,
-	IMECharMessage,    MouseWheelMessage, FreeResourceMessage,
-	CheckLocalFocusMessage
+	UnknowMessage         , MouseMoveMessage  , MouseClickedMessage   ,
+	KeyClickedMessage     , RepaintMessage    , GetRepaintAeraMessage ,
+	IMECharMessage        , MouseWheelMessage , FreeResourceMessage   ,
+	CheckLocalFocusMessage, KillFocusMessage
 };
 
 /*
@@ -238,6 +238,17 @@ public:
 	VCheckFocusMessage(VPoint Point)
 		: VMessage(VMessageType::CheckLocalFocusMessage) {
 		FocusPoint = Point;
+	}
+};
+
+/*
+ * VKillFocusMessage class:
+ *	@description  : Kill the Focus
+*/
+class VKillFocusMessage : public VMessage {
+public:
+	VKillFocusMessage()
+		: VMessage(VMessageType::KillFocusMessage) {
 	}
 };
 
