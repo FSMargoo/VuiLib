@@ -137,6 +137,49 @@ public:
 		return (LocalX >= 1 + InterpolatorDuration);
 	}
 
+	void  SetInterpolator(VInterpolatorType Interpolator) {
+		using namespace VInterpolatorFunctional;
+
+		switch (Interpolator) {
+		case VInterpolatorType::AnticipateInterpolator:
+			InterpolatorFunction = AnticipateInterpolator;
+
+			break;
+		case VInterpolatorType::AccelerateDecelerateInterpolator:
+			InterpolatorFunction = AccelerateDecelerateInterpolator;
+
+			break;
+		case VInterpolatorType::AccelerateInterpolator:
+			InterpolatorFunction = AccelerateInterpolator;
+
+			break;
+		case VInterpolatorType::AnticipateOvershootInterpolator:
+			InterpolatorFunction = AnticipateOvershootInterpolator;
+
+			break;
+		case VInterpolatorType::DecelerateInterpolator:
+			InterpolatorFunction = DecelerateInterpolator;
+
+			break;
+		case VInterpolatorType::LinearInterpolator:
+			InterpolatorFunction = LinearInterpolator;
+
+			break;
+		case VInterpolatorType::OvershootInterpolator:
+			InterpolatorFunction = OvershootInterpolator;
+
+			break;
+		case VInterpolatorType::CycleInterpolator:
+			InterpolatorFunction = CycleInterpolator;
+
+			break;
+		default:
+			InterpolatorFunction = AnticipateInterpolator;
+
+			break;
+		}
+	}
+
 	double GetOneFrame() {
 		if (InterpolatorEnd() == true) {
 			return 1.f;
@@ -169,7 +212,7 @@ public:
 
 class VBasicInterpolator {
 protected:
-	bool   AnimationStart = false;
+	bool                   AnimationStart = false;
 	VAnimationInterpolator Interpolator;
 
 public:
@@ -287,6 +330,17 @@ public:
 		: VBasicInterpolator(Dx, Interpolator) {
 
 	}
+
+	void SetTargetPoint(VPoint Target) {
+		TargetPoint = Target;
+	}
+	void SetInterpolator(VInterpolatorType InterpolatorType) {
+		Interpolator.SetInterpolator(InterpolatorType);
+	}
+	void SetDx(double Dx) {
+		Interpolator.SetDx(Dx);
+	}
+
 	void Start(VPoint Source, VPoint Target) {
 		TargetPoint = Target;
 		SourcePoint = Source;
@@ -324,6 +378,17 @@ public:
 		: VBasicInterpolator(Dx, Interpolator) {
 
 	}
+
+	void SetTargetAlpha(int Target) {
+		TargetAlpha = Target;
+	}
+	void SetInterpolator(VInterpolatorType InterpolatorType) {
+		Interpolator.SetInterpolator(InterpolatorType);
+	}
+	void SetDx(double Dx) {
+		Interpolator.SetDx(Dx);
+	}
+
 	void Start(short Source, short Target) {
 		TargetAlpha = Target;
 		SourceAlpha = Source;
@@ -365,6 +430,16 @@ public:
 		AnimationStart = true;
 
 		Interpolator.Reset();
+	}
+
+	void SetTargetSize(VSize Target) {
+		TargetSize = Target;
+	}
+	void SetInterpolator(VInterpolatorType InterpolatorType) {
+		Interpolator.SetInterpolator(InterpolatorType);
+	}
+	void SetDx(double Dx) {
+		Interpolator.SetDx(Dx);
 	}
 
 	/*

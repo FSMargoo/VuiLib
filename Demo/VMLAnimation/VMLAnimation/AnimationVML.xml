@@ -1,0 +1,22 @@
+<!-- 主窗口的创建 -->
+<MainWindow Type="VMainWindow" Width="1113" Height="680" Title="VML Animation Demo">
+    <!-- 创建一个动画按钮 -->
+    <PositionAnimationButton Type="VPushButton" Width="180" Height="60" Text="点击我播放位移动画" X="0" Y="0">
+        <!-- 创建唯一一个动画 -->
+        <!-- 动画持续 800s 目标坐标 (80, 80) 插值器为 OvershootInterpolator -->
+        <Animation Type="VPositionAnimation" TargetX="0" TargetY="0" Duraction="800" Interpolator="OvershootInterpolator">
+        </Animation>
+    </PositionAnimationButton>
+    <AlphaAnimationButton Type="VPushButton" Width="180" Height="60" Text="点我播放渐入动画" X="0" Y="80">
+        <!-- 创建唯一一个动画 -->
+        <!-- 动画持续 800s 目标坐标 (80, 80) 插值器为 OvershootInterpolator -->
+        <Animation Type="VAlphaAnimation" TargetAlpha="255" Duraction="800" Interpolator="OvershootInterpolator">
+        </Animation>
+    </AlphaAnimationButton>
+    <GeomteryAnimationButton Type="VPushButton" Width="180" Height="60" Text="点我播放大小改变动画" X="0" Y="80">
+        <!-- 创建唯一一个动画 -->
+        <!-- 动画持续 800s 目标坐标 (80, 80) 插值器为 OvershootInterpolator -->
+        <Animation Type="VGeomteryAnimation" TargetWidth="180" TargetHeight="60" Duraction="800" Interpolator="OvershootInterpolator">
+        </Animation>
+    </GeomteryAnimationButton>
+</MainWindow>
