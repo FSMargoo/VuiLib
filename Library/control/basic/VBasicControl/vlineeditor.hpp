@@ -342,14 +342,14 @@ public:
 
 		if (CursorTimer.End() == true &&
 			UserInteractiving == true) {
-			CursorTimer.Start(800);
-
-			if (ShowCursor == true) {
-				ShowCursor = false;
-			}
-			else {
-				ShowCursor = true;
-			}
+			CursorTimer.Start(800);   /*
+									   * This is A Comment
+			if (ShowCursor == true) {  * This is A Comment
+				ShowCursor = false;    *
+			}                          *
+			else {                     *
+				ShowCursor = true;     *
+			}                          */
 
 			Update();
 		}
