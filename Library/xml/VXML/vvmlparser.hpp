@@ -72,7 +72,7 @@ enum class VVMLParserParseMode {
 
 class VVMLParser {
 private:
-	seal_lexical* ParserLexical;
+	seal_lexical* ParserLexical = nullptr;
 
 private:
 	void			  ThrowError(VVMLParserResult* Result, std::wstring ErrorString) {
@@ -100,10 +100,19 @@ private:
 		VVMLPropertyValue Value;
 		VVMLPropertyType  Type = VVMLPropertyType::IntValue;
 
+		bool DotExsit = false;
+
 		for (auto& Character : String) {
 			if (!(Character >= L'0' && Character <= L'9')) {
 				if (Character == L'.') {
-					Type = VVMLPropertyType::DoubleValue;
+					if (DotExsit == false) {
+						DotExsit = true;
+
+						Type = VVMLPropertyType::DoubleValue;
+					}
+					else {
+						Type = VVMLPropertyType::StringValue;
+					}
 				}
 				else {
 					Type = VVMLPropertyType::StringValue;
@@ -157,7 +166,7 @@ public:
 			break;
 		}
 		default: {
-			ParserLexical = new seal_lexical(VMLString);
+			ParserLexical    = new seal_lexical(VMLString);
 			BaseLine = Line;
 
 			break;
@@ -169,7 +178,7 @@ public:
 		VVMLParserResult ParseResult;
 
 		if (FileExist == false) {
-			ParseResult.ErrorInfo.push_back({ L"Target File Doesenot Exsits!", 0 });
+			ParseResult.ErrorInfo.push_back({ L"Target File Dosen't Exsits!", 0 });
 			ParseResult.ParserStatus = VVMLParserStatus::Failed;
 
 			return ParseResult;

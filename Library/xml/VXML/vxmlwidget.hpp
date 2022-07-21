@@ -220,6 +220,48 @@ public:
 							return Result;
 						}
 					}
+					if (ElementProperty.PropertyAsString == L"VPositionAnimation") {
+						VPositionAnimation* Animation = new VPositionAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
+						VMLObject->UIObject = Animation;
+
+						VVMLContronBuildStatus       BuildStatus;
+						VVMLPositionAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+
+						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
+							Result.Status = VVMLWidgetVMLLoadStats::Failed;
+							Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Builed Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+							return Result;
+						}
+					}
+					if (ElementProperty.PropertyAsString == L"VGeomteryAnimation") {
+						VGeomteryAnimation* Animation = new VGeomteryAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
+						VMLObject->UIObject = Animation;
+
+						VVMLContronBuildStatus       BuildStatus;
+						VVMLGeomteryAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+
+						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
+							Result.Status = VVMLWidgetVMLLoadStats::Failed;
+							Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Builed Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+							return Result;
+						}
+					}
+					if (ElementProperty.PropertyAsString == L"VAlphaAnimation") {
+						VAlphaAnimation* Animation = new VAlphaAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
+						VMLObject->UIObject = Animation;
+
+						VVMLContronBuildStatus       BuildStatus;
+						VVMLAlphaAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+
+						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
+							Result.Status = VVMLWidgetVMLLoadStats::Failed;
+							Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Builed Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+							return Result;
+						}
+					}
 					if (ElementProperty.PropertyAsString == L"VMainWindow") {
 						VMLObject->UIObject = this;
 

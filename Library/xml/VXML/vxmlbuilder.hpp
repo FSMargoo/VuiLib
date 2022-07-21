@@ -564,5 +564,252 @@ public:
 		AnalyzeProperty(MainWindow, PropertyValueList, BuildStatus);
 	}
 };
+class VVMLAnimationCommonBuilderAPI {
+public:
+	static VInterpolatorType ConvertInterpolator(std::wstring InterpolatorName) {
+		if (InterpolatorName == L"AnticipateInterpolator") {
+			return VInterpolatorType::AnticipateInterpolator;
+		}
+		else if (InterpolatorName == L"AccelerateDecelerateInterpolator") {
+			return VInterpolatorType::AccelerateDecelerateInterpolator;
+		}
+		else if (InterpolatorName == L"AccelerateInterpolator") {
+			return VInterpolatorType::AccelerateInterpolator;
+		}
+		else if (InterpolatorName == L"AnticipateOvershootInterpolator") {
+			return VInterpolatorType::AnticipateOvershootInterpolator;
+		}
+		else if (InterpolatorName == L"DecelerateInterpolator") {
+			return VInterpolatorType::DecelerateInterpolator;
+		}
+		else if (InterpolatorName == L"LinearInterpolator") {
+			return VInterpolatorType::LinearInterpolator;
+		}
+		else if (InterpolatorName == L"OvershootInterpolator") {
+			return VInterpolatorType::OvershootInterpolator;
+		}
+		else if (InterpolatorName == L"CycleInterpolator") {
+			return VInterpolatorType::CycleInterpolator;
+		}
+
+		return VInterpolatorType::AccelerateDecelerateInterpolator;
+	}
+};
+class VVMLPositionAnimationBuilder : public VVMLCommonBuilder {
+protected:
+	void Builder(
+		VPositionAnimation* Animation, 
+		int                 TargetX,
+		int                 TargetY,
+		int                 Duraction,
+		VInterpolatorType   Interpolator) {
+		Animation->SetTargetPoint({ TargetX, TargetY });
+		Animation->SetDuraction(Duraction);
+		Animation->SetInterpolator(Interpolator);
+	}
+
+	void AnalyzeProperty(VPositionAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus) {
+		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+
+		int               TargetX      = 0;
+		int               TargetY      = 0;
+		int               Duraction    = 0;
+		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
+
+		for (auto& ElementProperty : PropertyValueList) {
+			if (ElementProperty.first == L"TargetX") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"TargetX\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				TargetX = ElementProperty.second.PropertyAsInt;
+			}
+			if (ElementProperty.first == L"TargetY") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"TargetY\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				TargetY = ElementProperty.second.PropertyAsInt;
+			}
+
+			if (ElementProperty.first == L"Duraction") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Duraction\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				Duraction = ElementProperty.second.PropertyAsInt;
+			}
+			if (ElementProperty.first == L"Interpolator") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Interpolator\" Property Must Match the Type \"String\"";
+
+					return;
+				}
+
+				Interpolator = Interpolator = VVMLAnimationCommonBuilderAPI::ConvertInterpolator(ElementProperty.second.PropertyAsString);
+			}
+		}
+
+		Builder(Object, TargetX, TargetY, Duraction, Interpolator);
+	}
+
+public:
+	VVMLPositionAnimationBuilder(VPositionAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus)
+		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+		AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+	}
+};
+class VVMLAlphaAnimationBuilder : public VVMLCommonBuilder {
+protected:
+	void Builder(
+		VAlphaAnimation*  Animation,
+		int               Alpha,
+		int               Duraction,
+		VInterpolatorType Interpolator) {
+		Animation->SetTargetAlpha(Alpha);
+		Animation->SetDuraction(Duraction);
+		Animation->SetInterpolator(Interpolator);
+	}
+
+	void AnalyzeProperty(VAlphaAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus) {
+		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+
+		int               TargetAlpha = 0;
+		int               Duraction = 0;
+		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
+
+		for (auto& ElementProperty : PropertyValueList) {
+			if (ElementProperty.first == L"TargetAlpha") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"TargetAlpha\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				TargetAlpha = ElementProperty.second.PropertyAsInt;
+			}
+
+			if (ElementProperty.first == L"Duraction") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Duraction\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				Duraction = ElementProperty.second.PropertyAsInt;
+			}
+			if (ElementProperty.first == L"Interpolator") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Interpolator\" Property Must Match the Type \"String\"";
+
+					return;
+				}
+
+				Interpolator = Interpolator = VVMLAnimationCommonBuilderAPI::ConvertInterpolator(ElementProperty.second.PropertyAsString);
+			}
+		}
+
+		Builder(Object, TargetAlpha, Duraction, Interpolator);
+	}
+
+public:
+	VVMLAlphaAnimationBuilder(VAlphaAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus)
+		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+		AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+	}
+};
+class VVMLGeomteryAnimationBuilder : public VVMLCommonBuilder {
+protected:
+	void Builder(
+		VGeomteryAnimation* Animation,
+		int                 TargetWidth,
+		int                 TargetHeight,
+		int                 Duraction,
+		VInterpolatorType   Interpolator) {
+		Animation->SetTargetSize({ TargetWidth, TargetHeight });
+		Animation->SetDuraction(Duraction);
+		Animation->SetInterpolator(Interpolator);
+	}
+
+	void AnalyzeProperty(VGeomteryAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus) {
+		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+
+		int               TargetWidth  = 0;
+		int               TargetHeight = 0;
+		int               Duraction    = 0;
+		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
+
+		for (auto& ElementProperty : PropertyValueList) {
+			if (ElementProperty.first == L"TargetX") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"TargetWidth\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				TargetWidth = ElementProperty.second.PropertyAsInt;
+			}
+			if (ElementProperty.first == L"TargetY") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"TargetHeight\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				TargetHeight = ElementProperty.second.PropertyAsInt;
+			}
+
+			if (ElementProperty.first == L"Duraction") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Duraction\" Property Must Match the Type \"Int\"";
+
+					return;
+				}
+
+				Duraction = ElementProperty.second.PropertyAsInt;
+			}
+			if (ElementProperty.first == L"Interpolator") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Interpolator\" Property Must Match the Type \"String\"";
+
+					return;
+				}
+
+				Interpolator = Interpolator = VVMLAnimationCommonBuilderAPI::ConvertInterpolator(ElementProperty.second.PropertyAsString);
+			}
+		}
+
+		Builder(Object, TargetWidth, TargetHeight, Duraction, Interpolator);
+	}
+
+public:
+	VVMLGeomteryAnimationBuilder(VGeomteryAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus)
+		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+		AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+	}
+};
 
 VLIB_END_NAMESPACE
