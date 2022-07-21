@@ -29,13 +29,15 @@ int main() {
 	// 加载 VML 到 VMLWidget 上
 	VApplication* VMLAnimationDemo = new VApplication();
 	VVMLWidget    VMLWidget(0, 0, VMLAnimationDemo);
-	VVMLParser    VMLParser(L"./AnimationVML.xml", VVMLParserParseMode::FromFile);
+	VVMLParser    VMLParser(L"./AnimationVML.xmal", VVMLParserParseMode::FromFile);
 
 	auto VMLParserResult = VMLWidget.LoadVML(VMLParser.ParseVML());
 
 	if (VMLParserResult.Status != VVMLWidgetVMLLoadStats::Ok) {
 		MessageBox(VMLWidget.GetWinID(), VMLParserResult.FailedMessage.c_str(), 
 			L"Sorry but Something Error Happend", MB_OK + 16);
+
+		return -1;
 	}
 
 	// 映射 VML 对象到 C++ 中
