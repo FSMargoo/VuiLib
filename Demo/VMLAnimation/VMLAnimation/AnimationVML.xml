@@ -9,13 +9,13 @@
     </PositionAnimationButton>
     <AlphaAnimationButton Type="VPushButton" Width="180" Height="60" Text="点我播放渐入动画" X="0" Y="80">
         <!-- 创建唯一一个动画 -->
-        <!-- 动画持续 800s 目标坐标 (80, 80) 插值器为 OvershootInterpolator -->
+        <!-- 动画持续 800s 目标透明度 255 插值器为 OvershootInterpolator -->
         <Animation Type="VAlphaAnimation" TargetAlpha="255" Duraction="800" Interpolator="OvershootInterpolator">
         </Animation>
     </AlphaAnimationButton>
     <GeomteryAnimationButton Type="VPushButton" Width="180" Height="60" Text="点我播放大小改变动画" X="0" Y="160">
         <!-- 创建唯一一个动画 -->
-        <!-- 动画持续 800s 目标坐标 (80, 80) 插值器为 OvershootInterpolator -->
+        <!-- 动画持续 800s 目标宽高 (160, 60) 插值器为 OvershootInterpolator -->
         <Animation Type="VGeomteryAnimation" TargetWidth="180" TargetHeight="60" Duraction="800" Interpolator="OvershootInterpolator">
         </Animation>
     </GeomteryAnimationButton>
