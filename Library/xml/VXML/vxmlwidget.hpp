@@ -84,14 +84,6 @@ class VVMLWidget : public VMainWindow {
 protected:
 	std::vector<VVMLObject*> ObjectList;
 
-	void ReleaseVMLObjectList(std::vector<VVMLObject*> GCList) {
-		for (auto& Item : GCList) {
-			delete Item;
-		}
-
-		GCList.clear();
-	}
-
 public:
 	VVMLWidget(int Width, int Height, VApplication* Parent, bool Sizble = true)
 		: VMainWindow(Width, Height, Parent, Sizble) {    }
@@ -115,10 +107,6 @@ public:
 		return LoadVML(VMLAstTree.Nodes, nullptr, UIParent);
 	}
 	VVMLWidgetLoadResult LoadVML(std::map<std::wstring, VVMLNode> VMLAstTree, VVMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent = nullptr) {
-		if (ObjectList.empty() == false) {
-			ReleaseVMLObjectList(ObjectList);
-		}
-
 		VVMLWidgetLoadResult Result;
 		Result.Status = VVMLWidgetVMLLoadStats::Ok;
 
