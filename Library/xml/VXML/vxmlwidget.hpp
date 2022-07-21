@@ -84,19 +84,41 @@ class VVMLWidget : public VMainWindow {
 protected:
 	std::vector<VVMLObject*> ObjectList;
 
+	void ReleaseVMLObjectList(std::vector<VVMLObject*> GCList) {
+		for (auto& Item : GCList) {
+			delete Item;
+		}
+
+		GCList.clear();
+	}
+
 public:
 	VVMLWidget(int Width, int Height, VApplication* Parent, bool Sizble = true)
 		: VMainWindow(Width, Height, Parent, Sizble) {    }
 
 public:
 	VVMLWidgetLoadResult LoadVML(VVMLParserResult VMLAstTree, VUIObject* UIParent = nullptr) {
-		if (VMLAstTree.ParserStatus != VVMLParserStatus::Ok) {
-			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree" };
+		if (VMLAstTree.ParserStatus == VVMLParserStatus::Error) {
+			std::wstring ASTError;
+
+			for (auto& ErrorString : VMLAstTree.ErrorInfo) {
+				ASTError.append(ErrorString.ErrorString + L"At Line (" + std::to_wstring(ErrorString.Line)) + L")\n";
+			}
+
+			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree\nAST Error : \n" + ASTError };
 		}
+		if (VMLAstTree.ParserStatus == VVMLParserStatus::Failed) {
+			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree\nAST Error : " + VMLAstTree.ErrorInfo[0].ErrorString	};
+		}
+
 
 		return LoadVML(VMLAstTree.Nodes, nullptr, UIParent);
 	}
 	VVMLWidgetLoadResult LoadVML(std::map<std::wstring, VVMLNode> VMLAstTree, VVMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent = nullptr) {
+		if (ObjectList.empty() == false) {
+			ReleaseVMLObjectList(ObjectList);
+		}
+
 		VVMLWidgetLoadResult Result;
 		Result.Status = VVMLWidgetVMLLoadStats::Ok;
 
