@@ -29,7 +29,7 @@ int main() {
 	// ╪сть VML ╣╫ VMLWidget ио
 	VApplication* VMLAnimationDemo = new VApplication();
 	VVMLWidget    VMLWidget(0, 0, VMLAnimationDemo);
-	VVMLParser    VMLParser(L"./AnimationVML.xmal", VVMLParserParseMode::FromFile);
+	VVMLParser    VMLParser(L"./AnimationVML.xml", VVMLParserParseMode::FromFile);
 
 	auto VMLParserResult = VMLWidget.LoadVML(VMLParser.ParseVML());
 
