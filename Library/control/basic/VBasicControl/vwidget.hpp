@@ -36,19 +36,21 @@ LRESULT VMainWindowProcess(HWND Handle, UINT Message, WPARAM wParameter, LPARAM 
 		return 0;
 	}
 	case WM_SIZE: {
-		if (wParameter != SIZE_RESTORED) {
-			RECT Rect;
+		if (wParameter != SIZE_MINIMIZED) {
+			if (wParameter != SIZE_RESTORED) {
+				RECT Rect;
 
-			GetWindowRect(Handle, &Rect);
+				GetWindowRect(Handle, &Rect);
 
-			VMainWindowResizeProcess(Handle, Rect.right - Rect.left - 18, Rect.bottom - Rect.top - 39);
-		}
-		else {
-			RECT Rect;
+				VMainWindowResizeProcess(Handle, Rect.right - Rect.left - 18, Rect.bottom - Rect.top - 39);
+			}
+			else {
+				RECT Rect;
 
-			GetWindowRect(Handle, &Rect);
+				GetWindowRect(Handle, &Rect);
 
-			VMainWindowResizeProcess(Handle, LOWORD(lParameter), HIWORD(lParameter));
+				VMainWindowResizeProcess(Handle, LOWORD(lParameter), HIWORD(lParameter));
+			}
 		}
 
 		return 0;
