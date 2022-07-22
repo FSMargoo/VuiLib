@@ -205,21 +205,42 @@ public:
 	}
 };
 class VVMLTextLabelBuilder : public VVMLCommonBuilder {
+private:
+	VStringAlignment ConvertAlignemnt(std::wstring AlignmentString) {
+		if (AlignmentString == L"AlignmentNear") {
+			return VStringAlignment::AlignmentNear;
+		}
+		if (AlignmentString == L"AlignmentCenter") {
+			return VStringAlignment::AlignmentCenter;
+		}
+		if (AlignmentString == L"AlignmentFar") {
+			return VStringAlignment::AlignmentFar;
+		}
+
+		return VStringAlignment::AlignmentNear;
+	}
+
 protected:
-	void Builder(VTextLabel* TextLabel, std::wstring PlaneText, int TextSize) {
+	void Builder(VTextLabel* TextLabel, std::wstring PlaneText, int TextSize, VStringAlignment Alignment, VStringAlignment LineAlignment) {
 		TextLabel->SetPlaneText(PlaneText);
 
 		if (TextSize != 0) {
 			TextLabel->SetTextSize(TextSize);
 		}
+
+		TextLabel->SetAlignment(Alignment);
+		TextLabel->SetLineAlignment(LineAlignment);
 	}
 
 	void AnalyzeProperty(VTextLabel* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
 		VVMLContronBuildStatus* BuildStatus) {
 		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
-		std::wstring Text;
-		int          TextSize = 0;
+		std::wstring     Text;
+		int              TextSize = 0;
+
+		VStringAlignment Alignment     = VStringAlignment::AlignmentNear;
+		VStringAlignment LineAlignment = VStringAlignment::AlignmentNear;
 
 		for (auto& ElementProperty : PropertyValueList) {
 			if (ElementProperty.first == L"Text") {
@@ -242,9 +263,29 @@ protected:
 
 				TextSize = ElementProperty.second.PropertyAsInt;
 			}
+			if (ElementProperty.first == L"Alignment") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Alignment\" Property Must Match the Type \"StringValue\"";
+
+					return;
+				}
+
+				Alignment = ConvertAlignemnt(ElementProperty.second.PropertyAsString);
+			}
+			if (ElementProperty.first == L"LineAlignment") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"LineAlignment\" Property Must Match the Type \"StringValue\"";
+
+					return;
+				}
+
+				LineAlignment = ConvertAlignemnt(ElementProperty.second.PropertyAsString);
+			}
 		}
 
-		Builder(Object, Text, TextSize);
+		Builder(Object, Text, TextSize, Alignment, LineAlignment);
 	}
 
 public:
