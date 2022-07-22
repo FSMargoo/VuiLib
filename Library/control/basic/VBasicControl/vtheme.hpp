@@ -51,6 +51,7 @@ public:
 #define VSCROLLBUTTON_THEME             8
 #define VINTERACTIVETEXTLABEL_THEME     9
 #define VLINEEDITOR_THEME              10
+#define VVIEWLABEL_THEME               11
 
 class VWidgetTheme : public VTheme {
 public:
@@ -395,6 +396,22 @@ public:
 public:
 	short GetThemeType() override {
 		return VLINEEDITOR_THEME;
+	}
+};
+
+class VViewLabelTheme : public VTheme {
+public:
+	VColor BackgroundColor;
+	VPoint Radius;
+
+	VViewLabelTheme() {
+		BackgroundColor = VColor(51, 51, 51, 0);
+		Radius = { 13, 13 };
+	}
+
+public:
+	short GetThemeType() override {
+		return VVIEWLABEL_THEME;
 	}
 };
 

@@ -356,7 +356,15 @@ public:
 	*/
 	virtual void Update(VRect Rect) {
 		if (Parent() != nullptr) {
-			return Parent()->Update(Rect);
+			if (Rect.Overlap(
+				*(Parent()->Surface()->Rect.Clone().OffsetRV(0, 0))
+			) == true) {
+				if (Parent()->IsWidget() == false) {
+					Rect = Parent()->Surface()->Rect;
+				}
+
+				return Parent()->Update(Rect);
+			}
 		}
 	}
 	/*
@@ -503,15 +511,16 @@ protected:
 		}
 		}
 
-		auto Result = CheckUIFocusStats(MousePosition, ResourceMessage);
-
-		if (MousePosition.InsideRect(Surface()->Rect) == true) {
-			SendMessageToChild(ResourceMessage);
+		if (SendMessageToChild(ResourceMessage) == true) {
+			return true;
+		}
+		else {
+			auto Result = CheckUIFocusStats(MousePosition, ResourceMessage);
 
 			return true;
 		}
 
-		return Result;
+		return false;
 	}
 
 	/*
@@ -569,7 +578,7 @@ public:
 
 			if (RepaintMesage->DirtyRectangle.Overlap(Surface()->Rect) &&
 				(Parent()->IsApplication() == true ? true :
-					Parent()->GetRegoin().
+					Parent()->GetRegoin().Clone().
 					OffsetRV(Parent()->GetX(), Parent()->GetY())
 					->Overlap(Parent()->SurfaceRect()))
 				) {
@@ -582,6 +591,11 @@ public:
 				ObjectCanvas = new VCanvas(SurfaceRegion().GetWidth(),
 					SurfaceRegion().GetHeight());
 				OnPaint(ObjectCanvas);
+
+				if (IsWidget() == false && IsApplication() == false) {
+					RepaintMesage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
+				}
+				SendMessageToChild(Message, false);
 
 				if (Surface()->Transparency != 255) {
 					ObjectCanvas->SetTransparency(Surface()->Transparency);
@@ -624,6 +638,8 @@ public:
 
 			CheckUIFocusStats(FocusMessage->FocusPoint, FocusMessage);
 
+			SendMessageToChild(Message, false);
+
 			return false;
 		}
 		case VMessageType::KillFocusMessage: {
@@ -631,6 +647,8 @@ public:
 				LosedMouseFocus();
 				LosedFocus.Emit();
 			}
+
+			SendMessageToChild(Message, false);
 
 			return true;
 		}

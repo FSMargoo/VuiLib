@@ -11,3 +11,4 @@
 #include "./control/basic/VBasicControl/vlayout.hpp"
 #include "./xml/VXML/vxmlwidget.hpp"
 #include "./control/basic/VBasicControl/vfocuslockhelper.hpp"
+#include "./control/basic/VBasicControl/vviewlabel.hpp"

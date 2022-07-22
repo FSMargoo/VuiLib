@@ -10,3 +10,4 @@
 #include "control/basic/VBasicControl/vlineeditor.hpp"
 #include "control/basic/VBasicControl/vlayout.hpp"
 #include "control/basic/VBasicControl/vfocuslockhelper.hpp"
+#include "control/basic/VBasicControl/vviewlabel.hpp"

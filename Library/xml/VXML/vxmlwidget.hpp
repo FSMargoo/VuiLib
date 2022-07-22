@@ -275,6 +275,20 @@ public:
 							return Result;
 						}
 					}
+					if (ElementProperty.PropertyAsString == L"VViewLabel") {
+						VViewLabel* ViewLabel = new VViewLabel(0, 0, UIParent);
+						VMLObject->UIObject = ViewLabel;
+
+						VVMLContronBuildStatus BuildStatus;
+						VVMLViewLabelBuilder   Builder(ViewLabel, Element.second.NodeValue, &BuildStatus);
+
+						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
+							Result.Status = VVMLWidgetVMLLoadStats::Failed;
+							Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Builed Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+							return Result;
+						}
+					}
 				}
 				else {
 					delete VMLObject;

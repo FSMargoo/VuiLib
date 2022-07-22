@@ -23,22 +23,27 @@ struct VVMLContronBuildStatus {
 
 class VVMLCommonBuilder {
 protected:
-	void Builder(VUIObject* Object, int X, int Y, int Width, int Height, int Transparency) {
+	void Builder(VUIObject* Object, int X, int Y, int Width, int Height, int Transparency, bool Visble) {
 		if (Object->IsWidget() == false) {
 			Object->Move(X, Y);
 		}
 
 		Object->Resize(Width, Height);
 		Object->SetTransparency(Transparency);
+
+		if (Visble == false) {
+			Object->Hide();
+		}
 	}
 
 	virtual void AnalyzeProperty(VUIObject* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
 		VVMLContronBuildStatus* BuildStatus) {
-		int X = 0;
-		int Y = 0;
-		int Height = 0;
-		int Width = 0;
-		int Transparency = 255;
+		int  X = 0;
+		int  Y = 0;
+		int  Height = 0;
+		int  Width = 0;
+		int  Transparency = 255;
+		bool Visble = true;
 
 		BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Ok;
 
@@ -93,9 +98,19 @@ protected:
 
 				Transparency = ElementProperty.second.PropertyAsInt;
 			}
+			if (ElementProperty.first == L"Visble") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::BooleanValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"Visble\" Property Must Match the Type \"Boolean\"";
+
+					return;
+				}
+
+				Visble = ElementProperty.second.PropertyAsBool;
+			}
 		}
 
-		VVMLCommonBuilder::Builder(Object, X, Y, Width, Height, Transparency);
+		VVMLCommonBuilder::Builder(Object, X, Y, Width, Height, Transparency, Visble);
 	}
 
 public:
@@ -806,6 +821,24 @@ protected:
 
 public:
 	VVMLGeomteryAnimationBuilder(VGeomteryAnimation* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus)
+		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+		AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+	}
+};
+class VVMLViewLabelBuilder : public VVMLCommonBuilder {
+protected:
+	void Builder(VViewLabel* TextLabel) {
+
+	}
+
+	void AnalyzeProperty(VViewLabel* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
+		VVMLContronBuildStatus* BuildStatus) {
+		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+	}
+
+public:
+	VVMLViewLabelBuilder(VViewLabel* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
 		VVMLContronBuildStatus* BuildStatus)
 		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
 		AnalyzeProperty(Object, PropertyValueList, BuildStatus);

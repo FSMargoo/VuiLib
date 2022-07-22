@@ -148,6 +148,7 @@ private:
 		ThemeList.push_back(new VScrollButtonTheme());
 		ThemeList.push_back(new VInteractiveTextLabelTheme());
 		ThemeList.push_back(new VLineEditorTheme());
+		ThemeList.push_back(new VViewLabelTheme());
 	}
 
 protected:
