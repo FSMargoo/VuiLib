@@ -97,6 +97,11 @@ protected:
 	}
 
 public:
+	virtual bool IsAnimation() {
+		return false;
+	}
+
+public:
 	/*
 	 * ObjectCanvas Variable:
 	 *	@description  : Provide a Canvas For Object & Children Object to Paint Control
@@ -245,22 +250,28 @@ protected:
 	bool              SendMessageToChild(VBasicMessage* Message, bool BreakWhenMeetTrue = true) {
 		EditChildMessage(Message);
 
+		VMessage* FocusMessage = Message;
+
 		switch (Message->GetType()) {
 		case VMessageType::CheckLocalFocusMessage: {
-			auto FocusMessage = static_cast<VCheckFocusMessage*>(Message);
-			FocusMessage->FocusPoint.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
+			FocusMessage = new VCheckFocusMessage(*(static_cast<VCheckFocusMessage*>(Message)));
+			static_cast<VCheckFocusMessage*>(FocusMessage)->FocusPoint.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
 
 			break;
 		}
 		case VMessageType::MouseMoveMessage: {
-			auto FocusMessage = static_cast<VMouseMoveMessage*>(Message);
-			FocusMessage->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
+			FocusMessage = new VMouseMoveMessage(*(static_cast<VMouseMoveMessage*>(Message)));
+			static_cast<VMouseMoveMessage*>(FocusMessage)->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
+
+			break;
 
 			break;
 		}
 		case VMessageType::MouseClickedMessage: {
-			auto FocusMessage = static_cast<VMouseClickedMessage*>(Message);
-			FocusMessage->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
+			FocusMessage = new VMouseClickedMessage(*(static_cast<VMouseClickedMessage*>(Message)));
+			static_cast<VMouseClickedMessage*>(FocusMessage)->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
+
+			break;
 
 			break;
 		}
@@ -271,8 +282,12 @@ protected:
 		if (Message->GetType() != VMessageType::RepaintMessage) {
 			for (auto ChildObject = Kernel()->ChildObjectContainer.rbegin();
 				ChildObject != Kernel()->ChildObjectContainer.rend(); ++ChildObject) {
-				if (ChildObject.operator*()->SysDealyMessage(Message) == true) {
+				if (ChildObject.operator*()->SysDealyMessage(FocusMessage) == true) {
 					if (BreakWhenMeetTrue == true) {
+						if (FocusMessage != Message) {
+							delete FocusMessage;
+						}
+
 						return true;
 					}
 					else {
@@ -284,8 +299,12 @@ protected:
 		else {
 			for (auto ChildObject = Kernel()->ChildObjectContainer.begin();
 				ChildObject != Kernel()->ChildObjectContainer.end(); ++ChildObject) {
-				if (ChildObject.operator*()->SysDealyMessage(Message) == true) {
+				if (ChildObject.operator*()->SysDealyMessage(FocusMessage) == true) {
 					if (BreakWhenMeetTrue == true) {
+						if (FocusMessage != Message) {
+							delete FocusMessage;
+						}
+
 						return true;
 					}
 					else {
@@ -293,6 +312,10 @@ protected:
 					}
 				}
 			}
+		}
+
+		if (FocusMessage != Message) {
+			delete FocusMessage;
 		}
 
 		return Flag;
@@ -331,6 +354,11 @@ private:
 	*/
 	virtual VRect SurfaceRegion() {
 		return Surface()->Rect;
+	}
+
+public:
+	VUIObject* GetParent() {
+		return ObjectKernel->Parent;
 	}
 
 public:
@@ -410,6 +438,11 @@ protected:
 	 *	@description  : Check the UI Focus Stats and Call the Message Functional
 	*/
 	bool CheckUIFocusStats(VPoint MouseStats, VMessage* ResourceMessage) {
+		if (IsAnimation() == true ||
+			GetWidth() == 0 || GetHeight() == 0) {
+			return false;
+		}
+
 		if (IsGlobalIDLocking() == true &&
 			GetGlobalFocusID() != Kernel()->GlobalID) {
 			return false;
@@ -517,7 +550,7 @@ protected:
 		else {
 			auto Result = CheckUIFocusStats(MousePosition, ResourceMessage);
 
-			return true;
+			return Result;
 		}
 
 		return false;
@@ -582,6 +615,9 @@ public:
 					OffsetRV(Parent()->GetX(), Parent()->GetY())
 					->Overlap(Parent()->SurfaceRect()))
 				) {
+
+				VRepaintMessage* ChildRepaintMessage = RepaintMesage;
+
 				if (ObjectCanvas != nullptr) {
 					delete ObjectCanvas;
 
@@ -593,9 +629,15 @@ public:
 				OnPaint(ObjectCanvas);
 
 				if (IsWidget() == false && IsApplication() == false) {
-					RepaintMesage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
+					ChildRepaintMessage = new VRepaintMessage(*RepaintMesage);
+
+					ChildRepaintMessage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
 				}
-				SendMessageToChild(Message, false);
+				SendMessageToChild(ChildRepaintMessage, false);
+
+				if (ChildRepaintMessage != RepaintMesage) {
+					delete ChildRepaintMessage;
+				}
 
 				if (Surface()->Transparency != 255) {
 					ObjectCanvas->SetTransparency(Surface()->Transparency);

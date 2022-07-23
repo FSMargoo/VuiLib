@@ -58,6 +58,8 @@ struct VVMLNode {
 
 		return false;
 	}
+
+	int                                       ChildrenSequence = 0;
 };
 
 struct VVMLParserResult {
@@ -185,6 +187,8 @@ public:
 		}
 
 		seal_lexical_type_info::_lexical_token_type Token;
+
+		int ChildrenSequence = 0;
 
 		while (!ParserLexical->is_eof()) {
 			Token = ParserLexical->get_token();
@@ -400,6 +404,10 @@ public:
 						std::pair<std::wstring, VVMLNode>(ChildrenNode.first, ChildrenNode.second));
 				}
 			}
+
+			NewNode.ChildrenSequence = ChildrenSequence;
+
+			++ChildrenSequence;
 
 			ParseResult.Nodes.insert(std::pair<std::wstring, VVMLNode>(NewNode.NodeTag, NewNode));
 

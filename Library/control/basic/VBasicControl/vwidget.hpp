@@ -480,6 +480,8 @@ public:
 		GetWindowRect(GetWinID(), &Rect);
 		
 		MoveWindow(GetWinID(), Rect.left, Rect.top, Width, Height, true);
+
+		VUIObject::Resize(Width, Height);
 	}
 
 	void SetTitle(std::wstring Title) {

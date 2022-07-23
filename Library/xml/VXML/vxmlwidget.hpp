@@ -11,6 +11,8 @@
 #include "vvmlparser.hpp"
 #include "vxmlbuilder.hpp"
 
+#include <algorithm>
+
 VLIB_BEGIN_NAMESPACE
 
 struct VVMLObject {
@@ -84,6 +86,13 @@ class VVMLWidget : public VMainWindow {
 protected:
 	std::vector<VVMLObject*> ObjectList;
 
+private:
+	void SortVMLAstNode(std::vector<VVMLNode>& Nodes) {
+		std::sort(Nodes.begin(), Nodes.end(), [](VVMLNode Left, VVMLNode Right) -> bool {
+			return Left.ChildrenSequence < Right.ChildrenSequence;
+			});
+	}
+
 public:
 	VVMLWidget(int Width, int Height, VApplication* Parent, bool Sizble = true)
 		: VMainWindow(Width, Height, Parent, Sizble) {    }
@@ -104,7 +113,11 @@ public:
 		}
 
 
-		return LoadVML(VMLAstTree.Nodes, nullptr, UIParent);
+		auto LoadResult = LoadVML(VMLAstTree.Nodes, nullptr, UIParent);
+
+		Update({ 0, 0, Surface()->Rect.GetWidth(), Surface()->Rect.GetHeight() });
+
+		return LoadResult;
 	}
 	VVMLWidgetLoadResult LoadVML(std::map<std::wstring, VVMLNode> VMLAstTree, VVMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent = nullptr) {
 		VVMLWidgetLoadResult Result;
@@ -114,12 +127,21 @@ public:
 			UIParent = this;
 		}
 
+		std::vector<VVMLNode> VMLAstOrderlyNodes;
 		for (auto& Element : VMLAstTree) {
-			VVMLObject* VMLObject = new VVMLObject;
-			VMLObject->VMLID = Element.first;
+			VMLAstOrderlyNodes.push_back(Element.second);
+		}
 
-			if (Element.second.PropertyExsit(L"Type")) {
-				VVMLPropertyValue ElementProperty = Element.second.GetProperty(L"Type");
+		std::sort(VMLAstOrderlyNodes.begin(), VMLAstOrderlyNodes.end(), [](VVMLNode Left, VVMLNode Right) -> bool {
+			return Left.ChildrenSequence < Right.ChildrenSequence;
+		});
+
+		for (auto& Element : VMLAstOrderlyNodes) {
+			VVMLObject* VMLObject = new VVMLObject;
+			VMLObject->VMLID = Element.NodeTag;
+
+			if (Element.PropertyExsit(L"Type")) {
+				VVMLPropertyValue ElementProperty = Element.GetProperty(L"Type");
 
 				if (ElementProperty.PropertyType == VVMLPropertyType::StringValue) {
 					if (ElementProperty.PropertyAsString == L"VPushButton") {
@@ -127,7 +149,7 @@ public:
 						VMLObject->UIObject = PushButton;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLVPushButtonBuilder Builder(PushButton, Element.second.NodeValue, &BuildStatus);
+						VVMLVPushButtonBuilder Builder(PushButton, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -141,7 +163,7 @@ public:
 						VMLObject->UIObject = ImageLabel;
 
 						VVMLContronBuildStatus  BuildStatus;
-						VVMLImageLabelBuilder   Builder(ImageLabel, Element.second.NodeValue, &BuildStatus);
+						VVMLImageLabelBuilder   Builder(ImageLabel, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -155,7 +177,7 @@ public:
 						VMLObject->UIObject = TextLabel;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLTextLabelBuilder   Builder(TextLabel, Element.second.NodeValue, &BuildStatus);
+						VVMLTextLabelBuilder   Builder(TextLabel, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -169,7 +191,7 @@ public:
 						VMLObject->UIObject = BlurLabel;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLBlurLabelBuilder   Builder(BlurLabel, Element.second.NodeValue, &BuildStatus);
+						VVMLBlurLabelBuilder   Builder(BlurLabel, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -183,7 +205,7 @@ public:
 						VMLObject->UIObject = IconButton;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLIconButtonBuilder  Builder(IconButton, Element.second.NodeValue, &BuildStatus);
+						VVMLIconButtonBuilder  Builder(IconButton, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -197,7 +219,7 @@ public:
 						VMLObject->UIObject = LineEditor;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLLineEditorBuilder  Builder(LineEditor, Element.second.NodeValue, &BuildStatus);
+						VVMLLineEditorBuilder  Builder(LineEditor, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -211,7 +233,7 @@ public:
 						VMLObject->UIObject = Layout;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLLayoutBuilder      Builder(Layout, Element.second.NodeValue, &BuildStatus);
+						VVMLLayoutBuilder      Builder(Layout, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -225,7 +247,7 @@ public:
 						VMLObject->UIObject = Animation;
 
 						VVMLContronBuildStatus       BuildStatus;
-						VVMLPositionAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+						VVMLPositionAnimationBuilder Builder(Animation, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -239,7 +261,7 @@ public:
 						VMLObject->UIObject = Animation;
 
 						VVMLContronBuildStatus       BuildStatus;
-						VVMLGeomteryAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+						VVMLGeomteryAnimationBuilder Builder(Animation, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -253,7 +275,7 @@ public:
 						VMLObject->UIObject = Animation;
 
 						VVMLContronBuildStatus       BuildStatus;
-						VVMLAlphaAnimationBuilder Builder(Animation, Element.second.NodeValue, &BuildStatus);
+						VVMLAlphaAnimationBuilder Builder(Animation, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -266,7 +288,7 @@ public:
 						VMLObject->UIObject = this;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLMainWindowBuilder  Builder(this, Element.second.NodeValue, &BuildStatus);
+						VVMLMainWindowBuilder  Builder(this, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -280,7 +302,7 @@ public:
 						VMLObject->UIObject = ViewLabel;
 
 						VVMLContronBuildStatus BuildStatus;
-						VVMLViewLabelBuilder   Builder(ViewLabel, Element.second.NodeValue, &BuildStatus);
+						VVMLViewLabelBuilder   Builder(ViewLabel, Element.NodeValue, &BuildStatus);
 
 						if (BuildStatus.BuildStatusCode != VVMLControlBuildResultStatus::Ok) {
 							Result.Status = VVMLWidgetVMLLoadStats::Failed;
@@ -297,7 +319,7 @@ public:
 				}
 
 				VVMLWidgetVMLObjectList* ChildList = new VVMLWidgetVMLObjectList;
-				LoadVML(Element.second.ChildrenNodes, ChildList, VMLObject->UIObject);
+				LoadVML(Element.ChildrenNodes, ChildList, VMLObject->UIObject);
 
 				for (auto& ChildObject : ChildList->Objects) {
 					VMLObject->ChildrenObjects.push_back(ChildObject);
@@ -314,7 +336,7 @@ public:
 			else {
 				delete VMLObject;
 
-				return { VVMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.first + L"\" Dont Owns an Valid Type" };
+				return { VVMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.NodeTag + L"\" Dont Owns an Valid Type" };
 			}
 		}
 
