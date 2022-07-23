@@ -264,14 +264,10 @@ protected:
 			static_cast<VMouseMoveMessage*>(FocusMessage)->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
 
 			break;
-
-			break;
 		}
 		case VMessageType::MouseClickedMessage: {
 			FocusMessage = new VMouseClickedMessage(*(static_cast<VMouseClickedMessage*>(Message)));
 			static_cast<VMouseClickedMessage*>(FocusMessage)->MousePosition.Offset(-SurfaceRegion().left, -SurfaceRegion().top);
-
-			break;
 
 			break;
 		}

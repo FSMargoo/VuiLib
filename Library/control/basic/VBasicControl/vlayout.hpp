@@ -26,7 +26,7 @@ enum class VLayoutMode {
 */
 class VLayout : public VUIObject {
 private:
-	VMainWindow* TargetWindow;
+	VUIObject* TargetWindow;
 
 	VLayoutMode  VerticalLayoutMode;
 	VLayoutMode  HorizontalLayoutMode;
@@ -169,10 +169,10 @@ public:
 	 * Build up Functional
 	*/
 
-	VLayout(VUIObject* Parent, VMainWindow* TargetWidget) : VUIObject(Parent) {
+	VLayout(VUIObject* Parent, VUIObject* TargetWidget) : VUIObject(Parent) {
 		TargetWindow = TargetWidget;
 
-		TargetWidget->SizeOnChange.Connect(this, &VLayout::TargetWindowSizeChanged);
+		TargetWidget->SizeChanged.Connect(this, &VLayout::TargetWindowSizeChanged);
 		Parent->SizeChanged.Connect(this, &VLayout::ParentSizeChanged);
 
 		VerticalLayoutMode = VLayoutMode::LayoutModeCenter;
