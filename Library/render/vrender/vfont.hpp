@@ -178,6 +178,19 @@ public:
 
 		return static_cast<int>(StringRect.Y + StringRect.Height);
 	}
+	int GetHeight(std::wstring String, VFontFormat* Format, VRect OutRect) {
+		VGdiplus::FontFamily   FontFamily;
+		VGdiplus::GraphicsPath StringPath;
+		VGdiplus::RectF        StringRect;
+
+		NativeFont->GetFamily(&FontFamily);
+
+		StringPath.AddString(String.c_str(), -1, &FontFamily, NativeFont->GetStyle(), NativeFont->GetSize(),
+			OutRect.ToGdiplusRect(), Format->GetNativeFontFormat());
+		StringPath.GetBounds(&StringRect);
+
+		return static_cast<int>(StringRect.Y + StringRect.Height);
+	}
 	/*
 	 * GetWidth Functional:
 	 *	@description  : Get the Width of Target Format Type With Target String
@@ -191,6 +204,19 @@ public:
 
 		StringPath.AddString(String.c_str(), -1, &FontFamily, NativeFont->GetStyle(), NativeFont->GetSize(),
 			VGdiplus::PointF(0.f, 0.f), Format->GetNativeFontFormat());
+		StringPath.GetBounds(&StringRect);
+
+		return static_cast<int>(StringRect.Width + StringRect.X);
+	}
+	int GetWidth(std::wstring String, VFontFormat* Format, VRect OutRect) {
+		VGdiplus::FontFamily   FontFamily;
+		VGdiplus::GraphicsPath StringPath;
+		VGdiplus::RectF        StringRect;
+
+		NativeFont->GetFamily(&FontFamily);
+
+		StringPath.AddString(String.c_str(), -1, &FontFamily, NativeFont->GetStyle(), NativeFont->GetSize(),
+			OutRect.ToGdiplusRect(), Format->GetNativeFontFormat());
 		StringPath.GetBounds(&StringRect);
 
 		return static_cast<int>(StringRect.Width + StringRect.X);

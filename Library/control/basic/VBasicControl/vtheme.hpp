@@ -123,6 +123,8 @@ class VTextLabelTheme : public VNativeLabelTheme {
 public:
 	VFontFormat* FontFormat;
 
+	bool         AutoSize;
+
 public:
 	VTextLabelTheme() {
 		TextColor = VColor(255, 255, 255, 119);
@@ -138,6 +140,8 @@ public:
 
 		FontFormat->SetAlignment(VStringAlignment::AlignmentNear);
 		FontFormat->SetLineAlignment(VStringAlignment::AlignmentNear);
+
+		AutoSize = false;
 	}
 
 	short GetThemeType() override {

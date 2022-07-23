@@ -95,6 +95,28 @@ public:
 
 		UpdateObject();
 	}
+
+	void Resize(int Width, int Height) override {
+		if (Theme->AutoSize == false) {
+			VUIObject::Resize(Width, Height);
+		}
+		else {
+			ResizeAsPlaneText();
+		}
+	}
+
+	void SetAutoSize(bool Status) {
+		Theme->AutoSize = Status;
+
+		Update();
+	}
+
+	void ResizeAsPlaneText() {
+		VFont Font(Theme->FontFamily, Theme->FontSize);
+
+		VUIObject::Resize(Font.GetWidth(Theme->PlaneString, Theme->FontFormat, Surface()->Rect), 
+			Font.GetHeight(Theme->PlaneString, Theme->FontFormat, Surface()->Rect));
+	}
 };
 
 VLIB_END_NAMESPACE

@@ -164,7 +164,7 @@ protected:
 
 public:
 	VVMLVPushButtonBuilder(VPushButton* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
-		VVMLContronBuildStatus* BuildStatus) 
+		VVMLContronBuildStatus* BuildStatus)
 		: VVMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
 		AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 	}
@@ -221,7 +221,8 @@ private:
 	}
 
 protected:
-	void Builder(VTextLabel* TextLabel, std::wstring PlaneText, int TextSize, VStringAlignment Alignment, VStringAlignment LineAlignment) {
+	void Builder(VTextLabel* TextLabel, std::wstring PlaneText, int TextSize, VStringAlignment Alignment, VStringAlignment LineAlignment,
+		bool AutoSize) {
 		TextLabel->SetPlaneText(PlaneText);
 
 		if (TextSize != 0) {
@@ -230,6 +231,11 @@ protected:
 
 		TextLabel->SetAlignment(Alignment);
 		TextLabel->SetLineAlignment(LineAlignment);
+
+		if (AutoSize == true) {
+			TextLabel->SetAutoSize(true);
+			TextLabel->ResizeAsPlaneText();
+		}
 	}
 
 	void AnalyzeProperty(VTextLabel* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
@@ -239,7 +245,9 @@ protected:
 		std::wstring     Text;
 		int              TextSize = 0;
 
-		VStringAlignment Alignment     = VStringAlignment::AlignmentNear;
+		bool             AutoSize = true;
+
+		VStringAlignment Alignment = VStringAlignment::AlignmentNear;
 		VStringAlignment LineAlignment = VStringAlignment::AlignmentNear;
 
 		for (auto& ElementProperty : PropertyValueList) {
@@ -283,9 +291,19 @@ protected:
 
 				LineAlignment = ConvertAlignemnt(ElementProperty.second.PropertyAsString);
 			}
+			if (ElementProperty.first == L"AutoSize") {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::BooleanValue) {
+					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
+					BuildStatus->FailedReason = L"\"AutoSize\" Property Must Match the Type \"Boolean\"";
+
+					return;
+				}
+
+				AutoSize = ElementProperty.second.PropertyAsBool;
+			}
 		}
 
-		Builder(Object, Text, TextSize, Alignment, LineAlignment);
+		Builder(Object, Text, TextSize, Alignment, LineAlignment, AutoSize);
 	}
 
 public:
@@ -400,7 +418,7 @@ protected:
 		VVMLContronBuildStatus* BuildStatus) {
 		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
-		VLayoutMode  VerticalLayoutMode   = VLayoutMode::LayoutModeCenter;
+		VLayoutMode  VerticalLayoutMode = VLayoutMode::LayoutModeCenter;
 		VLayoutMode  HorizontalLayoutMode = VLayoutMode::LayoutModeCenter;
 
 		double       VerticalLayoutPercent = 0.f;
@@ -561,9 +579,9 @@ protected:
 
 	void AnalyzeProperty(VMainWindow* Object, std::map<std::wstring, VVMLPropertyValue> PropertyValueList,
 		VVMLContronBuildStatus* BuildStatus) {
-		int          Width  = 0;
+		int          Width = 0;
 		int          Height = 0;
-		
+
 		std::wstring Title;
 
 		bool         Sizble = true;
@@ -600,7 +618,7 @@ protected:
 				Title = ElementProperty.second.PropertyAsString;
 			}
 			if (ElementProperty.first == L"Sizble") {
-				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::BooleanValue) {
 					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
 					BuildStatus->FailedReason = L"\"Sizble\" Property Must Match the Type \"Boolean\"";
 
@@ -654,7 +672,7 @@ public:
 class VVMLPositionAnimationBuilder : public VVMLCommonBuilder {
 protected:
 	void Builder(
-		VPositionAnimation* Animation, 
+		VPositionAnimation* Animation,
 		int                 TargetX,
 		int                 TargetY,
 		int                 Duraction,
@@ -668,9 +686,9 @@ protected:
 		VVMLContronBuildStatus* BuildStatus) {
 		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
-		int               TargetX      = 0;
-		int               TargetY      = 0;
-		int               Duraction    = 0;
+		int               TargetX = 0;
+		int               TargetY = 0;
+		int               Duraction = 0;
 		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
 
 		for (auto& ElementProperty : PropertyValueList) {
@@ -730,7 +748,7 @@ public:
 class VVMLAlphaAnimationBuilder : public VVMLCommonBuilder {
 protected:
 	void Builder(
-		VAlphaAnimation*  Animation,
+		VAlphaAnimation* Animation,
 		int               Alpha,
 		int               Duraction,
 		VInterpolatorType Interpolator) {
@@ -808,9 +826,9 @@ protected:
 		VVMLContronBuildStatus* BuildStatus) {
 		VVMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
-		int               TargetWidth  = 0;
+		int               TargetWidth = 0;
 		int               TargetHeight = 0;
-		int               Duraction    = 0;
+		int               Duraction = 0;
 		VInterpolatorType Interpolator = VInterpolatorType::AccelerateInterpolator;
 
 		for (auto& ElementProperty : PropertyValueList) {

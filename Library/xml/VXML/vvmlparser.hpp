@@ -30,14 +30,14 @@ enum class VVMLPropertyType {
 };
 
 struct VVMLPropertyValue {
-	std::wstring	 PropertyName     = L"";
-								      
-	VVMLPropertyType PropertyType     = VVMLPropertyType::IntValue;
+	std::wstring	 PropertyName = L"";
 
-	int				 PropertyAsInt    = 0;
+	VVMLPropertyType PropertyType = VVMLPropertyType::IntValue;
+
+	int				 PropertyAsInt = 0;
 	std::wstring     PropertyAsString = L"";
 	double           PropertyAsDouble = 0.f;
-	bool             PropertyAsBool   = false;
+	bool             PropertyAsBool = false;
 };
 
 struct VVMLNode {
@@ -85,14 +85,14 @@ private:
 		if (String == L"true") {
 			VVMLPropertyValue Value;
 			Value.PropertyAsBool = true;
-			Value.PropertyType   = VVMLPropertyType::BooleanValue;
+			Value.PropertyType = VVMLPropertyType::BooleanValue;
 
 			return Value;
 		}
 		if (String == L"false") {
 			VVMLPropertyValue Value;
 			Value.PropertyAsBool = false;
-			Value.PropertyType  = VVMLPropertyType::BooleanValue;
+			Value.PropertyType = VVMLPropertyType::BooleanValue;
 
 			return Value;
 		}
@@ -166,7 +166,7 @@ public:
 			break;
 		}
 		default: {
-			ParserLexical    = new seal_lexical(VMLString);
+			ParserLexical = new seal_lexical(VMLString);
 			BaseLine = Line;
 
 			break;
@@ -202,6 +202,8 @@ public:
 
 			Token = ParserLexical->get_token();
 
+			bool BreakTokenTrigger = false;
+
 			// Skip Comment
 			if (Token.token_string == L"!") {
 				bool EndFlag = false;
@@ -210,7 +212,19 @@ public:
 				while (!ParserLexical->is_eof()) {
 					Token = ParserLexical->get_token();
 
-					if (Token.token_string == L">") {
+					if (Token.token_string == L"--") {
+						if (BreakTokenTrigger == false) {
+							BreakTokenTrigger = true;
+
+							continue;
+						}
+
+						Token = ParserLexical->get_token();
+
+						if (Token.token_string != L">") {
+							ThrowError(&ParseResult, L"Unknow Character \"" + Token.token_string + L"\"");
+						}
+
 						EndFlag = true;
 
 						break;
@@ -296,6 +310,9 @@ public:
 				if (Token.token_string == L"<") {
 					Token = ParserLexical->get_token();
 
+					bool BreakTokenTrigger = false;
+
+					// Skip Comment
 					if (Token.token_string == L"!") {
 						bool EndFlag = false;
 
@@ -303,7 +320,19 @@ public:
 						while (!ParserLexical->is_eof()) {
 							Token = ParserLexical->get_token();
 
-							if (Token.token_string == L">") {
+							if (Token.token_string == L"--") {
+								if (BreakTokenTrigger == false) {
+									BreakTokenTrigger = true;
+
+									continue;
+								}
+
+								Token = ParserLexical->get_token();
+
+								if (Token.token_string != L">") {
+									ThrowError(&ParseResult, L"Unknow Character \"" + Token.token_string + L"\"");
+								}
+
 								EndFlag = true;
 
 								break;
