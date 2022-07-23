@@ -27,6 +27,12 @@ public:
 		
 		Device.SolidRoundedRectangle(&Brush, { 0, 0, GetWidth(), GetHeight() }, Theme->Radius);
 	}
+
+	void SetBackgroundColor(VColor Color) {
+		Theme->BackgroundColor = Color;
+
+		Update();
+	}
 };
 
 VLIB_END_NAMESPACE
