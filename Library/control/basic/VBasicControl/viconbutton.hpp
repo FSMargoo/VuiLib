@@ -100,6 +100,10 @@ public:
 		Theme->IconImage = Icon;
 	}
 
+	VImage* GetIcon() const {
+		return Theme->IconImage;
+	}
+
 	void CheckFrame() override {
 		if (BackgroundColor.IsAnimationEnd() == false ||
 			TextColor.IsAnimationEnd() == false ||
@@ -110,6 +114,14 @@ public:
 
 			Update();
 		}
+	}
+
+	void SetTheme(VIconButtonTheme* NewTheme) {
+		delete Theme;
+
+		Theme = new VIconButtonTheme(*Theme);
+
+		Update();
 	}
 };
 

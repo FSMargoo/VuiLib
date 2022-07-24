@@ -11,10 +11,11 @@
 //       @operator    :  Margoo
 //
 
-#include "seal.lexical.token.hpp"
-#include "seal.info.hpp"
-
 #include <string>
+
+namespace SealForVSS {
+#include "vss.seal.lexical.token.hpp"
+#include "vss.seal.info.hpp"
 
 ///////////////////////////////////////////////////////////////
 //   _lexical_info[typedef with seal_lexical_type_info] :
@@ -94,7 +95,7 @@ public:
 		}
 
 		// Init core_info
-		core_info.lexical_token.cache_token = NO_STATUS_TOKEN;
+		core_info.lexical_token.cache_token  = NO_STATUS_TOKEN;
 		core_info.lexical_token.token_string = L"";
 
 		// If it's over
@@ -104,6 +105,8 @@ public:
 
 			return _lexical_info::_lexical_token_type{ EOF_TOKEN, L"" };
 		}
+
+		bool own_dot = false;
 
 		// Traverse string
 		for (; core_info.lexical_index < core_info.lexical_code.size(); ++core_info.lexical_index) {
@@ -283,7 +286,7 @@ public:
 				}
 
 				if (core_info.lexical_code[core_info.lexical_index] == ';') {
-					if (core_info.lexical_token.cache_token != NO_STATUS_TOKEN) {
+					if (core_info.lexical_token.cache_token == NO_STATUS_TOKEN) {
 						core_info.lexical_token.token_string = L";";
 
 						++core_info.lexical_index;
@@ -421,6 +424,18 @@ public:
 			else {
 				// If it is not a token
 				if (core_info.lexical_token.cache_token > COMMENT_TOKEN && core_info.lexical_token.cache_token <= BITWISE_OR_TOKEN) {
+					break;
+				}
+
+				if (core_info.lexical_code[core_info.lexical_index] == L'.' && own_dot == false) {
+					own_dot = true;
+
+					++core_info.lexical_index;
+				}
+
+				if (_MACRO_IS_NUMBER_(core_info.lexical_code[core_info.lexical_index]) == false &&
+					core_info.lexical_token.cache_token == CONST_NUMBER ||
+					(core_info.lexical_code[core_info.lexical_index] == L'.' && own_dot == true)) {
 					break;
 				}
 
@@ -732,3 +747,4 @@ public:
 		return core_info.lexical_line;
 	}
 } seal_lexical;
+}

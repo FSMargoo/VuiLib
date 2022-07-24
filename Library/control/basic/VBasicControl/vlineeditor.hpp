@@ -358,6 +358,12 @@ public:
 	std::wstring GetPlaneString() {
 		return StringBuffer;
 	}
+
+	void SetTheme(VLineEditorTheme* NewTheme) {
+		delete Theme;
+
+		Theme = new VLineEditorTheme(*NewTheme);
+	}
 };
 
 VLIB_END_NAMESPACE

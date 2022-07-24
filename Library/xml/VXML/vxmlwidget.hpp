@@ -17,7 +17,10 @@ VLIB_BEGIN_NAMESPACE
 
 struct VVMLObject {
 	VUIObject* UIObject = nullptr;
+
 	std::wstring VMLID;
+	std::wstring VMLClass;
+	std::wstring VMLDOMID;
 
 	std::vector<VVMLObject*> ChildrenObjects;
 };
@@ -106,10 +109,10 @@ public:
 				ASTError.append(ErrorString.ErrorString + L"At Line (" + std::to_wstring(ErrorString.Line) + L")\n");
 			}
 
-			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree\nAST Error : \n" + ASTError };
+			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Received an Invalid Ast Tree\nAST Error : \n" + ASTError };
 		}
 		if (VMLAstTree.ParserStatus == VVMLParserStatus::Failed) {
-			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Recived an Invalid Ast Tree\nAST Error : " + VMLAstTree.ErrorInfo[0].ErrorString	};
+			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Received an Invalid Ast Tree\nAST Error : " + VMLAstTree.ErrorInfo[0].ErrorString	};
 		}
 
 
@@ -158,7 +161,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VImageLabel") {
+					else if (ElementProperty.PropertyAsString == L"VImageLabel") {
 						VImageLabel* ImageLabel = new VImageLabel(nullptr, UIParent);
 						VMLObject->UIObject = ImageLabel;
 
@@ -172,7 +175,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VTextLabel") {
+					else if (ElementProperty.PropertyAsString == L"VTextLabel") {
 						VTextLabel* TextLabel = new VTextLabel(UIParent, L"");
 						VMLObject->UIObject = TextLabel;
 
@@ -186,7 +189,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VBlurLabel") {
+					else if (ElementProperty.PropertyAsString == L"VBlurLabel") {
 						VBlurLabel* BlurLabel = new VBlurLabel(UIParent);
 						VMLObject->UIObject = BlurLabel;
 
@@ -200,7 +203,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VIconButton") {
+					else if (ElementProperty.PropertyAsString == L"VIconButton") {
 						VIconButton* IconButton = new VIconButton(UIParent);
 						VMLObject->UIObject = IconButton;
 
@@ -214,7 +217,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VLineEditor") {
+					else if (ElementProperty.PropertyAsString == L"VLineEditor") {
 						VLineEditor* LineEditor = new VLineEditor(UIParent);
 						VMLObject->UIObject = LineEditor;
 
@@ -228,8 +231,15 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VLayout") {
-						VLayout* Layout = new VLayout(UIParent, this);
+					else if (ElementProperty.PropertyAsString == L"VLayout") {
+						VLayout* Layout;
+						if (UIParent->GetParent()->IsWidget() == false) {
+							Layout = new VLayout(UIParent, UIParent->GetParent());
+						}
+						else {
+							Layout = new VLayout(UIParent, this);
+						}
+
 						VMLObject->UIObject = Layout;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -242,7 +252,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VPositionAnimation") {
+					else if (ElementProperty.PropertyAsString == L"VPositionAnimation") {
 						VPositionAnimation* Animation = new VPositionAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
 						VMLObject->UIObject = Animation;
 
@@ -256,8 +266,8 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VGeomteryAnimation") {
-						VGeomteryAnimation* Animation = new VGeomteryAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
+					else if (ElementProperty.PropertyAsString == L"VGeomteryAnimation") {
+					VGeomteryAnimation* Animation = new VGeomteryAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
 						VMLObject->UIObject = Animation;
 
 						VVMLContronBuildStatus       BuildStatus;
@@ -270,7 +280,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VAlphaAnimation") {
+					else if (ElementProperty.PropertyAsString == L"VAlphaAnimation") {
 						VAlphaAnimation* Animation = new VAlphaAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
 						VMLObject->UIObject = Animation;
 
@@ -284,7 +294,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VMainWindow") {
+					else if (ElementProperty.PropertyAsString == L"VMainWindow") {
 						VMLObject->UIObject = this;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -297,7 +307,7 @@ public:
 							return Result;
 						}
 					}
-					if (ElementProperty.PropertyAsString == L"VViewLabel") {
+					else if (ElementProperty.PropertyAsString == L"VViewLabel") {
 						VViewLabel* ViewLabel = new VViewLabel(0, 0, UIParent);
 						VMLObject->UIObject = ViewLabel;
 
@@ -310,6 +320,11 @@ public:
 
 							return Result;
 						}
+					}
+					else {
+						delete VMLObject;
+
+						return { VVMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.NodeTag + L"\" Dont Owns an Valid Type" };
 					}
 				}
 				else {
@@ -324,19 +339,37 @@ public:
 				for (auto& ChildObject : ChildList->Objects) {
 					VMLObject->ChildrenObjects.push_back(ChildObject);
 				}
-				if (ObjectCacheList != nullptr) {
-					ObjectCacheList->Objects.push_back(VMLObject);
-				}
+			}
+			if (Element.PropertyExsit(L"Id")) {
+				VVMLPropertyValue ElementId = Element.GetProperty(L"Id");
 
+				if (ElementId.PropertyType == VVMLPropertyType::StringValue) {
+					VMLObject->VMLDOMID = ElementId.PropertyAsString;
+				}
 				else {
-					ObjectList.push_back(VMLObject);
-				}
+					delete VMLObject;
 
+					return { VVMLWidgetVMLLoadStats::Failed, L"Id Must Use String Value" };
+				}
+			}
+			if (Element.PropertyExsit(L"Class")) {
+				VVMLPropertyValue ElementId = Element.GetProperty(L"Class");
+
+				if (ElementId.PropertyType == VVMLPropertyType::StringValue) {
+					VMLObject->VMLClass = ElementId.PropertyAsString;
+				}
+				else {
+					delete VMLObject;
+
+					return { VVMLWidgetVMLLoadStats::Failed, L"Class Must Use String Value" };
+				}
+			}
+
+			if (ObjectCacheList != nullptr) {
+				ObjectCacheList->Objects.push_back(VMLObject);
 			}
 			else {
-				delete VMLObject;
-
-				return { VVMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.NodeTag + L"\" Dont Owns an Valid Type" };
+				ObjectList.push_back(VMLObject);
 			}
 		}
 

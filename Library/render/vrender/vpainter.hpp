@@ -144,9 +144,9 @@ public:
 		NativeGraphics->FillPath(Brush->GetNativeBrush(), &FillRectanglePath);
 	}
 	void FillRoundedRectangle(VPen* Pen, VBasicBrush* Brush, VRect  Rect, VPoint Radius) {
-		SolidRoundedRectangle(Brush, Rect, Radius);
+		Rect.Offset(Pen->GetThinkness(), Pen->GetThinkness(), -Pen->GetThinkness(), -Pen->GetThinkness());
 
-		Rect.Offset(1, 1, -1, -1);
+		SolidRoundedRectangle(Brush, Rect, Radius);
 
 		DrawRoundedRectangle(Pen, Rect, Radius);
 	}

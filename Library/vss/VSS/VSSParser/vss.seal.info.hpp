@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef SEAL_LEXICAL_BASIC
-#define SEAL_LEXICAL_BASIC
-
 /////////////////////////////////////////////////////////////////////////////
 //         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-lang.org)
 //  
@@ -35,5 +32,3 @@
 		&& !(object >= '0' && object <= '9') && object != '_' && object != '-')
 #define _MACRO_IS_NUMBER_(object) \
 		(object >= '0' && object <= '9')
-
-#endif

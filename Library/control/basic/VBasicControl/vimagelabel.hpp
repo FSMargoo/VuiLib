@@ -14,7 +14,19 @@ VLIB_BEGIN_NAMESPACE
  *	@description  : A Label Show a Image
 */
 class VImageLabel : public VUIObject {
-public:
+private:
+	VImage* ZoomedImage = nullptr;
+
+	VImage* ResizeImage(int Width, int Height) {
+		VImage* Image = new VImage(Width, Height);
+
+		VPainterDevice Device(Image);
+		Device.DrawImage(Theme->Image, { 0, 0, Width, Height });
+
+		return Image;
+	}
+
+private:
 	VImageLabelTheme* Theme;
 
 public:
@@ -26,10 +38,39 @@ public:
 
 	void OnPaint(VCanvas* Canvas) override {
 		if (Theme->Image != nullptr) {
-			VPainterDevice Device(Canvas);
+			if (Theme->ImageRepeat == true) {
+				VPainterDevice Device(Canvas);
+				VTextureBrush  Brush(Theme->Image);
+				VSolidBrush    DbgBrush(VColor(255, 255, 255));
 
-			Device.DrawImage(Theme->Image, { 0, 0, GetWidth(), GetHeight() });
+				Brush.SetWrapStyle(VTextureWrapStyle::Tile);
+
+				Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+			}
+			else {
+				if (ZoomedImage == nullptr) {
+					ZoomedImage = Theme->Image;
+				}
+				if (ZoomedImage->GetWidth()  != Surface()->Rect.GetWidth() &&
+					ZoomedImage->GetHeight() != Surface()->Rect.GetHeight()) {
+					if (ZoomedImage != Theme->Image) {
+						delete ZoomedImage;
+					}
+
+					ZoomedImage = ResizeImage(Surface()->Rect.GetWidth(), Surface()->Rect.GetHeight());
+				}
+
+				VPainterDevice Device(Canvas);
+				VTextureBrush  Brush(ZoomedImage);
+				VSolidBrush    DbgBrush(VColor(255, 255, 255));
+
+				Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+			}
 		}
+	}
+
+	VImage* GetImage() const {
+		return Theme->Image;
 	}
 
 	/*
@@ -40,6 +81,20 @@ public:
 		Theme->Image = Image;
 
 		UpdateObject();
+	}
+
+	void SetRadius(VPoint Radius) {
+		Theme->Radius = Radius;
+
+		Update();
+	}
+
+	void SetTheme(VImageLabelTheme* NewTheme) {
+		delete Theme;
+
+		Theme = new VImageLabelTheme(*NewTheme);
+
+		Update();
 	}
 };
 

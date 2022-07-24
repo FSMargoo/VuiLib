@@ -8,6 +8,8 @@
 #undef  WINVER
 #define WINVER 0x550
 
+#pragma warning(disable : 26415)
+
 #include <graphics.h>
 
 /* #ifndef _WIN64

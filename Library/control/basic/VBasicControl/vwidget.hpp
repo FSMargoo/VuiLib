@@ -330,7 +330,7 @@ protected:
 
 					ChildObject = Kernel()->ChildObjectContainer.begin();
 
-					ObjectCount = 0;
+					ObjectCount = -1;
 					
 					continue;
 				}

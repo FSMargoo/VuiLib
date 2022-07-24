@@ -33,6 +33,12 @@ public:
 
 		Update();
 	}
+
+	void SetTheme(VViewLabelTheme* NewTheme) {
+		delete Theme;
+
+		Theme = new VViewLabelTheme(*NewTheme);
+	}
 };
 
 VLIB_END_NAMESPACE

@@ -94,28 +94,32 @@ public:
 
 class VNativeLabelTheme : public VTheme {
 public:
-	VColor BackgroundColor;
-	VColor LineColor;
-	VColor TextColor;
+	VColor    BackgroundColor;
+	VColor    LineColor;
+	VColor    TextColor;
 
-	VImage* BackgroundImage;
+	VPenStyle BorderStyle;
 
-	VPoint Radius;
+	VImage*   BackgroundImage;
+
+	VPoint    Radius;
 	VFontFamily*
-		FontFamily = nullptr;
+		      FontFamily = nullptr;
 
-	int    FontSize = 0;
-
-	int    BorderThinkness;
+	int       FontSize = 0;
+		      
+	int       BorderThinkness;
 
 	std::wstring
-		PlaneString;
+		      PlaneString;
 
 public:
 	VNativeLabelTheme() {
 		BackgroundImage = nullptr;
 
-		BorderThinkness = 2;
+		BorderThinkness = 1;
+
+		BorderStyle     = VPenStyle::SolidStyle;
 	}
 };
 
@@ -339,6 +343,7 @@ class VImageLabelTheme : public VTheme {
 public:
 	VImage* Image;
 	VPoint  Radius;
+	bool    ImageRepeat = false;
 
 public:
 	VImageLabelTheme() {

@@ -199,7 +199,7 @@ public:
 
 			// If the Begin of the Code Isn't '<' That Certain Error
 			if (Token.cache_token != LESS_THAN_TOKEN) {
-				ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"0");
+				ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
 
 				break;
 			}

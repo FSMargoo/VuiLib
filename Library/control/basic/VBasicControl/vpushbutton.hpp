@@ -17,7 +17,7 @@ VLIB_BEGIN_NAMESPACE
 */
 class VPushButton : public VAbstractButton {
 private:
-	VPushButtonTheme* Theme;
+	VPushButtonTheme*  Theme;
 
 	VColorInterpolator TextColor;
 	VColorInterpolator BackgroundColor;
@@ -44,7 +44,7 @@ public:
 	 * OnPaint override Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
-		VPen        BorderPen(Theme->CurrentLineColor);
+		VPen        BorderPen(Theme->CurrentLineColor, Theme->BorderThinkness);
 		VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
 		VSolidBrush PenBrush(Theme->CurrentTextColor);
 		VFont       Font(Theme->FontFamily, Theme->FontSize);
@@ -54,6 +54,8 @@ public:
 		FontFormat.SetLineAlignment(VStringAlignment::AlignmentCenter);
 
 		VPainterDevice Device(Canvas);
+
+		BorderPen.SetStyle(Theme->BorderStyle);
 
 		Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
 		Device.DrawString(Theme->PlaneString, &Font, &PenBrush, &FontFormat, GetSourceRect());
@@ -110,6 +112,18 @@ public:
 
 			Update();
 		}
+	}
+
+	std::wstring GetPlaneText() const {
+		return Theme->PlaneString;
+	}
+
+public:
+	void SetTheme(VPushButtonTheme* NewTheme) {
+		delete Theme;
+		Theme = new VPushButtonTheme(*NewTheme);
+
+		Update();
 	}
 };
 

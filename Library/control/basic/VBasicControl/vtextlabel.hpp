@@ -35,12 +35,14 @@ public:
 	 *	@description  : Paint Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
-		VPen        BorderPen(Theme->LineColor);
+		VPen        BorderPen(Theme->LineColor, Theme->BorderThinkness);
 		VSolidBrush FillBrush(Theme->BackgroundColor);
 		VSolidBrush PenBrush(Theme->TextColor);
 		VFont       Font(Theme->FontFamily, Theme->FontSize);
 
 		VPainterDevice Device(Canvas);
+
+		BorderPen.SetStyle(Theme->BorderStyle);
 
 		Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
 		Device.DrawString(Theme->PlaneString, &Font, &PenBrush, Theme->FontFormat, GetSourceRect());
@@ -56,6 +58,9 @@ public:
 		UpdateObject();
 	}
 
+	std::wstring GetPlaneText() const {
+		return Theme->PlaneString;
+	}
 
 	void SetLineAlignment(VStringAlignment Alignment) {
 		Theme->FontFormat->SetLineAlignment(Alignment);
@@ -116,6 +121,13 @@ public:
 
 		VUIObject::Resize(Font.GetWidth(Theme->PlaneString, Theme->FontFormat, Surface()->Rect), 
 			Font.GetHeight(Theme->PlaneString, Theme->FontFormat, Surface()->Rect));
+	}
+
+	void SetTheme(VTextLabelTheme* NewTheme) {
+		delete Theme;
+		Theme = new VTextLabelTheme(*NewTheme);
+
+		Update();
 	}
 };
 

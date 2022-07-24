@@ -54,6 +54,12 @@ public:
 
 		UpdateObject();
 	}
+
+	void SetTheme(VBlurLabelTheme* NewTheme) {
+		delete Theme;
+
+		Theme = new VBlurLabelTheme(*NewTheme);
+	}
 };
 
 VLIB_END_NAMESPACE
