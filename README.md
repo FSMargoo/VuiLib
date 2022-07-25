@@ -25,6 +25,7 @@
 ![Capture-3Gif](./VisualCapture/Capture-3.gif)
 ![Capture-4](./VisualCapture/Capture-4.png)
 ![Capture-5](./VisualCapture/SkinChange.gif)
+![Capture-6](./VisualCapture/UIDesgin.gif)
 ## Support - 支持
 可在 GitHub 中提交 issues 来取得支持和帮助
 ## Demo - 实例程序
