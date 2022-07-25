@@ -15,7 +15,8 @@
 * 可用于写些打发时间的小程序。
 * 自带一个美观的 UI 样式。
 * 自带一个信号槽系统，整个 UI 由事件驱动。
-* 可使用 VML 构建界面，实现前后端分离
+* 可使用 VML 构建界面，实现前后端分离。
+* 若对原样式不满意，可以使用 VSS 来自定义主题和控件样式，实现一键切换软件皮肤等操作。
 ## VML Helper - VML 语言帮助
 详见目录下 VMLanguageHelper.md
 ## Visuals - 视觉效果
@@ -23,6 +24,7 @@
 ![Capture-2](./VisualCapture/Capture-2.png)
 ![Capture-3Gif](./VisualCapture/Capture-3.gif)
 ![Capture-4](./VisualCapture/Capture-4.png)
+![Capture-5](./VisualCapture/SkinChange.gif)
 ## Support - 支持
 可在 GitHub 中提交 issues 来取得支持和帮助
 ## Demo - 实例程序
