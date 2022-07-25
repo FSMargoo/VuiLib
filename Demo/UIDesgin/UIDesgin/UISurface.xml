@@ -1,0 +1,27 @@
+<MainWindow Type="VMainWindow" Width="510" Height="765" Sizble="false" Title="UIDesgin Demo" StyleSheetFile="./UITheme.css">
+    <OriginImage Type="VImageLabel" Width="510" Height="765" ImagePath="./Src/Origin.png">
+    </OriginImage>
+    <BlurImage Type="VImageLabel" Width="510" Height="765" ImagePath="./Src/Blur.png" Transparency="0">
+        <AlphaAnimation Type="VAlphaAnimation" Duraction="200" TargetAlpha="255" Interpolator="AccelerateInterpolator">
+        </AlphaAnimation>
+    </BlurImage>
+    <MessageViewlabel Type="VViewLabel" Width="320" Height="185" Transparency="0" Class="message-box"
+                      X="95" Y="290">
+        <AlphaAnimation Type="VAlphaAnimation" Duraction="200" TargetAlpha="255" Interpolator="AccelerateInterpolator">
+        </AlphaAnimation>
+
+        <MessageTitle Type="VTextLabel" AutoSize="false" Width="120" Height="27" Class="message-title" 
+                      Text="消息" X="23" Y="20">
+        </MessageTitle>
+        <MessageDescription Type="VTextLabel" AutoSize="false" Width="273" Height="60" Class="message-descrpition"
+                      Text="这是一个使用 VuiLib 做成的动效设计" X="29" Y="71">
+        </MessageDescription>
+
+        <ContinueButton Type="VPushButton" Width="160" Height="59" X="0" Y="126" Class="select-button"
+                        Text="再次播放">
+        </ContinueButton>
+        <ExitButton Type="VPushButton" Width="160" Height="59" X="160" Y="126" Class="select-button"
+                        Text="退出程序">
+        </ExitButton>
+    </MessageViewlabel>
+</MainWindow>
