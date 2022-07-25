@@ -129,6 +129,9 @@ public:
 
 		Update();
 	}
+	VTextLabelTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE

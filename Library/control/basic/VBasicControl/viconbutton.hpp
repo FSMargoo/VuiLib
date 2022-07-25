@@ -123,6 +123,9 @@ public:
 
 		Update();
 	}
+	VIconButtonTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE

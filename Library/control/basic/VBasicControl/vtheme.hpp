@@ -114,6 +114,26 @@ public:
 		      PlaneString;
 
 public:
+	VNativeLabelTheme(VNativeLabelTheme& Theme) {
+		BackgroundColor = Theme.BackgroundColor;
+		LineColor       = Theme.BackgroundColor;
+		TextColor       = Theme.TextColor;
+
+		if (Theme.BackgroundImage != nullptr) {
+			BackgroundImage = new VImage(*Theme.BackgroundImage);
+		}
+		else {
+			BackgroundImage = nullptr;
+		}
+
+		Radius			= Theme.Radius;
+		FontSize        = Theme.FontSize;
+		BorderThinkness = Theme.BorderThinkness;
+		PlaneString     = Theme.PlaneString;
+		FontFamily		= new VFontFamily(*Theme.FontFamily);
+	}
+
+public:
 	VNativeLabelTheme() {
 		BackgroundImage = nullptr;
 
@@ -130,6 +150,14 @@ public:
 	bool         AutoSize;
 
 public:
+	VTextLabelTheme(VTextLabelTheme& Theme) :
+		VNativeLabelTheme(Theme) {
+		AutoSize   = Theme.AutoSize;
+		FontFormat = new VFontFormat(*Theme.FontFormat);
+
+		FontFormat->SetAlignment(Theme.FontFormat->GetAlignment());
+		FontFormat->SetLineAlignment(Theme.FontFormat->GetLineAlignment());
+	}
 	VTextLabelTheme() {
 		TextColor = VColor(255, 255, 255, 119);
 		BackgroundColor = VColor(0, 0, 0, 0);

@@ -212,6 +212,22 @@ public:
 		/* Exit Not Normaly */
 		return -1;
 	}
+
+public:
+	void SetTheme(VTheme* Theme) {
+		for (int Count = 0; Count < ThemeList.size(); ++Count) {
+			if (ThemeList[Count]->GetThemeType() == Theme->GetThemeType()) {
+				ThemeList.erase(ThemeList.begin() + Count);
+				ThemeList.insert(ThemeList.begin() + Count, Theme);
+
+				for (auto& Objects : Kernel()->ChildObjectContainer) {
+					Objects->Update();
+				}
+
+				break;
+			}
+		}
+	}
 };
 
 VLIB_END_NAMESPACE

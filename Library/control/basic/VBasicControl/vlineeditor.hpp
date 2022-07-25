@@ -359,10 +359,14 @@ public:
 		return StringBuffer;
 	}
 
+public:
 	void SetTheme(VLineEditorTheme* NewTheme) {
 		delete Theme;
 
 		Theme = new VLineEditorTheme(*NewTheme);
+	}
+	VLineEditorTheme* GetTheme() {
+		return Theme;
 	}
 };
 

@@ -459,7 +459,7 @@ protected:
 					return;
 				}
 
-				RelativeX = ElementProperty.second.PropertyAsDouble;
+				RelativeX = ElementProperty.second.PropertyAsInt;
 			}
 			if (ElementProperty.first == L"RelativeY") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
@@ -469,7 +469,7 @@ protected:
 					return;
 				}
 
-				RelativeY = ElementProperty.second.PropertyAsDouble;
+				RelativeY = ElementProperty.second.PropertyAsInt;
 			}
 			if (ElementProperty.first == L"XMiddleOffset") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
@@ -479,7 +479,7 @@ protected:
 					return;
 				}
 
-				XMiddleOffset = ElementProperty.second.PropertyAsDouble;
+				XMiddleOffset = ElementProperty.second.PropertyAsInt;
 			}
 			if (ElementProperty.first == L"YMiddleOffset") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
@@ -489,7 +489,7 @@ protected:
 					return;
 				}
 
-				YMiddleOffset = ElementProperty.second.PropertyAsDouble;
+				YMiddleOffset = ElementProperty.second.PropertyAsInt;
 			}
 			if (ElementProperty.first == L"VerticalLayoutMode") {
 				if (ElementProperty.second.PropertyType != VVMLPropertyType::StringValue) {

@@ -65,9 +65,6 @@ public:
 	}
 	void FillRectangle(VPen* Pen, VBasicBrush* Brush, VRect  Rect) {
 		NativeGraphics->FillRectangle(Brush->GetNativeBrush(), Rect.ToGdiplusRect());
-
-		Rect.Offset(1, 1, -1, -1);
-
 		NativeGraphics->DrawRectangle(Pen->GetNativePen(), Rect.ToGdiplusRect());
 	}
 	void SolidRectangle(VBasicBrush* Brush, VRect        Rect) {
@@ -79,9 +76,6 @@ public:
 	}
 	void FillEllipse(VPen* Pen, VBasicBrush* Brush, VRect  Rect) {
 		NativeGraphics->FillEllipse(Brush->GetNativeBrush(), Rect.ToGdiplusRect());
-
-		Rect.Offset(1, 1, -1, -1);
-
 		NativeGraphics->DrawEllipse(Pen->GetNativePen(), Rect.ToGdiplusRect());
 	}
 	void SolidEllipse(VBasicBrush* Brush, VRect        Rect) {

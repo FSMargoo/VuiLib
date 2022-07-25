@@ -28,6 +28,9 @@ public:
 	}
 
 public:
+	VFontFamily(const VFontFamily& Family) {
+		NativeFamily.reset(Family.NativeFamily->Clone());
+	}
 	VFontFamily(std::wstring FontName) {
 		NativeFamily.reset(new VGdiplus::FontFamily(FontName.c_str()));
 	}
@@ -42,7 +45,7 @@ public:
 
 /*
  * VStringAlignment enum class:
- *	@description  : The String Alignemnt
+ *	@description  : The String Alignment
 */
 enum class VStringAlignment {
 	AlignmentNear, AlignmentCenter, AlignmentFar
@@ -105,6 +108,9 @@ private:
 public:
 	VFontFormat() {
 		NativeFormat.reset(new VGdiplus::StringFormat());
+	}
+	VFontFormat(VFontFormat& Format) {
+		NativeFormat.reset(Format.NativeFormat->Clone());
 	}
 
 public:

@@ -60,6 +60,9 @@ public:
 
 		Theme = new VBlurLabelTheme(*NewTheme);
 	}
+	VBlurLabelTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE

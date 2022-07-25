@@ -1,0 +1,34 @@
+<!--                    LayoutUI.xml                         -->
+<!-- 本 Demo 演示 VLib 中使用 VSS 和 VML 来构建一个一键换肤界面 -->
+
+<!-- 定义主窗口，并引入样式表 -->
+<MainWindow Type="VMainWindow" Width="640" Height="480" Title="一键换肤演示"
+            StyleSheetFile="./UI/LayoutSurfaceWhite.css" Sizble="false">
+    <TitleText Type="VTextLabel" Width="120" Height="24" AutoSize="false" Text="白色主题">
+        <Layout Type="VLayout" RelativeY="36" VerticalLayoutMode="RelativeTop">
+        </Layout>
+    </TitleText>
+    <PushButtonDemo Type="VPushButton" Width="241" Height="58" Text="白色主题的按钮">
+        <Layout Type="VLayout" RelativeY="121" VerticalLayoutMode="RelativeTop">
+        </Layout>
+    </PushButtonDemo>
+    <PlaneTextDemo Type="VTextLabel" Width="180" Height="28" Text="白色主题的文本框">
+        <Layout Type="VLayout" RelativeY="196" VerticalLayoutMode="RelativeTop">
+        </Layout>
+    </PlaneTextDemo>
+    <LineEditorDemo Type="VLineEditor" Width="241" Height="58">
+        <Layout Type="VLayout" RelativeY="239" VerticalLayoutMode="RelativeTop">
+        </Layout>
+    </LineEditorDemo>
+    <MethionText Type="VTextLabel" Width="240" Height="58" Text="↑ 黑色主题的输入框">
+        <Layout Type="VLayout" RelativeY="316" VerticalLayoutMode="RelativeTop">
+        </Layout>
+    </MethionText>
+
+    <BlackThemeButton Type="VPushButton" Width="241" Height="58"
+        Class = "black-switch-button" X="64" Y="380" Text="黑色主题">
+    </BlackThemeButton>
+    <WhiteThemeButton Type="VPushButton" Width="241" Height="58"
+        Class = "white-switch-button" X="342" Y="380" Text="白色主题">
+    </WhiteThemeButton>
+</MainWindow>

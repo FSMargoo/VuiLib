@@ -1,0 +1,106 @@
+/*
+ * LayoutSurfaceWhite.css
+ *   白色主题的 VSS 实现
+*/
+
+/*
+ * 代表白色主题的按钮
+*/
+.white-switch-button {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+}
+.white-switch-button:hover {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+}
+.white-switch-button:active {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+}
+/*
+ * 代表黑色主题的按钮
+*/
+.black-switch-button {
+    background-color: rgb(57, 57, 57); /* 背景色 */
+    border-color: rgb(112, 112, 112);  /* 边框色 */
+    border-radius: 0px;                  /* 无圆角 */
+}
+.black-switch-button:hover {
+    background-color: rgb(57, 57, 57); /* 背景色 */
+    border-color: rgb(112, 112, 112);  /* 边框色 */
+    border-radius: 0px;                  /* 无圆角 */
+}
+.black-switch-button:active {
+    background-color: rgb(57, 57, 57); /* 背景色 */
+    border-color: rgb(112, 112, 112);  /* 边框色 */
+    border-radius: 0px;                  /* 无圆角 */
+}
+
+/*
+ * 白色主题具体实现
+*/
+
+/*
+ * 按钮控件实现
+*/
+vpushbutton {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+    text-size: 18px;                        /* 文字大小 */
+}
+vpushbutton:hover {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+}
+vpushbutton:active {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+}
+
+/*
+ * 输入框控件实现 (其实和 pushbutton 也差不多)
+*/
+vlineeditor {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+    text-size: 18px;                        /* 文字大小 */
+    text-color: rgb(0, 0, 0);             /* 输入文字大小 */
+    cursor-color: rgb(0, 0, 0);           /* 光标颜色 */
+}
+vlineeditor:hover {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+    text-color: rgb(0, 0, 0);             /* 输入文字大小 */
+}
+vlineeditor:active {
+    background-color: rgb(255, 255, 255); /* 背景色 */
+    border-color: rgb(64, 64, 64);        /* 边框色 */
+    border-radius: 0px;                     /* 无圆角 */
+    text-color: rgb(0, 0, 0);             /* 输入文字大小 */
+}
+
+/*
+ * 文本框的样式实现
+*/
+vtextlabel {
+    text-align:      center;
+    text-line-align: center;
+
+    text-color: rgb(45, 45, 45);
+}
+
+/*
+ * 设定窗口背景色
+*/
+vmainwindow {
+    background-color: #ffffff;
+}

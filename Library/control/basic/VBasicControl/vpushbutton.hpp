@@ -125,6 +125,9 @@ public:
 
 		Update();
 	}
+	VPushButtonTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE

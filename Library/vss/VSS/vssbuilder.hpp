@@ -13,10 +13,12 @@ VLIB_BEGIN_NAMESPACE
 class VVSSVPushButtonBuilder {
 private:
 	void BuildVSSObject(VPushButton* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VPushButtonTheme* Theme = new VPushButtonTheme;
+		std::vector<VVSSBasicSelector*> SelectorSet, VPushButtonTheme* PushButtonTheme) {
+		VPushButtonTheme* Theme = PushButtonTheme;
 
-		Theme->PlaneString = TargetControl->GetPlaneText();
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -139,12 +141,12 @@ private:
 			}
 			if (Selector->GetType() == VVSSSelectorType::FakeClassSelector &&
 				static_cast<VVSSFakeClassSelector*>(Selector)->ElementTag == L"vpushbutton" &&
-				static_cast<VVSSFakeClassSelector*>(Selector)->ClassTag   == L"hover") {
+				static_cast<VVSSFakeClassSelector*>(Selector)->ClassTag == L"hover") {
 				for (auto& Property : Selector->SelectorProperty) {
 					if (Property.first == L"border-color") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
-								Theme->OnHoverLineColor        = PropertyValue.PropertyAsColorValue;
+								Theme->OnHoverLineColor = PropertyValue.PropertyAsColorValue;
 							}
 						}
 					}
@@ -158,7 +160,7 @@ private:
 					if (Property.first == L"background-color") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
-								Theme->OnHoverBackgroundColor    = PropertyValue.PropertyAsColorValue;
+								Theme->OnHoverBackgroundColor = PropertyValue.PropertyAsColorValue;
 							}
 						}
 					}
@@ -193,24 +195,24 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVPushButtonBuilder(VPushButton* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+		std::vector<VVSSBasicSelector*> SelectorSet, VPushButtonTheme* PushButtonTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, PushButtonTheme);
 	}
 };
 class VVSSVTextLabelBuilder {
 private:
 	void BuildVSSObject(VTextLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VTextLabelTheme* Theme = new VTextLabelTheme;
+		std::vector<VVSSBasicSelector*> SelectorSet, VTextLabelTheme* TextLabelTheme) {
+		VTextLabelTheme* Theme = TextLabelTheme;
 
-		Theme->PlaneString = TargetControl->GetPlaneText();
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -359,24 +361,23 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVTextLabelBuilder(VTextLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+		std::vector<VVSSBasicSelector*> SelectorSet, VTextLabelTheme* Theme) {
+		BuildVSSObject(TargetControl, SelectorSet, Theme);
 	}
 };
 class VVSSVImageLabelBuilder {
 private:
 	void BuildVSSObject(VImageLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VImageLabelTheme* Theme = new VImageLabelTheme;
-
-		Theme->Image = TargetControl->GetImage();
+		std::vector<VVSSBasicSelector*> SelectorSet, VImageLabelTheme* ImageLabelTheme) {
+		VImageLabelTheme* Theme = ImageLabelTheme;
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -407,22 +408,23 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVImageLabelBuilder(VImageLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+		std::vector<VVSSBasicSelector*> SelectorSet, VImageLabelTheme* ImageLabelTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, ImageLabelTheme);
 	}
 };
-class VVSSBlurLabelBuilder {
+class VVSSVBlurLabelBuilder {
 private:
 	void BuildVSSObject(VBlurLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VBlurLabelTheme* Theme = new VBlurLabelTheme;
+		std::vector<VVSSBasicSelector*> SelectorSet, VBlurLabelTheme* BlurLabelTheme) {
+		VBlurLabelTheme* Theme = BlurLabelTheme;
+		if (Theme != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -460,24 +462,23 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
-	VVSSBlurLabelBuilder(VBlurLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+	VVSSVBlurLabelBuilder(VBlurLabel* TargetControl,
+		std::vector<VVSSBasicSelector*> SelectorSet, VBlurLabelTheme* BlurLabelTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, BlurLabelTheme);
 	}
 };
 class VVSSVIconButtonBuilder {
 private:
 	void BuildVSSObject(VIconButton* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VIconButtonTheme* Theme = new VIconButtonTheme;
-
-		Theme->IconImage = TargetControl->GetIcon();
+		std::vector<VVSSBasicSelector*> SelectorSet, VIconButtonTheme* IconButtonTheme) {
+		VIconButtonTheme* Theme = IconButtonTheme;
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -614,22 +615,23 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVIconButtonBuilder(VIconButton* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+		std::vector<VVSSBasicSelector*> SelectorSet, VIconButtonTheme* IconButtonTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, IconButtonTheme);
 	}
 };
 class VVSSVViewLabelBuilder {
 private:
 	void BuildVSSObject(VViewLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VViewLabelTheme* Theme = new VViewLabelTheme;
+		std::vector<VVSSBasicSelector*> SelectorSet, VViewLabelTheme* ViewLabelTheme) {
+		VViewLabelTheme* Theme = ViewLabelTheme;
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -660,22 +662,23 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVViewLabelBuilder(VViewLabel* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		BuildVSSObject(TargetControl, SelectorSet);
+		std::vector<VVSSBasicSelector*> SelectorSet, VViewLabelTheme* ViewLabelTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, ViewLabelTheme);
 	}
 };
 class VVSSVLineEditorBuilder {
 private:
 	void BuildVSSObject(VLineEditor* TargetControl,
-		std::vector<VVSSBasicSelector*> SelectorSet) {
-		VLineEditorTheme* Theme = new VLineEditorTheme;
+		std::vector<VVSSBasicSelector*> SelectorSet, VLineEditorTheme* LineEditorTheme) {
+		VLineEditorTheme* Theme = LineEditorTheme;
+		if (TargetControl != nullptr) {
+			Theme = TargetControl->GetTheme();
+		}
 
 		for (auto& Selector : SelectorSet) {
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
@@ -714,6 +717,13 @@ private:
 							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
 								Theme->LineColor = PropertyValue.PropertyAsColorValue;
 								Theme->CurrentLineColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"cursor-color") {
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->CursorColor = PropertyValue.PropertyAsColorValue;
 							}
 						}
 					}
@@ -838,17 +848,40 @@ private:
 			}
 		}
 
-		TargetControl->SetTheme(Theme);
-
-		delete Theme;
+		if (TargetControl != nullptr) { TargetControl->Update(); }
 	}
 
 public:
 	VVSSVLineEditorBuilder(VLineEditor* TargetControl,
+		std::vector<VVSSBasicSelector*> SelectorSet, VLineEditorTheme* LineEditorTheme) {
+		BuildVSSObject(TargetControl, SelectorSet, LineEditorTheme);
+	}
+};
+class VVSSVMainWindowBuilder {
+private:
+	void BuildVSSObject(VMainWindow* TargetControl,
+		std::vector<VVSSBasicSelector*> SelectorSet) {
+		for (auto& Selector : SelectorSet) {
+			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
+				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vmainwindow") {
+				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"background-color") {
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								TargetControl->SetBackgroundColor(PropertyValue.PropertyAsColorValue);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+public:
+	VVSSVMainWindowBuilder(VMainWindow* TargetControl,
 		std::vector<VVSSBasicSelector*> SelectorSet) {
 		BuildVSSObject(TargetControl, SelectorSet);
 	}
-
 };
 
 VLIB_END_NAMESPACE

@@ -39,6 +39,10 @@ public:
 
 		Theme = new VViewLabelTheme(*NewTheme);
 	}
+
+	VViewLabelTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE

@@ -96,6 +96,10 @@ public:
 
 		Update();
 	}
+
+	VImageLabelTheme* GetTheme() {
+		return Theme;
+	}
 };
 
 VLIB_END_NAMESPACE
