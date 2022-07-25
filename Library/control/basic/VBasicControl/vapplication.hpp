@@ -217,6 +217,7 @@ public:
 	void SetTheme(VTheme* Theme) {
 		for (int Count = 0; Count < ThemeList.size(); ++Count) {
 			if (ThemeList[Count]->GetThemeType() == Theme->GetThemeType()) {
+				delete ThemeList.at(Count);
 				ThemeList.erase(ThemeList.begin() + Count);
 				ThemeList.insert(ThemeList.begin() + Count, Theme);
 

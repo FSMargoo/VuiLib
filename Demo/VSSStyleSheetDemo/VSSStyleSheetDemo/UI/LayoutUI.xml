@@ -20,10 +20,10 @@
         <Layout Type="VLayout" RelativeY="239" VerticalLayoutMode="RelativeTop">
         </Layout>
     </LineEditorDemo>
-    <MethionText Type="VTextLabel" Width="240" Height="58" Text="↑ 黑色主题的输入框">
+    <CommentText Type="VTextLabel" Width="240" Height="58" Text="↑ 白色主题的输入框">
         <Layout Type="VLayout" RelativeY="316" VerticalLayoutMode="RelativeTop">
         </Layout>
-    </MethionText>
+    </CommentText>
 
     <BlackThemeButton Type="VPushButton" Width="241" Height="58"
         Class = "black-switch-button" X="64" Y="380" Text="黑色主题">

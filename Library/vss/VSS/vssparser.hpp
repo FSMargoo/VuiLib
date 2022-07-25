@@ -459,6 +459,9 @@ public:
 		}
 		}
 	}
+	~VSSParser() {
+		delete ParserLexical;
+	}
 
 	VSSParserResult ParseVSS() {
 		VSSParserResult Result;
@@ -503,6 +506,8 @@ public:
 						return Result;
 					}
 
+					PropertyString.clear();
+
 					Selector->SelectorProperty = PropertySet;
 
 					Result.SelectorSet.push_back(Selector);
@@ -536,6 +541,8 @@ public:
 						if (Result.ParserStatus == VVVSParserStatus::Error) {
 							return Result;
 						}
+
+						PropertyString.clear();
 
 						Selector->SelectorProperty = PropertySet;
 
@@ -574,6 +581,8 @@ public:
 						if (Result.ParserStatus == VVVSParserStatus::Error) {
 							return Result;
 						}
+
+						PropertyString.clear();
 
 						Selector->SelectorProperty = PropertySet;
 
@@ -614,6 +623,8 @@ public:
 						return Result;
 					}
 
+					PropertyString.clear();
+
 					Selector->SelectorProperty = PropertySet;
 
 					Result.SelectorSet.push_back(Selector);
@@ -652,6 +663,8 @@ public:
 						return Result;
 					}
 
+					PropertyString.clear();
+
 					Selector->SelectorProperty = PropertySet;
 
 					Result.SelectorSet.push_back(Selector);
@@ -688,6 +701,8 @@ public:
 					if (Result.ParserStatus == VVVSParserStatus::Error) {
 						return Result;
 					}
+
+					PropertyString.clear();
 
 					Selector->SelectorProperty = PropertySet;
 
@@ -728,6 +743,8 @@ public:
 					return Result;
 				}
 
+				PropertyString.clear();
+
 				Selector->SelectorProperty = PropertySet;
 
 				Result.SelectorSet.push_back(Selector);
@@ -752,6 +769,8 @@ public:
 				if (Result.ParserStatus == VVVSParserStatus::Error) {
 					return Result;
 				}
+
+				PropertyString.clear();
 
 				Selector->SelectorProperty = PropertySet;
 

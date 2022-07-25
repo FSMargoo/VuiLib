@@ -6,15 +6,27 @@
 
 VVMLWidget* VMLWidget;
 
+VPushButton* DemoButton;
+VTextLabel*  TextLabel;
+VTextLabel*  CommentLabel;
+
 void SetBlackTheme() {
 	VSSParser Parser(L"./UI/LayoutSurfaceBlack.css", VVVSParserParseMode::FromFile);
 
 	VMLWidget->SetStyleSheet(Parser.ParseVSS());
+
+	DemoButton->SetPlaneText(L"黑色主题的按钮");
+	TextLabel->SetPlaneText(L"黑色主题的文本框");
+	CommentLabel->SetPlaneText(L"↑ 黑色主题的输入框");
 }
 void SetWhiteTheme() {
 	VSSParser Parser(L"./UI/LayoutSurfaceWhite.css", VVVSParserParseMode::FromFile);
 
 	VMLWidget->SetStyleSheet(Parser.ParseVSS());
+
+	DemoButton->SetPlaneText(L"白色主题的按钮");
+	TextLabel->SetPlaneText(L"白色主题的文本框");
+	CommentLabel->SetPlaneText(L"↑ 白色主题的输入框");
 }
 
 int main() {
@@ -40,6 +52,10 @@ int main() {
 		ButtonPushed.Connect(SetBlackTheme);
 	VMLWidget->operator[](L"MainWindow")[L"WhiteThemeButton"].Get<VPushButton>()->
 		ButtonPushed.Connect(SetWhiteTheme);
+
+	DemoButton   = VMLWidget->operator[](L"MainWindow")[L"PushButtonDemo"].Get<VPushButton>();
+	TextLabel    = VMLWidget->operator[](L"MainWindow")[L"PlaneTextDemo"].Get<VTextLabel>();
+	CommentLabel = VMLWidget->operator[](L"MainWindow")[L"CommentText"].Get<VTextLabel>();
 
 	return Application->Exec();
 }

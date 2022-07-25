@@ -23,8 +23,8 @@ enum class VVMLObjectType {
 };
 
 struct VVMLObject {
-	VUIObject*     UIObject = nullptr;
-				   
+	VUIObject* UIObject = nullptr;
+
 	std::wstring   VMLID;
 	std::wstring   VMLClass;
 	std::wstring   VMLDOMID;
@@ -141,7 +141,7 @@ struct VVMLObject {
 			if (static_cast<VVSSClassSelector*>(Selector)->ClassTag == VMLClass) {
 				VVSSElementSelector* ElementSelector = new VVSSElementSelector;
 
-				ElementSelector->ElementTag       = ObjectType2String(VMLObjectType);
+				ElementSelector->ElementTag = ObjectType2String(VMLObjectType);
 				ElementSelector->SelectorProperty = Selector->SelectorProperty;
 
 				SetNativeStyleSheet(ElementSelector);
@@ -163,10 +163,10 @@ struct VVMLObject {
 			if (static_cast<VVSSClassWithFakeClassSelector*>(Selector)->ClassTag == VMLClass) {
 				VVSSFakeClassSelector* FakeClassSelector = new VVSSFakeClassSelector;
 
-				FakeClassSelector->ElementTag       = ObjectType2String(VMLObjectType);
+				FakeClassSelector->ElementTag = ObjectType2String(VMLObjectType);
 				FakeClassSelector->SelectorProperty = Selector->SelectorProperty;
-				FakeClassSelector->ClassTag         = static_cast<VVSSClassWithFakeClassSelector*>(Selector)->FakeClassTag;
-				
+				FakeClassSelector->ClassTag = static_cast<VVSSClassWithFakeClassSelector*>(Selector)->FakeClassTag;
+
 				SetNativeStyleSheet(FakeClassSelector);
 
 				delete FakeClassSelector;
@@ -183,7 +183,7 @@ struct VVMLObject {
 			if (static_cast<VVSSIDSelector*>(Selector)->IDTag == VMLDOMID) {
 				VVSSElementSelector* ElementSelector = new VVSSElementSelector;
 
-				ElementSelector->ElementTag       = ObjectType2String(VMLObjectType);
+				ElementSelector->ElementTag = ObjectType2String(VMLObjectType);
 				ElementSelector->SelectorProperty = Selector->SelectorProperty;
 
 				SetNativeStyleSheet(ElementSelector);
@@ -298,7 +298,7 @@ public:
 			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Received an Invalid Ast Tree\nAST Error : \n" + ASTError };
 		}
 		if (VMLAstTree.ParserStatus == VVMLParserStatus::Failed) {
-			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Received an Invalid Ast Tree\nAST Error : " + VMLAstTree.ErrorInfo[0].ErrorString	};
+			return { VVMLWidgetVMLLoadStats::InvalidAstTree, L"Received an Invalid Ast Tree\nAST Error : " + VMLAstTree.ErrorInfo[0].ErrorString };
 		}
 
 
@@ -323,11 +323,11 @@ public:
 
 		std::sort(VMLAstOrderlyNodes.begin(), VMLAstOrderlyNodes.end(), [](VVMLNode Left, VVMLNode Right) -> bool {
 			return Left.ChildrenSequence < Right.ChildrenSequence;
-		});
+			});
 
 		for (auto& Element : VMLAstOrderlyNodes) {
 			std::wstring StyleSheetString;
-			VVMLObject*  VMLObject = new VVMLObject;
+			VVMLObject* VMLObject = new VVMLObject;
 			VMLObject->VMLID = Element.NodeTag;
 
 			if (Element.PropertyExsit(L"Type")) {
@@ -449,7 +449,7 @@ public:
 					}
 					else if (ElementProperty.PropertyAsString == L"VPositionAnimation") {
 						VPositionAnimation* Animation = new VPositionAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
-						VMLObject->UIObject      = Animation;
+						VMLObject->UIObject = Animation;
 						VMLObject->VMLObjectType = VVMLObjectType::PositionAnimation;
 
 						VVMLContronBuildStatus       BuildStatus;
@@ -463,7 +463,7 @@ public:
 						}
 					}
 					else if (ElementProperty.PropertyAsString == L"VGeomteryAnimation") {
-					VGeomteryAnimation* Animation = new VGeomteryAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
+						VGeomteryAnimation* Animation = new VGeomteryAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
 						VMLObject->UIObject = Animation;
 						VMLObject->VMLObjectType = VVMLObjectType::GeomteryAnimation;
 
@@ -479,7 +479,7 @@ public:
 					}
 					else if (ElementProperty.PropertyAsString == L"VAlphaAnimation") {
 						VAlphaAnimation* Animation = new VAlphaAnimation(UIParent, 0, VInterpolatorType::AccelerateDecelerateInterpolator);
-						VMLObject->UIObject      = Animation;
+						VMLObject->UIObject = Animation;
 						VMLObject->VMLObjectType = VVMLObjectType::AlphaAnimation;
 
 						VVMLContronBuildStatus       BuildStatus;
@@ -493,7 +493,7 @@ public:
 						}
 					}
 					else if (ElementProperty.PropertyAsString == L"VMainWindow") {
-						VMLObject->UIObject      = this;
+						VMLObject->UIObject = this;
 						VMLObject->VMLObjectType = VVMLObjectType::MainWindow;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -508,7 +508,7 @@ public:
 					}
 					else if (ElementProperty.PropertyAsString == L"VViewLabel") {
 						VViewLabel* ViewLabel = new VViewLabel(0, 0, UIParent);
-						VMLObject->UIObject      = ViewLabel;
+						VMLObject->UIObject = ViewLabel;
 						VMLObject->VMLObjectType = VVMLObjectType::ViewLabel;
 
 						VVMLContronBuildStatus BuildStatus;
@@ -669,6 +669,12 @@ public:
 	}
 	void SetStyleSheet(VSSParserResult VSSParserResult) {
 		SetStyleSheet(VSSParserResult, ObjectList);
+
+		for (int Count = 0; Count < VSSParserResult.SelectorSet.size(); ++Count) {
+			delete VSSParserResult.SelectorSet.at(Count);
+		}
+
+		VSSParserResult.SelectorSet.clear();
 	}
 
 public:
