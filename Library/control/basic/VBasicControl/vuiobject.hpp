@@ -620,28 +620,30 @@ public:
 					ObjectCanvas = nullptr;
 				}
 
-				ObjectCanvas = new VCanvas(SurfaceRegion().GetWidth(),
-					SurfaceRegion().GetHeight());
-				OnPaint(ObjectCanvas);
+				if (Surface()->Transparency != 0) {
+					ObjectCanvas = new VCanvas(SurfaceRegion().GetWidth(),
+						SurfaceRegion().GetHeight());
+					OnPaint(ObjectCanvas);
 
-				if (IsWidget() == false && IsApplication() == false) {
-					ChildRepaintMessage = new VRepaintMessage(*RepaintMesage);
+					if (IsWidget() == false && IsApplication() == false) {
+						ChildRepaintMessage = new VRepaintMessage(*RepaintMesage);
 
-					ChildRepaintMessage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
+						ChildRepaintMessage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
+					}
+					SendMessageToChild(ChildRepaintMessage, false);
+
+					if (ChildRepaintMessage != RepaintMesage) {
+						delete ChildRepaintMessage;
+					}
+
+					if (Surface()->Transparency != 255) {
+						ObjectCanvas->SetTransparency(Surface()->Transparency);
+					}
+
+					EditCanvas(ObjectCanvas);
+
+					GetParentCanvas()->PaintCanvas(Surface()->Rect.left, Surface()->Rect.top, ObjectCanvas);
 				}
-				SendMessageToChild(ChildRepaintMessage, false);
-
-				if (ChildRepaintMessage != RepaintMesage) {
-					delete ChildRepaintMessage;
-				}
-
-				if (Surface()->Transparency != 255) {
-					ObjectCanvas->SetTransparency(Surface()->Transparency);
-				}
-
-				EditCanvas(ObjectCanvas);
-
-				GetParentCanvas()->PaintCanvas(Surface()->Rect.left, Surface()->Rect.top, ObjectCanvas);
 
 				return true;
 			}
