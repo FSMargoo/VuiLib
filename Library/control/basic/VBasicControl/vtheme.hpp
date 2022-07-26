@@ -116,7 +116,7 @@ public:
 public:
 	VNativeLabelTheme(VNativeLabelTheme& Theme) {
 		BackgroundColor = Theme.BackgroundColor;
-		LineColor       = Theme.BackgroundColor;
+		LineColor       = Theme.LineColor;
 		TextColor       = Theme.TextColor;
 
 		if (Theme.BackgroundImage != nullptr) {

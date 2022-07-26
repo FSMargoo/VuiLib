@@ -33,6 +33,7 @@ public:
 		BackgroundColor(0.1, VInterpolatorType::AccelerateInterpolator),
 		LineColor(0.1, VInterpolatorType::AccelerateInterpolator) {
 		Theme = new VPushButtonTheme(*(static_cast<VPushButtonTheme*>(SearchThemeFromParent(VPUSHBUTTON_THEME))));
+
 		Theme->PlaneString = PlaneString;
 
 		if (VUnlikely(Theme == nullptr)) {
@@ -44,6 +45,8 @@ public:
 	 * OnPaint override Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
+		printf("%d\n", Theme->CurrentLineColor.GetAlpha());
+
 		VPen        BorderPen(Theme->CurrentLineColor, Theme->BorderThinkness);
 		VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
 		VSolidBrush PenBrush(Theme->CurrentTextColor);

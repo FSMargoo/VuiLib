@@ -299,7 +299,7 @@ private:
 	 *	@description  : Init the Widget
 	*/
 	HWND InitWindow(int Width, int Height, bool Sizble) {
-		HWND Handle = initgraph(Width, Height);
+		HWND Handle = initgraph(Width, Height, EW_SHOWCONSOLE);
 
 		InitWindowStyle(Sizble);
 
