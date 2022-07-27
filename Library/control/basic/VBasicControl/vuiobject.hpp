@@ -75,6 +75,8 @@ protected:
 			return std::vector<VTheme*>(0);
 		}
 	}
+
+public:
 	/*
 	 * GetRegoin Functional:
 	 *	@description  : Get the Regoin of Object

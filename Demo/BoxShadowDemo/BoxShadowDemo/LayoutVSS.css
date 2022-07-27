@@ -1,0 +1,19 @@
+/*
+ * 为标题文字设置 Box Shadow 和背景色等样式
+*/
+.title-text {
+    background-color: #ffffff;
+    box-shadow: #000000 8px;
+    border-color: #ffffff;
+    text-color: #000000;
+    text-align: center;
+    text-line-align: center;
+    text-size: 24px;
+}
+
+/*
+ * 设置主窗口背景色
+*/
+vmainwindow {
+    background-color: #ffffff;
+}

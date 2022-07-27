@@ -1,0 +1,6 @@
+<MainWindow Type="VMainWindow" Width="640" Height="320" StyleSheetFile="./LayoutVSS.css">
+    <!-- 创建一个 TextLabel 并应用 Layout 布局 -->
+    <TextLabel Type="VTextLabel" Width="420" Height="60" Class="title-text" Text="Hello Box Shadow" AutoSize="false">
+        <Layout Type="VLayout"></Layout>
+    </TextLabel>
+</MainWindow>

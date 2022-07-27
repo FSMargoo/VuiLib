@@ -12,11 +12,11 @@ VLIB_BEGIN_NAMESPACE
 class VBoxShadowHelper {
 public:
 	static VRect GetShadowElementRect(int Width, int Height, int BoxShadowPixel) {
-		return { BoxShadowPixel / 2, BoxShadowPixel / 2 - 4, BoxShadowPixel / 2 + Width, BoxShadowPixel / 2 + Height };
+		return { BoxShadowPixel, BoxShadowPixel, BoxShadowPixel + Width, BoxShadowPixel + Height };
 	}
 	static VRect GetShadowRect(int Width, int Height, int BoxShadowPixel) {
 		return { 0, 0, 
-			Width + BoxShadowPixel, Height + BoxShadowPixel };
+			Width + BoxShadowPixel * 2, Height + BoxShadowPixel * 2 };
 	}
 };
 

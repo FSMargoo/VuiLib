@@ -26,8 +26,8 @@ private:
 
 		auto ShadowRect = Surface()->Rect;
 
-		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
-		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.left = ShadowRect.left;
+		ShadowRect.top = ShadowRect.top;
 		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
 		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
 
@@ -65,9 +65,6 @@ public:
 			Device.DrawString(Theme->PlaneString, &Font, &PenBrush, Theme->FontFormat, GetSourceRect());
 		}
 		else {
-			int BoxEdgeWidth = GetWidth() + Theme->BoxShadowPixel * 2;
-			int BoxEdgeHeight = GetHeight() + Theme->BoxShadowPixel * 2;
-
 			VPen        BorderPen(Theme->LineColor, Theme->BorderThinkness);
 			VSolidBrush FillBrush(Theme->BackgroundColor);
 			VSolidBrush PenBrush(Theme->TextColor);

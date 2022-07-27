@@ -47,12 +47,12 @@ private:
 
 		switch (HorizontalLayoutMode) {
 		case VLayoutMode::LayoutModeCenter: {
-			NewX = Width / 2 - Parent()->GetWidth() / 2;
+			NewX = Width / 2 - Parent()->GetRegoin().GetWidth() / 2;
 
 			break;
 		}
 		case VLayoutMode::LayoutModeFar: {
-			NewX = Width - Parent()->GetWidth();
+			NewX = Width - Parent()->GetRegoin().GetWidth();
 
 			break;
 		}
@@ -77,19 +77,19 @@ private:
 			break;
 		}
 		case VLayoutMode::LayoutModeMiddleOffset: {
-			NewX = Width / 2 - Parent()->GetWidth() / 2 + XMiddleOffset;
+			NewX = Width / 2 - Parent()->GetRegoin().GetWidth() / 2 + XMiddleOffset;
 
 			break;
 		}
 		}
 		switch (VerticalLayoutMode) {
 		case VLayoutMode::LayoutModeCenter: {
-			NewY = Height / 2 - Parent()->GetHeight() / 2;
+			NewY = Height / 2 - Parent()->GetRegoin().GetHeight() / 2;
 
 			break;
 		}
 		case VLayoutMode::LayoutModeFar: {
-			NewY = Height - Parent()->GetHeight();
+			NewY = Height - Parent()->GetRegoin().GetHeight();
 
 			break;
 		}
@@ -114,7 +114,7 @@ private:
 			break;
 		}
 		case VLayoutMode::LayoutModeMiddleOffset: {
-			NewY = Height / 2 - Parent()->GetHeight() / 2 + YMiddleOffset;
+			NewY = Height / 2 - Parent()->GetRegoin().GetHeight() / 2 + YMiddleOffset;
 
 			break;
 		}
