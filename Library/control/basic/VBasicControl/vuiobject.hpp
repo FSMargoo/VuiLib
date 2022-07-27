@@ -381,10 +381,10 @@ public:
 	virtual void Update(VRect Rect) {
 		if (Parent() != nullptr) {
 			if (Rect.Overlap(
-				*(Parent()->Surface()->Rect.Clone().OffsetRV(0, 0))
+				*(Parent()->SurfaceRegion().Clone().OffsetRV(0, 0))
 			) == true) {
 				if (Parent()->IsWidget() == false) {
-					Rect = Parent()->Surface()->Rect;
+					Rect = Parent()->SurfaceRegion();
 				}
 
 				return Parent()->Update(Rect);
@@ -444,7 +444,7 @@ protected:
 			return false;
 		}
 
-		if (MouseStats.InsideRect(Surface()->Rect)) {
+		if (MouseStats.InsideRect(SurfaceRegion())) {
 			if (ResourceMessage->GetType() == VMessageType::CheckLocalFocusMessage) {
 				if (GetGlobalFocusID() != Kernel()->GlobalID) {
 					Surface()->UIStats = VUIObjectUIStats::Normal;
@@ -578,9 +578,9 @@ public:
 		case VMessageType::GetRepaintAeraMessage: {
 			/* If Two Region Already Own Across Aera, Fusion It */
 			VGetRepaintAeraMessage* RepaintMessage = static_cast<VGetRepaintAeraMessage*>(Message);
-			if (*(RepaintMessage->RepaintAera) != Surface()->Rect &&
-				RepaintMessage->RepaintAera->Overlap(Surface()->Rect) == true) {
-				(*(RepaintMessage->RepaintAera)).FusionRect(Surface()->Rect);
+			if (*(RepaintMessage->RepaintAera) != SurfaceRegion() &&
+				RepaintMessage->RepaintAera->Overlap(SurfaceRegion()) == true) {
+				(*(RepaintMessage->RepaintAera)).FusionRect(SurfaceRegion());
 
 				return true;
 			}
@@ -605,7 +605,7 @@ public:
 		case VMessageType::RepaintMessage: {
 			auto RepaintMesage = static_cast<VRepaintMessage*>(Message);
 
-			if (RepaintMesage->DirtyRectangle.Overlap(Surface()->Rect) &&
+			if (RepaintMesage->DirtyRectangle.Overlap(SurfaceRegion()) &&
 				(Parent()->IsApplication() == true ? true :
 					Parent()->GetRegoin().Clone().
 					OffsetRV(Parent()->GetX(), Parent()->GetY())
@@ -628,7 +628,7 @@ public:
 					if (IsWidget() == false && IsApplication() == false) {
 						ChildRepaintMessage = new VRepaintMessage(*RepaintMesage);
 
-						ChildRepaintMessage->DirtyRectangle = *(Surface()->Rect.Clone().OffsetRV(0, 0));
+						ChildRepaintMessage->DirtyRectangle = *(SurfaceRegion().Clone().OffsetRV(0, 0));
 					}
 					SendMessageToChild(ChildRepaintMessage, false);
 
@@ -643,6 +643,10 @@ public:
 					EditCanvas(ObjectCanvas);
 
 					GetParentCanvas()->PaintCanvas(Surface()->Rect.left, Surface()->Rect.top, ObjectCanvas);
+
+					delete ObjectCanvas;
+
+					ObjectCanvas = nullptr;
 				}
 
 				return true;

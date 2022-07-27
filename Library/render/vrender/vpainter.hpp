@@ -160,6 +160,51 @@ public:
 		NativeGraphics->DrawImage(Image->GetNativeImage(), { X, Y, Image->GetWidth(), Image->GetHeight() },
 			0, 0, Image->GetWidth(), Image->GetHeight(), VGdiplus::UnitPixel, Image->GetNativeAttributes());
 	}
+
+	void DrawBoxShadow(VColor ShadowColor, VRect Rect, VPoint Radius, int ShadowRadius) {
+		VGdiplus::GraphicsPath FillRectanglePath;
+		VGdiplus::Color        GradientColors[3] = {
+			VGdiplus::Color::Transparent,
+			VGdiplus::Color::MakeARGB(70, ShadowColor.GetRed(), ShadowColor.GetGreen(), ShadowColor.GetBlue()),
+			VGdiplus::Color::MakeARGB(180, ShadowColor.GetRed(), ShadowColor.GetGreen(), ShadowColor.GetBlue())
+		};
+
+		VGdiplus::REAL         GradientPoints[3] = { 0.0f, 0.6f, 1.0f};
+
+		if (Radius.x == Radius.y &&
+			Radius.x == 0) {
+			FillRectanglePath.AddRectangle(Rect.ToGdiplusRect());
+		}
+		else if (Radius.x < Rect.right - Rect.left && Radius.y < Rect.bottom - Rect.top) {
+			FillRectanglePath.AddArc(Rect.left, Rect.top, Radius.x, Radius.y, 180, 90);
+			FillRectanglePath.AddLine(Rect.left + Radius.x, Rect.top, Rect.right - Radius.x, Rect.top);
+
+			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.top, Radius.x, Radius.y, 270, 90);
+			FillRectanglePath.AddLine(Rect.right, Rect.top + Radius.y, Rect.right, Rect.bottom - Radius.y);
+
+			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.bottom - Radius.y, Radius.x, Radius.y, 0, 90);
+			FillRectanglePath.AddLine(Rect.right - Radius.x, Rect.bottom, Rect.left + Radius.x, Rect.bottom);
+
+			FillRectanglePath.AddArc(Rect.left, Rect.bottom - Radius.y, Radius.x, Radius.y, 90, 90);
+			FillRectanglePath.AddLine(Rect.left, Rect.bottom - Radius.y, Rect.left, Rect.top + Radius.y);
+		}
+		else {
+			FillRectanglePath.AddArc(Rect.left, Rect.top, Radius.x, Radius.y, 180, 90);
+			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.top, Radius.x, Radius.y, 270, 90);
+			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.bottom - Radius.y, Radius.x, Radius.y, 0, 90);
+			FillRectanglePath.AddArc(Rect.left, Rect.bottom - Radius.y, Radius.x, Radius.y, 90, 90);
+		}
+
+		FillRectanglePath.CloseFigure();
+
+		VGdiplus::PathGradientBrush GradientBrush(&FillRectanglePath);
+
+		GradientBrush.SetWrapMode(VGdiplus::WrapMode::WrapModeClamp);
+		GradientBrush.SetInterpolationColors(GradientColors, GradientPoints, 3);
+		GradientBrush.SetCenterPoint(VGdiplus::PointF{ Rect.GetWidth() / 2.f, Rect.GetHeight() / 2.f });
+
+		NativeGraphics->FillPath(&GradientBrush, &FillRectanglePath);
+	}
 };
 
 VLIB_END_NAMESPACE

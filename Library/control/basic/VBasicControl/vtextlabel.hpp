@@ -7,6 +7,7 @@
 #pragma once
 
 #include "vuiobject.hpp"
+#include "vboxshadowhelper.hpp"
 
 VLIB_BEGIN_NAMESPACE
 
@@ -17,6 +18,21 @@ VLIB_BEGIN_NAMESPACE
 class VTextLabel : public VUIObject {
 private:
 	VTextLabelTheme* Theme;
+
+	VRect SurfaceRegion() override {
+		if (Theme->EnableBoxShadow == false) {
+			return Surface()->Rect;
+		}
+
+		auto ShadowRect = Surface()->Rect;
+
+		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
+		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
+		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
+
+		return ShadowRect;
+	}
 
 public:
 	/*
@@ -35,17 +51,40 @@ public:
 	 *	@description  : Paint Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
-		VPen        BorderPen(Theme->LineColor, Theme->BorderThinkness);
-		VSolidBrush FillBrush(Theme->BackgroundColor);
-		VSolidBrush PenBrush(Theme->TextColor);
-		VFont       Font(Theme->FontFamily, Theme->FontSize);
+		if (Theme->EnableBoxShadow == false) {
+			VPen        BorderPen(Theme->LineColor, Theme->BorderThinkness);
+			VSolidBrush FillBrush(Theme->BackgroundColor);
+			VSolidBrush PenBrush(Theme->TextColor);
+			VFont       Font(Theme->FontFamily, Theme->FontSize);
 
-		VPainterDevice Device(Canvas);
+			VPainterDevice Device(Canvas);
 
-		BorderPen.SetStyle(Theme->BorderStyle);
+			BorderPen.SetStyle(Theme->BorderStyle);
 
-		Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
-		Device.DrawString(Theme->PlaneString, &Font, &PenBrush, Theme->FontFormat, GetSourceRect());
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
+			Device.DrawString(Theme->PlaneString, &Font, &PenBrush, Theme->FontFormat, GetSourceRect());
+		}
+		else {
+			int BoxEdgeWidth = GetWidth() + Theme->BoxShadowPixel * 2;
+			int BoxEdgeHeight = GetHeight() + Theme->BoxShadowPixel * 2;
+
+			VPen        BorderPen(Theme->LineColor, Theme->BorderThinkness);
+			VSolidBrush FillBrush(Theme->BackgroundColor);
+			VSolidBrush PenBrush(Theme->TextColor);
+			VFont       Font(Theme->FontFamily, Theme->FontSize);
+
+			VPainterDevice Device(Canvas);
+
+			BorderPen.SetStyle(Theme->BorderStyle);
+
+			Device.DrawBoxShadow(Theme->BoxShadowColor,
+				VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+				Theme->Radius, Theme->BoxShadowPixel);
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush,
+				VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel), 
+				Theme->Radius);
+			Device.DrawString(Theme->PlaneString, &Font, &PenBrush, Theme->FontFormat, VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel));
+		}
 	}
 
 	/*
@@ -131,6 +170,22 @@ public:
 	}
 	VTextLabelTheme* GetTheme() {
 		return Theme;
+	}
+
+	void SetBoxShadowEnable(bool Enable) {
+		Theme->EnableBoxShadow = Enable;
+
+		Update();
+	}
+	void SetBoxShadowColor(VColor Color) {
+		Theme->BoxShadowColor = Color;
+
+		Update();
+	}
+	void SetBoxShadowPixel(int Pixel) {
+		Theme->BoxShadowPixel = Pixel;
+
+		Update();
 	}
 };
 

@@ -37,6 +37,7 @@ public:
 	 * operator= Functional
 	*/
 	void operator=(const VImage& Object) {
+		NativeImage.reset();
 		NativeImage.reset(Object.NativeImage->Clone(
 			0, 0, Object.NativeImage->GetWidth(), Object.NativeImage->GetHeight(),
 			Object.NativeImage->GetPixelFormat()
@@ -149,6 +150,11 @@ public:
 
 		NativeAttributes.reset(new VGdiplus::ImageAttributes);
 		InitAttribute();
+	}
+
+	~VImage() {
+		NativeImage.reset(nullptr);
+		NativeAttributes.reset(nullptr);
 	}
 
 	/*

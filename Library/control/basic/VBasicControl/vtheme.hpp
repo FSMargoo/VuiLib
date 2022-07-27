@@ -98,6 +98,10 @@ public:
 	VColor    LineColor;
 	VColor    TextColor;
 
+	bool      EnableBoxShadow = false;
+	VColor    BoxShadowColor  = VColor(0, 0, 0, 255);
+	int       BoxShadowPixel  = 8;
+
 	VPenStyle BorderStyle;
 
 	VImage*   BackgroundImage;
@@ -118,6 +122,9 @@ public:
 		BackgroundColor = Theme.BackgroundColor;
 		LineColor       = Theme.LineColor;
 		TextColor       = Theme.TextColor;
+		EnableBoxShadow = Theme.EnableBoxShadow;
+		BoxShadowColor  = Theme.BoxShadowColor;
+		BoxShadowPixel  = Theme.BoxShadowPixel;
 
 		if (Theme.BackgroundImage != nullptr) {
 			BackgroundImage = new VImage(*Theme.BackgroundImage);
@@ -373,6 +380,10 @@ public:
 	VPoint  Radius;
 	bool    ImageRepeat = false;
 
+	bool      EnableBoxShadow = false;
+	VColor    BoxShadowColor  = VColor(0, 0, 0, 255);
+	int       BoxShadowPixel  = 8;
+
 public:
 	VImageLabelTheme() {
 		Image = nullptr;
@@ -441,9 +452,17 @@ public:
 	VColor BackgroundColor;
 	VPoint Radius;
 
+	bool      EnableBoxShadow;
+	VColor    BoxShadowColor;
+	int       BoxShadowPixel;
+
 	VViewLabelTheme() {
 		BackgroundColor = VColor(51, 51, 51, 0);
 		Radius = { 13, 13 };
+
+		EnableBoxShadow = false;
+		BoxShadowColor = VColor(0, 0, 0, 255);
+		BoxShadowPixel = 8;
 	}
 
 public:

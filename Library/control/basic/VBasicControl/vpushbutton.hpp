@@ -7,6 +7,7 @@
 #pragma once
 
 #include "vabstractButton.hpp"
+#include "vboxshadowhelper.hpp"
 #include "vbasicanimation.hpp"
 
 VLIB_BEGIN_NAMESPACE
@@ -23,6 +24,22 @@ private:
 	VColorInterpolator BackgroundColor;
 	VColorInterpolator LineColor;
 
+private:
+	VRect SurfaceRegion() override {
+		if (Theme->EnableBoxShadow == false) {
+			return Surface()->Rect;
+		}
+
+		auto ShadowRect = Surface()->Rect;
+
+		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
+		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
+		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
+
+		return ShadowRect;
+	}
+
 public:
 	/*
 	 * Build up Functional
@@ -33,7 +50,6 @@ public:
 		BackgroundColor(0.1, VInterpolatorType::AccelerateInterpolator),
 		LineColor(0.1, VInterpolatorType::AccelerateInterpolator) {
 		Theme = new VPushButtonTheme(*(static_cast<VPushButtonTheme*>(SearchThemeFromParent(VPUSHBUTTON_THEME))));
-
 		Theme->PlaneString = PlaneString;
 
 		if (VUnlikely(Theme == nullptr)) {
@@ -45,23 +61,46 @@ public:
 	 * OnPaint override Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
-		printf("%d\n", Theme->CurrentLineColor.GetAlpha());
+		if (Theme->EnableBoxShadow == false) {
+			VPen        BorderPen(Theme->CurrentLineColor, Theme->BorderThinkness);
+			VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
+			VSolidBrush PenBrush(Theme->CurrentTextColor);
+			VFont       Font(Theme->FontFamily, Theme->FontSize);
+			VFontFormat FontFormat;
 
-		VPen        BorderPen(Theme->CurrentLineColor, Theme->BorderThinkness);
-		VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
-		VSolidBrush PenBrush(Theme->CurrentTextColor);
-		VFont       Font(Theme->FontFamily, Theme->FontSize);
-		VFontFormat FontFormat;
+			FontFormat.SetAlignment(VStringAlignment::AlignmentCenter);
+			FontFormat.SetLineAlignment(VStringAlignment::AlignmentCenter);
 
-		FontFormat.SetAlignment(VStringAlignment::AlignmentCenter);
-		FontFormat.SetLineAlignment(VStringAlignment::AlignmentCenter);
+			VPainterDevice Device(Canvas);
 
-		VPainterDevice Device(Canvas);
+			BorderPen.SetStyle(Theme->BorderStyle);
 
-		BorderPen.SetStyle(Theme->BorderStyle);
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
+			Device.DrawString(Theme->PlaneString, &Font, &PenBrush, &FontFormat, GetSourceRect());
+		}
+		else {
+			VPen        BorderPen(Theme->CurrentLineColor, Theme->BorderThinkness);
+			VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
+			VSolidBrush PenBrush(Theme->CurrentTextColor);
+			VFont       Font(Theme->FontFamily, Theme->FontSize);
+			VFontFormat FontFormat;
 
-		Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
-		Device.DrawString(Theme->PlaneString, &Font, &PenBrush, &FontFormat, GetSourceRect());
+			FontFormat.SetAlignment(VStringAlignment::AlignmentCenter);
+			FontFormat.SetLineAlignment(VStringAlignment::AlignmentCenter);
+
+			VPainterDevice Device(Canvas);
+
+			BorderPen.SetStyle(Theme->BorderStyle);
+
+			Device.DrawBoxShadow(Theme->BoxShadowColor,
+				VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+				Theme->Radius, Theme->BoxShadowPixel);
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush, 
+				VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel)
+				, Theme->Radius);
+			Device.DrawString(Theme->PlaneString, &Font, &PenBrush, &FontFormat, 
+				VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel));
+		}
 	}
 
 	void LeftClickedDown() override {
@@ -130,6 +169,23 @@ public:
 	}
 	VPushButtonTheme* GetTheme() {
 		return Theme;
+	}
+
+public:
+	void SetBoxShadowEnable(bool Enable) {
+		Theme->EnableBoxShadow = Enable;
+
+		Update();
+	}
+	void SetBoxShadowColor(VColor Color) {
+		Theme->BoxShadowColor = Color;
+
+		Update();
+	}
+	void SetBoxShadowPixel(int Pixel) {
+		Theme->BoxShadowPixel = Pixel;
+
+		Update();
 	}
 };
 

@@ -7,6 +7,7 @@
 #pragma once
 
 #include "vabstractButton.hpp"
+#include "vboxshadowhelper.hpp"
 #include "vbasicanimation.hpp"
 
 VLIB_BEGIN_NAMESPACE
@@ -22,6 +23,21 @@ private:
 	VColorInterpolator TextColor;
 	VColorInterpolator BackgroundColor;
 	VColorInterpolator LineColor;
+
+	VRect SurfaceRegion() override {
+		if (Theme->EnableBoxShadow == false) {
+			return Surface()->Rect;
+		}
+
+		auto ShadowRect = Surface()->Rect;
+
+		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
+		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
+		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
+
+		return ShadowRect;
+	}
 
 public:
 	/*
@@ -55,17 +71,39 @@ public:
 	 * OnPaint override Functional
 	*/
 	void OnPaint(VCanvas* Canvas) override {
-		VPen        BorderPen(Theme->CurrentLineColor);
-		VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
-		VSolidBrush PenBrush(Theme->CurrentTextColor);
+		if (Theme->EnableBoxShadow == false) {
+			VPen        BorderPen(Theme->CurrentLineColor);
+			VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
+			VSolidBrush PenBrush(Theme->CurrentTextColor);
 
-		VPainterDevice Device(Canvas);
+			VPainterDevice Device(Canvas);
 
-		Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
-		Device.DrawImage(Theme->IconImage, { GetWidth() / 2 - Theme->IconImage->GetWidth() / 2,
-			GetHeight() / 2 - Theme->IconImage->GetHeight() / 2,
-			GetWidth() / 2 - Theme->IconImage->GetWidth() / 2 + Theme->IconImage->GetWidth(),
-			GetHeight() / 2 - Theme->IconImage->GetHeight() / 2 + Theme->IconImage->GetHeight() });
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush, GetSourceRect(), Theme->Radius);
+			Device.DrawImage(Theme->IconImage, { GetWidth() / 2 - Theme->IconImage->GetWidth() / 2,
+				GetHeight() / 2 - Theme->IconImage->GetHeight() / 2,
+				GetWidth() / 2 - Theme->IconImage->GetWidth() / 2 + Theme->IconImage->GetWidth(),
+				GetHeight() / 2 - Theme->IconImage->GetHeight() / 2 + Theme->IconImage->GetHeight() });
+		}
+		else {
+			VPen        BorderPen(Theme->CurrentLineColor);
+			VSolidBrush FillBrush(Theme->CurrentBackgroundColor);
+			VSolidBrush PenBrush(Theme->CurrentTextColor);
+
+			VPainterDevice Device(Canvas);
+
+			Device.DrawBoxShadow(Theme->BoxShadowColor,
+				VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+				Theme->Radius, Theme->BoxShadowPixel);
+			Device.FillRoundedRectangle(&BorderPen, &FillBrush, 
+				VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+				Theme->Radius);
+			Device.DrawImage(Theme->IconImage, { 
+				Theme->BoxShadowPixel + GetWidth() / 2 - Theme->IconImage->GetWidth() / 2,
+				Theme->BoxShadowPixel + GetHeight() / 2 - Theme->IconImage->GetHeight() / 2,
+				Theme->BoxShadowPixel + GetWidth() / 2 - Theme->IconImage->GetWidth() / 2 + Theme->IconImage->GetWidth(),
+				Theme->BoxShadowPixel + GetHeight() / 2 - Theme->IconImage->GetHeight() / 2 + Theme->IconImage->GetHeight() });
+
+		}
 	}
 
 	void LeftClickedDown() override {

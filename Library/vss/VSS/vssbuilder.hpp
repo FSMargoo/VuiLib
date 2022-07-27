@@ -24,6 +24,36 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vpushbutton") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
 					if (Property.first == L"border-style") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::StringValue) {
@@ -218,6 +248,37 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vtextlabel") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
+
 					if (Property.first == L"border-style") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::StringValue) {
@@ -383,6 +444,37 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vimagelabel") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
+
 					if (Property.first == L"border-radius") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
@@ -484,6 +576,36 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"viconbutton") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
 					if (Property.first == L"border-style") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::StringValue) {
@@ -637,6 +759,37 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vviewlabel") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
+
 					if (Property.first == L"border-radius") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
@@ -684,6 +837,36 @@ private:
 			if (Selector->GetType() == VVSSSelectorType::ElementSelector &&
 				static_cast<VVSSElementSelector*>(Selector)->ElementTag == L"vlineeditor") {
 				for (auto& Property : Selector->SelectorProperty) {
+					if (Property.first == L"box-shadow") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-color") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::ColorValue) {
+								Theme->BoxShadowColor = PropertyValue.PropertyAsColorValue;
+							}
+						}
+					}
+					if (Property.first == L"box-shadow-radius") {
+						Theme->EnableBoxShadow = true;
+
+						for (auto& PropertyValue : Property.second.ValueList) {
+							if (PropertyValue.Type == VVSSPropertyType::IntValue) {
+								Theme->BoxShadowPixel = PropertyValue.PropertyAsInt;
+							}
+						}
+					}
 					if (Property.first == L"border-style") {
 						for (auto& PropertyValue : Property.second.ValueList) {
 							if (PropertyValue.Type == VVSSPropertyType::StringValue) {

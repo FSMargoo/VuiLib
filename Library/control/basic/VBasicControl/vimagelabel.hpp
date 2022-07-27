@@ -6,6 +6,7 @@
 #pragma once
 
 #include "vuiobject.hpp"
+#include "vboxshadowhelper.hpp"
 
 VLIB_BEGIN_NAMESPACE
 
@@ -26,6 +27,21 @@ private:
 		return Image;
 	}
 
+	VRect SurfaceRegion() override {
+		if (Theme->EnableBoxShadow == false) {
+			return Surface()->Rect;
+		}
+
+		auto ShadowRect = Surface()->Rect;
+
+		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
+		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
+		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
+
+		return ShadowRect;
+	}
+
 private:
 	VImageLabelTheme* Theme;
 
@@ -39,13 +55,27 @@ public:
 	void OnPaint(VCanvas* Canvas) override {
 		if (Theme->Image != nullptr) {
 			if (Theme->ImageRepeat == true) {
-				VPainterDevice Device(Canvas);
-				VTextureBrush  Brush(Theme->Image);
-				VSolidBrush    DbgBrush(VColor(255, 255, 255));
+				if (Theme->EnableBoxShadow == false) {
+					VPainterDevice Device(Canvas);
+					VTextureBrush  Brush(Theme->Image);
 
-				Brush.SetWrapStyle(VTextureWrapStyle::Tile);
+					Brush.SetWrapStyle(VTextureWrapStyle::Tile);
 
-				Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+					Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+				}
+				else {
+					VPainterDevice Device(Canvas);
+					VTextureBrush  Brush(Theme->Image);
+
+					Brush.SetWrapStyle(VTextureWrapStyle::Tile);
+
+					Device.DrawBoxShadow(Theme->BoxShadowColor,
+						VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+						Theme->Radius, Theme->BoxShadowPixel);
+					Device.SolidRoundedRectangle(&Brush,
+						VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel)
+						, Theme->Radius);
+				}
 			}
 			else {
 				if (ZoomedImage == nullptr) {
@@ -60,11 +90,27 @@ public:
 					ZoomedImage = ResizeImage(Surface()->Rect.GetWidth(), Surface()->Rect.GetHeight());
 				}
 
-				VPainterDevice Device(Canvas);
-				VTextureBrush  Brush(ZoomedImage);
-				VSolidBrush    DbgBrush(VColor(255, 255, 255));
+				if (Theme->EnableBoxShadow == false) {
+					VPainterDevice Device(Canvas);
+					VTextureBrush  Brush(ZoomedImage);
 
-				Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+					Brush.SetWrapStyle(VTextureWrapStyle::Tile);
+
+					Device.SolidRoundedRectangle(&Brush, Surface()->Rect, Theme->Radius);
+				}
+				else {
+					VPainterDevice Device(Canvas);
+					VTextureBrush  Brush(ZoomedImage);
+
+					Brush.SetWrapStyle(VTextureWrapStyle::Tile);
+
+					Device.DrawBoxShadow(Theme->BoxShadowColor,
+						VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+						Theme->Radius, Theme->BoxShadowPixel);
+					Device.SolidRoundedRectangle(&Brush,
+						VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel)
+						, Theme->Radius);
+				}
 			}
 		}
 	}

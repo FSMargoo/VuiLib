@@ -349,6 +349,8 @@ private:
 					}
 
 					Property.ValueList.push_back(NumberProperty);
+
+					continue;
 				}
 				// Boolean Property
 				if (Token.cache_token == SealForVSS::CONST_BOOLEAN) {
@@ -364,6 +366,8 @@ private:
 					}
 
 					Property.ValueList.push_back(BooleanProperty);
+
+					continue;
 				}
 				// String Property
 				if (Token.cache_token == SealForVSS::CONST_STRING) {
@@ -373,6 +377,8 @@ private:
 					StringProperty.PropertyAsString = Token.token_string.substr(1, Token.token_string.size() - 2);
 
 					Property.ValueList.push_back(StringProperty);
+
+					continue;
 				}
 				// Const Property
 				if (Token.cache_token == SealForVSS::UNKNOW_TOKEN) {
@@ -382,6 +388,8 @@ private:
 					StringProperty.PropertyAsString = Token.token_string;
 
 					Property.ValueList.push_back(StringProperty);
+
+					continue;
 				}
 			}
 

@@ -7,6 +7,7 @@
 #pragma once
 
 #include "vinteractivetextlabel.hpp"
+#include "vboxshadowhelper.hpp"
 #include "vanimation.hpp"
 
 VLIB_BEGIN_NAMESPACE
@@ -32,6 +33,21 @@ private:
 
 	VTimer             CursorTimer;
 	VTimer             AnimationTimer;
+
+	VRect SurfaceRegion() override {
+		if (Theme->EnableBoxShadow == false) {
+			return Surface()->Rect;
+		}
+
+		auto ShadowRect = Surface()->Rect;
+
+		ShadowRect.left = ShadowRect.left - Theme->BoxShadowPixel;
+		ShadowRect.top = ShadowRect.top - Theme->BoxShadowPixel;
+		ShadowRect.bottom = ShadowRect.bottom + Theme->BoxShadowPixel * 2;
+		ShadowRect.right = ShadowRect.right + Theme->BoxShadowPixel * 2;
+
+		return ShadowRect;
+	}
 
 public:
 	VSignal<std::wstring> TextOnChange;
@@ -152,43 +168,91 @@ public:
 	}
 
 	void OnPaint(VCanvas* Canvas) override {
-		VPen           Border(Theme->CurrentLineColor);
-		VSolidBrush	   CursorBrush(Theme->CursorColor);
-		VSolidBrush    Brush(Theme->CurrentBackgroundColor);
-		VSolidBrush    FontBrush(Theme->CurrentTextColor);
+		if (Theme->EnableBoxShadow == false) {
+			VPen           Border(Theme->CurrentLineColor);
+			VSolidBrush	   CursorBrush(Theme->CursorColor);
+			VSolidBrush    Brush(Theme->CurrentBackgroundColor);
+			VSolidBrush    FontBrush(Theme->CurrentTextColor);
 
-		VPainterDevice Device(Canvas);
-		VFontFormat    Format;
-		VFont          Font(Theme->FontFamily, Theme->FontSize);
+			VPainterDevice Device(Canvas);
+			VFontFormat    Format;
+			VFont          Font(Theme->FontFamily, Theme->FontSize);
 
-		Format.SetLineAlignment(VStringAlignment::AlignmentCenter);
+			Format.SetLineAlignment(VStringAlignment::AlignmentCenter);
+			Device.FillRoundedRectangle(&Border, &Brush, { 0, 0, GetWidth(), GetHeight() }, Theme->Radius);
+			Device.DrawString(StringBuffer, &Font, &FontBrush, &Format, { 2, 0, GetWidth(), GetHeight() });
 
-		Device.FillRoundedRectangle(&Border, &Brush, { 0, 0, GetWidth(), GetHeight() }, Theme->Radius);
-		Device.DrawString(StringBuffer, &Font, &FontBrush, &Format, { 2, 0, GetWidth(), GetHeight() });
+			auto JudgeString = StringBuffer.substr(0, CursorX);
 
-		auto JudgeString = StringBuffer.substr(0, CursorX);
+			int TextHeight = (GetHeight() / 2 - Theme->FontSize / 2);
+			int TextWidth = Font.GetWidth(JudgeString, &Format);
 
-		int TextHeight = (GetHeight() / 2 - Theme->FontSize / 2);
-		int TextWidth = Font.GetWidth(JudgeString, &Format);
+			if (SpaceOnly(JudgeString) == false) {
+				TextWidth += GetStartSpace(JudgeString) * 4;
+				TextWidth += GetEndSpace(JudgeString) * 4;
+			}
+			else {
+				TextWidth += GetStartSpace(JudgeString) * 2;
+				TextWidth += GetEndSpace(JudgeString) * 2;
+			}
 
-		if (SpaceOnly(JudgeString) == false) {
-			TextWidth += GetStartSpace(JudgeString) * 4;
-			TextWidth += GetEndSpace(JudgeString) * 4;
+			int CursorY = GetHeight() / 2 - TextHeight / 2;
+
+			if (UserIMETyping == true) {
+				SetGlobalIMEPosition(GetX() + TextWidth, GetY() + TextHeight);
+			}
+
+			if (ShowCursor == true) {
+				Device.SolidRectangle(&CursorBrush,
+					{ TextWidth + 3, TextHeight, TextWidth + 4, TextHeight + Theme->FontSize });
+			}
 		}
 		else {
-			TextWidth += GetStartSpace(JudgeString) * 2;
-			TextWidth += GetEndSpace(JudgeString) * 2;
-		}
+			VPen           Border(Theme->CurrentLineColor);
+			VSolidBrush	   CursorBrush(Theme->CursorColor);
+			VSolidBrush    Brush(Theme->CurrentBackgroundColor);
+			VSolidBrush    FontBrush(Theme->CurrentTextColor);
 
-		int CursorY = GetHeight() / 2 - TextHeight / 2;
-		
-		if (UserIMETyping == true) {
-			SetGlobalIMEPosition(GetX() + TextWidth, GetY() + TextHeight);
-		}
+			VPainterDevice Device(Canvas);
+			VFontFormat    Format;
+			VFont          Font(Theme->FontFamily, Theme->FontSize);
 
-		if (ShowCursor == true) {
-			Device.SolidRectangle(&CursorBrush,
-				{ TextWidth + 3, TextHeight, TextWidth + 4, TextHeight + Theme->FontSize });
+			Border.SetStyle(Theme->BorderStyle);
+
+			Format.SetLineAlignment(VStringAlignment::AlignmentCenter);
+			Device.DrawBoxShadow(Theme->BoxShadowColor,
+				VBoxShadowHelper::GetShadowRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel),
+				Theme->Radius, Theme->BoxShadowPixel);
+			Device.FillRoundedRectangle(&Border, &Brush,
+				VBoxShadowHelper::GetShadowElementRect(GetWidth(), GetHeight(), Theme->BoxShadowPixel)
+				, Theme->Radius);
+			Device.DrawString(StringBuffer, &Font, &FontBrush, &Format, 
+				{ Theme->BoxShadowPixel + 2, Theme->BoxShadowPixel + 0, GetWidth(), GetHeight() });
+
+			auto JudgeString = StringBuffer.substr(0, CursorX);
+
+			int TextHeight = (GetHeight() / 2 - Theme->FontSize / 2);
+			int TextWidth = Font.GetWidth(JudgeString, &Format);
+
+			if (SpaceOnly(JudgeString) == false) {
+				TextWidth += GetStartSpace(JudgeString) * 4;
+				TextWidth += GetEndSpace(JudgeString) * 4;
+			}
+			else {
+				TextWidth += GetStartSpace(JudgeString) * 2;
+				TextWidth += GetEndSpace(JudgeString) * 2;
+			}
+
+			int CursorY = GetHeight() / 2 - TextHeight / 2;
+
+			if (UserIMETyping == true) {
+				SetGlobalIMEPosition(GetX() + TextWidth, GetY() + TextHeight);
+			}
+
+			if (ShowCursor == true) {
+				Device.SolidRectangle(&CursorBrush,
+					{ TextWidth + 3, TextHeight, TextWidth + 4, TextHeight + Theme->FontSize });
+			}
 		}
 	}
 	void DealyMessage(VMessage* Message) {
@@ -367,6 +431,23 @@ public:
 	}
 	VLineEditorTheme* GetTheme() {
 		return Theme;
+	}
+
+public:
+	void SetBoxShadowEnable(bool Enable) {
+		Theme->EnableBoxShadow = Enable;
+
+		Update();
+	}
+	void SetBoxShadowColor(VColor Color) {
+		Theme->BoxShadowColor = Color;
+
+		Update();
+	}
+	void SetBoxShadowPixel(int Pixel) {
+		Theme->BoxShadowPixel = Pixel;
+
+		Update();
 	}
 };
 
