@@ -24,6 +24,8 @@ private:
 	VColorInterpolator BackgroundColor;
 	VColorInterpolator LineColor;
 
+	VTimer             AnimationTimer;
+
 	VRect SurfaceRegion() override {
 		if (Theme->EnableBoxShadow == false) {
 			return Surface()->Rect;
@@ -45,9 +47,9 @@ public:
 	*/
 
 	VIconButton(VUIObject* Parent) : VAbstractButton(Parent),
-		TextColor(0.1, VInterpolatorType::AccelerateInterpolator),
-		BackgroundColor(0.1, VInterpolatorType::AccelerateInterpolator),
-		LineColor(0.1, VInterpolatorType::AccelerateInterpolator) {
+		TextColor(0.4, VInterpolatorType::AccelerateInterpolator),
+		BackgroundColor(0.4, VInterpolatorType::AccelerateInterpolator),
+		LineColor(0.4, VInterpolatorType::AccelerateInterpolator) {
 		Theme = new VIconButtonTheme(*(static_cast<VIconButtonTheme*>(SearchThemeFromParent(VICONBUTTON_THEME))));
 
 		if (VUnlikely(Theme == nullptr)) {
@@ -55,9 +57,9 @@ public:
 		}
 	}
 	VIconButton(VUIObject* Parent, VImage* Icon) : VAbstractButton(Parent),
-		TextColor(0.1, VInterpolatorType::AccelerateInterpolator),
-		BackgroundColor(0.1, VInterpolatorType::AccelerateInterpolator),
-		LineColor(0.1, VInterpolatorType::AccelerateInterpolator) {
+		TextColor(0.4, VInterpolatorType::AccelerateInterpolator),
+		BackgroundColor(0.4, VInterpolatorType::AccelerateInterpolator),
+		LineColor(0.4, VInterpolatorType::AccelerateInterpolator) {
 		Theme = new VIconButtonTheme(*(static_cast<VIconButtonTheme*>(SearchThemeFromParent(VICONBUTTON_THEME))));
 
 		if (VUnlikely(Theme == nullptr)) {
@@ -111,22 +113,28 @@ public:
 		TextColor.Start(Theme->CurrentTextColor, Theme->OnClickedTextColor);
 		LineColor.Start(Theme->CurrentLineColor, Theme->OnClickedLineColor);
 
-		ButtonPushed.Emit();
+		AnimationTimer.Start(16);
 	}
 	void LeftClickedUp() override {
 		BackgroundColor.Start(Theme->CurrentBackgroundColor, Theme->OnHoverBackgroundColor);
 		TextColor.Start(Theme->CurrentTextColor, Theme->OnHoverTextColor);
 		LineColor.Start(Theme->CurrentLineColor, Theme->OnHoverLineColor);
+
+		AnimationTimer.Start(16);
 	}
 	void GotMouseFocus() override {
 		BackgroundColor.Start(Theme->CurrentBackgroundColor, Theme->OnHoverBackgroundColor);
 		TextColor.Start(Theme->CurrentTextColor, Theme->OnHoverTextColor);
 		LineColor.Start(Theme->CurrentLineColor, Theme->OnHoverLineColor);
+
+		AnimationTimer.Start(16);
 	}
 	void LosedMouseFocus() override {
 		BackgroundColor.Start(Theme->CurrentBackgroundColor, Theme->BackgroundColor);
 		TextColor.Start(Theme->CurrentTextColor, Theme->TextColor);
 		LineColor.Start(Theme->CurrentLineColor, Theme->LineColor);
+
+		AnimationTimer.Start(16);
 	}
 
 public:
@@ -143,9 +151,11 @@ public:
 	}
 
 	void CheckFrame() override {
-		if (BackgroundColor.IsAnimationEnd() == false ||
+		if ((BackgroundColor.IsAnimationEnd() == false ||
 			TextColor.IsAnimationEnd() == false ||
-			LineColor.IsAnimationEnd() == false) {
+			LineColor.IsAnimationEnd() == false) && AnimationTimer.End()) {
+			AnimationTimer.Start(16);
+
 			Theme->CurrentBackgroundColor = BackgroundColor.GetOneFrame();
 			Theme->CurrentTextColor = TextColor.GetOneFrame();
 			Theme->CurrentLineColor = LineColor.GetOneFrame();

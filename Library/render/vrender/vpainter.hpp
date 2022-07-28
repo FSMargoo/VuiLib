@@ -100,10 +100,7 @@ public:
 			RectanglePath.AddLine(Rect.left, Rect.bottom - Radius.y, Rect.left, Rect.top + Radius.y);
 		}
 		else {
-			RectanglePath.AddArc(Rect.left, Rect.top, Radius.x, Radius.y, 180, 90);
-			RectanglePath.AddArc(Rect.right - Radius.x, Rect.top, Radius.x, Radius.y, 270, 90);
-			RectanglePath.AddArc(Rect.right - Radius.x, Rect.bottom - Radius.y, Radius.x, Radius.y, 0, 90);
-			RectanglePath.AddArc(Rect.left, Rect.bottom - Radius.y, Radius.x, Radius.y, 90, 90);
+			RectanglePath.AddEllipse(Rect.ToGdiplusRect());
 		}
 
 		RectanglePath.CloseFigure();
@@ -127,10 +124,7 @@ public:
 			FillRectanglePath.AddLine(Rect.left, Rect.bottom - Radius.y, Rect.left, Rect.top + Radius.y);
 		}
 		else {
-			FillRectanglePath.AddArc(Rect.left, Rect.top, Radius.x, Radius.y, 180, 90);
-			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.top, Radius.x, Radius.y, 270, 90);
-			FillRectanglePath.AddArc(Rect.right - Radius.x, Rect.bottom - Radius.y, Radius.x, Radius.y, 0, 90);
-			FillRectanglePath.AddArc(Rect.left, Rect.bottom - Radius.y, Radius.x, Radius.y, 90, 90);
+			FillRectanglePath.AddEllipse(Rect.ToGdiplusRect());
 		}
 
 		FillRectanglePath.CloseFigure();

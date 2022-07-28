@@ -372,6 +372,7 @@ protected:
 				}
 
 				Icon = new VImage(ElementProperty.second.PropertyAsString);
+				Object->SetIcon(Icon);
 			}
 		}
 
@@ -432,7 +433,7 @@ protected:
 
 		for (auto& ElementProperty : PropertyValueList) {
 			if (ElementProperty.first == L"VerticalPercent") {
-				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::DoubleValue) {
 					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
 					BuildStatus->FailedReason = L"\"VerticalPercent\" Property Must Match the Type \"Int\"";
 
@@ -442,7 +443,7 @@ protected:
 				VerticalLayoutPercent = ElementProperty.second.PropertyAsDouble;
 			}
 			if (ElementProperty.first == L"HorziontalPercent") {
-				if (ElementProperty.second.PropertyType != VVMLPropertyType::IntValue) {
+				if (ElementProperty.second.PropertyType != VVMLPropertyType::DoubleValue) {
 					BuildStatus->BuildStatusCode = VVMLControlBuildResultStatus::Failed;
 					BuildStatus->FailedReason = L"\"HorziontalPercent\" Property Must Match the Type \"Int\"";
 

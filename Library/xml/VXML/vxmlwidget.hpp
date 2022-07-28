@@ -81,7 +81,7 @@ struct VVMLObject {
 			return L"vviewlabel";
 		}
 		case VVMLObjectType::IconButton: {
-			return L"vviconbutton";
+			return L"viconbutton";
 		}
 		case VVMLObjectType::ImageLabel: {
 			return L"vimagelabel";
