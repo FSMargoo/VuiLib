@@ -1,4 +1,5 @@
 # VuiLib ![CI Status](https://img.shields.io/badge/build-passing-successimportant)
+# 该项目正在大面积重构中，未来一周 GitHub 将会暂停 push
 
 ## Installation - 安装
 ### Requirements - 必要条件
