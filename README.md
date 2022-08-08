@@ -1,5 +1,5 @@
 # VuiLib ![CI Status](https://img.shields.io/badge/build-passing-successimportant)
-# 该项目正在大面积重构中，未来一周 GitHub 将会暂停 push
+# 该项目正在大面积重构中发布日期未知，[请前往该仓库查看实时开发动态](https://github.com/FSMargoo/VuiLib-DevPre)
 
 ## Installation - 安装
 ### Requirements - 必要条件
