@@ -190,6 +190,7 @@ namespace VML {
         if (AlignmentString == L"alignment-far") {
             return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_TRAILING;
         }
+
         return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
     }
 

@@ -8,10 +8,10 @@ namespace VSS {
             return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_CENTER;
         }
         if (String == L"left") {
-            return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
+            return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_TRAILING;
         }
         if (String == L"right") {
-            return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_TRAILING;
+            return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
         }
         if (String == L"justify") {
             return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_JUSTIFIED;
@@ -350,6 +350,10 @@ namespace VSS {
                         }
                     }
                 }
+
+                Theme->LocalTheme   = Theme->StaticTheme;
+                Theme->OnHoverTheme = Theme->StaticTheme;
+                Theme->ActiveTheme  = Theme->StaticTheme;
             }
             if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
                 static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"textlabel" &&
@@ -458,10 +462,6 @@ namespace VSS {
                 }
             }
         }
-
-        Theme->LocalTheme   = Theme->StaticTheme;
-        Theme->OnHoverTheme = Theme->StaticTheme;
-        Theme->ActiveTheme  = Theme->StaticTheme;
 
         if (TargetControl != nullptr) { TargetControl->Update(); }
     }

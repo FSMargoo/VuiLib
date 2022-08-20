@@ -6,6 +6,18 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
+VFont::VFont(const VFont& FontObject) {
+    auto Widget  = FontObject.GetTextWeightStyle();
+    auto Family  = FontObject.GetFamilyName();
+    auto Style   = FontObject.GetTextFontStyle();
+    auto Stretch= FontObject.GetFontStretchStyle();
+    auto Locale = FontObject.GetLocaleName();
+    auto Size = FontObject.GetTextSize();
+
+    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextFormat(Family.c_str(), nullptr,
+                                                                           (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat) != S_OK,
+                      L"Create D2D fontformat object failed!");
+}
 VFont::VFont(const std::wstring& FamilyName, FontWeight TextWidget, FontStyle TextStyle, FontStretch TextStretch,
 		float TextSize, const std::wstring& Local) {
     VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextFormat(FamilyName.c_str(), nullptr,
@@ -49,13 +61,13 @@ std::wstring VFont::GetLocaleName() const {
     return LocaleCache;
 }
 
-VFont::FontWeight   VFont::GetTextWeightStyle() {
+VFont::FontWeight   VFont::GetTextWeightStyle() const {
     return (FontWeight)TextFormat->GetFontWeight();
 }
-VFont::FontStyle    VFont::GetTextFontStyle() {
+VFont::FontStyle    VFont::GetTextFontStyle() const {
     return (FontStyle)TextFormat->GetFontStyle();
 }
-VFont::FontStretch  VFont::GetFontStretchStyle() {
+VFont::FontStretch  VFont::GetFontStretchStyle() const {
     return (FontStretch)TextFormat->GetFontStretch();
 }
 void VFont::SetTextSize(const int& Size) {

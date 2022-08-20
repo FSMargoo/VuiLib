@@ -396,6 +396,8 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 
 						continue;
 					}
+
+                    break;
 				}
                 else {
                     core_info.lexical_token.cache_token  = UNKNOW_SMYBOL;
@@ -436,145 +438,6 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 			core_info.lexical_token.token_string += core_info.lexical_code[core_info.lexical_index];
 		}
 	}
-
-	// Processing keyword token
-	if (core_info.lexical_token.token_string == L"int") {
-		core_info.lexical_token.cache_token = INT_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"bool") {
-		core_info.lexical_token.cache_token = BOOL_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"string") {
-		core_info.lexical_token.cache_token = STRING_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"char") {
-		core_info.lexical_token.cache_token = CHAR_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"float") {
-		core_info.lexical_token.cache_token = FLOAT_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"def") {
-		core_info.lexical_token.cache_token = DEF_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"if") {
-		core_info.lexical_token.cache_token = IF_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"else") {
-		core_info.lexical_token.cache_token = ELSE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"elif") {
-		core_info.lexical_token.cache_token = ELIF_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"switch") {
-		core_info.lexical_token.cache_token = SWITCH_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"case") {
-		core_info.lexical_token.cache_token = CASE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"default") {
-		core_info.lexical_token.cache_token = DEFAULT_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"while") {
-		core_info.lexical_token.cache_token = WHILE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"continue") {
-		core_info.lexical_token.cache_token = CONTINUE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"break") {
-		core_info.lexical_token.cache_token = BREAK_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"operator") {
-		core_info.lexical_token.cache_token = OPERATOR_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"class") {
-		core_info.lexical_token.cache_token = CLASS_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"public") {
-		core_info.lexical_token.cache_token = PUBLIC_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"private") {
-		core_info.lexical_token.cache_token = PRIVATE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"return") {
-		core_info.lexical_token.cache_token = RETURN_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"enum") {
-		core_info.lexical_token.cache_token = ENUM_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"using") {
-		core_info.lexical_token.cache_token = USING_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"from") {
-		core_info.lexical_token.cache_token = FROM_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"NULL") {
-		core_info.lexical_token.cache_token = NULL_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"SAFENULL") {
-		core_info.lexical_token.cache_token = SAFENULL_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"delete") {
-		core_info.lexical_token.cache_token = DELETE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"do") {
-		core_info.lexical_token.cache_token = DO_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"for") {
-		core_info.lexical_token.cache_token = FOR_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"parad") {
-		core_info.lexical_token.cache_token = PARAD_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"static") {
-		core_info.lexical_token.cache_token = STATIC_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"new_static") {
-		core_info.lexical_token.cache_token = NEW_STATIC_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"un_gc") {
-		core_info.lexical_token.cache_token = UN_GC_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"force_delete") {
-		core_info.lexical_token.cache_token = FORCE_DELETE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"no_refer_count") {
-		core_info.lexical_token.cache_token = NO_REFER_COUNT_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"no_old") {
-		core_info.lexical_token.cache_token = NO_OLD_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"const") {
-		core_info.lexical_token.cache_token = CONST_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"seal_library_type") {
-		core_info.lexical_token.cache_token = SEAL_LIBRARY_TYPE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"seal_library_function") {
-		core_info.lexical_token.cache_token = SEAL_LIBRARY_FUNCTION_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"seal_library_run_function") {
-		core_info.lexical_token.cache_token = SEAL_LIBRARY_RUN_FUNCTION_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"type_alias") {
-		core_info.lexical_token.cache_token = TYPE_ALIAS_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"tpye_define") {
-		core_info.lexical_token.cache_token = TYPE_DEFINE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"function") {
-		core_info.lexical_token.cache_token = FUNCTION_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"retr_for") {
-		core_info.lexical_token.cache_token = RETR_FOR_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"namespace") {
-		core_info.lexical_token.cache_token = NAMESPACE_TOKEN;
-	}
-	else if (core_info.lexical_token.token_string == L"true" ||
-		core_info.lexical_token.token_string == L"false") {
-		core_info.lexical_token.cache_token = CONST_BOOLEAN;
-	}
-
 	// Processing token
 	if (core_info.lexical_token.token_string == L"(") {
 		core_info.lexical_token.cache_token = LEFT_BRACKETS;

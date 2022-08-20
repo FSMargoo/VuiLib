@@ -61,6 +61,7 @@ class VFont {
 	 }
 
  public:
+    VFont(const VFont& FontObject);
 	 VFont(const std::wstring& FamilyName, FontWeight TextWidget, FontStyle TextStyle, FontStretch TextStretch,
 		 float TextSize, const std::wstring& Local);
 	 ~VFont();
@@ -73,9 +74,9 @@ class VFont {
 
      std::wstring GetFamilyName() const;
      std::wstring GetLocaleName() const;
-     FontWeight   GetTextWeightStyle();
-     FontStyle    GetTextFontStyle();
-     FontStretch  GetFontStretchStyle();
+     FontWeight   GetTextWeightStyle() const;
+     FontStyle    GetTextFontStyle() const;
+     FontStretch  GetFontStretchStyle() const;
      int          GetTextSize() const;
 };
 }

@@ -183,7 +183,7 @@ namespace VSS {
 
                     PropertyValue.Type = VSSPropertyType::ColorValue;
                     PropertyValue.PropertyAsColorValue
-                            = Core::VColor(ColorArrary[0], ColorArrary[1], ColorArrary[2], 255 * Alpha);
+                            = Core::VColor::FromBYTERGBA(ColorArrary[0], ColorArrary[1], ColorArrary[2], 255 * Alpha);
 
                     Property.ValueList.push_back(PropertyValue);
 
