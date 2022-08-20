@@ -16,8 +16,7 @@ int main() {
     VApplication Application;
 
     VMLWidget VMLWidget(0, 0, &Application, true);
-    VMLParser Parser(L"./testvml.xml", VMLParserParseMode::FromFile);
-    auto	  Result      = VMLWidget.LoadVML(Parser.ParseVML());
+    auto	  Result= VMLWidget.LoadVML(L"./testvml.xml", VMLParserParseMode::FromFile);
 
     return Application.Exec();
 }

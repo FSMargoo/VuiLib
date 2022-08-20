@@ -73,8 +73,10 @@ namespace VML {
 
     public:
         VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
+        VMLWidget(Core::VApplication* Parent, const bool& Sizble = true);
 
     public:
+        VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);
         VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VUIObject* UIParent = nullptr);
         VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent = nullptr);
 

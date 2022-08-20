@@ -174,8 +174,18 @@ namespace VML {
             return Left.ChildrenSequence < Right.ChildrenSequence;
         });
     }
+    VMLWidget::VMLWidget(Core::VApplication* Parent, const bool& Sizble)
+            : VMainWindow(0, 0, Parent, Sizble) {
+
+    }
     VMLWidget::VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble)
             : VMainWindow(Width, Height, Parent, Sizble) {    }
+    VMLWidgetLoadResult VMLWidget::LoadVML(const std::wstring VML, VMLParserParseMode StringMode) {
+        VMLParser Parser(VML, StringMode);
+
+        return LoadVML(Parser.ParseVML());
+    }
+
     VMLWidgetLoadResult VMLWidget::LoadVML(VMLParserResult VMLAstTree, VUIObject* UIParent) {
         if (VMLAstTree.ParserStatus == VMLParserStatus::Error) {
             std::wstring ASTError;
