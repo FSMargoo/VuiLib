@@ -12,7 +12,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 enum class VUIThemeType {
-	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel
+	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton
 };
 
 struct VBasicUITheme {
@@ -57,7 +57,7 @@ struct VLabelStatusTheme {
     VLabelStatusTheme(const VLabelStatusTheme& Theme);
 };
 
-struct VLabelCommomTheme : public VBasicUITheme {
+struct VLabelCommonTheme : public VBasicUITheme {
  public:
 	 VLabelStatusTheme StaticTheme;
 	 VLabelStatusTheme OnHoverTheme;
@@ -66,11 +66,11 @@ struct VLabelCommomTheme : public VBasicUITheme {
      VFont*            LabelFont;
 
  public:
-	 VLabelCommomTheme(const VLabelCommomTheme& LabelObject);
-	 VLabelCommomTheme();
+	 VLabelCommonTheme(const VLabelCommonTheme& LabelObject);
+	 VLabelCommonTheme();
 };
 
-struct VPushButtonTheme : public VLabelCommomTheme {
+struct VPushButtonTheme : public VLabelCommonTheme {
  public:
      std::wstring PlaneText;
 
@@ -84,7 +84,21 @@ struct VPushButtonTheme : public VLabelCommomTheme {
 	 }
 };
 
-struct VTextLabelTheme : public VLabelCommomTheme {
+struct VRadioButtonTheme : public VLabelCommonTheme {
+ public:
+     bool SwitchStatus = false;
+
+ public:
+     VRadioButtonTheme();
+     VRadioButtonTheme(const VRadioButtonTheme& Theme);
+
+ public:
+     VUIThemeType GetThemeType() override {
+         return VUIThemeType::VRadioButton;
+     }
+};
+
+struct VTextLabelTheme : public VLabelCommonTheme {
  public:
     std::wstring PlaneText;
 

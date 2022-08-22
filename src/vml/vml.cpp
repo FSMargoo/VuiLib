@@ -21,6 +21,9 @@ namespace VML {
         if (String == L"layout") {
             return VMLObjectType::Layout;
         }
+        if (String == L"radiobutton") {
+            return VMLObjectType::RadioButton;
+        }
 
         return Type;
     }
@@ -37,6 +40,9 @@ namespace VML {
             }
             case VMLObjectType::MainWindow: {
                 return L"mainwindow";
+            }
+            case VMLObjectType::RadioButton: {
+                return L"radiobutton";
             }
         }
 
@@ -56,6 +62,11 @@ namespace VML {
             }
             case VMLObjectType::ImageLabel: {
                 VSS::VSSVImageLabelBuilder Builder(static_cast<Core::VImageLabel*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::RadioButton: {
+                VSS::VSSVRadioButtonBuilder Builder(static_cast<Core::VRadioButton*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }
@@ -169,6 +180,7 @@ namespace VML {
     VMLFinder::operator Core::VUIObject* () {
         return OriginObject->UIObject;
     }
+
     void VMLWidget::SortVMLAstNode(std::vector<VMLNode>& Nodes) {
         std::sort(Nodes.begin(), Nodes.end(), [](VMLNode Left, VMLNode Right) -> bool {
             return Left.ChildrenSequence < Right.ChildrenSequence;
@@ -310,6 +322,21 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"radiobutton") {
+                        Core::VRadioButton* RadioButton = new Core::VRadioButton(UIParent);
+                        VMLObject->UIObject = RadioButton;
+                        VMLObject->VMLType = VMLObjectType::RadioButton;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLRadioButtonBuilder Builder(RadioButton, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 
@@ -338,7 +365,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"Id Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"id Must Use String Value" };
                 }
             }
             if (Element.PropertyExsit(L"class")) {
@@ -350,7 +377,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"Class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
                 }
             }
             if (Element.PropertyExsit(L"style-sheet")) {
@@ -362,7 +389,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"Class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
                 }
             }
             if (Element.PropertyExsit(L"style-sheet-src")) {
@@ -375,7 +402,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"Class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
                 }
             }
 
@@ -405,7 +432,7 @@ namespace VML {
                 Selector->GetType() == VSS::VSSSelectorType::FakeClassSelector) {
                 std::wstring ElementTag = static_cast<VSS::VSSElementSelector*>(Selector)->ElementTag;
 
-                if (ElementTag == L"vpushbutton") {
+                if (ElementTag == L"pushbutton") {
                     Core::VPushButtonTheme* PushButtonTheme = new Core::VPushButtonTheme(*(
                             static_cast<Core::VPushButtonTheme*>(GetTargetTheme(Core::VUIThemeType::VPushButton)))
                     );
@@ -414,7 +441,7 @@ namespace VML {
 
                     static_cast<Core::VApplication*>(GetParent())->SetTheme(PushButtonTheme);
                 }
-                if (ElementTag == L"vimagelabel") {
+                if (ElementTag == L"imagelabel") {
                     Core::VImageLabelTheme* ImageLabelTheme = new Core::VImageLabelTheme(*(
                             static_cast<Core::VImageLabelTheme*>(GetTargetTheme(Core::VUIThemeType::VImageLabel)))
                     );
@@ -423,12 +450,21 @@ namespace VML {
 
                     static_cast<Core::VApplication*>(GetParent())->SetTheme(ImageLabelTheme);
                 }
-                if (ElementTag == L"vtextlabel") {
+                if (ElementTag == L"textlabel") {
                     Core::VTextLabelTheme* TextLabelTheme = new Core::VTextLabelTheme(*(static_cast<Core::VTextLabelTheme*>(
                             GetTargetTheme(Core::VUIThemeType::VTextLabel)))
                     );
 
                     VSS::VSSVTextLabelBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, TextLabelTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(TextLabelTheme);
+                }
+                if (ElementTag == L"radiobutton") {
+                    Core::VRadioButtonTheme* TextLabelTheme = new Core::VRadioButtonTheme(*(static_cast<Core::VRadioButtonTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VRadioButton)))
+                    );
+
+                    VSS::VSSVRadioButtonBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, TextLabelTheme);
 
                     static_cast<Core::VApplication*>(GetParent())->SetTheme(TextLabelTheme);
                 }

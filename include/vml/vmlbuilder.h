@@ -4,6 +4,7 @@
 
 #include "../core/control/vlayout.h"
 #include "../core/control/vtextlabel.h"
+#include "../core/control/vradiobutton.h"
 #include "../core/control/vimagelabel.h"
 #include "../core/control/vpushbutton.h"
 
@@ -29,11 +30,11 @@ namespace VML {
     protected:
         void Builder(Core::VUIObject* Object, const int& X, const int& Y, const int& Width, const int& Height, const int& Transparency, const bool& Visble);
 
-        virtual void AnalyzeProperty(Core::VUIObject* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        virtual void AnalyzeProperty(Core::VUIObject* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                      VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLCommonBuilder(Core::VUIObject* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLCommonBuilder(Core::VUIObject* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                           VMLControlBuildStatus* BuildStatus) {
             AnalyzeProperty(Object, PropertyValueList, BuildStatus);
         }
@@ -42,22 +43,22 @@ namespace VML {
     protected:
         void Builder(Core::VPushButton* PushButton, const std::wstring& PlaneText, const int& TextSize = 0);
 
-        void AnalyzeProperty(Core::VPushButton* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        void AnalyzeProperty(Core::VPushButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLPushButtonBuilder(Core::VPushButton* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLPushButtonBuilder(Core::VPushButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                VMLControlBuildStatus* BuildStatus);
     };
     class VMLImageLabelBuilder : public VMLCommonBuilder {
     protected:
         void Builder(Core::VImageLabel* ImageLabel, Core::VImage* Image);
 
-        void AnalyzeProperty(Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        void AnalyzeProperty(Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLImageLabelBuilder(Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLImageLabelBuilder(Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                               VMLControlBuildStatus* BuildStatus);
     };
     class VMLTextLabelBuilder : public VMLCommonBuilder {
@@ -68,11 +69,11 @@ namespace VML {
     protected:
         void Builder(Core::VTextLabel* TextLabel, const std::wstring& PlaneText, const int& TextSize, const Core::VFontAlignment& Alignment, const Core::VFontParagraphAlignment& LineAlignment);
 
-        void AnalyzeProperty(Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        void AnalyzeProperty(Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLTextLabelBuilder(Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLTextLabelBuilder(Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
     };
     class VMLLayoutBuilder : public VMLCommonBuilder {
@@ -81,23 +82,34 @@ namespace VML {
                      double VerticalLayoutPercent, double HorziontalLayoutPercent,
                      int RelativeX, int RelativeY, int XMiddleOffset, int YMiddleOffset);
 
-        void AnalyzeProperty(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        void AnalyzeProperty(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLLayoutBuilder(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLLayoutBuilder(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                           VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLRadioButtonBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VRadioButton* RadioButton, const bool& Status);
+
+        void AnalyzeProperty(Core::VRadioButton* RadioButton, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLRadioButtonBuilder(Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                              VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {
     protected:
         void Builder(Core::VMainWindow* MainWindow, const int& Width, const int& Height, const std::wstring& Title, const bool& Sizble);
 
-        void AnalyzeProperty(Core::VMainWindow* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        void AnalyzeProperty(Core::VMainWindow* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
 
     public:
-        VMLMainWindowBuilder(Core::VMainWindow* MainWindow, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+        VMLMainWindowBuilder(Core::VMainWindow* MainWindow, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                               VMLControlBuildStatus* BuildStatus);
     };
     

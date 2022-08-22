@@ -1,9 +1,12 @@
+#pragma once
+
 #include "vssparser.h"
 
 #include "../core/control/vlayout.h"
 #include "../core/control/vtextlabel.h"
 #include "../core/control/vimagelabel.h"
 #include "../core/control/vpushbutton.h"
+#include "../core/control/vradiobutton.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -26,6 +29,18 @@ namespace VSS {
         VSSVPushButtonBuilder(Core::VPushButton *TargetControl,
                               std::vector<VSSBasicSelector *> SelectorSet,
                               Core::VPushButtonTheme *PushButtonTheme);
+    };
+
+    class VSSVRadioButtonBuilder {
+    private:
+        void BuildVSSObject(Core::VRadioButton *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VRadioButtonTheme *RadioButtonTheme);
+
+    public:
+        VSSVRadioButtonBuilder(Core::VRadioButton *TargetControl,
+                               std::vector<VSSBasicSelector *> SelectorSet,
+                               Core::VRadioButtonTheme *RadioButtonTheme);
     };
 
     class VSSVTextLabelBuilder {

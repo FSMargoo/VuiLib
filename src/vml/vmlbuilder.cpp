@@ -19,7 +19,7 @@ namespace VML {
     }
 
     void VMLCommonBuilder::AnalyzeProperty(Core::VUIObject *Object,
-                                            std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                            std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                             VMLControlBuildStatus *BuildStatus) {
         int X = 0;
         int Y = 0;
@@ -105,7 +105,7 @@ namespace VML {
     }
 
     void VMLPushButtonBuilder::AnalyzeProperty(Core::VPushButton *Object,
-                                                 std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus *BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
@@ -139,7 +139,7 @@ namespace VML {
     }
 
     VMLPushButtonBuilder::VMLPushButtonBuilder(Core::VPushButton *Object,
-                                                   std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                   std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                    VMLControlBuildStatus *BuildStatus)
             : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(Object, PropertyValueList, BuildStatus);
@@ -150,7 +150,7 @@ namespace VML {
     }
 
     void VMLImageLabelBuilder::AnalyzeProperty(Core::VImageLabel *Object,
-                                                std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                 VMLControlBuildStatus *BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
@@ -174,7 +174,7 @@ namespace VML {
     }
 
     VMLImageLabelBuilder::VMLImageLabelBuilder(Core::VImageLabel *Object,
-                                                 std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus *BuildStatus)
             : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(Object, PropertyValueList, BuildStatus);
@@ -221,7 +221,7 @@ namespace VML {
     }
 
     void VMLTextLabelBuilder::AnalyzeProperty(Core::VTextLabel *Object,
-                                               std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                VMLControlBuildStatus *BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
@@ -278,7 +278,7 @@ namespace VML {
     }
 
     VMLTextLabelBuilder::VMLTextLabelBuilder(Core::VTextLabel *Object,
-                                               std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                VMLControlBuildStatus *BuildStatus)
             : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(Object, PropertyValueList, BuildStatus);
@@ -296,7 +296,7 @@ namespace VML {
     }
 
     void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow *Object,
-                                                std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                 VMLControlBuildStatus *BuildStatus) {
         int Width = 0;
         int Height = 0;
@@ -352,7 +352,7 @@ namespace VML {
     }
 
     VMLMainWindowBuilder::VMLMainWindowBuilder(Core::VMainWindow *MainWindow,
-                                                 std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus *BuildStatus) {
         AnalyzeProperty(MainWindow, PropertyValueList, BuildStatus);
     }
@@ -370,7 +370,7 @@ namespace VML {
         Layout->SetXMiddleOffset(YMiddleOffset);
     }
 
-    void VMLLayoutBuilder::AnalyzeProperty(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+    void VMLLayoutBuilder::AnalyzeProperty(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
 
@@ -390,7 +390,7 @@ namespace VML {
             if (ElementProperty.first == L"vertical-percent") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"vertical-percent\" Property Must Match the Type \"Int\"";
+                    BuildStatus->FailedReason = L"\"vertical-percent\" Property Must Match the Type \"int\"";
 
                     return;
                 }
@@ -513,10 +513,41 @@ namespace VML {
                 VerticalLayoutPercent, HorziontalLayoutPercent,
                 RelativeX, RelativeY, XMiddleOffset, YMiddleOffset);
     }
-    VMLLayoutBuilder::VMLLayoutBuilder(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue> PropertyValueList,
+    VMLLayoutBuilder::VMLLayoutBuilder(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
             VMLControlBuildStatus* BuildStatus)
             : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
                 AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status) {
+        RadioButton->SetSwitchStatus(Status);
+    }
+    void VMLRadioButtonBuilder::AnalyzeProperty(Core::VRadioButton *RadioButton,
+                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                VML::VMLControlBuildStatus *BuildStatus) {
+        VMLCommonBuilder::AnalyzeProperty(RadioButton, PropertyValueList, BuildStatus);
+
+        bool SwitchStatus = false;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"switch-status") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"switch-status\" Property Must Match the Type \"bool\"";
+
+                    return;
+                }
+
+                SwitchStatus = ElementProperty.second.PropertyAsBool;
+            }
+        }
+
+        Builder(RadioButton, SwitchStatus);
+    }
+    VMLRadioButtonBuilder::VMLRadioButtonBuilder(Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                 VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
     }
 }
 
