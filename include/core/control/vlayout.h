@@ -14,7 +14,7 @@ enum class VLayoutMode {
 
 class VLayout : public VUIObject {
 private:
-    VUIObject* TargetWindow;
+    VUIObject*   TargetWindow;
 
     VLayoutMode  VerticalLayoutMode;
     VLayoutMode  HorizontalLayoutMode;
@@ -29,128 +29,8 @@ private:
     int          YMiddleOffset = 0;
 
 private:
-    void TargetWindowSizeChanged(const int& Width, const int& Height) {
-        int NewX = 0;
-        int NewY = 0;
-
-        switch (HorizontalLayoutMode) {
-            case VLayoutMode::LayoutModeCenter: {
-                NewX = Width / 2 - GetParent()->GetRegion().GetWidth() / 2;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeFar: {
-                NewX = Width - GetParent()->GetRegion().GetWidth();
-
-                break;
-            }
-            case VLayoutMode::LayoutModePercent: {
-                NewX = Width * VerticalLayoutPercent;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelative: {
-                NewX = Width - RelativeX;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelativeTop: {
-                NewX = RelativeX;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelativeBottom: {
-                NewX = Width - RelativeX;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeMiddleOffset: {
-                NewX = Width / 2 - GetParent()->GetRegion().GetWidth() / 2 + XMiddleOffset;
-
-                break;
-            }
-        }
-        switch (VerticalLayoutMode) {
-            case VLayoutMode::LayoutModeCenter: {
-                NewY = Height / 2 - GetParent()->GetRegion().GetHeight() / 2;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeFar: {
-                NewY = Height - GetParent()->GetRegion().GetHeight();
-
-                break;
-            }
-            case VLayoutMode::LayoutModePercent: {
-                NewY = Height * VerticalLayoutPercent;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelative: {
-                NewY = RelativeY;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelativeTop: {
-                NewY = RelativeY;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeRelativeBottom: {
-                NewY = Height - RelativeY;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeMiddleOffset: {
-                NewY = Height / 2 - GetParent()->GetRegion().GetHeight() / 2 + YMiddleOffset;
-
-                break;
-            }
-        }
-
-        GetParent()->Move(NewX, NewY);
-    }
-    void ParentSizeChanged(const int& Width, const int& Height) {
-        int NewX = 0;
-        int NewY = 0;
-
-        switch (HorizontalLayoutMode) {
-            case VLayoutMode::LayoutModeCenter: {
-                NewX = TargetWindow->GetWidth() / 2 - Width / 2;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeFar: {
-                NewX = TargetWindow->GetWidth() - Width;
-
-                break;
-            }
-            case VLayoutMode::LayoutModePercent: {
-                NewX = TargetWindow->GetWidth() * VerticalLayoutPercent;
-
-                break;
-            }
-        }
-        switch (VerticalLayoutMode) {
-            case VLayoutMode::LayoutModeCenter: {
-                NewY = TargetWindow->GetHeight() / 2 - Height / 2;
-
-                break;
-            }
-            case VLayoutMode::LayoutModeFar: {
-                NewY = TargetWindow->GetHeight() - Height;
-
-                break;
-            }
-            case VLayoutMode::LayoutModePercent: {
-                NewY = TargetWindow->GetHeight() * VerticalLayoutPercent;
-
-                break;
-            }
-        }
-
-        GetParent()->Move(NewX, NewY);
-    }
+    void TargetWindowSizeChanged(const int& Width, const int& Height);
+    void ParentSizeChanged(const int& Width, const int& Height);
 
 public:
     /*
@@ -158,9 +38,12 @@ public:
     */
 
     VLayout(VUIObject* Parent, VUIObject* TargetWidget);
+    VLayout(VUIObject* Parent, VUIObject* TargetWidget,
+            const VLayoutMode& VerticalMode,
+            const VLayoutMode& HorizontalMode);
 
-    void SetVerticalLayoutMode(VLayoutMode Mode);
-    void SetHorizontalLayoutMode(VLayoutMode Mode);
+    void SetVerticalLayoutMode(const VLayoutMode& Mode);
+    void SetHorizontalLayoutMode(const VLayoutMode& Mode);
 
     void SetVerticalLayoutPercent(const double& Percent);
     void SetHorizontalLayoutPercent(const double& Percent);
@@ -176,6 +59,29 @@ public:
     int GetXMiddleOffset() const;
     int GetYMiddleOffset() const;
 };
+class VScaleLayout : public VUIObject {
+private:
+    VUIObject* TargetWindow;
+
+    double     LayoutWidthPercent  = 0.f;
+    double     LayoutHeightPercent = 0.f;
+
+private:
+    void TargetWindowSizeChanged(const int& Width, const int& Height);
+
+public:
+    /*
+     * Build up Functional
+    */
+
+    VScaleLayout(VUIObject* Parent, VUIObject* TargetWidget);
+    VScaleLayout(VUIObject* Parent, VUIObject* TargetWidget,
+                 const double& WidthPercent, const double& HeightPercent);
+
+    void SetWidthScalePercent(const double& Percent);
+    void SetHeightScalePercent(const double& Percent);
+};
+
 };
 
 VLIB_END_NAMESPACE

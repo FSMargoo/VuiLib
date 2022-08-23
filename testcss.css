@@ -20,3 +20,11 @@
 .target-radio-button:disabled {
     background-color: #000000;
 }
+.scale-text {
+    text-align: center;
+    vertical-align: center;
+
+    color: #000000;
+
+    background-color: rgb(255, 255, 255);
+}

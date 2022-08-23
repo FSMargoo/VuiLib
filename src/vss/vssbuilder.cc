@@ -78,8 +78,8 @@ namespace VSS {
                     if (Property.first == L"vertical-align") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::StringValue) {
-                                Theme->LabelFont->SetLineAlignment(
-                                        VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                                Theme->LabelFont->SetParagraphAlignment(
+                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
                             }
                         }
                     }
@@ -474,8 +474,8 @@ namespace VSS {
                     if (Property.first == L"vertical-align") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::StringValue) {
-                                Theme->LabelFont->SetLineAlignment(
-                                        VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                                Theme->LabelFont->SetParagraphAlignment(
+                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
                             }
                         }
                     }

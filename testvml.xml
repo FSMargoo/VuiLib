@@ -1,4 +1,4 @@
-<widget type="mainwindow" width="589" height="222" title="Welcome to new VUILib" style-sheet-src="./testcss.css" sizable="false">
+<widget type="mainwindow" width="589" height="222" title="Welcome to new VUILib" style-sheet-src="./testcss.css" sizable="true">
     <title-text type="textlabel" x="35" y="79" width="175" height="43" text="New VuiLib" class="main-title">
     </title-text>
     <version-text type="textlabel" x="35" y="122" width="135" height="21" text="Version 2.0.x beta" class="version-subtext-text">

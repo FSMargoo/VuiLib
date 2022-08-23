@@ -21,6 +21,9 @@ namespace VML {
         if (String == L"layout") {
             return VMLObjectType::Layout;
         }
+        if (String == L"scalelayout") {
+            return VMLObjectType::ScaleLayout;
+        }
         if (String == L"radiobutton") {
             return VMLObjectType::RadioButton;
         }
@@ -43,6 +46,9 @@ namespace VML {
             }
             case VMLObjectType::RadioButton: {
                 return L"radiobutton";
+            }
+            case VMLObjectType::ScaleLayout: {
+                return L"scalelayout";
             }
         }
 
@@ -300,6 +306,25 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLLayoutBuilder      Builder(Layout, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"scalelayout") {
+                        if (UIParent->GetParent()->IsApplication() == true) {
+                            continue;
+                        }
+
+                        Core::VScaleLayout* Layout = new Core::VScaleLayout(UIParent, UIParent->GetParent());
+                        VMLObject->UIObject = Layout;
+                        VMLObject->VMLType = VMLObjectType::Layout;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLScaleLayoutBuilder Builder(Layout, Element.NodeValue, &BuildStatus);
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;

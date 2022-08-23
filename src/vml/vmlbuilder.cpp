@@ -549,6 +549,46 @@ namespace VML {
             : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(Object, PropertyValueList, BuildStatus);
     }
+    void VMLScaleLayoutBuilder::Builder(Core::VScaleLayout* Layout, const double& ScaleWidthPercent, const double& ScaleHeightPercent) {
+        Layout->SetWidthScalePercent(ScaleWidthPercent);
+        Layout->SetHeightScalePercent(ScaleHeightPercent);
+    }
+    void VMLScaleLayoutBuilder::AnalyzeProperty(Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                         VMLControlBuildStatus* BuildStatus) {
+        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+
+        double WidthScale = 1.f;
+        double HeightScale = 1.f;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"width-scale") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"width-scale\" Property Must Match the Type \"double\"";
+
+                    return;
+                }
+
+                WidthScale = ElementProperty.second.PropertyAsDouble;
+            }
+            if (ElementProperty.first == L"height-scale") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"height-scale\" Property Must Match the Type \"double\"";
+
+                    return;
+                }
+
+                HeightScale = ElementProperty.second.PropertyAsDouble;
+            }
+        }
+
+        Builder(Object, WidthScale, HeightScale);
+    }
+    VMLScaleLayoutBuilder::VMLScaleLayoutBuilder(Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus): VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    }
 }
 
 VLIB_END_NAMESPACE
