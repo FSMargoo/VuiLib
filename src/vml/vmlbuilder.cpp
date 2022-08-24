@@ -3,9 +3,31 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {
-    void
-    VMLCommonBuilder::Builder(Core::VUIObject *Object, const int &X, const int &Y, const int &Width, const int &Height,
-                               const int &Transparency, const bool &Visble) {
+    void VMLCommonBuilder::Builder(Core::VUIObject* Object,
+                 const int& X, const int& Y,
+                 const int& Width,
+                 const int& Height,
+                 const int& Transparency,
+                 const bool& Visble,
+                 const Core::VLayoutMode& VerticalLayoutMode,
+                 const Core::VLayoutMode& HorizontalLayoutMode,
+                 const double& VerticalLayoutPercent, const double& HorizontalLayoutPercent,
+                 const int& RelativeX, const int& RelativeY,
+                 const int& XMiddleOffset, const int& YMiddleOffset,
+                 const double& WidthRatio, const double& HeightRatio) {
+        Core::VLayout* _NativeLayout = new Core::VLayout(Object, Object->GetParent());
+        _NativeLayout->SetHorizontalLayoutMode(HorizontalLayoutMode);
+        _NativeLayout->SetVerticalLayoutMode(VerticalLayoutMode);
+        _NativeLayout->SetVerticalLayoutPercent(VerticalLayoutPercent);
+        _NativeLayout->SetHorizontalLayoutPercent(HorizontalLayoutPercent);
+        _NativeLayout->SetRelativeX(RelativeX);
+        _NativeLayout->SetRelativeY(RelativeY);
+        _NativeLayout->SetXMiddleOffset(XMiddleOffset);
+        _NativeLayout->SetYMiddleOffset(YMiddleOffset);
+        Core::VScaleLayout* _NativeScaleLayout = new Core::VScaleLayout(Object, Object->GetParent());
+        _NativeScaleLayout->SetWidthScalePercent(WidthRatio);
+        _NativeScaleLayout->SetHeightScalePercent(HeightRatio);
+
         if (!Object->IsWidget()) {
             Object->Move(X, Y);
         }
@@ -28,48 +50,163 @@ namespace VML {
         int Transparency = 255;
         bool Visble = true;
 
+        Core::VLayoutMode  VerticalLayoutMode   = Core::VLayoutMode::LayoutModeDontUse;
+        Core::VLayoutMode  HorizontalLayoutMode = Core::VLayoutMode::LayoutModeDontUse;
+
+        double       VerticalLayoutPercent   = 0.f;
+        double       HorizontalLayoutPercent = 0.f;
+
+        int          RelativeX = 0;
+        int          RelativeY = 0;
+
+        int          XMiddleOffset = 0;
+        int          YMiddleOffset = 0;
+
+        double       WidthRatio  = 0.f;
+        double       HeightRatio = 0.f;
+
         BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Ok;
 
         for (auto &ElementProperty: PropertyValueList) {
             if (ElementProperty.first == L"x") {
-                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"x\" Property must match the type \"int\"";
+                    BuildStatus->FailedReason = L"\"x\" Property must match the type \"int\" or \"native call functional\"";
 
                     return;
                 }
 
-                X = ElementProperty.second.PropertyAsInt;
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    X = ElementProperty.second.PropertyAsInt;
+                } else {
+                    if (ElementProperty.second.NativeCallMethodName == L"center") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"centeroffset") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeMiddleOffset;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::IntValue) {
+                                XMiddleOffset = Property.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"relative") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::IntValue) {
+                                RelativeX = Property.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"ratio") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
+                                HorizontalLayoutPercent = Property.PropertyAsDouble;
+                            }
+                        }
+                    }
+                }
             }
             if (ElementProperty.first == L"y") {
-                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"y\" Property must match the type \"int\"";
+                    BuildStatus->FailedReason = L"\"y\" Property must match the type \"int\"  or \"native call functional\"";
 
                     return;
                 }
 
-                Y = ElementProperty.second.PropertyAsInt;
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    Y = ElementProperty.second.PropertyAsInt;
+                } else {
+                    if (ElementProperty.second.NativeCallMethodName == L"center") {
+                        VerticalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"centeroffset") {
+                        VerticalLayoutMode = Core::VLayoutMode::LayoutModeMiddleOffset;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::IntValue) {
+                                YMiddleOffset = Property.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"relative") {
+                        VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::IntValue) {
+                                RelativeY = Property.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"ratio") {
+                        VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
+                                VerticalLayoutPercent = Property.PropertyAsDouble;
+                            }
+                        }
+                    }
+                }
             }
             if (ElementProperty.first == L"width") {
-                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
                     BuildStatus->FailedReason = L"\"width\" Property must match the type \"int\"";
 
                     return;
                 }
 
-                Width = ElementProperty.second.PropertyAsInt;
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    Width = ElementProperty.second.PropertyAsInt;
+                } else {
+                    if (ElementProperty.second.NativeCallMethodName == L"fill") {
+                        WidthRatio = 1.f;
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"scale") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
+                                WidthRatio = Property.PropertyAsDouble;
+                            }
+                        }
+                    }
+                }
             }
             if (ElementProperty.first == L"height") {
-                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"height\" Property must match the type \"int\"";
+                    BuildStatus->FailedReason = L"\"height\" Property must match the type \"int\" or \"native call functional\"";
 
                     return;
                 }
 
-                Height = ElementProperty.second.PropertyAsInt;
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    Height = ElementProperty.second.PropertyAsInt;
+                } else {
+                    if (ElementProperty.second.NativeCallMethodName == L"fill") {
+                        HeightRatio = 1.f;
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"scale") {
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+
+                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
+                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
+                                HeightRatio = Property.PropertyAsDouble;
+                            }
+                        }
+                    }
+                }
             }
             if (ElementProperty.first == L"transparency") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
@@ -93,7 +230,11 @@ namespace VML {
             }
         }
 
-        VMLCommonBuilder::Builder(Object, X, Y, Width, Height, Transparency, Visble);
+        VMLCommonBuilder::Builder(Object, X, Y, Width, Height, Transparency, Visble,
+                                  VerticalLayoutMode, HorizontalLayoutMode,
+                                  VerticalLayoutPercent, HorizontalLayoutPercent,
+                                  RelativeX, RelativeY, XMiddleOffset, YMiddleOffset,
+                                  WidthRatio, HeightRatio);
     }
 
     void VMLPushButtonBuilder::Builder(Core::VPushButton *PushButton, const std::wstring &PlaneText, const int &TextSize) {

@@ -25,8 +25,8 @@ VLayout::VLayout(Core::VUIObject *Parent, Core::VUIObject *TargetWidget,
     HorizontalLayoutMode = HorizontalMode;
 }
 void VLayout::TargetWindowSizeChanged(const int& Width, const int& Height) {
-    int NewX = 0;
-    int NewY = 0;
+    int NewX = GetParent()->GetX();
+    int NewY = GetParent()->GetY();
 
     switch (HorizontalLayoutMode) {
         case VLayoutMode::LayoutModeCenter: {
@@ -106,8 +106,8 @@ void VLayout::TargetWindowSizeChanged(const int& Width, const int& Height) {
     GetParent()->Move(NewX, NewY);
 }
 void VLayout::ParentSizeChanged(const int& Width, const int& Height) {
-    int NewX = 0;
-    int NewY = 0;
+    int NewX = GetParent()->GetX();
+    int NewY = GetParent()->GetY();
 
     switch (HorizontalLayoutMode) {
         case VLayoutMode::LayoutModeCenter: {
@@ -224,7 +224,8 @@ void VScaleLayout::SetHeightScalePercent(const double& Percent) {
     TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
 }
 void VScaleLayout::TargetWindowSizeChanged(const int &Width, const int &Height) {
-    GetParent()->Resize(Width * LayoutWidthPercent, Height * LayoutHeightPercent);
+    GetParent()->Resize(LayoutWidthPercent != 0.f ? Width * LayoutWidthPercent : GetParent()->GetWidth(),
+                        LayoutHeightPercent != 0.f ? Height * LayoutHeightPercent : GetParent()->GetHeight());
 }
 
 };

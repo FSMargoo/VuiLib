@@ -28,7 +28,18 @@ namespace VML {
 
     class VMLCommonBuilder {
     protected:
-        void Builder(Core::VUIObject* Object, const int& X, const int& Y, const int& Width, const int& Height, const int& Transparency, const bool& Visble);
+        void Builder(Core::VUIObject* Object,
+                     const int& X, const int& Y,
+                     const int& Width,
+                     const int& Height,
+                     const int& Transparency,
+                     const bool& Visble,
+                     const Core::VLayoutMode& VerticalLayoutMode,
+                     const Core::VLayoutMode& HorizontalLayoutMode,
+                     const double& VerticalLayoutPercent, const double& HorizontalLayoutPercent,
+                     const int& RelativeX, const int& RelativeY,
+                     const int& XMiddleOffset, const int& YMiddleOffset,
+                     const double& WidthRatio, const double& HeightRatio);
 
         virtual void AnalyzeProperty(Core::VUIObject* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                      VMLControlBuildStatus* BuildStatus);

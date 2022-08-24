@@ -23,6 +23,48 @@ namespace VML {
     VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring& String) {
         std::wstring ValueString = String.substr(1, String.size() - 2);
 
+        if (ValueString[0] == L'@') {
+            VMLPropertyValue Value;
+            Value.PropertyType = VMLPropertyType::NativeCall;
+
+            VKits::seal_lexical* NativeCallLexical = new VKits::seal_lexical(ValueString);
+
+            // Skip @
+            NativeCallLexical->get_token();
+
+            Value.NativeCallMethodName = NativeCallLexical->get_token().token_string;
+
+            auto GrammarCheckToken = NativeCallLexical->get_token();
+
+            if (GrammarCheckToken.token_string != L"(" ||
+                GrammarCheckToken.cache_token == EOF_TOKEN) {
+                return Value;
+            }
+
+            std::wstring PropertyValue;
+            while (!NativeCallLexical->is_eof()) {
+                auto CacheToken = NativeCallLexical->get_token();
+
+                if (CacheToken.cache_token != CONST_STRING) {
+                    CacheToken.token_string.insert(CacheToken.token_string.begin(), L'\"');
+                    CacheToken.token_string.insert(CacheToken.token_string.end(), L'\"');
+                }
+
+                PropertyValue = CacheToken.token_string;
+                Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
+
+                auto TokenString = NativeCallLexical->get_token().token_string;
+
+                if (TokenString != L"," || TokenString == L")") {
+                    break;
+                }
+
+                PropertyValue.clear();
+            }
+
+            return Value;
+        }
+
         if (ValueString == L"true") {
             VMLPropertyValue Value;
             Value.PropertyAsBool = true;

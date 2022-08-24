@@ -9,15 +9,15 @@ namespace Core {
 enum class VLayoutMode {
     LayoutModeCenter, LayoutModeFar, LayoutModePercent,
     LayoutModeRelative, LayoutModeRelativeBottom, LayoutModeRelativeTop,
-    LayoutModeMiddleOffset
+    LayoutModeMiddleOffset, LayoutModeDontUse
 };
 
 class VLayout : public VUIObject {
 private:
     VUIObject*   TargetWindow;
 
-    VLayoutMode  VerticalLayoutMode;
-    VLayoutMode  HorizontalLayoutMode;
+    VLayoutMode  VerticalLayoutMode   = VLayoutMode::LayoutModeDontUse;
+    VLayoutMode  HorizontalLayoutMode = VLayoutMode::LayoutModeDontUse;
 
     double       VerticalLayoutPercent   = 0.f;
     double       HorizontalLayoutPercent = 0.f;

@@ -20,18 +20,21 @@ namespace VML {
     };
 
     enum class VMLPropertyType {
-        IntValue, StringValue, DoubleValue, BooleanValue
+        IntValue, StringValue, DoubleValue, BooleanValue, NativeCall
     };
 
     struct VMLPropertyValue {
         std::wstring	 PropertyName = L"";
 
-        VMLPropertyType PropertyType = VMLPropertyType::IntValue;
+        VMLPropertyType  PropertyType = VMLPropertyType::IntValue;
 
         int				 PropertyAsInt = 0;
         std::wstring     PropertyAsString = L"";
         double           PropertyAsDouble = 0.f;
         bool             PropertyAsBool = false;
+
+        std::wstring     NativeCallMethodName = L"";
+        std::vector<VMLPropertyValue> NativeCallParameter;
     };
 
     struct VMLNode {
