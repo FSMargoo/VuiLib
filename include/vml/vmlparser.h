@@ -20,7 +20,7 @@ namespace VML {
     };
 
     enum class VMLPropertyType {
-        IntValue, StringValue, DoubleValue, BooleanValue, NativeCall
+        IntValue, StringValue, DoubleValue, BooleanValue, NativeCall, ObjectCallParameter
     };
 
     struct VMLPropertyValue {
@@ -33,12 +33,15 @@ namespace VML {
         double           PropertyAsDouble = 0.f;
         bool             PropertyAsBool = false;
 
+        std::vector<std::wstring>
+                         PropertyAsObjectCallParameter;
+
         std::wstring     NativeCallMethodName = L"";
         std::vector<VMLPropertyValue> NativeCallParameter;
     };
 
     struct VMLNode {
-        std::wstring							  NodeTag;
+        std::wstring							 NodeTag;
         std::map<std::wstring, VMLPropertyValue> NodeValue;
 
         std::map<std::wstring, VMLNode>		  ChildrenNodes;
@@ -49,7 +52,7 @@ namespace VML {
     };
 
     struct VMLParserResult {
-        std::vector<VMLParserError>		 ErrorInfo;
+        std::vector<VMLParserError>		ErrorInfo;
         std::map<std::wstring, VMLNode> Nodes;
         VMLParserStatus				 ParserStatus = VMLParserStatus::Ok;
     };

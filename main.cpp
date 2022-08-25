@@ -6,6 +6,7 @@
 #include "./include/core/control/vimagelabel.h"
 #include "./include/core/control/vtextlabel.h"
 
+#include "./include/vml/vmlwidget.h"
 #include "./include/vml/vml.h"
 
 int main() {

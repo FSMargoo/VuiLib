@@ -51,12 +51,34 @@ namespace VML {
                 }
 
                 PropertyValue = CacheToken.token_string;
-                Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
 
                 auto TokenString = NativeCallLexical->get_token().token_string;
 
-                if (TokenString != L"," || TokenString == L")") {
+                if (TokenString == L".") {
+                    VMLPropertyValue ObjectCallValue;
+
+                    ObjectCallValue.PropertyType = VMLPropertyType::ObjectCallParameter;
+
+                    std::wstring PropertyValue;
+                    while (!NativeCallLexical->is_eof()) {
+                        ObjectCallValue.PropertyAsObjectCallParameter.push_back(CacheToken.token_string);
+
+                        CacheToken = NativeCallLexical->get_token();
+                        if (CacheToken.token_string != L"." || CacheToken.token_string == L")") {
+                            break;
+                        }
+
+                        CacheToken = NativeCallLexical->get_token();
+                    }
+
+                    Value.NativeCallParameter.push_back(ObjectCallValue);
+                } else if (TokenString != L"," || TokenString == L")") {
+                    Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
+                    PropertyValue.clear();
+
                     break;
+                } else {
+                    Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
                 }
 
                 PropertyValue.clear();

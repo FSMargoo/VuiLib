@@ -3,6 +3,16 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {
+    bool VMLCommonBuilder::CheckNativeCallParameter(std::vector<VMLPropertyValue> Properties,
+                                  std::vector<VMLPropertyType>  PropertiesType) {
+        for (int PropertiesCount = 0; PropertiesCount != Properties.size(); ++PropertiesCount) {
+            if (Properties[PropertiesCount].PropertyType != PropertiesType[PropertiesCount]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     void VMLCommonBuilder::Builder(Core::VUIObject* Object,
                  const int& X, const int& Y,
                  const int& Width,
@@ -14,7 +24,8 @@ namespace VML {
                  const double& VerticalLayoutPercent, const double& HorizontalLayoutPercent,
                  const int& RelativeX, const int& RelativeY,
                  const int& XMiddleOffset, const int& YMiddleOffset,
-                 const double& WidthRatio, const double& HeightRatio) {
+                 const double& WidthRatio, const double& HeightRatio,
+                 const VMLFinder& ObjectFinder) {
         Core::VLayout* _NativeLayout = new Core::VLayout(Object, Object->GetParent());
         _NativeLayout->SetHorizontalLayoutMode(HorizontalLayoutMode);
         _NativeLayout->SetVerticalLayoutMode(VerticalLayoutMode);
@@ -40,9 +51,10 @@ namespace VML {
         }
     }
 
-    void VMLCommonBuilder::AnalyzeProperty(Core::VUIObject *Object,
-                                            std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-                                            VMLControlBuildStatus *BuildStatus) {
+    void VMLCommonBuilder::AnalyzeProperty(const VMLFinder& RootFinder,
+                                           Core::VUIObject* Object,
+                                           std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                           VMLControlBuildStatus* BuildStatus) {
         int X = 0;
         int Y = 0;
         int Height = 0;
@@ -52,6 +64,8 @@ namespace VML {
 
         Core::VLayoutMode  VerticalLayoutMode   = Core::VLayoutMode::LayoutModeDontUse;
         Core::VLayoutMode  HorizontalLayoutMode = Core::VLayoutMode::LayoutModeDontUse;
+
+        Core::VUIObject* LayoutParent;
 
         double       VerticalLayoutPercent   = 0.f;
         double       HorizontalLayoutPercent = 0.f;
@@ -86,28 +100,25 @@ namespace VML {
                     if (ElementProperty.second.NativeCallMethodName == L"centeroffset") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeMiddleOffset;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::IntValue) {
-                                XMiddleOffset = Property.PropertyAsInt;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                            XMiddleOffset = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"relative") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::IntValue) {
-                                RelativeX = Property.PropertyAsInt;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                            RelativeX = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
-                                HorizontalLayoutPercent = Property.PropertyAsDouble;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
+                            HorizontalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
                         }
                     }
                 }
@@ -130,28 +141,25 @@ namespace VML {
                     if (ElementProperty.second.NativeCallMethodName == L"centeroffset") {
                         VerticalLayoutMode = Core::VLayoutMode::LayoutModeMiddleOffset;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::IntValue) {
-                                YMiddleOffset = Property.PropertyAsInt;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                            YMiddleOffset = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"relative") {
                         VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::IntValue) {
-                                RelativeY = Property.PropertyAsInt;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                            RelativeY = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
                         VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
 
-                        for (auto& Property : ElementProperty.second.NativeCallParameter) {
-                            if (Property.PropertyType == VMLPropertyType::DoubleValue) {
-                                VerticalLayoutPercent = Property.PropertyAsDouble;
-                            }
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
+                            RelativeY = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
                         }
                     }
                 }
@@ -234,7 +242,7 @@ namespace VML {
                                   VerticalLayoutMode, HorizontalLayoutMode,
                                   VerticalLayoutPercent, HorizontalLayoutPercent,
                                   RelativeX, RelativeY, XMiddleOffset, YMiddleOffset,
-                                  WidthRatio, HeightRatio);
+                                  WidthRatio, HeightRatio, RootFinder);
     }
 
     void VMLPushButtonBuilder::Builder(Core::VPushButton *PushButton, const std::wstring &PlaneText, const int &TextSize) {
@@ -245,10 +253,10 @@ namespace VML {
         }
     }
 
-    void VMLPushButtonBuilder::AnalyzeProperty(Core::VPushButton *Object,
+    void VMLPushButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VPushButton *Object,
                                                  std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 
         int TextSize = 0;
         std::wstring Text;
@@ -279,21 +287,21 @@ namespace VML {
         Builder(Object, Text, TextSize);
     }
 
-    VMLPushButtonBuilder::VMLPushButtonBuilder(Core::VPushButton *Object,
-                                                   std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-                                                   VMLControlBuildStatus *BuildStatus)
-            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    VMLPushButtonBuilder::VMLPushButtonBuilder(const VMLFinder& RootFinder,
+                                               Core::VPushButton* Object,
+                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                               VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
     void VMLImageLabelBuilder::Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image) {
         ImageLabel->SetImage(Image);
     }
 
-    void VMLImageLabelBuilder::AnalyzeProperty(Core::VImageLabel *Object,
-                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-                                                VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                               VMLControlBuildStatus* BuildStatus) {
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 
         Core::VImage *Image = nullptr;
 
@@ -314,11 +322,10 @@ namespace VML {
         Builder(Object, Image);
     }
 
-    VMLImageLabelBuilder::VMLImageLabelBuilder(Core::VImageLabel *Object,
-                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-                                                 VMLControlBuildStatus *BuildStatus)
-            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    VMLImageLabelBuilder::VMLImageLabelBuilder(const VMLFinder& RootFinder, Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                               VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
     Core::VFontAlignment VMLTextLabelBuilder::ConvertAlignment(std::wstring AlignmentString) {
@@ -361,10 +368,10 @@ namespace VML {
         TextLabel->SetParagraphAlignment(LineAlignment);
     }
 
-    void VMLTextLabelBuilder::AnalyzeProperty(Core::VTextLabel *Object,
+    void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextLabel *Object,
                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 
         std::wstring Text;
         int TextSize = 0;
@@ -418,11 +425,10 @@ namespace VML {
         Builder(Object, Text, TextSize, Alignment, LineAlignment);
     }
 
-    VMLTextLabelBuilder::VMLTextLabelBuilder(Core::VTextLabel *Object,
-                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-                                               VMLControlBuildStatus *BuildStatus)
-            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    VMLTextLabelBuilder::VMLTextLabelBuilder(const VMLFinder& RootFinder, Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                             VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
     void VMLMainWindowBuilder::Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height,
@@ -511,9 +517,9 @@ namespace VML {
         Layout->SetXMiddleOffset(YMiddleOffset);
     }
 
-    void VMLLayoutBuilder::AnalyzeProperty(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+    void VMLLayoutBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 
         Core::VLayoutMode  VerticalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
         Core::VLayoutMode  HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
@@ -654,19 +660,20 @@ namespace VML {
                 VerticalLayoutPercent, HorziontalLayoutPercent,
                 RelativeX, RelativeY, XMiddleOffset, YMiddleOffset);
     }
-    VMLLayoutBuilder::VMLLayoutBuilder(Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-            VMLControlBuildStatus* BuildStatus)
-            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-                AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    VMLLayoutBuilder::VMLLayoutBuilder(const VMLFinder& RootFinder, Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+    VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+                AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
     void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status) {
         RadioButton->SetSwitchStatus(Status);
     }
-    void VMLRadioButtonBuilder::AnalyzeProperty(Core::VRadioButton *RadioButton,
+    void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder,
+                                                Core::VRadioButton *RadioButton,
                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                 VML::VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RadioButton, PropertyValueList, BuildStatus);
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, RadioButton, PropertyValueList, BuildStatus);
 
         bool SwitchStatus = false;
 
@@ -685,18 +692,18 @@ namespace VML {
 
         Builder(RadioButton, SwitchStatus);
     }
-    VMLRadioButtonBuilder::VMLRadioButtonBuilder(Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+    VMLRadioButtonBuilder::VMLRadioButtonBuilder(const VMLFinder& RootFinder, Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus* BuildStatus)
-            : VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
     void VMLScaleLayoutBuilder::Builder(Core::VScaleLayout* Layout, const double& ScaleWidthPercent, const double& ScaleHeightPercent) {
         Layout->SetWidthScalePercent(ScaleWidthPercent);
         Layout->SetHeightScalePercent(ScaleHeightPercent);
     }
-    void VMLScaleLayoutBuilder::AnalyzeProperty(Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+    void VMLScaleLayoutBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 
         double WidthScale = 1.f;
         double HeightScale = 1.f;
@@ -726,9 +733,12 @@ namespace VML {
 
         Builder(Object, WidthScale, HeightScale);
     }
-    VMLScaleLayoutBuilder::VMLScaleLayoutBuilder(Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-            VMLControlBuildStatus* BuildStatus): VMLCommonBuilder(Object, PropertyValueList, BuildStatus) {
-        AnalyzeProperty(Object, PropertyValueList, BuildStatus);
+    VMLScaleLayoutBuilder::VMLScaleLayoutBuilder(const VMLFinder& RootFinder,
+                                                 Core::VScaleLayout* Object,
+                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                 VMLControlBuildStatus* BuildStatus)
+                                                 : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 }
 
