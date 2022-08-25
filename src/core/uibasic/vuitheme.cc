@@ -126,5 +126,35 @@ VRadioButtonTheme::VRadioButtonTheme(const VRadioButtonTheme& Theme) {
     LocalTheme   = Theme.StaticTheme;
     SwitchStatus = Theme.SwitchStatus;
 }
+VCircleScrollBar::VCircleScrollBar() {
+    StaticTheme.BackgroundColor = VColor::FromBYTERGBA(87, 87, 87, 255);
+    StaticTheme.BorderColor = VColor::FromBYTERGBA(87, 87, 87, 255);
+    StaticTheme.BorderThickness = 1.3f;
+    StaticTheme.Radius = { 5, 5 };
+    StaticTheme.TextColor = VColor::FromBYTERGBA(126, 126, 126, 255);
+    StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    OnHoverTheme.BackgroundColor = VColor::FromBYTERGBA(87, 87, 87, 255);
+    OnHoverTheme.BorderColor = VColor::FromBYTERGBA(87, 87, 87, 255);
+    OnHoverTheme.TextColor = VColor::FromBYTERGBA(126, 126, 126, 255);
+    OnHoverTheme.Radius = { 5, 5 };
+    OnHoverTheme.BorderThickness = 1.3f;
+    OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    ActiveTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
+    ActiveTheme.BorderColor = VColor::FromBYTERGBA(98, 100, 167, 255);
+    ActiveTheme.TextColor = VColor::FromBYTERGBA(255, 255, 255, 255);
+    ActiveTheme.Radius = { 5, 5 };
+    ActiveTheme.BorderThickness = 1.3f;
+    ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    LocalTheme = StaticTheme;
+}
+VCircleScrollBar::VCircleScrollBar(const VCircleScrollBar& Theme) {
+    StaticTheme  = Theme.StaticTheme;
+    OnHoverTheme = Theme.OnHoverTheme;
+    ActiveTheme  = Theme.ActiveTheme;
+    LocalTheme   = Theme.StaticTheme;
+}
 
 }

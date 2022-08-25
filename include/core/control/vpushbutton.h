@@ -1,6 +1,5 @@
 // License(MIT)
 // Athuor: Margoo
-// The widget (VMainWindow)
 #pragma once
 
 #include "../uibasic/vtimer.h"
@@ -10,8 +9,9 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
+
 class VPushButton : public VAbstractButton {
- private:
+ protected:
      VPushButtonTheme*       Theme;
 
  private:
@@ -23,7 +23,7 @@ class VPushButton : public VAbstractButton {
 
      bool                    InAnimation = false;
 
- private:
+ public:
      VRect GetRegion() override;
 
  public:
