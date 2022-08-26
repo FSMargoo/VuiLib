@@ -127,10 +127,10 @@ struct VImageLabelTheme : public VBasicUITheme {
     }
 };
 
-class VCircleScrollBar : public VPushButtonTheme {
+class VCircleScrollBarTheme : public VPushButtonTheme {
 public:
-    VCircleScrollBar();
-    VCircleScrollBar(const VCircleScrollBar& Theme);
+    VCircleScrollBarTheme();
+    VCircleScrollBarTheme(const VCircleScrollBarTheme& Theme);
 
 public:
     VUIThemeType GetThemeType() override {

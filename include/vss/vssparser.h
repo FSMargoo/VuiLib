@@ -40,7 +40,7 @@ namespace VSS {
 
     enum class VSSSelectorType {
         UnkownSelector, ElementSelector, IDSelector, ClassSelector, FakeClassSelector, ClassWithFakeClassSelector,
-        GenericSelector
+        GenericSelector, FakeElementSelector, FakeElementWithClassSelector, ClassWithFakeElementSelector
     };
 
     class  VSSBasicSelector {
@@ -89,18 +89,58 @@ namespace VSS {
     };
     class  VSSClassWithFakeClassSelector : public VSSBasicSelector {
     public:
-        std::wstring TargetElement;
         std::wstring ClassTag;
+        std::wstring ElementTag;
         std::wstring FakeClassTag;
 
         VSSSelectorType GetType() override {
             return VSSSelectorType::ClassWithFakeClassSelector;
         }
     };
+    class  VSSClassWithFakeElementSelector : public VSSBasicSelector {
+    public:
+        std::wstring ElementTag;
+        std::wstring ClassTag;
+
+        VSSSelectorType GetType() override {
+            return VSSSelectorType::ClassWithFakeElementSelector;
+        }
+    };
+    class  VSSClassWithFakeClassAndFakeElementSelector : public VSSBasicSelector {
+    public:
+        std::wstring FakeElementTag;
+        std::wstring FakeClassTag;
+        std::wstring ClassTag;
+
+        VSSSelectorType GetType() override {
+            return VSSSelectorType::ClassWithFakeElementSelector;
+        }
+    };
     class  VSSGenericSelector : public VSSBasicSelector {
     public:
         VSSSelectorType GetType() override {
             return VSSSelectorType::GenericSelector;
+        }
+    };
+    class VSSFakeElementSelector : public VSSBasicSelector {
+    public:
+        std::wstring ElementTag;
+        std::wstring FakeElementTag;
+
+    public:
+        VSSSelectorType GetType() override {
+            return VSSSelectorType::FakeElementSelector;
+        }
+    };
+    class VSSFakeElementWithClassSelector : public VSSBasicSelector {
+    public:
+        std::wstring ElementTag;
+        std::wstring ClassTag;
+        std::wstring FakeElementTag;
+
+    public:
+        VSSSelectorType GetType() override {
+            return VSSSelectorType::FakeElementWithClassSelector;
         }
     };
 

@@ -8,11 +8,17 @@ VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode& DragTowar
     : VDragControlBaseOnPushButton(Parent) {
     DragTowardsMode = DragTowards;
     MouseDragged.Connect(this, &VCircleScrollBarButton::UserOnDrag);
+
+    delete Theme;
+    Theme = new VCircleScrollBarTheme();
 }
 VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode& DragTowards, const int& Width, const int& Height, VUIObject* Parent)
     : VDragControlBaseOnPushButton(Width, Height, Parent) {
     DragTowardsMode = DragTowards;
     MouseDragged.Connect(this, &VCircleScrollBarButton::UserOnDrag);
+
+    delete Theme;
+    Theme = new VCircleScrollBarTheme();
 }
 void VCircleScrollBarButton::OnPaint(Core::VCanvasPainter *Painter) {
     VSolidBrush BackgroundBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
@@ -35,19 +41,24 @@ void VCircleScrollBarButton::OnPaint(Core::VCanvasPainter *Painter) {
 void VCircleScrollBarButton::SetDragRange(const VRect& Range) {
     DraggedRange = Range;
 }
+void VCircleScrollBarButton::LosedMouseFocus() {
+    if (!UserInDrag) {
+        VPushButton::LosedMouseFocus();
+    }
+}
 void VCircleScrollBarButton::UserOnDrag(const int &MouseX, const int &MouseY) {
     switch (DragTowardsMode) {
         case VDragTowardsMode::Vertical: {
-            if (MouseY >= GetX() + DraggedRange.Top &&
-                MouseY <= GetY() + DraggedRange.Bottom) {
+            if (MouseY >= DraggedRange.Top &&
+                MouseY <= DraggedRange.Bottom) {
                 Move(GetX(), MouseY);
             }
 
             break;
         }
         case VDragTowardsMode::Horizontal: {
-            if (MouseX >= GetX() + DraggedRange.Left &&
-                MouseX <= GetY() + DraggedRange.Right) {
+            if (MouseX >= DraggedRange.Left &&
+                MouseX <= DraggedRange.Right) {
                 Move(MouseX, GetY());
             }
 

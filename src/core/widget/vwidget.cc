@@ -51,8 +51,6 @@ void VMainWindow::InitIME() {
 
 VMainWindow::VMainWindow(const int& Width, const int& Height, VApplication* Parent, const bool& Sizble)
         : VUIObject(Parent) {
-    Resize(Width, Height);
-
     Theme = static_cast<VMainWindowTheme*>(GetTargetTheme(VUIThemeType::VMainWindow));
     VLIB_CHECK_REPORT(Theme == nullptr, L"Object [VMainWindow] losed!");
 
@@ -67,6 +65,8 @@ VMainWindow::VMainWindow(const int& Width, const int& Height, VApplication* Pare
     InitWindow();
     InitKernel();
     InitIME();
+
+    Resize(Width, Height);
 
     Update( { 0, 0, GetWidth(), GetHeight() } );
 }

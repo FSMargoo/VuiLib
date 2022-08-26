@@ -20,7 +20,7 @@ namespace VSS {
                 break;
             }
             if (Token.cache_token != UNKNOW_TOKEN) {
-                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                 return ReturnValue;
             }
@@ -29,7 +29,7 @@ namespace VSS {
 
             Token = PropertyLexical.get_token();
             if (Token.token_string != L":") {
-                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                 return ReturnValue;
             }
@@ -91,7 +91,7 @@ namespace VSS {
 
                     Token = PropertyLexical.get_token();
                     if (Token.token_string != L"(") {
-                        ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                        ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                         return ReturnValue;
                     }
@@ -101,7 +101,7 @@ namespace VSS {
                     for (int Count = 0; Count < 3; ++Count) {
                         Token = PropertyLexical.get_token();
                         if (Token.cache_token != CONST_NUMBER) {
-                            ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (It Should Be a Number)");
+                            ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (It Should Be a Number)");
 
                             return ReturnValue;
                         }
@@ -112,14 +112,14 @@ namespace VSS {
 
                         if (Count < 2) {
                             if (Token.token_string != L",") {
-                                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (Do you mean \',\'?)");
+                                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (Do you mean \',\'?)");
 
                                 return ReturnValue;
                             }
                         }
                         else {
                             if (Token.token_string != L")") {
-                                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (Do you mean \')\'?)");
+                                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (Do you mean \')\'?)");
 
                                 return ReturnValue;
                             }
@@ -140,7 +140,7 @@ namespace VSS {
 
                     Token = PropertyLexical.get_token();
                     if (Token.token_string != L"(") {
-                        ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                        ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                         return ReturnValue;
                     }
@@ -151,7 +151,7 @@ namespace VSS {
                     for (int Count = 0; Count < 4; ++Count) {
                         Token = PropertyLexical.get_token();
                         if (Token.cache_token != CONST_NUMBER) {
-                            ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (It Should Be a Number)");
+                            ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (It Should Be a Number)");
 
                             return ReturnValue;
                         }
@@ -167,14 +167,14 @@ namespace VSS {
 
                         if (Count < 3) {
                             if (Token.token_string != L",") {
-                                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (Do you mean \',\'?)");
+                                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (Do you mean \',\'?)");
 
                                 return ReturnValue;
                             }
                         }
                         else {
                             if (Token.token_string != L")") {
-                                ThrowError(Result, L"Unknown Character + \"" + Token.token_string + L"\" (Do you mean \')\'?)");
+                                ThrowError(Result, L"Unknown Character \"" + Token.token_string + L"\" (Do you mean \')\'?)");
 
                                 return ReturnValue;
                             }
@@ -364,7 +364,7 @@ namespace VSS {
                     std::wstring LevelTwoTag = Token.token_string;
 
                     if (Token.cache_token != UNKNOW_TOKEN) {
-                        ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                        ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                         return Result;
                     }
@@ -394,13 +394,13 @@ namespace VSS {
 
                         Result.SelectorSet.push_back(Selector);
                     }
-                        // Fake Class with Class Selector
+                    // Fake Class with Class Selector
                     else if (Token.token_string == L":") {
                         Selector = new VSSClassWithFakeClassSelector;
 
                         Token = ParserLexical->get_token();
                         if (Token.cache_token != UNKNOW_TOKEN) {
-                            ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                             return Result;
                         }
@@ -408,12 +408,12 @@ namespace VSS {
                         std::wstring LevelThreeTag = Token.token_string;
 
                         static_cast<VSSClassWithFakeClassSelector*>(Selector)->ClassTag      = LevelTwoTag;
-                        static_cast<VSSClassWithFakeClassSelector*>(Selector)->TargetElement = LevelOneTag;
+                        static_cast<VSSClassWithFakeClassSelector*>(Selector)->ElementTag    = LevelOneTag;
                         static_cast<VSSClassWithFakeClassSelector*>(Selector)->FakeClassTag  = LevelThreeTag;
 
                         Token = ParserLexical->get_token();
                         if (Token.token_string != L"{") {
-                            ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                             return Result;
                         }
@@ -437,51 +437,143 @@ namespace VSS {
                     }
                 }
                 else if (Token.token_string == L":") {
-                    // Fake Class
-                    // Class Selector
                     Token = ParserLexical->get_token();
 
-                    if (Token.cache_token != UNKNOW_TOKEN) {
-                        ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                    auto PreToken = ParserLexical->view_token(2);
+
+                    // Fake Class Selector
+                    if (Token.cache_token == UNKNOW_TOKEN) {
+                        Selector = new VSSFakeClassSelector;
+
+                        static_cast<VSSFakeClassSelector *>(Selector)->ClassTag = Token.token_string;
+                        static_cast<VSSFakeClassSelector *>(Selector)->ElementTag = LevelOneTag;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                    // Fake Element Selector
+                    else if (Token.token_string == L":" &&
+                             PreToken.token_string != L":") {
+                        Selector = new VSSFakeElementSelector;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSFakeElementSelector *>(Selector)->ElementTag = LevelOneTag;
+                        static_cast<VSSFakeElementSelector *>(Selector)->FakeElementTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                    // Fake Element Selector with Fake Class
+                    else if (PreToken.token_string == L":") {
+                        Selector = new VSSFakeElementWithClassSelector;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSFakeElementWithClassSelector *>(Selector)->ElementTag = LevelOneTag;
+                        static_cast<VSSFakeElementWithClassSelector *>(Selector)->FakeElementTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L":") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSFakeElementWithClassSelector *>(Selector)->ClassTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                    else {
+                        ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                         return Result;
                     }
-
-                    Selector = new VSSFakeClassSelector;
-
-                    static_cast<VSSFakeClassSelector*>(Selector)->ClassTag   = Token.token_string;
-                    static_cast<VSSFakeClassSelector*>(Selector)->ElementTag = LevelOneTag;
-
-                    Token = ParserLexical->get_token();
-                    if (Token.token_string != L"{") {
-                        ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
-
-                        return Result;
-                    }
-
-                    std::wstring PropertyString = GetPropertyString(&Result);
-                    if (Result.ParserStatus == VVVSParserStatus::Error) {
-                        return Result;
-                    }
-
-                    auto PropertySet = ParserProperty(PropertyString, &Result);
-                    if (Result.ParserStatus == VVVSParserStatus::Error) {
-                        return Result;
-                    }
-
-                    PropertyString.clear();
-
-                    Selector->SelectorProperty = PropertySet;
-
-                    Result.SelectorSet.push_back(Selector);
                 }
                 else {
-                    ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                    ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                     return Result;
                 }
             }
-                // Class Selector
+            // Class Selector
             else if (Token.cache_token == DOT_TOKEN) {
                 Token = ParserLexical->get_token();
 
@@ -516,43 +608,135 @@ namespace VSS {
                     Result.SelectorSet.push_back(Selector);
                 }
                 else if (Token.token_string == L":") {
-                    Selector = new VSSClassWithFakeClassSelector;
-
                     Token = ParserLexical->get_token();
-                    if (Token.cache_token != UNKNOW_TOKEN) {
+
+                    auto PreToken = ParserLexical->view_token(2);
+
+                    // Fake Class Selector
+                    if (Token.cache_token == UNKNOW_TOKEN) {
+                        Selector = new VSSClassWithFakeClassSelector;
+
+                        static_cast<VSSClassWithFakeClassSelector *>(Selector)->FakeClassTag = Token.token_string;
+                        static_cast<VSSClassWithFakeClassSelector *>(Selector)->ClassTag     = LevelTwoTag;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                        // Fake Element Selector
+                    else if (Token.token_string == L":" &&
+                             PreToken.token_string != L":") {
+                        Selector = new VSSClassWithFakeElementSelector;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSClassWithFakeElementSelector *>(Selector)->ClassTag = LevelOneTag;
+                        static_cast<VSSClassWithFakeElementSelector *>(Selector)->ElementTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                        // Fake Element Selector with Fake Class
+                    else if (PreToken.token_string == L":") {
+                        Selector = new VSSFakeElementWithClassSelector;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->ClassTag       = LevelOneTag;
+                        static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->FakeElementTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L":") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+                        Token = ParserLexical->get_token();
+                        if (Token.cache_token != UNKNOW_TOKEN) {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->FakeClassTag = Token.token_string;
+
+                        Token = ParserLexical->get_token();
+                        if (Token.token_string != L"{") {
+                            ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
+
+                            return Result;
+                        }
+
+                        std::wstring PropertyString = GetPropertyString(&Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        auto PropertySet = ParserProperty(PropertyString, &Result);
+                        if (Result.ParserStatus == VVVSParserStatus::Error) {
+                            return Result;
+                        }
+
+                        PropertyString.clear();
+
+                        Selector->SelectorProperty = PropertySet;
+
+                        Result.SelectorSet.push_back(Selector);
+                    }
+                    else {
                         ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                         return Result;
                     }
-
-                    std::wstring LevelThreeTag = Token.token_string;
-
-                    static_cast<VSSClassWithFakeClassSelector*>(Selector)->ClassTag = LevelTwoTag;
-                    static_cast<VSSClassWithFakeClassSelector*>(Selector)->TargetElement = LevelOneTag;
-                    static_cast<VSSClassWithFakeClassSelector*>(Selector)->FakeClassTag  = LevelThreeTag;
-
-                    Token = ParserLexical->get_token();
-                    if (Token.token_string != L"{") {
-                        ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
-
-                        return Result;
-                    }
-
-                    std::wstring PropertyString = GetPropertyString(&Result);
-                    if (Result.ParserStatus == VVVSParserStatus::Error) {
-                        return Result;
-                    }
-
-                    auto PropertySet = ParserProperty(PropertyString, &Result);
-                    if (Result.ParserStatus == VVVSParserStatus::Error) {
-                        return Result;
-                    }
-
-                    PropertyString.clear();
-
-                    Selector->SelectorProperty = PropertySet;
-
-                    Result.SelectorSet.push_back(Selector);
                 }
                 else {
                     ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
@@ -564,7 +748,7 @@ namespace VSS {
             else if (Token.token_string == L"#") {
                 Token = ParserLexical->get_token();
                 if (Token.cache_token != UNKNOW_TOKEN) {
-                    ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                    ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                     return Result;
                 }
@@ -574,7 +758,7 @@ namespace VSS {
 
                 Token = ParserLexical->get_token();
                 if (Token.token_string != L"{") {
-                    ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                    ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                     return Result;
                 }
@@ -601,7 +785,7 @@ namespace VSS {
 
                 Token = ParserLexical->get_token();
                 if (Token.token_string != L"{") {
-                    ThrowError(&Result, L"Unknown Character + \"" + Token.token_string + L"\"");
+                    ThrowError(&Result, L"Unknown Character \"" + Token.token_string + L"\"");
 
                     return Result;
                 }

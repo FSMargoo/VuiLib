@@ -26,6 +26,9 @@ public:
     VCircleScrollBarButton(const VDragTowardsMode& DragTowards, const int& Width, const int& Height, VUIObject* Parent);
 
 public:
+    void LosedMouseFocus() override;
+
+public:
     void OnPaint(VCanvasPainter* Painter) override;
 
 public:

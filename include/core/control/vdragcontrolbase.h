@@ -9,7 +9,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 class VDragControlBase : public VUIObject {
-private:
+protected:
     bool UserInDrag = false;
 
 public:
@@ -25,7 +25,7 @@ public:
     void OnMessage(VMessage* Message) override;
 };
 class VDragControlBaseOnPushButton : public VPushButton {
-private:
+protected:
     bool UserInDrag = false;
 
 public:

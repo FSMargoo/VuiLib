@@ -570,6 +570,44 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 }
 
 //////////////////////////////////////////////////////////////////////////
+//    view_token  :
+//           @description :   Cut a token from code_string ( in view mode )
+//           @birth       :   2022/8.26
+//
+_lexical_info::seal_lexical_token _lexical_core::view_token() {
+    bool update_status_cache                 = lexical_update_line;
+    seal_lexical_type_info kernel_cache      = core_info;
+    auto token_cache = get_token();
+
+    core_info           = kernel_cache;
+    lexical_update_line = update_status_cache;
+
+    return token_cache;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//    view_token  :
+//           @description :   Cut a token from code_string ( in view mode )
+//           @birth       :   2022/8.26
+//
+_lexical_info::seal_lexical_token _lexical_core::view_token(int count) {
+    bool update_status_cache                 = lexical_update_line;
+    seal_lexical_type_info kernel_cache      = core_info;
+    seal_lexical_type_info::seal_lexical_token token_cache;
+
+    while (count != 0) {
+        token_cache = get_token();
+
+        --count;
+    }
+
+    core_info           = kernel_cache;
+    lexical_update_line = update_status_cache;
+
+    return token_cache;
+}
+
+//////////////////////////////////////////////////////////////////////////
 //    is_eof  :
 //           @description :   Whether it ends, if end, return true
 //           @birth       :   2021/2.16

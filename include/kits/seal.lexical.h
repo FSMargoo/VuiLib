@@ -86,6 +86,18 @@ namespace VKits {
 		//           @birth       :   2021/2.15
 		//           
 		_lexical_info::seal_lexical_token get_token();
+        //////////////////////////////////////////////////////////////////////////
+        //    view_token  :
+        //           @description :   Cut a token from code_string ( in view mode )
+        //           @birth       :   2022/8.26
+        //
+        _lexical_info::seal_lexical_token view_token();
+        //////////////////////////////////////////////////////////////////////////
+        //    view_token  :
+        //           @description :   Cut a token from code_string ( in view mode )
+        //           @birth       :   2022/8.26
+        //
+        _lexical_info::seal_lexical_token view_token(int count);
 
 		//////////////////////////////////////////////////////////////////////////
 		//    is_eof  :
