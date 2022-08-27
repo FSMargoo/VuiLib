@@ -94,6 +94,8 @@ void VApplication::InitTheme() {
     ThemeList.push_back(new VImageLabelTheme);
     ThemeList.push_back(new VTextLabelTheme);
     ThemeList.push_back(new VRadioButtonTheme);
+    ThemeList.push_back(new VCircleScrollBarTheme);
+    ThemeList.push_back(new VSliderTheme);
 }
 void VApplication::ProcessEvent(Core::VMessage* PatchedMessage) {
     PatchedMessage = PatchEvent();

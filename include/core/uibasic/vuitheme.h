@@ -12,7 +12,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 enum class VUIThemeType {
-	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton
+	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton, VSlider
 };
 
 struct VBasicUITheme {
@@ -135,6 +135,44 @@ public:
 public:
     VUIThemeType GetThemeType() override {
         return VUIThemeType::VCircleBarButton;
+    }
+};
+
+struct VSliderStatusTheme {
+    VColor  BackgroundColor;
+    VColor  BorderColor;
+
+    float   BorderThickness;
+
+    VInterpolatorType
+    AnimationInterpolatorType;
+
+    VSliderStatusTheme() = default;
+    VSliderStatusTheme(const VSliderStatusTheme& Theme);
+};
+
+struct VSliderAreaTheme {
+    VSliderStatusTheme StaticTheme;
+    VSliderStatusTheme OnHoverTheme;
+    VSliderStatusTheme OnClickTheme;
+    VSliderStatusTheme LocalTheme;
+
+    VSliderAreaTheme() = default;
+    VSliderAreaTheme(const VSliderAreaTheme& Theme);
+};
+
+class VSliderTheme : public VBasicUITheme {
+public:
+    VSliderAreaTheme UnselectedArea;
+    VSliderAreaTheme SelectedArea;
+
+public:
+    VSliderTheme(const VSliderTheme& ThemeObject);
+    VSliderTheme();
+
+public:
+    VUIThemeType GetThemeType() override {
+        return VUIThemeType::VSlider;
     }
 };
 
