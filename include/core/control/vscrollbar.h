@@ -55,6 +55,9 @@ private:
     void SliderButtonDraged(const int&, const int&);
 
 public:
+    VCircleScrollBarButton* GetScrollBarButtonInstance();
+
+public:
     VSignal<const double&> ValueChanged;
 
 public:
@@ -67,6 +70,10 @@ public:
 public:
     void Move(const int& X, const int& Y) override;
     void Resize(const int& Width, const int& Height) override;
+
+public:
+    double GetValue() const;
+    void   SetValue(const double& Value);
 
 public:
     VSliderTheme* GetTheme();
@@ -91,6 +98,9 @@ private:
     void SliderButtonDraged(const int&, const int&);
 
 public:
+    VCircleScrollBarButton* GetScrollBarButtonInstance();
+
+public:
     VSignal<const double&> ValueChanged;
 
 public:
@@ -103,6 +113,10 @@ public:
 public:
     void Move(const int& X, const int& Y) override;
     void Resize(const int& Width, const int& Height) override;
+
+public:
+    double GetValue() const;
+    void   SetValue(const double& Value);
 
 public:
     VSliderTheme* GetTheme();

@@ -6,6 +6,7 @@
 #include "../core/control/vtextlabel.h"
 #include "../core/control/vimagelabel.h"
 #include "../core/control/vpushbutton.h"
+#include "../core/control/vscrollbar.h"
 #include "../core/control/vradiobutton.h"
 
 #include "../core/widget/vwidget.h"
@@ -75,6 +76,42 @@ namespace VSS {
     public:
         VSSVMainWindowBuilder(Core::VMainWindow *TargetControl,
                               std::vector<VSSBasicSelector *> SelectorSet);
+    };
+
+    class VSSVCircleButtonBuilder {
+    private:
+        void BuildVSSObject(Core::VCircleScrollBarButton *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VCircleScrollBarTheme *CircleButtonTheme);
+
+    public:
+        VSSVCircleButtonBuilder(Core::VCircleScrollBarButton *TargetControl,
+                                std::vector<VSSBasicSelector *> SelectorSet,
+                                Core::VCircleScrollBarTheme *CircleButtonTheme);
+    };
+
+    class VSSVSliderHorizontalBuilder {
+    private:
+        void BuildVSSObject(Core::VSliderHorizontal *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VSliderTheme *Theme);
+
+    public:
+        VSSVSliderHorizontalBuilder(Core::VSliderHorizontal *TargetControl,
+                                    std::vector<VSSBasicSelector *> SelectorSet,
+                                    Core::VSliderTheme *Theme);
+    };
+
+    class VSSVSliderVerticalBuilder {
+    private:
+        void BuildVSSObject(Core::VSliderVertical *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VSliderTheme *Theme);
+
+    public:
+        VSSVSliderVerticalBuilder(Core::VSliderVertical *TargetControl,
+                                  std::vector<VSSBasicSelector *> SelectorSet,
+                                  Core::VSliderTheme *Theme);
     };
 }
 

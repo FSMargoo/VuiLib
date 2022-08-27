@@ -40,7 +40,7 @@ namespace VSS {
 
     enum class VSSSelectorType {
         UnkownSelector, ElementSelector, IDSelector, ClassSelector, FakeClassSelector, ClassWithFakeClassSelector,
-        GenericSelector, FakeElementSelector, FakeElementWithClassSelector, ClassWithFakeElementSelector
+        GenericSelector, FakeElementSelector, FakeElementWithClassSelector, ClassWithFakeElementSelector, ClassWithFakeClassAndFakeElementSelector
     };
 
     class  VSSBasicSelector {
@@ -113,7 +113,7 @@ namespace VSS {
         std::wstring ClassTag;
 
         VSSSelectorType GetType() override {
-            return VSSSelectorType::ClassWithFakeElementSelector;
+            return VSSSelectorType::ClassWithFakeClassAndFakeElementSelector;
         }
     };
     class  VSSGenericSelector : public VSSBasicSelector {

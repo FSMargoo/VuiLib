@@ -152,9 +152,6 @@ struct VSliderStatusTheme {
 };
 
 struct VSliderAreaTheme {
-    VSliderStatusTheme StaticTheme;
-    VSliderStatusTheme OnHoverTheme;
-    VSliderStatusTheme OnClickTheme;
     VSliderStatusTheme LocalTheme;
 
     VSliderAreaTheme() = default;

@@ -11,7 +11,8 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VML {
     enum class VMLObjectType {
-        PushButton, ImageLabel, TextLabel, MainWindow, Layout, ScaleLayout, RadioButton
+        PushButton, ImageLabel, TextLabel, MainWindow, Layout, ScaleLayout, RadioButton,
+        HorizontalSlider, VerticalSlider
     };
 
     struct VMLObject {

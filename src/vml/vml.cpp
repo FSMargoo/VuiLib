@@ -27,6 +27,12 @@ namespace VML {
         if (String == L"radiobutton") {
             return VMLObjectType::RadioButton;
         }
+        if (String == L"horizontal-slider") {
+            return VMLObjectType::HorizontalSlider;
+        }
+        if (String == L"vertical-slider") {
+            return VMLObjectType::VerticalSlider;
+        }
 
         return Type;
     }
@@ -49,6 +55,12 @@ namespace VML {
             }
             case VMLObjectType::ScaleLayout: {
                 return L"scalelayout";
+            }
+            case VMLObjectType::HorizontalSlider: {
+                return L"horizontal-slider";
+            }
+            case VMLObjectType::VerticalSlider: {
+                return L"vertical-slider";
             }
         }
 
@@ -73,6 +85,16 @@ namespace VML {
             }
             case VMLObjectType::RadioButton: {
                 VSS::VSSVRadioButtonBuilder Builder(static_cast<Core::VRadioButton*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::HorizontalSlider: {
+                VSS::VSSVSliderHorizontalBuilder Builder(static_cast<Core::VSliderHorizontal*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::VerticalSlider: {
+                VSS::VSSVSliderHorizontalBuilder Builder(static_cast<Core::VSliderHorizontal*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }

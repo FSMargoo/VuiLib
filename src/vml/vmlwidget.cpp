@@ -153,6 +153,36 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"horizontal-slider") {
+                        Core::VSliderHorizontal* SliderHorizontal = new Core::VSliderHorizontal(UIParent);
+                        VMLObject->UIObject = SliderHorizontal;
+                        VMLObject->VMLType = VMLObjectType::HorizontalSlider;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLSliderHorizontalBuilder Builder(GetRootFinder(), SliderHorizontal, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"vertical-slider") {
+                        Core::VSliderVertical* SliderHorizontal = new Core::VSliderVertical(UIParent);
+                        VMLObject->UIObject = SliderHorizontal;
+                        VMLObject->VMLType = VMLObjectType::VerticalSlider;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLSliderVerticalBuilder Builder(GetRootFinder(), SliderHorizontal, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else if (ElementProperty.PropertyAsString == L"mainwindow") {
                         VMLObject->UIObject = this;
                         VMLObject->VMLType = VMLObjectType::MainWindow;
@@ -312,6 +342,24 @@ namespace VML {
                     VSS::VSSVRadioButtonBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, TextLabelTheme);
 
                     static_cast<Core::VApplication*>(GetParent())->SetTheme(TextLabelTheme);
+                }
+                if (ElementTag == L"horizontal-slider") {
+                    Core::VSliderTheme* SliderTheme = new Core::VSliderTheme(*(static_cast<Core::VSliderTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VSlider)))
+                    );
+
+                    VSS::VSSVSliderHorizontalBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
+                }
+                if (ElementTag == L"vertical-slider") {
+                    Core::VSliderTheme* SliderTheme = new Core::VSliderTheme(*(static_cast<Core::VSliderTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VSlider)))
+                    );
+
+                    VSS::VSSVSliderHorizontalBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
                 }
             }
 

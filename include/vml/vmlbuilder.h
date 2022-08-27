@@ -7,6 +7,7 @@
 #include "../core/control/vradiobutton.h"
 #include "../core/control/vimagelabel.h"
 #include "../core/control/vpushbutton.h"
+#include "../core/control/vscrollbar.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -130,6 +131,28 @@ namespace VML {
     public:
         VMLRadioButtonBuilder(const VMLFinder& RootFinder, Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                               VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLSliderHorizontalBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderHorizontal* Horizontal, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLSliderHorizontalBuilder(const VMLFinder& RootFinder, Core::VSliderHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                              VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLSliderVerticalBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VSliderVertical* SliderHorizontal, const double& Value);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderVertical* Vertical, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLSliderVerticalBuilder(const VMLFinder& RootFinder, Core::VSliderVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                   VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

@@ -150,6 +150,17 @@ void VSliderHorizontal::SliderButtonDraged(const int&, const int&) {
 void VSliderHorizontal::Resize(const int &Width, const int &Height) {
     VUIObject::Resize(Width, 4);
 }
+double VSliderHorizontal::GetValue() const {
+    return SliderPercent;
+}
+void VSliderHorizontal::SetValue(const double& Value) {
+    SliderPercent = Value;
+
+    Update();
+}
+VCircleScrollBarButton* VSliderHorizontal::GetScrollBarButtonInstance() {
+    return SliderButton;
+}
 
 VSliderVertical::VSliderVertical(VUIObject* Parent)
         : VUIObject(Parent) {
@@ -233,6 +244,17 @@ void VSliderVertical::SliderButtonDraged(const int&, const int&) {
 }
 void VSliderVertical::Resize(const int &Width, const int &Height) {
     VUIObject::Resize(4, Height);
+}
+double VSliderVertical::GetValue() const {
+    return SliderPercent;
+}
+void VSliderVertical::SetValue(const double& Value) {
+    SliderPercent = Value;
+
+    Update();
+}
+VCircleScrollBarButton* VSliderVertical::GetScrollBarButtonInstance() {
+    return SliderButton;
 }
 
 }

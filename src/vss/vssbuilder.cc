@@ -706,6 +706,437 @@ namespace VSS {
                                                  std::vector<VSSBasicSelector *> SelectorSet) {
         BuildVSSObject(TargetControl, SelectorSet);
     }
+
+    void VSSVCircleButtonBuilder::BuildVSSObject(Core::VCircleScrollBarButton *TargetControl,
+                                                std::vector<VSSBasicSelector *> SelectorSet,
+                                                Core::VCircleScrollBarTheme *CircleButtonTheme) {
+        Core::VCircleScrollBarTheme *Theme = CircleButtonTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = (Core::VCircleScrollBarTheme *)TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"circlebarbutton") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"circlebarbutton" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"circlebarbutton" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Theme->LocalTheme = Theme->StaticTheme;
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVCircleButtonBuilder::VSSVCircleButtonBuilder(Core::VCircleScrollBarButton *TargetControl,
+                                                   std::vector<VSSBasicSelector *> SelectorSet,
+                                                   Core::VCircleScrollBarTheme *RadioButtonTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, RadioButtonTheme);
+    }
+
+    void VSSVSliderHorizontalBuilder::BuildVSSObject(Core::VSliderHorizontal *TargetControl,
+                                                     std::vector<VSSBasicSelector *> SelectorSet,
+                                                     Core::VSliderTheme *SliderTheme) {
+        Core::VSliderTheme *Theme = SliderTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"horizontal-slider" ) {
+                // Common Property ( Not fade switch supported )
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"horizontal-slider" &&
+                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"unselected") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->UnselectedArea.LocalTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->UnselectedArea.LocalTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->UnselectedArea.LocalTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"horizontal-slider" &&
+                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"selected") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->SelectedArea.LocalTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->SelectedArea.LocalTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->SelectedArea.LocalTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"horizontal-slider" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"circlebarbutton";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"horizontal-slider" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"circlebarbutton";
+                GrooverSelector->ClassTag = L"hover";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"horizontal-slider" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"circlebarbutton";
+                GrooverSelector->ClassTag = L"active";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+        }
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVSliderHorizontalBuilder::VSSVSliderHorizontalBuilder(Core::VSliderHorizontal *TargetControl,
+                                                 std::vector<VSSBasicSelector *> SelectorSet,
+                                                 Core::VSliderTheme *SliderTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, SliderTheme);
+    }
+
+    void VSSVSliderVerticalBuilder::BuildVSSObject(Core::VSliderVertical *TargetControl,
+                                                   std::vector<VSSBasicSelector *> SelectorSet,
+                                                   Core::VSliderTheme *SliderTheme) {
+        Core::VSliderTheme *Theme = SliderTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"vertical-slider" ) {
+                // Common Property ( Not fade switch supported )
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"vertical-slider" &&
+                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"unselected") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->UnselectedArea.LocalTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->UnselectedArea.LocalTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->UnselectedArea.LocalTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"vertical-slider" &&
+                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"selected") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->SelectedArea.LocalTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->SelectedArea.LocalTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->SelectedArea.LocalTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"vertical-slider" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"circlebarbutton";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"vertical-slider" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"circlebarbutton";
+                GrooverSelector->ClassTag = L"hover";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"vertical-slider" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"circlebarbutton";
+                GrooverSelector->ClassTag = L"active";
+
+                VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+        }
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVSliderVerticalBuilder::VSSVSliderVerticalBuilder(Core::VSliderVertical *TargetControl,
+                                                             std::vector<VSSBasicSelector *> SelectorSet,
+                                                             Core::VSliderTheme *SliderTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, SliderTheme);
+    }
 }
 
 VLIB_END_NAMESPACE

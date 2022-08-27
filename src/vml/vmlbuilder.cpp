@@ -306,10 +306,10 @@ namespace VML {
         Core::VImage *Image = nullptr;
 
         for (auto &ElementProperty: PropertyValueList) {
-            if (ElementProperty.first == L"image-path") {
+            if (ElementProperty.first == L"src") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"image-path\" Property Must Match the Type \"string\"";
+                    BuildStatus->FailedReason = L"\"src\" Property Must Match the Type \"string\"";
 
                     return;
                 }
@@ -738,6 +738,64 @@ namespace VML {
                                                  std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus* BuildStatus)
                                                  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLSliderHorizontalBuilder::Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value) {
+        SliderHorizontal->SetValue(Value);
+    }
+    void VMLSliderHorizontalBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderHorizontal* Horizontal, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                         VMLControlBuildStatus* BuildStatus) {
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Horizontal, PropertyValueList, BuildStatus);
+
+        double Value = 0.f;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"value") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"value\" Property Must Match the Type \"double\"";
+
+                    return;
+                }
+
+                Value = ElementProperty.second.PropertyAsDouble;
+            }
+        }
+
+        Builder(Horizontal, Value);
+    }
+    VMLSliderHorizontalBuilder::VMLSliderHorizontalBuilder(const VMLFinder& RootFinder, Core::VSliderHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                               VMLControlBuildStatus* BuildStatus)  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLSliderVerticalBuilder::Builder(Core::VSliderVertical* SliderHorizontal, const double& Value) {
+        SliderHorizontal->SetValue(Value);
+    }
+    void VMLSliderVerticalBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderVertical* Vertical, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                     VMLControlBuildStatus* BuildStatus) {
+        VMLCommonBuilder::AnalyzeProperty(RootFinder, Vertical, PropertyValueList, BuildStatus);
+
+        double Value = 0.f;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"value") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"value\" Property Must Match the Type \"double\"";
+
+                    return;
+                }
+
+                Value = ElementProperty.second.PropertyAsDouble;
+            }
+        }
+
+        Builder(Vertical, Value);
+    }
+    VMLSliderVerticalBuilder::VMLSliderVerticalBuilder(const VMLFinder& RootFinder, Core::VSliderVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                           VMLControlBuildStatus* BuildStatus)  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 }

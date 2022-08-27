@@ -163,9 +163,7 @@ VSliderStatusTheme::VSliderStatusTheme(const VSliderStatusTheme& Theme) {
 }
 
 VSliderAreaTheme::VSliderAreaTheme(const VSliderAreaTheme& Theme) {
-    StaticTheme  = Theme.StaticTheme;
-    OnHoverTheme = Theme.OnHoverTheme;
-    OnClickTheme = Theme.OnClickTheme;
+    LocalTheme = Theme.LocalTheme;
 }
 
 VSliderTheme::VSliderTheme(const VSliderTheme& ThemeObject) {
@@ -173,33 +171,13 @@ VSliderTheme::VSliderTheme(const VSliderTheme& ThemeObject) {
     SelectedArea   = ThemeObject.SelectedArea;
 }
 VSliderTheme::VSliderTheme() {
-    UnselectedArea.StaticTheme.BorderColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.StaticTheme.BackgroundColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.StaticTheme.BorderThickness = 0.f;
+    UnselectedArea.LocalTheme.BorderColor = VColor::FromBYTERGBA(58, 58, 58, 255);
+    UnselectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(58, 58, 58, 255);
+    UnselectedArea.LocalTheme.BorderThickness = 0.f;
 
-    UnselectedArea.OnHoverTheme.BorderColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.OnHoverTheme.BackgroundColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.OnHoverTheme.BorderThickness = 0.f;
-
-    UnselectedArea.OnClickTheme.BorderColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.OnClickTheme.BackgroundColor = VColor::FromBYTERGBA(58, 58, 58, 255);
-    UnselectedArea.OnClickTheme.BorderThickness = 0.f;
-
-    UnselectedArea.LocalTheme = UnselectedArea.StaticTheme;
-
-    SelectedArea.StaticTheme.BorderColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.StaticTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.StaticTheme.BorderThickness = 0.f;
-
-    SelectedArea.OnHoverTheme.BorderColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.OnHoverTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.OnHoverTheme.BorderThickness = 0.f;
-
-    SelectedArea.OnClickTheme.BorderColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.OnClickTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
-    SelectedArea.OnClickTheme.BorderThickness = 0.f;
-
-    SelectedArea.LocalTheme = SelectedArea.StaticTheme;
+    SelectedArea.LocalTheme.BorderColor = VColor::FromBYTERGBA(98, 100, 167, 255);
+    SelectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
+    SelectedArea.LocalTheme.BorderThickness = 0.f;
 }
 
 }
