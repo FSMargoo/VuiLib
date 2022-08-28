@@ -12,7 +12,7 @@
 
 ## Installation - 安装
 ### Requirements - 必要条件
-* 编译目标平台：x64 （不支持）
+* 编译目标平台：x64 （不支持x32）
 * 操作系统： Windows Vista 及以上
 * 构造工具: CMake
 * API：EasyX2021730 & D2D9 及以上
