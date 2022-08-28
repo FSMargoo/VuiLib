@@ -919,9 +919,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
-                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"horizontal-slider" &&
-                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"unselected") {
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"horizontal-slider" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"unselected") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -946,9 +946,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
-                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"horizontal-slider" &&
-                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"selected") {
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"horizontal-slider" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"selected") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -978,6 +978,7 @@ namespace VSS {
                 static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
                 VSSElementSelector* GrooverSelector = new VSSElementSelector;
                 GrooverSelector->ElementTag = L"circlebarbutton";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 
@@ -990,6 +991,7 @@ namespace VSS {
                 VSSClassSelector* GrooverSelector = new VSSClassSelector;
                 GrooverSelector->TargetElement = L"circlebarbutton";
                 GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 
@@ -1002,6 +1004,7 @@ namespace VSS {
                 VSSClassSelector* GrooverSelector = new VSSClassSelector;
                 GrooverSelector->TargetElement = L"circlebarbutton";
                 GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 
@@ -1040,9 +1043,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
-                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"vertical-slider" &&
-                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"unselected") {
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"vertical-slider" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"unselected") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -1067,9 +1070,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
-                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"vertical-slider" &&
-                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"selected") {
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"vertical-slider" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"selected") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -1099,6 +1102,7 @@ namespace VSS {
                 static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
                 VSSElementSelector* GrooverSelector = new VSSElementSelector;
                 GrooverSelector->ElementTag = L"circlebarbutton";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 
@@ -1111,6 +1115,7 @@ namespace VSS {
                 VSSClassSelector* GrooverSelector = new VSSClassSelector;
                 GrooverSelector->TargetElement = L"circlebarbutton";
                 GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 
@@ -1123,6 +1128,7 @@ namespace VSS {
                 VSSClassSelector* GrooverSelector = new VSSClassSelector;
                 GrooverSelector->TargetElement = L"circlebarbutton";
                 GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
 
                 VSSVCircleButtonBuilder GrooveBuilder(TargetControl->GetScrollBarButtonInstance(), { GrooverSelector }, nullptr);
 

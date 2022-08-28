@@ -10,7 +10,7 @@
 #include "./include/vml/vmlwidget.h"
 #include "./include/vml/vml.h"
 
-int demomain() {
+int main() {
     using namespace Core;
     using namespace VML;
     using namespace VSS;
@@ -25,7 +25,7 @@ int demomain() {
 
 Core::VTextLabel* TextLabel;
 
-int main() {
+int Vmain() {
     using namespace Core;
     using namespace VML;
     using namespace VSS;

@@ -107,6 +107,53 @@ namespace VML {
     }
     void VMLObject::SetStyleSheet(VSS::VSSBasicSelector* Selector) {
         switch (Selector->GetType()) {
+            case VSS::VSSSelectorType::FakeElementSelector: {
+                if (StringToObjectType(static_cast<VSS::VSSFakeElementSelector*>(Selector)->ElementTag) == VMLType &&
+                        VMLClass.empty()) {
+                    SetNativeStyleSheet(Selector);
+                }
+
+                break;
+            }
+            case VSS::VSSSelectorType::FakeElementWithClassSelector: {
+                if (StringToObjectType(static_cast<VSS::VSSFakeElementWithClassSelector*>(Selector)->ElementTag) == VMLType &&
+                    VMLClass.empty()) {
+                    SetNativeStyleSheet(Selector);
+                }
+
+                break;
+            }
+            case VSS::VSSSelectorType::ClassWithFakeElementSelector: {
+                if (static_cast<VSS::VSSClassWithFakeElementSelector*>(Selector)->ClassTag == VMLClass) {
+                    VSS::VSSFakeElementSelector* FakeElementSelector = new VSS::VSSFakeElementSelector;
+
+                    FakeElementSelector->ElementTag = ObjectTypeToString(VMLType);
+                    FakeElementSelector->FakeElementTag = static_cast<VSS::VSSClassWithFakeElementSelector*>(Selector)->ElementTag;
+                    FakeElementSelector->SelectorProperty = Selector->SelectorProperty;
+
+                    SetNativeStyleSheet(FakeElementSelector);
+
+                    delete FakeElementSelector;
+                }
+
+                break;
+            }
+            case VSS::VSSSelectorType::ClassWithFakeClassAndFakeElementSelector: {
+                if (static_cast<VSS::VSSClassWithFakeClassAndFakeElementSelector*>(Selector)->ClassTag == VMLClass) {
+                    VSS::VSSFakeElementWithClassSelector* FakeElementWithClassSelector = new VSS::VSSFakeElementWithClassSelector;
+
+                    FakeElementWithClassSelector->ElementTag = ObjectTypeToString(VMLType);
+                    FakeElementWithClassSelector->FakeElementTag = static_cast<VSS::VSSFakeElementWithClassSelector*>(Selector)->ElementTag;
+                    FakeElementWithClassSelector->ClassTag = static_cast<VSS::VSSFakeElementWithClassSelector*>(Selector)->ClassTag;
+                    FakeElementWithClassSelector->SelectorProperty = Selector->SelectorProperty;
+
+                    SetNativeStyleSheet(FakeElementWithClassSelector);
+
+                    delete FakeElementWithClassSelector;
+                }
+
+                break;
+            }
             case VSS::VSSSelectorType::ClassSelector: {
                 if (static_cast<VSS::VSSClassSelector*>(Selector)->ClassTag == VMLClass) {
                     VSS::VSSElementSelector* ElementSelector = new VSS::VSSElementSelector;

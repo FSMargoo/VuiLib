@@ -654,7 +654,7 @@ namespace VSS {
                             return Result;
                         }
 
-                        static_cast<VSSClassWithFakeElementSelector *>(Selector)->ClassTag = LevelOneTag;
+                        static_cast<VSSClassWithFakeElementSelector *>(Selector)->ClassTag = LevelTwoTag;
                         static_cast<VSSClassWithFakeElementSelector *>(Selector)->ElementTag = Token.token_string;
 
                         Token = ParserLexical->get_token();
