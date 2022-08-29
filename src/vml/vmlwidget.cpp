@@ -240,7 +240,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"id Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"id must use string value" };
                 }
             }
             if (Element.PropertyExsit(L"class")) {
@@ -252,7 +252,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"class must use string value" };
                 }
             }
             if (Element.PropertyExsit(L"style-sheet")) {
@@ -264,7 +264,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"style-sheet must use string value" };
                 }
             }
             if (Element.PropertyExsit(L"style-sheet-src")) {
@@ -277,7 +277,7 @@ namespace VML {
                 else {
                     delete VMLObject;
 
-                    return { VMLWidgetVMLLoadStats::Failed, L"class Must Use String Value" };
+                    return { VMLWidgetVMLLoadStats::Failed, L"style-sheet-src must use string value (or value dosen't exsits)" };
                 }
             }
 

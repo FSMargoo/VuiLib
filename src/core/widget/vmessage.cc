@@ -42,9 +42,9 @@ VRepaintMessage::VRepaintMessage(const VRect& RepaintRegion)
 	: VMessage(VMessageType::RepaintMessage) {
 	DirtyRectangle = RepaintRegion;
 }
-VGetRepaintAeraMessage::VGetRepaintAeraMessage(VRect RepaintRegion)
+VGetRepaintAeraMessage::VGetRepaintAeraMessage(VRect& RepaintRegions)
 	: VMessage(VMessageType::GetRepaintAeraMessage) {
-	RepaintAera = &RepaintRegion;
+	RepaintAera = &RepaintRegions;
 }
 VIMECharMessage::VIMECharMessage(wchar_t CharInputed)
 	: VMessage(VMessageType::IMECharMessage) {

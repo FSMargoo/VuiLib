@@ -1,0 +1,4 @@
+<vml-window type="mainwindow" title="Hello VML!" width="680" height="320">
+    <hello-world-text type="textlabel" text="Hello World!" width="80" height="20" x="@center" y="@center">
+    </hello-world-text>
+</vml-window>

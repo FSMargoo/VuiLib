@@ -93,7 +93,7 @@ class VGetRepaintAeraMessage : public VMessage {
  	 VRect* RepaintAera;
  
  public:
- 	 explicit VGetRepaintAeraMessage(VRect RepaintRegion);
+ 	 explicit VGetRepaintAeraMessage(VRect& RepaintRegion);
 };
 
 class VIMECharMessage : public VMessage {

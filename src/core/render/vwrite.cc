@@ -13,10 +13,15 @@ VFont::VFont(const VFont& FontObject) {
     auto Stretch= FontObject.GetFontStretchStyle();
     auto Locale = FontObject.GetLocaleName();
     auto Size = FontObject.GetTextSize();
+    auto TextAlignment = FontObject.TextFormat->GetTextAlignment();
+    auto LineAlignment = FontObject.TextFormat->GetParagraphAlignment();
 
     VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextFormat(Family.c_str(), nullptr,
                                                                            (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat) != S_OK,
                       L"Create D2D fontformat object failed!");
+
+    TextFormat->SetTextAlignment(TextAlignment);
+    TextFormat->SetParagraphAlignment(LineAlignment);
 }
 VFont::VFont(const std::wstring& FamilyName, FontWeight TextWidget, FontStyle TextStyle, FontStretch TextStretch,
 		float TextSize, const std::wstring& Local) {

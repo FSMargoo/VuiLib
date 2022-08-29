@@ -18,7 +18,7 @@ namespace VML {
 
     void VMLParser::ThrowError(VMLParserResult* Result, const std::wstring& ErrorString) {
         (*Result).ParserStatus = VMLParserStatus::Error;
-        (*Result).ErrorInfo.push_back({ ErrorString, BaseLine + ParserLexical->get_line() + 1 });
+        (*Result).ErrorInfo.push_back({ ErrorString, static_cast<int>(BaseLine + ParserLexical->get_line() + 1) });
     }
     VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring& String) {
         std::wstring ValueString = String.substr(1, String.size() - 2);
