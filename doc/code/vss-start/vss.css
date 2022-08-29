@@ -1,0 +1,11 @@
+.widget {
+    background-color: rgb(30, 30, 30);
+}
+
+.test-label {
+    background-color: rgb(255, 255, 255);
+    color: rgb(30, 30, 30);
+
+    text-align: center;
+    vertical-align: center;
+}

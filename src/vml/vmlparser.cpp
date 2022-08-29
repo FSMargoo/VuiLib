@@ -147,6 +147,8 @@ namespace VML {
     VMLParser::VMLParser(const std::wstring& VMLString, VMLParserParseMode VMLParserMode, const int& Line) {
         switch (VMLParserMode) {
             case VMLParserParseMode::FromString: {
+                FilePath = VMLString;
+
                 ParserLexical = new VKits::seal_lexical(VMLString);
                 BaseLine = Line;
 
@@ -173,6 +175,12 @@ namespace VML {
     }
     VMLParserResult VMLParser::ParseVML() {
         VMLParserResult ParseResult;
+
+        if (FilePath.find(L"/") != -1) {
+            ParseResult.FilePath = FilePath.substr(0, FilePath.find_last_of(L"/"));
+        } else {
+            ParseResult.FilePath = FilePath.substr(0, FilePath.find_last_of(L"\\"));
+        }
 
         if (!FileExist) {
             ParseResult.ErrorInfo.push_back({ L"Target File Dosen't Exsits!", 0 });

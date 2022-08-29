@@ -9,6 +9,7 @@ namespace VKits {
 
     public:
         static short        HexStringToNum(const std::wstring& HexNumberString);
+        static void         HexStringLowerToUpper(std::wstring& HexStringNumber);
 
     public:
         static Core::VColor HexToColor(const std::wstring& HexString);

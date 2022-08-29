@@ -1,5 +1,7 @@
 #include "../../include/vml/vmlwidget.h"
 
+#include <direct.h>
+
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {

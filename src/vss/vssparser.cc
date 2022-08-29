@@ -66,6 +66,8 @@ namespace VSS {
                         }
                     }
 
+                    VKits::VSSColorHelper::HexStringLowerToUpper(HexString);
+
                     if (!VKits::VSSColorHelper::IsValidHex(L"#" + HexString)) {
                         if (!Token.token_string.empty()) {
                             ThrowError(Result, L"Unknown Hex Color \"" + Token.token_string + L"\"");

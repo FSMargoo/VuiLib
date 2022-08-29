@@ -16,6 +16,14 @@ namespace VKits {
 
         return FirstCount + SecondCount;
     }
+    void VSSColorHelper::HexStringLowerToUpper(std::wstring& HexStringNumber) {
+        int StringLength = HexStringNumber.size();
+        for (int Count = 0; Count < StringLength; ++Count) {
+            if (HexStringNumber[Count] >= L'A' && HexStringNumber[Count]<='Z') {
+                HexStringNumber[Count] += 32;
+            }
+        }
+    }
     Core::VColor VSSColorHelper::HexToColor(const std::wstring& HexString) {
         auto RawHexString = HexString.substr(1, HexString.size() - 1);
         short ColorArrary[3] = { 0, 0, 0 };

@@ -52,9 +52,10 @@ namespace VML {
     };
 
     struct VMLParserResult {
+        std::wstring                    FilePath;
         std::vector<VMLParserError>		ErrorInfo;
         std::map<std::wstring, VMLNode> Nodes;
-        VMLParserStatus				 ParserStatus = VMLParserStatus::Ok;
+        VMLParserStatus				    ParserStatus = VMLParserStatus::Ok;
     };
 
     enum class VMLParserParseMode {
@@ -64,6 +65,7 @@ namespace VML {
     class VMLParser {
     private:
         VKits::seal_lexical* ParserLexical = nullptr;
+        std::wstring         FilePath;
 
     private:
         void			 ThrowError(VMLParserResult* Result, const std::wstring& ErrorString);

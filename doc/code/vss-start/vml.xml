@@ -1,0 +1,5 @@
+<widget width="640" height="480" type="mainwindow" style-sheet-src="./vss.css" class="widget">
+    <label type="textlabel" width="@scale(0.8)" height="@scale(0.35)" x="@center" y="@center" class="test-label"
+           text="VUILIB STYLE SHEET DEMO\nHELLO VUILIB">
+    </label>
+</widget>
