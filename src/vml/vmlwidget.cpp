@@ -117,6 +117,21 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"fake-caption") {
+                        Core::VFakeCaption* FakeCaption = new Core::VFakeCaption(UIParent);
+                        VMLObject->UIObject = FakeCaption;
+                        VMLObject->VMLType = VMLObjectType::FakeCaption;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLCommonBuilder      Builder(GetRootFinder(), FakeCaption, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else if (ElementProperty.PropertyAsString == L"layout") {
                         if (UIParent->GetParent()->IsApplication() == true) {
                             continue;
@@ -396,6 +411,10 @@ namespace VML {
         }
 
         return VMLFinder(nullptr, std::vector<VMLObject*>());
+    }
+
+    HWND VMLWidget::GetLocalWinId() {
+        return GetHWnd();
     }
 }
 

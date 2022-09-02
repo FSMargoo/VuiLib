@@ -33,6 +33,9 @@ namespace VML {
         if (String == L"vertical-slider") {
             return VMLObjectType::VerticalSlider;
         }
+        if (String == L"fake-caption") {
+            return VMLObjectType::FakeCaption;
+        }
 
         return Type;
     }
@@ -61,6 +64,9 @@ namespace VML {
             }
             case VMLObjectType::VerticalSlider: {
                 return L"vertical-slider";
+            }
+            case VMLObjectType::FakeCaption: {
+                return L"fake-caption";
             }
         }
 

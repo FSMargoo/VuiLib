@@ -432,7 +432,7 @@ namespace VML {
     }
 
     void VMLMainWindowBuilder::Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height,
-                                        const std::wstring &Title, const bool &Sizble) {
+                                        const std::wstring &Title, const bool &Sizble, const bool &FramelessStatus) {
         MainWindow->Resize(Width, Height);
 
         if (!Title.empty()) {
@@ -440,6 +440,7 @@ namespace VML {
         }
 
         MainWindow->SetSizble(Sizble);
+        MainWindow->SetFrameless(FramelessStatus);
     }
 
     void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow *Object,
@@ -451,6 +452,7 @@ namespace VML {
         std::wstring Title;
 
         bool Sizble = true;
+        bool FramelessStatus = false;
 
         for (auto &ElementProperty: PropertyValueList) {
             if (ElementProperty.first == L"width") {
@@ -493,9 +495,19 @@ namespace VML {
 
                 Sizble = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"frameless") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"frameless\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                FramelessStatus = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Object, Width, Height, Title, Sizble);
+        Builder(Object, Width, Height, Title, Sizble, FramelessStatus);
     }
 
     VMLMainWindowBuilder::VMLMainWindowBuilder(Core::VMainWindow *MainWindow,

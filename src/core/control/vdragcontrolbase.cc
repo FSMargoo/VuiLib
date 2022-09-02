@@ -38,7 +38,10 @@ void VDragControlBase::OnMessage(Core::VMessage *Message) {
                 break;
             }
             case VMessageType::MouseMoveMessage: {
+                VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+
                 MouseDragged.Emit();
+                MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
 
                 break;
             }
@@ -91,6 +94,8 @@ void VDragControlBaseOnPushButton::OnMessage(Core::VMessage *Message) {
                 if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
                     UserInDrag = false;
                     CallWidgetUnlockFocusID();
+
+                    CallWidgetSendMessage(Message);
 
                     VPushButton::LosedMouseFocus();
 

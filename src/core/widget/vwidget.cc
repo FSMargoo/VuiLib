@@ -9,6 +9,9 @@ void VMainWindow::Win32ThreadResized(int Width, int Height) {
      Win32Cache.UserSetWidth    = Width;
      Win32Cache.UserSetHeight   = Height;
 }
+void VMainWindow::Win32ThreadRepaint() {
+    Win32Cache.Repaint = true;
+}
 void VMainWindow::Win32LoseFocus() {
     CallWidgetUnlockFocusID();
 
@@ -35,7 +38,7 @@ void VMainWindow::InitWindow() {
 
     BeginBatchDraw();
 
-    Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetImageHDC(),
+    Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(GetHWnd()),
                                    { 0, 0, GetWidth(), GetHeight() }, true);
     BufferPainter  = new VPainter(Direct2DRender->GetDirectXRenderTarget());
 
@@ -43,6 +46,7 @@ void VMainWindow::InitWindow() {
             { Win32ThreadResized(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); };
     WindowConfig.LosedUserFocus = [this]() -> void
             { Win32LoseFocus(); };
+    WindowConfig.WinRepaintMessage = [this]() { Win32ThreadRepaint(); };
 }
 void VMainWindow::InitIME() {
     WindowConfig.IMEX = -1;
@@ -147,18 +151,27 @@ void VMainWindow::CheckFrame() {
     if (FpsTimer.End()) {
         FpsTimer.Start(14);
 
+        if (Win32Cache.Repaint) {
+            if (!Win32Cache.UserSetGeomtery) {
+                Win32Cache.Repaint = false;
+
+                Update({0, 0, GetWidth(), GetHeight() } );
+            } else {
+                Win32Cache.Repaint = false;
+            }
+        }
+
         if (Win32Cache.UserSetGeomtery) {
             Win32Cache.UserSetGeomtery = false;
 
             VUIObject::Resize(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
-            ExResize(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
 
             Resized.Emit(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
 
             delete Direct2DRender;
             delete BufferPainter;
 
-            Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetImageHDC(),
+            Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(GetHWnd()),
                                            { 0, 0, GetWidth(), GetHeight() }, true);
             BufferPainter  = new VPainter(Direct2DRender->GetDirectXRenderTarget());
 
@@ -186,8 +199,6 @@ void VMainWindow::CheckFrame() {
 
             delete Canvas;
         }
-
-        FlushBatchDraw();
     }
 }
 
@@ -207,6 +218,21 @@ void VMainWindow::SetMaxSize(const VGeomtery& MaxSize) {
 void VMainWindow::SetMiniSize(const VGeomtery& MiniSize) {
     WindowConfig.UseMaxMinSize = true;
     WindowConfig.WindowMiniSize = MiniSize;
+}
+void VMainWindow::SetFrameless(const bool& FramelessStatus) {
+    if (FramelessStatus) {
+        WindowConfig.InFrameless = true;
+
+        SetWindowLongPtr(GetLocalWinId(), GWL_STYLE, GetWindowLongPtr(GetLocalWinId(), GWL_STYLE) & ~ (WS_THICKFRAME | WS_SIZEBOX | WS_CAPTION));
+
+        RECT WindowRect;
+        GetWindowRect(GetLocalWinId(), &WindowRect);
+        MoveWindow(GetLocalWinId(), WindowRect.left, WindowRect.top, GetWidth(), GetHeight(), FALSE);
+    } else {
+        WindowConfig.InFrameless = false;
+
+        SetWindowLongPtr(GetLocalWinId(), GWL_STYLE, 349110272ll);
+    }
 }
 void VMainWindow::SetSizble(const bool& Sizble) {
     if (Sizble) {

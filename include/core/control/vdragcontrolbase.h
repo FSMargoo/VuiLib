@@ -15,6 +15,7 @@ protected:
 public:
     VSignal<> UserStartDrag;
     VSignal<> MouseDragged;
+    VSignal<const int&, const int&> MouseDraggedPosition;
     VSignal<> UserEndDrag;
 
 public:

@@ -17,7 +17,8 @@ struct VMainWindowConfig {
 
     PLOGFONT  IMEFontStyle;
 
-    bool      UseMaxMinSize = false;
+    bool      InFrameless    = false;
+    bool      UseMaxMinSize  = false;
 
     VGeomtery WindowMaxSize;
     VGeomtery WindowMiniSize;
@@ -27,6 +28,7 @@ struct VMainWindowConfig {
     bool LockFocus = false;
     bool IMEInput  = false;
 
+    std::function<void()>         WinRepaintMessage;
     std::function<void()>         StartIMEInput;
     std::function<void()>         EndIMEInput;
     std::function<void()>         LosedUserFocus;

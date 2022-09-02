@@ -17,6 +17,7 @@ struct VWin32StatusCache {
     int UserSetHeight = 0;
 
     bool UserSetGeomtery = false;
+    bool Repaint         = false;
 };
 
 class VMainWindow : public VUIObject {
@@ -45,6 +46,7 @@ class VMainWindow : public VUIObject {
 
  private:
      void Win32ThreadResized(int Width, int Height);
+     void Win32ThreadRepaint();
      void Win32LoseFocus();
 
  public:
@@ -72,6 +74,8 @@ class VMainWindow : public VUIObject {
      void SetMaxSize(const VGeomtery& MaxSize);
      void SetMiniSize(const VGeomtery& MiniSize);
      void SetSizble(const bool& Sizble);
+
+     void SetFrameless(const bool& FramelessStatus);
 
      void Resize(const int& Width, const int& Height) override;
 

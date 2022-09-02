@@ -3,6 +3,8 @@
 #include "../core/vcontrol.h"
 #include "../vss/vssbuilder.h"
 
+#include "../core/control/vfakecaption.h"
+
 #include "vml.h"
 #include "vmlbuilder.h"
 
@@ -33,6 +35,8 @@ namespace VML {
     public:
         void SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List);
         void SetStyleSheet(VSS::VSSParserResult VSSParserResult);
+
+        HWND GetLocalWinId() override;
 
     public:
         VMLFinder Get(const std::wstring& ChildrenId);
