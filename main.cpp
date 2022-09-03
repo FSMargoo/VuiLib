@@ -1,6 +1,5 @@
 #include "./include/core/render/vpainter.h"
 #include "./include/core/widget/vwidget.h"
-#include "./include/core/control/vfakecaption.h"
 
 #include "./include/vml/vmlwidget.h"
 
@@ -12,7 +11,8 @@ int main() {
     VApplication Application;
 
     VMLWidget VMLWidget(400, 400, &Application, true);
-    auto	  Result = VMLWidget.LoadVML(L"./testvml.xml", VMLParserParseMode::FromFile);
+    BeginBatchDraw();
 
+    auto	  Result = VMLWidget.LoadVML(L"./testvml.xml", VMLParserParseMode::FromFile);
     return Application.Exec();
 }

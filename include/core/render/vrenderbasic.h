@@ -25,6 +25,7 @@ void VDXObjectSafeFree(ObjectType** Object) {
 		*Object = nullptr;
 	}
 }
+
 }
 
 VLIB_END_NAMESPACE
