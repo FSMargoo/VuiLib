@@ -1,7 +1,12 @@
 #include "../../../include/core/widget/vprivatewidget.h"
+#include "../../../include/core/render/vdirectxfactory.h"
 
 #include <graphics.h>
 #include <stdio.h>
+
+#include <gdiplus.h>
+
+#pragma comment(lib, "gdiplus.lib")
 
 VLIB_BEGIN_NAMESPACE
 

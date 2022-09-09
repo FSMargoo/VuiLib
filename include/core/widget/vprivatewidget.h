@@ -28,6 +28,9 @@ struct VMainWindowConfig {
     bool LockFocus = false;
     bool IMEInput  = false;
 
+    bool   EnableRadius = false;
+    VPoint BorderRadius = { 0, 0 };
+
     std::function<void()>         WinRepaintMessage;
     std::function<void()>         StartIMEInput;
     std::function<void()>         EndIMEInput;

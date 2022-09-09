@@ -114,11 +114,11 @@ namespace VML {
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
-                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModePercent;
 
                         if (ElementProperty.second.NativeCallParameter.size() == 1 &&
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
-                            HorizontalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
+                            VerticalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
                         }
                     }
                 }
@@ -155,11 +155,11 @@ namespace VML {
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
-                        VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
+                        VerticalLayoutMode = Core::VLayoutMode::LayoutModePercent;
 
                         if (ElementProperty.second.NativeCallParameter.size() == 1 &&
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
-                            RelativeY = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
+                            HorizontalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
                         }
                     }
                 }
@@ -256,8 +256,7 @@ namespace VML {
     void VMLPushButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VPushButton *Object,
                                                  std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
-
+        
         int TextSize = 0;
         std::wstring Text;
 
@@ -301,8 +300,7 @@ namespace VML {
 
     void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VImageLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                VMLControlBuildStatus* BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
-
+        
         Core::VImage *Image = nullptr;
 
         for (auto &ElementProperty: PropertyValueList) {
@@ -371,8 +369,7 @@ namespace VML {
     void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextLabel *Object,
                                                std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                VMLControlBuildStatus *BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
-
+        
         std::wstring Text;
         int TextSize = 0;
 
@@ -531,8 +528,7 @@ namespace VML {
 
     void VMLLayoutBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
-
+        
         Core::VLayoutMode  VerticalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
         Core::VLayoutMode  HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
 
@@ -715,8 +711,7 @@ namespace VML {
     }
     void VMLScaleLayoutBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
-        VMLCommonBuilder::AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
-
+        
         double WidthScale = 1.f;
         double HeightScale = 1.f;
 

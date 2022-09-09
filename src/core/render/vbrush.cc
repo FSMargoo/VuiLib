@@ -43,6 +43,17 @@ VSolidBrush::~VSolidBrush() {
 	VDXObjectSafeFree(&Brush);
 }
 
+ID2D1BitmapBrush* VBitmapBrush::GetDxBrush() {
+    return Brush;
+}
+
+VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, VImage* Image) {
+    Target->CreateBitmapBrush(Image->GetDirectXObject(), D2D1::BitmapBrushProperties(), &Brush);
+}
+VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, ID2D1Bitmap* Image) {
+    Target->CreateBitmapBrush(Image, D2D1::BitmapBrushProperties(), &Brush);
+}
+
 }
 
 VLIB_END_NAMESPACE

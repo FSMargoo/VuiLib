@@ -193,9 +193,62 @@ void VMainWindow::CheckFrame() {
 
             RepaintMessages.clear();
 
-            BufferPainter->BeginDraw();
-            BufferPainter->DrawCanvas(GetRegion(), Canvas, GetRegion(), 1.f);
-            BufferPainter->EndDraw();
+            if (WindowConfig.EnableRadius) {
+                IMAGE BorderImage(GetWidth(), GetHeight());
+                auto Property = D2D1::RenderTargetProperties(
+                        D2D1_RENDER_TARGET_TYPE::D2D1_RENDER_TARGET_TYPE_HARDWARE,
+                        D2D1::PixelFormat(
+                                DXGI_FORMAT_B8G8R8A8_UNORM,
+                                D2D1_ALPHA_MODE_PREMULTIPLIED
+                        ), 0.0, 0.0, D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE, D2D1_FEATURE_LEVEL_DEFAULT
+                );
+                ID2D1DCRenderTarget* DCRenderTarget;
+                HRESULT Result = VDirectXD2DFactory.GetInstance()->CreateDCRenderTarget(
+                        &Property,
+                        &DCRenderTarget
+                );
+                RECT WindowRect = { 0, 0, GetWidth(), GetHeight() };
+
+                ID2D1Bitmap *Bitmap;
+                Canvas->GetDXObject()->GetBitmap(&Bitmap);
+                VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), Bitmap);
+
+                DCRenderTarget->BindDC(GetImageHDC(&BorderImage), &WindowRect);
+                SetWindowLongPtr(GetHWnd(), GWL_EXSTYLE, WS_EX_LAYERED);
+
+                DWORD* Buffer = GetImageBuffer(&BorderImage);
+                unsigned long BufferTotalCount = GetWidth() * GetHeight();
+                for (unsigned long PixelCount = 0; PixelCount < BufferTotalCount; ++PixelCount) {
+                    Buffer[PixelCount] = (RGB(0, 0, 0) | (((DWORD)(BYTE)(0))<<24));
+                }
+
+                DCRenderTarget->BeginDraw();
+
+                DCRenderTarget->FillRoundedRectangle(D2D1_ROUNDED_RECT{
+                        {0, 0, static_cast<float>(GetWidth()), static_cast<float>(GetHeight())},
+                        static_cast<float>(WindowConfig.BorderRadius.X),
+                        static_cast<float>(WindowConfig.BorderRadius.Y)}, BitmapBrush.GetDxBrush());
+
+                DCRenderTarget->EndDraw();
+
+                HDC WindowDC = GetDC(GetHWnd());
+
+                BLENDFUNCTION BlendFN = { 0 };
+                BlendFN.BlendOp = AC_SRC_OVER;
+                BlendFN.SourceConstantAlpha = 255;
+                BlendFN.AlphaFormat = AC_SRC_ALPHA;
+
+                POINT	SourcePoint = { 0, 0 };
+                SIZE	WindowSize = { GetWidth(), GetHeight() };
+                UpdateLayeredWindow(GetHWnd(), WindowDC, NULL, &WindowSize, GetImageHDC(&BorderImage),
+                                    &SourcePoint, NULL, &BlendFN, ULW_ALPHA);
+
+                ReleaseDC(GetHWnd(), WindowDC);
+            } else {
+                BufferPainter->BeginDraw();
+                BufferPainter->DrawCanvas(GetRegion(), Canvas, GetRegion(), 1.f);
+                BufferPainter->EndDraw();
+            }
 
             delete Canvas;
         }
@@ -243,6 +296,17 @@ void VMainWindow::SetSizble(const bool& Sizble) {
         SetWindowLong(GetHWnd(), GWL_STYLE, GetWindowLong(GetHWnd(), GWL_STYLE) ^ (WS_MAXIMIZEBOX));
         SetWindowLong(GetHWnd(), GWL_STYLE, (GetWindowLong(GetHWnd(), GWL_STYLE) ^ (WS_THICKFRAME)));
     }
+}
+void VMainWindow::SetRadius(VPoint Radius) {
+    if (Radius == VPoint{ 0, 0 }) {
+        WindowConfig.EnableRadius = false;
+        WindowConfig.BorderRadius = Radius;
+    } else {
+        WindowConfig.EnableRadius = true;
+        WindowConfig.BorderRadius = Radius;
+    }
+
+    Update({ 0, 0, GetWidth(), GetHeight() });
 }
 void VMainWindow::Resize(const int& Width, const int& Height) {
     VUIObject::Resize(Width, Height);

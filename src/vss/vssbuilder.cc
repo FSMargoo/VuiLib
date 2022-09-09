@@ -698,6 +698,13 @@ namespace VSS {
                             }
                         }
                     }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetRadius({ PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt });
+                            }
+                        }
+                    }
                 }
             }
         }

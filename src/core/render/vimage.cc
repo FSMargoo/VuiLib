@@ -84,7 +84,6 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
 
     ID2D1Bitmap1* TargetBitmap = NULL;
 
-    //Create a Bitmap with "D2D1_BITMAP_OPTIONS_TARGET"
     D2D1_BITMAP_PROPERTIES1 BitmapProperties =
             D2D1::BitmapProperties1(
                     D2D1_BITMAP_OPTIONS_TARGET,

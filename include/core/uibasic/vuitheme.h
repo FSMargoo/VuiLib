@@ -32,7 +32,7 @@ class VMainWindowTheme : public VBasicUITheme {
      std::wstring WindowPlaneText;
 
      VMainWindowTheme() {
-         BackgroundColor = VColor::FromBYTERGBA(41, 42, 43);
+         BackgroundColor = VColor::FromBYTERGBA(41, 42, 43, 255);
          WindowSizble    = true;
      }
 

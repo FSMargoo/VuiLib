@@ -81,6 +81,34 @@ void VCanvasPainter::SolidRoundedRectangle(const VRect& Rectangle, const VPoint&
 		PenBrush->GetDxBrush());
 }
 
+void VCanvasPainter::SolidRectangle(const VRect& Rectangle, VBitmapBrush* PenBrush) {
+    TargetDevice->FillRectangle(D2D1::RectF(static_cast<FLOAT>(Rectangle.Left), static_cast<FLOAT>(Rectangle.Top), static_cast<FLOAT>(Rectangle.Right), static_cast<FLOAT>(Rectangle.Bottom)),
+                                PenBrush->GetDxBrush());
+}
+void VCanvasPainter::SolidEllipse(const VRect& EllipseRectangle, VBitmapBrush* PenBrush) {
+    int RadiusX = EllipseRectangle.GetWidth() / 2;
+    int RadiusY = EllipseRectangle.GetHeight() / 2;
+
+    TargetDevice->FillEllipse(
+            D2D1_ELLIPSE
+                    {
+                            {
+                                    static_cast<FLOAT>(EllipseRectangle.Left + RadiusX),
+                                    static_cast<FLOAT>(EllipseRectangle.Top + RadiusY)
+                            },
+                            static_cast<FLOAT>(RadiusX), static_cast<FLOAT>(RadiusY)
+                    },
+            PenBrush->GetDxBrush()
+    );
+}
+void VCanvasPainter::SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VBitmapBrush* PenBrush) {
+    TargetDevice->FillRoundedRectangle(D2D1::RoundedRect(
+                                               D2D1::RectF(static_cast<FLOAT>(Rectangle.Left), static_cast<FLOAT>(Rectangle.Top), static_cast<FLOAT>(Rectangle.Right), static_cast<FLOAT>(Rectangle.Bottom)),
+                                               static_cast<FLOAT>(Radius.X), static_cast<FLOAT>(Radius.Y)
+                                       ),
+                                       PenBrush->GetDxBrush());
+}
+
 void VCanvasPainter::FillRectangle(const VRect& Rectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush) {
 	SolidRectangle(Rectangle, FillBrush);
 	DrawEllipse(Rectangle, BorderPen);
@@ -142,6 +170,7 @@ void VPainter::BeginDraw() {
 void VPainter::EndDraw() {
 	TargetDevice->EndDraw();
 }
+
 void VPainter::DrawLine(const VPoint& StartPoint, const VPoint& EndPoint, VPenBrush* PenBrush) {
 	TargetDevice->DrawLine(D2D1::Point2F(static_cast<FLOAT>(StartPoint.X), static_cast<FLOAT>(StartPoint.Y)), D2D1::Point2F(static_cast<FLOAT>(EndPoint.X), static_cast<FLOAT>(EndPoint.Y)), 
 		PenBrush->GetDxBrush(), PenBrush->GetThickness(), PenBrush->GetStrokeStyle());
@@ -200,6 +229,34 @@ void VPainter::SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radiu
 		static_cast<FLOAT>(Radius.X), static_cast<FLOAT>(Radius.Y)
 	),
 		PenBrush->GetDxBrush());
+}
+
+void VPainter::SolidRectangle(const VRect& Rectangle, VBitmapBrush* PenBrush) {
+    TargetDevice->FillRectangle(D2D1::RectF(static_cast<FLOAT>(Rectangle.Left), static_cast<FLOAT>(Rectangle.Top), static_cast<FLOAT>(Rectangle.Right), static_cast<FLOAT>(Rectangle.Bottom)),
+                                PenBrush->GetDxBrush());
+}
+void VPainter::SolidEllipse(const VRect& EllipseRectangle, VBitmapBrush* PenBrush) {
+    int RadiusX = EllipseRectangle.GetWidth() / 2;
+    int RadiusY = EllipseRectangle.GetHeight() / 2;
+
+    TargetDevice->FillEllipse(
+            D2D1_ELLIPSE
+                    {
+                            {
+                                    static_cast<FLOAT>(EllipseRectangle.Left + RadiusX),
+                                    static_cast<FLOAT>(EllipseRectangle.Top + RadiusY)
+                            },
+                            static_cast<FLOAT>(RadiusX), static_cast<FLOAT>(RadiusY)
+                    },
+            PenBrush->GetDxBrush()
+    );
+}
+void VPainter::SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VBitmapBrush* PenBrush) {
+    TargetDevice->FillRoundedRectangle(D2D1::RoundedRect(
+                                               D2D1::RectF(static_cast<FLOAT>(Rectangle.Left), static_cast<FLOAT>(Rectangle.Top), static_cast<FLOAT>(Rectangle.Right), static_cast<FLOAT>(Rectangle.Bottom)),
+                                               static_cast<FLOAT>(Radius.X), static_cast<FLOAT>(Radius.Y)
+                                       ),
+                                       PenBrush->GetDxBrush());
 }
 
 void VPainter::FillRectangle(const VRect& Rectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush) {

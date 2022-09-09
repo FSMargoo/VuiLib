@@ -36,9 +36,14 @@ class VCanvasPainter {
 	 void DrawRectangle(const VRect& Rectangle, VPenBrush* PenBrush);
 	 void DrawEllipse(const VRect& EllipseRectangle, VPenBrush* PenBrush);
 	 void DrawRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* PenBrush);
+
 	 void SolidRectangle(const VRect& Rectangle, VSolidBrush* PenBrush);
 	 void SolidEllipse(const VRect& EllipseRectangle, VSolidBrush* PenBrush);
 	 void SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VSolidBrush* PenBrush);
+     void SolidRectangle(const VRect& Rectangle, VBitmapBrush* PenBrush);
+     void SolidEllipse(const VRect& EllipseRectangle, VBitmapBrush* PenBrush);
+     void SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VBitmapBrush* PenBrush);
+
 	 void FillRectangle(const VRect& Rectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush);
 	 void FillEllipse(const VRect& EllipseRectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush);
 	 void FillRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* BorderPen, VSolidBrush* FillBrush);
@@ -67,9 +72,14 @@ class VPainter {
 	 void DrawRectangle(const VRect& Rectangle, VPenBrush* PenBrush);
 	 void DrawEllipse(const VRect& EllipseRectangle, VPenBrush* PenBrush);
 	 void DrawRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* PenBrush);
+
 	 void SolidRectangle(const VRect& Rectangle, VSolidBrush* PenBrush);
 	 void SolidEllipse(const VRect& EllipseRectangle, VSolidBrush* PenBrush);
 	 void SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VSolidBrush* PenBrush);
+     void SolidRectangle(const VRect& Rectangle, VBitmapBrush* PenBrush);
+     void SolidEllipse(const VRect& EllipseRectangle, VBitmapBrush* PenBrush);
+     void SolidRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VBitmapBrush* PenBrush);
+
 	 void FillRectangle(const VRect& Rectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush);
 	 void FillEllipse(const VRect& EllipseRectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush);
 	 void FillRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* BorderPen, VSolidBrush* FillBrush);

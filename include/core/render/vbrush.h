@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vcolor.h"
+#include "vimage.h"
 #include "vdirectxfactory.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -36,6 +37,19 @@ class VSolidBrush {
 	 VSolidBrush(ID2D1RenderTarget* Target, const VColor& Color);
 	 ~VSolidBrush();
 };
+class VBitmapBrush {
+ private:
+     ID2D1BitmapBrush* Brush{};
+
+ public:
+     ID2D1BitmapBrush* GetDxBrush();
+
+ public:
+     VBitmapBrush(ID2D1RenderTarget* Target, VImage* Image);
+     VBitmapBrush(ID2D1RenderTarget* Target, ID2D1Bitmap* Image);
+};
+
+
 }
 
 VLIB_END_NAMESPACE

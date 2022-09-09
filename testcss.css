@@ -28,3 +28,6 @@
 
     background-color: rgb(255, 255, 255);
 }
+.main-window {
+    border-radius: 10px;
+}
