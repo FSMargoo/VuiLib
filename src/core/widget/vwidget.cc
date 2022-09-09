@@ -214,7 +214,6 @@ void VMainWindow::CheckFrame() {
                 VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), Bitmap);
 
                 DCRenderTarget->BindDC(GetImageHDC(&BorderImage), &WindowRect);
-                SetWindowLongPtr(GetHWnd(), GWL_EXSTYLE, WS_EX_LAYERED);
 
                 DWORD* Buffer = GetImageBuffer(&BorderImage);
                 unsigned long BufferTotalCount = GetWidth() * GetHeight();
@@ -302,6 +301,8 @@ void VMainWindow::SetRadius(VPoint Radius) {
         WindowConfig.EnableRadius = false;
         WindowConfig.BorderRadius = Radius;
     } else {
+        SetWindowLongPtr(GetHWnd(), GWL_EXSTYLE, WS_EX_LAYERED);
+
         WindowConfig.EnableRadius = true;
         WindowConfig.BorderRadius = Radius;
     }
