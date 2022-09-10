@@ -1,5 +1,6 @@
 <widget type="mainwindow" width="589" height="222" title="Welcome to new VUILib" style-sheet-src="./testcss.css" sizable="true" frameless="true"
         class="main-window">
     <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill"></background-image>
+    <blur-label type="blurlabel" width="@fill" height="@fill" class="blur-label"></blur-label>
     <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
 </widget>
