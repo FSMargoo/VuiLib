@@ -12,7 +12,12 @@ VImageLabel::VImageLabel(const int& Width, const int& Height, Core::VUIObject *P
 }
 VImageLabel::VImageLabel(const int& Width, const int& Height, VImage* Image, VUIObject* Parent) : VUIObject(Parent) {
     Theme        = new VImageLabelTheme;
-    Theme->Image = new VImage(*Image);
+
+    if (Image != nullptr) {
+        Theme->Image = new VImage(*Image);
+    } else {
+        Theme->Image = nullptr;
+    }
 
     Resize(Width, Height);
 }
@@ -48,7 +53,11 @@ void VImageLabel::OnPaint(VCanvasPainter* Painter) {
 }
 
 void VImageLabel::SetImage(VImage* Image) {
-    *(Theme->Image) = *(Image);
+    if (Theme->Image != nullptr) {
+        *(Theme->Image) = *(Image);
+    } else {
+        Theme->Image = new VImage(*Image);
+    }
 }
 
 }
