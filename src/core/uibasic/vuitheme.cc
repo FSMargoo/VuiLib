@@ -180,4 +180,13 @@ VSliderTheme::VSliderTheme() {
     SelectedArea.LocalTheme.BorderThickness = 0.f;
 }
 
+VBlurLabelTheme::VBlurLabelTheme(const VBlurLabelTheme& ThemeObject) {
+    MixedColor = ThemeObject.MixedColor;
+    BlurRadius = ThemeObject.BlurRadius;
+}
+VBlurLabelTheme::VBlurLabelTheme() {
+    MixedColor = VColor::FromBYTERGBA(56, 56, 56, 219);
+    BlurRadius = 23;
+}
+
 }

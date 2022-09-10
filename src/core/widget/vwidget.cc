@@ -97,6 +97,9 @@ bool VMainWindow::CallWidgetGetLockingStatus() {
 void VMainWindow::CallWidgetSendMessage(VMessage *Message) {
     SendMessageToChild(Message);
 }
+VCanvasPainter* VMainWindow::CallWidgetGetCanvas() {
+    return Canvas;
+}
 Core::VDCRender* VMainWindow::CallWidgetGetDCRenderTarget() {
     return Direct2DRender;
 }

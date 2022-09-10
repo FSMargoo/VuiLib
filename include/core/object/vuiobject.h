@@ -93,6 +93,10 @@ public:
     virtual Core::VDCRender *CallWidgetGetDCRenderTarget();
 
 protected:
+    virtual Core::VCanvasPainter*
+                             CallWidgetGetCanvas();
+
+protected:
     virtual void EditChildMessage(VMessage *Message) {}
 
 protected:

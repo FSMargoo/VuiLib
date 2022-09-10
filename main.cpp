@@ -2,6 +2,7 @@
 #include "./include/core/widget/vwidget.h"
 
 #include "./include/vml/vmlwidget.h"
+#include "./include/core/control/vblurlabel.h"
 
 int main() {
     using namespace Core;

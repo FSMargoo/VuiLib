@@ -805,6 +805,7 @@ namespace VML {
                                                            VMLControlBuildStatus* BuildStatus)  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
+
 }
 
 VLIB_END_NAMESPACE

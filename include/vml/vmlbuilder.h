@@ -8,6 +8,7 @@
 #include "../core/control/vimagelabel.h"
 #include "../core/control/vpushbutton.h"
 #include "../core/control/vscrollbar.h"
+#include "../core/control/vblurlabel.h"
 
 #include "../core/widget/vwidget.h"
 

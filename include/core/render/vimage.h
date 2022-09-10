@@ -22,8 +22,12 @@ class VImage {
  public:
 	 VImage(const VImage& Image);
 	 VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget);
+     VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget, D2D1_ALPHA_MODE DirectXAlphaMode);
 	 VImage(const std::wstring& FromFile, ID2D1RenderTarget* DirectXRenderTarget);
 	 ~VImage();
+
+     int GetWidth() const;
+     int GetHeight() const;
 
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
 };

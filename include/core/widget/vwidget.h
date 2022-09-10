@@ -60,6 +60,7 @@ class VMainWindow : public VUIObject {
      void CallWidgetUnlockFocusID() override;
      bool CallWidgetGetLockingStatus() override;
      void CallWidgetSendMessage(VMessage *Message) override;
+     VCanvasPainter* CallWidgetGetCanvas() override;
      Core::VDCRender *CallWidgetGetDCRenderTarget() override;
 
  public:

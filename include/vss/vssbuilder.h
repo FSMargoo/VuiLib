@@ -8,6 +8,7 @@
 #include "../core/control/vpushbutton.h"
 #include "../core/control/vscrollbar.h"
 #include "../core/control/vradiobutton.h"
+#include "../core/control/vblurlabel.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -112,6 +113,18 @@ namespace VSS {
         VSSVSliderVerticalBuilder(Core::VSliderVertical *TargetControl,
                                   std::vector<VSSBasicSelector *> SelectorSet,
                                   Core::VSliderTheme *Theme);
+    };
+
+    class VSSVBlurLabelBuilder {
+    private:
+        void BuildVSSObject(Core::VBlurLabel *TargetControl,
+            std::vector<VSSBasicSelector *> SelectorSet,
+            Core::VBlurLabelTheme *Theme);
+
+    public:
+        VSSVBlurLabelBuilder(Core::VBlurLabel *TargetControl,
+            std::vector<VSSBasicSelector *> SelectorSet,
+            Core::VBlurLabelTheme *Theme);
     };
 }
 

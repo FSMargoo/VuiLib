@@ -36,6 +36,9 @@ namespace VML {
         if (String == L"fake-caption") {
             return VMLObjectType::FakeCaption;
         }
+        if (String == L"blurlabel") {
+            return VMLObjectType::BlurLabel;
+        }
 
         return Type;
     }
@@ -67,6 +70,9 @@ namespace VML {
             }
             case VMLObjectType::FakeCaption: {
                 return L"fake-caption";
+            }
+            case VMLObjectType::BlurLabel: {
+                return L"blurlabel";
             }
         }
 
@@ -106,6 +112,11 @@ namespace VML {
             }
             case VMLObjectType::MainWindow: {
                 VSS::VSSVMainWindowBuilder Builder(static_cast<Core::VMainWindow*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
+
+                break;
+            }
+            case VMLObjectType::BlurLabel: {
+                VSS::VSSVBlurLabelBuilder Builder(static_cast<Core::VBlurLabel*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }

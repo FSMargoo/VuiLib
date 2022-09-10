@@ -1150,6 +1150,53 @@ namespace VSS {
                                                              Core::VSliderTheme *SliderTheme) {
         BuildVSSObject(TargetControl, SelectorSet, SliderTheme);
     }
+    void VSSVBlurLabelBuilder::BuildVSSObject(Core::VBlurLabel *TargetControl,
+                                                     std::vector<VSSBasicSelector *> SelectorSet,
+                                                     Core::VBlurLabelTheme *BlurLabelTheme) {
+        Core::VBlurLabelTheme *Theme = BlurLabelTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"blurlabel" ) {
+                // Common Property ( Not fade switch supported )
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->MixedColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->BlurRadius = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVBlurLabelBuilder::VSSVBlurLabelBuilder(Core::VBlurLabel *TargetControl,
+                                               std::vector<VSSBasicSelector *> SelectorSet,
+                                               Core::VBlurLabelTheme *Theme) {
+        BuildVSSObject(TargetControl, SelectorSet, Theme);
+    }
 }
 
 VLIB_END_NAMESPACE

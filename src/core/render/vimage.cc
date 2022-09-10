@@ -17,10 +17,22 @@ VImage::VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget) {
 
 	HRESULT Result = DirectXRenderTarget->CreateBitmap(
 		D2D1::SizeU(Width, Height), D2D1::BitmapProperties(
-			D2D1::PixelFormat(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE::D2D1_ALPHA_MODE_STRAIGHT)
+			D2D1::PixelFormat(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM,
+                              D2D1_ALPHA_MODE::D2D1_ALPHA_MODE_STRAIGHT)
 		), &DirectXBitmap);
 
 	VLIB_CHECK_REPORT(FAILED(Result), L"DirectX create ID2D1Bitmap failed!");
+}
+VImage::VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget, D2D1_ALPHA_MODE DirectXAlphaMode) {
+    VLIB_CHECK_REPORT(DirectXRenderTarget == nullptr, L"DirectXRenderTarget should be not as value nullptr!");
+
+    HRESULT Result = DirectXRenderTarget->CreateBitmap(
+            D2D1::SizeU(Width, Height), D2D1::BitmapProperties(
+                    D2D1::PixelFormat(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM,
+                                      DirectXAlphaMode)
+            ), &DirectXBitmap);
+
+    VLIB_CHECK_REPORT(FAILED(Result), L"DirectX create ID2D1Bitmap failed!");
 }
 VImage::VImage(const std::wstring& FromFile, ID2D1RenderTarget* DirectXRenderTarget) {
 	IWICBitmapDecoder* IWICDecoder     = nullptr;
@@ -65,6 +77,13 @@ VImage::VImage(const std::wstring& FromFile, ID2D1RenderTarget* DirectXRenderTar
 }
 VImage::~VImage() {
 	VDXObjectSafeFree(&DirectXBitmap);
+}
+
+int VImage::GetWidth() const {
+    return DirectXBitmap->GetSize().width;
+}
+int VImage::GetHeight() const {
+    return DirectXBitmap->GetSize().height;
 }
 
 void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTarget) {

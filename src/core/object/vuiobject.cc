@@ -115,6 +115,14 @@ Core::VDCRender *VUIObject::CallWidgetGetDCRenderTarget() {
 
     return nullptr;
 }
+Core::VCanvasPainter *VUIObject::CallWidgetGetCanvas() {
+    if (GetParent() != nullptr) {
+        return GetParent()->CallWidgetGetCanvas();
+    }
+
+    return nullptr;
+}
+
 
 void VUIObject::Update(VRect UpdateRect) {
     if (GetParent() != nullptr) {

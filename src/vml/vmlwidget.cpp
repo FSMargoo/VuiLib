@@ -229,6 +229,22 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"blurlabel") {
+                        Core::VBlurLabel* BlurLabel = new Core::VBlurLabel(UIParent);
+
+                        VMLObject->UIObject = BlurLabel;
+                        VMLObject->VMLType = VMLObjectType::BlurLabel;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLCommonBuilder      Builder(GetRootFinder(), BlurLabel, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 
