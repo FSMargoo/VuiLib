@@ -96,6 +96,7 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
 
     BlurEffect->SetInput(0, DirectXBitmap);
     BlurEffect->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, static_cast<float>(Radius));
+    BlurEffect->SetValue(D2D1_GAUSSIANBLUR_PROP_BORDER_MODE, D2D1_BORDER_MODE_HARD);
     BlurEffect->GetOutput(&BlurOutput);
 
     UINT Width  = DirectXBitmap->GetSize().width;
