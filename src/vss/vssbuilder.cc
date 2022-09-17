@@ -429,6 +429,174 @@ namespace VSS {
         BuildVSSObject(TargetControl, SelectorSet, RadioButtonTheme);
     }
 
+    void VSSVIconButtonBuilder::BuildVSSObject(Core::VIconButton *TargetControl,
+                                                std::vector<VSSBasicSelector *> SelectorSet,
+                                                Core::VIconButtonTheme *IconButtonTheme) {
+        Core::VIconButtonTheme *Theme = IconButtonTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"iconbutton") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"iconbutton" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"iconbutton" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Theme->LocalTheme = Theme->StaticTheme;
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVIconButtonBuilder::VSSVIconButtonBuilder(Core::VIconButton *TargetControl,
+                                                   std::vector<VSSBasicSelector *> SelectorSet,
+                                                   Core::VIconButtonTheme *IconButtonTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, IconButtonTheme);
+    }
+
     void VSSVTextLabelBuilder::BuildVSSObject(Core::VTextLabel *TargetControl,
                                               std::vector<VSSBasicSelector *> SelectorSet,
                                               Core::VTextLabelTheme *TextLabelTheme) {

@@ -9,6 +9,7 @@
 #include "../core/control/vpushbutton.h"
 #include "../core/control/vscrollbar.h"
 #include "../core/control/vblurlabel.h"
+#include "../core/control/viconbutton.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -154,6 +155,17 @@ namespace VML {
     public:
         VMLSliderVerticalBuilder(const VMLFinder& RootFinder, Core::VSliderVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                    VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLIconButtonBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VIconButton* IconButton, Core::VImage* Image);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VIconButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLIconButtonBuilder(const VMLFinder& RootFinder, Core::VIconButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                 VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

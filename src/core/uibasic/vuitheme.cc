@@ -191,4 +191,47 @@ VBlurLabelTheme::VBlurLabelTheme() {
     BorderRadius = { 0, 0 };
 }
 
+VIconButtonStatus::VIconButtonStatus() {
+    Image = nullptr;
+    Opacity = 1.f;
+}
+VIconButtonStatus::VIconButtonStatus(const VIconButtonStatus& Status) {
+    Image   = Status.Image;
+    Opacity = Status.Opacity;
+}
+
+VIconButtonTheme::VIconButtonTheme(const VIconButtonTheme& Theme) {
+    StaticTheme  = Theme.StaticTheme;
+    OnHoverTheme = Theme.OnHoverTheme;
+    ActiveTheme  = Theme.ActiveTheme;
+    LocalTheme   = Theme.StaticTheme;
+
+    if (Theme.Image != nullptr) {
+        Image = new VImage(*Theme.Image);
+    }
+}
+VIconButtonTheme::VIconButtonTheme() : VLabelCommonTheme() {
+    StaticTheme.BackgroundColor = VColor::FromBYTERGBA(56, 56, 56, 0);
+    StaticTheme.BorderColor = VColor::FromBYTERGBA(53, 53, 53, 0);
+    StaticTheme.BorderThickness = 1.3f;
+    StaticTheme.Radius = { 5, 5 };
+    StaticTheme.TextColor = VColor::FromBYTERGBA(126, 126, 126, 255);
+    StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    OnHoverTheme.BackgroundColor = VColor::FromBYTERGBA(255, 255, 255, 25);
+    OnHoverTheme.BorderColor = VColor::FromBYTERGBA(255, 255, 255, 25);
+    OnHoverTheme.Radius = { 5, 5 };
+    OnHoverTheme.BorderThickness = 1.3f;
+    OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    ActiveTheme.BackgroundColor = VColor::FromBYTERGBA(255, 255, 255, 81);
+    ActiveTheme.BorderColor = VColor::FromBYTERGBA(255, 255, 255, 81);
+    ActiveTheme.Radius = { 5, 5 };
+    ActiveTheme.BorderThickness = 1.3f;
+    ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    LocalTheme = StaticTheme;
+    Image      = nullptr;
+}
+
 }

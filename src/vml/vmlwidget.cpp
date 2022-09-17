@@ -245,6 +245,22 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"iconbutton") {
+                        Core::VIconButton* BlurLabel = new Core::VIconButton(UIParent);
+
+                        VMLObject->UIObject = BlurLabel;
+                        VMLObject->VMLType = VMLObjectType::IconButton;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLIconButtonBuilder  Builder(GetRootFinder(), BlurLabel, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 

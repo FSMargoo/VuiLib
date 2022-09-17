@@ -806,6 +806,39 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
+    void VMLIconButtonBuilder::Builder(Core::VIconButton* IconButton, Core::VImage* Image) {
+        IconButton->SetIconImage(Image);
+    }
+
+    void VMLIconButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VIconButton *Object,
+                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                               VMLControlBuildStatus *BuildStatus) {
+        Core::VImage* Image = nullptr;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"src") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"src\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                Image = new Core::VImage(ElementProperty.second.PropertyAsString,
+                                         Object->CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+            }
+        }
+
+        Builder(Object, Image);
+    }
+
+    VMLIconButtonBuilder::VMLIconButtonBuilder(const VMLFinder& RootFinder,
+                                               Core::VIconButton* Object,
+                                               std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                               VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
 }
 
 VLIB_END_NAMESPACE

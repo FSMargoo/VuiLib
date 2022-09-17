@@ -30,7 +30,7 @@ aux_source_directory(src/vss VSS_DIR_SRC)
 
 add_library(vuilib STATIC ${DIR_SRCS})
 add_library(vmllib STATIC ${VML_DIR_SRC})
-add_library(vkitlib STATIC ${VKITS_DIR_SRC})
+add_library(vkitlib STATIC ${VKITS_DIR_SRC} include/core/control/viconbutton.h)
 add_library(vsslib STATIC ${VSS_DIR_SRC})
 
 add_executable(vuilib_cmake main.cpp)

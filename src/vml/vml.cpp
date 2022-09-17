@@ -39,6 +39,9 @@ namespace VML {
         if (String == L"blurlabel") {
             return VMLObjectType::BlurLabel;
         }
+        if (String == L"iconbutton") {
+            return VMLObjectType::IconButton;
+        }
 
         return Type;
     }
@@ -73,6 +76,9 @@ namespace VML {
             }
             case VMLObjectType::BlurLabel: {
                 return L"blurlabel";
+            }
+            case VMLObjectType::IconButton: {
+                return L"iconbutton";
             }
         }
 
@@ -117,6 +123,11 @@ namespace VML {
             }
             case VMLObjectType::BlurLabel: {
                 VSS::VSSVBlurLabelBuilder Builder(static_cast<Core::VBlurLabel*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::IconButton: {
+                VSS::VSSVIconButtonBuilder Builder(static_cast<Core::VIconButton*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }

@@ -9,6 +9,7 @@
 #include "../core/control/vscrollbar.h"
 #include "../core/control/vradiobutton.h"
 #include "../core/control/vblurlabel.h"
+#include "../core/control/viconbutton.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -43,6 +44,18 @@ namespace VSS {
         VSSVRadioButtonBuilder(Core::VRadioButton *TargetControl,
                                std::vector<VSSBasicSelector *> SelectorSet,
                                Core::VRadioButtonTheme *RadioButtonTheme);
+    };
+
+    class VSSVIconButtonBuilder {
+    private:
+        void BuildVSSObject(Core::VIconButton *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VIconButtonTheme *IconButtonTheme);
+
+    public:
+        VSSVIconButtonBuilder(Core::VIconButton *TargetControl,
+                               std::vector<VSSBasicSelector *> SelectorSet,
+                               Core::VIconButtonTheme *IconButtonTheme);
     };
 
     class VSSVTextLabelBuilder {

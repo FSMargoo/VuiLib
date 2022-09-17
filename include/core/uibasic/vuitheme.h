@@ -12,7 +12,8 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 enum class VUIThemeType {
-	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton, VSlider, VBlurLabel
+	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton, VSlider, VBlurLabel,
+    VIconButton
 };
 
 struct VBasicUITheme {
@@ -187,6 +188,28 @@ public:
 public:
     VUIThemeType GetThemeType() override {
         return VUIThemeType::VBlurLabel;
+    }
+};
+
+struct VIconButtonStatus {
+    VImage* Image;
+    float   Opacity;
+
+    VIconButtonStatus();
+    VIconButtonStatus(const VIconButtonStatus& Status);
+};
+
+class VIconButtonTheme  : public VLabelCommonTheme {
+public:
+    VImage* Image = nullptr;
+
+public:
+    VIconButtonTheme();
+    VIconButtonTheme(const VIconButtonTheme& Theme);
+
+public:
+    VUIThemeType GetThemeType() override {
+        return VUIThemeType::VIconButton;
     }
 };
 
