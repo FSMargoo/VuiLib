@@ -109,7 +109,7 @@ void VLayout::ParentSizeChanged(const int& Width, const int& Height) {
     int NewX = GetParent()->GetX();
     int NewY = GetParent()->GetY();
 
-    switch (VerticalLayoutMode) {
+    switch (HorizontalLayoutMode) {
         case VLayoutMode::LayoutModeCenter: {
             NewX = TargetWindow->GetWidth() / 2 - Width / 2;
 
@@ -126,7 +126,7 @@ void VLayout::ParentSizeChanged(const int& Width, const int& Height) {
             break;
         }
     }
-    switch (HorizontalLayoutMode) {
+    switch (VerticalLayoutMode) {
         case VLayoutMode::LayoutModeCenter: {
             NewY = TargetWindow->GetHeight() / 2 - Height / 2;
 
