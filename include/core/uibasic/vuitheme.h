@@ -178,6 +178,8 @@ public:
     VColor MixedColor;
     int    BlurRadius;
 
+    VPoint BorderRadius;
+
 public:
     VBlurLabelTheme(const VBlurLabelTheme& ThemeObject);
     VBlurLabelTheme();

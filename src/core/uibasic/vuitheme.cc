@@ -181,12 +181,14 @@ VSliderTheme::VSliderTheme() {
 }
 
 VBlurLabelTheme::VBlurLabelTheme(const VBlurLabelTheme& ThemeObject) {
-    MixedColor = ThemeObject.MixedColor;
-    BlurRadius = ThemeObject.BlurRadius;
+    MixedColor   = ThemeObject.MixedColor;
+    BlurRadius   = ThemeObject.BlurRadius;
+    BorderRadius = ThemeObject.BorderRadius;
 }
 VBlurLabelTheme::VBlurLabelTheme() {
-    MixedColor = VColor::FromBYTERGBA(56, 56, 56, 219);
-    BlurRadius = 23;
+    MixedColor   = VColor::FromBYTERGBA(56, 56, 56, 219);
+    BlurRadius   = 23;
+    BorderRadius = { 0, 0 };
 }
 
 }
