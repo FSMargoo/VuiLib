@@ -12,7 +12,8 @@ class VBlurLabel : public VUIObject {
 
  public:
      VBlurLabel(VUIObject* Parent);
-     VBlurLabel(const int& Width, const int &Height, VUIObject* Parent);
+     ~VBlurLabel();
+    VBlurLabel(const int& Width, const int &Height, VUIObject* Parent);
      VBlurLabel(const int& Width, const int &Height, const int& Radius, VUIObject* Parent);
 
      VBlurLabelTheme* GetTheme();

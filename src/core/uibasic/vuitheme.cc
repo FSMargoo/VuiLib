@@ -26,6 +26,9 @@ VLabelCommonTheme::VLabelCommonTheme() {
 
     LabelFont = new VFont(L"Microsoft YaHei UI", VFont::WEIGHT_NORMAL, VFont::STYLE_NORMAL, VFont::STRETCH_NORMAL, 12.f, LocaleName);
 }
+VLabelCommonTheme::~VLabelCommonTheme() {
+    delete LabelFont;
+}
 VPushButtonTheme::VPushButtonTheme(const VPushButtonTheme& Theme) {
     StaticTheme  = Theme.StaticTheme;
     OnHoverTheme = Theme.OnHoverTheme;

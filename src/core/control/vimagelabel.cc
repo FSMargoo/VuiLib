@@ -27,6 +27,9 @@ VImageLabel::VImageLabel(const int& Width, const int& Height, const std::wstring
 
     Resize(Width, Height);
 }
+VImageLabel::~VImageLabel() {
+    delete Theme;
+}
 
 VImageLabelTheme* VImageLabel::GetTheme() {
     return Theme;

@@ -37,6 +37,7 @@ public:
     VTextLabel(VUIObject* Parent);
     VTextLabel(int Width, int Height, VUIObject* Parent);
     VTextLabel(int Width, int Height, const std::wstring& PlaneText, VUIObject* Parent);
+    ~VTextLabel();
 
 public:
     void SetPlaneText(const std::wstring& PlaneText);

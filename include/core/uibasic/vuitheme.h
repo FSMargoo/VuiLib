@@ -69,6 +69,8 @@ struct VLabelCommonTheme : public VBasicUITheme {
  public:
 	 VLabelCommonTheme(const VLabelCommonTheme& LabelObject);
 	 VLabelCommonTheme();
+
+     ~VLabelCommonTheme();
 };
 
 struct VPushButtonTheme : public VLabelCommonTheme {

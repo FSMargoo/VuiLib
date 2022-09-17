@@ -9,6 +9,9 @@ namespace Core {
 VBlurLabel::VBlurLabel(VUIObject* Parent) : VUIObject(Parent) {
     Theme = new VBlurLabelTheme(*(static_cast<VBlurLabelTheme*>(GetTargetTheme(VUIThemeType::VBlurLabel))));
 }
+VBlurLabel::~VBlurLabel() {
+    delete Theme;
+}
 VBlurLabel::VBlurLabel(const int& Width, const int &Height, VUIObject* Parent) : VUIObject(Parent) {
     Theme = new VBlurLabelTheme(*(static_cast<VBlurLabelTheme*>(GetTargetTheme(VUIThemeType::VBlurLabel))));
 

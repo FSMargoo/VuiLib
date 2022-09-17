@@ -32,6 +32,10 @@ VTextLabel::VTextLabel(int Width, int Height, const std::wstring &PlaneText, Cor
 
     Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 }
+VTextLabel::~VTextLabel() {
+    delete Theme;
+    delete Interpolator;
+}
 
 void VTextLabel::LeftClickedDown() {
     InAnimation = true;

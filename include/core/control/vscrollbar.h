@@ -63,6 +63,7 @@ public:
 public:
     VSliderHorizontal(VUIObject* Parent);
     VSliderHorizontal(const int& Width, VUIObject* Parent);
+    ~VSliderHorizontal();
 
 public:
     void OnPaint(VCanvasPainter* Painter) override;
@@ -106,6 +107,7 @@ public:
 public:
     VSliderVertical(VUIObject* Parent);
     VSliderVertical(const int& Height, VUIObject* Parent);
+    ~VSliderVertical();
 
 public:
     void OnPaint(VCanvasPainter* Painter) override;

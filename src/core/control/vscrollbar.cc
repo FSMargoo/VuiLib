@@ -91,6 +91,9 @@ VSliderHorizontal::VSliderHorizontal(const int& Width, VUIObject* Parent)
 
     Resize(Width, 4);
 }
+VSliderHorizontal::~VSliderHorizontal() {
+    delete Theme;
+}
 
 int VSliderHorizontal::GetSliderButtonX() const {
     return SliderPercent * GetWidth() + GetX();
@@ -185,6 +188,9 @@ VSliderVertical::VSliderVertical(const int& Height, VUIObject* Parent)
     SliderButton->MouseDragged.Connect(this, &VSliderVertical::SliderButtonDraged);
 
     Resize(4, Height);
+}
+VSliderVertical::~VSliderVertical() {
+    delete Theme;
 }
 
 int VSliderVertical::GetSliderButtonX() const {
