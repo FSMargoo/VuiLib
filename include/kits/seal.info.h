@@ -20,7 +20,7 @@
 #	define se_int int
 #else
 #	define se_large_int __int32
-#	define se_int size_t
+#	define se_int int
 #endif
 
 // Disable warnings that must be blocked
