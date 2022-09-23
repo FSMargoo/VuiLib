@@ -169,6 +169,12 @@ LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lPa
             }
             case WM_GETMINMAXINFO: {
                 VMainWindowConfig *WindowConfig = _VMainConfigs.find(Handle)->second;
+
+                if (WindowConfig->InFrameless) {
+                    PMINMAXINFO MinMaxInfo = (PMINMAXINFO) lParameter;
+
+                    MinMaxInfo->ptMaxSize.y = GetSystemMetrics(SM_CYFULLSCREEN) + GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME);
+                }
                 if (WindowConfig->UseMaxMinSize) {
                     PMINMAXINFO MinMaxInfo = (PMINMAXINFO) lParameter;
 
