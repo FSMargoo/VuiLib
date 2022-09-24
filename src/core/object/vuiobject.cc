@@ -393,7 +393,10 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
 
                         ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
                     }
+
+                    Canvas->BeginDraw();
                     SendMessageToChild(ChildRepaintMessage, false);
+                    Canvas->EndDraw();
 
                     if (ChildRepaintMessage != RepaintMesage) {
                         delete ChildRepaintMessage;
