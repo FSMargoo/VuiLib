@@ -77,6 +77,7 @@ namespace VML {
 
     public:
         VMLParser(const std::wstring& VMLString, VMLParserParseMode VMLParserMode = VMLParserParseMode::FromString, const int& Line = 0);
+        ~VMLParser();
 
         VMLParserResult ParseVML();
     };

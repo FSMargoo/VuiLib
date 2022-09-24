@@ -173,6 +173,9 @@ namespace VML {
             }
         }
     }
+    VMLParser::~VMLParser() {
+        delete ParserLexical;
+    }
     VMLParserResult VMLParser::ParseVML() {
         VMLParserResult ParseResult;
 

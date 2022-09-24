@@ -47,6 +47,7 @@ class VBitmapBrush {
  public:
      VBitmapBrush(ID2D1RenderTarget* Target, VImage* Image);
      VBitmapBrush(ID2D1RenderTarget* Target, ID2D1Bitmap* Image);
+	 ~VBitmapBrush();
 };
 
 

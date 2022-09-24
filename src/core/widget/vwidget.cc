@@ -246,6 +246,9 @@ void VMainWindow::CheckFrame() {
                                     &SourcePoint, NULL, &BlendFN, ULW_ALPHA);
 
                 ReleaseDC(GetHWnd(), WindowDC);
+
+                Bitmap->Release();
+                DCRenderTarget->Release();
             } else {
                 BufferPainter->BeginDraw();
                 BufferPainter->DrawCanvas(GetRegion(), Canvas, GetRegion(), 1.f);

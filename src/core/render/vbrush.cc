@@ -53,6 +53,9 @@ VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, VImage* Image) {
 VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, ID2D1Bitmap* Image) {
     Target->CreateBitmapBrush(Image, D2D1::BitmapBrushProperties(), &Brush);
 }
+VBitmapBrush::~VBitmapBrush() {
+	VDXObjectSafeFree(&Brush);
+}
 
 }
 
