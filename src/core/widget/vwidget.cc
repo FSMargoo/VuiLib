@@ -218,16 +218,10 @@ void VMainWindow::CheckFrame() {
 
                 DCRenderTarget->BindDC(GetImageHDC(&BorderImage), &WindowRect);
 
-                DWORD* Buffer = GetImageBuffer(&BorderImage);
-                unsigned long BufferTotalCount = GetWidth() * GetHeight();
-                for (unsigned long PixelCount = 0; PixelCount < BufferTotalCount; ++PixelCount) {
-                    Buffer[PixelCount] = (RGB(0, 0, 0) | (((DWORD)(BYTE)(0))<<24));
-                }
-
                 DCRenderTarget->BeginDraw();
 
                 DCRenderTarget->FillRoundedRectangle(D2D1_ROUNDED_RECT{
-                        {0, 0, static_cast<float>(GetWidth()), static_cast<float>(GetHeight())},
+                        {0, 0, static_cast<float>(GetWidth() - 1), static_cast<float>(GetHeight() - 1)},
                         static_cast<float>(WindowConfig.BorderRadius.X),
                         static_cast<float>(WindowConfig.BorderRadius.Y)}, BitmapBrush.GetDxBrush());
 
