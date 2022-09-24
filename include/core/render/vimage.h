@@ -31,7 +31,7 @@ class VImage {
 
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
 
-	 bool IsValidBitmapFile(const std::wstring& FilePath);
+	 static bool IsValidBitmapFile(const std::wstring& FilePath);
 };
 
 };
