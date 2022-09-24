@@ -4,6 +4,15 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
+VUIObject::~VUIObject() {
+    SetParent(nullptr);
+
+    for (auto& ChildObject : ObjectKernel.ChildObjectContainer) {
+        delete (VUIObject*)ChildObject;
+    }
+
+    ObjectKernel.ChildObjectContainer.clear();
+}
 std::vector<VBasicUITheme *> VUIObject::GetApplicationTheme() {
     if (GetParent() != nullptr) {
         return GetParent()->GetApplicationTheme();

@@ -180,6 +180,7 @@ public:
     explicit VUIObject(VUIObject *Parent) {
         SetParent(Parent);
     }
+    ~VUIObject();
 };
 
 }

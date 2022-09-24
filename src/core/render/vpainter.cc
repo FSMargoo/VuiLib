@@ -138,7 +138,7 @@ void VCanvasPainter::DrawString(const std::wstring& String, const VRect& StringR
 void VCanvasPainter::DrawImage(const VRect& TargetRectangle, VImage* SourceImage, const VRect& SourceRectangle, const float& ImageOpacity) {
 	TargetDevice->DrawBitmap(SourceImage->GetDirectXObject(),
 		D2D1::RectF(TargetRectangle.Left, TargetRectangle.Top, TargetRectangle.Right, TargetRectangle.Bottom),
-		ImageOpacity, D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+		ImageOpacity, D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 		D2D1::RectF(SourceRectangle.Left, SourceRectangle.Top, SourceRectangle.Right, SourceRectangle.Bottom));
 }
 void VCanvasPainter::DrawCanvas(const VRect& TargetRectangle, VCanvasPainter* SourceImage, const VRect& SourceRectangle, const float& ImageOpacity) {
@@ -149,7 +149,7 @@ void VCanvasPainter::DrawCanvas(const VRect& TargetRectangle, VCanvasPainter* So
 
     TargetDevice->DrawBitmap(DirectXObject,
                              D2D1::RectF(TargetRectangle.Left, TargetRectangle.Top, TargetRectangle.Right, TargetRectangle.Bottom),
-                             ImageOpacity, D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+                             ImageOpacity, D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
                              D2D1::RectF(SourceRectangle.Left, SourceRectangle.Top, SourceRectangle.Right, SourceRectangle.Bottom));
 
     VDXObjectSafeFree(&DirectXObject);

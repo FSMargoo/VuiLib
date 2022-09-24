@@ -140,7 +140,6 @@ bool VImage::IsValidBitmapFile(const std::wstring& FilePath) {
 	if (FAILED(Result)) {
 		VDXObjectSafeFree(&IWICDecoder);
 		VDXObjectSafeFree(&IWICFrame);
-		VDXObjectSafeFree(&IWICConverter);
 
 		return false;
 	}
@@ -155,7 +154,6 @@ bool VImage::IsValidBitmapFile(const std::wstring& FilePath) {
 	if (FAILED(Result)) {
 		VDXObjectSafeFree(&IWICDecoder);
 		VDXObjectSafeFree(&IWICFrame);
-		VDXObjectSafeFree(&IWICConverter);
 
 		return false;
 	}

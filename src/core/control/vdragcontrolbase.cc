@@ -12,12 +12,15 @@ void VDragControlBase::MouseLeftClicked(VMouseClickedFlag ClickedFlag) {
         case VMouseClickedFlag::Down: {
             UserInDrag = true;
             CallWidgetLockFocusID();
+            UserStartDrag.Emit();
 
             break;
         }
         case VMouseClickedFlag::Up: {
             UserInDrag = false;
             CallWidgetUnlockFocusID();
+
+            UserEndDrag.Emit();
 
             break;
         }
@@ -28,9 +31,15 @@ void VDragControlBase::OnMessage(Core::VMessage *Message) {
         switch (Message->GetType()) {
             case VMessageType::MouseClickedMessage: {
                 VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
-                if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
+                if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion()) ||
+                    (ClickedMessage->ClickedKey == VMouseKeyFlag::Left && 
+                     ClickedMessage->ClickedMethod == VMouseClickedFlag::Up)) {
                     UserInDrag = false;
                     CallWidgetUnlockFocusID();
+
+                    CallWidgetSendMessage(Message);
+                    
+                    UserEndDrag.Emit();
                 } else {
                     MouseDragged.Emit();
                 }
@@ -38,10 +47,12 @@ void VDragControlBase::OnMessage(Core::VMessage *Message) {
                 break;
             }
             case VMessageType::MouseMoveMessage: {
-                VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+                if (UserInDrag) {
+                    VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
 
-                MouseDragged.Emit();
-                MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
+                    MouseDragged.Emit();
+                    MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
+                }
 
                 break;
             }

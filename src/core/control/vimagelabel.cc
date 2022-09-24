@@ -56,12 +56,13 @@ void VImageLabel::OnPaint(VCanvasPainter* Painter) {
 }
 
 void VImageLabel::SetImage(VImage* Image) {
-    if (Theme->Image != nullptr) {
-        delete Theme->Image;
-
-        Theme->Image = new VImage(*Image);
-    } else {
-        Theme->Image = new VImage(*Image);
+    if (Image != nullptr) {
+        if (Theme->Image != nullptr) {
+            *(Theme->Image) = *Image;
+        }
+        else {
+            Theme->Image = new VImage(*Image);
+        }
     }
 }
 
