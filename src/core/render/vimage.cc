@@ -130,6 +130,64 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     VDXObjectSafeFree(&BlurOutput);
 }
 
+bool VImage::IsValidBitmapFile(const std::wstring& FilePath) {
+	IWICBitmapDecoder* IWICDecoder = nullptr;
+	IWICBitmapFrameDecode* IWICFrame = nullptr;
+	IWICFormatConverter* IWICConverter = nullptr;
+
+	HRESULT Result = CoCreateInstance(CLSID_WICBmpDecoder, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&IWICDecoder));
+
+	if (FAILED(Result)) {
+		VDXObjectSafeFree(&IWICDecoder);
+		VDXObjectSafeFree(&IWICFrame);
+		VDXObjectSafeFree(&IWICConverter);
+
+		return false;
+	}
+
+	Result = VDirectXIWICImagingFactory.GetInstance()->CreateDecoderFromFilename(
+		FilePath.c_str(),
+		nullptr,
+		GENERIC_READ,
+		WICDecodeMetadataCacheOnDemand,
+		&IWICDecoder
+	);
+	if (FAILED(Result)) {
+		VDXObjectSafeFree(&IWICDecoder);
+		VDXObjectSafeFree(&IWICFrame);
+		VDXObjectSafeFree(&IWICConverter);
+
+		return false;
+	}
+
+	Result = IWICDecoder->GetFrame(0, &IWICFrame);
+	if (FAILED(Result)) {
+		VDXObjectSafeFree(&IWICDecoder);
+		VDXObjectSafeFree(&IWICFrame);
+		VDXObjectSafeFree(&IWICConverter);
+
+		return false;
+	}
+
+	VDirectXIWICImagingFactory.GetInstance()->CreateFormatConverter(&IWICConverter);
+
+	Result = IWICConverter->Initialize(IWICFrame, GUID_WICPixelFormat32bppPBGRA,
+		WICBitmapDitherTypeNone, nullptr, 0.0f, WICBitmapPaletteTypeCustom);
+	if (FAILED(Result)) {
+		VDXObjectSafeFree(&IWICDecoder);
+		VDXObjectSafeFree(&IWICFrame);
+		VDXObjectSafeFree(&IWICConverter);
+
+		return false;
+	}
+
+	VDXObjectSafeFree(&IWICDecoder);
+	VDXObjectSafeFree(&IWICFrame);
+	VDXObjectSafeFree(&IWICConverter);
+
+	return true;
+}
+
 }
 
 VLIB_END_NAMESPACE

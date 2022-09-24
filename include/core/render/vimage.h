@@ -30,6 +30,8 @@ class VImage {
      int GetHeight() const;
 
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
+
+	 bool IsValidBitmapFile(const std::wstring& FilePath);
 };
 
 };

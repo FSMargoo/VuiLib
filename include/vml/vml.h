@@ -58,7 +58,7 @@ namespace VML {
         VMLFinder Get(const std::wstring& ChildrenId);
         bool      IsValid();
 
-        template<class Type = VUIObject>
+        template<class Type = Core::VUIObject>
         Type* Get() {
             return static_cast<Type*>(OriginObject->UIObject);
         }
