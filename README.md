@@ -6,10 +6,6 @@
     <img src="https://img.shields.io/badge/version-2.0.x%20beta-orange"/>
 </div>
 
-~~~
-该版本的 VuiLib 为 beta 版本，还有很多功能未补齐，若急需，可在 GitHub 分支中找到 1.0.x 分支使用
-~~~
-
 ## Installation - 安装
 ### Requirements - 必要条件
 * 编译目标平台：x64 x32
@@ -32,6 +28,13 @@ git clone https://github.com/FSMargoo/VuiLib.git
 * 自带一个信号槽系统，整个 UI 由事件驱动。
 * 可使用 VML 构建界面，实现前后端分离。
 * 若对原样式不满意，可以使用 VSS 来自定义主题和控件样式，实现一键切换软件皮肤等操作。
+## Visual - 使用 VuiLib 创造的界面
+<div align=center>
+    <img src="./readme-resource/capture 1.png">
+    <img src="./readme-resource/capture 2.png">
+    <img src="./readme-resource/capture 3.png">
+</div>
+
 ## Support - 支持
 可在 GitHub 中提交 issues 来取得支持和帮助
 ## License - 开源协议
