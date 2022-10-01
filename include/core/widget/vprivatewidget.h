@@ -19,6 +19,7 @@ struct VMainWindowConfig {
 
     bool      InFrameless    = false;
     bool      UseMaxMinSize  = false;
+    bool      Sizable        = false;
 
     VGeomtery WindowMaxSize;
     VGeomtery WindowMiniSize;

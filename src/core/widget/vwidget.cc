@@ -287,6 +287,8 @@ void VMainWindow::SetFrameless(const bool& FramelessStatus) {
     }
 }
 void VMainWindow::SetSizble(const bool& Sizble) {
+    WindowConfig.Sizable = Sizble;
+
     if (Sizble) {
         SetWindowLong(GetHWnd(), GWL_STYLE, GetWindowLong(GetHWnd(), GWL_STYLE) | (WS_MAXIMIZEBOX));
         SetWindowLong(GetHWnd(), GWL_STYLE, (GetWindowLong(GetHWnd(), GWL_STYLE) | WS_THICKFRAME));
@@ -300,11 +302,15 @@ void VMainWindow::SetRadius(VPoint Radius) {
     if (Radius == VPoint{ 0, 0 }) {
         WindowConfig.EnableRadius = false;
         WindowConfig.BorderRadius = Radius;
+
+        WindowConfig.InFrameless = false;
     } else {
         SetWindowLongPtr(GetHWnd(), GWL_EXSTYLE, WS_EX_LAYERED);
 
         WindowConfig.EnableRadius = true;
         WindowConfig.BorderRadius = Radius;
+
+        WindowConfig.InFrameless  = true;
     }
 
     Update({ 0, 0, GetWidth(), GetHeight() });

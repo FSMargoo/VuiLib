@@ -38,28 +38,68 @@ namespace Core {
                     GetWindowRect(Handle, &WindowRect);
 
                     if (MousePoint.x <= WindowRect.left + 10 && MousePoint.y <= WindowRect.top + 10) {
-                        return HTTOPLEFT;
+                        if (WindowConfig->Sizable) {
+                            return HTTOPLEFT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.x >= WindowRect.right - 10 && MousePoint.y <= WindowRect.top + 10) {
-                        return HTTOPRIGHT;
+                        if (WindowConfig->Sizable) {
+                            return HTTOPRIGHT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.x <= WindowRect.left + 10 && MousePoint.y >= WindowRect.bottom - 10) {
-                        return HTBOTTOMLEFT;
+                        if (WindowConfig->Sizable) {
+                            return HTBOTTOMLEFT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.x >= WindowRect.right - 10 && MousePoint.y >= WindowRect.bottom - 10) {
-                        return HTBOTTOMRIGHT;
+                        if (WindowConfig->Sizable) {
+                            return HTBOTTOMRIGHT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.x <= WindowRect.left + 10) {
-                        return HTLEFT;
+                        if (WindowConfig->Sizable) {
+                            return HTLEFT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.x >= WindowRect.right - 10) {
-                        return HTRIGHT;
+                        if (WindowConfig->Sizable) {
+                            return HTRIGHT;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.y <= WindowRect.top + 10) {
-                        return HTTOP;
+                        if (WindowConfig->Sizable) {
+                            return HTTOP;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                     else if (MousePoint.y >= WindowRect.bottom - 10) {
-                        return HTBOTTOM;
+                        if (WindowConfig->Sizable) {
+                            return HTBOTTOM;
+                        }
+                        else {
+                            return HTCLIENT;
+                        }
                     }
                 }
 
@@ -68,7 +108,7 @@ namespace Core {
             case WM_SETCURSOR: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless) {
+                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
                     switch (LOWORD(lParameter)) {
                     case HTTOP:
                     case HTBOTTOM: {
@@ -101,7 +141,7 @@ namespace Core {
             case WM_NCLBUTTONDOWN: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless) {
+                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
                     POINT MousePoint = { (int)(short)LOWORD(lParameter), (int)(short)HIWORD(lParameter) };
                     switch (wParameter) {
                     case HTTOP:

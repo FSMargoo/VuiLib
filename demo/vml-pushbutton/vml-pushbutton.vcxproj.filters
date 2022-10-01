@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\src\core\control\vabstractbutton.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vblurlabel.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vfakecaption.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\viconbutton.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vimagelabel.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vlayout.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vpushbutton.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vradiobutton.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vscrollbar.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vtextlabel.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\object\vapplication.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\object\vuiobject.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vbrush.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vcolor.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vdirectxfactory.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vimage.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vpainter.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vpainterdevice.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vrenderbasic.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\render\vwrite.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\signal\vsignal.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\uibasic\vsmarttimer.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\uibasic\vtimer.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\uibasic\vuiinterpolator.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\uibasic\vuitheme.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\vbasiccore.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\widget\vmessage.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\widget\vprivatewidget.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\widget\vwidget.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\seal.info.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\seal.lexical.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\seal.lexical.token.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\vcolorhelper.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\vparserhelper.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vml\vml.cpp">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vml\vmlbuilder.cpp">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vml\vmlparser.cpp">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vml\vmlwidget.cpp">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vss\vssbuilder.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vss\vssparser.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="vuilib">
+      <UniqueIdentifier>{7d11ca98-4ca6-44c7-9a15-7f029ad0682d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\core\control\vabstractbutton.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vblurlabel.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vfakecaption.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\viconbutton.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vimagelabel.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vlayout.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vpushbutton.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vradiobutton.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vscrollbar.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vtextlabel.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\object\vapplication.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\object\vuiobject.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vbrush.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vcolor.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vdirectxfactory.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vimage.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vpainter.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vpainterdevice.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vrenderbasic.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\render\vwrite.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\signal\vsignal.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\uibasic\vsmarttimer.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\uibasic\vtimer.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\uibasic\vuiinterpolator.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\uibasic\vuitheme.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\vbasiccore.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\vcontrol.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\widget\vmessage.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\widget\vprivatewidget.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\widget\vwidget.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\seal.info.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\seal.lexical.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\seal.lexical.token.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\vcolorhelper.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\vparserhelper.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vml\vml.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vml\vmlbuilder.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vml\vmlparser.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vml\vmlwidget.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vss\vssbuilder.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vss\vssparser.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

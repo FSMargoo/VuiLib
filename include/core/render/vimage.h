@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vdirectxfactory.h"
+#include "vcolor.h"
 
 #include <d2d1effects.h>
 #include <d2d1_1.h>
@@ -30,6 +31,7 @@ class VImage {
      int GetHeight() const;
 
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
+     void ApplyShadowEffect(const int& ShadowRadius, const VColor& ShadowColor, ID2D1RenderTarget* DirectXRenderTarget);
 
 	 static bool IsValidBitmapFile(const std::wstring& FilePath);
 };

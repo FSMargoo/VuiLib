@@ -130,6 +130,53 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     VDXObjectSafeFree(&BlurOutput);
 }
 
+void VImage::ApplyShadowEffect(const int &ShadowRadius, const VColor &ShadowColor,
+                               ID2D1RenderTarget *DirectXRenderTarget) {
+    ID2D1Effect* BlurEffect;
+    ID2D1DeviceContext* DeviceContext;
+    ID2D1Image* BlurOutput;
+
+    DirectXRenderTarget->QueryInterface(&DeviceContext);
+    VLIB_CHECK_REPORT(FAILED(DeviceContext->CreateEffect(CLSID_D2D1Shadow, &BlurEffect)), L"Created D2D1Effect Failed!");
+
+    BlurEffect->SetInput(0, DirectXBitmap);
+    BlurEffect->SetValue(D2D1_SHADOW_PROP_BLUR_STANDARD_DEVIATION, static_cast<float>(ShadowRadius));
+    BlurEffect->SetValue(D2D1_SHADOW_PROP_COLOR, D2D1_VECTOR_4F{
+        ShadowColor.GetR(), ShadowColor.GetG(), ShadowColor.GetB(), ShadowColor.GetA()
+    });
+    BlurEffect->GetOutput(&BlurOutput);
+
+    UINT Width  = DirectXBitmap->GetSize().width;
+    UINT Height = DirectXBitmap->GetSize().height;
+
+    ID2D1Bitmap1* TargetBitmap = NULL;
+
+    D2D1_BITMAP_PROPERTIES1 BitmapProperties =
+            D2D1::BitmapProperties1(
+                    D2D1_BITMAP_OPTIONS_TARGET,
+                    D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
+            );
+    DeviceContext->CreateBitmap({ Width, Height }, 0, 0, BitmapProperties, &TargetBitmap);
+
+    ID2D1Image* OldDCTarget;
+    DeviceContext->GetTarget(&OldDCTarget);
+    DeviceContext->SetTarget(TargetBitmap);
+
+    DeviceContext->BeginDraw();
+    DeviceContext->DrawImage(BlurEffect);
+    DeviceContext->EndDraw();
+
+    DeviceContext->SetTarget(OldDCTarget);
+
+    VDXObjectSafeFree(&DirectXBitmap);
+
+    DirectXBitmap = TargetBitmap;
+
+    VDXObjectSafeFree(&BlurEffect);
+    VDXObjectSafeFree(&DeviceContext);
+    VDXObjectSafeFree(&BlurOutput);
+}
+
 bool VImage::IsValidBitmapFile(const std::wstring& FilePath) {
 	IWICBitmapDecoder* IWICDecoder = nullptr;
 	IWICBitmapFrameDecode* IWICFrame = nullptr;

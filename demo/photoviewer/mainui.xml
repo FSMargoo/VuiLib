@@ -1,0 +1,57 @@
+<!-- 主窗口 -->
+<photo-viewer-widget type="mainwindow" style-sheet-src="./uistyle.css" class="main-widget" frameless="true" width="800" height="450">
+	<main-ui type="textlabel" width="@fill" height="@fill" visible="false">
+		<!-- 背景界面部分 -->
+		<view-background type="imagelabel" width="@fill" height="@fill" class="view-background">
+		</view-background>
+		<view-blur-background type="blurlabel" width="@fill" height="@fill" class="view-blur-background">
+		</view-blur-background>
+		
+		<background-drag-caption type="fake-caption" width="@fill" height="@fill">
+		</background-drag-caption>
+
+		<!-- 正在预览的图片对象 -->
+		<view-image type="imagelabel" x="0" y="0" width="800" height="450" class="viewing-image">
+		</view-image>
+
+		<toolbar-blur-background type="blurlabel" width="@fill" height="76" class="view-blur-background">
+		</toolbar-blur-background>
+
+		<!-- 图片和缩放信息 top bar -->
+		<zoom-tag type="textlabel" width="@fill" height="22" class="zoom-tag" text="100%" x="@center" y="38">
+		</zoom-tag>
+	</main-ui>
+	<startup-ui type="textlabel" width="@fill" height="@fill">
+		<background-drag-caption type="fake-caption" width="@fill" height="@fill">
+		</background-drag-caption>
+
+		<welcome-text type="textlabel" x="@center" y="@center" width="340" height="30" class="welcome-text" text="欢迎来到全新的 Photo Viewer">
+		</welcome-text>
+		<open-file-button type="pushbutton" x="@center" y="@centeroffset(50)" width="141" height="42" class="open-file-button" text="打开您的图片">
+		</open-file-button>
+	</startup-ui>
+
+	<!-- 标题文字 -->
+	<title-text type="textlabel" height="40" width="@fill" x="@center" y="17" class="title-text" text="PhotoViewer v1.2.8">
+	</title-text>
+	
+	<!-- 标题栏拖拽控件 -->
+	<drag-caption type="fake-caption" width="@fill" height="76">
+	</drag-caption>
+
+	<zoom-down-button type="iconbutton" width="35" height="35" x="49" y="22" src="./ui/zoomdown.png" class="zoomdown-button" visible="false">
+	</zoom-down-button>
+	<zoom-up-button type="iconbutton" width="35" height="35" x="122" y="22" src="./ui/zoomup.png" class="zoom-up-button" visible="false">
+	</zoom-up-button>
+	<one-to-one-button type="iconbutton" width="38" height="35" x="195" y="22" src="./ui/fill.png" class="one-to-one-button" visible="false">
+	</one-to-one-button>
+
+	<!-- 窗口控制栏 -->
+	<minisize-button type="iconbutton" width="35" height="35" x="@relative(187)" y="19" src="./ui/minisize.png" class="minisize-button">
+	</minisize-button>
+	<maxsize-button type="iconbutton" width="35" height="35" x="@relative(124)" y="19" src="./ui/maxsize.png" class="maxsize-button">
+	</maxsize-button>
+	<close-button type="iconbutton" width="35" height="35" x="@relative(67)" y="19" src="./ui/close.png" class="close-button">
+	</close-button>
+
+</photo-viewer-widget>

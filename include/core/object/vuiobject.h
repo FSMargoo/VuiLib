@@ -31,14 +31,15 @@ enum VUIObjectUIStats {
 };
 
 struct VUIObjectSurface {
-    VRect Rectangle;
-    float Transparency = 1.f;
+    VRect  Rectangle;
+    float  Transparency = 1.f;
+
     VUIObjectUIStats Stats = VUIObjectUIStats::Normal;
 };
 
 class VUIObject {
 protected:
-    VUIObjectKernel ObjectKernel;
+    VUIObjectKernel  ObjectKernel;
     VUIObjectSurface ObjectVisual;
 
 public:
@@ -171,7 +172,6 @@ protected:
     bool CheckUIFocusStatus(const VPoint &MousePosition, VMessage *SourceMessage);
 
     bool CheckElementUIStatus(VMessage *SourceMessage);
-
 public:
     void Hide();
     void Show();

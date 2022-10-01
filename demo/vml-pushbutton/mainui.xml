@@ -1,0 +1,4 @@
+<vml-demo-window type="mainwindow" width="400" height="200" title="vml push button demo">
+    <push-button type="pushbutton" width="@scale(0.4)" height="@scale(0.2)" text="Made with VuiLib\nAnd VML" x="@center" y="@center">
+    </push-button>
+</vml-demo-window>

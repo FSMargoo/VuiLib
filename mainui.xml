@@ -1,0 +1,25 @@
+<vml-widget type="mainwindow" width="978" height="486" class="vml-widget" style-sheet-src="./style.css" sizable="false">
+    <background-image type="imagelabel" src="./background.jpg" width="@fill" height="@fill">
+    </background-image>
+
+    <background-blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label">
+    </background-blur-label>
+    <text-blur-label type="blurlabel" width="@fill" height="156" x="0" y="330" class="text-blur-label">
+    </text-blur-label>
+
+    <logo-image type="imagelabel" width="220" height="254" src="./logo.png" x="229" y="43">
+    </logo-image>
+
+    <welcome-text type="textlabel" class="welcome-text" x="490" y="141" width="246" height="49" text="Welcome to">
+    </welcome-text>
+    <welcome-sub-text type="textlabel" class="welcome-sub-text" x="501" y="175" width="148" height="53" text="VuiLib">
+    </welcome-sub-text>
+
+    <text-title type="textlabel" class="text-title" x="@center" y="367" width="668" height="32" text="音无结弦之时，天使跃动之心。立于浮华之世，奏响天籁之音">
+    </text-title>
+    <text-angel-beats-title type="textlabel" class="text-angel-beats-title" x="@center" y="408" width="150" height="28" text="Angel Beat">
+    </text-angel-beats-title>
+
+    <drag-caption type="fake-caption" width="@fill" height="@fill">
+    </drag-caption>
+</vml-widget>
