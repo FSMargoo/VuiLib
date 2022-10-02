@@ -447,6 +447,8 @@ void VLineEditor::LeftClickedDown() {
     Interpolator->Reset();
     AnimationFrameTimer.Start(0);
 
+    StartedType.Emit();
+
     CallWidgetSetFocusID(ObjectKernel.GlobalID);
     CallWidgetLockFocusID();
     CallWidgetSetIME(GetX() + CursorGraphicsX + 10, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
@@ -494,6 +496,8 @@ void VLineEditor::LosedMouseFocus() {
 
         Interpolator->Reset();
         AnimationFrameTimer.Start(0);
+
+        EndType.Emit();
 
         Update();
     }

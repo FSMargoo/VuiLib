@@ -32,7 +32,7 @@ private:
 
 private:
     std::wstring            InputStringCache;
-    int                     CursorPosition = 0;
+    int                     CursorPosition  = 0;
     int                     CursorGraphicsX = 0;
 
 public:
@@ -40,6 +40,8 @@ public:
 
 public:
     VSignal<const std::wstring&> TextOnChange;
+    VSignal<>                    StartedType;
+    VSignal<>                    EndType;
 
 public:
     void OnPaint(VCanvasPainter* Painter) override;
