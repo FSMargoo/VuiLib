@@ -3,8 +3,6 @@
 #include "../../../include/core/render/vimage.h"
 #include "../../../include/core/render/vpainterdevice.h"
 
-#include <graphics.h>
-
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {

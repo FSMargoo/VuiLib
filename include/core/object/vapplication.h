@@ -8,8 +8,6 @@
 #include "../uibasic/vuitheme.h"
 #include "vuiobject.h"
 
-#include <graphics.h>
-
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {

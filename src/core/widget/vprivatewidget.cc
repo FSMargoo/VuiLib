@@ -1,7 +1,6 @@
 #include "../../../include/core/widget/vprivatewidget.h"
 #include "../../../include/core/render/vdirectxfactory.h"
 
-#include <graphics.h>
 #include <stdio.h>
 
 #include <gdiplus.h>
@@ -252,7 +251,7 @@ namespace Core {
                     Composition.ptCurrentPos.y = WindowConfig->IMEY;
 
                     ImmAssociateContext(Handle, IMCHandle);
-                    ImmSetCompositionFont(IMCHandle, WindowConfig->IMEFontStyle);
+                    ImmSetCompositionFont(IMCHandle, &WindowConfig->IMEFontStyle);
                     ImmSetCompositionWindow(IMCHandle, &Composition);
                 }
 
@@ -271,7 +270,7 @@ namespace Core {
             case WM_KILLFOCUS: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->IMEX == -1 && WindowConfig->IMEY == -1 && !WindowConfig->IMEInput) {
+                if (!WindowConfig->IMEInput) {
                     WindowConfig->LosedUserFocus();
                 }
 

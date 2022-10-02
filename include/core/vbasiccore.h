@@ -11,8 +11,10 @@
 #define VLIB_END_NAMESPACE   }
 #endif
 
+#define WINVER 0x0600
+
 #include <new>
-#include <windows.h>
+#include <graphics.h>
 #include <string>
 #include <crtdbg.h>
 #include <d2d1helper.h>

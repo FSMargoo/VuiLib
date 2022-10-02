@@ -10,6 +10,7 @@
 #include "../core/control/vscrollbar.h"
 #include "../core/control/vblurlabel.h"
 #include "../core/control/viconbutton.h"
+#include "../core/control/vlineeditor.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -166,6 +167,17 @@ namespace VML {
     public:
         VMLIconButtonBuilder(const VMLFinder& RootFinder, Core::VIconButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                  VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLLineEditorBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VLineEditor* LineEditor, std::wstring PlaneText);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLLineEditorBuilder(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

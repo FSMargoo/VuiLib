@@ -20,7 +20,7 @@ VLabelCommonTheme::VLabelCommonTheme(const VLabelCommonTheme& LabelObject) {
 VLabelCommonTheme::VLabelCommonTheme() {
     LCID    LocaleID = GetThreadLocale();
     wchar_t LocaleName[LOCALE_NAME_MAX_LENGTH];
-    if(!LCIDToLocaleName(LocaleID, LocaleName, LOCALE_NAME_MAX_LENGTH, 0)){
+    if (!LCIDToLocaleName(LocaleID, LocaleName, LOCALE_NAME_MAX_LENGTH, 0)) {
         VLIB_REPORT_ERROR(L"Failed to get the system locale");
     }
 
@@ -237,4 +237,45 @@ VIconButtonTheme::VIconButtonTheme() : VLabelCommonTheme() {
     Image      = nullptr;
 }
 
+VTextEditorTheme::VTextEditorTheme(const VTextEditorTheme& Theme) {
+    StaticTheme  = Theme.StaticTheme;
+    OnHoverTheme = Theme.OnHoverTheme;
+    ActiveTheme  = Theme.ActiveTheme;
+    LabelFont    = new VFont(*Theme.LabelFont);
+    PlaneText    = Theme.PlaneText;
+    LocalTheme   = Theme.StaticTheme;
+    CursorColor  = Theme.CursorColor;
 }
+VTextEditorTheme::VTextEditorTheme() {
+    StaticTheme.BackgroundColor = VColor::FromBYTERGBA(67, 67, 67, 255);
+    StaticTheme.BorderColor = VColor::FromBYTERGBA(67, 67, 67, 255);
+    StaticTheme.BorderThickness = 1.3f;
+    StaticTheme.Radius = { 5, 5 };
+    StaticTheme.TextColor = VColor::FromBYTERGBA(255, 255, 255, 150);
+    StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    OnHoverTheme.BackgroundColor = VColor::FromBYTERGBA(67, 67, 67, 255);
+    OnHoverTheme.BorderColor = VColor::FromBYTERGBA(67, 67, 67, 255);
+    OnHoverTheme.TextColor = VColor::FromBYTERGBA(255, 255, 255, 150);
+    OnHoverTheme.Radius = { 5, 5 };
+    OnHoverTheme.BorderThickness = 1.3f;
+    OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    ActiveTheme.BackgroundColor = VColor::FromBYTERGBA(67, 67, 67, 255);
+    ActiveTheme.BorderColor = VColor::FromBYTERGBA(99, 101, 181, 255);
+    ActiveTheme.TextColor = VColor::FromBYTERGBA(255, 255, 255, 255);
+    ActiveTheme.Radius = { 5, 5 };
+    ActiveTheme.BorderThickness = 1.3f;
+    ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+    CursorColor = VColor::FromBYTERGBA(255, 255, 255);
+
+    LocalTheme = StaticTheme;
+
+    LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+    LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING);
+}
+
+}
+
+VLIB_END_NAMESPACE

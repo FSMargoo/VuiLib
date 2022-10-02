@@ -98,6 +98,7 @@ void VApplication::InitTheme() {
     ThemeList.push_back(new VSliderTheme);
     ThemeList.push_back(new VBlurLabelTheme);
     ThemeList.push_back(new VIconButtonTheme);
+    ThemeList.push_back(new VTextEditorTheme);
 }
 void VApplication::ProcessEvent(Core::VMessage* PatchedMessage) {
     PatchedMessage = PatchEvent();

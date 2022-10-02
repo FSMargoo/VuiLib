@@ -839,6 +839,35 @@ namespace VML {
             : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
+
+    void VMLLineEditorBuilder::Builder(Core::VLineEditor* LineEditor, std::wstring PlaneText) {
+        LineEditor->SetPlaneText(PlaneText);
+    }
+    void VMLLineEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                         VMLControlBuildStatus* BuildStatus) {
+        std::wstring PlaneText;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"plane-text") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"plane-text\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                PlaneText = ElementProperty.second.PropertyAsString;
+            }
+        }
+
+        Builder(Object, PlaneText);
+    }
+    VMLLineEditorBuilder::VMLLineEditorBuilder(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                         VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+
+    }
 }
 
 VLIB_END_NAMESPACE

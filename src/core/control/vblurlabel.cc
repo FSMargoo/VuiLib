@@ -1,7 +1,5 @@
 #include "../../../include/core/control/vblurlabel.h"
 
-#include <graphics.h>
-
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {

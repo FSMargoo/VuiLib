@@ -47,6 +47,11 @@ void VMainWindow::InitWindow() {
     WindowConfig.LosedUserFocus = [this]() -> void
             { Win32LoseFocus(); };
     WindowConfig.WinRepaintMessage = [this]() { Win32ThreadRepaint(); };
+
+    gettextstyle(&WindowConfig.IMEFontStyle);
+
+    _tcscpy_s(WindowConfig.IMEFontStyle.lfFaceName, L"微软雅黑");
+    WindowConfig.IMEFontStyle.lfQuality = PROOF_QUALITY;
 }
 void VMainWindow::InitIME() {
     WindowConfig.IMEX = -1;

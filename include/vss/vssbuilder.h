@@ -10,6 +10,7 @@
 #include "../core/control/vradiobutton.h"
 #include "../core/control/vblurlabel.h"
 #include "../core/control/viconbutton.h"
+#include "../core/control/vlineeditor.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -138,6 +139,18 @@ namespace VSS {
         VSSVBlurLabelBuilder(Core::VBlurLabel *TargetControl,
             std::vector<VSSBasicSelector *> SelectorSet,
             Core::VBlurLabelTheme *Theme);
+    };
+
+    class VSSVLineEditorBuilder {
+    private:
+        void BuildVSSObject(Core::VLineEditor *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VTextEditorTheme *TextEditorTheme);
+
+    public:
+        VSSVLineEditorBuilder(Core::VLineEditor *TargetControl,
+                              std::vector<VSSBasicSelector *> SelectorSet,
+                              Core::VTextEditorTheme *TextEditorTheme);
     };
 }
 

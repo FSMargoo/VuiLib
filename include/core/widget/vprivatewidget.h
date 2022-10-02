@@ -15,7 +15,7 @@ struct VMainWindowConfig {
     int IMEX = -1;
     int IMEY = -2 ;
 
-    PLOGFONT  IMEFontStyle;
+    LOGFONT  IMEFontStyle;
 
     bool      InFrameless    = false;
     bool      UseMaxMinSize  = false;
