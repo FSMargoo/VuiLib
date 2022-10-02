@@ -206,6 +206,8 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 else {
                     InputStringCache.erase(InputStringCache.begin());
                 }
+
+                TextOnChange.Emit(InputStringCache);
             }
         }
         if (KeyMessage->KeyVKCode == VK_END && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
@@ -306,6 +308,8 @@ void VLineEditor::OnMessage(VMessage* Message) {
 
                     CallWidgetSetIME(GetX() + CursorGraphicsX + 10,
                                      GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                    TextOnChange.Emit(InputStringCache);
                 }
 
                 VDXObjectSafeFree(&TextLayout);
@@ -373,6 +377,8 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 VDXObjectSafeFree(&TextLayout);
 
                 CallWidgetSetIME(GetX() + CursorGraphicsX + 10, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                TextOnChange.Emit(InputStringCache);
             }
 
             return;
@@ -419,6 +425,8 @@ void VLineEditor::OnMessage(VMessage* Message) {
             TestTextLayout->HitTestTextPosition(CursorPosition, FALSE, &CursorX, &CursorY, &HitTestMetrics);
 
             CursorGraphicsX = HitTestMetrics.width + HitTestMetrics.left;
+
+            TextOnChange.Emit(InputStringCache);
 
             CallWidgetSetIME(GetX() + CursorGraphicsX + 10,
                              GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
@@ -491,10 +499,17 @@ void VLineEditor::LosedMouseFocus() {
     }
 }
 
-void VLineEditor::SetPlaneText(const std::wstring PlaneText) {
+void VLineEditor::SetPlaneText(const std::wstring& PlaneText) {
     InputStringCache = PlaneText;
 
     Update();
+}
+
+const std::wstring VLineEditor::GetPlaneText() {
+    return InputStringCache;
+}
+const int         VLineEditor::GetCurrentCursorPosition() {
+    return CursorPosition;
 }
 
 VTextEditorTheme* VLineEditor::GetTheme() {

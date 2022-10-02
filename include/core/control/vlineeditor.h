@@ -39,6 +39,9 @@ public:
     VLineEditor(VUIObject* Parent);
 
 public:
+    VSignal<const std::wstring&> TextOnChange;
+
+public:
     void OnPaint(VCanvasPainter* Painter) override;
     void CheckFrame() override;
     void OnMessage(VMessage* Message) override;
@@ -47,7 +50,9 @@ public:
     VTextEditorTheme* GetTheme();
 
 public:
-    void SetPlaneText(const std::wstring PlaneText);
+    void SetPlaneText(const std::wstring& PlaneText);
+    const std::wstring GetPlaneText();
+    const int          GetCurrentCursorPosition();
 
 public:
     void LeftClickedDown() override;
