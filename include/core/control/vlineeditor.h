@@ -35,6 +35,9 @@ private:
     int                     CursorPosition  = 0;
     int                     CursorGraphicsX = 0;
 
+    int                     OffsetX         = 0;
+    int                     WidthOffset     = 0;
+
 public:
     VLineEditor(VUIObject* Parent);
     VLineEditor(const int& Width, const int& Height, VUIObject* Parent);

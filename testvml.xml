@@ -9,5 +9,5 @@
         text="DirectX2D 加速渲染\n更加优雅的 VML 和 VSS 语法\n对于 W3C CSS 标准的更多兼容" class="description-text">
     </description-text>
 
-    <test-text type="textlabel" text="I am just a test text" x="@center" y="@center" auto-size="true"></test-text>
+    <test-text type="lineeditor" plane-text="Test" x="@center" y="@center" width="100" height="40"></test-text>
 </widget>
