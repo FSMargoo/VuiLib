@@ -7,6 +7,10 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
+enum class VLineEditorUsedKey {
+    Left, Right, Home, End, None
+};
+
 class VLineEditor : public VAbstractButton {
 private:
     VTextEditorTheme* Theme;
@@ -37,6 +41,13 @@ private:
 
     int                     OffsetX         = 0;
     int                     WidthOffset     = 0;
+
+    DWRITE_TEXT_RANGE       TextSelectRange;
+
+    VLineEditorUsedKey      SelectedUsedKey;
+
+    bool                    ShiftOnHold       = false;
+    bool                    InSelectMode      = false;
 
 public:
     VLineEditor(VUIObject* Parent);

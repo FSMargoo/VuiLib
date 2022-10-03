@@ -220,6 +220,8 @@ public:
     std::wstring PlaneText;
 
     VColor       CursorColor;
+    VColor       OnSelectedColor;
+    VColor       OnSelectedBackgroundColor;
 
 public:
     VTextEditorTheme();

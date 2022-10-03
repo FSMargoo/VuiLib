@@ -245,6 +245,9 @@ VTextEditorTheme::VTextEditorTheme(const VTextEditorTheme& Theme) {
     PlaneText    = Theme.PlaneText;
     LocalTheme   = Theme.StaticTheme;
     CursorColor  = Theme.CursorColor;
+
+    OnSelectedColor = Theme.OnSelectedColor;
+    OnSelectedBackgroundColor = Theme.OnSelectedBackgroundColor;
 }
 VTextEditorTheme::VTextEditorTheme() {
     StaticTheme.BackgroundColor = VColor::FromBYTERGBA(67, 67, 67, 255);
@@ -274,6 +277,9 @@ VTextEditorTheme::VTextEditorTheme() {
 
     LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
     LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING);
+
+    OnSelectedColor = VColor::FromBYTERGBA(98, 100, 167);
+    OnSelectedBackgroundColor = VColor(0.f, 0.f, 0.f, 0.f);
 }
 
 }

@@ -1420,14 +1420,6 @@ namespace VSS {
                             }
                         }
                     }
-                    if (Property.first == L"vertical-align") {
-                        for (auto &PropertyValue: Property.second.ValueList) {
-                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
-                                Theme->LabelFont->SetParagraphAlignment(
-                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
-                            }
-                        }
-                    }
 
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {

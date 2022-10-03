@@ -105,6 +105,11 @@ void VLineEditor::OnMessage(VMessage* Message) {
         VMouseClickedMessage* MouseMessage = static_cast<VMouseClickedMessage*>(Message);
 
         if (!MouseMessage->MousePosition.InsideRectangle(GetRegion()) && InTyping) {
+            if (!ShiftOnHold && InSelectMode) {
+                InSelectMode = false;
+                Update();
+            }
+
             CallWidgetUnlockFocusID();
 
             VMouseClickedMessage* RestoreMessage = new VMouseClickedMessage(*MouseMessage);
@@ -161,14 +166,209 @@ void VLineEditor::OnMessage(VMessage* Message) {
         VKeyClickedMessage* KeyMessage = static_cast<VKeyClickedMessage*>(Message);
 
         if (KeyMessage->KeyVKCode == VK_LEFT && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
-            if (CursorPosition - 1 >= 0) {
-                ShowCursor = true;
+            if (!ShiftOnHold && InSelectMode) {
+                InSelectMode = false;
 
                 Update();
 
-                --CursorPosition;
+                CursorPosition = TextSelectRange.startPosition - 1;
 
-                IDWriteTextLayout* TextLayout;
+                if (CursorPosition != -1) {
+                    IDWriteTextLayout *TextLayout;
+
+                    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                            InputStringCache.c_str(),
+                            InputStringCache.size(),
+                            Theme->LabelFont->GetDXObject(),
+                            INT_MAX,
+                            GetHeight(),
+                            &TextLayout
+                    ), L"Failed to create TextLayout object!");
+
+                    DWRITE_HIT_TEST_METRICS HitTestMetrics;
+
+                    FLOAT CursorX;
+                    FLOAT CursorY;
+
+                    TextLayout->HitTestTextPosition(CursorPosition, FALSE, &CursorX, &CursorY, &HitTestMetrics);
+
+                    CursorGraphicsX = HitTestMetrics.width + HitTestMetrics.left;
+
+                    if (CursorGraphicsX > GetWidth()) {
+                        OffsetX = (HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top) < GetWidth() ?
+                                  0 : static_cast<int>(GetWidth() -
+                                                       (HitTestMetrics.width + HitTestMetrics.left +
+                                                        HitTestMetrics.top));
+
+                        WidthOffset = HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top;
+                    } else {
+                        DWRITE_TEXT_METRICS StringMetrics;
+
+                        TextLayout->GetMetrics(&StringMetrics);
+
+                        OffsetX = 0;
+                        WidthOffset = StringMetrics.top + StringMetrics.width;
+                    }
+
+                    VDXObjectSafeFree(&TextLayout);
+
+                    CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                     GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+                }
+                else {
+                    if (!ShiftOnHold && InSelectMode) {
+                        InSelectMode = false;
+
+                        Update();
+                    }
+
+                    CursorPosition = -1;
+                    OffsetX        = 0;
+
+                    IDWriteTextLayout* TextLayout;
+
+                    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                            InputStringCache.c_str(),
+                            InputStringCache.size(),
+                            Theme->LabelFont->GetDXObject(),
+                            INT_MAX,
+                            GetHeight(),
+                            &TextLayout
+                    ), L"Failed to create TextLayout object!");
+
+                    DWRITE_TEXT_METRICS StringMetrics;
+
+                    TextLayout->GetMetrics(&StringMetrics);
+
+                    WidthOffset = StringMetrics.top + StringMetrics.width;
+
+                    CursorGraphicsX = Theme->LocalTheme.BorderThickness;
+
+                    ShowCursor = true;
+
+                    VDXObjectSafeFree(&TextLayout);
+
+                    CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                    Update();
+                }
+
+                return;
+            }
+
+            if (SelectedUsedKey == VLineEditorUsedKey::None) {
+                SelectedUsedKey = VLineEditorUsedKey::Left;
+            }
+
+            if (CursorPosition - 1 >= -1) {
+                if (CursorPosition - 1 == -1) {
+                    CursorPosition = -1;
+                    OffsetX        = 0;
+
+                    IDWriteTextLayout* TextLayout;
+
+                    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                            InputStringCache.c_str(),
+                            InputStringCache.size(),
+                            Theme->LabelFont->GetDXObject(),
+                            INT_MAX,
+                            GetHeight(),
+                            &TextLayout
+                    ), L"Failed to create TextLayout object!");
+
+                    DWRITE_TEXT_METRICS StringMetrics;
+
+                    TextLayout->GetMetrics(&StringMetrics);
+
+                    WidthOffset = StringMetrics.top + StringMetrics.width;
+
+                    CursorGraphicsX = Theme->LocalTheme.BorderThickness;
+
+                    ShowCursor = true;
+
+                    VDXObjectSafeFree(&TextLayout);
+
+                    CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                    Update();
+                }
+                else {
+                    ShowCursor = true;
+
+                    Update();
+
+                    if (CursorPosition == InputStringCache.size()) {
+                        --CursorPosition;
+                    }
+
+                    --CursorPosition;
+
+                    IDWriteTextLayout *TextLayout;
+
+                    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                            InputStringCache.c_str(),
+                            InputStringCache.size(),
+                            Theme->LabelFont->GetDXObject(),
+                            INT_MAX,
+                            GetHeight(),
+                            &TextLayout
+                    ), L"Failed to create TextLayout object!");
+
+                    DWRITE_HIT_TEST_METRICS HitTestMetrics;
+
+                    FLOAT CursorX;
+                    FLOAT CursorY;
+
+                    TextLayout->HitTestTextPosition(CursorPosition, FALSE, &CursorX, &CursorY, &HitTestMetrics);
+
+                    CursorGraphicsX = HitTestMetrics.width + HitTestMetrics.left;
+
+                    if (CursorGraphicsX > GetWidth()) {
+                        OffsetX = (HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top) < GetWidth() ?
+                                  0 : static_cast<int>(GetWidth() -
+                                                       (HitTestMetrics.width + HitTestMetrics.left +
+                                                        HitTestMetrics.top));
+
+                        WidthOffset = HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top;
+                    } else {
+                        DWRITE_TEXT_METRICS StringMetrics;
+
+                        TextLayout->GetMetrics(&StringMetrics);
+
+                        OffsetX = 0;
+                        WidthOffset = StringMetrics.top + StringMetrics.width;
+                    }
+
+                    VDXObjectSafeFree(&TextLayout);
+
+                    CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                     GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+                }
+
+                if (InSelectMode) {
+                    if (SelectedUsedKey == VLineEditorUsedKey::Left || SelectedUsedKey == VLineEditorUsedKey::Home ) {
+                        TextSelectRange.startPosition = CursorPosition + 1;
+                        TextSelectRange.length = TextSelectRange.length + 1;
+
+                        SelectedUsedKey = VLineEditorUsedKey::Left;
+                    }
+                    else {
+                        TextSelectRange.length -= 1;
+
+                        if (TextSelectRange.length == 0) {
+                            SelectedUsedKey = VLineEditorUsedKey::Left;
+                        }
+                    }
+                }
+            }
+        }
+        if (KeyMessage->KeyVKCode == VK_RIGHT && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            if (!ShiftOnHold && InSelectMode) {
+                InSelectMode = false;
+
+                CursorPosition = TextSelectRange.startPosition + TextSelectRange.length;
+
+                IDWriteTextLayout *TextLayout;
 
                 VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
                         InputStringCache.c_str(),
@@ -191,11 +391,11 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 if (CursorGraphicsX > GetWidth()) {
                     OffsetX = (HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top) < GetWidth() ?
                               0 : static_cast<int>(GetWidth() -
-                                                   (HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top));
+                                                   (HitTestMetrics.width + HitTestMetrics.left +
+                                                    HitTestMetrics.top));
 
                     WidthOffset = HitTestMetrics.width + HitTestMetrics.left + HitTestMetrics.top;
-                }
-                else {
+                } else {
                     DWRITE_TEXT_METRICS StringMetrics;
 
                     TextLayout->GetMetrics(&StringMetrics);
@@ -206,16 +406,47 @@ void VLineEditor::OnMessage(VMessage* Message) {
 
                 VDXObjectSafeFree(&TextLayout);
 
-                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                 GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                Update();
+
+                return;
             }
-        }
-        if (KeyMessage->KeyVKCode == VK_RIGHT && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+
             if (CursorPosition + 1 <= InputStringCache.size()) {
+                if (SelectedUsedKey == VLineEditorUsedKey::None) {
+                    SelectedUsedKey = VLineEditorUsedKey::Right;
+                }
                 ShowCursor = true;
 
                 Update();
 
                 ++CursorPosition;
+
+                if (InSelectMode) {
+                    if (TextSelectRange.length != 0) {
+                        if (TextSelectRange.startPosition > CursorPosition && TextSelectRange.length != 0) {
+                            TextSelectRange.length += 1;
+                        }
+                        else if (SelectedUsedKey == VLineEditorUsedKey::Right|| SelectedUsedKey == VLineEditorUsedKey::End) {
+                            TextSelectRange.length += 1;
+                        }
+                        else {
+
+                            TextSelectRange.startPosition += 1;
+                            TextSelectRange.length -= 1;
+
+                            if (TextSelectRange.length == 0) {
+                                SelectedUsedKey = VLineEditorUsedKey::Right;
+                            }
+                        }
+                    }
+                    else {
+                        TextSelectRange.startPosition = CursorPosition;
+                        TextSelectRange.length        = 1;
+                    }
+                }
 
                 IDWriteTextLayout* TextLayout;
 
@@ -261,6 +492,53 @@ void VLineEditor::OnMessage(VMessage* Message) {
             }
         }
         if (KeyMessage->KeyVKCode == VK_DELETE && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            if (InSelectMode && !ShiftOnHold) {
+                InSelectMode = false;
+
+                InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+
+                CursorPosition = TextSelectRange.startPosition;
+
+                ShowCursor = true;
+
+                IDWriteTextLayout *TextLayout;
+
+                VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                        InputStringCache.c_str(),
+                        InputStringCache.size(),
+                        Theme->LabelFont->GetDXObject(),
+                        INT_MAX,
+                        GetHeight(),
+                        &TextLayout
+                ), L"Failed to create TextLayout object!");
+
+                DWRITE_HIT_TEST_METRICS HitTestMetrics;
+
+                FLOAT CursorX;
+                FLOAT CursorY;
+
+                TextLayout->HitTestTextPosition(CursorPosition, FALSE, &CursorX, &CursorY, &HitTestMetrics);
+
+                CursorGraphicsX = HitTestMetrics.width + HitTestMetrics.left;
+
+                DWRITE_TEXT_METRICS TextMetrics;
+                TextLayout->GetMetrics(&TextMetrics);
+
+                OffsetX = TextMetrics.widthIncludingTrailingWhitespace < GetWidth() ?
+                          0 : static_cast<int>(GetWidth() - TextMetrics.widthIncludingTrailingWhitespace -
+                                               TextMetrics.top);
+
+                VDXObjectSafeFree(&TextLayout);
+
+                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                 GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                TextOnChange.Emit(InputStringCache);
+
+                Update();
+
+                return;
+            }
             if (CursorPosition + 1 < InputStringCache.size()) {
                 ShowCursor = true;
 
@@ -277,6 +555,27 @@ void VLineEditor::OnMessage(VMessage* Message) {
             }
         }
         if (KeyMessage->KeyVKCode == VK_END && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            if (ShiftOnHold && InSelectMode) {
+                if (CursorPosition != -1) {
+                    TextSelectRange.startPosition = CursorPosition + 1;
+
+                    TextSelectRange.length = InputStringCache.size() - CursorPosition - 1;
+                }
+                else {
+                    TextSelectRange.startPosition = TextSelectRange.length;
+                    TextSelectRange.length = InputStringCache.size() - TextSelectRange.length;
+                }
+
+                SelectedUsedKey = VLineEditorUsedKey::End;
+
+                Update();
+            }
+            if (!ShiftOnHold && InSelectMode) {
+                InSelectMode = false;
+
+                Update();
+            }
+
             CursorPosition = InputStringCache.size() - 1;
 
             ShowCursor = true;
@@ -393,7 +692,109 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 VDXObjectSafeFree(&TextLayout);
             }
         }
+        if (KeyMessage->KeyVKCode == 0x41 && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            if (GetAsyncKeyState(VK_CONTROL) & 0x8000) {
+                KeyboardUsed = true;
+                InSelectMode = true;
+                ShiftOnHold  = false;
+
+                TextSelectRange.length = InputStringCache.size();
+                TextSelectRange.startPosition = 0;
+
+                CursorPosition = -1;
+                OffsetX        = 0;
+
+                IDWriteTextLayout* TextLayout;
+
+                VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                        InputStringCache.c_str(),
+                        InputStringCache.size(),
+                        Theme->LabelFont->GetDXObject(),
+                        INT_MAX,
+                        GetHeight(),
+                        &TextLayout
+                ), L"Failed to create TextLayout object!");
+
+                DWRITE_TEXT_METRICS StringMetrics;
+
+                TextLayout->GetMetrics(&StringMetrics);
+
+                WidthOffset = StringMetrics.top + StringMetrics.width;
+
+                CursorGraphicsX = Theme->LocalTheme.BorderThickness;
+
+                ShowCursor = true;
+
+                VDXObjectSafeFree(&TextLayout);
+
+                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                Update();
+
+                SelectedUsedKey = VLineEditorUsedKey::None;
+            }
+        }
+        if (KeyMessage->KeyVKCode == 0x43 && KeyMessage->KeyStats == VkeyClickedFlag::Down){
+            if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && InSelectMode && OpenClipboard(GetHWnd())) {
+                KeyboardUsed = true;
+
+                std::wstring ClipString;
+                ClipString = InputStringCache.substr(TextSelectRange.startPosition > 0 ? TextSelectRange.startPosition - 1 : 0, TextSelectRange.length);
+
+                std::string ANSIString;
+
+                int ConvertedLength = WideCharToMultiByte(CP_ACP, 0, ClipString.c_str(), -1, NULL, 0, NULL, NULL);
+
+                ANSIString.resize(ConvertedLength);
+                WideCharToMultiByte(CP_ACP, 0, ClipString.c_str(), -1, &ANSIString[0], (int)ANSIString.size(), NULL, NULL);
+
+                HANDLE ClipBoardHandle;
+                char*  ClipBoardBuffer;
+
+                EmptyClipboard();
+
+                ClipBoardHandle = GlobalAlloc(GMEM_MOVEABLE, ANSIString.size() + 1);
+                ClipBoardBuffer = (char*)GlobalLock(ClipBoardHandle);
+
+                strcpy_s(ClipBoardBuffer, ANSIString.size() + 1, ANSIString.c_str());
+
+                GlobalUnlock(ClipBoardHandle);
+                SetClipboardData(CF_TEXT, ClipBoardHandle);
+
+                CloseClipboard();
+            }
+        }
+        if (KeyMessage->KeyVKCode == VK_SHIFT && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            InSelectMode = true;
+            ShiftOnHold  = true;
+
+            TextSelectRange.length = 0;
+            TextSelectRange.startPosition = 0;
+
+            SelectedUsedKey = VLineEditorUsedKey::None;
+        }
+        if (KeyMessage->KeyVKCode == VK_SHIFT && KeyMessage->KeyStats == VkeyClickedFlag::Up) {
+            ShiftOnHold = false;
+        }
         if (KeyMessage->KeyVKCode == VK_HOME && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
+            if (ShiftOnHold && InSelectMode) {
+                TextSelectRange.startPosition = 0;
+
+                int SelectLength = abs(static_cast<int>(TextSelectRange.length) - CursorPosition);
+
+                TextSelectRange.length =
+                        SelectLength == InputStringCache.size() + 1 ? SelectLength + 2 : SelectLength + 1;
+
+                SelectedUsedKey = VLineEditorUsedKey::Home;
+
+                Update();
+            }
+            if (!ShiftOnHold && InSelectMode) {
+                InSelectMode = false;
+
+                Update();
+            }
+
             CursorPosition = -1;
             OffsetX        = 0;
 
@@ -443,16 +844,16 @@ void VLineEditor::OnMessage(VMessage* Message) {
             return;
         }
         if (IMECharMessage->IMEChar == L'\b') {
-            if (CursorPosition >= 0) {
+            if (InSelectMode && !ShiftOnHold) {
+                InSelectMode = false;
+
+                CursorPosition = TextSelectRange.startPosition;
+
+                InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+
                 ShowCursor = true;
 
-                Update();
-
-                InputStringCache.erase(InputStringCache.begin() + CursorPosition);
-
-                --CursorPosition;
-
-                IDWriteTextLayout* TextLayout;
+                IDWriteTextLayout *TextLayout;
 
                 VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
                         InputStringCache.c_str(),
@@ -476,11 +877,60 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 TextLayout->GetMetrics(&TextMetrics);
 
                 OffsetX = TextMetrics.widthIncludingTrailingWhitespace < GetWidth() ?
-                          0 : static_cast<int>(GetWidth() - TextMetrics.widthIncludingTrailingWhitespace - TextMetrics.top);
+                          0 : static_cast<int>(GetWidth() - TextMetrics.widthIncludingTrailingWhitespace -
+                                               TextMetrics.top);
 
                 VDXObjectSafeFree(&TextLayout);
 
-                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                 GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+
+                TextOnChange.Emit(InputStringCache);
+
+                Update();
+
+                return;
+            }
+            if (CursorPosition >= 0) {
+                ShowCursor = true;
+
+                Update();
+
+                InputStringCache.erase(InputStringCache.begin() + CursorPosition);
+
+                --CursorPosition;
+
+                IDWriteTextLayout *TextLayout;
+
+                VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+                        InputStringCache.c_str(),
+                        InputStringCache.size(),
+                        Theme->LabelFont->GetDXObject(),
+                        INT_MAX,
+                        GetHeight(),
+                        &TextLayout
+                ), L"Failed to create TextLayout object!");
+
+                DWRITE_HIT_TEST_METRICS HitTestMetrics;
+
+                FLOAT CursorX;
+                FLOAT CursorY;
+
+                TextLayout->HitTestTextPosition(CursorPosition, FALSE, &CursorX, &CursorY, &HitTestMetrics);
+
+                CursorGraphicsX = HitTestMetrics.width + HitTestMetrics.left;
+
+                DWRITE_TEXT_METRICS TextMetrics;
+                TextLayout->GetMetrics(&TextMetrics);
+
+                OffsetX = TextMetrics.widthIncludingTrailingWhitespace < GetWidth() ?
+                          0 : static_cast<int>(GetWidth() - TextMetrics.widthIncludingTrailingWhitespace -
+                                               TextMetrics.top);
+
+                VDXObjectSafeFree(&TextLayout);
+
+                CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+                                 GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
                 TextOnChange.Emit(InputStringCache);
             }
@@ -488,23 +938,27 @@ void VLineEditor::OnMessage(VMessage* Message) {
             return;
         }
 
-        std::wstring TestString = InputStringCache;
+        if (InSelectMode) {
+            InSelectMode = false;
+
+            InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+        }
 
         if (CursorPosition == -1) {
-            TestString.insert(TestString.begin(), IMECharMessage->IMEChar);
+            InputStringCache.insert(InputStringCache.begin(), IMECharMessage->IMEChar);
         }
         else if (CursorPosition < InputStringCache.size()) {
-            TestString.insert(TestString.begin() + CursorPosition + 1, IMECharMessage->IMEChar);
+            InputStringCache.insert(InputStringCache.begin() + CursorPosition + 1, IMECharMessage->IMEChar);
         }
         else {
-            TestString.insert(TestString.begin() + CursorPosition, IMECharMessage->IMEChar);
+            InputStringCache.insert(InputStringCache.begin() + CursorPosition, IMECharMessage->IMEChar);
         }
 
         IDWriteTextLayout* TestTextLayout;
 
         VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-                TestString.c_str(),
-                TestString.size(),
+                InputStringCache.c_str(),
+                InputStringCache.size(),
                 Theme->LabelFont->GetDXObject(),
                 INT_MAX,
                 GetHeight(),
@@ -513,8 +967,6 @@ void VLineEditor::OnMessage(VMessage* Message) {
 
         DWRITE_TEXT_METRICS TestMetrics;
         TestTextLayout->GetMetrics(&TestMetrics);
-
-        InputStringCache = TestString;
 
         ++CursorPosition;
 
@@ -599,6 +1051,9 @@ void VLineEditor::LosedMouseFocus() {
     if (!InTyping) {
         InAnimation = true;
 
+        ShiftOnHold = false;
+        InSelectMode = false;
+
         OldTheme = Theme->LocalTheme;
         TargetTheme = Theme->StaticTheme;
 
@@ -643,6 +1098,10 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter) {
                           Theme->LocalTheme.TextColor);
     VPenBrush   CursorBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
                             Theme->CursorColor);
+    VSolidBrush SelectedBackgroundBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
+                                        Theme->OnSelectedBackgroundColor);
+    VPenBrush   SelectedColor(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
+                                        Theme->OnSelectedColor);
 
     VCanvasPainter TextCanvas(GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight(),
                           CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
@@ -655,14 +1114,25 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter) {
             },
             Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
 
+    IDWriteTextLayout* TextLayout;
+
+    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+            InputStringCache.c_str(),
+            InputStringCache.size(),
+            Theme->LabelFont->GetDXObject(),
+            INT_MAX,
+            GetHeight(),
+            &TextLayout
+    ), L"Failed to create TextLayout object!");
+
+    if (InSelectMode) {
+        TextLayout->SetDrawingEffect(SelectedBackgroundBrush.GetDxBrush(), TextSelectRange);
+        TextLayout->SetDrawingEffect(SelectedColor.GetDxBrush(), TextSelectRange);
+    }
+
     TextCanvas.BeginDraw();
     TextCanvas.Clear(VColor(0.f, 0.f, 0.f, 0.f));
-    TextCanvas.DrawString(InputStringCache,
-                        {
-                                OffsetX,
-                                0,
-                                GetWidth() + WidthOffset, GetHeight()
-                        }, Theme->LabelFont, &TextBrush);
+    TextCanvas.GetDXObject()->DrawTextLayout({ static_cast<float>(OffsetX), 0 }, TextLayout, TextBrush.GetDxBrush());
     TextCanvas.EndDraw();
 
     Painter->DrawCanvas({ static_cast<int>(Theme->LocalTheme.BorderThickness), 0,
