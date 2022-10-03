@@ -11,6 +11,8 @@ class VTextLabel : public VAbstractButton {
 private:
     VTextLabelTheme* Theme;
 
+    bool             AutoSize = false;
+
 private:
     VRect GetRegion() override;
 
@@ -47,6 +49,15 @@ public:
     void SetTextSize(const int& TextSize);
     void SetLineAlignment(const Core::VFontAlignment& Alignment);
     void SetParagraphAlignment(const Core::VFontParagraphAlignment& Alignment);
+    void SetAutoSize(const bool& Status);
+
+public:
+    std::wstring GetPlaneText() const;
+    bool         GetAutoSizeStatus() const;
+
+public:
+    void ResizeByText(const std::wstring& Text);
+    void ResizeByText();
 
 public:
    void OnPaint(VCanvasPainter* Painter) override;

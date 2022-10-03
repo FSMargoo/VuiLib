@@ -37,6 +37,11 @@ private:
 
 public:
     VLineEditor(VUIObject* Parent);
+    VLineEditor(const int& Width, const int& Height, VUIObject* Parent);
+    VLineEditor(const int& Width, const int& Height, std::wstring PlaneText, VUIObject* Parent);
+
+public:
+    void Move(const int &X, const int &Y) override;
 
 public:
     VSignal<const std::wstring&> TextOnChange;
@@ -52,7 +57,7 @@ public:
     VTextEditorTheme* GetTheme();
 
 public:
-    void SetPlaneText(const std::wstring& PlaneText);
+    void               SetPlaneText(const std::wstring& PlaneText);
     const std::wstring GetPlaneText();
     const int          GetCurrentCursorPosition();
 

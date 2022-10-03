@@ -91,7 +91,7 @@ namespace VML {
         Core::VFontParagraphAlignment ConvertParagraphAlignment(std::wstring ParagraphString);
 
     protected:
-        void Builder(Core::VTextLabel* TextLabel, const std::wstring& PlaneText, const int& TextSize, const Core::VFontAlignment& Alignment, const Core::VFontParagraphAlignment& LineAlignment);
+        void Builder(Core::VTextLabel* TextLabel, const std::wstring& PlaneText, const int& TextSize, const Core::VFontAlignment& Alignment, const Core::VFontParagraphAlignment& LineAlignment, const bool& AutoSize);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);

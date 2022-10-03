@@ -809,7 +809,12 @@ namespace VSS {
             }
         }
 
-        if (TargetControl != nullptr) { TargetControl->Update(); }
+        if (TargetControl != nullptr) {
+            if (TargetControl->GetAutoSizeStatus()) {
+                TargetControl->ResizeByText();
+            }
+            TargetControl->Update();
+        }
     }
     VSSVTextLabelBuilder::VSSVTextLabelBuilder(Core::VTextLabel *TargetControl,
                                                std::vector<VSSBasicSelector *> SelectorSet,

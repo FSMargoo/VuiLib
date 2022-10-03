@@ -9,6 +9,31 @@ VLineEditor::VLineEditor(VUIObject* Parent) : VAbstractButton(Parent) {
 
     Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 }
+VLineEditor::VLineEditor(const int& Width, const int& Height, VUIObject* Parent) : VAbstractButton(Parent) {
+    Theme = new VTextEditorTheme(*(static_cast<VTextEditorTheme*>(GetTargetTheme(VUIThemeType::VTextEditor))));
+
+    Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
+
+    Resize(Width, Height);
+}
+VLineEditor::VLineEditor(const int& Width, const int& Height, std::wstring PlaneText, VUIObject* Parent) : VAbstractButton(Parent) {
+    Theme = new VTextEditorTheme(*(static_cast<VTextEditorTheme*>(GetTargetTheme(VUIThemeType::VTextEditor))));
+
+    Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
+
+    InputStringCache = PlaneText;
+
+    Resize(Width, Height);
+}
+
+void VLineEditor::Move(const int &X, const int &Y) {
+    VUIObject::Move(X, Y);
+
+    if (InTyping) {
+        CallWidgetSetIME(GetX() + CursorGraphicsX + 10, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+    }
+}
+
 void VLineEditor::CheckFrame() {
     if (!Interpolator->IsEnd() && InAnimation) {
         if (AnimationFrameTimer.End()) {
@@ -104,7 +129,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                     GetWidth() - 10,
                     GetHeight(),
                     &TextLayout
-            ), L"Falied to create TextLayout object!");
+            ), L"Failed to create TextLayout object!");
 
             auto MouseRelativeX = MouseMessage->MousePosition.X - GetX() - 10;
             auto MouseRelativeY = MouseMessage->MousePosition.Y - GetY();
@@ -145,7 +170,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                         GetWidth() - 10,
                         GetHeight(),
                         &TextLayout
-                ), L"Falied to create TextLayout object!");
+                ), L"Failed to create TextLayout object!");
 
                 DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
@@ -178,7 +203,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                         GetWidth() - 10,
                         GetHeight(),
                         &TextLayout
-                ), L"Falied to create TextLayout object!");
+                ), L"Failed to create TextLayout object!");
 
                 DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
@@ -224,7 +249,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                     GetWidth() - 10,
                     GetHeight(),
                     &TextLayout
-            ), L"Falied to create TextLayout object!");
+            ), L"Failed to create TextLayout object!");
 
             DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
@@ -280,7 +305,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                         GetWidth() - 20,
                         GetHeight(),
                         &TextLayout
-                ), L"Falied to create TextLayout object!");
+                ), L"Failed to create TextLayout object!");
 
                 DWRITE_TEXT_METRICS TestMetrics;
                 TextLayout->GetMetrics(&TestMetrics);
@@ -363,7 +388,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                         GetWidth() - 10,
                         GetHeight(),
                         &TextLayout
-                ), L"Falied to create TextLayout object!");
+                ), L"Failed to create TextLayout object!");
 
                 DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
@@ -405,7 +430,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
                 GetWidth() - 20,
                 GetHeight(),
                 &TestTextLayout
-        ), L"Falied to create TextLayout object!");
+        ), L"Failed to create TextLayout object!");
 
         DWRITE_TEXT_METRICS TestMetrics;
         TestTextLayout->GetMetrics(&TestMetrics);
@@ -505,6 +530,9 @@ void VLineEditor::LosedMouseFocus() {
 
 void VLineEditor::SetPlaneText(const std::wstring& PlaneText) {
     InputStringCache = PlaneText;
+
+    CursorPosition  = 0;
+    CursorGraphicsX = 0;
 
     Update();
 }

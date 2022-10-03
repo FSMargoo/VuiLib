@@ -354,8 +354,8 @@ namespace VML {
     }
 
     void VMLTextLabelBuilder::Builder(Core::VTextLabel *TextLabel, const std::wstring &PlaneText, const int &TextSize,
-                                       const Core::VFontAlignment &Alignment,
-                                       const Core::VFontParagraphAlignment &LineAlignment) {
+                                       const Core::VFontAlignment &Alignment, const Core::VFontParagraphAlignment &LineAlignment,
+                                       const bool& AutoSize) {
         TextLabel->SetPlaneText(PlaneText);
 
         if (TextSize != 0) {
@@ -364,6 +364,7 @@ namespace VML {
 
         TextLabel->SetLineAlignment(Alignment);
         TextLabel->SetParagraphAlignment(LineAlignment);
+        TextLabel->SetAutoSize(AutoSize);
     }
 
     void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextLabel *Object,
@@ -371,7 +372,8 @@ namespace VML {
                                                VMLControlBuildStatus *BuildStatus) {
         
         std::wstring Text;
-        int TextSize = 0;
+        int  TextSize = 0;
+        bool AutoSize = false;
 
         Core::VFontAlignment Alignment = Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
         Core::VFontParagraphAlignment LineAlignment = Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR;
@@ -417,9 +419,19 @@ namespace VML {
 
                 LineAlignment = ConvertParagraphAlignment(ElementProperty.second.PropertyAsString);
             }
+            if (ElementProperty.first == L"auto-size") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"auto-size\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                AutoSize = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Object, Text, TextSize, Alignment, LineAlignment);
+        Builder(Object, Text, TextSize, Alignment, LineAlignment, AutoSize);
     }
 
     VMLTextLabelBuilder::VMLTextLabelBuilder(const VMLFinder& RootFinder, Core::VTextLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,

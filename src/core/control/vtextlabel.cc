@@ -197,11 +197,67 @@ VRect VTextLabel::GetRegion() {
 }
 void VTextLabel::SetLineAlignment(const Core::VFontAlignment& Alignment) {
     Theme->LabelFont->SetLineAlignment(Alignment);
+
+    Update();
 }
 void VTextLabel::SetParagraphAlignment(const Core::VFontParagraphAlignment& Alignment) {
     Theme->LabelFont->SetParagraphAlignment(Alignment);
+
+    Update();
 }
 
+void VTextLabel::SetAutoSize(const bool &Status) {
+    AutoSize = Status;
+    if (Status) {
+        ResizeByText();
+    }
+
+    Update();
+}
+
+std::wstring VTextLabel::GetPlaneText() const {
+    return Theme->PlaneText;
+}
+bool         VTextLabel::GetAutoSizeStatus() const {
+    return AutoSize;
+}
+
+void VTextLabel::ResizeByText(const std::wstring &Text) {
+    IDWriteTextLayout* TextLayout;
+
+    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+            Text.c_str(), Text.size(),
+            Theme->LabelFont->GetDXObject(),
+            INT_MAX,
+            INT_MAX,
+            &TextLayout
+    ), L"Failed to create TextLayout object!");
+
+    DWRITE_TEXT_METRICS TextMetrics;
+    TextLayout->GetMetrics(&TextMetrics);
+
+    Resize(TextMetrics.width + TextMetrics.left, TextMetrics.height + TextMetrics.top);
+
+    VDXObjectSafeFree(&TextLayout);
+}
+void VTextLabel::ResizeByText() {
+    IDWriteTextLayout* TextLayout;
+
+    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+            Theme->PlaneText.c_str(), Theme->PlaneText.size(),
+            Theme->LabelFont->GetDXObject(),
+            INT_MAX,
+            INT_MAX,
+            &TextLayout
+    ), L"Failed to create TextLayout object!");
+
+    DWRITE_TEXT_METRICS TextMetrics;
+    TextLayout->GetMetrics(&TextMetrics);
+
+    Resize(TextMetrics.width, TextMetrics.height);
+
+    VDXObjectSafeFree(&TextLayout);
+}
 
 }
 
