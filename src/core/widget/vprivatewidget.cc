@@ -19,6 +19,9 @@ namespace Core {
     }
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
+        if (Message == 144 || Message == 2) {
+            return _VExWindowProcess(Handle, Message, wParameter, lParameter);
+        }
         if (_VMainConfigs.find(Handle) != _VMainConfigs.end()) {
             switch (Message) {
             case WM_PAINT: {

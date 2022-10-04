@@ -46,8 +46,8 @@ private:
 
     VLineEditorUsedKey      SelectedUsedKey;
 
-    bool                    ShiftOnHold       = false;
-    bool                    InSelectMode      = false;
+    bool                    ShiftOnHold        = false;
+    bool                    InSelectMode       = false;
 
 public:
     VLineEditor(VUIObject* Parent);

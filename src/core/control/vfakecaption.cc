@@ -16,7 +16,8 @@ void VFakeCaption::OnMessage(VMessage* Message) {
 
         if (MouseClicekdMessage->ClickedKey == VMouseKeyFlag::Left &&
             MouseClicekdMessage->ClickedMethod == VMouseClickedFlag::Down &&
-            MouseClicekdMessage->MousePosition.InsideRectangle(GetRegion())) {
+            MouseClicekdMessage->MousePosition.InsideRectangle(GetRegion()) &&
+            CallWidgetGetLockingStatus() == false) {
             PostMessage(GetLocalWinId(), WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM(MouseClicekdMessage->MousePosition.X, MouseClicekdMessage->MousePosition.Y));
         }
     }
