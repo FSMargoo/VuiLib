@@ -1196,8 +1196,6 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter) {
                           Theme->LocalTheme.TextColor);
     VPenBrush   CursorBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
                             Theme->CursorColor);
-    VSolidBrush SelectedBackgroundBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                                        Theme->OnSelectedBackgroundColor);
     VPenBrush   SelectedColor(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
                                         Theme->OnSelectedColor);
 
@@ -1224,7 +1222,6 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter) {
     ), L"Failed to create TextLayout object!");
 
     if (InSelectMode) {
-        TextLayout->SetDrawingEffect(SelectedBackgroundBrush.GetDxBrush(), TextSelectRange);
         TextLayout->SetDrawingEffect(SelectedColor.GetDxBrush(), TextSelectRange);
     }
 

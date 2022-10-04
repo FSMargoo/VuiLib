@@ -1450,6 +1450,13 @@ namespace VSS {
                             }
                         }
                     }
+                    if (Property.first == L"caret-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnSelectedColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
 
                     if (Property.first == L"border-width") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -1579,6 +1586,19 @@ namespace VSS {
                             }
                             if (PropertyValue.Type == VSSPropertyType::IntValue) {
                                 Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector *>(Selector)->ElementTag == L"lineeditor" &&
+                static_cast<VSSFakeElementSelector *>(Selector)->FakeElementTag == L"selection") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnSelectedColor = PropertyValue.PropertyAsColorValue;
                             }
                         }
                     }

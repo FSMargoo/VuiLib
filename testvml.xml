@@ -8,8 +8,4 @@
     <description-text type="textlabel" x="@ratio(0.51)" y="@ratio(0.33)" width="246" height="113" 
         text="DirectX2D 加速渲染\n更加优雅的 VML 和 VSS 语法\n对于 W3C CSS 标准的更多兼容" class="description-text">
     </description-text>
-
-    <test-input type="lineeditor" x="@center" y="@center" width="@scale(0.4)" height="40">
-
-    </test-input>
 </widget>
