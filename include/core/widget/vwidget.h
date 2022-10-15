@@ -4,6 +4,7 @@
 #pragma once
 
 #include "../object/vapplication.h"
+#include "../control/vswitchgroup.h"
 #include "vprivatewidget.h"
 
 #include <map>
@@ -62,6 +63,9 @@ class VMainWindow : public VUIObject {
      void CallWidgetSendMessage(VMessage *Message) override;
      VCanvasPainter* CallWidgetGetCanvas() override;
      Core::VDCRender *CallWidgetGetDCRenderTarget() override;
+
+public:
+    HWND GetLocalWinId() override;
 
  public:
      void Update(VRect UpdateRect) override;

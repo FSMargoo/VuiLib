@@ -1,0 +1,64 @@
+\hypertarget{vpushbutton_8h_source}{}\doxysection{vpushbutton.\+h}
+\label{vpushbutton_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/control/vpushbutton.h@{G:/VueLib/vuilib-\/cmake/include/core/control/vpushbutton.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../uibasic/vtimer.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../object/vuiobject.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}vabstractbutton.h"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_push_button}{VPushButton}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_abstract_button}{VAbstractButton}} \{}
+\DoxyCodeLine{14  \textcolor{keyword}{protected}:}
+\DoxyCodeLine{15      \mbox{\hyperlink{struct_core_1_1_v_push_button_theme}{VPushButtonTheme}}*       Theme;}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{private}:}
+\DoxyCodeLine{18      \mbox{\hyperlink{class_core_1_1_v_basic_timer}{VBasicTimer}}             AnimationFrameTimer;}
+\DoxyCodeLine{19      \mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}}* Interpolator;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21      \mbox{\hyperlink{struct_core_1_1_v_label_status_theme}{VLabelStatusTheme}}       OldTheme;}
+\DoxyCodeLine{22      \mbox{\hyperlink{struct_core_1_1_v_label_status_theme}{VLabelStatusTheme}}       TargetTheme;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24      \textcolor{keywordtype}{bool}                    InAnimation = \textcolor{keyword}{false};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26  \textcolor{keyword}{public}:}
+\DoxyCodeLine{27      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} GetRegion() \textcolor{keyword}{override};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29  \textcolor{keyword}{public}:}
+\DoxyCodeLine{30      \textcolor{keywordtype}{void} LeftClickedDown() \textcolor{keyword}{override};}
+\DoxyCodeLine{31      \textcolor{keywordtype}{void} LeftClickedUp() \textcolor{keyword}{override};}
+\DoxyCodeLine{32      \textcolor{keywordtype}{void} GotMouseFocus() \textcolor{keyword}{override};}
+\DoxyCodeLine{33      \textcolor{keywordtype}{void} LosedMouseFocus() \textcolor{keyword}{override};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35  \textcolor{keyword}{public}:}
+\DoxyCodeLine{36      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_push_button}{VPushButton}}(\mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{37      \mbox{\hyperlink{class_core_1_1_v_push_button}{VPushButton}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{38      \mbox{\hyperlink{class_core_1_1_v_push_button}{VPushButton}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \textcolor{keyword}{const} std::wstring\& PlaneText, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{39      \mbox{\hyperlink{class_core_1_1_v_push_button}{\string~VPushButton}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41  \textcolor{keyword}{public}:}
+\DoxyCodeLine{42      \textcolor{keywordtype}{void} SetPlaneText(\textcolor{keyword}{const} std::wstring\& PlaneText);}
+\DoxyCodeLine{43      \textcolor{keywordtype}{void} SetTextSize(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& TextSize);}
+\DoxyCodeLine{44      \textcolor{keyword}{const} std::wstring\& GetPlaneString();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46  \textcolor{keyword}{public}:}
+\DoxyCodeLine{47      \mbox{\hyperlink{struct_core_1_1_v_push_button_theme}{VPushButtonTheme}}* GetTheme();}
+\DoxyCodeLine{48      \textcolor{keywordtype}{void} SetTheme(\mbox{\hyperlink{struct_core_1_1_v_push_button_theme}{VPushButtonTheme}}* Theme);}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50  \textcolor{keyword}{public}:}
+\DoxyCodeLine{51      \textcolor{keywordtype}{void} OnPaint(\mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}}* Painter) \textcolor{keyword}{override};}
+\DoxyCodeLine{52      \textcolor{keywordtype}{void} CheckFrame() \textcolor{keyword}{override};}
+\DoxyCodeLine{53 \};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

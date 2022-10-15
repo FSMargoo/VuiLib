@@ -1,0 +1,169 @@
+\hypertarget{vbasiccore_8h_source}{}\doxysection{vbasiccore.\+h}
+\label{vbasiccore_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/vbasiccore.h@{G:/VueLib/vuilib-\/cmake/include/core/vbasiccore.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// This is the basic core file in vuilib}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#ifndef VLIB\_ENABLE\_NAMESPACE}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#define VLIB\_BEGIN\_NAMESPACE}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#define VLIB\_END\_NAMESPACE}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define VLIB\_BEGIN\_NAMESPACE namespace VuiLib \{}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define VLIB\_END\_NAMESPACE   \}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define WINVER 0x0600}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <new>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <graphics.h>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <crtdbg.h>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <d2d1helper.h>}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define VLIB\_REPORT\_ERROR(ErrorMessage)                   \(\backslash\)}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{    do \{                                                  \(\backslash\)}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{        \_RPTFW0(\_CRT\_ASSERT, ErrorMessage);                \(\backslash\)}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{    \} while (true)}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define VLIB\_CHECK\_REPORT(Expression, ErrorMessage)       \(\backslash\)}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{    while ((Expression)) \{                                                \(\backslash\)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{        \_RPTFW0(\_CRT\_ASSERT, ErrorMessage);                \(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{    \}}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{template}<\textcolor{keyword}{class} DataType>}
+\DoxyCodeLine{36 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}} \{}
+\DoxyCodeLine{37  \textcolor{keyword}{public}:}
+\DoxyCodeLine{38      DataType Left;}
+\DoxyCodeLine{39      DataType Right;}
+\DoxyCodeLine{40      DataType Top;}
+\DoxyCodeLine{41      DataType Bottom;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43  \textcolor{keyword}{public}:}
+\DoxyCodeLine{44      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& RectObject);}
+\DoxyCodeLine{45      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}(DataType LeftData, DataType TopData, DataType RightData, DataType BottomData);}
+\DoxyCodeLine{46      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}();}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48  \textcolor{keyword}{public}:}
+\DoxyCodeLine{49      DataType GetWidth() \textcolor{keyword}{const};}
+\DoxyCodeLine{50      DataType GetHeight() \textcolor{keyword}{const};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52  \textcolor{keyword}{public}:}
+\DoxyCodeLine{53      \textcolor{keywordtype}{void} Move(\textcolor{keyword}{const} DataType\& X, \textcolor{keyword}{const} DataType\& Y);}
+\DoxyCodeLine{54      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}* MoveRV(\textcolor{keyword}{const} DataType\& X, \textcolor{keyword}{const} DataType\& Y);}
+\DoxyCodeLine{55      \textcolor{keywordtype}{void} Extended(\textcolor{keyword}{const} DataType\& LeftOffset, \textcolor{keyword}{const} DataType\& TopOffset,}
+\DoxyCodeLine{56          \textcolor{keyword}{const} DataType\& RightOffset, \textcolor{keyword}{const} DataType\& BottomOffset);}
+\DoxyCodeLine{57      \textcolor{keywordtype}{void} Resize(\textcolor{keyword}{const} DataType\& Width, \textcolor{keyword}{const} DataType\& Height);}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59      \textcolor{keywordtype}{void} FusionRect(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& FusionObject);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61      \textcolor{keywordtype}{bool} Overlap(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& JudgedObject) \textcolor{keyword}{const};}
+\DoxyCodeLine{62      \textcolor{keywordtype}{bool} Include(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& JudgedObject) \textcolor{keyword}{const};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}} Clone() \textcolor{keyword}{const};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66  \textcolor{keyword}{public}:}
+\DoxyCodeLine{67      \textcolor{keyword}{inline} RECT ToRECT()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{68          \textcolor{keywordflow}{return} RECT\{ \textcolor{keyword}{static\_cast<}LONG\textcolor{keyword}{>}(Left), \textcolor{keyword}{static\_cast<}LONG\textcolor{keyword}{>}(Top), \textcolor{keyword}{static\_cast<}LONG\textcolor{keyword}{>}(Right), \textcolor{keyword}{static\_cast<}LONG\textcolor{keyword}{>}(Bottom) \};}
+\DoxyCodeLine{69      \}}
+\DoxyCodeLine{70      \textcolor{keyword}{inline} D2D1\_SIZE\_U ToDxPoint2U()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{71          \textcolor{keywordflow}{return} D2D1\_SIZE\_U\{ \textcolor{keyword}{static\_cast<}UINT32\textcolor{keyword}{>}(GetWidth()), \textcolor{keyword}{static\_cast<}UINT32\textcolor{keyword}{>}(GetHeight()) \};}
+\DoxyCodeLine{72      \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74  \textcolor{keyword}{public}:}
+\DoxyCodeLine{75      \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& RightObject) \{}
+\DoxyCodeLine{76          \textcolor{keywordflow}{return} LeftObject.Left   == RightObject.Left \&\&}
+\DoxyCodeLine{77                 LeftObject.Right  == RightObject.Right \&\&}
+\DoxyCodeLine{78                 LeftObject.Bottom == RightObject.Bottom \&\&}
+\DoxyCodeLine{79                 LeftObject.Top    == RightObject.Top;}
+\DoxyCodeLine{80      \}}
+\DoxyCodeLine{81      \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect}}\& RightObject) \{}
+\DoxyCodeLine{82          \textcolor{keywordflow}{return} !(LeftObject.Left == RightObject.Left \&\&}
+\DoxyCodeLine{83              LeftObject.Right == RightObject.Right \&\&}
+\DoxyCodeLine{84              LeftObject.Bottom == RightObject.Bottom \&\&}
+\DoxyCodeLine{85              LeftObject.Top == RightObject.Top);}
+\DoxyCodeLine{86      \}}
+\DoxyCodeLine{87 \};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{keyword}{template}<\textcolor{keyword}{class} DataType>}
+\DoxyCodeLine{90 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}} \{}
+\DoxyCodeLine{91  \textcolor{keyword}{public}:}
+\DoxyCodeLine{92      DataType X;}
+\DoxyCodeLine{93      DataType Y;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95  \textcolor{keyword}{public}:}
+\DoxyCodeLine{96      \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}();}
+\DoxyCodeLine{97      \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}\& PointObject);}
+\DoxyCodeLine{98      \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}(\textcolor{keyword}{const} DataType\& TargetX, \textcolor{keyword}{const} DataType\& TargetY)}
+\DoxyCodeLine{99          : X(TargetX), Y(TargetY) \{}
+\DoxyCodeLine{100      \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102  \textcolor{keyword}{public}:}
+\DoxyCodeLine{103      \textcolor{keywordtype}{bool} InsideRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect<int>}}\& RectangleObject) \textcolor{keyword}{const};}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105      \textcolor{keywordtype}{void} Move(\textcolor{keyword}{const} DataType\& TargetX, \textcolor{keyword}{const} DataType\& TargetY);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107      \textcolor{keywordtype}{void} Offset(\textcolor{keyword}{const} DataType\& OffsetX, \textcolor{keyword}{const} DataType\& OffsetY);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109      \textcolor{keyword}{inline} POINT ToPOINT()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{110          \textcolor{keywordflow}{return} POINT \{ X, Y \};}
+\DoxyCodeLine{111      \}}
+\DoxyCodeLine{112      \textcolor{keyword}{inline} D2D1\_POINT\_2U ToDxPointU() \{}
+\DoxyCodeLine{113          \textcolor{keywordflow}{return} D2D1::Point2U(X, Y);}
+\DoxyCodeLine{114      \}}
+\DoxyCodeLine{115      \textcolor{keyword}{inline} D2D1\_POINT\_2F ToDxPOINT2F() \{}
+\DoxyCodeLine{116          \textcolor{keywordflow}{return} D2D1::Point2F(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(X), \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(Y));}
+\DoxyCodeLine{117      \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119  \textcolor{keyword}{public}:}
+\DoxyCodeLine{120     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}\& RightObject) \{}
+\DoxyCodeLine{121         \textcolor{keywordflow}{return} LeftObject.X == RightObject.X \&\&}
+\DoxyCodeLine{122                LeftObject.Y == RightObject.Y;}
+\DoxyCodeLine{123     \}}
+\DoxyCodeLine{124     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint}}\& RightObject) \{}
+\DoxyCodeLine{125         \textcolor{keywordflow}{return} !(LeftObject.X == RightObject.X \&\&}
+\DoxyCodeLine{126                  LeftObject.Y == RightObject.Y);}
+\DoxyCodeLine{127     \}}
+\DoxyCodeLine{128 \};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130 \textcolor{keyword}{template}<\textcolor{keyword}{class} DataType>}
+\DoxyCodeLine{131 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}} \{}
+\DoxyCodeLine{132 \textcolor{keyword}{public}:}
+\DoxyCodeLine{133     DataType Width;}
+\DoxyCodeLine{134     DataType Height;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 \textcolor{keyword}{public}:}
+\DoxyCodeLine{137     \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}();}
+\DoxyCodeLine{138     \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}\& GeomteryObject);}
+\DoxyCodeLine{139     \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}(\textcolor{keyword}{const} DataType\& TargetWidth, \textcolor{keyword}{const} DataType\& TargetHeight);}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{keyword}{public}:}
+\DoxyCodeLine{142     \textcolor{keywordtype}{bool} InsideRectangle(\mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect<DataType>}} RectangleObject);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{keywordtype}{void} Move(\textcolor{keyword}{const} DataType\& TargetWidth, \textcolor{keyword}{const} DataType\& TargetHeight);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 \textcolor{keyword}{public}:}
+\DoxyCodeLine{147     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}\& RightObject) \{}
+\DoxyCodeLine{148         \textcolor{keywordflow}{return} LeftObject.Width == RightObject.Width \&\&}
+\DoxyCodeLine{149             LeftObject.Height == RightObject.Height;}
+\DoxyCodeLine{150     \}}
+\DoxyCodeLine{151     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}\& LeftObject, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery}}\& RightObject) \{}
+\DoxyCodeLine{152         \textcolor{keywordflow}{return} !(LeftObject.Width == RightObject.Width \&\&}
+\DoxyCodeLine{153             LeftObject.Height == RightObject.Height);}
+\DoxyCodeLine{154     \}}
+\DoxyCodeLine{155 \};}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 \textcolor{keyword}{using }\mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}     = \mbox{\hyperlink{class_core_1_1_v_core_rect}{VCoreRect<int>}};}
+\DoxyCodeLine{158 \textcolor{keyword}{using }\mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}    = \mbox{\hyperlink{class_core_1_1_v_core_point}{VCorePoint<int>}};}
+\DoxyCodeLine{159 \textcolor{keyword}{using }\mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VGeomtery}} = \mbox{\hyperlink{class_core_1_1_v_core_geomtery}{VCoreGeomtery<int>}};}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 \}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

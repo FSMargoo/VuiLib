@@ -1,0 +1,90 @@
+  \doxysection*{Vui\+Lib 快速上手：使用 VWidget 创造一个简单的应用}
+
+ 
+
+\begin{quote}
+该部分将会通过 Vui\+Lib 中的 VWidget 来创造一个简单的 Demo 应用（ 即不使用任何 VML 和 VSS，纯 C++ 开发 ）
+
+在开始教程以前，请先使用您任意受使用支持的编译器和 API 版本的 IDE 创建一个 .cpp 文件
+
+本教程的完整源码可以在 doc/code/vwidget-\/start 找到 \end{quote}
+\hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md8}{}\doxysubsection{第一步：引用 Vui\+Lib 的头文件}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md8}
+
+\begin{DoxyEnumerate}
+\item 打开你的 cpp 文件，如果你已经配置好了 Vui\+Lib 环境，并且已经连接好了 Vui\+Lib 的静态库，那么你可以开始像下面的代码一样引用 Vui\+Lib 的头文件 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{// 按照您的配置地址而定具体头文件地址}
+\DoxyCodeLine{// demo 中的源码是直接引用了当前版本的 vuilib 源码}
+\DoxyCodeLine{\#include <vuilib/core/widget/vwidget.h>}
+\DoxyCodeLine{\#include <vuilib/core/control/vpushbutton.h>}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md9}{}\doxysubsection{第二步：创建一个 VApplication 类}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md9}
+VApplicaiton 类是整个 Vui\+Lib 的基石，没有它，整个 Vui\+Lib 不能够正常运作，它负责处理消息循环并通过对象树消息发送给每一个对象，创建一个 VApplicaiton 类需要修改 main 的返回值为 \$\{Your\+Applicaiton\+Class\+Name\}.Exec(); 就像下面一样\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{int main() \{}
+\DoxyCodeLine{    Core::VApplication MyDemo;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    return MyDemo.Exec();}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 恭喜，至此你已经创建了一个 Vui\+Lib 的框架，接下来，开始创建我们的第一个 Vui\+Lib 窗口吧。 \hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md10}{}\doxysubsection{第三步：创建一个 VMain\+Window 窗口并设置标题}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md10}
+
+\begin{DoxyEnumerate}
+\item 创建窗口：在 Vui\+Lib 的纯 C++ 开发中，使用 VMain\+Window 作为我们唯一的创建窗口方法，我们可以用如下方式创建一个窗口\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{// 第三个参数需要传入一个 VApplicaiton 的指针}
+\DoxyCodeLine{Core::VMainWindow MyWindow(640, 480, \&MyDemo);}
+
+\end{DoxyCode}
+
+\item 设置标题：在 VMain\+Window 中提供了一个方法 Set\+Title 来设置窗口的标题，我们可以通过调用 Set\+Title 即可设置窗口在标题栏上展示的文字，如下所示\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{MyWindow.SetTitle(L"{}Hello VuiLib!"{});}
+
+\end{DoxyCode}
+ 接下来，将你所写的代码编译出来，如果这段代码正常工作，那么它将会弹出一个 640px 宽 480px 高，标题为 Hello Vui\+Lib! 的黑色背景窗口，如果是这样，那恭喜你，你成功地创建了一个 Vui\+Lib 的窗口！接下来，为你的窗口添加一些能和用户交互的东西吧！ 
+\end{DoxyEnumerate}\hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md11}{}\doxysubsection{第四步：创建一个 VPush\+Button 按钮控件}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md11}
+还记得我们一开始引用的 \mbox{\hyperlink{vpushbutton_8h_source}{vpushbutton.\+h}} 吗？关于按钮控件的东西就在这个小文件里头，我们现在可以直接开始创建一个按钮控件了，接下来，我们可以使用这段代码来创建一个按钮控件： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{Core::VPushButton MyPushButton(100, 40, L"{}Push me!"{}, \&MyWindow);}
+
+\end{DoxyCode}
+ 接下来，再把你所写的代码编译运行，如果你看到左上角有一个按钮出现并且写着 Push me! 字样，那么恭喜你，你已经成功地创建了一个按钮，可是这个按钮并不会相应用户的点击，让我们来让它能处理用户的点击吧！ \hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md12}{}\doxysubsection{第五步：绑定 VPush\+Button 的信号}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md12}
+VPush\+Button 中有一个公有成员，叫 Button\+Pushed，可以通过这个成员的 Connect 方法来链接按钮按下的信号，就像下面一样 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{// 此处使用 λ 表达式来代替函数}
+\DoxyCodeLine{MyPushButton.ButtonPushed.Connect([]()-\/>void \{ MessageBox(GetHWnd(), L"{}You pushed me uwu!"{}, L"{}uwu"{}, MB\_OK); \});}
+
+\end{DoxyCode}
+ 再次编译运行，并且点击按钮，你应该会发现，在点击以后弹出了一个消息提示框，如果是这样，恭喜你成功给按钮的 Button\+Pushed 信号绑定了一个 lambda 对象！
+
+Vui\+Lib 中的信号功能非常强大，也是 Vui\+Lib 中的基石之一，整个 Vui\+Lib 界面依托信号进行驱动，在日后我们在对它进行慢慢的介绍。 \hypertarget{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md13}{}\doxysubsection{结语}\label{md__g___vue_lib_vuilib_cmake_doc_vwidget_quickstart_autotoc_md13}
+至此，本篇到此结束，你也成功使用 Vui\+Lib 创建了一个简单的应用程序，因为全部代码非常的简短，这里放出本篇的完整代码（可以直接复制到你的 IDE 或编辑器里编译运行）： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{\#include "{}../../../include/core/widget/vwidget.h"{}}
+\DoxyCodeLine{\#include "{}../../../include/core/control/vpushbutton.h"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main() \{}
+\DoxyCodeLine{    Core::VApplication MyDemo;}
+\DoxyCodeLine{    Core::VMainWindow  MyWindow(640, 480, \&MyDemo);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    Core::VPushButton MyPushButton(100, 40, L"{}Push me!"{}, \&MyWindow);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    MyPushButton.ButtonPushed.Connect([]()-\/>void \{ MessageBox(GetHWnd(), L"{}You pushed me uwu!"{}, L"{}uwu"{}, MB\_OK); \});}
+\DoxyCodeLine{    MyWindow.SetTitle(L"{}Hello VuiLib!"{});}
+\DoxyCodeLine{}
+\DoxyCodeLine{    return MyDemo.Exec();}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 

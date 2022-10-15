@@ -1,0 +1,66 @@
+\hypertarget{vpainterdevice_8h_source}{}\doxysection{vpainterdevice.\+h}
+\label{vpainterdevice_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/render/vpainterdevice.h@{G:/VueLib/vuilib-\/cmake/include/core/render/vpainterdevice.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// This is the painter device file in vuilib}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}vrenderbasic.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <Windows.h>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{enum class} VTargetRenderType \{}
+\DoxyCodeLine{15     UnknownRender, DCRender, IWICImageRender, HWNDRender}
+\DoxyCodeLine{16 \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_d_c_render}{VDCRender}} \{}
+\DoxyCodeLine{19  \textcolor{keyword}{private}:}
+\DoxyCodeLine{20      ID2D1DCRenderTarget* DirectXDCTarget\{\};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22  \textcolor{keyword}{public}:}
+\DoxyCodeLine{23      ID2D1DCRenderTarget* GetDirectXRenderTarget();}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25      \textcolor{keyword}{static} VTargetRenderType GetType();}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27  \textcolor{keyword}{public}:}
+\DoxyCodeLine{28      \mbox{\hyperlink{class_core_1_1_v_d_c_render}{VDCRender}}(ID2D1Factory* DirectXFactory, \textcolor{keyword}{const} HDC\& TargetDC, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& DCRectangle, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& HardwareAcceleration = \textcolor{keyword}{true});}
+\DoxyCodeLine{29      \mbox{\hyperlink{class_core_1_1_v_d_c_render}{\string~VDCRender}}();}
+\DoxyCodeLine{30 \};}
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_h_w_n_d_render}{VHWNDRender}} \{}
+\DoxyCodeLine{32 \textcolor{keyword}{private}:}
+\DoxyCodeLine{33     ID2D1HwndRenderTarget* DirectXDCTarget\{\};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{public}:}
+\DoxyCodeLine{36     ID2D1HwndRenderTarget* GetDirectXRenderTarget();}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keyword}{static} VTargetRenderType GetType();}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{public}:}
+\DoxyCodeLine{41     \mbox{\hyperlink{class_core_1_1_v_h_w_n_d_render}{VHWNDRender}}(ID2D1Factory* DirectXFactory, \textcolor{keyword}{const} HWND\& TargetHWND, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& RenderRect, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& HardwareAcceleration = \textcolor{keyword}{true});}
+\DoxyCodeLine{42     \mbox{\hyperlink{class_core_1_1_v_h_w_n_d_render}{\string~VHWNDRender}}();}
+\DoxyCodeLine{43 \};}
+\DoxyCodeLine{44 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_i_w_i_c_i_render}{VIWICIRender}} \{}
+\DoxyCodeLine{45 \textcolor{keyword}{private}:}
+\DoxyCodeLine{46     ID2D1BitmapRenderTarget* DirectXDCTarget\{\};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{keyword}{public}:}
+\DoxyCodeLine{49     ID2D1BitmapRenderTarget* GetDirectXRenderTarget();}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{static} VTargetRenderType GetType();}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{keyword}{public}:}
+\DoxyCodeLine{54     \mbox{\hyperlink{class_core_1_1_v_i_w_i_c_i_render}{VIWICIRender}}(ID2D1Factory* DirectXFactory, IWICBitmap* TargetBitmap, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& HardwareAcceleration = \textcolor{keyword}{true});}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_core_1_1_v_i_w_i_c_i_render}{\string~VIWICIRender}}();}
+\DoxyCodeLine{56 \};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

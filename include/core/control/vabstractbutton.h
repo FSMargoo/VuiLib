@@ -8,6 +8,7 @@ namespace Core {
 class VAbstractButton : public VUIObject {
  public:
      VSignal<> ButtonPushed;
+     VSignal<VAbstractButton*> _PtrButtonPushed;
      VSignal<> ButtonOnActive;
 
  public:

@@ -1,0 +1,31 @@
+\hypertarget{vabstractbutton_8h_source}{}\doxysection{vabstractbutton.\+h}
+\label{vabstractbutton_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/control/vabstractbutton.h@{G:/VueLib/vuilib-\/cmake/include/core/control/vabstractbutton.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../object/vuiobject.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_abstract_button}{VAbstractButton}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}} \{}
+\DoxyCodeLine{9  \textcolor{keyword}{public}:}
+\DoxyCodeLine{10      \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} ButtonPushed;}
+\DoxyCodeLine{11      \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} ButtonOnActive;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13  \textcolor{keyword}{public}:}
+\DoxyCodeLine{14      \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} LeftClickedUp()   \{  \}}
+\DoxyCodeLine{15      \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} LeftClickedDown() \{  \}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{public}:}
+\DoxyCodeLine{18      \textcolor{keywordtype}{void} MouseLeftClicked(VMouseClickedFlag ClickedFlag) \textcolor{keyword}{override};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20  \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_core_1_1_v_abstract_button}{VAbstractButton}}(\mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent) : \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}(Parent) \{  \}}
+\DoxyCodeLine{22 \};}
+\DoxyCodeLine{23 \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

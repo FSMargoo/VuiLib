@@ -14,6 +14,7 @@ void VAbstractButton::MouseLeftClicked(VMouseClickedFlag ClickedFlag) {
         case VMouseClickedFlag::Up: {
             LeftClickedUp();
             ButtonPushed.Emit();
+            _PtrButtonPushed.Emit(this);
 
             break;
         }

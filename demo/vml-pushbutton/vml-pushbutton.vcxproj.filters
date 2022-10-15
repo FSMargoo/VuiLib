@@ -23,6 +23,9 @@
     <ClCompile Include="..\..\src\core\control\vlayout.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vlineeditor.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\core\control\vpushbutton.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
@@ -151,6 +154,9 @@
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vlayout.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vlineeditor.h">
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vpushbutton.h">

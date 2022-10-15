@@ -1,0 +1,101 @@
+\hypertarget{vpainter_8h_source}{}\doxysection{vpainter.\+h}
+\label{vpainter_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/render/vpainter.h@{G:/VueLib/vuilib-\/cmake/include/core/render/vpainter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// The painter class}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}vpainterdevice.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}vbrush.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}vimage.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}vwrite.h"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}} \{}
+\DoxyCodeLine{16  \textcolor{keyword}{private}:}
+\DoxyCodeLine{17      ID2D1BitmapRenderTarget* TargetDevice\{\};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19  \textcolor{keyword}{public}:}
+\DoxyCodeLine{20      \mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, ID2D1RenderTarget* SourceDevice);}
+\DoxyCodeLine{21      \mbox{\hyperlink{class_core_1_1_v_canvas_painter}{\string~VCanvasPainter}}();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23  \textcolor{keyword}{public}:}
+\DoxyCodeLine{24      ID2D1BitmapRenderTarget* GetDXObject() \{}
+\DoxyCodeLine{25          \textcolor{keywordflow}{return} TargetDevice;}
+\DoxyCodeLine{26      \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28  \textcolor{keyword}{public}:}
+\DoxyCodeLine{29      \textcolor{keywordtype}{void} BeginDraw();}
+\DoxyCodeLine{30      \textcolor{keywordtype}{void} EndDraw();}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32  \textcolor{keyword}{public}:}
+\DoxyCodeLine{33      \textcolor{keywordtype}{void} Clear(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& FlushColor);}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35      \textcolor{keywordtype}{void} DrawLine(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& StartPoint, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& EndPoint, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{36      \textcolor{keywordtype}{void} DrawRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{37      \textcolor{keywordtype}{void} DrawEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{38      \textcolor{keywordtype}{void} DrawRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40      \textcolor{keywordtype}{void} SolidRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{41      \textcolor{keywordtype}{void} SolidEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{42      \textcolor{keywordtype}{void} SolidRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{43      \textcolor{keywordtype}{void} SolidRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{44      \textcolor{keywordtype}{void} SolidEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{45      \textcolor{keywordtype}{void} SolidRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47      \textcolor{keywordtype}{void} FillRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{48      \textcolor{keywordtype}{void} FillEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{49      \textcolor{keywordtype}{void} FillRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51      \textcolor{keywordtype}{void} DrawString(\textcolor{keyword}{const} std::wstring\& String, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& StringRectangle, \mbox{\hyperlink{class_core_1_1_v_font}{VFont}}* TargetFont, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* TextBrush);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53      \textcolor{keywordtype}{void} DrawImage(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& TargetRectangle, \mbox{\hyperlink{class_core_1_1_v_image}{VImage}}* SourceImage, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& SourceRectangle, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& ImageOpacity);}
+\DoxyCodeLine{54      \textcolor{keywordtype}{void} DrawCanvas(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& TargetRectangle, \mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}}* SourceImage, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& SourceRectangle, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& ImageOpacity);}
+\DoxyCodeLine{55 \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_painter}{VPainter}} \{}
+\DoxyCodeLine{58  \textcolor{keyword}{private}:}
+\DoxyCodeLine{59      ID2D1RenderTarget* TargetDevice;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61  \textcolor{keyword}{public}:}
+\DoxyCodeLine{62      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_painter}{VPainter}}(ID2D1RenderTarget* RenderTarget);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64  \textcolor{keyword}{public}:}
+\DoxyCodeLine{65      \textcolor{keywordtype}{void} BeginDraw();}
+\DoxyCodeLine{66      \textcolor{keywordtype}{void} EndDraw();}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68  \textcolor{keyword}{public}:}
+\DoxyCodeLine{69      \textcolor{keywordtype}{void} Clear(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& FlushColor);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71      \textcolor{keywordtype}{void} DrawLine(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& StartPoint, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& EndPoint, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{72      \textcolor{keywordtype}{void} DrawRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{73      \textcolor{keywordtype}{void} DrawEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{74      \textcolor{keywordtype}{void} DrawRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* PenBrush);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76      \textcolor{keywordtype}{void} SolidRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{77      \textcolor{keywordtype}{void} SolidEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{78      \textcolor{keywordtype}{void} SolidRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* PenBrush);}
+\DoxyCodeLine{79      \textcolor{keywordtype}{void} SolidRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{80      \textcolor{keywordtype}{void} SolidEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{81      \textcolor{keywordtype}{void} SolidRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmapBrush}}* PenBrush);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83      \textcolor{keywordtype}{void} FillRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{84      \textcolor{keywordtype}{void} FillEllipse(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& EllipseRectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{85      \textcolor{keywordtype}{void} FillRoundedRectangle(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& Rectangle, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* BorderPen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolidBrush}}* FillBrush);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87      \textcolor{keywordtype}{void} DrawString(\textcolor{keyword}{const} std::wstring\& String, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& StringRectangle, \mbox{\hyperlink{class_core_1_1_v_font}{VFont}}* TargetFont, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPenBrush}}* TextBrush);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89      \textcolor{keywordtype}{void} DrawImage(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& TargetRectangle, \mbox{\hyperlink{class_core_1_1_v_image}{VImage}}* SourceImage, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& SourceRectangle, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& ImageOpacity);}
+\DoxyCodeLine{90      \textcolor{keywordtype}{void} DrawCanvas(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& TargetRectangle, \mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}}* SourceImage, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& SourceRectangle, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& ImageOpacity);}
+\DoxyCodeLine{91 \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

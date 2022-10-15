@@ -45,6 +45,9 @@ namespace VML {
         if (String == L"lineeditor") {
             return VMLObjectType::LineEditor;
         }
+        if (String == L"switchgroup") {
+            return VMLObjectType::SwitchGroup;
+        }
 
         return Type;
     }
@@ -85,6 +88,9 @@ namespace VML {
             }
             case VMLObjectType::LineEditor: {
                 return L"lineeditor";
+            }
+            case VMLObjectType::SwitchGroup: {
+                return L"switchgroup";
             }
         }
 

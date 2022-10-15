@@ -1,0 +1,59 @@
+\hypertarget{vdragcontrolbase_8h_source}{}\doxysection{vdragcontrolbase.\+h}
+\label{vdragcontrolbase_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/control/vdragcontrolbase.h@{G:/VueLib/vuilib-\/cmake/include/core/control/vdragcontrolbase.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}vpushbutton.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_drag_control_base}{VDragControlBase}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}} \{}
+\DoxyCodeLine{12 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{13     \textcolor{keywordtype}{bool} UserInDrag = \textcolor{keyword}{false};}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{public}:}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} UserStartDrag;}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} MouseDragged;}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<const int\&, const int\&>}} MouseDraggedPosition;}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} UserEndDrag;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_core_1_1_v_drag_control_base}{VDragControlBase}}(\mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{public}:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} MouseLeftClicked(VMouseClickedFlag ClickedFlag) \textcolor{keyword}{override};}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} OnMessage(\mbox{\hyperlink{class_core_1_1_v_message}{VMessage}}* Message) \textcolor{keyword}{override};}
+\DoxyCodeLine{27 \};}
+\DoxyCodeLine{28 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_drag_control_base_on_push_button}{VDragControlBaseOnPushButton}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_push_button}{VPushButton}} \{}
+\DoxyCodeLine{29 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{30     \textcolor{keywordtype}{bool} UserInDrag = \textcolor{keyword}{false};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{public}:}
+\DoxyCodeLine{33     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} UserStartDrag;}
+\DoxyCodeLine{34     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<const int\&, const int\&>}} MouseDragged;}
+\DoxyCodeLine{35     \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} UserEndDrag;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{public}:}
+\DoxyCodeLine{38     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} BeginDrag() \{  \}}
+\DoxyCodeLine{39     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} EndDrag() \{  \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{public}:}
+\DoxyCodeLine{42     \mbox{\hyperlink{class_core_1_1_v_drag_control_base_on_push_button}{VDragControlBaseOnPushButton}}(\mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{43     \mbox{\hyperlink{class_core_1_1_v_drag_control_base_on_push_button}{VDragControlBaseOnPushButton}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{keyword}{public}:}
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} MouseLeftClicked(VMouseClickedFlag ClickedFlag) \textcolor{keyword}{override};}
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} OnMessage(\mbox{\hyperlink{class_core_1_1_v_message}{VMessage}}* Message) \textcolor{keyword}{override};}
+\DoxyCodeLine{48 \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,67 @@
+\hypertarget{seal_8lexical_8token_8h_source}{}\doxysection{seal.\+lexical.\+token.\+h}
+\label{seal_8lexical_8token_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/kits/seal.lexical.token.h@{G:/VueLib/vuilib-\/cmake/include/kits/seal.lexical.token.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{4 \textcolor{comment}{//         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-\/lang.org)}}
+\DoxyCodeLine{5 \textcolor{comment}{//  }}
+\DoxyCodeLine{6 \textcolor{comment}{//  seal.lexical.token.h : }}
+\DoxyCodeLine{7 \textcolor{comment}{//       @description :  This header folder defines the token required by leixcal}}
+\DoxyCodeLine{8 \textcolor{comment}{//       @birth       :  2021/2.15}}
+\DoxyCodeLine{9 \textcolor{comment}{//       @operator    :  Margoo}}
+\DoxyCodeLine{10 \textcolor{comment}{//}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 }
+\DoxyCodeLine{14 \textcolor{comment}{//   \_leixcal\_token[typedef with seal\_token] :}}
+\DoxyCodeLine{15 \textcolor{comment}{//          @description :   Enumerate tokens required for seal lexical analysis}}
+\DoxyCodeLine{16 \textcolor{comment}{//          @birth       :   2021/2.15}}
+\DoxyCodeLine{17 \textcolor{comment}{//          @operator    :   Margoo}}
+\DoxyCodeLine{18 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \_lexical\_token \{}
+\DoxyCodeLine{19     NO\_STATUS\_TOKEN = (int)0,}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     UNKNOW\_TOKEN,}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{comment}{// Quantitative statement}}
+\DoxyCodeLine{24     CONST\_NUMBER, CONST\_STRING, CONST\_BOOLEAN,}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{comment}{// Keyword token}}
+\DoxyCodeLine{27     INT\_TOKEN, BOOL\_TOKEN, STRING\_TOKEN, CHAR\_TOKEN, FLOAT\_TOKEN, DEF\_TOKEN,}
+\DoxyCodeLine{28     IF\_TOKEN, ELSE\_TOKEN, ELIF\_TOKEN, SWITCH\_TOKEN, CASE\_TOKEN, DEFAULT\_TOKEN,}
+\DoxyCodeLine{29     WHILE\_TOKEN, CONTINUE\_TOKEN, BREAK\_TOKEN, OPERATOR\_TOKEN,}
+\DoxyCodeLine{30     CLASS\_TOKEN, PUBLIC\_TOKEN, PRIVATE\_TOKEN,}
+\DoxyCodeLine{31     RETURN\_TOKEN, ENUM\_TOKEN, USING\_TOKEN, FROM\_TOKEN, NULL\_TOKEN, SAFENULL\_TOKEN,}
+\DoxyCodeLine{32     DELETE\_TOKEN, DO\_TOKEN, FOR\_TOKEN, PARAD\_TOKEN,}
+\DoxyCodeLine{33     STATIC\_TOKEN, NEW\_STATIC\_TOKEN, UN\_GC\_TOKEN, FORCE\_DELETE\_TOKEN, NO\_REFER\_COUNT\_TOKEN, NO\_OLD\_TOKEN,}
+\DoxyCodeLine{34     CONST\_TOKEN, }
+\DoxyCodeLine{35     \textcolor{comment}{// Dynamic library library implementation keywords}}
+\DoxyCodeLine{36     SEAL\_LIBRARY\_TYPE\_TOKEN, SEAL\_LIBRARY\_FUNCTION\_TOKEN, SEAL\_LIBRARY\_RUN\_FUNCTION\_TOKEN,}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     TYPE\_ALIAS\_TOKEN, TYPE\_DEFINE\_TOKEN, FUNCTION\_TOKEN, RETR\_FOR\_TOKEN,}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     NAMESPACE\_TOKEN,}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     COMMENT\_TOKEN,}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     LEFT\_BRACKETS \textcolor{comment}{/*(*/}, RIGHT\_BRACKETS, \textcolor{comment}{/*)*/}}
+\DoxyCodeLine{45     MIDDLE\_LEFT\_BRACKETS \textcolor{comment}{/* [ */}, MIDDLE\_RIGHT\_BRACKETS, \textcolor{comment}{/* ] */}}
+\DoxyCodeLine{46     BIG\_LEFT\_BRACKETS \textcolor{comment}{/* \{ */}, BIG\_RIGHT\_BRACKETS, \textcolor{comment}{/* \} */}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     UNKNOW\_SMYBOL,}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     SEMICOLON\_TOKEN \textcolor{comment}{/* ; */}, DOT\_TOKEN \textcolor{comment}{/* . */}, COMMA\_TOKEN \textcolor{comment}{/* , */}, COLON\_TOKEN \textcolor{comment}{/* : */},}
+\DoxyCodeLine{51     PLUS\_SIGN\_TOKEN \textcolor{comment}{/* + */}, MINUS\_SIGN\_TOKEN \textcolor{comment}{/* -\/ */}, MULTIPLICATION\_SIGN\_TOKEN \textcolor{comment}{/* * */},}
+\DoxyCodeLine{52     SLASH\_TOKEN \textcolor{comment}{/* / */}, MODULO\_SIGN\_TOKEN \textcolor{comment}{/* \% */}, DOUBLE\_PLUS\_TOKEN \textcolor{comment}{/* ++ */}, UNDERSCORE\_TOKEN \textcolor{comment}{/* \_ */},}
+\DoxyCodeLine{53     DOUBLE\_MINUS\_TOKEN \textcolor{comment}{/* -\/-\/ */}, EQUAL\_SIGN\_TOKEN \textcolor{comment}{/* = */}, DOUBLE\_EQUAL\_SIGN\_TOKEN \textcolor{comment}{/* == */},}
+\DoxyCodeLine{54     EXCLAMATION\_MARK \textcolor{comment}{/* ! */}, NOT\_EQUAL\_TOKEN \textcolor{comment}{/* != */}, MORE\_THAN\_TOKEN \textcolor{comment}{/* > */}, LESS\_THAN\_TOKEN \textcolor{comment}{/* < */},}
+\DoxyCodeLine{55     MORE\_THAN\_EQUAL\_TOKEN \textcolor{comment}{/* >= */}, LESS\_THAN\_EQUAL\_TOKEN \textcolor{comment}{/* <= */}, VERSUS\_TOKEN \textcolor{comment}{/* \& */},}
+\DoxyCodeLine{56     LOGICALAND\_TOKEN \textcolor{comment}{/* \&\& */}, VERTICAL\_BAR\_TOKEN \textcolor{comment}{/* | */}, LOGICAL\_OR\_TOKEN \textcolor{comment}{/* || */},}
+\DoxyCodeLine{57     CARET\_TOKEN \textcolor{comment}{/* \string^ */}, TILDE\_TOKEN \textcolor{comment}{/* \string~ */}, BR\_LEFT\_SHIFT\_OPERATOR\_TOKEN \textcolor{comment}{/* << */}, BR\_RIGHT\_SHIFT\_OPERATOR\_TOKEN \textcolor{comment}{/* >> */},}
+\DoxyCodeLine{58     ADDITIONAND\_TOKEN \textcolor{comment}{/* += */}, MINUSITIONAND\_TOKEN \textcolor{comment}{/* -\/= */}, MULTIPLYAND\_TOKEN \textcolor{comment}{/* *= */}, EXCEPTAND\_TOKEN, \textcolor{comment}{/* /= */}}
+\DoxyCodeLine{59     BITWISEAND\_TOKEN \textcolor{comment}{/* \&= */}, INHERITANCE\_TOKEN \textcolor{comment}{/* <-\/ */},}
+\DoxyCodeLine{60     BITWISEANDDIFFERENT\_TOKEN \textcolor{comment}{/* \string^= */}, BITWISE\_OR\_TOKEN, \textcolor{comment}{/* |= */}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     EOF\_TOKEN}
+\DoxyCodeLine{63 \} seal\_token;}
+
+\end{DoxyCode}

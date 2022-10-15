@@ -1,11 +1,11 @@
 <widget type="mainwindow" width="589" height="222" title="Welcome to new VUILib" style-sheet-src="./testcss.css" sizable="true" frameless="true"
         class="main-window">
+
     <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
     <title-text type="textlabel" x="@ratio(0.05)" y="@ratio(0.35)" width="175" height="43" text="New VuiLib" class="main-title">
     </title-text>
     <version-text type="textlabel" x="@ratio(0.05)" y="@ratio(0.54)" width="135" height="21" text="Version 2.0.x beta" class="version-subtext-text">
     </version-text>
     <description-text type="textlabel" x="@ratio(0.51)" y="@ratio(0.33)" width="246" height="113" 
-        text="DirectX2D 加速渲染\n更加优雅的 VML 和 VSS 语法\n对于 W3C CSS 标准的更多兼容" class="description-text">
-    </description-text>
+        text="DirectX2D 加速渲染\n更加优雅的 VML 和 VSS 语法\n对于 W3C CSS 标准的更多兼容" class="description-text">    </description-text>
 </widget>

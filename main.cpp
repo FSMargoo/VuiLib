@@ -1,4 +1,5 @@
 #include "./include/core/control/vlineeditor.h"
+#include "./include/core/control/vswitchgroup.h"
 
 #include "./include/vml/vmlwidget.h"
 
@@ -9,9 +10,9 @@ int main() {
 
     VApplication Application;
 
-    VMLWidget VMLWidget(400, 400, &Application, true);
+    VMLWidget Widget(400, 400, &Application, true);
 
-    auto   Result = VMLWidget.LoadVML(L"./testvml.xml", VMLParserParseMode::FromFile);
+    auto   Result = Widget.LoadVML(L"./testvml.xml", VMLParserParseMode::FromFile);
 
     return Application.Exec();
 }

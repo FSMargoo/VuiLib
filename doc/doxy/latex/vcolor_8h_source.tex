@@ -1,0 +1,197 @@
+\hypertarget{vcolor_8h_source}{}\doxysection{vcolor.\+h}
+\label{vcolor_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/render/vcolor.h@{G:/VueLib/vuilib-\/cmake/include/core/render/vcolor.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// The color class}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}vrenderbasic.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_color}{VColor}} \{}
+\DoxyCodeLine{13  \textcolor{keyword}{private}:}
+\DoxyCodeLine{14      D2D1::ColorF DxColorObject;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16  \textcolor{keyword}{public}:}
+\DoxyCodeLine{17      D2D1::ColorF GetDxObject() \textcolor{keyword}{const};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19  \textcolor{keyword}{public}:}
+\DoxyCodeLine{20      \textcolor{keyword}{enum} ColorEnum \{}
+\DoxyCodeLine{21          AliceBlue = 0xF0F8FF,}
+\DoxyCodeLine{22          AntiqueWhite = 0xFAEBD7,}
+\DoxyCodeLine{23          Aqua = 0x00FFFF,}
+\DoxyCodeLine{24          Aquamarine = 0x7FFFD4,}
+\DoxyCodeLine{25          Azure = 0xF0FFFF,}
+\DoxyCodeLine{26          Beige = 0xF5F5DC,}
+\DoxyCodeLine{27          Bisque = 0xFFE4C4,}
+\DoxyCodeLine{28          Black = 0x000000,}
+\DoxyCodeLine{29          BlanchedAlmond = 0xFFEBCD,}
+\DoxyCodeLine{30          Blue = 0x0000FF,}
+\DoxyCodeLine{31          BlueViolet = 0x8A2BE2,}
+\DoxyCodeLine{32          Brown = 0xA52A2A,}
+\DoxyCodeLine{33          BurlyWood = 0xDEB887,}
+\DoxyCodeLine{34          CadetBlue = 0x5F9EA0,}
+\DoxyCodeLine{35          Chartreuse = 0x7FFF00,}
+\DoxyCodeLine{36          Chocolate = 0xD2691E,}
+\DoxyCodeLine{37          Coral = 0xFF7F50,}
+\DoxyCodeLine{38          CornflowerBlue = 0x6495ED,}
+\DoxyCodeLine{39          Cornsilk = 0xFFF8DC,}
+\DoxyCodeLine{40          Crimson = 0xDC143C,}
+\DoxyCodeLine{41          Cyan = 0x00FFFF,}
+\DoxyCodeLine{42          DarkBlue = 0x00008B,}
+\DoxyCodeLine{43          DarkCyan = 0x008B8B,}
+\DoxyCodeLine{44          DarkGoldenrod = 0xB8860B,}
+\DoxyCodeLine{45          DarkGray = 0xA9A9A9,}
+\DoxyCodeLine{46          DarkGreen = 0x006400,}
+\DoxyCodeLine{47          DarkKhaki = 0xBDB76B,}
+\DoxyCodeLine{48          DarkMagenta = 0x8B008B,}
+\DoxyCodeLine{49          DarkOliveGreen = 0x556B2F,}
+\DoxyCodeLine{50          DarkOrange = 0xFF8C00,}
+\DoxyCodeLine{51          DarkOrchid = 0x9932CC,}
+\DoxyCodeLine{52          DarkRed = 0x8B0000,}
+\DoxyCodeLine{53          DarkSalmon = 0xE9967A,}
+\DoxyCodeLine{54          DarkSeaGreen = 0x8FBC8F,}
+\DoxyCodeLine{55          DarkSlateBlue = 0x483D8B,}
+\DoxyCodeLine{56          DarkSlateGray = 0x2F4F4F,}
+\DoxyCodeLine{57          DarkTurquoise = 0x00CED1,}
+\DoxyCodeLine{58          DarkViolet = 0x9400D3,}
+\DoxyCodeLine{59          DeepPink = 0xFF1493,}
+\DoxyCodeLine{60          DeepSkyBlue = 0x00BFFF,}
+\DoxyCodeLine{61          DimGray = 0x696969,}
+\DoxyCodeLine{62          DodgerBlue = 0x1E90FF,}
+\DoxyCodeLine{63          Firebrick = 0xB22222,}
+\DoxyCodeLine{64          FloralWhite = 0xFFFAF0,}
+\DoxyCodeLine{65          ForestGreen = 0x228B22,}
+\DoxyCodeLine{66          Fuchsia = 0xFF00FF,}
+\DoxyCodeLine{67          Gainsboro = 0xDCDCDC,}
+\DoxyCodeLine{68          GhostWhite = 0xF8F8FF,}
+\DoxyCodeLine{69          Gold = 0xFFD700,}
+\DoxyCodeLine{70          Goldenrod = 0xDAA520,}
+\DoxyCodeLine{71          Gray = 0x808080,}
+\DoxyCodeLine{72          Green = 0x008000,}
+\DoxyCodeLine{73          GreenYellow = 0xADFF2F,}
+\DoxyCodeLine{74          Honeydew = 0xF0FFF0,}
+\DoxyCodeLine{75          HotPink = 0xFF69B4,}
+\DoxyCodeLine{76          IndianRed = 0xCD5C5C,}
+\DoxyCodeLine{77          Indigo = 0x4B0082,}
+\DoxyCodeLine{78          Ivory = 0xFFFFF0,}
+\DoxyCodeLine{79          Khaki = 0xF0E68C,}
+\DoxyCodeLine{80          Lavender = 0xE6E6FA,}
+\DoxyCodeLine{81          LavenderBlush = 0xFFF0F5,}
+\DoxyCodeLine{82          LawnGreen = 0x7CFC00,}
+\DoxyCodeLine{83          LemonChiffon = 0xFFFACD,}
+\DoxyCodeLine{84          LightBlue = 0xADD8E6,}
+\DoxyCodeLine{85          LightCoral = 0xF08080,}
+\DoxyCodeLine{86          LightCyan = 0xE0FFFF,}
+\DoxyCodeLine{87          LightGoldenrodYellow = 0xFAFAD2,}
+\DoxyCodeLine{88          LightGreen = 0x90EE90,}
+\DoxyCodeLine{89          LightGray = 0xD3D3D3,}
+\DoxyCodeLine{90          LightPink = 0xFFB6C1,}
+\DoxyCodeLine{91          LightSalmon = 0xFFA07A,}
+\DoxyCodeLine{92          LightSeaGreen = 0x20B2AA,}
+\DoxyCodeLine{93          LightSkyBlue = 0x87CEFA,}
+\DoxyCodeLine{94          LightSlateGray = 0x778899,}
+\DoxyCodeLine{95          LightSteelBlue = 0xB0C4DE,}
+\DoxyCodeLine{96          LightYellow = 0xFFFFE0,}
+\DoxyCodeLine{97          Lime = 0x00FF00,}
+\DoxyCodeLine{98          LimeGreen = 0x32CD32,}
+\DoxyCodeLine{99          Linen = 0xFAF0E6,}
+\DoxyCodeLine{100          Magenta = 0xFF00FF,}
+\DoxyCodeLine{101          Maroon = 0x800000,}
+\DoxyCodeLine{102          MediumAquamarine = 0x66CDAA,}
+\DoxyCodeLine{103          MediumBlue = 0x0000CD,}
+\DoxyCodeLine{104          MediumOrchid = 0xBA55D3,}
+\DoxyCodeLine{105          MediumPurple = 0x9370DB,}
+\DoxyCodeLine{106          MediumSeaGreen = 0x3CB371,}
+\DoxyCodeLine{107          MediumSlateBlue = 0x7B68EE,}
+\DoxyCodeLine{108          MediumSpringGreen = 0x00FA9A,}
+\DoxyCodeLine{109          MediumTurquoise = 0x48D1CC,}
+\DoxyCodeLine{110          MediumVioletRed = 0xC71585,}
+\DoxyCodeLine{111          MidnightBlue = 0x191970,}
+\DoxyCodeLine{112          MintCream = 0xF5FFFA,}
+\DoxyCodeLine{113          MistyRose = 0xFFE4E1,}
+\DoxyCodeLine{114          Moccasin = 0xFFE4B5,}
+\DoxyCodeLine{115          NavajoWhite = 0xFFDEAD,}
+\DoxyCodeLine{116          Navy = 0x000080,}
+\DoxyCodeLine{117          OldLace = 0xFDF5E6,}
+\DoxyCodeLine{118          Olive = 0x808000,}
+\DoxyCodeLine{119          OliveDrab = 0x6B8E23,}
+\DoxyCodeLine{120          Orange = 0xFFA500,}
+\DoxyCodeLine{121          OrangeRed = 0xFF4500,}
+\DoxyCodeLine{122          Orchid = 0xDA70D6,}
+\DoxyCodeLine{123          PaleGoldenrod = 0xEEE8AA,}
+\DoxyCodeLine{124          PaleGreen = 0x98FB98,}
+\DoxyCodeLine{125          PaleTurquoise = 0xAFEEEE,}
+\DoxyCodeLine{126          PaleVioletRed = 0xDB7093,}
+\DoxyCodeLine{127          PapayaWhip = 0xFFEFD5,}
+\DoxyCodeLine{128          PeachPuff = 0xFFDAB9,}
+\DoxyCodeLine{129          Peru = 0xCD853F,}
+\DoxyCodeLine{130          Pink = 0xFFC0CB,}
+\DoxyCodeLine{131          Plum = 0xDDA0DD,}
+\DoxyCodeLine{132          PowderBlue = 0xB0E0E6,}
+\DoxyCodeLine{133          Purple = 0x800080,}
+\DoxyCodeLine{134          Red = 0xFF0000,}
+\DoxyCodeLine{135          RosyBrown = 0xBC8F8F,}
+\DoxyCodeLine{136          RoyalBlue = 0x4169E1,}
+\DoxyCodeLine{137          SaddleBrown = 0x8B4513,}
+\DoxyCodeLine{138          Salmon = 0xFA8072,}
+\DoxyCodeLine{139          SandyBrown = 0xF4A460,}
+\DoxyCodeLine{140          SeaGreen = 0x2E8B57,}
+\DoxyCodeLine{141          SeaShell = 0xFFF5EE,}
+\DoxyCodeLine{142          Sienna = 0xA0522D,}
+\DoxyCodeLine{143          Silver = 0xC0C0C0,}
+\DoxyCodeLine{144          SkyBlue = 0x87CEEB,}
+\DoxyCodeLine{145          SlateBlue = 0x6A5ACD,}
+\DoxyCodeLine{146          SlateGray = 0x708090,}
+\DoxyCodeLine{147          Snow = 0xFFFAFA,}
+\DoxyCodeLine{148          SpringGreen = 0x00FF7F,}
+\DoxyCodeLine{149          SteelBlue = 0x4682B4,}
+\DoxyCodeLine{150          Tan = 0xD2B48C,}
+\DoxyCodeLine{151          Teal = 0x008080,}
+\DoxyCodeLine{152          Thistle = 0xD8BFD8,}
+\DoxyCodeLine{153          Tomato = 0xFF6347,}
+\DoxyCodeLine{154          Turquoise = 0x40E0D0,}
+\DoxyCodeLine{155          Violet = 0xEE82EE,}
+\DoxyCodeLine{156          Wheat = 0xF5DEB3,}
+\DoxyCodeLine{157          White = 0xFFFFFF,}
+\DoxyCodeLine{158          WhiteSmoke = 0xF5F5F5,}
+\DoxyCodeLine{159          Yellow = 0xFFFF00,}
+\DoxyCodeLine{160          YellowGreen = 0x9ACD32,}
+\DoxyCodeLine{161      \};}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163  \textcolor{keyword}{public}:}
+\DoxyCodeLine{164      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}();}
+\DoxyCodeLine{165      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& ColorObject);}
+\DoxyCodeLine{166      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(\textcolor{keyword}{const} ColorEnum\& Color, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& AlphaValue = 1.f);}
+\DoxyCodeLine{167      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(\textcolor{keyword}{const} UINT32\& RGB, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& AlphaValue);}
+\DoxyCodeLine{168      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(\textcolor{keyword}{const} \textcolor{keywordtype}{float}\& R, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& G, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& B, \textcolor{keyword}{const} \textcolor{keywordtype}{float}\& A);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170  \textcolor{keyword}{public}:}
+\DoxyCodeLine{171      \textcolor{keywordtype}{float} GetR() \textcolor{keyword}{const};}
+\DoxyCodeLine{172      \textcolor{keywordtype}{float} GetG() \textcolor{keyword}{const};}
+\DoxyCodeLine{173      \textcolor{keywordtype}{float} GetB() \textcolor{keyword}{const};}
+\DoxyCodeLine{174      \textcolor{keywordtype}{float} GetA() \textcolor{keyword}{const};}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176      \textcolor{keywordtype}{void} SetR(\textcolor{keyword}{const} \textcolor{keywordtype}{float}\& R);}
+\DoxyCodeLine{177      \textcolor{keywordtype}{void} SetG(\textcolor{keyword}{const} \textcolor{keywordtype}{float}\& G);}
+\DoxyCodeLine{178      \textcolor{keywordtype}{void} SetB(\textcolor{keyword}{const} \textcolor{keywordtype}{float}\& B);}
+\DoxyCodeLine{179      \textcolor{keywordtype}{void} SetA(\textcolor{keyword}{const} \textcolor{keywordtype}{float}\& A);}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181      \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} FromBYTERGBA(BYTE R, BYTE G, BYTE B, BYTE A) \{}
+\DoxyCodeLine{182          \textcolor{keywordflow}{return} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(R / 255.f, G / 255.f, B / 255.f, A / 255.f);}
+\DoxyCodeLine{183      \}}
+\DoxyCodeLine{184     \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} FromBYTERGBA(BYTE R, BYTE G, BYTE B) \{}
+\DoxyCodeLine{185         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}(R / 255.f, G / 255.f, B / 255.f, 1.f);}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187 \};}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

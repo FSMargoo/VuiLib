@@ -1,0 +1,74 @@
+\hypertarget{class_core_1_1_v_canvas_painter}{}\doxysection{Core\+::VCanvas\+Painter Class Reference}
+\label{class_core_1_1_v_canvas_painter}\index{Core::VCanvasPainter@{Core::VCanvasPainter}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a04324b672ec5a0d30efa45ef2f36aaf1}\label{class_core_1_1_v_canvas_painter_a04324b672ec5a0d30efa45ef2f36aaf1}} 
+{\bfseries VCanvas\+Painter} (const int \&Width, const int \&Height, ID2\+D1\+Render\+Target $\ast$Source\+Device)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a48da3e18f06842d14a2f3e606c9a388c}\label{class_core_1_1_v_canvas_painter_a48da3e18f06842d14a2f3e606c9a388c}} 
+ID2\+D1\+Bitmap\+Render\+Target $\ast$ {\bfseries Get\+DXObject} ()
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a995b9bf63ee7a0f47f10fbd1e1b5c70e}\label{class_core_1_1_v_canvas_painter_a995b9bf63ee7a0f47f10fbd1e1b5c70e}} 
+void {\bfseries Begin\+Draw} ()
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_aca20e3eb0ed93055e1d4d6e8377c0ae3}\label{class_core_1_1_v_canvas_painter_aca20e3eb0ed93055e1d4d6e8377c0ae3}} 
+void {\bfseries End\+Draw} ()
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a80f7cf6b15b44170110b3dcdbb0e719a}\label{class_core_1_1_v_canvas_painter_a80f7cf6b15b44170110b3dcdbb0e719a}} 
+void {\bfseries Clear} (const \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} \&Flush\+Color)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_ab38d7208756fca524d396f68de51a4d0}\label{class_core_1_1_v_canvas_painter_ab38d7208756fca524d396f68de51a4d0}} 
+void {\bfseries Draw\+Line} (const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&Start\+Point, const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&End\+Point, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_aa6853154483b8c62863a380b8f044809}\label{class_core_1_1_v_canvas_painter_aa6853154483b8c62863a380b8f044809}} 
+void {\bfseries Draw\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a22d49240a100ac23480ecce214909f53}\label{class_core_1_1_v_canvas_painter_a22d49240a100ac23480ecce214909f53}} 
+void {\bfseries Draw\+Ellipse} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Ellipse\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_ad7acbd9737b5a097974bc030313efbe1}\label{class_core_1_1_v_canvas_painter_ad7acbd9737b5a097974bc030313efbe1}} 
+void {\bfseries Draw\+Rounded\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a4734a446a0f47c363bbeee80deab34eb}\label{class_core_1_1_v_canvas_painter_a4734a446a0f47c363bbeee80deab34eb}} 
+void {\bfseries Solid\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a2cf46d4a9d2c3f3aa6d7990ca23a45b6}\label{class_core_1_1_v_canvas_painter_a2cf46d4a9d2c3f3aa6d7990ca23a45b6}} 
+void {\bfseries Solid\+Ellipse} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Ellipse\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_af9f67441fb8da6df7c4f5eb349d7bd8d}\label{class_core_1_1_v_canvas_painter_af9f67441fb8da6df7c4f5eb349d7bd8d}} 
+void {\bfseries Solid\+Rounded\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&Radius, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a0e24c4b63479c0449da40ad8749ab5f9}\label{class_core_1_1_v_canvas_painter_a0e24c4b63479c0449da40ad8749ab5f9}} 
+void {\bfseries Solid\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmap\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a07389b31e1c73d789fd9d9c8100ab14f}\label{class_core_1_1_v_canvas_painter_a07389b31e1c73d789fd9d9c8100ab14f}} 
+void {\bfseries Solid\+Ellipse} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Ellipse\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmap\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a795d50443b616d5f1a53ef978bd84df0}\label{class_core_1_1_v_canvas_painter_a795d50443b616d5f1a53ef978bd84df0}} 
+void {\bfseries Solid\+Rounded\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&Radius, \mbox{\hyperlink{class_core_1_1_v_bitmap_brush}{VBitmap\+Brush}} $\ast$Pen\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_ace8f47ce13fe3ae2127e5d8c03587256}\label{class_core_1_1_v_canvas_painter_ace8f47ce13fe3ae2127e5d8c03587256}} 
+void {\bfseries Fill\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Border\+Pen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Fill\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a780ba6d3505ed84a9f34600e148b6261}\label{class_core_1_1_v_canvas_painter_a780ba6d3505ed84a9f34600e148b6261}} 
+void {\bfseries Fill\+Ellipse} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Ellipse\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Border\+Pen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Fill\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a19e8deee9fa84b986aa50bd9e2f38ad2}\label{class_core_1_1_v_canvas_painter_a19e8deee9fa84b986aa50bd9e2f38ad2}} 
+void {\bfseries Fill\+Rounded\+Rectangle} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Rectangle, const \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} \&Radius, \mbox{\hyperlink{class_core_1_1_v_pen_brush}{VPen\+Brush}} $\ast$Border\+Pen, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Fill\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a534f9d53964611240e684f9386f9d7ee}\label{class_core_1_1_v_canvas_painter_a534f9d53964611240e684f9386f9d7ee}} 
+void {\bfseries Draw\+String} (const std\+::wstring \&String, const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&String\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_font}{VFont}} $\ast$Target\+Font, \mbox{\hyperlink{class_core_1_1_v_solid_brush}{VSolid\+Brush}} $\ast$Text\+Brush)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a852773cb10a1319c0224873c6009e76b}\label{class_core_1_1_v_canvas_painter_a852773cb10a1319c0224873c6009e76b}} 
+void {\bfseries Draw\+Image} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Target\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_image}{VImage}} $\ast$Source\+Image, const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Source\+Rectangle, const float \&Image\+Opacity)
+\item 
+\mbox{\Hypertarget{class_core_1_1_v_canvas_painter_a2c4ea690f4e04e055381dead927e6b22}\label{class_core_1_1_v_canvas_painter_a2c4ea690f4e04e055381dead927e6b22}} 
+void {\bfseries Draw\+Canvas} (const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Target\+Rectangle, \mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvas\+Painter}} $\ast$Source\+Image, const \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} \&Source\+Rectangle, const float \&Image\+Opacity)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+G\+:/\+Vue\+Lib/vuilib-\/cmake/include/core/render/vpainter.\+h\item 
+G\+:/\+Vue\+Lib/vuilib-\/cmake/src/core/render/vpainter.\+cc\end{DoxyCompactItemize}

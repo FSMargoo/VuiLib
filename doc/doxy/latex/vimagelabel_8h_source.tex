@@ -1,0 +1,35 @@
+\hypertarget{vimagelabel_8h_source}{}\doxysection{vimagelabel.\+h}
+\label{vimagelabel_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/control/vimagelabel.h@{G:/VueLib/vuilib-\/cmake/include/core/control/vimagelabel.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../object/vuiobject.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_image_label}{VImageLabel}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}} \{}
+\DoxyCodeLine{9 \textcolor{keyword}{private}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{struct_core_1_1_v_image_label_theme}{VImageLabelTheme}}* Theme;}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_core_1_1_v_image_label}{VImageLabel}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_core_1_1_v_image_label}{VImageLabel}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \mbox{\hyperlink{class_core_1_1_v_image}{VImage}}* Image, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_core_1_1_v_image_label}{VImageLabel}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Width, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Height, \textcolor{keyword}{const} std::wstring\& ImagePath, \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}}* Parent);}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_core_1_1_v_image_label}{\string~VImageLabel}}();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} SetImage(\mbox{\hyperlink{class_core_1_1_v_image}{VImage}}* Image);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{struct_core_1_1_v_image_label_theme}{VImageLabelTheme}}* GetTheme();}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{public}:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} OnPaint(\mbox{\hyperlink{class_core_1_1_v_canvas_painter}{VCanvasPainter}}* Painter) \textcolor{keyword}{override};}
+\DoxyCodeLine{26 \};}
+\DoxyCodeLine{27 \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,59 @@
+\hypertarget{vapplication_8h_source}{}\doxysection{vapplication.\+h}
+\label{vapplication_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/object/vapplication.h@{G:/VueLib/vuilib-\/cmake/include/core/object/vapplication.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// The application}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../widget/vmessage.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}../uibasic/vtimer.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../uibasic/vuitheme.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}vuiobject.h"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }VApplication;}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{extern} VApplication* VLib\_Application;}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_application}{VApplication}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}} \{}
+\DoxyCodeLine{20  \textcolor{keyword}{private}:}
+\DoxyCodeLine{21      std::vector<VBasicUITheme*> ThemeList;}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23      \textcolor{keywordtype}{void} InitTheme();}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25  \textcolor{keyword}{protected}:}
+\DoxyCodeLine{26      std::vector<VBasicUITheme*> GetApplicationTheme() \textcolor{keyword}{override};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28  \textcolor{keyword}{private}:}
+\DoxyCodeLine{29      \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}}* PatchEvent();}
+\DoxyCodeLine{30      \textcolor{keywordtype}{void}      ProcessEvent(\mbox{\hyperlink{class_core_1_1_v_message}{VMessage}}* PatchedMessage);}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32  \textcolor{keyword}{public}:}
+\DoxyCodeLine{33      \mbox{\hyperlink{class_core_1_1_v_application}{VApplication}}();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35  \textcolor{keyword}{public}:}
+\DoxyCodeLine{36      \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_application}{VApplication}}* GetInstance() \{}
+\DoxyCodeLine{37          \textcolor{keywordflow}{return} VLib\_Application;}
+\DoxyCodeLine{38      \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40      \textcolor{keywordtype}{bool} IsApplication()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{41          \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{42      \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44  \textcolor{keyword}{public}:}
+\DoxyCodeLine{45      \textcolor{keywordtype}{int} Exec();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47  \textcolor{keyword}{public}:}
+\DoxyCodeLine{48      \textcolor{keywordtype}{void} SetTheme(\mbox{\hyperlink{struct_core_1_1_v_basic_u_i_theme}{VBasicUITheme}}* Theme);}
+\DoxyCodeLine{49 \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

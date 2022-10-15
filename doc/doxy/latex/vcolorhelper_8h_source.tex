@@ -1,0 +1,26 @@
+\hypertarget{vcolorhelper_8h_source}{}\doxysection{vcolorhelper.\+h}
+\label{vcolorhelper_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/kits/vcolorhelper.h@{G:/VueLib/vuilib-\/cmake/include/kits/vcolorhelper.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#include "{}../core/render/vcolor.h"{}}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }VKits \{}
+\DoxyCodeLine{6     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_kits_1_1_v_s_s_color_helper}{VSSColorHelper}} \{}
+\DoxyCodeLine{7     \textcolor{keyword}{public}:}
+\DoxyCodeLine{8         \textcolor{keyword}{static} \textcolor{keywordtype}{short}        SingleHexLetterToNum(\textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t}\& Hex);}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10     \textcolor{keyword}{public}:}
+\DoxyCodeLine{11         \textcolor{keyword}{static} \textcolor{keywordtype}{short}        HexStringToNum(\textcolor{keyword}{const} std::wstring\& HexNumberString);}
+\DoxyCodeLine{12         \textcolor{keyword}{static} \textcolor{keywordtype}{void}         HexStringLowerToUpper(std::wstring\& HexStringNumber);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keyword}{public}:}
+\DoxyCodeLine{15         \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_color}{Core::VColor}} HexToColor(\textcolor{keyword}{const} std::wstring\& HexString);}
+\DoxyCodeLine{16         \textcolor{keyword}{static} \textcolor{keywordtype}{bool}         IsValidHex(\textcolor{keyword}{const} std::wstring\& HexString);}
+\DoxyCodeLine{17     \};}
+\DoxyCodeLine{18 \}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

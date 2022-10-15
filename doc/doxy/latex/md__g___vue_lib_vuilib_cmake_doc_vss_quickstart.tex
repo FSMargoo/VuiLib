@@ -1,0 +1,88 @@
+  \doxysection*{Vui\+Lib\mbox{[}VSS\&VML\mbox{]} 快速上手：使用 VSS+\+VML 快速构建全新完全布局}
+
+ 
+
+\begin{quote}
+该部分将会通过 Vui\+Lib 中的 VSS 快速构建一个软件的布局
+
+本教程的完整 VSS\&VML 源码可以在 doc/code/vss-\/start 找到 \end{quote}
+\hypertarget{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md4}{}\doxysubsection{第一步：认识 VSS}\label{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md4}
+VSS 是一个由 CSS 阉割而来的样式表语言，\+CSS 的一个基础语法如下： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{/* 一个基础选择器 */}
+\DoxyCodeLine{my-\/element \{}
+\DoxyCodeLine{    color: rgb(0, 0, 0);}
+\DoxyCodeLine{    background-\/color: rgb(255, 255, 255);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{/* 类选择器 */}
+\DoxyCodeLine{.my-\/class \{}
+\DoxyCodeLine{    color: rgb(255, 255, 255);}
+\DoxyCodeLine{    background-\/color: rgb(0, 0, 0);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \hypertarget{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md5}{}\doxysubsection{第二步：\+VSS 和 VML 结合开发界面}\label{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md5}
+VSS 支持小部分的 W3C 标准，且需要 VML 层调用才可以应用，使用方法如下： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{<!-\/-\/ 从文件引用 VSS -\/-\/>}}
+\DoxyCodeLine{<\textcolor{keywordtype}{tag} \textcolor{keyword}{style-\/sheet-\/src}=\textcolor{stringliteral}{"{}./file.css"{}}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{tag}>}
+\DoxyCodeLine{\textcolor{comment}{<!-\/-\/ 直接使用字符 VSS -\/-\/>}}
+\DoxyCodeLine{<\textcolor{keywordtype}{tag} \textcolor{keyword}{style-\/sheet}=\textcolor{stringliteral}{"{}element \{ property: 8px; \}"{}}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{tag}>}
+
+\end{DoxyCode}
+ 并且，如果要在 VSS 中使用类选择器或 ID 选择器需要在 VML 中定义相关的属性例如： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<\textcolor{keywordtype}{tag} \textcolor{keyword}{class}=\textcolor{stringliteral}{"{}class-\/name"{}}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{tag}>}
+\DoxyCodeLine{<\textcolor{keywordtype}{tag} \textcolor{keyword}{id}=\textcolor{stringliteral}{"{}id-\/name"{}}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{tag}>}
+
+\end{DoxyCode}
+ \hypertarget{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md6}{}\doxysubsection{第三步：开始编写你的 VSS 代码}\label{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md6}
+
+\begin{DoxyEnumerate}
+\item 编写 VSS 代码之前，需要先写好一个引用 VSS 的 VML 文件，这里不多赘述 VML 的构造方式，直接贴出 VML 代码 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<\textcolor{keywordtype}{widget} \textcolor{keyword}{width}=\textcolor{stringliteral}{"{}640"{}} \textcolor{keyword}{height}=\textcolor{stringliteral}{"{}480"{}} \textcolor{keyword}{type}=\textcolor{stringliteral}{"{}mainwindow"{}} \textcolor{keyword}{style-\/sheet-\/src}=\textcolor{stringliteral}{"{}./vss.css"{}} \textcolor{keyword}{class}=\textcolor{stringliteral}{"{}widget"{}}>}
+\DoxyCodeLine{    <\textcolor{keywordtype}{label} \textcolor{keyword}{type}=\textcolor{stringliteral}{"{}textlabel"{}} \textcolor{keyword}{width}=\textcolor{stringliteral}{"{}@scale(0.8)"{}} \textcolor{keyword}{height}=\textcolor{stringliteral}{"{}@scale(0.35)"{}} \textcolor{keyword}{x}=\textcolor{stringliteral}{"{}@center"{}} \textcolor{keyword}{y}=\textcolor{stringliteral}{"{}@center"{}} \textcolor{keyword}{class}=\textcolor{stringliteral}{"{}test-\/label"{}}}
+\DoxyCodeLine{           \textcolor{keyword}{text}=\textcolor{stringliteral}{"{}VUILIB STYLE SHEET DEMO\(\backslash\)nHELLO VUILIB"{}}>}
+\DoxyCodeLine{    </\textcolor{keywordtype}{label}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{widget}>}
+
+\end{DoxyCode}
+
+\item 对于窗口样式的定义
+
+VSS 中，mainwindow 拥有一个属性：background-\/color，以设定窗口的背景色，所以如果我们想定义窗口的背景色，可以这么写： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{/* 类选择器 */}
+\DoxyCodeLine{.widget \{}
+\DoxyCodeLine{    /* 设置背景颜色为 rgb(30, 30, 30) */}
+\DoxyCodeLine{    background-\/color: rgb(30, 30, 30);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+然后把你的 VML 文件拖入 vmlviewer\+\_\+x64.\+exe 中，预览发现窗口的背景色已经变成 rgb(30, 30, 30) 了。
+\item 对于文本框样式的定义
+
+VSS 中，textlabel 可以定义的属性略多，这里也步多做赘述，直接上 VSS 源码 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.test-\/label \{}
+\DoxyCodeLine{    /* 设置背景色 */}
+\DoxyCodeLine{    background-\/color: rgb(255, 255, 255);}
+\DoxyCodeLine{    /* 设置文字颜色 */}
+\DoxyCodeLine{    color: rgb(30, 30, 30);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* 设置文字居中对齐 */}
+\DoxyCodeLine{    text-\/align: center;}
+\DoxyCodeLine{    vertical-\/align: center;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyEnumerate}\hypertarget{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md7}{}\doxysubsection{第四步：预览}\label{md__g___vue_lib_vuilib_cmake_doc_vss_quickstart_autotoc_md7}
+把你的 VML 拖入 vmlviewer\+\_\+x64.\+exe 中，就可以看到你的 VML+\+VSS 的最终实际效果了。 

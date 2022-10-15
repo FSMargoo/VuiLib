@@ -29,8 +29,8 @@ namespace VML {
 
     public:
         VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);
-        VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VUIObject* UIParent = nullptr);
-        VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent = nullptr);
+        VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent = nullptr);
+        VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent = nullptr);
 
     public:
         void SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List);

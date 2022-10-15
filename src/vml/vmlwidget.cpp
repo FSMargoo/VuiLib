@@ -26,7 +26,7 @@ namespace VML {
         return VMLFinder(nullptr, ObjectList);
     }
 
-    VMLWidgetLoadResult VMLWidget::LoadVML(VMLParserResult VMLAstTree, VUIObject* UIParent) {
+    VMLWidgetLoadResult VMLWidget::LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent) {
         if (VMLAstTree.ParserStatus == VMLParserStatus::Error) {
             std::wstring ASTError;
 
@@ -46,12 +46,14 @@ namespace VML {
 
         return LoadResult;
     }
-    VMLWidgetLoadResult VMLWidget::LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VUIObject* UIParent) {
+    VMLWidgetLoadResult VMLWidget::LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent) {
         VMLWidgetLoadResult Result;
         Result.Status = VMLWidgetVMLLoadStats::Ok;
 
         if (UIParent == nullptr) {
-            UIParent = this;
+            UIParent = new VMLObject;
+
+            UIParent->UIObject = this;
         }
 
         std::vector<VMLNode> VMLAstOrderlyNodes;
@@ -73,7 +75,7 @@ namespace VML {
 
                 if (ElementProperty.PropertyType == VMLPropertyType::StringValue) {
                     if (ElementProperty.PropertyAsString == L"pushbutton") {
-                        Core::VPushButton* PushButton = new Core::VPushButton(UIParent);
+                        Core::VPushButton* PushButton = new Core::VPushButton(UIParent->UIObject);
                         VMLObject->UIObject = PushButton;
                         VMLObject->VMLType = VMLObjectType::PushButton;
 
@@ -88,7 +90,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"imagelabel") {
-                        Core::VImageLabel* ImageLabel = new Core::VImageLabel(0, 0, nullptr, UIParent);
+                        Core::VImageLabel* ImageLabel = new Core::VImageLabel(0, 0, nullptr, UIParent->UIObject);
                         VMLObject->UIObject = ImageLabel;
                         VMLObject->VMLType = VMLObjectType::ImageLabel;
 
@@ -103,7 +105,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"textlabel") {
-                        Core::VTextLabel* TextLabel = new Core::VTextLabel(UIParent);
+                        Core::VTextLabel* TextLabel = new Core::VTextLabel(UIParent->UIObject);
                         VMLObject->UIObject = TextLabel;
                         VMLObject->VMLType = VMLObjectType::TextLabel;
 
@@ -118,7 +120,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"fake-caption") {
-                        Core::VFakeCaption* FakeCaption = new Core::VFakeCaption(UIParent);
+                        Core::VFakeCaption* FakeCaption = new Core::VFakeCaption(UIParent->UIObject);
                         VMLObject->UIObject = FakeCaption;
                         VMLObject->VMLType = VMLObjectType::FakeCaption;
 
@@ -133,11 +135,11 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"layout") {
-                        if (UIParent->GetParent()->IsApplication() == true) {
+                        if (UIParent->UIObject->GetParent()->IsApplication() == true) {
                             continue;
                         }
 
-                        Core::VLayout* Layout = new Core::VLayout(UIParent, UIParent->GetParent());
+                        Core::VLayout* Layout = new Core::VLayout(UIParent->UIObject, UIParent->UIObject->GetParent());
                         VMLObject->UIObject = Layout;
                         VMLObject->VMLType = VMLObjectType::Layout;
 
@@ -152,11 +154,11 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"scalelayout") {
-                        if (UIParent->GetParent()->IsApplication() == true) {
+                        if (UIParent->UIObject->GetParent()->IsApplication() == true) {
                             continue;
                         }
 
-                        Core::VScaleLayout* Layout = new Core::VScaleLayout(UIParent, UIParent->GetParent());
+                        Core::VScaleLayout* Layout = new Core::VScaleLayout(UIParent->UIObject, UIParent->UIObject->GetParent());
                         VMLObject->UIObject = Layout;
                         VMLObject->VMLType = VMLObjectType::Layout;
 
@@ -171,7 +173,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"horizontal-slider") {
-                        Core::VSliderHorizontal* SliderHorizontal = new Core::VSliderHorizontal(UIParent);
+                        Core::VSliderHorizontal* SliderHorizontal = new Core::VSliderHorizontal(UIParent->UIObject);
                         VMLObject->UIObject = SliderHorizontal;
                         VMLObject->VMLType = VMLObjectType::HorizontalSlider;
 
@@ -186,7 +188,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"vertical-slider") {
-                        Core::VSliderVertical* SliderHorizontal = new Core::VSliderVertical(UIParent);
+                        Core::VSliderVertical* SliderHorizontal = new Core::VSliderVertical(UIParent->UIObject);
                         VMLObject->UIObject = SliderHorizontal;
                         VMLObject->VMLType = VMLObjectType::VerticalSlider;
 
@@ -215,22 +217,47 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"radiobutton") {
-                        Core::VRadioButton* RadioButton = new Core::VRadioButton(UIParent);
-                        VMLObject->UIObject = RadioButton;
-                        VMLObject->VMLType = VMLObjectType::RadioButton;
+                        if (UIParent->VMLType != VMLObjectType::SwitchGroup) {
+                            Core::VRadioButton *RadioButton = new Core::VRadioButton(UIParent->UIObject);
+                            VMLObject->UIObject = RadioButton;
+                            VMLObject->VMLType = VMLObjectType::RadioButton;
 
-                        VMLControlBuildStatus BuildStatus;
-                        VMLRadioButtonBuilder Builder(GetRootFinder(), RadioButton, Element.NodeValue, &BuildStatus);
+                            VMLControlBuildStatus BuildStatus;
+                            VMLRadioButtonBuilder Builder(GetRootFinder(), RadioButton, Element.NodeValue,
+                                                          &BuildStatus);
 
-                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
-                            Result.Status = VMLWidgetVMLLoadStats::Failed;
-                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage =
+                                        L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" +
+                                        BuildStatus.FailedReason + L"\"";
 
-                            return Result;
+                                return Result;
+                            }
+                        }
+                        else {
+                            Core::VRadioButton *RadioButton = new Core::VRadioButton(UIParent->UIObject->GetParent());
+                            VMLObject->UIObject = RadioButton;
+                            VMLObject->VMLType = VMLObjectType::RadioButton;
+
+                            ((Core::VSwitchGroup*)UIParent->UIObject)->AddObject(RadioButton);
+
+                            VMLControlBuildStatus BuildStatus;
+                            VMLRadioButtonBuilder Builder(GetRootFinder(), RadioButton, Element.NodeValue,
+                                                          &BuildStatus);
+
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage =
+                                        L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" +
+                                        BuildStatus.FailedReason + L"\"";
+
+                                return Result;
+                            }
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"blurlabel") {
-                        Core::VBlurLabel* BlurLabel = new Core::VBlurLabel(UIParent);
+                        Core::VBlurLabel* BlurLabel = new Core::VBlurLabel(UIParent->UIObject);
 
                         VMLObject->UIObject = BlurLabel;
                         VMLObject->VMLType = VMLObjectType::BlurLabel;
@@ -246,7 +273,7 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"iconbutton") {
-                        Core::VIconButton* BlurLabel = new Core::VIconButton(UIParent);
+                        Core::VIconButton* BlurLabel = new Core::VIconButton(UIParent->UIObject);
 
                         VMLObject->UIObject = BlurLabel;
                         VMLObject->VMLType = VMLObjectType::IconButton;
@@ -262,13 +289,13 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"lineeditor") {
-                        Core::VLineEditor* BlurLabel = new Core::VLineEditor(UIParent);
+                        Core::VLineEditor* LineEditor = new Core::VLineEditor(UIParent->UIObject);
 
-                        VMLObject->UIObject = BlurLabel;
+                        VMLObject->UIObject = LineEditor;
                         VMLObject->VMLType = VMLObjectType::LineEditor;
 
                         VMLControlBuildStatus BuildStatus;
-                        VMLLineEditorBuilder  Builder(GetRootFinder(), BlurLabel, Element.NodeValue, &BuildStatus);
+                        VMLLineEditorBuilder  Builder(GetRootFinder(), LineEditor, Element.NodeValue, &BuildStatus);
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -276,6 +303,12 @@ namespace VML {
 
                             return Result;
                         }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"switchgroup") {
+                        Core::VSwitchGroup* SwithGroup = new Core::VSwitchGroup(UIParent->UIObject);
+
+                        VMLObject->UIObject = SwithGroup;
+                        VMLObject->VMLType = VMLObjectType::SwitchGroup;
                     }
                     else {
                         delete VMLObject;
@@ -290,7 +323,7 @@ namespace VML {
                 }
 
                 VMLWidgetVMLObjectList* ChildList = new VMLWidgetVMLObjectList;
-                LoadVML(Element.ChildrenNodes, ChildList, VMLObject->UIObject);
+                LoadVML(Element.ChildrenNodes, ChildList, VMLObject);
 
                 for (auto& ChildObject : ChildList->Objects) {
                     VMLObject->ChildrenObjects.push_back(ChildObject);

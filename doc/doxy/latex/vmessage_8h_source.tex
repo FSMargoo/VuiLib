@@ -1,0 +1,127 @@
+\hypertarget{vmessage_8h_source}{}\doxysection{vmessage.\+h}
+\label{vmessage_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/widget/vmessage.h@{G:/VueLib/vuilib-\/cmake/include/core/widget/vmessage.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// License(MIT)}}
+\DoxyCodeLine{2 \textcolor{comment}{// Athuor: Margoo}}
+\DoxyCodeLine{3 \textcolor{comment}{// This is Message in vuilib}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../vbasiccore.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{enum} VMessageType \{}
+\DoxyCodeLine{13     UnknowMessage, MouseMoveMessage, MouseClickedMessage,}
+\DoxyCodeLine{14     KeyClickedMessage, RepaintMessage, GetRepaintAeraMessage,}
+\DoxyCodeLine{15     IMECharMessage, MouseWheelMessage, FreeResourceMessage,}
+\DoxyCodeLine{16     CheckLocalFocusMessage, KillFocusMessage}
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{20  \textcolor{keyword}{private}:}
+\DoxyCodeLine{21      VMessageType MessageType;}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23  \textcolor{keyword}{public}:}
+\DoxyCodeLine{24      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}}(VMessageType Type = UnknowMessage);}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26      VMessageType GetType() \{}
+\DoxyCodeLine{27          \textcolor{keywordflow}{return} MessageType;}
+\DoxyCodeLine{28      \}}
+\DoxyCodeLine{29 \} VBasicMessage;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_free_source_message}{VFreeSourceMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{32  \textcolor{keyword}{public}:}
+\DoxyCodeLine{33      \mbox{\hyperlink{class_core_1_1_v_free_source_message}{VFreeSourceMessage}}();}
+\DoxyCodeLine{34 \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_mouse_move_message}{VMouseMoveMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{37  \textcolor{keyword}{public}:}
+\DoxyCodeLine{38      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} MousePosition;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40  \textcolor{keyword}{public}:}
+\DoxyCodeLine{41      \mbox{\hyperlink{class_core_1_1_v_mouse_move_message}{VMouseMoveMessage}}(\textcolor{keywordtype}{int} X, \textcolor{keywordtype}{int} Y);}
+\DoxyCodeLine{42 \};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_mouse_wheel_message}{VMouseWheelMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{45  \textcolor{keyword}{public}:}
+\DoxyCodeLine{46      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} MousePosition;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48      \textcolor{keywordtype}{short}  WheelValue;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50  \textcolor{keyword}{public}:}
+\DoxyCodeLine{51      \mbox{\hyperlink{class_core_1_1_v_mouse_wheel_message}{VMouseWheelMessage}}(\textcolor{keywordtype}{int} X, \textcolor{keywordtype}{int} Y, \textcolor{keywordtype}{short} WheelParameter);}
+\DoxyCodeLine{52 \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} VMouseClickedFlag \{}
+\DoxyCodeLine{55     Down, Up}
+\DoxyCodeLine{56 \} VkeyClickedFlag;}
+\DoxyCodeLine{57 \textcolor{keyword}{enum} VMouseKeyFlag \{}
+\DoxyCodeLine{58     Middle, Left, Right}
+\DoxyCodeLine{59 \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_mouse_clicked_message}{VMouseClickedMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{62  \textcolor{keyword}{public}:}
+\DoxyCodeLine{63      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}             MousePosition;}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65      VMouseClickedFlag ClickedMethod;}
+\DoxyCodeLine{66      VMouseKeyFlag     ClickedKey;}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68  \textcolor{keyword}{public}:}
+\DoxyCodeLine{69      \mbox{\hyperlink{class_core_1_1_v_mouse_clicked_message}{VMouseClickedMessage}}(\textcolor{keywordtype}{int} X, \textcolor{keywordtype}{int} Y, VMouseClickedFlag ClickedFlag, VMouseKeyFlag Key);}
+\DoxyCodeLine{70 \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_key_clicked_message}{VKeyClickedMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{73  \textcolor{keyword}{public}:}
+\DoxyCodeLine{74      \textcolor{keywordtype}{byte}           KeyVKCode;}
+\DoxyCodeLine{75      \textcolor{keywordtype}{bool}           KeyPrevDown;}
+\DoxyCodeLine{76      \textcolor{keywordtype}{bool}           KeyExtened;}
+\DoxyCodeLine{77      VkeyClickedFlag KeyStats;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79  \textcolor{keyword}{public}:}
+\DoxyCodeLine{80      \mbox{\hyperlink{class_core_1_1_v_key_clicked_message}{VKeyClickedMessage}}(\textcolor{keywordtype}{byte} VKCode, \textcolor{keywordtype}{bool} PrevDown, \textcolor{keywordtype}{bool} Extened, VkeyClickedFlag Stats);}
+\DoxyCodeLine{81 \};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_repaint_message}{VRepaintMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{84  \textcolor{keyword}{public}:}
+\DoxyCodeLine{85      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}} DirtyRectangle;}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87  \textcolor{keyword}{public}:}
+\DoxyCodeLine{88      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_repaint_message}{VRepaintMessage}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& RepaintRegion);}
+\DoxyCodeLine{89 \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_get_repaint_aera_message}{VGetRepaintAeraMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{92  \textcolor{keyword}{public}:}
+\DoxyCodeLine{93      \mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}* RepaintAera;}
+\DoxyCodeLine{94  }
+\DoxyCodeLine{95  \textcolor{keyword}{public}:}
+\DoxyCodeLine{96      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_get_repaint_aera_message}{VGetRepaintAeraMessage}}(\mbox{\hyperlink{class_core_1_1_v_core_rect}{VRect}}\& RepaintRegion);}
+\DoxyCodeLine{97 \};}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_i_m_e_char_message}{VIMECharMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{100  \textcolor{keyword}{public}:}
+\DoxyCodeLine{101      \textcolor{keywordtype}{wchar\_t} IMEChar;}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103  \textcolor{keyword}{public}:}
+\DoxyCodeLine{104      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_i_m_e_char_message}{VIMECharMessage}}(\textcolor{keywordtype}{wchar\_t} CharInputed);}
+\DoxyCodeLine{105 \};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_check_focus_message}{VCheckFocusMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{108  \textcolor{keyword}{public}:}
+\DoxyCodeLine{109      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} FocusPoint;}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111  \textcolor{keyword}{public}:}
+\DoxyCodeLine{112      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_check_focus_message}{VCheckFocusMessage}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Point);}
+\DoxyCodeLine{113 \};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_kill_focus_message}{VKillFocusMessage}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_message}{VMessage}} \{}
+\DoxyCodeLine{116  \textcolor{keyword}{public}:}
+\DoxyCodeLine{117      \mbox{\hyperlink{class_core_1_1_v_kill_focus_message}{VKillFocusMessage}}();}
+\DoxyCodeLine{118 \};}
+\DoxyCodeLine{119 \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

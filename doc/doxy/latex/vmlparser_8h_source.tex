@@ -1,0 +1,92 @@
+\hypertarget{vmlparser_8h_source}{}\doxysection{vmlparser.\+h}
+\label{vmlparser_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/vml/vmlparser.h@{G:/VueLib/vuilib-\/cmake/include/vml/vmlparser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../kits/seal.lexical.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../kits/vparserhelper.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../core/vbasiccore.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{namespace }VML \{}
+\DoxyCodeLine{13     \textcolor{keyword}{enum class} VMLParserStatus \{}
+\DoxyCodeLine{14         Ok, Error, Failed}
+\DoxyCodeLine{15     \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_parser_error}{VMLParserError}} \{}
+\DoxyCodeLine{18         std::wstring ErrorString;}
+\DoxyCodeLine{19         \textcolor{keywordtype}{int}          Line;}
+\DoxyCodeLine{20     \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keyword}{enum class} VMLPropertyType \{}
+\DoxyCodeLine{23         IntValue, StringValue, DoubleValue, BooleanValue, NativeCall, ObjectCallParameter}
+\DoxyCodeLine{24     \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_property_value}{VMLPropertyValue}} \{}
+\DoxyCodeLine{27         std::wstring     PropertyName = L\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         VMLPropertyType  PropertyType = VMLPropertyType::IntValue;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \textcolor{keywordtype}{int}              PropertyAsInt = 0;}
+\DoxyCodeLine{32         std::wstring     PropertyAsString = L\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{33         \textcolor{keywordtype}{double}           PropertyAsDouble = 0.f;}
+\DoxyCodeLine{34         \textcolor{keywordtype}{bool}             PropertyAsBool = \textcolor{keyword}{false};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         std::vector<std::wstring>}
+\DoxyCodeLine{37                          PropertyAsObjectCallParameter;}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         std::wstring     NativeCallMethodName = L\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{40         std::vector<VMLPropertyValue> NativeCallParameter;}
+\DoxyCodeLine{41     \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_node}{VMLNode}} \{}
+\DoxyCodeLine{44         std::wstring                             NodeTag;}
+\DoxyCodeLine{45         std::map<std::wstring, VMLPropertyValue> NodeValue;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         std::map<std::wstring, VMLNode>       ChildrenNodes;}
+\DoxyCodeLine{48         \textcolor{keywordtype}{int}                                       ChildrenSequence = 0;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_property_value}{VMLPropertyValue}} GetProperty(\textcolor{keyword}{const} std::wstring\& Type);}
+\DoxyCodeLine{51         \textcolor{keywordtype}{bool} PropertyExsit(\textcolor{keyword}{const} std::wstring\& Type);}
+\DoxyCodeLine{52     \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_parser_result}{VMLParserResult}} \{}
+\DoxyCodeLine{55         std::wstring                    FilePath;}
+\DoxyCodeLine{56         std::vector<VMLParserError>     ErrorInfo;}
+\DoxyCodeLine{57         std::map<std::wstring, VMLNode> Nodes;}
+\DoxyCodeLine{58         VMLParserStatus                 ParserStatus = VMLParserStatus::Ok;}
+\DoxyCodeLine{59     \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{enum class} VMLParserParseMode \{}
+\DoxyCodeLine{62         FromFile, FromString}
+\DoxyCodeLine{63     \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_m_l_1_1_v_m_l_parser}{VMLParser}} \{}
+\DoxyCodeLine{66     \textcolor{keyword}{private}:}
+\DoxyCodeLine{67         VKits::seal\_lexical* ParserLexical = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{68         std::wstring         FilePath;}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keyword}{private}:}
+\DoxyCodeLine{71         \textcolor{keywordtype}{void}             ThrowError(\mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_parser_result}{VMLParserResult}}* Result, \textcolor{keyword}{const} std::wstring\& ErrorString);}
+\DoxyCodeLine{72         \mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_property_value}{VMLPropertyValue}} ToPropertyValue(\textcolor{keyword}{const} std::wstring\& String);}
+\DoxyCodeLine{73         \textcolor{keywordtype}{int}  BaseLine = 0;}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keyword}{private}:}
+\DoxyCodeLine{76         \textcolor{keywordtype}{bool} FileExist = \textcolor{keyword}{true};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keyword}{public}:}
+\DoxyCodeLine{79         \mbox{\hyperlink{class_v_m_l_1_1_v_m_l_parser}{VMLParser}}(\textcolor{keyword}{const} std::wstring\& VMLString, VMLParserParseMode VMLParserMode = VMLParserParseMode::FromString, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& Line = 0);}
+\DoxyCodeLine{80         \mbox{\hyperlink{class_v_m_l_1_1_v_m_l_parser}{\string~VMLParser}}();}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \mbox{\hyperlink{struct_v_m_l_1_1_v_m_l_parser_result}{VMLParserResult}} ParseVML();}
+\DoxyCodeLine{83     \};}
+\DoxyCodeLine{84 \}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

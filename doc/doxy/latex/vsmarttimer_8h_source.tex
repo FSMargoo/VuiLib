@@ -1,0 +1,30 @@
+\hypertarget{vsmarttimer_8h_source}{}\doxysection{vsmarttimer.\+h}
+\label{vsmarttimer_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/uibasic/vsmarttimer.h@{G:/VueLib/vuilib-\/cmake/include/core/uibasic/vsmarttimer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#include "{}../object/vapplication.h"{}}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../signal/vsignal.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}vtimer.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_smart_timer}{VSmartTimer}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_basic_timer}{VBasicTimer}}, \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_u_i_object}{VUIObject}} \{}
+\DoxyCodeLine{9  \textcolor{keyword}{private}:}
+\DoxyCodeLine{10      \textcolor{keywordtype}{bool} StartClock = \textcolor{keyword}{false};}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12  \textcolor{keyword}{public}:}
+\DoxyCodeLine{13      \mbox{\hyperlink{class_core_1_1_v_signal}{VSignal<>}} OnTime;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15  \textcolor{keyword}{public}:}
+\DoxyCodeLine{16      \textcolor{keyword}{explicit} \mbox{\hyperlink{class_core_1_1_v_smart_timer}{VSmartTimer}}(\mbox{\hyperlink{class_core_1_1_v_application}{VApplication}}* Parent);}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18      \textcolor{keywordtype}{void} Start(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& TimerDuraction) \textcolor{keyword}{override};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20      \textcolor{keywordtype}{void} CheckFrame() \textcolor{keyword}{override};}
+\DoxyCodeLine{21 \};}
+\DoxyCodeLine{22 \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

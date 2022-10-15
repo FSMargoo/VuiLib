@@ -1,0 +1,101 @@
+\hypertarget{vuiinterpolator_8h_source}{}\doxysection{vuiinterpolator.\+h}
+\label{vuiinterpolator_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/core/uibasic/vuiinterpolator.h@{G:/VueLib/vuilib-\/cmake/include/core/uibasic/vuiinterpolator.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../vbasiccore.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../render/vcolor.h"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }Core \{}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }VInterpolatorFunctional \{}
+\DoxyCodeLine{14     \textcolor{keywordtype}{double} AnticipateInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{double} AccelerateDecelerateInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{16     \textcolor{keywordtype}{double} AccelerateInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{17     \textcolor{keywordtype}{double} AnticipateOvershootInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{18     \textcolor{keywordtype}{double} DecelerateInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{19     \textcolor{keywordtype}{double} LinearInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{20     \textcolor{keywordtype}{double} OvershootInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{21     \textcolor{keywordtype}{double} CycleInterpolator(\textcolor{keywordtype}{double} x);}
+\DoxyCodeLine{22 \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{enum class} VInterpolatorType \{}
+\DoxyCodeLine{25     AnticipateInterpolator,           \textcolor{comment}{// x * x* ((2 + 1)* x -\/ 2)}}
+\DoxyCodeLine{26     AccelerateDecelerateInterpolator, \textcolor{comment}{// (cos((x+ 1) * 3.14) / 2.0) + 0.5}}
+\DoxyCodeLine{27     AccelerateInterpolator,           \textcolor{comment}{// pow(x, 2)}}
+\DoxyCodeLine{28     AnticipateOvershootInterpolator,  \textcolor{comment}{// 0.5*2*x * 2*x * ((3 + 1) * 2*x -\/ 3)             0 < x < 0.5}}
+\DoxyCodeLine{29                                       \textcolor{comment}{// 0.5 * ((2 * x -\/ 2) * (2 * x -\/ 2) * ((3 + 1) * (2 * x -\/ 2) + 3) + 2)  0.5 <= x < 1.0}}
+\DoxyCodeLine{30     DecelerateInterpolator,           \textcolor{comment}{// 1.0 -\/ pow((1.0 -\/ x), 2 * 1)}}
+\DoxyCodeLine{31     LinearInterpolator,               \textcolor{comment}{// x}}
+\DoxyCodeLine{32     OvershootInterpolator,            \textcolor{comment}{// (x-\/1) * (x-\/1) * ((2+ 1) *( x-\/1) + 2)+1}}
+\DoxyCodeLine{33     CycleInterpolator                 \textcolor{comment}{// sin(2 * 1 * Pai * x)}}
+\DoxyCodeLine{34 \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}} \{}
+\DoxyCodeLine{37  \textcolor{keyword}{private}:}
+\DoxyCodeLine{38     \textcolor{keywordtype}{double}                        InterpolatorDuration;}
+\DoxyCodeLine{39     std::function<double(\textcolor{keywordtype}{double})> InterpolatorFunction;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41  \textcolor{keyword}{private}:}
+\DoxyCodeLine{42      \textcolor{keywordtype}{void} \_SetInterpolator(\textcolor{keyword}{const} VInterpolatorType\& Interpolator);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44  \textcolor{keyword}{public}:}
+\DoxyCodeLine{45     \textcolor{keywordtype}{double}                        LocalX = 0;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47  \textcolor{keyword}{public}:}
+\DoxyCodeLine{48      \mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& Dx, \textcolor{keyword}{const} VInterpolatorType\& Interpolator);}
+\DoxyCodeLine{49      \mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& Dx, std::function<\textcolor{keywordtype}{double}(\textcolor{keywordtype}{double})> Interpolator);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51  \textcolor{keyword}{public}:}
+\DoxyCodeLine{52      \textcolor{keywordtype}{bool} IsEnd() \textcolor{keyword}{const};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54      \textcolor{keywordtype}{void} SetInterpolator(\textcolor{keyword}{const} VInterpolatorType\& Interpolator);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56      \textcolor{keywordtype}{double} GetOneFrame();}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58      \textcolor{keywordtype}{void} Reset();}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60      \textcolor{keywordtype}{void} SetDeltaX(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& Dx);}
+\DoxyCodeLine{61 \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_color_interpolator}{VColorInterpolator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}} \{}
+\DoxyCodeLine{64  \textcolor{keyword}{private}:}
+\DoxyCodeLine{65      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} TargetColor;}
+\DoxyCodeLine{66      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} SourceColor;}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68  \textcolor{keyword}{public}:}
+\DoxyCodeLine{69      \mbox{\hyperlink{class_core_1_1_v_color_interpolator}{VColorInterpolator}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}\& Duraction, \textcolor{keyword}{const} VInterpolatorType\& Interpolator);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71  \textcolor{keyword}{public}:}
+\DoxyCodeLine{72      \textcolor{keywordtype}{void} Start(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& Target, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& Source);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74      \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} GetFrame();}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76  \textcolor{keyword}{public}:}
+\DoxyCodeLine{77      \textcolor{keyword}{static} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}} GetTheColorByPercent(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& OldColor, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_color}{VColor}}\& NewColor, \textcolor{keyword}{const} \textcolor{keywordtype}{double}\& Percent);}
+\DoxyCodeLine{78 \};}
+\DoxyCodeLine{79 \textcolor{keyword}{class }\mbox{\hyperlink{class_core_1_1_v_position_interpolator}{VPositionInterpolator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_animation_interpolator}{VAnimationInterpolator}} \{}
+\DoxyCodeLine{80  \textcolor{keyword}{private}:}
+\DoxyCodeLine{81      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} TargetPosition;}
+\DoxyCodeLine{82      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} SourcePosition;}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84  \textcolor{keyword}{public}:}
+\DoxyCodeLine{85      \mbox{\hyperlink{class_core_1_1_v_position_interpolator}{VPositionInterpolator}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}\& Duraction, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Target, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Source,}
+\DoxyCodeLine{86          \textcolor{keyword}{const} VInterpolatorType\& Interpolator);}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88      \textcolor{keywordtype}{void} Start(\textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Target, \textcolor{keyword}{const} \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}}\& Source);}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90      \mbox{\hyperlink{class_core_1_1_v_core_point}{VPoint}} GetFrame();}
+\DoxyCodeLine{91 \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

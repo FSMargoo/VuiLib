@@ -1,0 +1,308 @@
+﻿  vabstractbutton.cc
+  vblurlabel.cc
+  vdragcontrolbase.cc
+  vfakecaption.cc
+  viconbutton.cc
+G:\VueLib\vuilib-cmake\src\core\control\viconbutton.cc(89,77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\viconbutton.cc(103,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\viconbutton.cc(105,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+  vimagelabel.cc
+  vlayout.cc
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(43,26): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(80,27): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(124,45): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(141,46): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(228,45): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlayout.cc(227,44): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
+  vlineeditor.cc
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(33,87): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(44,77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(58,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(60,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(145,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(152,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(152,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(169,56): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(187,49): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(189,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(193,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(218,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(225,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(225,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(234,60): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(242,82): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(249,57): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(269,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(276,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(276,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(282,53): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(284,56): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(291,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(308,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(315,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(315,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(321,53): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(323,56): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(329,99): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(346,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(353,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(353,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(362,60): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(370,82): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(377,57): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(382,99): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(414,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(421,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(421,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(430,56): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(438,78): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(445,53): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(450,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(470,59): warning C4018: '>': signed/unsigned mismatch
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(494,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(501,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(501,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(513,56): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(520,78): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(527,82): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(532,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(550,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(557,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(557,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(568,60): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(586,53): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(588,56): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(593,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(621,90): warning C4267: '=': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(625,94): warning C4267: '=': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(641,57): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(647,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(654,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(654,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(663,52): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(674,91): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(710,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(717,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(717,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(738,60): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(748,63): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(763,65): warning C4267: '=': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(771,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(778,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(778,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(784,49): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(786,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(792,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(867,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(874,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(874,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(880,45): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(882,48): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(888,91): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(925,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(932,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(932,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(943,60): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(962,53): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(964,56): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(969,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(989,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(996,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(996,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1005,56): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1016,95): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1054,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1061,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1061,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1077,48): warning C4244: '=': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1087,87): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1109,83): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1202,42): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1215,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1222,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vlineeditor.cc(1222,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+  vpushbutton.cc
+G:\VueLib\vuilib-cmake\src\core\control\vpushbutton.cc(92,77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vpushbutton.cc(106,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vpushbutton.cc(108,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+  vradiobutton.cc
+G:\VueLib\vuilib-cmake\src\core\control\vradiobutton.cc(59,77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vradiobutton.cc(73,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vradiobutton.cc(75,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+  vscrollbar.cc
+G:\VueLib\vuilib-cmake\src\core\control\vscrollbar.cc(99,39): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vscrollbar.cc(108,23): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vscrollbar.cc(200,40): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vscrollbar.cc(206,24): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  vtextlabel.cc
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(91,77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(105,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(107,63): warning C4244: '=': conversion from 'double' to 'DataType', possible loss of data
+          with
+          [
+              DataType=int
+          ]
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(234,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(234,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(239,69): warning C4244: 'argument': conversion from 'FLOAT' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(239,30): warning C4244: 'argument': conversion from 'FLOAT' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(252,1): warning C4305: 'argument': truncation from 'int' to 'FLOAT'
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(252,1): warning C4267: 'argument': conversion from 'size_t' to 'UINT32', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(257,42): warning C4244: 'argument': conversion from 'FLOAT' to 'const int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\control\vtextlabel.cc(257,23): warning C4244: 'argument': conversion from 'FLOAT' to 'const int', possible loss of data
+  vapplication.cc
+  vuiobject.cc
+  vbrush.cc
+  vcolor.cc
+  vdirectxfactory.cc
+  vimage.cc
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(81,36): warning C4244: 'return': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(84,36): warning C4244: 'return': conversion from 'FLOAT' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(100,17): warning C4244: 'initializing': conversion from 'FLOAT' to 'UINT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(101,17): warning C4244: 'initializing': conversion from 'FLOAT' to 'UINT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(147,17): warning C4244: 'initializing': conversion from 'FLOAT' to 'UINT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vimage.cc(148,17): warning C4244: 'initializing': conversion from 'FLOAT' to 'UINT', possible loss of data
+  vpainter.cc
+  vpainterdevice.cc
+  Compiling...
+  vrenderbasic.cc
+  vwrite.cc
+G:\VueLib\vuilib-cmake\src\core\render\vwrite.cc(19,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vwrite.cc(50,1): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vwrite.cc(87,1): warning C4244: 'argument': conversion from 'const int' to 'FLOAT', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\render\vwrite.cc(92,35): warning C4244: 'return': conversion from 'FLOAT' to 'int', possible loss of data
+  vsignal.cc
+  vsmarttimer.cc
+  vtimer.cc
+  vuiinterpolator.cc
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(134,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(135,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(136,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(137,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(144,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(145,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(146,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(147,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(166,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\core\uibasic\vuiinterpolator.cc(167,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  vuitheme.cc
+  vbasiccore.cc
+  vmessage.cc
+  vprivatewidget.cc
+G:\VueLib\vuilib-cmake\src\core\widget\vprivatewidget.cc(117,52): warning C4302: 'type cast': truncation from 'LPWSTR' to 'WORD'
+G:\VueLib\vuilib-cmake\src\core\widget\vprivatewidget.cc(123,52): warning C4302: 'type cast': truncation from 'LPWSTR' to 'WORD'
+G:\VueLib\vuilib-cmake\src\core\widget\vprivatewidget.cc(129,52): warning C4302: 'type cast': truncation from 'LPWSTR' to 'WORD'
+G:\VueLib\vuilib-cmake\src\core\widget\vprivatewidget.cc(135,52): warning C4302: 'type cast': truncation from 'LPWSTR' to 'WORD'
+  vwidget.cc
+  seal.info.cc
+  seal.lexical.cc
+G:\VueLib\vuilib-cmake\src\kits\seal.lexical.cc(217,26): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+  seal.lexical.token.cc
+  vcolorhelper.cc
+G:\VueLib\vuilib-cmake\src\kits\vcolorhelper.cc(20,50): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+G:\VueLib\vuilib-cmake\src\kits\vcolorhelper.cc(35,88): warning C4244: 'argument': conversion from 'short' to 'BYTE', possible loss of data
+G:\VueLib\vuilib-cmake\src\kits\vcolorhelper.cc(35,72): warning C4244: 'argument': conversion from 'short' to 'BYTE', possible loss of data
+G:\VueLib\vuilib-cmake\src\kits\vcolorhelper.cc(35,56): warning C4244: 'argument': conversion from 'short' to 'BYTE', possible loss of data
+  vparserhelper.cc
+  vml.cpp
+  vmlbuilder.cpp
+G:\VueLib\vuilib-cmake\src\vml\vmlbuilder.cpp(47,33): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vml\vmlbuilder.cpp(68,26): warning C4101: 'LayoutParent': unreferenced local variable
+  vmlparser.cpp
+  vmlwidget.cpp
+  Compiling...
+  vssbuilder.cc
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(53,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(112,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(130,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(165,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(183,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(218,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(236,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(274,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(304,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(322,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(350,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(368,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(396,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(414,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(449,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(472,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(490,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(518,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(536,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(564,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(582,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(617,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(676,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(694,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(733,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(751,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(786,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(804,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(839,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(907,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(937,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(955,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(990,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1008,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1043,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1061,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1096,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1123,97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1150,95): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1220,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1247,97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1274,95): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1343,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1398,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1464,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1482,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1517,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1535,84): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1570,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+G:\VueLib\vuilib-cmake\src\vss\vssbuilder.cc(1588,83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  vssparser.cc
+G:\VueLib\vuilib-cmake\src\vss\vssparser.cc(188,110): warning C4244: 'argument': conversion from 'double' to 'BYTE', possible loss of data
+  main.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1455 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  vml-pushbutton.vcxproj -> G:\VueLib\vuilib-cmake\demo\vml-pushbutton\x64\Release\vml-pushbutton.exe

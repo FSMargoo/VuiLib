@@ -1,0 +1,163 @@
+\hypertarget{vssbuilder_8h_source}{}\doxysection{vssbuilder.\+h}
+\label{vssbuilder_8h_source}\index{G:/VueLib/vuilib-\/cmake/include/vss/vssbuilder.h@{G:/VueLib/vuilib-\/cmake/include/vss/vssbuilder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}vssparser.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../core/control/vlayout.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../core/control/vtextlabel.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}../core/control/vimagelabel.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../core/control/vpushbutton.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}../core/control/vscrollbar.h"{}}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}../core/control/vradiobutton.h"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}../core/control/vblurlabel.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}../core/control/viconbutton.h"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}../core/control/vlineeditor.h"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}../core/widget/vwidget.h"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 VLIB\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{namespace }VSS \{}
+\DoxyCodeLine{20     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_parser_helper}{VSSParserHelper}} \{}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \textcolor{keyword}{static} Core::VFontAlignment StringToAlignment(\textcolor{keyword}{const} std::wstring\& String);}
+\DoxyCodeLine{23         \textcolor{keyword}{static} Core::VFontParagraphAlignment StringToParagraphAlignment(\textcolor{keyword}{const} std::wstring\& String);}
+\DoxyCodeLine{24     \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_push_button_builder}{VSSVPushButtonBuilder}} \{}
+\DoxyCodeLine{27     \textcolor{keyword}{private}:}
+\DoxyCodeLine{28         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}} *TargetControl,}
+\DoxyCodeLine{29                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{30                             \mbox{\hyperlink{struct_core_1_1_v_push_button_theme}{Core::VPushButtonTheme}} *PushButtonTheme);}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keyword}{public}:}
+\DoxyCodeLine{33         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_push_button_builder}{VSSVPushButtonBuilder}}(\mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}} *TargetControl,}
+\DoxyCodeLine{34                               std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{35                               \mbox{\hyperlink{struct_core_1_1_v_push_button_theme}{Core::VPushButtonTheme}} *PushButtonTheme);}
+\DoxyCodeLine{36     \};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_radio_button_builder}{VSSVRadioButtonBuilder}} \{}
+\DoxyCodeLine{39     \textcolor{keyword}{private}:}
+\DoxyCodeLine{40         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_radio_button}{Core::VRadioButton}} *TargetControl,}
+\DoxyCodeLine{41                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{42                             \mbox{\hyperlink{struct_core_1_1_v_radio_button_theme}{Core::VRadioButtonTheme}} *RadioButtonTheme);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keyword}{public}:}
+\DoxyCodeLine{45         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_radio_button_builder}{VSSVRadioButtonBuilder}}(\mbox{\hyperlink{class_core_1_1_v_radio_button}{Core::VRadioButton}} *TargetControl,}
+\DoxyCodeLine{46                                std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{47                                \mbox{\hyperlink{struct_core_1_1_v_radio_button_theme}{Core::VRadioButtonTheme}} *RadioButtonTheme);}
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_icon_button_builder}{VSSVIconButtonBuilder}} \{}
+\DoxyCodeLine{51     \textcolor{keyword}{private}:}
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_icon_button}{Core::VIconButton}} *TargetControl,}
+\DoxyCodeLine{53                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{54                             \mbox{\hyperlink{class_core_1_1_v_icon_button_theme}{Core::VIconButtonTheme}} *IconButtonTheme);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keyword}{public}:}
+\DoxyCodeLine{57         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_icon_button_builder}{VSSVIconButtonBuilder}}(\mbox{\hyperlink{class_core_1_1_v_icon_button}{Core::VIconButton}} *TargetControl,}
+\DoxyCodeLine{58                                std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{59                                \mbox{\hyperlink{class_core_1_1_v_icon_button_theme}{Core::VIconButtonTheme}} *IconButtonTheme);}
+\DoxyCodeLine{60     \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_text_label_builder}{VSSVTextLabelBuilder}} \{}
+\DoxyCodeLine{63     \textcolor{keyword}{private}:}
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_text_label}{Core::VTextLabel}} *TargetControl,}
+\DoxyCodeLine{65                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{66                             \mbox{\hyperlink{struct_core_1_1_v_text_label_theme}{Core::VTextLabelTheme}} *TextLabelTheme);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keyword}{public}:}
+\DoxyCodeLine{69         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_text_label_builder}{VSSVTextLabelBuilder}}(\mbox{\hyperlink{class_core_1_1_v_text_label}{Core::VTextLabel}} *TargetControl,}
+\DoxyCodeLine{70                              std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{71                              \mbox{\hyperlink{struct_core_1_1_v_text_label_theme}{Core::VTextLabelTheme}} *Theme);}
+\DoxyCodeLine{72     \};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_image_label_builder}{VSSVImageLabelBuilder}} \{}
+\DoxyCodeLine{75     \textcolor{keyword}{private}:}
+\DoxyCodeLine{76         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_image_label}{Core::VImageLabel}} *TargetControl,}
+\DoxyCodeLine{77                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{78                             \mbox{\hyperlink{struct_core_1_1_v_image_label_theme}{Core::VImageLabelTheme}} *ImageLabelTheme);}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keyword}{public}:}
+\DoxyCodeLine{81         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_image_label_builder}{VSSVImageLabelBuilder}}(\mbox{\hyperlink{class_core_1_1_v_image_label}{Core::VImageLabel}} *TargetControl,}
+\DoxyCodeLine{82                               std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{83                               \mbox{\hyperlink{struct_core_1_1_v_image_label_theme}{Core::VImageLabelTheme}} *ImageLabelTheme);}
+\DoxyCodeLine{84     \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_main_window_builder}{VSSVMainWindowBuilder}} \{}
+\DoxyCodeLine{87     \textcolor{keyword}{private}:}
+\DoxyCodeLine{88         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_main_window}{Core::VMainWindow}} *TargetControl,}
+\DoxyCodeLine{89                             std::vector<VSSBasicSelector *> SelectorSet);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keyword}{public}:}
+\DoxyCodeLine{92         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_main_window_builder}{VSSVMainWindowBuilder}}(\mbox{\hyperlink{class_core_1_1_v_main_window}{Core::VMainWindow}} *TargetControl,}
+\DoxyCodeLine{93                               std::vector<VSSBasicSelector *> SelectorSet);}
+\DoxyCodeLine{94     \};}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_circle_button_builder}{VSSVCircleButtonBuilder}} \{}
+\DoxyCodeLine{97     \textcolor{keyword}{private}:}
+\DoxyCodeLine{98         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_circle_scroll_bar_button}{Core::VCircleScrollBarButton}} *TargetControl,}
+\DoxyCodeLine{99                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{100                             \mbox{\hyperlink{class_core_1_1_v_circle_scroll_bar_theme}{Core::VCircleScrollBarTheme}} *CircleButtonTheme);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keyword}{public}:}
+\DoxyCodeLine{103         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_circle_button_builder}{VSSVCircleButtonBuilder}}(\mbox{\hyperlink{class_core_1_1_v_circle_scroll_bar_button}{Core::VCircleScrollBarButton}} *TargetControl,}
+\DoxyCodeLine{104                                 std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{105                                 \mbox{\hyperlink{class_core_1_1_v_circle_scroll_bar_theme}{Core::VCircleScrollBarTheme}} *CircleButtonTheme);}
+\DoxyCodeLine{106     \};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_slider_horizontal_builder}{VSSVSliderHorizontalBuilder}} \{}
+\DoxyCodeLine{109     \textcolor{keyword}{private}:}
+\DoxyCodeLine{110         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_slider_horizontal}{Core::VSliderHorizontal}} *TargetControl,}
+\DoxyCodeLine{111                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{112                             \mbox{\hyperlink{class_core_1_1_v_slider_theme}{Core::VSliderTheme}} *Theme);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keyword}{public}:}
+\DoxyCodeLine{115         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_slider_horizontal_builder}{VSSVSliderHorizontalBuilder}}(\mbox{\hyperlink{class_core_1_1_v_slider_horizontal}{Core::VSliderHorizontal}} *TargetControl,}
+\DoxyCodeLine{116                                     std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{117                                     \mbox{\hyperlink{class_core_1_1_v_slider_theme}{Core::VSliderTheme}} *Theme);}
+\DoxyCodeLine{118     \};}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_slider_vertical_builder}{VSSVSliderVerticalBuilder}} \{}
+\DoxyCodeLine{121     \textcolor{keyword}{private}:}
+\DoxyCodeLine{122         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_slider_vertical}{Core::VSliderVertical}} *TargetControl,}
+\DoxyCodeLine{123                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{124                             \mbox{\hyperlink{class_core_1_1_v_slider_theme}{Core::VSliderTheme}} *Theme);}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keyword}{public}:}
+\DoxyCodeLine{127         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_slider_vertical_builder}{VSSVSliderVerticalBuilder}}(\mbox{\hyperlink{class_core_1_1_v_slider_vertical}{Core::VSliderVertical}} *TargetControl,}
+\DoxyCodeLine{128                                   std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{129                                   \mbox{\hyperlink{class_core_1_1_v_slider_theme}{Core::VSliderTheme}} *Theme);}
+\DoxyCodeLine{130     \};}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_blur_label_builder}{VSSVBlurLabelBuilder}} \{}
+\DoxyCodeLine{133     \textcolor{keyword}{private}:}
+\DoxyCodeLine{134         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_blur_label}{Core::VBlurLabel}} *TargetControl,}
+\DoxyCodeLine{135             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{136             \mbox{\hyperlink{class_core_1_1_v_blur_label_theme}{Core::VBlurLabelTheme}} *Theme);}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \textcolor{keyword}{public}:}
+\DoxyCodeLine{139         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_blur_label_builder}{VSSVBlurLabelBuilder}}(\mbox{\hyperlink{class_core_1_1_v_blur_label}{Core::VBlurLabel}} *TargetControl,}
+\DoxyCodeLine{140             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{141             \mbox{\hyperlink{class_core_1_1_v_blur_label_theme}{Core::VBlurLabelTheme}} *Theme);}
+\DoxyCodeLine{142     \};}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_line_editor_builder}{VSSVLineEditorBuilder}} \{}
+\DoxyCodeLine{145     \textcolor{keyword}{private}:}
+\DoxyCodeLine{146         \textcolor{keywordtype}{void} BuildVSSObject(\mbox{\hyperlink{class_core_1_1_v_line_editor}{Core::VLineEditor}} *TargetControl,}
+\DoxyCodeLine{147                             std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{148                             \mbox{\hyperlink{struct_core_1_1_v_text_editor_theme}{Core::VTextEditorTheme}} *TextEditorTheme);}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     \textcolor{keyword}{public}:}
+\DoxyCodeLine{151         \mbox{\hyperlink{class_v_s_s_1_1_v_s_s_v_line_editor_builder}{VSSVLineEditorBuilder}}(\mbox{\hyperlink{class_core_1_1_v_line_editor}{Core::VLineEditor}} *TargetControl,}
+\DoxyCodeLine{152                               std::vector<VSSBasicSelector *> SelectorSet,}
+\DoxyCodeLine{153                               \mbox{\hyperlink{struct_core_1_1_v_text_editor_theme}{Core::VTextEditorTheme}} *TextEditorTheme);}
+\DoxyCodeLine{154     \};}
+\DoxyCodeLine{155 \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 VLIB\_END\_NAMESPACE}
+
+\end{DoxyCode}

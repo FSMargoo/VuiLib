@@ -1,0 +1,110 @@
+\hypertarget{pvmainwindow_8h_source}{}\doxysection{pvmainwindow.\+h}
+\label{pvmainwindow_8h_source}\index{G:/VueLib/vuilib-\/cmake/demo/photoviewer/pvmainwindow.h@{G:/VueLib/vuilib-\/cmake/demo/photoviewer/pvmainwindow.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../../include/vml/vml.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../../include/vml/vmlwidget.h"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_p_v_file_reading_project}{PVFileReadingProject}} \{}
+\DoxyCodeLine{7     std::vector<std::wstring> FileList;}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} LocalViewingFile = 0;}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11     \textcolor{keywordtype}{double} LocalScalePercent = 1.f;}
+\DoxyCodeLine{12 \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_v_dragble_image_label}{VDragbleImageLabel}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_core_1_1_v_drag_control_base}{Core::VDragControlBase}} \{}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_core_1_1_v_image}{Core::VImage}}* ViewImage;}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_v_dragble_image_label}{VDragbleImageLabel}}(\mbox{\hyperlink{class_core_1_1_v_u_i_object}{Core::VUIObject}}* Parent, \mbox{\hyperlink{class_core_1_1_v_image}{Core::VImage}}* Image);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} SetImage(\mbox{\hyperlink{class_core_1_1_v_image}{Core::VImage}}* Image);}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} OnPaint(\mbox{\hyperlink{class_core_1_1_v_canvas_painter}{Core::VCanvasPainter}}* Painter) \textcolor{keyword}{override};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \mbox{\hyperlink{class_v_dragble_image_label}{\string~VDragbleImageLabel}}() \{}
+\DoxyCodeLine{25         \textcolor{keywordflow}{if} (ViewImage != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{26             \textcolor{keyword}{delete} ViewImage;}
+\DoxyCodeLine{27         \}}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_p_v_main_window}{PVMainWindow}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_v_m_l_1_1_v_m_l_widget}{VML::VMLWidget}} \{}
+\DoxyCodeLine{32 \textcolor{keyword}{private}:}
+\DoxyCodeLine{33     \mbox{\hyperlink{class_core_1_1_v_image_label}{Core::VImageLabel}}*         BlurBackgroundImage;}
+\DoxyCodeLine{34     \mbox{\hyperlink{class_core_1_1_v_image_label}{Core::VImageLabel}}*         ViewingLabel;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{private}:}
+\DoxyCodeLine{37     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     MiniSizeButton;}
+\DoxyCodeLine{38     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     MaxSizeButton;}
+\DoxyCodeLine{39     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     CloseButton;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{bool} InMaxSize = \textcolor{keyword}{false};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{private}:}
+\DoxyCodeLine{44     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     FileOpenButton;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{keyword}{private}:}
+\DoxyCodeLine{47     \mbox{\hyperlink{class_core_1_1_v_u_i_object}{Core::VUIObject}}*         MainuiContainer;}
+\DoxyCodeLine{48     \mbox{\hyperlink{class_core_1_1_v_u_i_object}{Core::VUIObject}}*         StartupuiContainer;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{keyword}{private}:}
+\DoxyCodeLine{51     \mbox{\hyperlink{class_core_1_1_v_text_label}{Core::VTextLabel}}*       TitleText;}
+\DoxyCodeLine{52     \mbox{\hyperlink{class_core_1_1_v_text_label}{Core::VTextLabel}}*       PercentTagText;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{keyword}{private}:}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     ZoomUpButton;}
+\DoxyCodeLine{56     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     ZoomDownButton;}
+\DoxyCodeLine{57     \mbox{\hyperlink{class_core_1_1_v_push_button}{Core::VPushButton}}*     OneToOneButton;}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{keyword}{private}:}
+\DoxyCodeLine{60     \mbox{\hyperlink{class_core_1_1_v_drag_control_base}{Core::VDragControlBase}}* ImageDragger;}
+\DoxyCodeLine{61     \mbox{\hyperlink{class_core_1_1_v_scale_layout}{Core::VScaleLayout}}*       ImageDraggerLayout;}
+\DoxyCodeLine{62                             }
+\DoxyCodeLine{63 \textcolor{keyword}{private}:                  }
+\DoxyCodeLine{64     \mbox{\hyperlink{struct_p_v_file_reading_project}{PVFileReadingProject}}*   ViewingProject;}
+\DoxyCodeLine{65     \mbox{\hyperlink{class_core_1_1_v_image}{Core::VImage}}*           ViewingImage;}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{68     \textcolor{keywordtype}{void} MiniSizeButtonOnClicked();}
+\DoxyCodeLine{69     \textcolor{keywordtype}{void} MaxSizeButtonOnClicked();}
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} CloseButtonOnClicked();}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} ZoomUpButtonOnClicked();}
+\DoxyCodeLine{73     \textcolor{keywordtype}{void} ZoomDownButtonOnClicked();}
+\DoxyCodeLine{74     \textcolor{keywordtype}{void} OneToOneButtonOnClicked();}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} WindowOnResize(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\&, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\&);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{79     \mbox{\hyperlink{class_core_1_1_v_core_point}{Core::VPoint}} OffsetPoint;}
+\DoxyCodeLine{80     \mbox{\hyperlink{class_core_1_1_v_core_point}{Core::VPoint}} CenterOffsetPoint;}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{keywordtype}{bool} StartDrag = \textcolor{keyword}{false};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} ImageStartDrag();}
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} ImageOnDrag(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& X, \textcolor{keyword}{const} \textcolor{keywordtype}{int} \&Y);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{keyword}{private}:}
+\DoxyCodeLine{88     std::wstring GetFileName(\textcolor{keyword}{const} std::wstring\& FilePath);}
+\DoxyCodeLine{89     std::wstring GetFolderPath(\textcolor{keyword}{const} std::wstring\& FilePath);}
+\DoxyCodeLine{90     std::wstring GetPercentString(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& ScalePercent);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{keyword}{private}:}
+\DoxyCodeLine{93     \textcolor{keywordtype}{void} CreateViewingProject(\textcolor{keyword}{const} std::wstring\& FilePath);}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{keyword}{private}:}
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} OpenViewProject();}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 \textcolor{keyword}{public}:}
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} OnMessage(\mbox{\hyperlink{class_core_1_1_v_message}{Core::VMessage}}* Message) \textcolor{keyword}{override};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{keyword}{public}:}
+\DoxyCodeLine{102     \mbox{\hyperlink{class_p_v_main_window}{PVMainWindow}}(\mbox{\hyperlink{class_core_1_1_v_application}{Core::VApplication}}* Parent);}
+\DoxyCodeLine{103     \mbox{\hyperlink{class_p_v_main_window}{PVMainWindow}}(\mbox{\hyperlink{class_core_1_1_v_application}{Core::VApplication}}* Parent, \textcolor{keyword}{const} std::wstring\& FilePath);}
+\DoxyCodeLine{104 \};}
+
+\end{DoxyCode}

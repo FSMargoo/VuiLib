@@ -328,6 +328,10 @@ void VMainWindow::Resize(const int& Width, const int& Height) {
     }
 }
 
+HWND VMainWindow::GetLocalWinId() {
+    return GetHWnd();
+}
+
 }
 
 VLIB_END_NAMESPACE
