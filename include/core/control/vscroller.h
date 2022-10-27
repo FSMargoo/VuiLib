@@ -119,16 +119,19 @@ class VScrollerVertical : public VAbstractButton {
     void SetViewPoint(const int& TargetPoint);
 
  public:
+    void Resize(const int &Width, const int &Height) override;
+
+ public:
     VScrollerVertical(VUIObject* Parent);
     VScrollerVertical(const int& Width, const int& Height, VUIObject* Parent);
     VScrollerVertical(const int& Width, const int& Height, const int& ViewHeight, VUIObject* Parent);
 };
 
 class VScrollerHorizontal : public VAbstractButton {
-private:
+ private:
     int    ScrollerViewWidth = 0;
 
-private:
+ private:
     VViewScrollerTheme*       Theme;
 
     VBasicTimer               AnimationFrameTimer;
@@ -140,42 +143,45 @@ private:
     bool                      InAnimation = false;
     bool                      OnMouseHover = false;
 
-private:
+ private:
     VScrollerPushButton*      ScrollerButton;
 
-private:
+ private:
     void InitViewButton();
     void ResetViewButton();
 
-private:
+ private:
     void ScrollerValueOnChange();
 
-public:
+ public:
     VSignal<const double&> ValueOnChange;
     double GetValue() const;
 
-public:
+ public:
     VRect GetRegion() override;
 
-private:
+ private:
     void OnMessage(VMessage* Message) override;
 
-private:
+ private:
     void SwitchDraggingStatusAnimation();
     void TurnToNormalStatusAnimation();
     void GotMouseFocus() override;
     void LosedMouseFocus() override;
 
-public:
+ public:
     void OnPaint(VCanvasPainter* Painter) override;
     void CheckFrame() override;
 
-public:
+ public:
     void SetViewWidth(const int& Width);
     void SetViewPercent(const double& ViewPercent);
     void SetViewPoint(const int& TargetPoint);
 
-public:
+ public:
+    void Resize(const int &Width, const int &Height) override;
+
+ public:
     VScrollerHorizontal(VUIObject* Parent);
     VScrollerHorizontal(const int& Width, const int& Height, VUIObject* Parent);
     VScrollerHorizontal(const int& Width, const int& Height, const int& ViewHeight, VUIObject* Parent);

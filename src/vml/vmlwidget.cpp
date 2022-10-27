@@ -308,10 +308,26 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"switchgroup") {
-                        Core::VSwitchGroup* SwithGroup = new Core::VSwitchGroup(UIParent->UIObject);
+                        Core::VSwitchGroup* SwitchGroup = new Core::VSwitchGroup(UIParent->UIObject);
 
-                        VMLObject->UIObject = SwithGroup;
+                        VMLObject->UIObject = SwitchGroup;
                         VMLObject->VMLType = VMLObjectType::SwitchGroup;
+                    }
+                    else if (ElementProperty.PropertyAsString == L"vertical-scroller") {
+                        Core::VScrollerVertical* VerticalScroller = new Core::VScrollerVertical(UIParent->UIObject);
+
+                        VMLObject->UIObject = VerticalScroller;
+                        VMLObject->VMLType = VMLObjectType::VerticalScroller;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLVerticalScrollerBuilder  Builder(GetRootFinder(), VerticalScroller, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
                     }
                     else {
                         delete VMLObject;

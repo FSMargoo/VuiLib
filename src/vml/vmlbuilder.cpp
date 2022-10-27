@@ -93,7 +93,8 @@ namespace VML {
 
                 if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
                     X = ElementProperty.second.PropertyAsInt;
-                } else {
+                }
+                else {
                     if (ElementProperty.second.NativeCallMethodName == L"center") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
                     }
@@ -878,7 +879,110 @@ namespace VML {
                          VMLControlBuildStatus* BuildStatus)
             : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
 
+    void VMLVerticalScrollerBuilder::Builder(Core::VScrollerVertical *Scroller, const int &Value,
+                                             const int &ViewValue) {
+        Scroller->SetViewPoint(ViewValue);
+        Scroller->SetViewHeight(Value);
+    }
+    void VMLVerticalScrollerBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VScrollerVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                     VMLControlBuildStatus* BuildStatus) {
+        int ViewHeight = 0;
+        int ViewPoint = 0;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"view-height") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-height\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                ViewHeight = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"view-point") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-point\" Property must match the type \"int\" or \"native call functional\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    ViewPoint = ElementProperty.second.PropertyAsInt;
+                }
+                else {
+                    if (ElementProperty.second.NativeCallMethodName == L"ratio") {
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
+                            ViewPoint = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble * Object->GetHeight();
+                        }
+                    }
+                }
+            }
+        }
+
+        Builder(Object, ViewPoint, ViewHeight);
+    }
+    VMLVerticalScrollerBuilder::VMLVerticalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                           VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLHorizontalScrollerBuilder::Builder(Core::VScrollerHorizontal *Scroller, const int &Value,
+                                             const int &ViewValue) {
+        Scroller->SetViewPoint(ViewValue);
+        Scroller->SetViewWidth(Value);
+    }
+    void VMLHorizontalScrollerBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                     VMLControlBuildStatus* BuildStatus) {
+        int ViewWidth = 0;
+        int ViewPoint = 0;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"view-width") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-height\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                ViewWidth = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"view-point") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-point\" Property must match the type \"int\" or \"native call functional\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
+                    ViewPoint = ElementProperty.second.PropertyAsInt;
+                }
+                else {
+                    if (ElementProperty.second.NativeCallMethodName == L"ratio") {
+                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
+                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
+                            ViewPoint = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble * Object->GetWidth();
+                        }
+                    }
+                }
+            }
+        }
+
+        Builder(Object, ViewPoint, ViewWidth);
+    }
+    VMLHorizontalScrollerBuilder::VMLHorizontalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                           VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 }
 

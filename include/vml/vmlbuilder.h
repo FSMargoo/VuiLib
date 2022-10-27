@@ -11,6 +11,7 @@
 #include "../core/control/vblurlabel.h"
 #include "../core/control/viconbutton.h"
 #include "../core/control/vlineeditor.h"
+#include "../core/control/vscroller.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -32,7 +33,7 @@ namespace VML {
     };
 
     class VMLCommonBuilder {
-    private:
+    protected:
         bool CheckNativeCallParameter(std::vector<VMLPropertyValue> Properties,
                                       std::vector<VMLPropertyType>  PropertiesType);
 
@@ -178,6 +179,28 @@ namespace VML {
     public:
         VMLLineEditorBuilder(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLVerticalScrollerBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VScrollerVertical* Scroller, const int& Value, const int& ViewValue);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VScrollerVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLVerticalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLHorizontalScrollerBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VScrollerHorizontal* Scroller, const int& Value, const int& ViewValue);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLHorizontalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                   VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

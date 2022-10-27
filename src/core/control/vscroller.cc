@@ -427,6 +427,16 @@ void VScrollerVertical::ResetViewButton() {
     ScrollerButton->SetMaxValue(GetHeight());
 }
 
+void VScrollerVertical::Resize(const int &Width, const int &Height) {
+    VUIObject::Resize(Width, Height);
+
+    ResetViewButton();
+
+    if (ScrollerButton->GetY() > Height - ScrollerButton->GetHeight()) {
+        ScrollerButton->Move(GetX(), Height - ScrollerButton->GetHeight());
+    }
+}
+
 void VScrollerVertical::SetViewHeight(const int& Height) {
     ScrollerViewHeight = Height;
 
@@ -633,6 +643,16 @@ void VScrollerHorizontal::ResetViewButton() {
 
     ScrollerButton->SetMiniValue(0);
     ScrollerButton->SetMaxValue(GetWidth());
+}
+
+void VScrollerHorizontal::Resize(const int &Width, const int &Height) {
+    VUIObject::Resize(Width, Height);
+
+    ResetViewButton();
+
+    if (ScrollerButton->GetX() > Width - ScrollerButton->GetWidth()) {
+        ScrollerButton->Move(Width - ScrollerButton->GetWidth(), GetY());
+    }
 }
 
 void VScrollerHorizontal::SetViewWidth(const int& Width) {
