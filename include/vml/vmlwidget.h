@@ -26,6 +26,7 @@ namespace VML {
     public:
         VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
         VMLWidget(Core::VApplication* Parent, const bool& Sizble = true);
+        ~VMLWidget();
 
     public:
         VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);

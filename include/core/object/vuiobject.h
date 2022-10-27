@@ -46,6 +46,7 @@ public:
     VUIObject *GetParent();
 
     virtual VRect GetRegion();
+    virtual VRect GetChildrenVisualRegion();
 
     virtual HWND GetLocalWinId();
 
@@ -124,7 +125,7 @@ public:
 
     virtual void MouseMiddleClicked(VMouseClickedFlag) {}
 
-    virtual bool MouseMiddleDraged(short) { return false; }
+    virtual bool MouseMiddleDragged(short) { return false; }
 
     virtual bool CheckDown(VKeyClickedMessage *) { return false; }
 

@@ -5,6 +5,7 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
+
 class VAbstractButton : public VUIObject {
  public:
      VSignal<> ButtonPushed;
@@ -21,6 +22,7 @@ class VAbstractButton : public VUIObject {
  public:
     VAbstractButton(VUIObject* Parent) : VUIObject(Parent) {  }
 };
+
 }
 
 VLIB_END_NAMESPACE

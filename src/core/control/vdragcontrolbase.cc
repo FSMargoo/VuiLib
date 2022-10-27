@@ -31,28 +31,28 @@ void VDragControlBase::OnMessage(Core::VMessage *Message) {
         switch (Message->GetType()) {
             case VMessageType::MouseClickedMessage: {
                 VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
+
                 if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion()) ||
                     (ClickedMessage->ClickedKey == VMouseKeyFlag::Left && 
                      ClickedMessage->ClickedMethod == VMouseClickedFlag::Up)) {
                     UserInDrag = false;
-                    CallWidgetUnlockFocusID();
 
+                    CallWidgetUnlockFocusID();
                     CallWidgetSendMessage(Message);
                     
                     UserEndDrag.Emit();
-                } else {
+                }
+                else {
                     MouseDragged.Emit();
                 }
 
                 break;
             }
             case VMessageType::MouseMoveMessage: {
-                if (UserInDrag) {
-                    VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+                VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
 
-                    MouseDragged.Emit();
-                    MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
-                }
+                MouseDragged.Emit();
+                MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
 
                 break;
             }

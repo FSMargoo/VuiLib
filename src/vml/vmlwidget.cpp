@@ -16,6 +16,9 @@ namespace VML {
     }
     VMLWidget::VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble)
             : VMainWindow(Width, Height, Parent, Sizble) {    }
+    VMLWidget::~VMLWidget() {
+        VMainWindow::~VMainWindow();
+    }
     VMLWidgetLoadResult VMLWidget::LoadVML(const std::wstring VML, VMLParserParseMode StringMode) {
         VMLParser Parser(VML, StringMode);
 

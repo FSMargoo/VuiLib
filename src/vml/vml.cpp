@@ -48,6 +48,12 @@ namespace VML {
         if (String == L"switchgroup") {
             return VMLObjectType::SwitchGroup;
         }
+        if (String == L"vertical-scroller") {
+            return VMLObjectType::VerticalScroller;
+        }
+        if (String == L"horizontal-scroller") {
+            return VMLObjectType::HorizontalSlider;
+        }
 
         return Type;
     }
@@ -91,6 +97,12 @@ namespace VML {
             }
             case VMLObjectType::SwitchGroup: {
                 return L"switchgroup";
+            }
+            case VMLObjectType::VerticalScroller: {
+                return L"vertical-scroller";
+            }
+            case VMLObjectType::HorizontalScroller: {
+                return L"horizontal-scroller";
             }
         }
 

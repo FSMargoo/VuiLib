@@ -52,6 +52,7 @@ class VMainWindow : public VUIObject {
 
  public:
      VMainWindow(const int& Width, const int& Height, VApplication* Parent, const bool& Sizble = true);
+     ~VMainWindow();
 
  public:
      void CallWidgetSetIME(const int& X, const int& Y) override;

@@ -79,6 +79,11 @@ VMainWindow::VMainWindow(const int& Width, const int& Height, VApplication* Pare
 
     Update( { 0, 0, GetWidth(), GetHeight() } );
 }
+VMainWindow::~VMainWindow() {
+    VUIObject::~VUIObject();
+
+    _VMainConfigs[GetHWnd()] = nullptr;
+}
 
 void VMainWindow::CallWidgetSetIME(const int& X, const int& Y) {
     WindowConfig.IMEX = X;

@@ -52,6 +52,9 @@ VUIObject *VUIObject::GetParent() {
 VRect VUIObject::GetRegion() {
     return ObjectVisual.Rectangle;
 }
+VRect VUIObject::GetChildrenVisualRegion() {
+    return { 0, 0, GetWidth(), GetHeight() };
+}
 
 VCanvasPainter *VUIObject::GetParentCanvas() {
     return GetParent()->Canvas;
@@ -374,11 +377,7 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
             auto RepaintMesage = static_cast<VRepaintMessage *>(Message);
 
             if (RepaintMesage->DirtyRectangle.Overlap(GetRegion()) &&
-                (GetParent()->IsApplication() || GetParent()->GetRegion().Clone().
-                                MoveRV(GetParent()->GetX(), GetParent()->GetY())
-                        ->Overlap(GetRegion()))
-                    ) {
-
+                (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
                 VRepaintMessage *ChildRepaintMessage = RepaintMesage;
 
                 if (Canvas != nullptr) {
@@ -428,7 +427,9 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
         case VMessageType::MouseWheelMessage: {
             auto WheelMessage = static_cast<VMouseWheelMessage *>(Message);
 
-            return MouseMiddleDraged(WheelMessage->WheelValue);
+            MouseMiddleDragged(WheelMessage->WheelValue);
+
+            return SendMessageToChild(WheelMessage, false);
         }
         case VMessageType::KeyClickedMessage: {
             auto KeyMessage = static_cast<VKeyClickedMessage *>(Message);
