@@ -329,6 +329,38 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"horizontal-scroller") {
+                        Core::VScrollerHorizontal* VerticalScroller = new Core::VScrollerHorizontal(UIParent->UIObject);
+
+                        VMLObject->UIObject = VerticalScroller;
+                        VMLObject->VMLType = VMLObjectType::VerticalScroller;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLHorizontalScrollerBuilder Builder(GetRootFinder(), VerticalScroller, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"viewlabel") {
+                        Core::VViewLabel* ViewLabel = new Core::VViewLabel(UIParent->UIObject);
+
+                        VMLObject->UIObject = ViewLabel;
+                        VMLObject->VMLType = VMLObjectType::ViewLabel;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLViewLabelBuilder Builder(GetRootFinder(), ViewLabel, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 
@@ -475,6 +507,33 @@ namespace VML {
                     );
 
                     VSS::VSSVSliderHorizontalBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
+                }
+                if (ElementTag == L"horizontal-scroller") {
+                    Core::VViewScrollerTheme* SliderTheme = new Core::VViewScrollerTheme(*(static_cast<Core::VViewScrollerTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VViewLabel)))
+                    );
+
+                    VSS::VSSHorizontalScrollerBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
+                }
+                if (ElementTag == L"vertical-scroller") {
+                    Core::VViewScrollerTheme* SliderTheme = new Core::VViewScrollerTheme(*(static_cast<Core::VViewScrollerTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VViewLabel)))
+                    );
+
+                    VSS::VSSHorizontalScrollerBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
+
+                    static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
+                }
+                if (ElementTag == L"view-label") {
+                    Core::VViewLabelTheme* SliderTheme = new Core::VViewLabelTheme(*(static_cast<Core::VViewLabelTheme*>(
+                            GetTargetTheme(Core::VUIThemeType::VViewLabel)))
+                    );
+
+                    VSS::VSSViewLabelBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector*>{Selector}, SliderTheme);
 
                     static_cast<Core::VApplication*>(GetParent())->SetTheme(SliderTheme);
                 }

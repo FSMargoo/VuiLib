@@ -100,7 +100,7 @@ class VScrollerVertical : public VAbstractButton {
  public:
     VRect GetRegion() override;
 
- private:
+ public:
     void OnMessage(VMessage* Message) override;
 
  private:
@@ -120,6 +120,10 @@ class VScrollerVertical : public VAbstractButton {
 
  public:
     void Resize(const int &Width, const int &Height) override;
+
+ public:
+    VViewScrollerTheme*  GetTheme();
+    VScrollerPushButton* GetScrollerButtonInstance();
 
  public:
     VScrollerVertical(VUIObject* Parent);
@@ -160,7 +164,7 @@ class VScrollerHorizontal : public VAbstractButton {
  public:
     VRect GetRegion() override;
 
- private:
+ public:
     void OnMessage(VMessage* Message) override;
 
  private:
@@ -180,6 +184,10 @@ class VScrollerHorizontal : public VAbstractButton {
 
  public:
     void Resize(const int &Width, const int &Height) override;
+
+ public:
+    VViewScrollerTheme*  GetTheme();
+    VScrollerPushButton* GetScrollerButtonInstance();
 
  public:
     VScrollerHorizontal(VUIObject* Parent);

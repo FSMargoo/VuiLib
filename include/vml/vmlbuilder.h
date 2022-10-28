@@ -12,6 +12,7 @@
 #include "../core/control/viconbutton.h"
 #include "../core/control/vlineeditor.h"
 #include "../core/control/vscroller.h"
+#include "../core/control/vviewlabel.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -201,6 +202,20 @@ namespace VML {
     public:
         VMLHorizontalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                    VMLControlBuildStatus* BuildStatus);
+    };
+
+    class VMLViewLabelBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VViewLabel* ViewLabel, const int& ViewWidth, const int& ViewHeight,
+                     const Core::VViewLabelVerticalAlign& VerticalAlign, const Core::VViewLabelHorizontalAlign& HorizontalAlign,
+                     const bool& TieWheel);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VViewLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLViewLabelBuilder(const VMLFinder& RootFinder, Core::VViewLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                     VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

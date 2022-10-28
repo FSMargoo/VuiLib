@@ -13,7 +13,7 @@ namespace VML {
     enum class VMLObjectType {
         PushButton, ImageLabel, TextLabel, MainWindow, Layout, ScaleLayout, RadioButton,
         HorizontalSlider, VerticalSlider, FakeCaption, BlurLabel, IconButton, LineEditor,
-        SwitchGroup, VerticalScroller, HorizontalScroller
+        SwitchGroup, VerticalScroller, HorizontalScroller, ViewLabel
     };
 
     struct VMLObject {

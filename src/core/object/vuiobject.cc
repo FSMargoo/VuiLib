@@ -86,6 +86,11 @@ void VUIObject::CallWidgetSetFocusID(const std::wstring& ObjectID) {
     }
 }
 
+void VUIObject::RestoreMousePosition(VPoint* MousePosition) {
+    MousePosition->X -= GetX();
+    MousePosition->X -= GetY();
+}
+
 std::wstring VUIObject::CallWidgetGetFocusID() {
     if (GetParent() != nullptr) {
         return GetParent()->CallWidgetGetFocusID();
@@ -116,6 +121,27 @@ bool VUIObject::CallWidgetGetLockingStatus() {
 
 void VUIObject::CallWidgetSendMessage(VMessage *Message) {
     if (GetParent() != nullptr) {
+        switch (Message->GetType()) {
+            case VMessageType::CheckLocalFocusMessage: {
+                GetParent()->RestoreMousePosition(&static_cast<VCheckFocusMessage *>(Message)->FocusPoint);
+
+                break;
+            }
+            case VMessageType::MouseMoveMessage: {
+                GetParent()->RestoreMousePosition(&static_cast<VMouseMoveMessage *>(Message)->MousePosition);
+
+                break;
+            }
+            case VMessageType::MouseClickedMessage: {
+                GetParent()->RestoreMousePosition(&static_cast<VMouseClickedMessage *>(Message)->MousePosition);
+
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
         return GetParent()->CallWidgetSendMessage(Message);
     }
 }
@@ -138,16 +164,7 @@ Core::VCanvasPainter *VUIObject::CallWidgetGetCanvas() {
 
 void VUIObject::Update(VRect UpdateRect) {
     if (GetParent() != nullptr) {
-        auto ParentRectangle = GetParent()->GetRegion().Clone();
-        ParentRectangle.Move(0, 0);
-
-        if (UpdateRect.Overlap(ParentRectangle)) {
-            if (GetParent()->IsWidget()) {
-                UpdateRect = GetParent()->GetRegion();
-            }
-
-            return GetParent()->Update(UpdateRect);
-        }
+        return GetParent()->Update(UpdateRect);
     }
 }
 
@@ -319,7 +336,8 @@ bool VUIObject::CheckUIFocusStatus(const VPoint &MousePosition, VMessage *Source
         }
 
         return true;
-    } else if (ObjectVisual.Stats == VUIObjectUIStats::OnFocus) {
+    }
+    else if (ObjectVisual.Stats == VUIObjectUIStats::OnFocus) {
         ObjectVisual.Stats = VUIObjectUIStats::Normal;
 
         Update();
@@ -330,6 +348,56 @@ bool VUIObject::CheckUIFocusStatus(const VPoint &MousePosition, VMessage *Source
         LosedFocus.Emit();
 
         return false;
+    }
+
+    return false;
+}
+
+bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage) {
+    if (RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
+        (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
+        VRepaintMessage *ChildRepaintMessage = RepaintMessage;
+
+        if (Canvas != nullptr) {
+            delete Canvas;
+
+            Canvas = nullptr;
+        }
+
+        if (ObjectVisual.Transparency != 0) {
+            Canvas = new VCanvasPainter(GetRegion().GetWidth(),
+                                        GetRegion().GetHeight(),
+                                        CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+            Canvas->BeginDraw();
+            Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
+            Canvas->EndDraw();
+
+            OnPaint(Canvas);
+
+            if (!IsWidget() && !IsApplication()) {
+                ChildRepaintMessage = new VRepaintMessage(*RepaintMessage);
+
+                ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
+            }
+
+            Canvas->BeginDraw();
+            SendMessageToChild(ChildRepaintMessage, false);
+            Canvas->EndDraw();
+
+            if (ChildRepaintMessage != RepaintMessage) {
+                delete ChildRepaintMessage;
+            }
+
+            EditCanvas(Canvas);
+
+            GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
+
+            delete Canvas;
+
+            Canvas = nullptr;
+        }
+
+        return true;
     }
 
     return false;
@@ -374,55 +442,9 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
             break;
         }
         case VMessageType::RepaintMessage: {
-            auto RepaintMesage = static_cast<VRepaintMessage *>(Message);
+            auto RepaintMessage = static_cast<VRepaintMessage *>(Message);
 
-            if (RepaintMesage->DirtyRectangle.Overlap(GetRegion()) &&
-                (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
-                VRepaintMessage *ChildRepaintMessage = RepaintMesage;
-
-                if (Canvas != nullptr) {
-                    delete Canvas;
-
-                    Canvas = nullptr;
-                }
-
-                if (ObjectVisual.Transparency != 0) {
-                    Canvas = new VCanvasPainter(GetRegion().GetWidth(),
-                                                GetRegion().GetHeight(),
-                                                CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
-                    Canvas->BeginDraw();
-                    Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
-                    Canvas->EndDraw();
-
-                    OnPaint(Canvas);
-
-                    if (!IsWidget() && !IsApplication()) {
-                        ChildRepaintMessage = new VRepaintMessage(*RepaintMesage);
-
-                        ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
-                    }
-
-                    Canvas->BeginDraw();
-                    SendMessageToChild(ChildRepaintMessage, false);
-                    Canvas->EndDraw();
-
-                    if (ChildRepaintMessage != RepaintMesage) {
-                        delete ChildRepaintMessage;
-                    }
-
-                    EditCanvas(Canvas);
-
-                    GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
-
-                    delete Canvas;
-
-                    Canvas = nullptr;
-                }
-
-                return true;
-            }
-
-            return false;
+            return OnMessageTrigger(RepaintMessage);
         }
         case VMessageType::MouseWheelMessage: {
             auto WheelMessage = static_cast<VMouseWheelMessage *>(Message);

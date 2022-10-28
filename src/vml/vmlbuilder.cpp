@@ -925,7 +925,7 @@ namespace VML {
             }
         }
 
-        Builder(Object, ViewPoint, ViewHeight);
+        Builder(Object, ViewHeight, ViewPoint);
     }
     VMLVerticalScrollerBuilder::VMLVerticalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                            VMLControlBuildStatus* BuildStatus)
@@ -947,7 +947,7 @@ namespace VML {
             if (ElementProperty.first == L"view-width") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"view-height\" Property Must Match the Type \"int\"";
+                    BuildStatus->FailedReason = L"\"view-width\" Property Must Match the Type \"int\"";
 
                     return;
                 }
@@ -977,11 +977,112 @@ namespace VML {
             }
         }
 
-        Builder(Object, ViewPoint, ViewWidth);
+        Builder(Object, ViewWidth, ViewPoint);
     }
     VMLHorizontalScrollerBuilder::VMLHorizontalScrollerBuilder(const VMLFinder& RootFinder, Core::VScrollerHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                            VMLControlBuildStatus* BuildStatus)
             : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLViewLabelBuilder::Builder(Core::VViewLabel* ViewLabel, const int& ViewWidth, const int& ViewHeight,
+                 const Core::VViewLabelVerticalAlign& VerticalAlign, const Core::VViewLabelHorizontalAlign& HorizontalAlign,
+                 const bool& TieWheel) {
+        ViewLabel->SetViewRegion({ ViewWidth, ViewHeight });
+        ViewLabel->SetVerticalAlign(VerticalAlign);
+        ViewLabel->SetHorizontalAlign(HorizontalAlign);
+        ViewLabel->SetTieWithWheel(TieWheel);
+    }
+    void VMLViewLabelBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VViewLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                              VMLControlBuildStatus* BuildStatus) {
+        int ViewWidth = 0;
+        int ViewHeight = 0;
+
+        Core::VViewLabelVerticalAlign VerticalAlign = Core::VViewLabelVerticalAlign::Right;
+        Core::VViewLabelHorizontalAlign HorizontalAlign = Core::VViewLabelHorizontalAlign::Bottom;
+
+        bool TieWheel = false;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"view-width") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-width\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                ViewWidth = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"view-height") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-height\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                ViewHeight = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"vertical-align") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"vertical-align\" Property Must Match the Type \"vertical-align-string\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyAsString == L"left") {
+                    VerticalAlign = Core::VViewLabelVerticalAlign::Left;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"right") {
+                    VerticalAlign = Core::VViewLabelVerticalAlign::Right;
+                }
+                else {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"vertical-align\" Property Must Match the Type \"vertical-align-string\"";
+
+                    return;
+                }
+            }
+            if (ElementProperty.first == L"horizontal-align") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"horizontal-align\" Property Must Match the Type \"horizontal-align-string\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyAsString == L"top") {
+                    HorizontalAlign = Core::VViewLabelHorizontalAlign::Top;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"bottom") {
+                    HorizontalAlign = Core::VViewLabelHorizontalAlign::Bottom;
+                }
+                else {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"horizontal-align\" Property Must Match the Type \"horizontal-align-string\"";
+
+                    return;
+                }
+            }
+            if (ElementProperty.first == L"tie-wheel") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"view-wheel\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                TieWheel = ElementProperty.second.PropertyAsBool;
+            }
+        }
+
+        Builder(Object, ViewWidth, ViewHeight, VerticalAlign, HorizontalAlign, TieWheel);
+    }
+    VMLViewLabelBuilder::VMLViewLabelBuilder(const VMLFinder& RootFinder, Core::VViewLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                          VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 }

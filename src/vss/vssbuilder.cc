@@ -1615,6 +1615,866 @@ namespace VSS {
             Core::VTextEditorTheme *TextEditorTheme) {
         BuildVSSObject(TargetControl, SelectorSet, TextEditorTheme);
     }
+
+    void VSSVerticalScrollerBuilder::BuildVSSObject(Core::VScrollerVertical *TargetControl,
+                        std::vector<VSSBasicSelector *> SelectorSet,
+                        Core::VViewScrollerTheme *ScrollerTheme) {
+        Core::VViewScrollerTheme *Theme = ScrollerTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"vertical-scroller") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-family") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetFamilyName(PropertyValue.PropertyAsString);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-size") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->LabelFont->SetTextSize(PropertyValue.PropertyAsInt);
+                            }
+                        }
+                    }
+                    if (Property.first == L"text-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetLineAlignment(VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+                    if (Property.first == L"vertical-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetParagraphAlignment(
+                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"vertical-scroller" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"vertical-scroller" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"vertical-scroller" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"scroller-button";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"vertical-scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"vertical-scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+        }
+
+        Theme->LocalTheme = Theme->StaticTheme;
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSVerticalScrollerBuilder::VSSVerticalScrollerBuilder(Core::VScrollerVertical *TargetControl,
+                                                           std::vector<VSSBasicSelector *> SelectorSet,
+                                                           Core::VViewScrollerTheme *ScrollerTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, ScrollerTheme);
+    }
+
+    void VSSHorizontalScrollerBuilder::BuildVSSObject(Core::VScrollerHorizontal *TargetControl,
+                                                    std::vector<VSSBasicSelector *> SelectorSet,
+                                                    Core::VViewScrollerTheme *ScrollerTheme) {
+        Core::VViewScrollerTheme *Theme = ScrollerTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"horizontal-scroller") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-family") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetFamilyName(PropertyValue.PropertyAsString);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-size") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->LabelFont->SetTextSize(PropertyValue.PropertyAsInt);
+                            }
+                        }
+                    }
+                    if (Property.first == L"text-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetLineAlignment(VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+                    if (Property.first == L"vertical-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetParagraphAlignment(
+                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"horizontal-scroller" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"horizontal-scroller" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"horizontal-scroller" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"scroller-button";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"horizontal-scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"horizontal-scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder GrooveBuilder(TargetControl->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+        }
+
+        Theme->LocalTheme = Theme->StaticTheme;
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+    VSSHorizontalScrollerBuilder::VSSHorizontalScrollerBuilder(Core::VScrollerHorizontal *TargetControl,
+                                                           std::vector<VSSBasicSelector *> SelectorSet,
+                                                           Core::VViewScrollerTheme *ScrollerTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, ScrollerTheme);
+    }
+
+    void VSSScrollerButtonBuilder::BuildVSSObject(Core::VScrollerPushButton *TargetControl,
+                                                  std::vector<VSSBasicSelector *> SelectorSet,
+                                                  Core::VViewScrollerButtonTheme *ScrollerTheme) {
+        Core::VViewScrollerButtonTheme *Theme = ScrollerTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"scroller-button") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-family") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetFamilyName(PropertyValue.PropertyAsString);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-size") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->LabelFont->SetTextSize(PropertyValue.PropertyAsInt);
+                            }
+                        }
+                    }
+                    if (Property.first == L"text-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetLineAlignment(VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+                    if (Property.first == L"vertical-align") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetParagraphAlignment(
+                                        VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"scroller-button" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"scroller-button" &&
+                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border-width") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.Radius = { PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"border") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Theme->LocalTheme = Theme->StaticTheme;
+
+        if (TargetControl != nullptr) { TargetControl->Update(); }
+    }
+
+    VSSScrollerButtonBuilder::VSSScrollerButtonBuilder(Core::VScrollerPushButton *TargetControl,
+                                                       std::vector<VSSBasicSelector *> SelectorSet,
+                                                       Core::VViewScrollerButtonTheme *ScrollerTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, ScrollerTheme);
+    }
+
+    void VSSViewLabelBuilder::BuildVSSObject(Core::VViewLabel *TargetControl,
+                        std::vector<VSSBasicSelector *> SelectorSet,
+                        Core::VViewLabelTheme *ViewLabelTheme) {
+        Core::VViewLabelTheme* Theme = ViewLabelTheme;
+
+        if (TargetControl != nullptr) {
+            Theme = TargetControl->GetTheme();
+        }
+
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"viewlabel") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    // Common Property ( Not fade switch supported )
+                    if (Property.first == L"opacity") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
+                                TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+                            }
+                        }
+                    }
+
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->BackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->BorderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"groove") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"scroller-button";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+                VSSScrollerButtonBuilder HorizontalGrooveBuilder(TargetControl->GetHorizontalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+                VSSScrollerButtonBuilder HorizontalGrooveBuilder(TargetControl->GetHorizontalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"groove" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+                VSSScrollerButtonBuilder HorizontalGrooveBuilder(TargetControl->GetHorizontalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"scroller") {
+                VSSElementSelector* GrooverSelector = new VSSElementSelector;
+                GrooverSelector->ElementTag = L"scroller-button";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSScrollerButtonBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+                VSSScrollerButtonBuilder HorizontalGrooveBuilder(TargetControl->GetVerticalScrollerInstance()->GetScrollerButtonInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"hover") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"hover";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSVerticalScrollerBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance(), { GrooverSelector }, nullptr);
+                VSSHorizontalScrollerBuilder HorizontalGrooveBuilder(TargetControl->GetHorizontalScrollerInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementWithClassSelector &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ElementTag == L"viewlabel" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->FakeElementTag == L"scroller" &&
+                static_cast<VSSFakeElementWithClassSelector*>(Selector)->ClassTag == L"active") {
+                VSSClassSelector* GrooverSelector = new VSSClassSelector;
+                GrooverSelector->TargetElement = L"scroller-button";
+                GrooverSelector->ClassTag = L"active";
+                GrooverSelector->SelectorProperty = Selector->SelectorProperty;
+
+                VSSVerticalScrollerBuilder VerticalGrooveBuilder(TargetControl->GetVerticalScrollerInstance(), { GrooverSelector }, nullptr);
+                VSSHorizontalScrollerBuilder HorizontalGrooveBuilder(TargetControl->GetHorizontalScrollerInstance(), { GrooverSelector }, nullptr);
+
+                delete GrooverSelector;
+            }
+        }
+
+        if (TargetControl != nullptr) { TargetControl->Update(TargetControl->GetRegion()); }
+    }
+    VSSViewLabelBuilder::VSSViewLabelBuilder(Core::VViewLabel *TargetControl,
+                                             std::vector<VSSBasicSelector *> SelectorSet,
+                                             Core::VViewLabelTheme *ViewLabelTheme) {
+        BuildVSSObject(TargetControl, SelectorSet, ViewLabelTheme);
+    }
 }
 
 VLIB_END_NAMESPACE

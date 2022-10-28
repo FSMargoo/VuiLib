@@ -77,6 +77,9 @@ private:
     std::wstring GeneratedGlobalID(std::wstring TargetID = L"");
 
 protected:
+    virtual void RestoreMousePosition(VPoint* MousePosition);
+
+protected:
     virtual void CallWidgetSetIME(const int& X, const int& Y);
 
     virtual void CallWidgetSetFocusID(const std::wstring& ObjectID);
@@ -113,6 +116,8 @@ protected:
     virtual void OnPaint(VCanvasPainter *) {}
 
     virtual void EditCanvas(VCanvasPainter *) {}
+
+    virtual bool OnMessageTrigger(VRepaintMessage *Message);
 
 public:
     virtual void GotMouseFocus() {}

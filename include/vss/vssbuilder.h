@@ -11,6 +11,8 @@
 #include "../core/control/vblurlabel.h"
 #include "../core/control/viconbutton.h"
 #include "../core/control/vlineeditor.h"
+#include "../core/control/vscroller.h"
+#include "../core/control/vviewlabel.h"
 
 #include "../core/widget/vwidget.h"
 
@@ -151,6 +153,53 @@ namespace VSS {
         VSSVLineEditorBuilder(Core::VLineEditor *TargetControl,
                               std::vector<VSSBasicSelector *> SelectorSet,
                               Core::VTextEditorTheme *TextEditorTheme);
+    };
+
+    class VSSScrollerButtonBuilder {
+    private:
+        void BuildVSSObject(Core::VScrollerPushButton *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VViewScrollerButtonTheme *ScrollerTheme);
+
+    public:
+        VSSScrollerButtonBuilder(Core::VScrollerPushButton *TargetControl,
+                std::vector<VSSBasicSelector *> SelectorSet,
+                Core::VViewScrollerButtonTheme *ScrollerTheme);
+    };
+
+    class VSSVerticalScrollerBuilder {
+    private:
+        void BuildVSSObject(Core::VScrollerVertical *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VViewScrollerTheme *ScrollerTheme);
+
+    public:
+        VSSVerticalScrollerBuilder(Core::VScrollerVertical *TargetControl,
+                              std::vector<VSSBasicSelector *> SelectorSet,
+                              Core::VViewScrollerTheme *ScrollerTheme);
+    };
+    class VSSHorizontalScrollerBuilder {
+    private:
+        void BuildVSSObject(Core::VScrollerHorizontal *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VViewScrollerTheme *ScrollerTheme);
+
+    public:
+        VSSHorizontalScrollerBuilder(Core::VScrollerHorizontal *TargetControl,
+                                   std::vector<VSSBasicSelector *> SelectorSet,
+                                   Core::VViewScrollerTheme *ScrollerTheme);
+    };
+
+    class VSSViewLabelBuilder {
+    private:
+        void BuildVSSObject(Core::VViewLabel *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet,
+                            Core::VViewLabelTheme *ViewLabelTheme);
+
+    public:
+        VSSViewLabelBuilder(Core::VViewLabel *TargetControl,
+                std::vector<VSSBasicSelector *> SelectorSet,
+                Core::VViewLabelTheme *ViewLabelTheme);
     };
 }
 

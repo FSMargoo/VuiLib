@@ -196,11 +196,24 @@ void VMainWindow::CheckFrame() {
                                                                CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
 
             Canvas->BeginDraw();
-            for (auto& Message : RepaintMessages) {
-                OnPaint(Canvas, Message->DirtyRectangle);
-                SendMessageToChild(Message, false);
+            if (!WindowConfig.EnableRadius) {
+                for (auto &Message: RepaintMessages) {
+                    OnPaint(Canvas, Message->DirtyRectangle);
+                    SendMessageToChild(Message, false);
 
-                delete Message;
+                    delete Message;
+                }
+            }
+            else {
+                for (auto &Message: RepaintMessages) {
+                    delete Message;
+                }
+                RepaintMessages.clear();
+
+                VRepaintMessage RepaintAll({ 0, 0, GetWidth(), GetHeight() });
+
+                OnPaint(Canvas, RepaintAll.DirtyRectangle);
+                SendMessageToChild(&RepaintAll, false);
             }
             Canvas->EndDraw();
 
@@ -230,6 +243,7 @@ void VMainWindow::CheckFrame() {
 
                 DCRenderTarget->BeginDraw();
 
+                DCRenderTarget->Clear(D2D1::ColorF(0.f, 0.f, 0.f, 0.f));
                 DCRenderTarget->FillRoundedRectangle(D2D1_ROUNDED_RECT{
                         {0, 0, static_cast<float>(GetWidth() - 1), static_cast<float>(GetHeight() - 1)},
                         static_cast<float>(WindowConfig.BorderRadius.X),

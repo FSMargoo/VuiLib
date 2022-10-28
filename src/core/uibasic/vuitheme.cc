@@ -342,6 +342,19 @@ VViewScrollerTheme::VViewScrollerTheme(const VViewScrollerTheme& Theme) {
     LocalTheme = StaticTheme;
 }
 
+VViewLabelTheme::VViewLabelTheme() {
+    BackgroundColor = VColor(0.f, 0.f, 0.f, 0.f);
+    BorderColor = VColor(0.f, 0.f, 0.f, 0.f);
+
+    Radius = { 8, 8 };
+}
+
+VViewLabelTheme::VViewLabelTheme(const VViewLabelTheme& Theme) {
+    BackgroundColor = Theme.BackgroundColor;
+    BorderColor = Theme.BorderColor;
+    Radius = Theme.Radius;
+}
+
 }
 
 VLIB_END_NAMESPACE

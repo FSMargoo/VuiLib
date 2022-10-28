@@ -54,6 +54,9 @@ namespace VML {
         if (String == L"horizontal-scroller") {
             return VMLObjectType::HorizontalSlider;
         }
+        if (String == L"viewlabel") {
+            return VMLObjectType::ViewLabel;
+        }
 
         return Type;
     }
@@ -103,6 +106,9 @@ namespace VML {
             }
             case VMLObjectType::HorizontalScroller: {
                 return L"horizontal-scroller";
+            }
+            case VMLObjectType::ViewLabel: {
+                return L"viewlabel";
             }
         }
 
@@ -157,6 +163,21 @@ namespace VML {
             }
             case VMLObjectType::LineEditor: {
                 VSS::VSSVLineEditorBuilder Builder(static_cast<Core::VLineEditor*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::VerticalScroller: {
+                VSS::VSSVerticalScrollerBuilder Builder(static_cast<Core::VScrollerVertical*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::HorizontalScroller: {
+                VSS::VSSHorizontalScrollerBuilder Builder(static_cast<Core::VScrollerHorizontal*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::ViewLabel: {
+                VSS::VSSViewLabelBuilder Builder(static_cast<Core::VViewLabel*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }

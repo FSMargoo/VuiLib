@@ -13,7 +13,7 @@ namespace Core {
 
 enum class VUIThemeType {
 	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton, VSlider, VBlurLabel,
-    VIconButton, VTextEditor, VViewScroller, VViewScrollerPushButton
+    VIconButton, VTextEditor, VViewScroller, VViewScrollerPushButton, VViewLabel
 };
 
 struct VBasicUITheme {
@@ -252,6 +252,23 @@ public:
 public:
     VUIThemeType GetThemeType() override {
         return VUIThemeType::VViewScroller;
+    }
+};
+
+class VViewLabelTheme : public VBasicUITheme {
+public:
+    VColor BackgroundColor;
+    VColor BorderColor;
+
+    VPoint Radius;
+
+public:
+    VViewLabelTheme();
+    VViewLabelTheme(const VViewLabelTheme& Theme);
+
+public:
+    VUIThemeType GetThemeType() override {
+        return VUIThemeType::VViewLabel;
     }
 };
 

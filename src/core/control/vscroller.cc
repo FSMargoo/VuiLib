@@ -382,7 +382,11 @@ void VScrollerVertical::ScrollerValueOnChange() {
     ValueOnChange.Emit(double(GetHeight()) / double(ScrollerButton->GetY()));
 }
 double VScrollerVertical::GetValue() const {
-    return double(GetHeight()) / double(ScrollerButton->GetY());
+    if (GetHeight() >= ScrollerViewHeight) {
+        return 1.f;
+    }
+
+    return double(ScrollerButton->GetY()) / double(GetHeight() - ScrollerButton->GetHeight());
 }
 
 void VScrollerVertical::OnMessage(Core::VMessage* Message) {
@@ -415,16 +419,18 @@ void VScrollerVertical::InitViewButton() {
     ScrollerButton->ScrollerOnTrigger.Connect(this, &VScrollerVertical::ScrollerValueOnChange);
 }
 void VScrollerVertical::ResetViewButton() {
-    auto ViewRatioRegion = double(GetHeight()) / double(ScrollerViewHeight);
+    if (ScrollerViewHeight > 0) {
+        auto ViewRatioRegion = double(GetHeight()) / double(ScrollerViewHeight);
 
-    ScrollerButton->Resize(GetWidth(), GetHeight() * ViewRatioRegion);
+        ScrollerButton->Resize(GetWidth(), GetHeight() * ViewRatioRegion);
 
-    if (ScrollerButton->GetHeight() <= 20) {
-        ScrollerButton->Resize(GetWidth(), 20);
+        if (ScrollerButton->GetHeight() <= 20) {
+            ScrollerButton->Resize(GetWidth(), 20);
+        }
+
+        ScrollerButton->SetMiniValue(0);
+        ScrollerButton->SetMaxValue(GetHeight());
     }
-
-    ScrollerButton->SetMiniValue(0);
-    ScrollerButton->SetMaxValue(GetHeight());
 }
 
 void VScrollerVertical::Resize(const int &Width, const int &Height) {
@@ -435,6 +441,14 @@ void VScrollerVertical::Resize(const int &Width, const int &Height) {
     if (ScrollerButton->GetY() > Height - ScrollerButton->GetHeight()) {
         ScrollerButton->Move(GetX(), Height - ScrollerButton->GetHeight());
     }
+}
+
+VViewScrollerTheme* VScrollerVertical::GetTheme() {
+    return Theme;
+}
+
+VScrollerPushButton* VScrollerVertical::GetScrollerButtonInstance() {
+    return ScrollerButton;
 }
 
 void VScrollerVertical::SetViewHeight(const int& Height) {
@@ -534,6 +548,16 @@ void VScrollerHorizontal::LosedMouseFocus() {
 
     Update();
 }
+
+VViewScrollerTheme* VScrollerHorizontal::GetTheme() {
+    return Theme;
+}
+
+VScrollerPushButton* VScrollerHorizontal::GetScrollerButtonInstance() {
+    return ScrollerButton;
+}
+
+
 void VScrollerHorizontal::CheckFrame() {
     if (!Interpolator->IsEnd() && InAnimation) {
         if (AnimationFrameTimer.End()) {
@@ -600,7 +624,11 @@ void VScrollerHorizontal::ScrollerValueOnChange() {
     ValueOnChange.Emit(double(GetWidth()) / double(ScrollerButton->GetX()));
 }
 double VScrollerHorizontal::GetValue() const {
-    return double(GetHeight()) / double(ScrollerButton->GetY());
+    if (GetWidth() >= ScrollerViewWidth) {
+        return 1.f;
+    }
+
+    return double(ScrollerButton->GetX()) / double(GetWidth() - ScrollerButton->GetWidth());
 }
 
 void VScrollerHorizontal::OnMessage(Core::VMessage* Message) {
@@ -631,18 +659,22 @@ void VScrollerHorizontal::InitViewButton() {
     ScrollerButton->OnMouseFocus.Connect(this, &VScrollerHorizontal::GotMouseFocus);
     ScrollerButton->LoseMouseFocus.Connect(this, &VScrollerHorizontal::LosedMouseFocus);
     ScrollerButton->ScrollerOnTrigger.Connect(this, &VScrollerHorizontal::ScrollerValueOnChange);
+
+    ScrollerButton->Move(0, 0);
 }
 void VScrollerHorizontal::ResetViewButton() {
-    auto ViewRatioRegion = double(GetWidth()) / double(ScrollerViewWidth);
+    if (ScrollerViewWidth > 0) {
+        auto ViewRatioRegion = double(GetWidth()) / double(ScrollerViewWidth);
 
-    ScrollerButton->Resize(GetWidth() * ViewRatioRegion, GetHeight());
+        ScrollerButton->Resize(GetWidth() * ViewRatioRegion, GetHeight());
 
-    if (ScrollerButton->GetWidth() <= 20) {
-        ScrollerButton->Resize(ViewRatioRegion, 20);
+        if (ScrollerButton->GetWidth() <= 20) {
+            ScrollerButton->Resize(ViewRatioRegion, 20);
+        }
+
+        ScrollerButton->SetMiniValue(0);
+        ScrollerButton->SetMaxValue(GetWidth());
     }
-
-    ScrollerButton->SetMiniValue(0);
-    ScrollerButton->SetMaxValue(GetWidth());
 }
 
 void VScrollerHorizontal::Resize(const int &Width, const int &Height) {
