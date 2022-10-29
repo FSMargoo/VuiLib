@@ -14,6 +14,8 @@
 #include "../core/control/vscroller.h"
 #include "../core/control/vviewlabel.h"
 
+#include "../core/animation/vanimation.h"
+
 #include "../core/widget/vwidget.h"
 
 #include "vmlparser.h"
@@ -216,6 +218,40 @@ namespace VML {
     public:
         VMLViewLabelBuilder(const VMLFinder& RootFinder, Core::VViewLabel* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                      VMLControlBuildStatus* BuildStatus);
+    };
+
+    class VMLGeometryAnimationBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VGeometryAnimation* Animation, const Core::VPoint& TargetPoint, const Core::VAnimationCurveFlag& Flag, const int& Duration);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VGeometryAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLGeometryAnimationBuilder(const VMLFinder& RootFinder, Core::VGeometryAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                            VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLPositionAnimationBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VPositionAnimation* Animation, const Core::VPoint& TargetPoint, const Core::VAnimationCurveFlag& Flag, const int& Duration);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VPositionAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLPositionAnimationBuilder(const VMLFinder& RootFinder, Core::VPositionAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                    VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLOpacityAnimationBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VOpacityAnimation* Animation, const int& TargetValue, const Core::VAnimationCurveFlag& Flag, const int& Duration);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLOpacityAnimationBuilder(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                    VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

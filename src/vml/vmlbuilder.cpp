@@ -1085,6 +1085,312 @@ namespace VML {
             : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
+
+    void VMLGeometryAnimationBuilder::Builder(Core::VGeometryAnimation* Animation, const Core::VPoint& TargetPoint, const Core::VAnimationCurveFlag& Flag, const int& Duration) {
+        Animation->SetTargetSize(TargetPoint);
+        Animation->SetCurve(Core::VAnimationCurveFactory::GetCurve(Flag));
+        Animation->SetDuration(Duration);
+    }
+    void VMLGeometryAnimationBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VGeometryAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                              VMLControlBuildStatus* BuildStatus) {
+        Core::VPoint TargetPoint;
+        Core::VAnimationCurveFlag AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+
+        int Duration = 0;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"target-point") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"target-point\" Property Must Match the Type \"point-native\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.NativeCallMethodName == L"point") {
+                    if (ElementProperty.second.NativeCallParameter.size() == 2 &&
+                        CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                        TargetPoint = { ElementProperty.second.NativeCallParameter[0].PropertyAsInt, ElementProperty.second.NativeCallParameter[0].PropertyAsInt };
+                    }
+                }
+            }
+
+            if (ElementProperty.first == L"animation-curve") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyAsString == L"ease-liner-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuartCurve;
+                }
+                else {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+            }
+
+            if (ElementProperty.first == L"duration") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"duration\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Duration = ElementProperty.second.PropertyAsInt;
+            }
+        }
+
+        Builder(Object, TargetPoint, AnimationCurve, Duration);
+    }
+    VMLGeometryAnimationBuilder::VMLGeometryAnimationBuilder(const VMLFinder& RootFinder, Core::VGeometryAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                             VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLPositionAnimationBuilder::Builder(Core::VPositionAnimation* Animation, const Core::VPoint& TargetPoint, const Core::VAnimationCurveFlag& Flag, const int& Duration) {
+        Animation->SetTargetPosition(TargetPoint);
+        Animation->SetDuration(Duration);
+        Animation->SetCurve(Core::VAnimationCurveFactory::GetCurve(Flag));
+    }
+    void VMLPositionAnimationBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VPositionAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                      VMLControlBuildStatus* BuildStatus) {
+        Core::VPoint TargetPoint;
+        Core::VAnimationCurveFlag AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+
+        int Duration = 0;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"target-size") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"target-size\" Property Must Match the Type \"size-native\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.NativeCallMethodName == L"size") {
+                    if (ElementProperty.second.NativeCallParameter.size() == 2 &&
+                        CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
+                        TargetPoint = { ElementProperty.second.NativeCallParameter[0].PropertyAsInt, ElementProperty.second.NativeCallParameter[0].PropertyAsInt };
+                    }
+                }
+            }
+
+            if (ElementProperty.first == L"animation-curve") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyAsString == L"ease-liner-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuartCurve;
+                }
+                else {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+            }
+
+            if (ElementProperty.first == L"duration") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"duration\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Duration = ElementProperty.second.PropertyAsInt;
+            }
+        }
+
+        Builder(Object, TargetPoint, AnimationCurve, Duration);
+    }
+    VMLPositionAnimationBuilder::VMLPositionAnimationBuilder(const VMLFinder& RootFinder, Core::VPositionAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                             VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLOpacityAnimationBuilder::Builder(Core::VOpacityAnimation* Animation, const int& TargetValue, const Core::VAnimationCurveFlag& Flag, const int& Duration) {
+        Animation->SetTargetValue(TargetValue);
+        Animation->SetDuration(Duration);
+        Animation->SetCurve(Core::VAnimationCurveFactory::GetCurve(Flag));
+    }
+    void VMLOpacityAnimationBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                      VMLControlBuildStatus* BuildStatus) {
+        int TargetValue = 255;
+        int Duration    = 0;
+        Core::VAnimationCurveFlag AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"target-opacity") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"target-opacity\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                TargetValue = ElementProperty.second.PropertyAsInt;
+            }
+
+            if (ElementProperty.first == L"animation-curve") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyAsString == L"ease-liner-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseLinerCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutSineCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quad-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuadCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-cubic-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutCubicCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseOutQuartCurve;
+                }
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-out-quart-curve") {
+                    AnimationCurve = Core::VAnimationCurveFlag::EaseInOutQuartCurve;
+                }
+                else {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+
+                    return;
+                }
+            }
+
+            if (ElementProperty.first == L"duration") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"duration\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Duration = ElementProperty.second.PropertyAsInt;
+            }
+        }
+
+        Builder(Object, TargetValue, AnimationCurve, Duration);
+    }
+    VMLOpacityAnimationBuilder::VMLOpacityAnimationBuilder(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                             VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
 }
 
 VLIB_END_NAMESPACE

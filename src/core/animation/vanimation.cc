@@ -27,6 +27,16 @@ VPositionAnimation::VPositionAnimation(VUIObject *Parent, VAnimationCurve *Curve
 void VPositionAnimation::SetTargetPosition(const VPoint& Target) {
     TargetPoint = Target;
 }
+void VPositionAnimation::SetCurve(VAnimationCurve* Curve) {
+    if (Animation.AnimationCurve != nullptr) {
+        delete Animation.AnimationCurve;
+    }
+
+    Animation.AnimationCurve = Curve;
+}
+void VPositionAnimation::SetDuration(const int& Duration) {
+    Animation.DeltaX = 16.f / double(Duration);
+}
 
 void VPositionAnimation::Start() {
     SourcePoint = { GetParent()->GetX(), GetParent()->GetY() };
@@ -70,6 +80,12 @@ VGeometryAnimation::VGeometryAnimation(VUIObject *Parent, VAnimationCurve *Curve
 void VGeometryAnimation::SetTargetSize(const VPoint& Target) {
     TargetPoint = Target;
 }
+void VGeometryAnimation::SetCurve(VAnimationCurve* Curve) {
+    Animation.AnimationCurve = Curve;
+}
+void VGeometryAnimation::SetDuration(const int& Duration) {
+    Animation.DeltaX = 16.f / double(Duration);
+}
 
 void VGeometryAnimation::Start() {
     SourcePoint = { GetParent()->GetWidth(), GetParent()->GetHeight() };
@@ -111,6 +127,15 @@ VOpacityAnimation::VOpacityAnimation(VUIObject *Parent, VAnimationCurve *Curve, 
 
 void VOpacityAnimation::SetTargetValue(const int& Target) {
     TargetValue = Target;
+}
+void VOpacityAnimation::SetCurve(VAnimationCurve* Curve) {
+    if (Animation.AnimationCurve != nullptr) {
+        delete Animation.AnimationCurve;
+    }
+    Animation.AnimationCurve = Curve;
+}
+void VOpacityAnimation::SetDuration(const int& Duration) {
+    Animation.DeltaX = 16.f / double(Duration);
 }
 
 void VOpacityAnimation::Start() {

@@ -57,6 +57,15 @@ namespace VML {
         if (String == L"viewlabel") {
             return VMLObjectType::ViewLabel;
         }
+        if (String == L"position-animation") {
+            return VMLObjectType::PositionAnimation;
+        }
+        if (String == L"geometry-animation") {
+            return VMLObjectType::GeometryAnimation;
+        }
+        if (String == L"opacity-animation") {
+            return VMLObjectType::OpacityAnimation;
+        }
 
         return Type;
     }
@@ -109,6 +118,15 @@ namespace VML {
             }
             case VMLObjectType::ViewLabel: {
                 return L"viewlabel";
+            }
+            case VMLObjectType::PositionAnimation: {
+                return L"position-animation";
+            }
+            case VMLObjectType::GeometryAnimation: {
+                return L"geometry-animation";
+            }
+            case VMLObjectType::OpacityAnimation: {
+                return L"opacity-animation";
             }
         }
 

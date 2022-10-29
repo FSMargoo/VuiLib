@@ -361,6 +361,54 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"geometry-animation") {
+                        Core::VGeometryAnimation* Animation = new Core::VGeometryAnimation(UIParent->UIObject, nullptr, 0.f);
+
+                        VMLObject->UIObject = Animation;
+                        VMLObject->VMLType = VMLObjectType::GeometryAnimation;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLGeometryAnimationBuilder Builder(GetRootFinder(), Animation, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"position-animation") {
+                        Core::VPositionAnimation* Animation = new Core::VPositionAnimation(UIParent->UIObject, nullptr, 0.f);
+
+                        VMLObject->UIObject = Animation;
+                        VMLObject->VMLType = VMLObjectType::PositionAnimation;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLPositionAnimationBuilder Builder(GetRootFinder(), Animation, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"opacity-animation") {
+                        Core::VOpacityAnimation* Animation = new Core::VOpacityAnimation(UIParent->UIObject, nullptr, 0.f);
+
+                        VMLObject->UIObject = Animation;
+                        VMLObject->VMLType = VMLObjectType::OpacityAnimation;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLOpacityAnimationBuilder Builder(GetRootFinder(), Animation, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 

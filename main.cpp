@@ -11,8 +11,6 @@ int main() {
     using namespace VML;
     using namespace VSS;
 
-    srand(time(NULL));
-
     VApplication Application;
 
     VMLWidget Widget(500, 400, &Application, true);

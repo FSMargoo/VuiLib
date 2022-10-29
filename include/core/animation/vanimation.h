@@ -34,6 +34,8 @@ public:
     VPositionAnimation(VUIObject* Parent, VAnimationCurve* Curve, const double& Duration, const VPoint& Target);
 
     void SetTargetPosition(const VPoint& Target);
+    void SetCurve(VAnimationCurve* Curve);
+    void SetDuration(const int& Duration);
 
     void Start();
     void Pause();
@@ -57,6 +59,8 @@ public:
     VGeometryAnimation(VUIObject* Parent, VAnimationCurve* Curve, const double& Duration, const VPoint& Target);
 
     void SetTargetSize(const VPoint& Target);
+    void SetCurve(VAnimationCurve* Curve);
+    void SetDuration(const int& Duration);
 
     void Start();
     void Pause();
@@ -80,6 +84,8 @@ public:
     VOpacityAnimation(VUIObject* Parent, VAnimationCurve* Curve, const double& Duration, const int& Target);
 
     void SetTargetValue(const int& Target);
+    void SetCurve(VAnimationCurve* Curve);
+    void SetDuration(const int& Duration);
 
     void Start();
     void Pause();
