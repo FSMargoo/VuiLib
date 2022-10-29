@@ -111,11 +111,11 @@ void VCanvasPainter::SolidRoundedRectangle(const VRect& Rectangle, const VPoint&
 
 void VCanvasPainter::FillRectangle(const VRect& Rectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush) {
 	SolidRectangle(Rectangle, FillBrush);
-	DrawEllipse(Rectangle, BorderPen);
+	DrawRectangle(Rectangle, BorderPen);
 }
 void VCanvasPainter::FillEllipse(const VRect& EllipseRectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush) {
 	SolidEllipse(EllipseRectangle, FillBrush);
-	DrawEllipse(EllipseRectangle, BorderPen);
+    DrawRectangle(EllipseRectangle, BorderPen);
 }
 void VCanvasPainter::FillRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* BorderPen, VSolidBrush* FillBrush) {
 	SolidRoundedRectangle(Rectangle, Radius, FillBrush);

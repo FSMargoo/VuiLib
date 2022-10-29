@@ -86,6 +86,51 @@ namespace VML {
 
             return Value;
         }
+        if (ValueString[0] == L'-') {
+            auto SpiltString = ValueString.substr(1, ValueString.size() - 1);
+
+            bool DotExsit = false;
+
+            VMLPropertyValue Value;
+            VMLPropertyType  Type = VMLPropertyType::IntValue;
+
+            for (auto& Character : SpiltString) {
+                if (!(Character >= L'0' && Character <= L'9')) {
+                    if (Character == L'.') {
+                        if (!DotExsit) {
+                            DotExsit = true;
+
+                            Type = VMLPropertyType::DoubleValue;
+                        }
+                        else {
+                            Type = VMLPropertyType::StringValue;
+                        }
+                    }
+                    else {
+                        Type = VMLPropertyType::StringValue;
+                    }
+                }
+            }
+
+            Value.PropertyType = Type;
+
+            switch (Type) {
+                case VMLPropertyType::IntValue: {
+                    Value.PropertyAsInt = _wtoi(ValueString.c_str());
+                    break;
+                }
+                case VMLPropertyType::StringValue: {
+                    Value.PropertyAsString = ValueString;
+                    break;
+                }
+                case VMLPropertyType::DoubleValue: {
+                    Value.PropertyAsDouble = _wtof(ValueString.c_str());
+                    break;
+                }
+            }
+
+            return Value;
+        }
 
         if (ValueString == L"true") {
             VMLPropertyValue Value;

@@ -217,6 +217,7 @@ void VUIObject::Resize(const int &Width, const int &Height) {
 
 void VUIObject::Move(const int &X, const int &Y) {
     auto OldRect = ObjectVisual.Rectangle.Clone();
+    auto FlushRect = GetRegion().Clone();
 
     auto Width = GetWidth();
     auto Height = GetHeight();
@@ -228,8 +229,8 @@ void VUIObject::Move(const int &X, const int &Y) {
 
     OldRect.Extended(1, 1, 1, 1);
 
-    Update();
-    Update(OldRect);
+    Update(GetRegion());
+    Update(FlushRect);
 
     Moved.Emit(X, Y);
 }

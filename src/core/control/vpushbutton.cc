@@ -58,6 +58,7 @@ void VPushButton::OnPaint(VCanvasPainter* Painter) {
                 GetWidth(), GetHeight()
             },
             Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
+
     Painter->DrawString(Theme->PlaneText,
                         {
                                 static_cast<int>(Theme->LocalTheme.BorderThickness),

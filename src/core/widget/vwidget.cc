@@ -196,6 +196,7 @@ void VMainWindow::CheckFrame() {
                                                                CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
 
             Canvas->BeginDraw();
+            Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
             if (!WindowConfig.EnableRadius) {
                 for (auto &Message: RepaintMessages) {
                     OnPaint(Canvas, Message->DirtyRectangle);

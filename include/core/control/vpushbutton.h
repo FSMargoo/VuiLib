@@ -14,6 +14,8 @@ class VPushButton : public VAbstractButton {
  protected:
      VPushButtonTheme*       Theme;
 
+     unsigned long dbgCount = 0;
+
  private:
      VBasicTimer             AnimationFrameTimer;
      VAnimationInterpolator* Interpolator;
