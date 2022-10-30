@@ -87,8 +87,8 @@ void VUIObject::CallWidgetSetFocusID(const std::wstring& ObjectID) {
 }
 
 void VUIObject::RestoreMousePosition(VPoint* MousePosition) {
-    MousePosition->X -= GetX();
-    MousePosition->X -= GetY();
+    MousePosition->X += GetX();
+    MousePosition->Y += GetY();
 }
 
 std::wstring VUIObject::CallWidgetGetFocusID() {
