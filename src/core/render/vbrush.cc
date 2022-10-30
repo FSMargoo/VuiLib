@@ -28,6 +28,7 @@ VPenBrush::VPenBrush(ID2D1RenderTarget* Target, const VColor& Color, const float
 }
 VPenBrush::~VPenBrush() {
 	VDXObjectSafeFree(&Brush);
+	VDXObjectSafeFree(&StrokeStyle);
 }
 
 ID2D1SolidColorBrush* VSolidBrush::GetDxBrush() {

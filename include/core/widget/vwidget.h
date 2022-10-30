@@ -33,7 +33,7 @@ class VMainWindow : public VUIObject {
      VMainWindowConfig WindowConfig;
      VWin32StatusCache Win32Cache;
 
-     VDCRender*        Direct2DRender;
+     VHWNDRender*      Direct2DRender;
 
  public:
      bool IsWidget() override {
@@ -63,7 +63,7 @@ class VMainWindow : public VUIObject {
      bool CallWidgetGetLockingStatus() override;
      void CallWidgetSendMessage(VMessage *Message) override;
      VCanvasPainter* CallWidgetGetCanvas() override;
-     Core::VDCRender *CallWidgetGetDCRenderTarget() override;
+     Core::VHWNDRender* CallWidgetGetDCRenderTarget() override;
 
 public:
     HWND GetLocalWinId() override;

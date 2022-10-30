@@ -161,6 +161,8 @@ VPainter::VPainter(ID2D1RenderTarget* RenderTarget) {
 	
 	TargetDevice = RenderTarget;
 }
+VPainter::~VPainter() {
+}
 void VPainter::Clear(const VColor& Color) {
 	TargetDevice->Clear(Color.GetDxObject());
 }

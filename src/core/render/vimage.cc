@@ -8,6 +8,8 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 VImage::VImage(const VImage& Image) {
+    VDXObjectSafeFree(&DirectXBitmap);
+
 	DirectXBitmap = Image.DirectXBitmap;
 }
 VImage::VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget) {

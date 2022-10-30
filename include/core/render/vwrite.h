@@ -10,7 +10,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core {
 
 using VFontAlignment           = DWRITE_TEXT_ALIGNMENT;
-using VFontParagraphAlignment = DWRITE_PARAGRAPH_ALIGNMENT;
+using VFontParagraphAlignment  = DWRITE_PARAGRAPH_ALIGNMENT;
 
 class VFont {
  private:

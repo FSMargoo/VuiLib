@@ -95,7 +95,7 @@ protected:
     virtual void CallWidgetSendMessage(VMessage *Message);
 
 public:
-    virtual Core::VDCRender *CallWidgetGetDCRenderTarget();
+    virtual Core::VHWNDRender* CallWidgetGetDCRenderTarget();
 
 protected:
     virtual Core::VCanvasPainter*

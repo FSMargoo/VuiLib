@@ -146,7 +146,7 @@ void VUIObject::CallWidgetSendMessage(VMessage *Message) {
     }
 }
 
-Core::VDCRender *VUIObject::CallWidgetGetDCRenderTarget() {
+Core::VHWNDRender* VUIObject::CallWidgetGetDCRenderTarget() {
     if (GetParent() != nullptr) {
         return GetParent()->CallWidgetGetDCRenderTarget();
     }

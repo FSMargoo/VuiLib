@@ -38,7 +38,7 @@ void VMainWindow::InitWindow() {
 
     BeginBatchDraw();
 
-    Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(GetHWnd()),
+    Direct2DRender = new VHWNDRender(VDirectXD2DFactory.GetInstance(), GetHWnd(),
                                    { 0, 0, GetWidth(), GetHeight() }, true);
     BufferPainter  = new VPainter(Direct2DRender->GetDirectXRenderTarget());
 
@@ -110,7 +110,7 @@ void VMainWindow::CallWidgetSendMessage(VMessage *Message) {
 VCanvasPainter* VMainWindow::CallWidgetGetCanvas() {
     return Canvas;
 }
-Core::VDCRender* VMainWindow::CallWidgetGetDCRenderTarget() {
+Core::VHWNDRender* VMainWindow::CallWidgetGetDCRenderTarget() {
     return Direct2DRender;
 }
 
@@ -165,7 +165,7 @@ void VMainWindow::CheckFrame() {
         FpsTimer.Start(14);
 
         if (Win32Cache.Repaint) {
-            if (!Win32Cache.UserSetGeomtery) {
+             if (!Win32Cache.UserSetGeomtery) {
                 Win32Cache.Repaint = false;
 
                 Update({0, 0, GetWidth(), GetHeight() } );
@@ -181,19 +181,14 @@ void VMainWindow::CheckFrame() {
 
             Resized.Emit(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
 
-            delete Direct2DRender;
-            delete BufferPainter;
-
-            Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(GetHWnd()),
-                                           { 0, 0, GetWidth(), GetHeight() }, true);
-            BufferPainter  = new VPainter(Direct2DRender->GetDirectXRenderTarget());
+            Direct2DRender->GetDirectXRenderTarget()->Resize(D2D1::SizeU(static_cast<UINT32>(GetWidth()), static_cast<UINT32>(GetHeight())));
 
             Update( { 0, 0, GetWidth(), GetHeight() } );
         }
 
         if (!RepaintMessages.empty()) {
             Canvas = new VCanvasPainter(GetWidth(), GetHeight(),
-                                                               CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+                                        CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
 
             Canvas->BeginDraw();
             Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
@@ -274,7 +269,7 @@ void VMainWindow::CheckFrame() {
                 BufferPainter->EndDraw();
             }
 
-            delete Canvas;
+            delete Canvas; 
         }
     }
 }

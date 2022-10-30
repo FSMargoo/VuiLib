@@ -10,7 +10,6 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
-
     WNDPROC _VExWindowProcess;
     std::map<HWND, VMainWindowConfig*> _VMainConfigs;
 

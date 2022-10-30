@@ -19,10 +19,10 @@ namespace Core {
 
 template<class ObjectType>
 void VDXObjectSafeFree(ObjectType** Object) {
-	if (*Object != NULL) {
+	if (*Object) {
 		(*Object)->Release();
 
-		*Object = nullptr;
+		*Object = NULL;
 	}
 }
 

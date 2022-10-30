@@ -60,6 +60,7 @@ class VPainter {
 
  public:
 	 explicit VPainter(ID2D1RenderTarget* RenderTarget);
+	 ~VPainter();
 
  public:
 	 void BeginDraw();
