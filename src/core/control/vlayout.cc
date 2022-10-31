@@ -228,6 +228,28 @@ void VScaleLayout::TargetWindowSizeChanged(const int &Width, const int &Height) 
                         LayoutHeightPercent != 0.f ? Height * LayoutHeightPercent : GetParent()->GetHeight());
 }
 
+void VTextSizeLayout::TargetWindowSizeChanged(const int &Width, const int &Height) {
+    static_cast<VTextLabel*>(GetParent())->GetTheme()->LabelFont->SetTextSize(LayoutHeightPercent * Height);
+}
+VTextSizeLayout::VTextSizeLayout(Core::VTextLabel *Parent, Core::VUIObject *TargetWidget) : VUIObject(Parent) {
+    TargetWidget->Resized.Connect(this, &VTextSizeLayout::TargetWindowSizeChanged);
+
+    TargetWindow = TargetWidget;
+}
+VTextSizeLayout::VTextSizeLayout(Core::VTextLabel *Parent, Core::VUIObject *TargetWidget, const double &HeightPercent) : VUIObject(Parent) {
+    TargetWidget->Resized.Connect(this, &VTextSizeLayout::TargetWindowSizeChanged);
+
+    LayoutHeightPercent = HeightPercent;
+
+    TargetWindow = TargetWidget;
+}
+void VTextSizeLayout::SetScalePercent(const double& Percent) {
+    LayoutHeightPercent = Percent;
+
+    TargetWindowSizeChanged(TargetWindow->GetWidth(), TargetWindow->GetHeight());
+}
+
+
 };
 
 VLIB_END_NAMESPACE

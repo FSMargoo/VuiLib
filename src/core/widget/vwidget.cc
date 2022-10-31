@@ -38,7 +38,7 @@ void VMainWindow::InitWindow() {
 
     BeginBatchDraw();
 
-    Direct2DRender = new VHWNDRender(VDirectXD2DFactory.GetInstance(), GetHWnd(),
+    Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(GetHWnd()),
                                    { 0, 0, GetWidth(), GetHeight() }, true);
     BufferPainter  = new VPainter(Direct2DRender->GetDirectXRenderTarget());
 
@@ -110,7 +110,7 @@ void VMainWindow::CallWidgetSendMessage(VMessage *Message) {
 VCanvasPainter* VMainWindow::CallWidgetGetCanvas() {
     return Canvas;
 }
-Core::VHWNDRender* VMainWindow::CallWidgetGetDCRenderTarget() {
+Core::VDCRender* VMainWindow::CallWidgetGetDCRenderTarget() {
     return Direct2DRender;
 }
 
@@ -181,7 +181,9 @@ void VMainWindow::CheckFrame() {
 
             Resized.Emit(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
 
-            Direct2DRender->GetDirectXRenderTarget()->Resize(D2D1::SizeU(static_cast<UINT32>(GetWidth()), static_cast<UINT32>(GetHeight())));
+            RECT NewRect = { 0, 0, GetWidth(), GetHeight() };
+
+            Direct2DRender->GetDirectXRenderTarget()->BindDC(GetDC(GetHWnd()), &NewRect);
 
             Update( { 0, 0, GetWidth(), GetHeight() } );
         }
@@ -218,20 +220,20 @@ void VMainWindow::CheckFrame() {
             if (WindowConfig.EnableRadius) {
                 IMAGE BorderImage(GetWidth(), GetHeight());
                 auto Property = D2D1::RenderTargetProperties(
-                        D2D1_RENDER_TARGET_TYPE::D2D1_RENDER_TARGET_TYPE_HARDWARE,
-                        D2D1::PixelFormat(
-                                DXGI_FORMAT_B8G8R8A8_UNORM,
-                                D2D1_ALPHA_MODE_PREMULTIPLIED
-                        ), 0.0, 0.0, D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE, D2D1_FEATURE_LEVEL_DEFAULT
+                    D2D1_RENDER_TARGET_TYPE::D2D1_RENDER_TARGET_TYPE_HARDWARE,
+                    D2D1::PixelFormat(
+                        DXGI_FORMAT_B8G8R8A8_UNORM,
+                        D2D1_ALPHA_MODE_PREMULTIPLIED
+                    ), 0.0, 0.0, D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE, D2D1_FEATURE_LEVEL_DEFAULT
                 );
                 ID2D1DCRenderTarget* DCRenderTarget;
                 HRESULT Result = VDirectXD2DFactory.GetInstance()->CreateDCRenderTarget(
-                        &Property,
-                        &DCRenderTarget
+                    &Property,
+                    &DCRenderTarget
                 );
                 RECT WindowRect = { 0, 0, GetWidth(), GetHeight() };
 
-                ID2D1Bitmap *Bitmap;
+                ID2D1Bitmap* Bitmap;
                 Canvas->GetDXObject()->GetBitmap(&Bitmap);
                 VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), Bitmap);
 
@@ -243,7 +245,7 @@ void VMainWindow::CheckFrame() {
                 DCRenderTarget->FillRoundedRectangle(D2D1_ROUNDED_RECT{
                         {0, 0, static_cast<float>(GetWidth() - 1), static_cast<float>(GetHeight() - 1)},
                         static_cast<float>(WindowConfig.BorderRadius.X),
-                        static_cast<float>(WindowConfig.BorderRadius.Y)}, BitmapBrush.GetDxBrush());
+                        static_cast<float>(WindowConfig.BorderRadius.Y) }, BitmapBrush.GetDxBrush());
 
                 DCRenderTarget->EndDraw();
 
@@ -257,7 +259,7 @@ void VMainWindow::CheckFrame() {
                 POINT	SourcePoint = { 0, 0 };
                 SIZE	WindowSize = { GetWidth(), GetHeight() };
                 UpdateLayeredWindow(GetHWnd(), WindowDC, NULL, &WindowSize, GetImageHDC(&BorderImage),
-                                    &SourcePoint, NULL, &BlendFN, ULW_ALPHA);
+                    &SourcePoint, NULL, &BlendFN, ULW_ALPHA);
 
                 ReleaseDC(GetHWnd(), WindowDC);
 

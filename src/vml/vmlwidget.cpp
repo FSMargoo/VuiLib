@@ -175,6 +175,37 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"text-size-layout") {
+                        if (UIParent->UIObject->GetParent()->IsApplication() == true) {
+                            continue;
+                        }
+
+                        if (UIParent->VMLType == VMLObjectType::TextLabel) {
+                            Core::VTextSizeLayout *Layout = new Core::VTextSizeLayout(static_cast<Core::VTextLabel*>(UIParent->UIObject),
+                                                                                   UIParent->UIObject->GetParent());
+                            VMLObject->UIObject = Layout;
+                            VMLObject->VMLType = VMLObjectType::Layout;
+
+                            VMLControlBuildStatus BuildStatus;
+                            VMLTextSizeLayoutBuilder Builder(GetRootFinder(), Layout, Element.NodeValue, &BuildStatus);
+
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage =
+                                        L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" +
+                                        BuildStatus.FailedReason + L"\"";
+
+                                return Result;
+                            }
+                        }
+                        else {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage =
+                                    L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"\'text-size-layout\' should match parent \'text-label\'\"";
+
+                            return Result;
+                        }
+                    }
                     else if (ElementProperty.PropertyAsString == L"horizontal-slider") {
                         Core::VSliderHorizontal* SliderHorizontal = new Core::VSliderHorizontal(UIParent->UIObject);
                         VMLObject->UIObject = SliderHorizontal;

@@ -128,6 +128,17 @@ namespace VML {
         VMLScaleLayoutBuilder(const VMLFinder& RootFinder, Core::VScaleLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                 VMLControlBuildStatus* BuildStatus);
     };
+    class VMLTextSizeLayoutBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VTextSizeLayout* Layout, const double& Scale);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextSizeLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLTextSizeLayoutBuilder(const VMLFinder& RootFinder, Core::VTextSizeLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                              VMLControlBuildStatus* BuildStatus);
+    };
     class VMLRadioButtonBuilder : public VMLCommonBuilder {
     protected:
         void Builder(Core::VRadioButton* RadioButton, const bool& Status);

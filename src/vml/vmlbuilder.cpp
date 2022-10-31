@@ -430,6 +430,21 @@ namespace VML {
 
                 AutoSize = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"size-layout") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"width\" Property must match the type \"size-layout native function\"";
+
+                    return;
+                }
+
+                if (ElementProperty.second.PropertyType == VMLPropertyType::NativeCall && ElementProperty.second.NativeCallMethodName == L"scale" &&
+                    CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, { VMLPropertyType::DoubleValue })) {
+
+                    Core::VTextSizeLayout* Layout = new Core::VTextSizeLayout(Object, Object->GetParent());
+                    Layout->SetScalePercent(ElementProperty.second.NativeCallParameter[0].PropertyAsDouble);
+                }
+            }
         }
 
         Builder(Object, Text, TextSize, Alignment, LineAlignment, AutoSize);
@@ -758,6 +773,36 @@ namespace VML {
                                                  std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus* BuildStatus)
                                                  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+    void VMLTextSizeLayoutBuilder::Builder(Core::VTextSizeLayout* Layout, const double& Scale) {
+        Layout->SetScalePercent(Scale);
+    }
+    void VMLTextSizeLayoutBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VTextSizeLayout* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                VMLControlBuildStatus* BuildStatus) {
+
+        double Scale = 1.f;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"scale") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::DoubleValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"scale-scale\" Property Must Match the Type \"double\"";
+
+                    return;
+                }
+
+                Scale = ElementProperty.second.PropertyAsDouble;
+            }
+        }
+
+        Builder(Object, Scale);
+    }
+    VMLTextSizeLayoutBuilder::VMLTextSizeLayoutBuilder(const VMLFinder& RootFinder,
+                                                 Core::VTextSizeLayout* Object,
+                                                 std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                 VMLControlBuildStatus* BuildStatus)
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
