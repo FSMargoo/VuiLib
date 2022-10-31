@@ -25,7 +25,7 @@ class VDCRender {
 	 static VTargetRenderType GetType();
 
  public:
-	 VDCRender(ID2D1Factory* DirectXFactory, const HDC& TargetDC, const VRect& DCRectangle, const bool& HardwareAcceleration = true);
+	 VDCRender(ID2D1Factory* DirectXFactory, const HDC& TargetDC, const VRect& DCRectangle, const bool& GDIMode = false, const bool& HardwareAcceleration = true);
 	 ~VDCRender();
 };
 class VHWNDRender {
