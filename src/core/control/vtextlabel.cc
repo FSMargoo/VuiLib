@@ -246,15 +246,15 @@ void VTextLabel::ResizeByText() {
     VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
             Theme->PlaneText.c_str(), Theme->PlaneText.size(),
             Theme->LabelFont->GetDXObject(),
-            INT_MAX,
-            INT_MAX,
+            0.f,
+            0.f,
             &TextLayout
     ), L"Failed to create TextLayout object!");
 
-    DWRITE_TEXT_METRICS TextMetrics;
-    TextLayout->GetMetrics(&TextMetrics);
+    DWRITE_OVERHANG_METRICS TextMetrics;
+    TextLayout->GetOverhangMetrics(&TextMetrics);
 
-    Resize(TextMetrics.width, TextMetrics.height);
+    Resize(ceil(TextMetrics.bottom), (Theme->LabelFont->GetDXObject()->GetFontWeight()));
 
     VDXObjectSafeFree(&TextLayout);
 }

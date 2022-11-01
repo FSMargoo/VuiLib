@@ -433,7 +433,7 @@ namespace VML {
             if (ElementProperty.first == L"size-layout") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"width\" Property must match the type \"size-layout native function\"";
+                    BuildStatus->FailedReason = L"\"size-layout\" Property must match the type \"size-layout native function\"";
 
                     return;
                 }
