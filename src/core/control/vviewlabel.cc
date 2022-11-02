@@ -182,6 +182,26 @@ bool VViewLabel::OnMessageTrigger(VRepaintMessage *RepaintMessage) {
                 delete ChildRepaintMessage;
             }
 
+            if (ObjectVisual.Shadow.EnableShadow) {
+                int ShadowOffset = ObjectVisual.Shadow.ShadowRadius * 3;
+
+                D2D1_POINT_2U OriginPoint = { 0, 0 };
+                D2D1_RECT_U   CopyRect    = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
+
+                ID2D1Bitmap* CanvasSurface;
+
+                Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
+
+                VImage ShadowImage(CanvasSurface);
+                ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.ShadowRadius, ObjectVisual.Shadow.ShadowColor, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+
+                GetParentCanvas()->DrawImage({ static_cast<int>(GetX() - ShadowOffset),
+                                               static_cast<int>(GetY() - ShadowOffset),
+                                               static_cast<int>(GetX() - ShadowOffset + ShadowImage.GetWidth()),
+                                               static_cast<int>(GetY() - ShadowOffset + ShadowImage.GetHeight()) }, &ShadowImage,
+                                             { 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+            }
+
             EditCanvas(Canvas);
 
             GetParentCanvas()->DrawCanvas({ GetX(), GetY(), GetX() + GetWidth(), GetY() + GetHeight() }, Canvas, {

@@ -26,6 +26,13 @@ struct VUIObjectKernel {
     std::vector<VUIObject *> ChildObjectContainer;
 };
 
+struct VUIObjectShadowProperty {
+    VColor ShadowColor  = VColor(0.f, 0.f, 0.f, 1.f);
+    float  ShadowRadius = 2;
+    bool   EnableShadow = false;
+    VPoint ShadowOffset = { 0, 0 };
+};
+
 enum VUIObjectUIStats {
     Hidden, OnClicked, OnFocus, Normal
 };
@@ -33,6 +40,7 @@ enum VUIObjectUIStats {
 struct VUIObjectSurface {
     VRect  Rectangle;
     float  Transparency = 1.f;
+    VUIObjectShadowProperty Shadow;
 
     VUIObjectUIStats Stats = VUIObjectUIStats::Normal;
 };
@@ -68,6 +76,11 @@ protected:
     VBasicUITheme* GetTargetTheme(VUIThemeType ThemeType);
 
 public:
+    void SetShadowStats(const bool& Stats);
+    void SetShadowColor(const VColor& Color);
+    void SetShadowRadius(const float& Radius);
+
+public:
     VSignal<> InFocus;
     VSignal<> LosedFocus;
     VSignal<const int &, const int &> Resized;
@@ -98,8 +111,7 @@ public:
     virtual Core::VDCRender* CallWidgetGetDCRenderTarget();
 
 protected:
-    virtual Core::VCanvasPainter*
-                             CallWidgetGetCanvas();
+    virtual Core::VCanvasPainter* CallWidgetGetCanvas();
 
 protected:
     virtual void EditChildMessage(VMessage *Message) {}

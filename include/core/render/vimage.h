@@ -25,13 +25,17 @@ class VImage {
 	 VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget);
      VImage(int Width, int Height, ID2D1RenderTarget* DirectXRenderTarget, D2D1_ALPHA_MODE DirectXAlphaMode);
 	 VImage(const std::wstring& FromFile, ID2D1RenderTarget* DirectXRenderTarget);
+
+     // Helper
+     VImage(ID2D1Bitmap* HelperIBitmap) { DirectXBitmap = HelperIBitmap; }
+
 	 ~VImage();
 
      int GetWidth() const;
      int GetHeight() const;
 
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
-     void ApplyShadowEffect(const int& ShadowRadius, const VColor& ShadowColor, ID2D1RenderTarget* DirectXRenderTarget);
+     void ApplyShadowEffect(const float& ShadowRadius, const VColor& ShadowColor, ID2D1RenderTarget* DirectXRenderTarget, VPoint* Offset = nullptr);
 
 	 static bool IsValidBitmapFile(const std::wstring& FilePath);
 };

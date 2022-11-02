@@ -163,6 +163,11 @@ Core::VCanvasPainter *VUIObject::CallWidgetGetCanvas() {
 
 
 void VUIObject::Update(VRect UpdateRect) {
+    if (ObjectVisual.Shadow.EnableShadow) {
+        auto ShadowOffset = ObjectVisual.Shadow.ShadowRadius * 3;
+        UpdateRect.Extended(ShadowOffset, ShadowOffset, ShadowOffset, ShadowOffset);
+    }
+
     if (GetParent() != nullptr) {
         return GetParent()->Update(UpdateRect);
     }
@@ -354,6 +359,22 @@ bool VUIObject::CheckUIFocusStatus(const VPoint &MousePosition, VMessage *Source
     return false;
 }
 
+void VUIObject::SetShadowStats(const bool& Stats) {
+    ObjectVisual.Shadow.EnableShadow = Stats;
+
+    Update();
+}
+void VUIObject::SetShadowColor(const VColor& Color) {
+    ObjectVisual.Shadow.ShadowColor = Color;
+
+    Update();
+}
+void VUIObject::SetShadowRadius(const float& Radius) {
+    ObjectVisual.Shadow.ShadowRadius = Radius;
+
+    Update();
+}
+
 bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage) {
     if (RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
         (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
@@ -384,6 +405,24 @@ bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage) {
             Canvas->BeginDraw();
             SendMessageToChild(ChildRepaintMessage, false);
             Canvas->EndDraw();
+
+            if (ObjectVisual.Shadow.EnableShadow) {
+                D2D1_POINT_2U OriginPoint = { 0, 0 };
+                D2D1_RECT_U   CopyRect    = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
+
+                ID2D1Bitmap* CanvasSurface;
+
+                Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
+
+                VImage ShadowImage(CanvasSurface);
+                ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.ShadowRadius, ObjectVisual.Shadow.ShadowColor, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ObjectVisual.Shadow.ShadowOffset);
+
+                GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X),
+                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y),
+                                               static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X + ShadowImage.GetWidth()),
+                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
+                                             { 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+            }
 
             if (ChildRepaintMessage != RepaintMessage) {
                 delete ChildRepaintMessage;

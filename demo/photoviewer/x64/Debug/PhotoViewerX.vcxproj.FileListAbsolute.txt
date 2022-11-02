@@ -1,0 +1,1 @@
+G:\VueLib\vuilib-cmake\demo\photoviewer\x64\Debug\PhotoViewerX.exe

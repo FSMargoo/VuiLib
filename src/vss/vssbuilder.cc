@@ -47,6 +47,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"pushbutton") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -268,6 +281,19 @@ namespace VSS {
                  static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"disabled")) {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -443,6 +469,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"iconbutton") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -611,6 +650,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"textlabel") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -833,6 +885,19 @@ namespace VSS {
             if (Selector->GetType() == VSSSelectorType::ElementSelector &&
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"imagelabel") {
                 for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -901,6 +966,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"circlebarbutton") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1087,9 +1165,21 @@ namespace VSS {
 
         for (auto &Selector: SelectorSet) {
             if (Selector->GetType() == VSSSelectorType::ElementSelector &&
-                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"horizontal-slider" ) {
-                // Common Property ( Not fade switch supported )
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"horizontal-slider") {
                 for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1211,9 +1301,22 @@ namespace VSS {
 
         for (auto &Selector: SelectorSet) {
             if (Selector->GetType() == VSSSelectorType::ElementSelector &&
-                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"vertical-slider" ) {
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"vertical-slider") {
                 // Common Property ( Not fade switch supported )
                 for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1337,6 +1440,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"blurlabel" ) {
                 // Common Property ( Not fade switch supported )
                 for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1392,6 +1508,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"lineeditor") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1630,6 +1759,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"vertical-scroller") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -1886,6 +2028,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"horizontal-scroller") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -2141,6 +2296,18 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"scroller-button") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {
@@ -2360,6 +2527,19 @@ namespace VSS {
                 static_cast<VSSElementSelector *>(Selector)->ElementTag == L"viewlabel") {
                 for (auto &Property: Selector->SelectorProperty) {
                     // Common Property ( Not fade switch supported )
+                    if (Property.first == L"box-shadow") {
+                        TargetControl->SetShadowStats(true);
+
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+                            }
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::DoubleValue) {

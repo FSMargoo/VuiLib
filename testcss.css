@@ -1,6 +1,7 @@
 .main-title {
     color: #ffffff;
     font-size: 34px;
+    box-shadow: rgba(0, 0, 0, 0.16) 4px;
 }
 .description-text {
     color:#737373;
@@ -30,4 +31,5 @@
 }
 .main-window {
     border-radius: 10px;
+    background-color: #ffffff;
 }

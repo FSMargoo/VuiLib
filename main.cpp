@@ -7,6 +7,8 @@
 #include "./include/vml/vmlwidget.h"
 
 int main() {
+    srand(time(NULL));
+
     using namespace Core;
     using namespace VML;
     using namespace VSS;

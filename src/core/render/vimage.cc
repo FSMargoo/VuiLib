@@ -90,6 +90,7 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     ID2D1Effect* BlurEffect;
     ID2D1DeviceContext* DeviceContext;
     ID2D1Image* BlurOutput;
+    D2D1_RECT_F OutputRectangle;
 
     DirectXRenderTarget->QueryInterface(&DeviceContext);
     VLIB_CHECK_REPORT(FAILED(DeviceContext->CreateEffect(CLSID_D2D1GaussianBlur, &BlurEffect)), L"Created D2D1Effect Failed!");
@@ -99,42 +100,53 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     BlurEffect->SetValue(D2D1_GAUSSIANBLUR_PROP_BORDER_MODE, D2D1_BORDER_MODE_HARD);
     BlurEffect->GetOutput(&BlurOutput);
 
-    UINT Width  = DirectXBitmap->GetSize().width;
-    UINT Height = DirectXBitmap->GetSize().height;
-
-    ID2D1Bitmap1* TargetBitmap = NULL;
+    ID2D1BitmapRenderTarget* ResultRenderTarget;
+    ID2D1DeviceContext*      ResultDeviceContext;
 
     D2D1_BITMAP_PROPERTIES1 BitmapProperties =
             D2D1::BitmapProperties1(
                     D2D1_BITMAP_OPTIONS_TARGET,
                     D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
             );
-    DeviceContext->CreateBitmap({ Width, Height }, 0, 0, BitmapProperties, &TargetBitmap);
 
-    ID2D1Image* OldDCTarget;
-    DeviceContext->GetTarget(&OldDCTarget);
-    DeviceContext->SetTarget(TargetBitmap);
+    ID2D1Image* EffectOutput;
+    BlurEffect->GetOutput(&EffectOutput);
 
-    DeviceContext->BeginDraw();
-    DeviceContext->DrawImage(BlurEffect);
-    DeviceContext->EndDraw();
+    DeviceContext->GetImageLocalBounds(EffectOutput, &OutputRectangle);
 
-    DeviceContext->SetTarget(OldDCTarget);
+    DirectXRenderTarget->CreateCompatibleRenderTarget(D2D1_SIZE_F { static_cast<float>(OutputRectangle.right + abs(OutputRectangle.left)),
+                                                                    static_cast<float>(OutputRectangle.bottom  + abs(OutputRectangle.top)) }, &ResultRenderTarget);
 
-    VDXObjectSafeFree(&DirectXBitmap);
+    ResultRenderTarget->QueryInterface(&ResultDeviceContext);
 
-    DirectXBitmap = TargetBitmap;
+    ResultDeviceContext->BeginDraw();
 
+    ResultDeviceContext->Clear(D2D1::ColorF(0.f, 0.f, 0.f, 0.f));
+    ResultDeviceContext->DrawImage(EffectOutput, D2D1_POINT_2F { abs(OutputRectangle.left), abs(OutputRectangle.top) });
+
+    ResultDeviceContext->EndDraw();
+
+    ResultRenderTarget->GetBitmap(&DirectXBitmap);
+
+    D2D1_POINT_2U OriginPoint = { 0, 0 };
+    D2D1_RECT_U   Rect        = { 0, 0, static_cast<unsigned int>(OutputRectangle.right + abs(OutputRectangle.left)),
+                                  static_cast<unsigned int>(OutputRectangle.bottom + abs(OutputRectangle.left)) };
+
+    DirectXBitmap->CopyFromRenderTarget(&OriginPoint, ResultRenderTarget, &Rect);
+
+    VDXObjectSafeFree(&ResultDeviceContext);
+    VDXObjectSafeFree(&ResultRenderTarget);
     VDXObjectSafeFree(&BlurEffect);
     VDXObjectSafeFree(&DeviceContext);
     VDXObjectSafeFree(&BlurOutput);
 }
 
-void VImage::ApplyShadowEffect(const int &ShadowRadius, const VColor &ShadowColor,
-                               ID2D1RenderTarget *DirectXRenderTarget) {
+void VImage::ApplyShadowEffect(const float &ShadowRadius, const VColor &ShadowColor,
+                               ID2D1RenderTarget *DirectXRenderTarget, VPoint* Offset) {
     ID2D1Effect* BlurEffect;
     ID2D1DeviceContext* DeviceContext;
     ID2D1Image* BlurOutput;
+    D2D1_RECT_F OutputRectangle;
 
     DirectXRenderTarget->QueryInterface(&DeviceContext);
     VLIB_CHECK_REPORT(FAILED(DeviceContext->CreateEffect(CLSID_D2D1Shadow, &BlurEffect)), L"Created D2D1Effect Failed!");
@@ -149,29 +161,48 @@ void VImage::ApplyShadowEffect(const int &ShadowRadius, const VColor &ShadowColo
     UINT Width  = DirectXBitmap->GetSize().width;
     UINT Height = DirectXBitmap->GetSize().height;
 
-    ID2D1Bitmap1* TargetBitmap = NULL;
+    UINT ShadowOffset = ShadowRadius * 2;
+
+    ID2D1BitmapRenderTarget* ResultRenderTarget;
+    ID2D1DeviceContext*      ResultDeviceContext;
 
     D2D1_BITMAP_PROPERTIES1 BitmapProperties =
             D2D1::BitmapProperties1(
                     D2D1_BITMAP_OPTIONS_TARGET,
                     D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
             );
-    DeviceContext->CreateBitmap({ Width, Height }, 0, 0, BitmapProperties, &TargetBitmap);
 
-    ID2D1Image* OldDCTarget;
-    DeviceContext->GetTarget(&OldDCTarget);
-    DeviceContext->SetTarget(TargetBitmap);
+    ID2D1Image* EffectOutput;
+    BlurEffect->GetOutput(&EffectOutput);
 
-    DeviceContext->BeginDraw();
-    DeviceContext->DrawImage(BlurEffect);
-    DeviceContext->EndDraw();
+    DeviceContext->GetImageLocalBounds(EffectOutput, &OutputRectangle);
 
-    DeviceContext->SetTarget(OldDCTarget);
+    if (Offset != nullptr) {
+        *Offset = { static_cast<int>(OutputRectangle.left), static_cast<int>(OutputRectangle.top) };
+    }
 
-    VDXObjectSafeFree(&DirectXBitmap);
+    DirectXRenderTarget->CreateCompatibleRenderTarget(D2D1_SIZE_F { static_cast<float>(OutputRectangle.right + abs(OutputRectangle.left)),
+                                                                    static_cast<float>(OutputRectangle.bottom  + abs(OutputRectangle.top)) }, &ResultRenderTarget);
 
-    DirectXBitmap = TargetBitmap;
+    ResultRenderTarget->QueryInterface(&ResultDeviceContext);
 
+    ResultDeviceContext->BeginDraw();
+
+    ResultDeviceContext->Clear(D2D1::ColorF(0.f, 0.f, 0.f, 0.f));
+    ResultDeviceContext->DrawImage(EffectOutput, D2D1_POINT_2F { abs(OutputRectangle.left), abs(OutputRectangle.top) });
+
+    ResultDeviceContext->EndDraw();
+
+    ResultRenderTarget->GetBitmap(&DirectXBitmap);
+
+    D2D1_POINT_2U OriginPoint = { 0, 0 };
+    D2D1_RECT_U   Rect        = { 0, 0, static_cast<unsigned int>(OutputRectangle.right + abs(OutputRectangle.left)),
+                                  static_cast<unsigned int>(OutputRectangle.bottom + abs(OutputRectangle.left)) };
+
+    DirectXBitmap->CopyFromRenderTarget(&OriginPoint, ResultRenderTarget, &Rect);
+
+    VDXObjectSafeFree(&ResultDeviceContext);
+    VDXObjectSafeFree(&ResultRenderTarget);
     VDXObjectSafeFree(&BlurEffect);
     VDXObjectSafeFree(&DeviceContext);
     VDXObjectSafeFree(&BlurOutput);
