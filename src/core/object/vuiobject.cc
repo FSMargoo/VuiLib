@@ -59,6 +59,29 @@ VRect VUIObject::GetChildrenVisualRegion() {
 VCanvasPainter *VUIObject::GetParentCanvas() {
     return GetParent()->Canvas;
 }
+VCanvasPainter* VUIObject::GetWidgetCanvas() {
+    if (IsWidget() == false) {
+        return GetParent()->GetWidgetCanvas();
+    }
+
+    return Canvas;
+}
+
+int VUIObject::GetOriginX(const int& X) {
+    if (IsWidget() == false) {
+        return GetParent()->GetOriginX(GetX() + X);
+    }
+
+    return X;
+}
+
+int VUIObject::GetOriginY(const int& Y) {
+    if (IsWidget() == false) {
+        return GetParent()->GetOriginX(GetY() + Y);
+    }
+
+    return Y;
+}
 
 VRect VUIObject::HelperGetSourceRect() {
     return VRect{0, 0, ObjectVisual.Rectangle.GetWidth(), ObjectVisual.Rectangle.GetHeight()};
@@ -287,7 +310,7 @@ bool VUIObject::CheckUIFocusStatus(const VPoint &MousePosition, VMessage *Source
         return false;
     }
 
-    if (MousePosition.InsideRectangle(GetRegion())) {
+    if (MousePosition.InsideRectangle(GetRegion()) && CheckMousePositon(MousePosition)) {
         if (SourceMessage->GetType() == VMessageType::CheckLocalFocusMessage) {
             if (CallWidgetGetFocusID() != ObjectKernel.GlobalID) {
                 ObjectVisual.Stats = VUIObjectUIStats::Normal;
@@ -414,7 +437,7 @@ bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage) {
 
                 Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
 
-                VImage ShadowImage(CanvasSurface);
+                VImage ShadowImage((ID2D1Bitmap1*)CanvasSurface);
                 ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.ShadowRadius, ObjectVisual.Shadow.ShadowColor, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ObjectVisual.Shadow.ShadowOffset);
 
                 GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X),
@@ -631,6 +654,12 @@ bool VUIObject::CheckElementUIStatus(VMessage *SourceMessage) {
     }
 
     if (SendMessageToChild(SourceMessage, true)) {
+        if (!CheckMousePositon(MousePosition) && MousePosition.InsideRectangle(GetRegion())) {
+            VKillFocusMessage KillFocus;
+
+            SendMessageToChild(&KillFocus, true);
+        }
+
         return true;
     } else {
         auto Result = CheckUIFocusStatus(MousePosition, SourceMessage);

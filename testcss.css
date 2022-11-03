@@ -1,35 +1,47 @@
-.main-title {
+.background-blur-label {
+    background-color: rgba(0, 0, 0, 0.29);
+    radius: 30px;
+}
+
+.title-backgruond {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 0px;
+    box-shadow: 6px rgba(0, 0, 0, 0.16);
+}
+.welcome-backgruond {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
+    box-shadow: 6px rgba(0, 0, 0, 0.16);
+}
+
+.welcome-ui-view {
+    box-shadow: 6px rgba(0, 0, 0, 1);
+}
+
+.main-ui-view {
+    box-shadow: 6px rgba(0, 0, 0, 1);
+}
+
+.title-text {
     color: #ffffff;
     font-size: 34px;
-    box-shadow: rgba(0, 0, 0, 0.16) 4px;
+    font-weight: 900px;
+    box-shadow: 6px rgba(0, 0, 0, 0.16);
 }
-.description-text {
-    color:#737373;
+.version-text {
+    color: #ffffff;
     font-size: 16px;
-    text-align: left;
+    font-weight: 100px;
+    box-shadow: 6px rgba(0, 0, 0, 0.16);
 }
-.version-subtext-text {
-    color: rgba(242, 242, 242, 0.7);
+
+.welcome-use-text {
+    color: #ffffff;
+    font-weight: 100px;
+    font-size: 23px;
+}
+.welcome-sub-text {
+    color: rgba(255, 255, 255, 0.31);
+    font-weight: 100px;
     font-size: 17px;
-}
-.target-radio-button:hover {
-    background-color: #ffffff;
-}
-.target-radio-button:enabled {
-    background-color: rgb(0, 255, 0);
-}
-.target-radio-button:disabled {
-    background-color: #000000;
-}
-.scale-text {
-    text-align: center;
-    vertical-align: center;
-
-    color: #000000;
-
-    background-color: rgb(255, 255, 255);
-}
-.main-window {
-    border-radius: 10px;
-    background-color: #ffffff;
 }

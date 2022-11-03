@@ -26,13 +26,12 @@ VBlurLabel::VBlurLabel(const int& Width, const int& Height, const int& Radius, V
 void VBlurLabel::OnPaint(Core::VCanvasPainter *Painter) {
     VImage BlurImage(GetWidth(), GetHeight(), CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), D2D1_ALPHA_MODE_PREMULTIPLIED);
 
-    D2D1_POINT_2U SourcePoint = {0, 0 };
-    D2D1_RECT_U   RectArea    = { static_cast<unsigned int>(GetX()), static_cast<unsigned int>(GetY()),
-                                  static_cast<unsigned int>(GetX()) + static_cast<unsigned int>(GetWidth()),
-                                  static_cast<unsigned int>(GetHeight()) + static_cast<unsigned int>(GetY()) };
+    D2D1_POINT_2U SourcePoint = { 0, 0 };
+    D2D1_RECT_U   RectArea    = { static_cast<unsigned int>(GetOriginX()), static_cast<unsigned int>(GetOriginY()),
+                                  static_cast<unsigned int>(GetOriginX()) + static_cast<unsigned int>(GetWidth()),
+                                  static_cast<unsigned int>(GetHeight()) + static_cast<unsigned int>(GetOriginY()) };
 
-    auto Result = BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetParentCanvas()->GetDXObject(), &RectArea);
-
+    BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetWidgetCanvas()->GetDXObject(), &RectArea);
     BlurImage.ApplyGassBlur(Theme->BlurRadius, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
 
     VSolidBrush  SolidBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), Theme->MixedColor);

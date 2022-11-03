@@ -71,6 +71,7 @@ class VFont {
 	 void SetParagraphAlignment(const VFontParagraphAlignment& Alignment);
      void SetFamilyName(const std::wstring& FontFamilyName);
      void SetTextSize(const int& Size);
+     void SetTextWidget(const int& Widget);
 
      std::wstring GetFamilyName() const;
      std::wstring GetLocaleName() const;

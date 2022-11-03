@@ -14,6 +14,8 @@
 #include "../core/control/vscroller.h"
 #include "../core/control/vviewlabel.h"
 
+#include "../core/visual/vvisual.h"
+
 #include "../core/animation/vanimation.h"
 
 #include "../core/widget/vwidget.h"
@@ -253,6 +255,7 @@ namespace VML {
         VMLPositionAnimationBuilder(const VMLFinder& RootFinder, Core::VPositionAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                     VMLControlBuildStatus* BuildStatus);
     };
+
     class VMLOpacityAnimationBuilder : public VMLCommonBuilder {
     protected:
         void Builder(Core::VOpacityAnimation* Animation, const int& TargetValue, const Core::VAnimationCurveFlag& Flag, const int& Duration);
@@ -263,6 +266,18 @@ namespace VML {
     public:
         VMLOpacityAnimationBuilder(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                     VMLControlBuildStatus* BuildStatus);
+    };
+
+    class VMLPolygonViewBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VPolygonView* PolygonView, const std::vector<Core::VPointF>& Points);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VPolygonView* PolygonView, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLPolygonViewBuilder(const VMLFinder& RootFinder, Core::VPolygonView* PolygonView, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                   VMLControlBuildStatus* BuildStatus);
     };
 
     class VMLMainWindowBuilder {

@@ -229,12 +229,14 @@ void VScaleLayout::TargetWindowSizeChanged(const int &Width, const int &Height) 
 }
 
 void VTextSizeLayout::TargetWindowSizeChanged(const int &Width, const int &Height) {
-    auto LabelFont = static_cast<VTextLabel*>(GetParent())->GetTheme()->LabelFont;
-    LabelFont->SetTextSize(LayoutHeightPercent * Height);
+    if (Height > 0) {
+        auto LabelFont = static_cast<VTextLabel *>(GetParent())->GetTheme()->LabelFont;
+        LabelFont->SetTextSize(LayoutHeightPercent * Height);
 
-    static_cast<VTextLabel*>(GetParent())->ResizeByText();
+        static_cast<VTextLabel *>(GetParent())->ResizeByText();
 
-    GetParent()->Update();
+        GetParent()->Update();
+    }
 }
 VTextSizeLayout::VTextSizeLayout(Core::VTextLabel *Parent, Core::VUIObject *TargetWidget) : VUIObject(Parent) {
     TargetWidget->Resized.Connect(this, &VTextSizeLayout::TargetWindowSizeChanged);

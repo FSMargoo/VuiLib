@@ -14,6 +14,8 @@
 #include "../core/control/vscroller.h"
 #include "../core/control/vviewlabel.h"
 
+#include "../core/visual/vvisual.h"
+
 #include "../core/widget/vwidget.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -200,6 +202,26 @@ namespace VSS {
         VSSViewLabelBuilder(Core::VViewLabel *TargetControl,
                 std::vector<VSSBasicSelector *> SelectorSet,
                 Core::VViewLabelTheme *ViewLabelTheme);
+    };
+
+    class VSSCircleViewBuilder {
+    private:
+        void BuildVSSObject(Core::VCircleView *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet);
+
+    public:
+        VSSCircleViewBuilder(Core::VCircleView *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet);
+    };
+
+    class VSSPolygonViewBuilder {
+    private:
+        void BuildVSSObject(Core::VPolygonView *TargetControl,
+                            std::vector<VSSBasicSelector *> SelectorSet);
+
+    public:
+        VSSPolygonViewBuilder(Core::VPolygonView *TargetControl,
+                             std::vector<VSSBasicSelector *> SelectorSet);
     };
 }
 

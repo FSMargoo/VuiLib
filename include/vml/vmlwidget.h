@@ -3,6 +3,8 @@
 #include "../core/vcontrol.h"
 #include "../vss/vssbuilder.h"
 
+#include "../core/visual/vvisual.h"
+
 #include "../core/control/vfakecaption.h"
 
 #include "vml.h"

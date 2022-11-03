@@ -37,6 +37,8 @@ class VImage {
      void ApplyGassBlur(const int& Radius, ID2D1RenderTarget* DirectXRenderTarget);
      void ApplyShadowEffect(const float& ShadowRadius, const VColor& ShadowColor, ID2D1RenderTarget* DirectXRenderTarget, VPoint* Offset = nullptr);
 
+     VColor GetPixel(int X, int Y, ID2D1RenderTarget* DirectXRenderTarget) const;
+
 	 static bool IsValidBitmapFile(const std::wstring& FilePath);
 };
 

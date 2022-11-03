@@ -100,7 +100,7 @@ class VCorePoint {
 	 }
 
  public:
-	 bool InsideRectangle(const VCoreRect<int>& RectangleObject) const;
+	 bool InsideRectangle(const VCoreRect<DataType>& RectangleObject) const;
 
 	 void Move(const DataType& TargetX, const DataType& TargetY);
 
@@ -155,7 +155,9 @@ public:
 };
 
 using VRect     = VCoreRect<int>;
+using VRectF    = VCoreRect<double>;
 using VPoint    = VCorePoint<int>;
+using VPointF   = VCorePoint<double>;
 using VGeomtery = VCoreGeomtery<int>;
 
 }

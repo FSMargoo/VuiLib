@@ -72,6 +72,10 @@ protected:
     VCanvasPainter* Canvas = nullptr;
 
     VCanvasPainter* GetParentCanvas();
+    VCanvasPainter* GetWidgetCanvas();
+
+    int GetOriginX(const int& X = 0);
+    int GetOriginY(const int& Y = 0);
 
     VBasicUITheme* GetTargetTheme(VUIThemeType ThemeType);
 
@@ -181,6 +185,7 @@ public:
 
 public:
     virtual void OnMessage(VMessage *Message) {}
+    virtual bool CheckMousePositon(const VPoint& Point) { return true; }
 
     bool SysProcessMessage(VMessage *Message);
 

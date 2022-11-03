@@ -103,16 +103,9 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     ID2D1BitmapRenderTarget* ResultRenderTarget;
     ID2D1DeviceContext*      ResultDeviceContext;
 
-    D2D1_BITMAP_PROPERTIES1 BitmapProperties =
-            D2D1::BitmapProperties1(
-                    D2D1_BITMAP_OPTIONS_TARGET,
-                    D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
-            );
+    BlurEffect->GetOutput(&BlurOutput);
 
-    ID2D1Image* EffectOutput;
-    BlurEffect->GetOutput(&EffectOutput);
-
-    DeviceContext->GetImageLocalBounds(EffectOutput, &OutputRectangle);
+    DeviceContext->GetImageLocalBounds(BlurOutput, &OutputRectangle);
 
     DirectXRenderTarget->CreateCompatibleRenderTarget(D2D1_SIZE_F { static_cast<float>(OutputRectangle.right + abs(OutputRectangle.left)),
                                                                     static_cast<float>(OutputRectangle.bottom  + abs(OutputRectangle.top)) }, &ResultRenderTarget);
@@ -122,11 +115,11 @@ void VImage::ApplyGassBlur(const int &Radius, ID2D1RenderTarget* DirectXRenderTa
     ResultDeviceContext->BeginDraw();
 
     ResultDeviceContext->Clear(D2D1::ColorF(0.f, 0.f, 0.f, 0.f));
-    ResultDeviceContext->DrawImage(EffectOutput, D2D1_POINT_2F { abs(OutputRectangle.left), abs(OutputRectangle.top) });
+    ResultDeviceContext->DrawImage(BlurOutput, D2D1_POINT_2F { abs(OutputRectangle.left), abs(OutputRectangle.top) });
 
     ResultDeviceContext->EndDraw();
 
-    ResultRenderTarget->GetBitmap(&DirectXBitmap);
+    // ResultRenderTarget->GetBitmap(&DirectXBitmap);
 
     D2D1_POINT_2U OriginPoint = { 0, 0 };
     D2D1_RECT_U   Rect        = { 0, 0, static_cast<unsigned int>(OutputRectangle.right + abs(OutputRectangle.left)),
@@ -262,6 +255,41 @@ bool VImage::IsValidBitmapFile(const std::wstring& FilePath) {
 	VDXObjectSafeFree(&IWICConverter);
 
 	return true;
+}
+
+VColor VImage::GetPixel(int X, int Y, ID2D1RenderTarget* DirectXRenderTarget) const {
+    ID2D1DeviceContext* DeviceContext;
+    ID2D1Bitmap1* D2D1BitmapInstance;
+    D2D1_BITMAP_PROPERTIES1 bitmapProperties =
+            D2D1::BitmapProperties1(
+                    D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
+                    D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
+            );
+
+    DirectXRenderTarget->QueryInterface(&DeviceContext);
+
+    DeviceContext->CreateBitmap(D2D1::SizeU(GetWidth(), GetHeight()), 0, 0, bitmapProperties, &D2D1BitmapInstance);
+
+    auto OriginPoint = D2D1::Point2U(0, 0);
+    auto RectArea    = D2D1::RectU(0, 0, GetWidth(), GetHeight());
+
+    D2D1BitmapInstance->CopyFromBitmap(&OriginPoint, DirectXBitmap, &RectArea);
+
+    D2D1_MAPPED_RECT MapRect = {  };
+
+    D2D1BitmapInstance->Map(D2D1_MAP_OPTIONS_READ, &MapRect);
+
+    unsigned long Base = X + Y * GetWidth() * 4;
+
+    auto RByte = MapRect.bits[Base];
+    auto GByte = MapRect.bits[Base + 1];
+    auto BByte = MapRect.bits[Base + 2];
+    auto AByte = MapRect.bits[Base + 3];
+
+    VDXObjectSafeFree(&DeviceContext);
+    VDXObjectSafeFree(&D2D1BitmapInstance);
+
+    return VColor::FromBYTERGBA(BByte, GByte, RByte, AByte);
 }
 
 }

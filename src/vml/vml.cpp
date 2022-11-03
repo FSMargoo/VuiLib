@@ -66,6 +66,12 @@ namespace VML {
         if (String == L"opacity-animation") {
             return VMLObjectType::OpacityAnimation;
         }
+        if (String == L"circle-view") {
+            return VMLObjectType::CircleView;
+        }
+        if (String == L"polygon-view") {
+            return VMLObjectType::PolygonView;
+        }
 
         return Type;
     }
@@ -127,6 +133,12 @@ namespace VML {
             }
             case VMLObjectType::OpacityAnimation: {
                 return L"opacity-animation";
+            }
+            case VMLObjectType::CircleView: {
+                return L"circle-view";
+            }
+            case VMLObjectType::PolygonView: {
+                return L"polygon-view";
             }
         }
 
@@ -196,6 +208,16 @@ namespace VML {
             }
             case VMLObjectType::ViewLabel: {
                 VSS::VSSViewLabelBuilder Builder(static_cast<Core::VViewLabel*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
+
+                break;
+            }
+            case VMLObjectType::CircleView: {
+                VSS::VSSCircleViewBuilder Builder(static_cast<Core::VCircleView*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
+
+                break;
+            }
+            case VMLObjectType::PolygonView: {
+                VSS::VSSPolygonViewBuilder Builder(static_cast<Core::VPolygonView*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
 
                 break;
             }

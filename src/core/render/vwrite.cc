@@ -88,6 +88,19 @@ void VFont::SetTextSize(const int& Size) {
                                                          (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat) != S_OK,
                       L"Create D2D fontformat object failed!");
 }
+void VFont::SetTextWidget(const int& Widget) {
+    auto Family  = GetFamilyName();
+    auto Style   = GetTextFontStyle();
+    auto Stretch = GetFontStretchStyle();
+    auto Locale  = GetLocaleName();
+    auto Size    = GetTextSize();
+
+    VDXObjectSafeFree(&TextFormat);
+
+    VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextFormat(Family.c_str(), nullptr,
+                                                                           (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat) != S_OK,
+                      L"Create D2D fontformat object failed!");
+}
 int VFont::GetTextSize() const {
     return TextFormat->GetFontSize();
 }

@@ -5,6 +5,10 @@ VLIB_BEGIN_NAMESPACE
 namespace VML {
     bool VMLCommonBuilder::CheckNativeCallParameter(std::vector<VMLPropertyValue> Properties,
                                   std::vector<VMLPropertyType>  PropertiesType) {
+        if (Properties.size() != PropertiesType.size()) {
+            return false;
+        }
+
         for (int PropertiesCount = 0; PropertiesCount != Properties.size(); ++PropertiesCount) {
             if (Properties[PropertiesCount].PropertyType != PropertiesType[PropertiesCount]) {
                 return false;
@@ -181,8 +185,6 @@ namespace VML {
                         WidthRatio = 1.f;
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"scale") {
-                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
-
                         for (auto& Property : ElementProperty.second.NativeCallParameter) {
                             if (Property.PropertyType == VMLPropertyType::DoubleValue) {
                                 WidthRatio = Property.PropertyAsDouble;
@@ -207,8 +209,6 @@ namespace VML {
                         HeightRatio = 1.f;
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"scale") {
-                        HorizontalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
-
                         for (auto& Property : ElementProperty.second.NativeCallParameter) {
                             if (Property.PropertyType == VMLPropertyType::DoubleValue) {
                                 HeightRatio = Property.PropertyAsDouble;
@@ -1433,8 +1433,62 @@ namespace VML {
     }
     VMLOpacityAnimationBuilder::VMLOpacityAnimationBuilder(const VMLFinder& RootFinder, Core::VOpacityAnimation* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                              VMLControlBuildStatus* BuildStatus)
-            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus){
+            : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
+    void VMLPolygonViewBuilder::Builder(Core::VPolygonView* PolygonView, const std::vector<Core::VPointF>& Points) {
+        for (auto& Point : Points) {
+            PolygonView->AddPoint(Point);
+        }
+    }
+    void VMLPolygonViewBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VPolygonView* PolygonView, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                                VMLControlBuildStatus* BuildStatus) {
+        std::vector<Core::VPointF> PointsContainer;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"points") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"points\" Property Must Match the Type \"points-native-function\"";
+
+                    return;
+                }
+
+                for (auto& Element : ElementProperty.second.NativeCallParameter) {
+                    if (Element.PropertyType != VMLPropertyType::DoubleValue && Element.NativeCallMethodName != L"parallelogram") {
+                        BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                        BuildStatus->FailedReason = L"Unexpected parameters type, is should be \"point-native-function\" in points-native-function or parallelogram-native-function";
+
+                        return;
+                    }
+
+                    if (ElementProperty.second.NativeCallMethodName == L"parallelogram" && CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, { VMLPropertyType::DoubleValue })) {
+                        PointsContainer.push_back(Core::VPointF { ElementProperty.second.NativeCallParameter[0].PropertyAsDouble, 0 });
+                        PointsContainer.push_back(Core::VPointF { 0, 1.f });
+                        PointsContainer.push_back(Core::VPointF { 1.f - ElementProperty.second.NativeCallParameter[0].PropertyAsDouble, 1.f });
+                        PointsContainer.push_back(Core::VPointF { 1.f, 0 });
+
+                        break;
+                    }
+                    if (ElementProperty.second.NativeCallMethodName == L"parallelogram" &&
+                        CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, { VMLPropertyType::DoubleValue, VMLPropertyType::DoubleValue, VMLPropertyType::DoubleValue, VMLPropertyType::DoubleValue })) {
+                        PointsContainer.push_back(Core::VPointF { ElementProperty.second.NativeCallParameter[0].PropertyAsDouble, 0 });
+                        PointsContainer.push_back(Core::VPointF { ElementProperty.second.NativeCallParameter[1].PropertyAsDouble, 1.f });
+                        PointsContainer.push_back(Core::VPointF { 1.f - ElementProperty.second.NativeCallParameter[2].PropertyAsDouble, 1.f });
+                        PointsContainer.push_back(Core::VPointF { 1.f - ElementProperty.second.NativeCallParameter[3].PropertyAsDouble, 0 });
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        Builder(PolygonView, PointsContainer);
+    }
+    VMLPolygonViewBuilder::VMLPolygonViewBuilder(const VMLFinder& RootFinder, Core::VPolygonView* PolygonView, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                          VMLControlBuildStatus* BuildStatus): VMLCommonBuilder(RootFinder, PolygonView, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, PolygonView, PropertyValueList, BuildStatus);
     }
 }
 

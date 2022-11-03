@@ -1,10 +1,28 @@
-<widget type="mainwindow" width="589" height="222" title="Welcome to new VUILib" style-sheet-src="./testcss.css" sizable="true" frameless="true"
+<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css" sizable="true" frameless="true"
         class="main-window">
+    <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill">
+    </background-image>
+    <blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label"></blur-label>
+
+    <welcome-text-view type="polygon-view" x="@ratio(0.5)" y="@ratio(0.35)" width="@scale(0.52)" height="@scale(0.34)" points="@parallelogram(0.385, 0.0, 0.0, 0.0)" class="welcome-ui-view">
+        <background type="textlabel" width="@fill" height="@fill" class="welcome-backgruond">
+        </background>
+        <welcome-use-text type="textlabel" x="@ratio(0.30)" y="@ratio(0.35)" width="@scale(0.62)" height="@scale(0.20)" size-layout="@scale(0.14)" text="欢迎使用" class="welcome-use-text">
+        </welcome-use-text>
+        <welcome-use-sub-text type="textlabel" x="@ratio(0.20)" y="@ratio(0.50)" width="@scale(0.32)" height="@scale(0.15)" size-layout="@scale(0.10)" text="全新的 VuiLib" class="welcome-sub-text">
+        </welcome-use-sub-text>
+    </welcome-text-view>
+
+    <main-title-view type="polygon-view" x="0" y="@ratio(0.35)" width="@scale(0.70)" height="@scale(0.34)" points="@parallelogram(0.0, 0.0, 0.285, 0.0)" class="main-ui-view">
+        <background type="textlabel" width="@fill" height="@fill" class="title-backgruond">
+        </background>
+
+        <vuilib-text type="textlabel" width="@scale(0.6)" height="@scale(0.30)" size-layout="@scale(0.20)" x="65" y="@ratio(0.29)" class="title-text" text="VUILIB">
+        </vuilib-text>
+
+        <version-text type="textlabel" width="@scale(0.3)" height="@scale(0.12)" size-layout="@scale(0.09)" x="65" y="@ratio(0.49)" class="version-text" text="Version 2.x.x">
+        </version-text>
+    </main-title-view>
+
     <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
-    <title-text type="textlabel" x="@ratio(0.05)" y="@ratio(0.35)" width="175" height="43" text="New VuiLib" class="main-title">
-    </title-text>
-    <version-text type="textlabel" x="400" y="400" width="135" height="21" text="Version 2.0.x beta" class="version-subtext-text">
-    </version-text>
-    <description-text type="textlabel" x="@ratio(0.51)" y="@ratio(0.33)" width="246" height="113" 
-        text="DirectX2D 加速渲染\n更加优雅的 VML 和 VSS 语法\n对于 W3C CSS 标准的更多兼容" class="description-text">    </description-text>
 </widget>

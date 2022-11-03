@@ -440,6 +440,38 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"circle-view") {
+                        Core::VCircleView* CircleView = new Core::VCircleView(UIParent->UIObject);
+
+                        VMLObject->UIObject = CircleView;
+                        VMLObject->VMLType = VMLObjectType::CircleView;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLCommonBuilder Builder(GetRootFinder(), CircleView, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
+                    else if (ElementProperty.PropertyAsString == L"polygon-view") {
+                        Core::VPolygonView* PolygonView = new Core::VPolygonView(UIParent->UIObject);
+
+                        VMLObject->UIObject = PolygonView;
+                        VMLObject->VMLType = VMLObjectType::PolygonView;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLPolygonViewBuilder Builder(GetRootFinder(), PolygonView, Element.NodeValue, &BuildStatus);
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else {
                         delete VMLObject;
 
