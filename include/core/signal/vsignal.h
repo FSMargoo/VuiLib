@@ -81,18 +81,18 @@ public:
 template<class... Type>
 class VSignal {
 private:
-	std::list<std::shared_ptr<connect_basic<Type...> > >
+	std::list<std::shared_ptr<connect_basic<Type...> > >*
 		slots;
 
 private:
 	void _operator(void (*functional)(Type...), int operator_stage) {
-		for (auto iterator = slots.begin(); iterator != slots.end();) {
+		for (auto iterator = slots->begin(); iterator != slots->end();) {
 			connect_functional<Type...>* connect_function = static_cast<connect_functional<Type...>*>((*iterator).get());
 
 			if (connect_function->get_raw_function() == functional) {
 				switch (operator_stage) {
 				case 0: {
-					slots.erase(iterator++);
+					slots->erase(iterator++);
 
 					break;
 				}
@@ -120,7 +120,7 @@ private:
 	}
 	template<class ObjectType>
 	void _operator(ObjectType* object, void (ObjectType::* object_function)(Type...), int opreator_stage) {
-		for (auto iterator = slots.begin(); iterator != slots.end(); ) {
+		for (auto iterator = slots->begin(); iterator != slots->end(); ) {
 			if (iterator->get()->is_block() == true) {
 				continue;
 			}
@@ -131,7 +131,7 @@ private:
 				connect->get_raw_object() == object) {
 				switch (opreator_stage) {
 				case 0: {
-					slots.erase(iterator++);
+					slots->erase(iterator++);
 
 					break;
 				}
@@ -159,17 +159,25 @@ private:
 	}
 
 public:
+    VSignal() {
+        slots = new std::list<std::shared_ptr<connect_basic<Type...> > >;
+    }
+    ~VSignal() {
+
+    }
+
+public:
 	inline void Connect(void (*functional)(Type...)) {
 		std::shared_ptr<connect_functional<Type...>> functional_ptr
 		(new connect_functional<Type...>(functional));
-		slots.push_back(functional_ptr);
+		slots->push_back(functional_ptr);
 	}
 	template<class ObjectType>
 	inline void Connect(ObjectType* object, void (ObjectType::* functional)(Type...)) {
 		std::shared_ptr<connection<ObjectType, Type...> > functional_ptr
 		(new connection<ObjectType, Type...>(object, functional));
 
-		slots.push_back(functional_ptr);
+		slots->push_back(functional_ptr);
 	}
 
 	inline void Disconnect(void (*functional)(Type...)) {
@@ -189,7 +197,7 @@ public:
 	}
 
 	void Emit(Type... args) {
-		for (auto iterator = slots.begin(); iterator != slots.end(); ++iterator) {
+		for (auto iterator = slots->begin(); iterator != slots->end(); ++iterator) {
 			if (iterator->get()->is_block() == true) {
 				continue;
 			}

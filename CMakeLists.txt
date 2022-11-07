@@ -34,13 +34,18 @@ aux_source_directory(src/kits VKITS_DIR_SRC)
 aux_source_directory(include/vss VSS_DIR_SRC)
 aux_source_directory(src/vss VSS_DIR_SRC)
 
+aux_source_directory(include/win32base VWIN32_SRC)
+aux_source_directory(src/win32base VWIN32_SRC)
+
 add_library(vuilib STATIC ${DIR_SRCS})
 add_library(vmllib STATIC ${VML_DIR_SRC})
 add_library(vkitlib STATIC ${VKITS_DIR_SRC})
 add_library(vsslib STATIC ${VSS_DIR_SRC})
+add_library(vwin32base STATIC ${VWIN32_SRC})
 
 add_executable(vuilib_cmake main.cpp)
 target_link_libraries(vuilib_cmake vuilib)
 target_link_libraries(vuilib_cmake vmllib)
 target_link_libraries(vuilib_cmake vkitlib)
 target_link_libraries(vuilib_cmake vsslib)
+target_link_libraries(vuilib_cmake vwin32base)

@@ -91,7 +91,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
 
         if (MouseMoveMessage->MousePosition.InsideRectangle(GetRegion())) {
             HCURSOR ArrowCursor = LoadCursor(NULL, IDC_IBEAM);
-            SetClassLongPtr(GetHWnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+            SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
 
             InCursorStyle = true;
         }
@@ -99,7 +99,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
             InCursorStyle = false;
 
             HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
-            SetClassLongPtr(GetHWnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+            SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
         }
     }
     if (Message->GetType() == VMessageType::MouseClickedMessage) {
@@ -676,7 +676,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
             Update();
         }
         if (KeyMessage->KeyVKCode == 0x56 && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
-            if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && IsClipboardFormatAvailable(CF_TEXT) && OpenClipboard(GetHWnd())) {
+            if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && IsClipboardFormatAvailable(CF_TEXT) && OpenClipboard(CallWidgetGetHWND())) {
                 KeyboardUsed = true;
 
                 HANDLE ClipBoardHandle;
@@ -797,7 +797,7 @@ void VLineEditor::OnMessage(VMessage* Message) {
             }
         }
         if (KeyMessage->KeyVKCode == 0x43 && KeyMessage->KeyStats == VkeyClickedFlag::Down){
-            if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && InSelectMode && OpenClipboard(GetHWnd())) {
+            if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && InSelectMode && OpenClipboard(CallWidgetGetHWND())) {
                 KeyboardUsed = true;
 
                 std::wstring ClipString;

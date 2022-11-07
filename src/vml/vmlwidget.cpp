@@ -5,31 +5,31 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {
-    void VMLWidget::SortVMLAstNode(std::vector<VMLNode>& Nodes) {
+    void VMLMainWindow::SortVMLAstNode(std::vector<VMLNode>& Nodes) {
         std::sort(Nodes.begin(), Nodes.end(), [](VMLNode Left, VMLNode Right) -> bool {
             return Left.ChildrenSequence < Right.ChildrenSequence;
         });
     }
-    VMLWidget::VMLWidget(Core::VApplication* Parent, const bool& Sizble)
+    VMLMainWindow::VMLMainWindow(Core::VApplication* Parent, const bool& Sizble)
             : VMainWindow(0, 0, Parent, Sizble) {
 
     }
-    VMLWidget::VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble)
+    VMLMainWindow::VMLMainWindow(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble)
             : VMainWindow(Width, Height, Parent, Sizble) {    }
-    VMLWidget::~VMLWidget() {
+    VMLMainWindow::~VMLMainWindow() {
         VMainWindow::~VMainWindow();
     }
-    VMLWidgetLoadResult VMLWidget::LoadVML(const std::wstring VML, VMLParserParseMode StringMode) {
+    VMLWidgetLoadResult VMLMainWindow::LoadVML(const std::wstring VML, VMLParserParseMode StringMode) {
         VMLParser Parser(VML, StringMode);
 
         return LoadVML(Parser.ParseVML());
     }
 
-    VMLFinder VMLWidget::GetRootFinder() {
+    VMLFinder VMLMainWindow::GetRootFinder() {
         return VMLFinder(nullptr, ObjectList);
     }
 
-    VMLWidgetLoadResult VMLWidget::LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent) {
+    VMLWidgetLoadResult VMLMainWindow::LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent) {
         if (VMLAstTree.ParserStatus == VMLParserStatus::Error) {
             std::wstring ASTError;
 
@@ -49,9 +49,10 @@ namespace VML {
 
         return LoadResult;
     }
-    VMLWidgetLoadResult VMLWidget::LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent) {
+    VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent) {
         VMLWidgetLoadResult Result;
         Result.Status = VMLWidgetVMLLoadStats::Ok;
+        bool                AlreadyCreateMainWindow = false;
 
         if (UIParent == nullptr) {
             UIParent = new VMLObject;
@@ -239,6 +240,8 @@ namespace VML {
                     else if (ElementProperty.PropertyAsString == L"mainwindow") {
                         VMLObject->UIObject = this;
                         VMLObject->VMLType = VMLObjectType::MainWindow;
+
+                        AlreadyCreateMainWindow = true;
 
                         VMLControlBuildStatus BuildStatus;
                         VMLMainWindowBuilder  Builder(this, Element.NodeValue, &BuildStatus);
@@ -472,6 +475,56 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"widget") {
+                        if (AlreadyCreateMainWindow) {
+                            Core::VWidget *Widget = new Core::VWidget(0, 0, static_cast<Core::VApplication*>(GetParent()), L"WidgetFromVML");
+
+                            VMLObject->UIObject = Widget;
+                            VMLObject->VMLType = VMLObjectType::Widget;
+
+                            VMLControlBuildStatus BuildStatus;
+                            VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
+
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                                return Result;
+                            }
+                        }
+                        else if (UIParent->VMLType == VMLObjectType::MainWindow) {
+                            Core::VWidget *Widget = new Core::VWidget(0, 0, static_cast<Core::VMainWindow*>(GetParent()), L"WidgetFromVML");
+
+                            VMLObject->UIObject = Widget;
+                            VMLObject->VMLType = VMLObjectType::Widget;
+
+                            VMLControlBuildStatus BuildStatus;
+                            VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
+
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                                return Result;
+                            }
+                        }
+                        else if (UIParent->VMLType == VMLObjectType::Widget) {
+                            Core::VWidget *Widget = new Core::VWidget(0, 0, static_cast<Core::VWidget*>(GetParent()), L"WidgetFromVML");
+
+                            VMLObject->UIObject = Widget;
+                            VMLObject->VMLType = VMLObjectType::Widget;
+
+                            VMLControlBuildStatus BuildStatus;
+                            VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
+
+                            if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                                Result.Status = VMLWidgetVMLLoadStats::Failed;
+                                Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                                return Result;
+                            }
+                        }
+                    }
                     else {
                         delete VMLObject;
 
@@ -561,7 +614,7 @@ namespace VML {
 
         return Result;
     }
-    void VMLWidget::SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List) {
+    void VMLMainWindow::SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List) {
         for (auto& Selector : VSSParserResult.SelectorSet) {
             if (Selector->GetType() == VSS::VSSSelectorType::ElementSelector ||
                 Selector->GetType() == VSS::VSSSelectorType::FakeClassSelector) {
@@ -655,7 +708,7 @@ namespace VML {
             }
         }
     }
-    void VMLWidget::SetStyleSheet(VSS::VSSParserResult VSSParserResult) {
+    void VMLMainWindow::SetStyleSheet(VSS::VSSParserResult VSSParserResult) {
         SetStyleSheet(VSSParserResult, ObjectList);
 
         for (int Count = 0; Count < VSSParserResult.SelectorSet.size(); ++Count) {
@@ -664,7 +717,7 @@ namespace VML {
 
         VSSParserResult.SelectorSet.clear();
     }
-    VMLFinder VMLWidget::Get(const std::wstring& ChildrenId) {
+    VMLFinder VMLMainWindow::Get(const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
                 return VMLFinder(Object, Object->ChildrenObjects);
@@ -673,7 +726,7 @@ namespace VML {
 
         return VMLFinder(nullptr, std::vector<VMLObject*>());
     }
-    VMLFinder VMLWidget::operator[](const std::wstring& ChildrenId) {
+    VMLFinder VMLMainWindow::operator[](const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
                 return VMLFinder(Object, Object->ChildrenObjects);
@@ -683,8 +736,8 @@ namespace VML {
         return VMLFinder(nullptr, std::vector<VMLObject*>());
     }
 
-    HWND VMLWidget::GetLocalWinId() {
-        return GetHWnd();
+    HWND VMLMainWindow::GetLocalWinId() {
+        return Core::VMainWindow::CallWidgetGetHWND();
     }
 }
 

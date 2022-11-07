@@ -27,7 +27,7 @@ class VApplication : public VUIObject {
 
  private:
      static VMessage* PatchEvent();
-     void      ProcessEvent(VMessage* PatchedMessage);
+     void   ProcessEvent(VMessage* PatchedMessage);
 
  public:
      VApplication();

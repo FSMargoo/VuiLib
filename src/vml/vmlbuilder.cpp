@@ -464,7 +464,7 @@ namespace VML {
             MainWindow->SetTitle(Title);
         }
 
-        MainWindow->SetSizble(Sizble);
+        MainWindow->SetSizable(Sizble);
         MainWindow->SetFrameless(FramelessStatus);
     }
 
@@ -1489,6 +1489,99 @@ namespace VML {
     VMLPolygonViewBuilder::VMLPolygonViewBuilder(const VMLFinder& RootFinder, Core::VPolygonView* PolygonView, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                           VMLControlBuildStatus* BuildStatus): VMLCommonBuilder(RootFinder, PolygonView, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, PolygonView, PropertyValueList, BuildStatus);
+    }
+
+    void VMLWidgetBuilder::Builder(Core::VWidget *Widget, const int &Width, const int &Height, const std::wstring &Title,
+                              const bool &Sizable, const bool &FramelessStatus, const bool& Visible) {
+        Widget->Resize(Width, Height);
+        Widget->SetTitle(Title);
+        Widget->SetSizable(Sizable);
+        Widget->SetFrameless(FramelessStatus);
+
+        if (Visible) {
+            Widget->Show();
+        }
+    }
+    void VMLWidgetBuilder::AnalyzeProperty(Core::VWidget *Widget,
+                                           std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
+                                           VML::VMLControlBuildStatus *BuildStatus) {
+        int  Width           = 0;
+        int  Height          = 0;
+        bool Sizble          = true;
+        bool FramelessStatus = false;
+        bool Visible         = false;
+
+        std::wstring Title;
+
+        for (auto &ElementProperty: PropertyValueList) {
+            if (ElementProperty.first == L"width") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"width\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Width = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"height") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"height\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Height = ElementProperty.second.PropertyAsInt;
+            }
+            if (ElementProperty.first == L"title") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"title\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                Title = ElementProperty.second.PropertyAsString;
+            }
+            if (ElementProperty.first == L"sizable") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"sizable\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                Sizble = ElementProperty.second.PropertyAsBool;
+            }
+            if (ElementProperty.first == L"frameless") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"frameless\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                FramelessStatus = ElementProperty.second.PropertyAsBool;
+            }
+            if (ElementProperty.first == L"visible") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"visible\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                Visible = ElementProperty.second.PropertyAsBool;
+            }
+        }
+
+        Builder(Widget, Width, Height, Title, Sizble, FramelessStatus, Visible);
+    }
+
+    VMLWidgetBuilder::VMLWidgetBuilder(Core::VWidget* Widget, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                                       VMLControlBuildStatus* BuildStatus) {
+        AnalyzeProperty(Widget, PropertyValueList, BuildStatus);
     }
 }
 

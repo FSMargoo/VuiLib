@@ -111,6 +111,8 @@ protected:
 
     virtual void CallWidgetSendMessage(VMessage *Message);
 
+    virtual HWND CallWidgetGetHWND();
+
 public:
     virtual Core::VDCRender* CallWidgetGetDCRenderTarget();
 
@@ -188,6 +190,7 @@ public:
     virtual bool CheckMousePositon(const VPoint& Point) { return true; }
 
     bool SysProcessMessage(VMessage *Message);
+    virtual bool CheckQuitWindowMessage(VMessage* Message) { return false; }
 
 protected:
     bool SendMessageToChild(VMessage *Message, bool BreakWhenMeetTrue = true);
@@ -196,8 +199,8 @@ protected:
 
     bool CheckElementUIStatus(VMessage *SourceMessage);
 public:
-    void Hide();
-    void Show();
+    virtual void Hide();
+    virtual void Show();
 
 public:
     explicit VUIObject(VUIObject *Parent) {

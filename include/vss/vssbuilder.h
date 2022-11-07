@@ -223,6 +223,16 @@ namespace VSS {
         VSSPolygonViewBuilder(Core::VPolygonView *TargetControl,
                              std::vector<VSSBasicSelector *> SelectorSet);
     };
+
+    class VSSVWidgetBuilder {
+    private:
+        void BuildVSSObject(Core::VWidget *TargetControl,
+                           std::vector<VSSBasicSelector *> SelectorSet);
+
+    public:
+        VSSVWidgetBuilder(Core::VWidget *TargetControl,
+                   std::vector<VSSBasicSelector *> SelectorSet);
+    };
 }
 
 VLIB_END_NAMESPACE

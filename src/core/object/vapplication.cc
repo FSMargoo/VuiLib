@@ -9,68 +9,88 @@ VApplication* VLib_Application = nullptr;
 VMessage *VApplication::PatchEvent() {
     VMessage* ResultEvent = nullptr;
 
-    ExMessage EasyXMessage{};
-    peekmessage(&EasyXMessage);
+    Win32Core::VWin32Msg Win32Message{};
+    auto Result = Win32Core::VPeekMessage(&Win32Message);
 
-    switch (EasyXMessage.message) {
+    if (!Result) {
+        return nullptr;
+    }
+
+    switch (Win32Message.message) {
         case WM_LBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Up, VMouseKeyFlag::Left);
 
             return ResultEvent;
         }
         case WM_LBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Down, VMouseKeyFlag::Left);
 
             return ResultEvent;
         }
         case WM_RBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Up, VMouseKeyFlag::Right);
 
             return ResultEvent;
         }
         case WM_RBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Down, VMouseKeyFlag::Right);
+
+            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
             return ResultEvent;
         }
         case WM_MBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Up, VMouseKeyFlag::Middle);
+
+            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
             return ResultEvent;
         }
         case WM_MBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(EasyXMessage.x, EasyXMessage.y,
+            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
                                                    VMouseClickedFlag::Down, VMouseKeyFlag::Middle);
+
+            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
             return ResultEvent;
         }
         case WM_MOUSEMOVE: {
-            ResultEvent = new VMouseMoveMessage(EasyXMessage.x, EasyXMessage.y);
+            ResultEvent = new VMouseMoveMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y);
+
+            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
             return ResultEvent;
         }
         case WM_MOUSEWHEEL: {
-            ResultEvent = new VMouseWheelMessage(EasyXMessage.x, EasyXMessage.y, EasyXMessage.wheel);
+            ResultEvent = new VMouseWheelMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y, Win32Message.wheel);
 
             return ResultEvent;
         }
         case WM_KEYUP: {
-            ResultEvent = new VKeyClickedMessage(EasyXMessage.vkcode, EasyXMessage.prevdown, EasyXMessage.extended, VkeyClickedFlag::Up);
+            ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Up);
 
             return ResultEvent;
         }
         case WM_KEYDOWN: {
-            ResultEvent = new VKeyClickedMessage(EasyXMessage.vkcode, EasyXMessage.prevdown, EasyXMessage.extended, VkeyClickedFlag::Down);
+            ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Down);
 
             return ResultEvent;
         }
         case WM_CHAR: {
-            ResultEvent = new VIMECharMessage(EasyXMessage.ch);
+            ResultEvent = new VIMECharMessage(Win32Message.wHandle, Win32Message.ch);
+
+            return ResultEvent;
+        }
+
+        case WM_CLOSE: {
+            ResultEvent = new VQuitWindowMessage(Win32Message.wHandle);
+
+            ResultEvent->Win32ID              = Win32Message.message;
 
             return ResultEvent;
         }

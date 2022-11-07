@@ -8,7 +8,7 @@ VUIObject::~VUIObject() {
     SetParent(nullptr);
 
     for (auto& ChildObject : ObjectKernel.ChildObjectContainer) {
-        delete (VUIObject*)ChildObject;
+        ChildObject->~VUIObject();
     }
 
     ObjectKernel.ChildObjectContainer.clear();
@@ -167,6 +167,14 @@ void VUIObject::CallWidgetSendMessage(VMessage *Message) {
 
         return GetParent()->CallWidgetSendMessage(Message);
     }
+}
+
+HWND VUIObject::CallWidgetGetHWND() {
+    if (IsWidget() == false) {
+        return GetParent()->CallWidgetGetHWND();
+    }
+
+    return CallWidgetGetHWND();
 }
 
 Core::VDCRender* VUIObject::CallWidgetGetDCRenderTarget() {
@@ -358,7 +366,7 @@ bool VUIObject::CheckUIFocusStatus(const VPoint &MousePosition, VMessage *Source
 
             InFocus.Emit();
 
-            VCheckFocusMessage *CheckFocus = new VCheckFocusMessage(MousePosition);
+            VCheckFocusMessage *CheckFocus = new VCheckFocusMessage(CallWidgetGetHWND(), MousePosition);
 
             CallWidgetSendMessage(CheckFocus);
             delete CheckFocus;
@@ -468,7 +476,21 @@ bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage) {
 
 bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
     if (IsApplication()) {
-        return SendMessageToChild(Message, false);
+        if (Message->GetType() != VMessageType::QuitWindowMessage) {
+            return SendMessageToChild(Message, false);
+        }
+        else {
+            return SendMessageToChild(Message, true);
+        }
+    }
+
+    if (Message->MessageTriggerWidget != CallWidgetGetHWND()) {
+        if (Message->GetType() != VMessageType::QuitWindowMessage) {
+            return SendMessageToChild(Message, false);
+        }
+        else {
+            return SendMessageToChild(Message, true);
+        }
     }
 
     if (ObjectVisual.Stats == VUIObjectUIStats::Hidden) {
@@ -478,6 +500,9 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message) {
     OnMessage(Message);
 
     switch (Message->GetType()) {
+        case VMessageType::QuitWindowMessage: {
+            return CheckQuitWindowMessage(Message);
+        }
         case VMessageType::GetRepaintAeraMessage: {
             VGetRepaintAeraMessage *RepaintMessage = static_cast<VGetRepaintAeraMessage *>(Message);
             if (*(RepaintMessage->RepaintAera) != GetRegion() &&
@@ -655,7 +680,7 @@ bool VUIObject::CheckElementUIStatus(VMessage *SourceMessage) {
 
     if (SendMessageToChild(SourceMessage, true)) {
         if (!CheckMousePositon(MousePosition) && MousePosition.InsideRectangle(GetRegion())) {
-            VKillFocusMessage KillFocus;
+            VKillFocusMessage KillFocus(CallWidgetGetHWND());
 
             SendMessageToChild(&KillFocus, true);
         }

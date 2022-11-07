@@ -14,7 +14,8 @@ namespace VML {
         PushButton, ImageLabel, TextLabel, MainWindow, Layout, ScaleLayout, RadioButton,
         HorizontalSlider, VerticalSlider, FakeCaption, BlurLabel, IconButton, LineEditor,
         SwitchGroup, VerticalScroller, HorizontalScroller, ViewLabel,
-        PositionAnimation, GeometryAnimation, OpacityAnimation, CircleView, PolygonView
+        PositionAnimation, GeometryAnimation, OpacityAnimation, CircleView, PolygonView,
+        Widget
     };
 
     struct VMLObject {

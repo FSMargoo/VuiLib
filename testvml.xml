@@ -1,4 +1,4 @@
-<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css" sizable="true" frameless="true"
+<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css"
         class="main-window">
     <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill">
     </background-image>

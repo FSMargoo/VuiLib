@@ -3,6 +3,10 @@
 // This is the basic core file in vuilib
 #pragma once
 
+#ifndef VCONSOLE_APPLICATION
+#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+#endif
+
 #ifndef VLIB_ENABLE_NAMESPACE
 #define VLIB_BEGIN_NAMESPACE
 #define VLIB_END_NAMESPACE
@@ -14,10 +18,11 @@
 #define WINVER 0x0600
 
 #include <new>
-#include <graphics.h>
 #include <string>
 #include <crtdbg.h>
 #include <d2d1helper.h>
+
+#include "../win32base/vwin32base.h"
 
 VLIB_BEGIN_NAMESPACE
 

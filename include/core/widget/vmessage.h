@@ -13,12 +13,16 @@ enum VMessageType {
 	UnknowMessage, MouseMoveMessage, MouseClickedMessage,
 	KeyClickedMessage, RepaintMessage, GetRepaintAeraMessage,
 	IMECharMessage, MouseWheelMessage, FreeResourceMessage,
-	CheckLocalFocusMessage, KillFocusMessage
+	CheckLocalFocusMessage, KillFocusMessage, QuitWindowMessage
 };
 
 typedef class VMessage {
  private:
 	 VMessageType MessageType;
+
+ public:
+     UINT         Win32ID;
+     HWND         MessageTriggerWidget = NULL;
 
  public:
 	 explicit VMessage(VMessageType Type = UnknowMessage);
@@ -30,7 +34,7 @@ typedef class VMessage {
 
 class VFreeSourceMessage : public VMessage {
  public:
- 	 VFreeSourceMessage();
+ 	 VFreeSourceMessage(HWND TriggerWidget);
 };
 
 class VMouseMoveMessage : public VMessage {
@@ -38,7 +42,7 @@ class VMouseMoveMessage : public VMessage {
 	 VPoint MousePosition;
 
  public:
-	 VMouseMoveMessage(int X, int Y);
+	 VMouseMoveMessage(HWND TriggerWidget, int X, int Y);
 };
 
 class VMouseWheelMessage : public VMessage {
@@ -48,7 +52,7 @@ class VMouseWheelMessage : public VMessage {
 	 short  WheelValue;
 
  public:
-	 VMouseWheelMessage(int X, int Y, short WheelParameter);
+	 VMouseWheelMessage(HWND TriggerWidget, int X, int Y, short WheelParameter);
 };
 
 typedef enum VMouseClickedFlag {
@@ -66,7 +70,7 @@ class VMouseClickedMessage : public VMessage {
 	 VMouseKeyFlag     ClickedKey;
 
  public:
-	 VMouseClickedMessage(int X, int Y, VMouseClickedFlag ClickedFlag, VMouseKeyFlag Key);
+	 VMouseClickedMessage(HWND TriggerWidget, int X, int Y, VMouseClickedFlag ClickedFlag, VMouseKeyFlag Key);
 };
 
 class VKeyClickedMessage : public VMessage {
@@ -77,7 +81,7 @@ class VKeyClickedMessage : public VMessage {
 	 VkeyClickedFlag KeyStats;
 
  public:
-	 VKeyClickedMessage(byte VKCode, bool PrevDown, bool Extened, VkeyClickedFlag Stats);
+	 VKeyClickedMessage(HWND TriggerWidget, byte VKCode, bool PrevDown, bool Extened, VkeyClickedFlag Stats);
 };
 
 class VRepaintMessage : public VMessage {
@@ -85,7 +89,7 @@ class VRepaintMessage : public VMessage {
  	 VRect DirtyRectangle;
 
  public:
-	 explicit VRepaintMessage(const VRect& RepaintRegion);
+	 explicit VRepaintMessage(HWND TriggerWidget, const VRect& RepaintRegion);
 };
 
 class VGetRepaintAeraMessage : public VMessage {
@@ -93,7 +97,7 @@ class VGetRepaintAeraMessage : public VMessage {
  	 VRect* RepaintAera;
  
  public:
- 	 explicit VGetRepaintAeraMessage(VRect& RepaintRegion);
+ 	 explicit VGetRepaintAeraMessage(HWND TriggerWidget, VRect& RepaintRegion);
 };
 
 class VIMECharMessage : public VMessage {
@@ -101,7 +105,7 @@ class VIMECharMessage : public VMessage {
 	 wchar_t IMEChar;
 
  public:
-	 explicit VIMECharMessage(wchar_t CharInputed);
+	 explicit VIMECharMessage(HWND TriggerWidget, wchar_t CharInputed);
 };
 
 class VCheckFocusMessage : public VMessage {
@@ -109,13 +113,19 @@ class VCheckFocusMessage : public VMessage {
 	 VPoint FocusPoint;
 
  public:
-	 explicit VCheckFocusMessage(const VPoint& Point);
+	 explicit VCheckFocusMessage(HWND TriggerWidget, const VPoint& Point);
 };
 
 class VKillFocusMessage : public VMessage {
  public:
-	 VKillFocusMessage();
+	 VKillFocusMessage(HWND TriggerWidget);
 };
+
+class VQuitWindowMessage : public VMessage {
+ public:
+    VQuitWindowMessage(HWND TriggerWidget);
+};
+
 }
 
 VLIB_END_NAMESPACE

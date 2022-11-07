@@ -283,7 +283,7 @@ namespace VML {
     class VMLMainWindowBuilder {
     protected:
         void Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height,
-                     const std::wstring &Title, const bool &Sizble, const bool &FramelessStatus);
+                     const std::wstring &Title, const bool &Sizable, const bool &FramelessStatus);
 
         void AnalyzeProperty(Core::VMainWindow* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
@@ -292,7 +292,18 @@ namespace VML {
         VMLMainWindowBuilder(Core::VMainWindow* MainWindow, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                               VMLControlBuildStatus* BuildStatus);
     };
-    
+
+    class VMLWidgetBuilder {
+    protected:
+        void Builder(Core::VWidget* Widget, const int& Width, const int& Height, const std::wstring& Title,
+                     const bool& Sizable, const bool& FramelessStatus, const bool& Visible);
+        void AnalyzeProperty(Core::VWidget* Widget, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                             VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLWidgetBuilder(Core::VWidget* Widget, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+                           VMLControlBuildStatus* BuildStatus);
+    };
 }
 
 VLIB_END_NAMESPACE

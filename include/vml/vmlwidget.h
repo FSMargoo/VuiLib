@@ -15,7 +15,7 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {
-    class VMLWidget : public Core::VMainWindow {
+    class VMLMainWindow : public Core::VMainWindow {
     protected:
         std::vector<VMLObject*> ObjectList;
 
@@ -26,9 +26,9 @@ namespace VML {
         void SortVMLAstNode(std::vector<VMLNode>& Nodes);
 
     public:
-        VMLWidget(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
-        VMLWidget(Core::VApplication* Parent, const bool& Sizble = true);
-        ~VMLWidget();
+        VMLMainWindow(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
+        VMLMainWindow(Core::VApplication* Parent, const bool& Sizble = true);
+        ~VMLMainWindow();
 
     public:
         VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);

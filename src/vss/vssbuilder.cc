@@ -2673,7 +2673,7 @@ namespace VSS {
 
     void VSSCircleViewBuilder::BuildVSSObject(Core::VCircleView *TargetControl,
             std::vector<VSSBasicSelector *> SelectorSet) {
-        if (TargetControl != nullptr) {
+        if (TargetControl == nullptr) {
             return;
         }
 
@@ -2737,6 +2737,35 @@ namespace VSS {
     }
     VSSPolygonViewBuilder::VSSPolygonViewBuilder(Core::VPolygonView *TargetControl,
                                                  std::vector<VSSBasicSelector *> SelectorSet) {
+        BuildVSSObject(TargetControl, SelectorSet);
+    }
+
+    void VSSVWidgetBuilder::BuildVSSObject(Core::VWidget *TargetControl,
+                                               std::vector<VSSBasicSelector *> SelectorSet) {
+        for (auto &Selector: SelectorSet) {
+            if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+                static_cast<VSSElementSelector *>(Selector)->ElementTag == L"widget") {
+                for (auto &Property: Selector->SelectorProperty) {
+                    if (Property.first == L"background-color") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                TargetControl->SetBackgroundColor(PropertyValue.PropertyAsColorValue);
+                            }
+                        }
+                    }
+                    if (Property.first == L"border-radius") {
+                        for (auto &PropertyValue: Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                TargetControl->SetRadius({ PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VSSVWidgetBuilder::VSSVWidgetBuilder(Core::VWidget *TargetControl,
+                                         std::vector<VSSBasicSelector *> SelectorSet) {
         BuildVSSObject(TargetControl, SelectorSet);
     }
 }

@@ -37,9 +37,10 @@ struct VMainWindowConfig {
     std::function<void()>         EndIMEInput;
     std::function<void()>         LosedUserFocus;
     std::function<void(int, int)> WindowOnSize;
+
+    WNDPROC OriginWindowProcess;
 };
 
-extern WNDPROC _VExWindowProcess;
 extern std::map<HWND, VMainWindowConfig*> _VMainConfigs;
 
 void ExResize(const int& Width, const int& Height);

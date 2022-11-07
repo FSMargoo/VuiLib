@@ -10,18 +10,16 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
-    WNDPROC _VExWindowProcess;
     std::map<HWND, VMainWindowConfig*> _VMainConfigs;
-
-    void ExResize(const int& Width, const int& Height) {
-        Resize(NULL, Width, Height);
-    }
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
         if (Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
                 _VMainConfigs[Handle] == nullptr) {
-            return _VExWindowProcess(Handle, Message, wParameter, lParameter);
+            return DefWindowProc(Handle, Message, wParameter, lParameter);
         }
+
+        WNDPROC _VExWindowProcess = _VMainConfigs[Handle]->OriginWindowProcess;
+
         if (_VMainConfigs.find(Handle) != _VMainConfigs.end()) {
             switch (Message) {
             case WM_PAINT: {
@@ -33,8 +31,8 @@ namespace Core {
             case WM_NCHITTEST: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless) {
-                    POINT MousePoint = { (int)(short)LOWORD(lParameter), (int)(short)HIWORD(lParameter) };
+                if (WindowConfig->InFrameless && !WindowConfig->EnableRadius) {
+                    POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
 
                     RECT WindowRect;
                     GetWindowRect(Handle, &WindowRect);
@@ -110,7 +108,7 @@ namespace Core {
             case WM_SETCURSOR: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
+                if (WindowConfig->InFrameless && WindowConfig->Sizable && !WindowConfig->EnableRadius) {
                     switch (LOWORD(lParameter)) {
                     case HTTOP:
                     case HTBOTTOM: {
@@ -143,8 +141,8 @@ namespace Core {
             case WM_NCLBUTTONDOWN: {
                 VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
-                    POINT MousePoint = { (int)(short)LOWORD(lParameter), (int)(short)HIWORD(lParameter) };
+                if (WindowConfig->InFrameless && !WindowConfig->EnableRadius && WindowConfig->Sizable) {
+                    POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
                     switch (wParameter) {
                     case HTTOP:
                         SendMessage(Handle, WM_SYSCOMMAND, SC_SIZE | WMSZ_TOP,
@@ -205,13 +203,13 @@ namespace Core {
                     VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                     if (wParameter != SIZE_RESTORED) {
+                        WindowConfig->WindowOnSize(LOWORD(lParameter), HIWORD(lParameter));
+                    }
+                    else {
                         RECT Rect;
                         GetWindowRect(Handle, &Rect);
 
                         WindowConfig->WindowOnSize(Rect.right - Rect.left, Rect.bottom - Rect.top);
-                    }
-                    else {
-                        WindowConfig->WindowOnSize(LOWORD(lParameter), HIWORD(lParameter));
                     }
                 }
 

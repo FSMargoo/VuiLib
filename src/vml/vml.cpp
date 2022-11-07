@@ -72,6 +72,9 @@ namespace VML {
         if (String == L"polygon-view") {
             return VMLObjectType::PolygonView;
         }
+        if (String == L"widget") {
+            return VMLObjectType::Widget;
+        }
 
         return Type;
     }
@@ -139,6 +142,9 @@ namespace VML {
             }
             case VMLObjectType::PolygonView: {
                 return L"polygon-view";
+            }
+            case VMLObjectType::Widget: {
+                return L"widget";
             }
         }
 
@@ -218,6 +224,11 @@ namespace VML {
             }
             case VMLObjectType::PolygonView: {
                 VSS::VSSPolygonViewBuilder Builder(static_cast<Core::VPolygonView*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
+
+                break;
+            }
+            case VMLObjectType::Widget: {
+                VSS::VSSVWidgetBuilder Builder(static_cast<Core::VWidget*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
 
                 break;
             }
