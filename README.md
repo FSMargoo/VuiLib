@@ -11,7 +11,7 @@
 * 编译目标平台：x64 x32
 * 操作系统： Windows Vista 及以上
 * 构造工具: CMake
-* API：EasyX2021730 & D2D9 及以上
+* API：D2D9 及以上
 ### Steps - 安装过程
 1. 拉取仓库代码
 ```
@@ -20,7 +20,7 @@ git clone https://github.com/FSMargoo/VuiLib.git
 2. 使用 CMake 进行构造得到 vkitlib.lib vkits.lib vmllib.lib vsslib.lib vuilib.lib
 3. 配置到你的开发环境中，然后就可以使用 VuiLib 了
 ## Features - 特点
-* 基于 EasyX + D2D，编译出的程序体积极小。
+* 基于 D2D，编译出的程序体积极小。
 * DirectX2D 渲染效率极高。
 * 库文件简单，开包即用。
 * 可用于写些打发时间的小程序。
