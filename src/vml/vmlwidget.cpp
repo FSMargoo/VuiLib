@@ -493,7 +493,7 @@ namespace VML {
                             }
                         }
                         else if (UIParent->VMLType == VMLObjectType::MainWindow) {
-                            Core::VWidget *Widget = new Core::VWidget(0, 0, static_cast<Core::VMainWindow*>(GetParent()), L"WidgetFromVML");
+                            Core::VWidget *Widget = new Core::VWidget(0, 0, static_cast<Core::VMainWindow*>(UIParent->UIObject), L"WidgetFromVML");
 
                             VMLObject->UIObject = Widget;
                             VMLObject->VMLType = VMLObjectType::Widget;

@@ -80,10 +80,10 @@ VMainWindow::VMainWindow(const int& Width, const int& Height, VApplication* Pare
     Update( { 0, 0, GetWidth(), GetHeight() } );
 }
 VMainWindow::~VMainWindow() {
-    VUIObject::~VUIObject();
-
     _VMainConfigs.erase(WindowHandle);
     _VMainConfigs[WindowHandle] = nullptr;
+
+    VUIObject::~VUIObject();
 }
 
 void VMainWindow::CallWidgetSetIME(const int& X, const int& Y) {
@@ -503,12 +503,12 @@ VWidget::VWidget(const int& Width, const int& Height, VApplication* Parent, cons
     Update( { 0, 0, GetWidth(), GetHeight() } );
 }
 VWidget::~VWidget() {
-    PostMessage(WindowHandle, WM_CLOSE, NULL, NULL);
-
     VUIObject::~VUIObject();
 
     _VMainConfigs.erase(WindowHandle);
     _VMainConfigs[WindowHandle] = nullptr;
+
+    PostMessage(WindowHandle, WM_CLOSE, NULL, NULL);
 }
 
 void VWidget::Show() {
