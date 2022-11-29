@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{8630c5f4-60a2-42be-adb1-75511fcc48ff}</ProjectGuid>
+    <RootNamespace>PhotoViewerX</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\animation\vanimation.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\animation\vanimationcurve.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vabstractbutton.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vblurlabel.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vdragcontrolbase.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vfakecaption.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\viconbutton.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vimagelabel.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vlayout.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vlineeditor.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vpushbutton.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vradiobutton.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vscrollbar.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vscroller.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vswitchgroup.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vtextlabel.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\control\vviewlabel.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\object\vapplication.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\object\vuiobject.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vbrush.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vcolor.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vdirectxfactory.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vimage.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vpainter.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vpainterdevice.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vrenderbasic.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\render\vwrite.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\signal\vsignal.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\uibasic\vsmarttimer.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\uibasic\vtimer.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\uibasic\vuiinterpolator.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\uibasic\vuitheme.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\vbasiccore.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\visual\vvisual.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\widget\vmessage.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\widget\vprivatewidget.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\core\widget\vwidget.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\kits\seal.info.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\kits\seal.lexical.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\kits\seal.lexical.token.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\kits\vcolorhelper.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\kits\vparserhelper.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vml\vml.cpp" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vml\vmlbuilder.cpp" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vml\vmlparser.cpp" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vml\vmlwidget.cpp" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vss\vssbuilder.cc" />
+    <ClCompile Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\src\vss\vssparser.cc" />
+    <ClCompile Include="..\..\src\core\control\vabstractbutton.cc" />
+    <ClCompile Include="..\..\src\core\control\vblurlabel.cc" />
+    <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc" />
+    <ClCompile Include="..\..\src\core\control\vfakecaption.cc" />
+    <ClCompile Include="..\..\src\core\control\viconbutton.cc" />
+    <ClCompile Include="..\..\src\core\control\vimagelabel.cc" />
+    <ClCompile Include="..\..\src\core\control\vlayout.cc" />
+    <ClCompile Include="..\..\src\core\control\vpushbutton.cc" />
+    <ClCompile Include="..\..\src\core\control\vradiobutton.cc" />
+    <ClCompile Include="..\..\src\core\control\vscrollbar.cc" />
+    <ClCompile Include="..\..\src\core\control\vtextlabel.cc" />
+    <ClCompile Include="..\..\src\core\object\vapplication.cc" />
+    <ClCompile Include="..\..\src\core\object\vuiobject.cc" />
+    <ClCompile Include="..\..\src\core\render\vbrush.cc" />
+    <ClCompile Include="..\..\src\core\render\vcolor.cc" />
+    <ClCompile Include="..\..\src\core\render\vdirectxfactory.cc" />
+    <ClCompile Include="..\..\src\core\render\vimage.cc" />
+    <ClCompile Include="..\..\src\core\render\vpainter.cc" />
+    <ClCompile Include="..\..\src\core\render\vpainterdevice.cc" />
+    <ClCompile Include="..\..\src\core\render\vrenderbasic.cc" />
+    <ClCompile Include="..\..\src\core\render\vwrite.cc" />
+    <ClCompile Include="..\..\src\core\signal\vsignal.cc" />
+    <ClCompile Include="..\..\src\core\uibasic\vsmarttimer.cc" />
+    <ClCompile Include="..\..\src\core\uibasic\vtimer.cc" />
+    <ClCompile Include="..\..\src\core\uibasic\vuiinterpolator.cc" />
+    <ClCompile Include="..\..\src\core\uibasic\vuitheme.cc" />
+    <ClCompile Include="..\..\src\core\vbasiccore.cc" />
+    <ClCompile Include="..\..\src\core\widget\vmessage.cc" />
+    <ClCompile Include="..\..\src\core\widget\vprivatewidget.cc" />
+    <ClCompile Include="..\..\src\core\widget\vwidget.cc" />
+    <ClCompile Include="..\..\src\kits\seal.info.cc" />
+    <ClCompile Include="..\..\src\kits\seal.lexical.cc" />
+    <ClCompile Include="..\..\src\kits\seal.lexical.token.cc" />
+    <ClCompile Include="..\..\src\kits\vcolorhelper.cc" />
+    <ClCompile Include="..\..\src\kits\vparserhelper.cc" />
+    <ClCompile Include="..\..\src\vml\vml.cpp" />
+    <ClCompile Include="..\..\src\vml\vmlbuilder.cpp" />
+    <ClCompile Include="..\..\src\vml\vmlparser.cpp" />
+    <ClCompile Include="..\..\src\vml\vmlwidget.cpp" />
+    <ClCompile Include="..\..\src\vss\vssbuilder.cc" />
+    <ClCompile Include="..\..\src\vss\vssparser.cc" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pvmainwindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="mainui.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="uistyle.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\animation\vanimation.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\animation\vanimationcurve.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vabstractbutton.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vblurlabel.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vdragcontrolbase.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vfakecaption.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\viconbutton.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vimagelabel.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vlayout.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vlineeditor.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vpushbutton.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vradiobutton.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vscrollbar.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vscroller.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vswitchgroup.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vtextlabel.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\control\vviewlabel.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\object\vapplication.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\object\vuiobject.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vbrush.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vcolor.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vdirectxfactory.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vimage.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vpainter.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vpainterdevice.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vrenderbasic.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\render\vwrite.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\signal\vsignal.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\uibasic\vsmarttimer.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\uibasic\vtimer.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\uibasic\vuiinterpolator.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\uibasic\vuitheme.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\vbasiccore.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\vcontrol.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\visual\vvisual.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\widget\vmessage.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\widget\vprivatewidget.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\core\widget\vwidget.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\kits\seal.info.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\kits\seal.lexical.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\kits\seal.lexical.token.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\kits\vcolorhelper.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\kits\vparserhelper.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vml\vml.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vml\vmlbuilder.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vml\vmlparser.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vml\vmlwidget.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vss\vssbuilder.h" />
+    <ClInclude Include="..\..\..\..\PhotoViewerX\PhotoViewerX\vuilib\include\vss\vssparser.h" />
+    <ClInclude Include="..\..\include\core\control\vabstractbutton.h" />
+    <ClInclude Include="..\..\include\core\control\vblurlabel.h" />
+    <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h" />
+    <ClInclude Include="..\..\include\core\control\vfakecaption.h" />
+    <ClInclude Include="..\..\include\core\control\viconbutton.h" />
+    <ClInclude Include="..\..\include\core\control\vimagelabel.h" />
+    <ClInclude Include="..\..\include\core\control\vlayout.h" />
+    <ClInclude Include="..\..\include\core\control\vpushbutton.h" />
+    <ClInclude Include="..\..\include\core\control\vradiobutton.h" />
+    <ClInclude Include="..\..\include\core\control\vscrollbar.h" />
+    <ClInclude Include="..\..\include\core\control\vtextlabel.h" />
+    <ClInclude Include="..\..\include\core\object\vapplication.h" />
+    <ClInclude Include="..\..\include\core\object\vuiobject.h" />
+    <ClInclude Include="..\..\include\core\render\vbrush.h" />
+    <ClInclude Include="..\..\include\core\render\vcolor.h" />
+    <ClInclude Include="..\..\include\core\render\vdirectxfactory.h" />
+    <ClInclude Include="..\..\include\core\render\vimage.h" />
+    <ClInclude Include="..\..\include\core\render\vpainter.h" />
+    <ClInclude Include="..\..\include\core\render\vpainterdevice.h" />
+    <ClInclude Include="..\..\include\core\render\vrenderbasic.h" />
+    <ClInclude Include="..\..\include\core\render\vwrite.h" />
+    <ClInclude Include="..\..\include\core\signal\vsignal.h" />
+    <ClInclude Include="..\..\include\core\uibasic\vsmarttimer.h" />
+    <ClInclude Include="..\..\include\core\uibasic\vtimer.h" />
+    <ClInclude Include="..\..\include\core\uibasic\vuiinterpolator.h" />
+    <ClInclude Include="..\..\include\core\uibasic\vuitheme.h" />
+    <ClInclude Include="..\..\include\core\vbasiccore.h" />
+    <ClInclude Include="..\..\include\core\vcontrol.h" />
+    <ClInclude Include="..\..\include\core\widget\vmessage.h" />
+    <ClInclude Include="..\..\include\core\widget\vprivatewidget.h" />
+    <ClInclude Include="..\..\include\core\widget\vwidget.h" />
+    <ClInclude Include="..\..\include\kits\seal.info.h" />
+    <ClInclude Include="..\..\include\kits\seal.lexical.h" />
+    <ClInclude Include="..\..\include\kits\seal.lexical.token.h" />
+    <ClInclude Include="..\..\include\kits\vcolorhelper.h" />
+    <ClInclude Include="..\..\include\kits\vparserhelper.h" />
+    <ClInclude Include="..\..\include\vml\vml.h" />
+    <ClInclude Include="..\..\include\vml\vmlbuilder.h" />
+    <ClInclude Include="..\..\include\vml\vmlparser.h" />
+    <ClInclude Include="..\..\include\vml\vmlwidget.h" />
+    <ClInclude Include="..\..\include\vss\vssbuilder.h" />
+    <ClInclude Include="..\..\include\vss\vssparser.h" />
+    <ClInclude Include="pvmainwindow.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

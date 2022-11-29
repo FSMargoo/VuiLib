@@ -1,0 +1,46 @@
+<main-ui type="mainwindow" width="800" height="800" sizable="false">
+	<setting-button type="pushbutton" width="100" height="20" width="100" height="40" x="@center" y="@center">
+	</setting-button>
+
+	<setting-widget type="widget" width="400" height="500" sizable="false">
+		<scroll-view type="viewlabel" width="400" view-width="400" height="500" view-height="600">
+			<leader-text-1 type="textlabel" text="Selection 1: " auto-size="true" y="0">
+			</leader-text-1>
+			<leader-text-2 type="textlabel" text="Selection 2: " auto-size="true" y="60">
+			</leader-text-2>
+			<leader-text-3 type="textlabel" text="Selection 3: " auto-size="true" y="120">
+			</leader-text-3>
+			<leader-text-4 type="textlabel" text="Selection 4: " auto-size="true" y="180">
+			</leader-text-4>
+			<leader-text-5 type="textlabel" text="Selection 5: " auto-size="true" y="240">
+			</leader-text-5>
+			<leader-text-6 type="textlabel" text="Selection 6: " auto-size="true" y="300">
+			</leader-text-6>
+			<leader-text-7 type="textlabel" text="Selection 7: " auto-size="true" y="360">
+			</leader-text-7>
+			<leader-text-8 type="textlabel" text="Selection 8: " auto-size="true" y="480">
+			</leader-text-8>
+			<leader-text-9 type="textlabel" text="Selection 9: " auto-size="true" y="540">
+			</leader-text-9>
+
+			<leader-button-1 type="pushbutton" width="100" height="20" text="Selection 1" x="240" y="0">
+			</leader-button-1>
+			<leader-button-2 type="pushbutton" width="100" height="20" text="Selection 2" x="240" y="60">
+			</leader-button-2>
+			<leader-button-3 type="pushbutton" width="100" height="20" text="Selection 3" x="240" y="120">
+			</leader-button-3>
+			<leader-button-4 type="pushbutton" width="100" height="20" text="Selection 4" x="240" y="180">
+			</leader-button-4>
+			<leader-button-5 type="pushbutton" width="100" height="20" text="Selection 5" x="240" y="240">
+			</leader-button-5>
+			<leader-button-6 type="pushbutton" width="100" height="20" text="Selection 6" x="240" y="300">
+			</leader-button-6>
+			<leader-button-7 type="pushbutton" width="100" height="20" text="Selection 7" x="240" y="360">
+			</leader-button-7>
+			<leader-button-8 type="pushbutton" width="100" height="20" text="Selection 8" x="240" y="480">
+			</leader-button-8>
+			<leader-button-9 type="pushbutton" width="100" height="20" text="Selection 9" x="240" y="540">
+			</leader-button-9>
+		</scroll-view>
+	</setting-widget>
+</main-ui>

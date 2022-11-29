@@ -1,0 +1,34 @@
+.vml-widget {
+    border-radius: 8px;
+}
+
+.background-blur-label {
+    background-color: rgba(0, 0, 0, 0.17);
+    radius: 13px;
+}
+
+.text-blur-label {
+    background-color: rgba(41, 42, 43, 0.72);
+    radius: 50px;
+    border-radius: 8px;
+}
+
+.welcome-text {
+    color: rgb(255, 255, 255);
+    font-size: 37px;
+}
+
+.welcome-sub-text {
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+}
+
+.text-title {
+    color: rgba(139, 132, 132, 0.6);
+    font-size: 24px;
+}
+
+.text-angel-beats-title {
+    color: rgba(139, 132, 132, 0.39);
+    font-size: 21px;
+}
