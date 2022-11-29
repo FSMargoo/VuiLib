@@ -6,381 +6,382 @@ namespace Win32Core {
 	HWND					VLastWindowHandle;
 
 	LRESULT VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter, LPARAM lParameter) {
-		VWin32Msg* RawWin32Msg = nullptr;
+		VWin32Msg RawWin32Msg { };
+		bool flag = false;
 
 		switch (MessageType) {
 		case WM_LBUTTONDOWN: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl		= false;
-			RawWin32Msg->shift		= false;
-			RawWin32Msg->lbutton	= false;
-			RawWin32Msg->mbutton	= false;
-			RawWin32Msg->rbutton	= false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	= false;
+			RawWin32Msg.shift	= false;
+			RawWin32Msg.lbutton	= false;
+			RawWin32Msg.mbutton	= false;
+			RawWin32Msg.rbutton	= false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x		 = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y		 = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x		 = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y		 = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_LBUTTONUP: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl = false;
-			RawWin32Msg->shift = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl = false;
+			RawWin32Msg.shift = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_MBUTTONDOWN: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl		= false;
-			RawWin32Msg->shift		= false;
-			RawWin32Msg->lbutton	= false;
-			RawWin32Msg->mbutton	= false;
-			RawWin32Msg->rbutton	= false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl		= false;
+			RawWin32Msg.shift		= false;
+			RawWin32Msg.lbutton	= false;
+			RawWin32Msg.mbutton	= false;
+			RawWin32Msg.rbutton	= false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x		 = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y		 = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x		 = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y		 = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_MBUTTONUP: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl = false;
-			RawWin32Msg->shift = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl = false;
+			RawWin32Msg.shift = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_RBUTTONUP: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_RBUTTONDOWN: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_MOUSEMOVE: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	= false;
+			RawWin32Msg.shift	= false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_IME_CHAR: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
-			RawWin32Msg->message = WM_CHAR;
+			RawWin32Msg.message = WM_CHAR;
 
 			if (lParameter >> 24) {
-				RawWin32Msg->extended = true;
+				RawWin32Msg.extended = true;
 			}
 
-			RawWin32Msg->ch = wParameter;
+			RawWin32Msg.ch = wParameter;
 
 			break;
 		}
 		case WM_CHAR: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
-			RawWin32Msg->message = WM_CHAR;
+			RawWin32Msg.message = WM_CHAR;
 
-			RawWin32Msg->extended = lParameter >> 24;
-			RawWin32Msg->prevdown = lParameter >> 30;
+			RawWin32Msg.extended = lParameter >> 24;
+			RawWin32Msg.prevdown = lParameter >> 30;
 
-			RawWin32Msg->vkcode = wParameter;
+			RawWin32Msg.vkcode = wParameter;
 
 			break;
 		}
 		case WM_KEYDOWN: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
-			RawWin32Msg->message = WM_KEYDOWN;
+			RawWin32Msg.message = WM_KEYDOWN;
 
-			RawWin32Msg->extended = lParameter >> 24;
-			RawWin32Msg->prevdown = lParameter >> 30;
+			RawWin32Msg.extended = lParameter >> 24;
+			RawWin32Msg.prevdown = lParameter >> 30;
 
-			RawWin32Msg->vkcode = wParameter;
+			RawWin32Msg.vkcode = wParameter;
 
 			break;
 		}
 		case WM_KEYUP: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl	 = false;
-			RawWin32Msg->shift	 = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl	 = false;
+			RawWin32Msg.shift	 = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
-			RawWin32Msg->message = WM_KEYUP;
+			RawWin32Msg.message = WM_KEYUP;
 
-			RawWin32Msg->extended = lParameter >> 24;
-			RawWin32Msg->prevdown = lParameter >> 30;
+			RawWin32Msg.extended = lParameter >> 24;
+			RawWin32Msg.prevdown = lParameter >> 30;
 
-			RawWin32Msg->vkcode = wParameter;
+			RawWin32Msg.vkcode = wParameter;
 
 			break;
 		}
 		case WM_MOUSEWHEEL: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->ctrl = false;
-			RawWin32Msg->shift = false;
-			RawWin32Msg->lbutton = false;
-			RawWin32Msg->mbutton = false;
-			RawWin32Msg->rbutton = false;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.ctrl = false;
+			RawWin32Msg.shift = false;
+			RawWin32Msg.lbutton = false;
+			RawWin32Msg.mbutton = false;
+			RawWin32Msg.rbutton = false;
 
 			if (wParameter & MK_CONTROL) {
-				RawWin32Msg->ctrl = true;
+				RawWin32Msg.ctrl = true;
 			}
 			if (wParameter & MK_LBUTTON) {
-				RawWin32Msg->lbutton = true;
+				RawWin32Msg.lbutton = true;
 			}
 			if (wParameter & MK_MBUTTON) {
-				RawWin32Msg->mbutton = true;
+				RawWin32Msg.mbutton = true;
 			}
 			if (wParameter & MK_RBUTTON) {
-				RawWin32Msg->rbutton = true;
+				RawWin32Msg.rbutton = true;
 			}
 			if (wParameter & MK_SHIFT) {
-				RawWin32Msg->shift = true;
+				RawWin32Msg.shift = true;
 			}
 
-			RawWin32Msg->message = MessageType;
+			RawWin32Msg.message = MessageType;
 
-			RawWin32Msg->x = GET_X_LPARAM(lParameter);
-			RawWin32Msg->y = GET_Y_LPARAM(lParameter);
+			RawWin32Msg.x = GET_X_LPARAM(lParameter);
+			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg->wheel = wParameter;
+			RawWin32Msg.wheel = wParameter;
 
-			RawWin32Msg->wParam = wParameter;
-			RawWin32Msg->lParam = lParameter;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
 
 			break;
 		}
 		case WM_CLOSE: {
-			RawWin32Msg = new VWin32Msg;
+			flag = true;
 
-			RawWin32Msg->wHandle = Handle;
-			RawWin32Msg->message = MessageType;
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.message = MessageType;
 
 			break;
 		}
 		}
 
-		if (RawWin32Msg != nullptr) {
-			VWin32MsgStack.push_back(*RawWin32Msg);
+		if (flag) {
+			VWin32MsgStack.push_back(RawWin32Msg);
 		}
 
 		return DefWindowProc(Handle, MessageType, wParameter, lParameter);

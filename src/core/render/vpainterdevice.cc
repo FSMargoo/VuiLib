@@ -63,10 +63,10 @@ VDCRender::VDCRender(ID2D1Factory* DirectXFactory, const HDC& TargetDC, const VR
 		VLIB_CHECK_REPORT(DirectXDCTarget->BindDC(TargetDC, &DCRect) != S_OK, L"TargetRender Bind DC Failed!");
 	}
 VDCRender::~VDCRender() {
-	VDXObjectSafeFree(&DirectXDCTarget);
+	DirectXDCTarget.ReleaseAndGetAddressOf();
 }
 ID2D1DCRenderTarget* VDCRender::GetDirectXRenderTarget() {
-	return DirectXDCTarget;
+	return DirectXDCTarget.Get();
 }
 VTargetRenderType VDCRender::GetType() {
 	return VTargetRenderType::DCRender;
@@ -97,16 +97,16 @@ VHWNDRender::VHWNDRender(ID2D1Factory* DirectXFactory, const HWND& TargetHWND, c
 	}
 
 	HRESULT ProduceResult = DirectXFactory->CreateHwndRenderTarget(D2D1::RenderTargetProperties(), D2D1::HwndRenderTargetProperties(
-		TargetHWND, RenderRect.ToDxPoint2U()
+		TargetHWND, RenderRect.ToDxSize2U()
 	), &DirectXDCTarget);
 
 	VLIB_CHECK_REPORT(FAILED(ProduceResult), L"DirectX Render Target Produce Failed!");
 }
 VHWNDRender::~VHWNDRender() {
-	VDXObjectSafeFree(&DirectXDCTarget);
+	DirectXDCTarget.ReleaseAndGetAddressOf();
 }
 ID2D1HwndRenderTarget* VHWNDRender::GetDirectXRenderTarget() {
-	return DirectXDCTarget;
+	return DirectXDCTarget.Get();
 }
 VTargetRenderType VHWNDRender::GetType() {
 	return VTargetRenderType::DCRender;
@@ -139,15 +139,15 @@ VIWICIRender::VIWICIRender(ID2D1Factory* DirectXFactory, IWICBitmap* TargetBitma
 	WICPixelFormatGUID PixelFormat;
 	TargetBitmap->GetPixelFormat(&PixelFormat);
 
-	HRESULT ProduceResult = DirectXFactory->CreateWicBitmapRenderTarget((IWICBitmap*)TargetBitmap, (D2D1_RENDER_TARGET_PROPERTIES)Property, (ID2D1RenderTarget**)(&DirectXDCTarget));
+	HRESULT ProduceResult = DirectXFactory->CreateWicBitmapRenderTarget((IWICBitmap*)TargetBitmap, (D2D1_RENDER_TARGET_PROPERTIES)Property, (ID2D1RenderTarget**)DirectXDCTarget.GetAddressOf());
 
 	VLIB_CHECK_REPORT(FAILED(ProduceResult), L"DirectX Render Target Produce Failed!");
 }
 VIWICIRender::~VIWICIRender() {
-	VDXObjectSafeFree(&DirectXDCTarget);
+	DirectXDCTarget.ReleaseAndGetAddressOf();
 }
 ID2D1BitmapRenderTarget* VIWICIRender::GetDirectXRenderTarget() {
-	return DirectXDCTarget;
+	return DirectXDCTarget.Get();
 }
 VTargetRenderType VIWICIRender::GetType() {
 	return VTargetRenderType::DCRender;

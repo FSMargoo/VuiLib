@@ -3,169 +3,181 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
+	VApplication* VLib_Application = nullptr;
 
-VApplication* VLib_Application = nullptr;
+	VApplication::~VApplication() {
+		VUIObject::~VUIObject();
 
-VMessage *VApplication::PatchEvent() {
-    VMessage* ResultEvent = nullptr;
+		for (auto& ThemeInstance : ThemeList) {
+			delete ThemeInstance;
+		}
 
-    Win32Core::VWin32Msg Win32Message{};
-    auto Result = Win32Core::VPeekMessage(&Win32Message);
+		ThemeList.clear();
+	}
+	VApplication::VApplication() : VUIObject(nullptr) {
+		if (VLib_Application == nullptr) {
+			InitTheme();
 
-    if (!Result) {
-        return nullptr;
-    }
+			VLib_Application = this;
+		}
+		else {
+			VLIB_REPORT_ERROR(L"The VApplication object should only be created as once!");
+		}
+	}
+	VMessage* VApplication::PatchEvent() {
+		VMessage* ResultEvent = nullptr;
 
-    switch (Win32Message.message) {
-        case WM_LBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Up, VMouseKeyFlag::Left);
+		Win32Core::VWin32Msg Win32Message{};
+		auto Result = Win32Core::VPeekMessage(&Win32Message);
 
-            return ResultEvent;
-        }
-        case WM_LBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Down, VMouseKeyFlag::Left);
+		if (!Result) {
+			return nullptr;
+		}
 
-            return ResultEvent;
-        }
-        case WM_RBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Up, VMouseKeyFlag::Right);
+		switch (Win32Message.message) {
+		case WM_LBUTTONUP: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Up, VMouseKeyFlag::Left);
 
-            return ResultEvent;
-        }
-        case WM_RBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Down, VMouseKeyFlag::Right);
+			return ResultEvent;
+		}
+		case WM_LBUTTONDOWN: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Down, VMouseKeyFlag::Left);
 
-            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
+			return ResultEvent;
+		}
+		case WM_RBUTTONUP: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Up, VMouseKeyFlag::Right);
 
-            return ResultEvent;
-        }
-        case WM_MBUTTONUP: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Up, VMouseKeyFlag::Middle);
+			return ResultEvent;
+		}
+		case WM_RBUTTONDOWN: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Down, VMouseKeyFlag::Right);
 
-            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
+			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
-            return ResultEvent;
-        }
-        case WM_MBUTTONDOWN: {
-            ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
-                                                   VMouseClickedFlag::Down, VMouseKeyFlag::Middle);
+			return ResultEvent;
+		}
+		case WM_MBUTTONUP: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Up, VMouseKeyFlag::Middle);
 
-            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
+			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
-            return ResultEvent;
-        }
-        case WM_MOUSEMOVE: {
-            ResultEvent = new VMouseMoveMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y);
+			return ResultEvent;
+		}
+		case WM_MBUTTONDOWN: {
+			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
+				VMouseClickedFlag::Down, VMouseKeyFlag::Middle);
 
-            ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
+			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
-            return ResultEvent;
-        }
-        case WM_MOUSEWHEEL: {
-            ResultEvent = new VMouseWheelMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y, Win32Message.wheel);
+			return ResultEvent;
+		}
+		case WM_MOUSEMOVE: {
+			ResultEvent = new VMouseMoveMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y);
 
-            return ResultEvent;
-        }
-        case WM_KEYUP: {
-            ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Up);
+			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
-            return ResultEvent;
-        }
-        case WM_KEYDOWN: {
-            ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Down);
+			return ResultEvent;
+		}
+		case WM_MOUSEWHEEL: {
+			ResultEvent = new VMouseWheelMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y, Win32Message.wheel);
 
-            return ResultEvent;
-        }
-        case WM_CHAR: {
-            ResultEvent = new VIMECharMessage(Win32Message.wHandle, Win32Message.ch);
+			return ResultEvent;
+		}
+		case WM_KEYUP: {
+			ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Up);
 
-            return ResultEvent;
-        }
+			return ResultEvent;
+		}
+		case WM_KEYDOWN: {
+			ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Down);
 
-        case WM_CLOSE: {
-            ResultEvent = new VQuitWindowMessage(Win32Message.wHandle);
+			return ResultEvent;
+		}
+		case WM_CHAR: {
+			ResultEvent = new VIMECharMessage(Win32Message.wHandle, Win32Message.ch);
 
-            ResultEvent->Win32ID              = Win32Message.message;
+			return ResultEvent;
+		}
 
-            return ResultEvent;
-        }
-    }
+		case WM_CLOSE: {
+			ResultEvent = new VQuitWindowMessage(Win32Message.wHandle);
 
-    return nullptr;
-}
-VApplication::VApplication() : VUIObject(nullptr) {
-    if (VLib_Application == nullptr) {
-        InitTheme();
+			ResultEvent->Win32ID = Win32Message.message;
 
-        VLib_Application = this;
-    } else {
-        VLIB_REPORT_ERROR(L"Application can only init as once.");
-    }
-}
+			return ResultEvent;
+		}
+		}
 
-void VApplication::InitTheme() {
-    ThemeList.push_back(new VPushButtonTheme);
-    ThemeList.push_back(new VMainWindowTheme);
-    ThemeList.push_back(new VImageLabelTheme);
-    ThemeList.push_back(new VTextLabelTheme);
-    ThemeList.push_back(new VRadioButtonTheme);
-    ThemeList.push_back(new VCircleScrollBarTheme);
-    ThemeList.push_back(new VSliderTheme);
-    ThemeList.push_back(new VBlurLabelTheme);
-    ThemeList.push_back(new VIconButtonTheme);
-    ThemeList.push_back(new VTextEditorTheme);
-    ThemeList.push_back(new VViewScrollerButtonTheme);
-    ThemeList.push_back(new VViewScrollerTheme);
-    ThemeList.push_back(new VViewLabelTheme);
-}
-void VApplication::ProcessEvent(Core::VMessage* PatchedMessage) {
-    PatchedMessage = PatchEvent();
+		return nullptr;
+	}
+	void VApplication::InitTheme() {
+		ThemeList.push_back(new VPushButtonTheme);
+		ThemeList.push_back(new VMainWindowTheme);
+		ThemeList.push_back(new VImageLabelTheme);
+		ThemeList.push_back(new VTextLabelTheme);
+		ThemeList.push_back(new VRadioButtonTheme);
+		ThemeList.push_back(new VCircleScrollBarTheme);
+		ThemeList.push_back(new VSliderTheme);
+		ThemeList.push_back(new VBlurLabelTheme);
+		ThemeList.push_back(new VIconButtonTheme);
+		ThemeList.push_back(new VTextEditorTheme);
+		ThemeList.push_back(new VViewScrollerButtonTheme);
+		ThemeList.push_back(new VViewScrollerTheme);
+		ThemeList.push_back(new VViewLabelTheme);
+	}
+	void VApplication::ProcessEvent(Core::VMessage* PatchedMessage) {
+		PatchedMessage = PatchEvent();
 
-    while (PatchedMessage != nullptr) {
-        SysProcessMessage(PatchedMessage);
+		while (PatchedMessage != nullptr) {
+			SysProcessMessage(PatchedMessage);
 
-        delete PatchedMessage;
+			delete PatchedMessage;
 
-        PatchedMessage = PatchEvent();
-    }
-}
+			PatchedMessage = PatchEvent();
+		}
+	}
+	std::vector<VBasicUITheme*> VApplication::GetApplicationTheme() {
+		return ThemeList;
+	}
+	int VApplication::Exec() {
+		VMessage* PatchedMessage = nullptr;
 
-std::vector<VBasicUITheme*> VApplication::GetApplicationTheme() {
-    return ThemeList;
-}
+		while (true) {
+			ProcessEvent(PatchedMessage);
+			CheckAllFrame(true);
 
-int VApplication::Exec() {
-    VMessage* PatchedMessage = nullptr;
+			VTimeHelper::Sleep(1);
+		}
 
-    while (true) {
-        ProcessEvent(PatchedMessage);
-        CheckAllFrame(true);
+		return -1;
+	}
+	VApplication* VApplication::GetInstance() {
+		return VLib_Application;
+	}
+	bool VApplication::IsApplication() {
+		return true;
+	}
+	void VApplication::SetTheme(VBasicUITheme* Theme) {
+		for (int Count = 0; Count < ThemeList.size(); ++Count) {
+			if (ThemeList[Count]->GetThemeType() == Theme->GetThemeType()) {
+				delete ThemeList[Count];
 
-        VTimeHelper::Sleep(1);
-    }
+				ThemeList.erase(ThemeList.begin() + Count);
+				ThemeList.insert(ThemeList.begin() + Count, Theme);
 
-    return -1;
-}
-void VApplication::SetTheme(VBasicUITheme* Theme) {
-    for (int Count = 0; Count < ThemeList.size(); ++Count) {
-        if (ThemeList[Count]->GetThemeType() == Theme->GetThemeType()) {
-            delete ThemeList.at(Count);
-            ThemeList.erase(ThemeList.begin() + Count);
-            ThemeList.insert(ThemeList.begin() + Count, Theme);
+				for (auto& Objects : ObjectKernel.ChildObjectContainer) {
+					Objects->Update();
+				}
 
-            for (auto& Objects : ObjectKernel.ChildObjectContainer) {
-                Objects->Update();
-            }
-
-            break;
-        }
-    }
-}
-
+				break;
+			}
+		}
+	}
 }
 VLIB_END_NAMESPACE

@@ -923,7 +923,7 @@ namespace VSS {
                     if (Property.first == L"src") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::StringValue) {
-                                Theme->Image = new Core::VImage(PropertyValue.PropertyAsString, TargetControl->CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+                                Theme->Image = new Core::VImage(PropertyValue.PropertyAsString, TargetControl->CallWidgetGetRenderHandle());
                             }
                         }
                     }

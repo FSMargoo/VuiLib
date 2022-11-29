@@ -23,7 +23,7 @@ VImageLabel::VImageLabel(const int& Width, const int& Height, VImage* Image, VUI
 }
 VImageLabel::VImageLabel(const int& Width, const int& Height, const std::wstring& ImagePath, VUIObject* Parent) : VUIObject(Parent) {
     Theme        = new VImageLabelTheme;
-    Theme->Image = new VImage(ImagePath.c_str(), CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+    Theme->Image = new VImage(ImagePath.c_str(), CallWidgetGetRenderHandle());
 
     Resize(Width, Height);
 }

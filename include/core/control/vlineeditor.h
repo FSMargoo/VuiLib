@@ -79,7 +79,7 @@ public:
     void LeftClickedDown() override;
     void LeftClickedUp() override;
     void GotMouseFocus() override;
-    void LosedMouseFocus() override;
+    void LostMouseFocus() override;
 };
 
 }

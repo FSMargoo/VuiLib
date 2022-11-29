@@ -313,8 +313,7 @@ namespace VML {
                     return;
                 }
 
-                Image = new Core::VImage(ElementProperty.second.PropertyAsString,
-                                         Object->CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+                Image = new Core::VImage(ElementProperty.second.PropertyAsString, Object->CallWidgetGetDCRenderTarget());
             }
         }
 
@@ -882,8 +881,7 @@ namespace VML {
                     return;
                 }
 
-                Image = new Core::VImage(ElementProperty.second.PropertyAsString,
-                                         Object->CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+                Image = new Core::VImage(ElementProperty.second.PropertyAsString, Object->CallWidgetGetRenderHandle());
             }
         }
 

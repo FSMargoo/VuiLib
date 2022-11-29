@@ -92,7 +92,7 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 							lexical_update_line = true;
 						}
 						else {
-							++lexical_update_line;
+							++core_info.lexical_line;
 
 							if (core_info.lexical_index + 1 >= core_info.lexical_code.size()) {
 								core_info.lexical_eof = true;

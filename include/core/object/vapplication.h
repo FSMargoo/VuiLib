@@ -1,6 +1,9 @@
-// License(MIT)
-// Athuor: Margoo
-// The application
+/*
+ * File name	: vapplicaiton.h
+ * Author		: Margoo
+ * Date			: 11/21/2022
+ * Description	: The application class VApplication's definition
+*/
 #pragma once
 
 #include "../widget/vmessage.h"
@@ -11,43 +14,74 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
+    /*
+     * VApplication class:
+     *  Description : This class is using to describe the application in vuilib
+     *  Tips        : The VApplicaiton should only be created as once in one single
+     *                vuilib project
+    */
+    class VApplication : public VUIObject {
+     protected:
+         /*
+          * GetApplicationTheme override function:
+          *     Description : Get the application theme list
+         */
+         std::vector<VBasicUITheme*> GetApplicationTheme() override;
+    
+     private:
+         /*
+          * PatchEvent function:
+          *     Description : Patch a event from event stack (if there is any event exists)
+         */
+         static VMessage* PatchEvent();
+         /*
+          * ProcessEvent function:
+          *     Description : Send the event to each child objects
+         */
+         void             ProcessEvent(VMessage* PatchedMessage);
+    
+     public:
+         /*
+          * Exec function:
+          *     Description : Join the main loop
+         */
+         int Exec();
+    
+     public:
+         /*
+          * SetTheme function:
+          *     Description : Set the theme as the specified theme
+         */
+         void SetTheme(VBasicUITheme* Theme);
 
-class VApplication;
+     private:
+         /*
+          * InitTheme function:
+          *     Description : Initialize native theme
+         */
+         void InitTheme();
 
-extern VApplication* VLib_Application;
+     public:
+         /*
+          * GetInstance function:
+          *     Description : Get the only instance of VApplication
+         */
+         static VApplication* GetInstance();
+         /*
+          * IsApplication override function:
+          *     Description : To mark this object is a application object
+         */
+         bool                 IsApplication() override;
 
-class VApplication : public VUIObject {
- private:
-     std::vector<VBasicUITheme*> ThemeList;
+     public:
+         VApplication();
+         ~VApplication();
 
-     void InitTheme();
-
- protected:
-     std::vector<VBasicUITheme*> GetApplicationTheme() override;
-
- private:
-     static VMessage* PatchEvent();
-     void   ProcessEvent(VMessage* PatchedMessage);
-
- public:
-     VApplication();
-
- public:
-     static VApplication* GetInstance() {
-         return VLib_Application;
-     }
-
-     bool IsApplication() override {
-         return true;
-     }
-
- public:
-     int Exec();
-
- public:
-     void SetTheme(VBasicUITheme* Theme);
-};
-
+     private:
+         std::vector<VBasicUITheme*> ThemeList;
+    };
+    
+    extern VApplication* VLib_Application;
 }
 
 VLIB_END_NAMESPACE

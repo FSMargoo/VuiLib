@@ -17,7 +17,7 @@ class VAbstractButton : public VUIObject {
      virtual void LeftClickedDown() {  }
 
  public:
-     void MouseLeftClicked(VMouseClickedFlag ClickedFlag) override;
+     void MouseLeftClicked(const VMouseClickedFlag& ClickedFlag) override;
 
  public:
     VAbstractButton(VUIObject* Parent) : VUIObject(Parent) {  }

@@ -24,7 +24,7 @@ VBlurLabel::VBlurLabel(const int& Width, const int& Height, const int& Radius, V
 }
 
 void VBlurLabel::OnPaint(Core::VCanvasPainter *Painter) {
-    VImage BlurImage(GetWidth(), GetHeight(), CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), D2D1_ALPHA_MODE_PREMULTIPLIED);
+    VImage BlurImage(GetWidth(), GetHeight(), VSF_ALPHA_MODE_PREMULTIPLIED, CallWidgetGetRenderHandle());
 
     D2D1_POINT_2U SourcePoint = { 0, 0 };
     D2D1_RECT_U   RectArea    = { static_cast<unsigned int>(GetOriginX()), static_cast<unsigned int>(GetOriginY()),
@@ -32,10 +32,10 @@ void VBlurLabel::OnPaint(Core::VCanvasPainter *Painter) {
                                   static_cast<unsigned int>(GetHeight()) + static_cast<unsigned int>(GetOriginY()) };
 
     BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetWidgetCanvas()->GetDXObject(), &RectArea);
-    BlurImage.ApplyGassBlur(Theme->BlurRadius, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+    BlurImage.ApplyGassBlur(Theme->BlurRadius, CallWidgetGetRenderHandle());
 
-    VSolidBrush  SolidBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), Theme->MixedColor);
-    VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &BlurImage);
+    VSolidBrush  SolidBrush(Theme->MixedColor, CallWidgetGetRenderHandle());
+    VBitmapBrush BitmapBrush(&BlurImage, CallWidgetGetRenderHandle());
 
     Painter->BeginDraw();
     Painter->Clear(VColor(0.f, 0.f, 0.f, 0.f));

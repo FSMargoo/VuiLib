@@ -4,194 +4,190 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
-VCircleView::VCircleView(Core::VUIObject* Parent) : VUIObject(Parent) {
+	VCircleView::VCircleView(Core::VUIObject* Parent) : VUIObject(Parent) {
 
-}
-bool VCircleView::OnMessageTrigger(VRepaintMessage* RepaintMessage) {
-    if (RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
-        (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
-        VRepaintMessage *ChildRepaintMessage = RepaintMessage;
+	}
+	bool VCircleView::OnMessageTrigger(VRepaintMessage* RepaintMessage) {
+		if (RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
+			(GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
+			VRepaintMessage* ChildRepaintMessage = RepaintMessage;
 
-        if (Canvas != nullptr) {
-            delete Canvas;
+			if (Canvas != nullptr) {
+				delete Canvas;
 
-            Canvas = nullptr;
-        }
+				Canvas = nullptr;
+			}
 
-        if (ObjectVisual.Transparency != 0) {
-            Canvas = new VCanvasPainter(GetRegion().GetWidth(),
-                                        GetRegion().GetHeight(),
-                                        CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
-            Canvas->BeginDraw();
-            Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
-            Canvas->EndDraw();
+			if (ObjectVisual.Transparency != 0) {
+				Canvas = new VCanvasPainter(GetRegion().GetWidth(), GetRegion().GetHeight(), CallWidgetGetRenderHandle());
+				Canvas->BeginDraw();
+				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
+				Canvas->EndDraw();
 
-            OnPaint(Canvas);
+				OnPaint(Canvas);
 
-            if (!IsWidget() && !IsApplication()) {
-                ChildRepaintMessage = new VRepaintMessage(*RepaintMessage);
+				if (!IsWidget() && !IsApplication()) {
+					ChildRepaintMessage = new VRepaintMessage(*RepaintMessage);
 
-                ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
-            }
+					ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
+				}
 
-            Canvas->BeginDraw();
-            SendMessageToChild(ChildRepaintMessage, false);
-            Canvas->EndDraw();
+				Canvas->BeginDraw();
+				SendMessageToChild(ChildRepaintMessage, false);
+				Canvas->EndDraw();
 
-            if (ObjectVisual.Shadow.EnableShadow) {
-                D2D1_POINT_2U OriginPoint = { 0, 0 };
-                D2D1_RECT_U   CopyRect    = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
+				if (ObjectVisual.Shadow.EnableStatus) {
+					D2D1_POINT_2U OriginPoint = { 0, 0 };
+					D2D1_RECT_U   CopyRect = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
 
-                ID2D1Bitmap* CanvasSurface;
+					ID2D1Bitmap* CanvasSurface;
 
-                Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
+					Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
 
-                VImage ShadowImage(CanvasSurface);
-                ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.ShadowRadius, ObjectVisual.Shadow.ShadowColor, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ObjectVisual.Shadow.ShadowOffset);
+					VImage ShadowImage(CanvasSurface);
+					ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.Radius, ObjectVisual.Shadow.Color, CallWidgetGetRenderHandle(), &ObjectVisual.Shadow.Offset);
 
-                GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X),
-                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y),
-                                               static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X + ShadowImage.GetWidth()),
-                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
-                                             { 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
-            }
+					GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X),
+												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y),
+												   static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X + ShadowImage.GetWidth()),
+												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
+						{ 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+				}
 
-            if (ChildRepaintMessage != RepaintMessage) {
-                delete ChildRepaintMessage;
-            }
+				if (ChildRepaintMessage != RepaintMessage) {
+					delete ChildRepaintMessage;
+				}
 
-            EditCanvas(Canvas);
+				EditCanvas(Canvas);
 
-            ID2D1Bitmap* Bitmap;
-            Canvas->GetDXObject()->GetBitmap(&Bitmap);
+				ID2D1Bitmap* Bitmap;
+				Canvas->GetDXObject()->GetBitmap(&Bitmap);
 
-            VImage ImageHelper(Bitmap);
-            VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ImageHelper);
+				VImage ImageHelper(Bitmap);
+				VBitmapBrush BitmapBrush(&ImageHelper, CallWidgetGetRenderHandle());
 
-            GetParentCanvas()->SolidEllipse(GetRegion(), &BitmapBrush);
+				GetParentCanvas()->SolidEllipse(GetRegion(), &BitmapBrush);
 
-            delete Canvas;
+				delete Canvas;
 
-            Canvas = nullptr;
-        }
+				Canvas = nullptr;
+			}
 
-        return true;
-    }
+			return true;
+		}
 
-    return false;
-}
+		return false;
+	}
 
-VPolygonView::VPolygonView(VUIObject* Parent) : VUIObject(Parent) {
+	VPolygonView::VPolygonView(VUIObject* Parent) : VUIObject(Parent) {
 
-}
-void VPolygonView::AddPoint(const VPointF& Point) {
-    PolygonPoint.push_back(Point);
-}
-bool VPolygonView::OnMessageTrigger(VRepaintMessage* RepaintMessage) {
-    if (PolygonPoint.size() >= 3 && RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
-        (GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
-        VRepaintMessage *ChildRepaintMessage = RepaintMessage;
+	}
+	void VPolygonView::AddPoint(const VPointF& Point) {
+		PolygonPoint.push_back(Point);
+	}
+	bool VPolygonView::OnMessageTrigger(VRepaintMessage* RepaintMessage) {
+		if (PolygonPoint.size() >= 3 && RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
+			(GetParent()->IsApplication() || GetParent()->GetChildrenVisualRegion().Overlap(GetRegion()))) {
+			VRepaintMessage* ChildRepaintMessage = RepaintMessage;
 
-        if (Canvas != nullptr) {
-            delete Canvas;
+			if (Canvas != nullptr) {
+				delete Canvas;
 
-            Canvas = nullptr;
-        }
+				Canvas = nullptr;
+			}
 
-        if (ObjectVisual.Transparency != 0) {
-            Canvas = new VCanvasPainter(GetRegion().GetWidth(),
-                                        GetRegion().GetHeight(),
-                                        CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
-            Canvas->BeginDraw();
-            Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
-            Canvas->EndDraw();
+			if (ObjectVisual.Transparency != 0) {
+				Canvas = new VCanvasPainter(GetRegion().GetWidth(), GetRegion().GetHeight(), CallWidgetGetRenderHandle());
+				Canvas->BeginDraw();
+				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
+				Canvas->EndDraw();
 
-            OnPaint(Canvas);
+				OnPaint(Canvas);
 
-            if (!IsWidget() && !IsApplication()) {
-                ChildRepaintMessage = new VRepaintMessage(*RepaintMessage);
+				if (!IsWidget() && !IsApplication()) {
+					ChildRepaintMessage = new VRepaintMessage(*RepaintMessage);
 
-                ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
-            }
+					ChildRepaintMessage->DirtyRectangle = *(GetRegion().Clone().MoveRV(0, 0));
+				}
 
-            Canvas->BeginDraw();
-            SendMessageToChild(ChildRepaintMessage, false);
-            Canvas->EndDraw();
+				Canvas->BeginDraw();
+				SendMessageToChild(ChildRepaintMessage, false);
+				Canvas->EndDraw();
 
-            VCanvasPainter ViewCanvas(GetWidth(), GetHeight(), CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+				VCanvasPainter ViewCanvas(GetWidth(), GetHeight(), CallWidgetGetRenderHandle());
 
-            ID2D1Bitmap* Bitmap;
-            Canvas->GetDXObject()->GetBitmap(&Bitmap);
+				ID2D1Bitmap* Bitmap;
+				Canvas->GetDXObject()->GetBitmap(&Bitmap);
 
-            VImage ImageHelper(Bitmap);
+				VImage ImageHelper(Bitmap);
 
-            VBitmapBrush BitmapBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ImageHelper);
-            ID2D1PathGeometry* PathGeometry;
-            ID2D1GeometrySink* GeometrySink;
-            VDirectXD2DFactory.GetInstance()->CreatePathGeometry(&PathGeometry);
-            PathGeometry->Open(&GeometrySink);
+				VBitmapBrush BitmapBrush(&ImageHelper, CallWidgetGetRenderHandle());
+				ID2D1PathGeometry* PathGeometry;
+				ID2D1GeometrySink* GeometrySink;
+				VDirectXD2DFactory.GetInstance()->CreatePathGeometry(&PathGeometry);
+				PathGeometry->Open(&GeometrySink);
 
-            GeometrySink->BeginFigure(D2D1::Point2F(0, 0), D2D1_FIGURE_BEGIN_FILLED);
+				GeometrySink->BeginFigure(D2D1::Point2F(0, 0), D2D1_FIGURE_BEGIN_FILLED);
 
-            D2D_POINT_2F* PointArray = new D2D_POINT_2F[PolygonPoint.size()];
+				D2D_POINT_2F* PointArray = new D2D_POINT_2F[PolygonPoint.size()];
 
-            for (auto Count = 0; Count < PolygonPoint.size(); ++Count) {
-                PointArray[Count] = D2D1::Point2F(GetWidth() * PolygonPoint[Count].X, GetHeight() * PolygonPoint[Count].Y);
-            }
+				for (auto Count = 0; Count < PolygonPoint.size(); ++Count) {
+					PointArray[Count] = D2D1::Point2F(GetWidth() * PolygonPoint[Count].X, GetHeight() * PolygonPoint[Count].Y);
+				}
 
-            GeometrySink->AddLines(PointArray, PolygonPoint.size());
+				GeometrySink->AddLines(PointArray, PolygonPoint.size());
 
-            GeometrySink->EndFigure(D2D1_FIGURE_END_CLOSED);
+				GeometrySink->EndFigure(D2D1_FIGURE_END_CLOSED);
 
-            GeometrySink->Close();
+				GeometrySink->Close();
 
-            ViewCanvas.BeginDraw();
+				ViewCanvas.BeginDraw();
 
-            ViewCanvas.Clear(VColor(0.f, 0.f, 0.f, 0.f));
-            ViewCanvas.GetDXObject()->FillGeometry(PathGeometry, BitmapBrush.GetDxBrush());
+				ViewCanvas.Clear(VColor(0.f, 0.f, 0.f, 0.f));
+				ViewCanvas.GetDXObject()->FillGeometry(PathGeometry, BitmapBrush.GetDxBrush());
 
-            ViewCanvas.EndDraw();
+				ViewCanvas.EndDraw();
 
-            if (ChildRepaintMessage != RepaintMessage) {
-                delete ChildRepaintMessage;
-            }
+				if (ChildRepaintMessage != RepaintMessage) {
+					delete ChildRepaintMessage;
+				}
 
-            if (ObjectVisual.Shadow.EnableShadow) {
-                D2D1_POINT_2U OriginPoint = { 0, 0 };
-                D2D1_RECT_U   CopyRect    = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
+				if (ObjectVisual.Shadow.EnableStatus) {
+					D2D1_POINT_2U OriginPoint = { 0, 0 };
+					D2D1_RECT_U   CopyRect = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
 
-                ID2D1Bitmap* CanvasSurface;
+					ID2D1Bitmap* CanvasSurface;
 
-                ViewCanvas.GetDXObject()->GetBitmap(&CanvasSurface);
+					ViewCanvas.GetDXObject()->GetBitmap(&CanvasSurface);
 
-                VImage ShadowImage(CanvasSurface);
-                ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.ShadowRadius, ObjectVisual.Shadow.ShadowColor, CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(), &ObjectVisual.Shadow.ShadowOffset);
+					VImage ShadowImage(CanvasSurface);
+					ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.Radius, ObjectVisual.Shadow.Color, CallWidgetGetRenderHandle(), &ObjectVisual.Shadow.Offset);
 
-                GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X),
-                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y),
-                                               static_cast<int>(GetX() + ObjectVisual.Shadow.ShadowOffset.X + ShadowImage.GetWidth()),
-                                               static_cast<int>(GetY() + ObjectVisual.Shadow.ShadowOffset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
-                                             { 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
-            }
+					GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X),
+												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y),
+												   static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X + ShadowImage.GetWidth()),
+												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
+						{ 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+				}
 
-            EditCanvas(Canvas);
+				EditCanvas(Canvas);
 
-            GetParentCanvas()->DrawCanvas(GetRegion(), &ViewCanvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
+				GetParentCanvas()->DrawCanvas(GetRegion(), &ViewCanvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
 
-            VDXObjectSafeFree(&PathGeometry);
-            VDXObjectSafeFree(&GeometrySink);
+				VDXObjectSafeFree(&PathGeometry);
+				VDXObjectSafeFree(&GeometrySink);
 
-            delete[] PointArray;
-            delete Canvas;
+				delete[] PointArray;
+				delete Canvas;
 
-            Canvas = nullptr;
-        }
+				Canvas = nullptr;
+			}
 
-        return true;
-    }
+			return true;
+		}
 
-    return false;
-}
+		return false;
+	}
 
 }
 

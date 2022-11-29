@@ -84,10 +84,8 @@ void VRadioButton::CheckFrame() {
 void VRadioButton::OnPaint(VCanvasPainter* Painter) {
     Painter->BeginDraw();
 
-    VSolidBrush BackgroundBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                                Theme->LocalTheme.BackgroundColor);
-    VPenBrush   PenBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                         Theme->LocalTheme.BorderColor, Theme->LocalTheme.BorderThickness);
+    VSolidBrush BackgroundBrush(Theme->LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
+    VPenBrush   PenBrush(Theme->LocalTheme.BorderColor, CallWidgetGetRenderHandle(), Theme->LocalTheme.BorderThickness);
 
     Painter->FillRoundedRectangle(
 {
@@ -139,7 +137,7 @@ void VRadioButton::GotMouseFocus() {
         Update();
     }
 }
-void VRadioButton::LosedMouseFocus() {
+void VRadioButton::LostMouseFocus() {
     if (Theme->SwitchStatus) {
         InAnimation = true;
 

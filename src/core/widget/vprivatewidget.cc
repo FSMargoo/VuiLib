@@ -10,10 +10,10 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
-    std::map<HWND, VMainWindowConfig*> _VMainConfigs;
+    std::map<HWND, VWin32ThreadPipe*> _VMainConfigs;
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
-        if (Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
+        if (Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
                 _VMainConfigs[Handle] == nullptr) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
         }
@@ -23,13 +23,13 @@ namespace Core {
         if (_VMainConfigs.find(Handle) != _VMainConfigs.end()) {
             switch (Message) {
             case WM_PAINT: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
                 WindowConfig->WinRepaintMessage();
 
                 break;
             }
             case WM_NCHITTEST: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (WindowConfig->InFrameless && !WindowConfig->EnableRadius) {
                     POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
@@ -106,7 +106,7 @@ namespace Core {
                 break;
             }
             case WM_SETCURSOR: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (WindowConfig->InFrameless && WindowConfig->Sizable && !WindowConfig->EnableRadius) {
                     switch (LOWORD(lParameter)) {
@@ -139,7 +139,7 @@ namespace Core {
                 break;
             }
             case WM_NCLBUTTONDOWN: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (WindowConfig->InFrameless && !WindowConfig->EnableRadius && WindowConfig->Sizable) {
                     POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
@@ -190,7 +190,7 @@ namespace Core {
                 break;
             }
             case WM_SIZING: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 RECT* Rect = (RECT*)lParameter;
 
@@ -200,7 +200,7 @@ namespace Core {
             }
             case WM_SIZE: {
                 if (wParameter != SIZE_MINIMIZED) {
-                    VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                    VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                     if (wParameter != SIZE_RESTORED) {
                         WindowConfig->WindowOnSize(LOWORD(lParameter), HIWORD(lParameter));
@@ -216,7 +216,7 @@ namespace Core {
                 break;
             }
             case WM_GETMINMAXINFO: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (WindowConfig->InFrameless) {
                     PMINMAXINFO MinMaxInfo = (PMINMAXINFO)lParameter;
@@ -236,7 +236,7 @@ namespace Core {
                 return DefWindowProc(Handle, Message, wParameter, lParameter);
             }
             case WM_IME_COMPOSITION: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 HIMC IMCHandle = ImmGetContext(Handle);
                 if (IMCHandle) {
@@ -259,7 +259,7 @@ namespace Core {
                 break;
             }
             case WM_IME_CHAR: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 WindowConfig->IMEInput = false;
                 if (WindowConfig->EndIMEInput != nullptr) {
@@ -269,10 +269,19 @@ namespace Core {
                 break;
             }
             case WM_KILLFOCUS: {
-                VMainWindowConfig* WindowConfig = _VMainConfigs.find(Handle)->second;
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (!WindowConfig->IMEInput) {
                     WindowConfig->LosedUserFocus();
+                }
+
+                break;
+            }
+            case WM_CLOSE: {
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
+
+                if (WindowConfig->WindowQuitOnClicked()) {
+                    return 0;
                 }
 
                 break;

@@ -1,3 +1,9 @@
+/*
+ * File name	: vwin32base.h
+ * Author		: Margoo
+ * Date			: 11/22/2022
+ * Description	: The basic win32 operation's wrapper in vuilib
+*/
 #pragma once
 
 #include <vector>
@@ -8,7 +14,6 @@
 #define GET_Y_LPARAM(lp)                        ((int)(short)HIWORD(lp))
 
 namespace Win32Core {
-
 	struct VWin32Msg {
 		USHORT message;
 

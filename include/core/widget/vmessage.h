@@ -98,6 +98,7 @@ class VGetRepaintAeraMessage : public VMessage {
  
  public:
  	 explicit VGetRepaintAeraMessage(HWND TriggerWidget, VRect& RepaintRegion);
+	 ~VGetRepaintAeraMessage();
 };
 
 class VIMECharMessage : public VMessage {

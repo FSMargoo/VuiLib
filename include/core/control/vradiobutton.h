@@ -32,7 +32,7 @@ class VRadioButton : public VAbstractButton {
  public:
      void LeftClickedDown() override;
      void GotMouseFocus() override;
-     void LosedMouseFocus() override;
+     void LostMouseFocus() override;
 
  public:
      explicit VRadioButton(VUIObject* Parent);

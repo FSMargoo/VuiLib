@@ -32,7 +32,7 @@ class VPushButton : public VAbstractButton {
      void LeftClickedDown() override;
      void LeftClickedUp() override;
      void GotMouseFocus() override;
-     void LosedMouseFocus() override;
+     void LostMouseFocus() override;
 
  public:
      explicit VPushButton(VUIObject* Parent);

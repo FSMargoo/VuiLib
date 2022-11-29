@@ -3,61 +3,69 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
-ID2D1SolidColorBrush* VPenBrush::GetDxBrush() {
-	return Brush;
-}
-ID2D1StrokeStyle* VPenBrush::GetStrokeStyle() {
-	return StrokeStyle;
-}
+	VPenBrush::VPenBrush(const VColor& Color, const VRenderHandle& RenderHandle, const float& LineThickness) :
+			Brush(RenderHandle.Allocator), StrokeStyle(RenderHandle.Allocator), Thickness(LineThickness) {
+		VLIB_CHECK_REPORT(!RenderHandle._IRenderTarget, L"A invalid renderer handle has specified");
 
-float VPenBrush::GetThickness() const {
-	return Thickness;
-}
-void VPenBrush::SetThickness(const float& TargetThickness) {
-	Thickness = TargetThickness;
-}
-VPenBrush::VPenBrush(ID2D1RenderTarget* Target, const VColor& Color, const float& LineThickness)
-	: Thickness(LineThickness) {
-	HRESULT Result = Target->CreateSolidColorBrush(Color.GetDxObject(), &Brush);
-	VLIB_CHECK_REPORT(Result != S_OK, L"DirectX Created Brush Failed!");
+		VLIB_REPORT_IF_FAILED_INFO(
+			RenderHandle._IRenderTarget->CreateSolidColorBrush(Color.GetDxObject(), &Brush.Object),
+			L"Failed to create ID2D1SolidColorBrush object"
+		);
+		VLIB_REPORT_IF_FAILED_INFO(
+			VDirectXD2DFactory.GetInstance()->CreateStrokeStyle(D2D1::StrokeStyleProperties(), nullptr, 0, &StrokeStyle.Object),
+			L"Failed to create ID2D1StrokeStyle object"
+		);
+	}
+	VPenBrush::~VPenBrush() {
+	
+	}
+	ID2D1SolidColorBrush* VPenBrush::GetDxBrush()     const {
+		return Brush.Get();
+	}
+	ID2D1StrokeStyle*	  VPenBrush::GetStrokeStyle() const {
+		return StrokeStyle.Get();
+	}
+	float				  VPenBrush::GetThickness()   const {
+		return Thickness;
+	}
+	void				  VPenBrush::SetThickness(const float& TargetThickness) {
+		VLIB_CHECK_REPORT(TargetThickness <= 0.f, L"Thickness shouldn't be a negative value nor zero value!");
 
-	Result = VDirectXD2DFactory.GetInstance()->CreateStrokeStyle(
-		D2D1::StrokeStyleProperties(), nullptr, 0, &StrokeStyle
-	);
-	VLIB_CHECK_REPORT(Result != S_OK, L"DirectX Created Stroke Style Failed!");
-}
-VPenBrush::~VPenBrush() {
-	VDXObjectSafeFree(&Brush);
-	VDXObjectSafeFree(&StrokeStyle);
-}
-
-ID2D1SolidColorBrush* VSolidBrush::GetDxBrush() {
-	return Brush;
-}
-
-VSolidBrush::VSolidBrush(ID2D1RenderTarget* Target, const VColor& Color) {
-    HRESULT Result = Target->CreateSolidColorBrush(Color.GetDxObject(), &Brush);
-
-    VLIB_CHECK_REPORT(Result != S_OK, L"DirectX Created Brush Failed!");
-}
-VSolidBrush::~VSolidBrush() {
-	VDXObjectSafeFree(&Brush);
-}
-
-ID2D1BitmapBrush* VBitmapBrush::GetDxBrush() {
-    return Brush;
-}
-
-VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, VImage* Image) {
-    Target->CreateBitmapBrush(Image->GetDirectXObject(), D2D1::BitmapBrushProperties(), &Brush);
-}
-VBitmapBrush::VBitmapBrush(ID2D1RenderTarget* Target, ID2D1Bitmap* Image) {
-    Target->CreateBitmapBrush(Image, D2D1::BitmapBrushProperties(), &Brush);
-}
-VBitmapBrush::~VBitmapBrush() {
-	VDXObjectSafeFree(&Brush);
-}
-
+		Thickness = TargetThickness;
+	}
+	
+	VSolidBrush::VSolidBrush(const VColor& Color, const VRenderHandle& RenderHandle)
+			: Brush(RenderHandle.Allocator) {
+		VLIB_REPORT_IF_FAILED_INFO(
+			RenderHandle._IRenderTarget->CreateSolidColorBrush(Color.GetDxObject(), &Brush.Object),
+			L"Failed to create ID2D1SolidColorBrush object"
+		);
+	}
+	VSolidBrush::~VSolidBrush() {
+		
+	}
+	ID2D1SolidColorBrush* VSolidBrush::GetDxBrush() const {
+		return Brush.Get();
+	}
+	
+	VBitmapBrush::VBitmapBrush(VImage* Image, const VRenderHandle& RenderHandle) : Brush(RenderHandle.Allocator) {
+	    VLIB_REPORT_IF_FAILED_INFO(
+			RenderHandle._IRenderTarget->CreateBitmapBrush(Image->GetDirectXObject(), D2D1::BitmapBrushProperties(), &Brush.Object),
+			L"Failed to create ID2D1BitmapBrush object"
+		);
+	}
+	VBitmapBrush::VBitmapBrush(ID2D1Bitmap* Image, const VRenderHandle& RenderHandle) : Brush(RenderHandle.Allocator) VRENDER_HELPER {
+		VLIB_REPORT_IF_FAILED_INFO(
+			RenderHandle._IRenderTarget->CreateBitmapBrush(Image, D2D1::BitmapBrushProperties(), &Brush.Object),
+			L"Failed to create ID2D1BitmapBrush object"
+		);
+	}
+	VBitmapBrush::~VBitmapBrush() {
+		
+	}
+	ID2D1BitmapBrush* VBitmapBrush::GetDxBrush() const {
+		return Brush.Get();
+	}
 }
 
 VLIB_END_NAMESPACE

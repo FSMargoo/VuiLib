@@ -4,138 +4,139 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
-VDragControlBase::VDragControlBase(VUIObject* Parent) : VUIObject(Parent) {
+	VDragControlBase::VDragControlBase(VUIObject* Parent) : VUIObject(Parent) {
 
-}
-void VDragControlBase::MouseLeftClicked(VMouseClickedFlag ClickedFlag) {
-    switch (ClickedFlag) {
-        case VMouseClickedFlag::Down: {
-            UserInDrag = true;
-            CallWidgetLockFocusID();
-            UserStartDrag.Emit();
+	}
+	void VDragControlBase::MouseLeftClicked(const VMouseClickedFlag& ClickedFlag) {
+		switch (ClickedFlag) {
+		case VMouseClickedFlag::Down: {
+			UserInDrag = true;
+			CallWidgetLockFocusID();
+			UserStartDrag.Emit();
 
-            break;
-        }
-        case VMouseClickedFlag::Up: {
-            UserInDrag = false;
-            CallWidgetUnlockFocusID();
+			break;
+		}
+		case VMouseClickedFlag::Up: {
+			UserInDrag = false;
+			CallWidgetUnlockFocusID();
 
-            UserEndDrag.Emit();
+			UserEndDrag.Emit();
 
-            break;
-        }
-    }
-}
-void VDragControlBase::OnMessage(Core::VMessage *Message) {
-    if (UserInDrag) {
-        switch (Message->GetType()) {
-            case VMessageType::MouseClickedMessage: {
-                VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
+			break;
+		}
+		}
+	}
+	void VDragControlBase::OnMessage(Core::VMessage* Message) {
+		if (UserInDrag) {
+			switch (Message->GetType()) {
+			case VMessageType::MouseClickedMessage: {
+				VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
 
-                if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion()) ||
-                    (ClickedMessage->ClickedKey == VMouseKeyFlag::Left && 
-                     ClickedMessage->ClickedMethod == VMouseClickedFlag::Up)) {
-                    UserInDrag = false;
+				if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion()) ||
+					(ClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
+						ClickedMessage->ClickedMethod == VMouseClickedFlag::Up)) {
+					UserInDrag = false;
 
-                    CallWidgetUnlockFocusID();
-                    CallWidgetSendMessage(Message);
-                    
-                    UserEndDrag.Emit();
-                }
-                else {
-                    MouseDragged.Emit();
-                }
+					CallWidgetUnlockFocusID();
+					CallWidgetSendMessage(Message);
 
-                break;
-            }
-            case VMessageType::MouseMoveMessage: {
-                VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+					UserEndDrag.Emit();
+				}
+				else {
+					MouseDragged.Emit();
+				}
 
-                MouseDragged.Emit();
-                MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
+				break;
+			}
+			case VMessageType::MouseMoveMessage: {
+				VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
 
-                break;
-            }
-            case VMessageType::KillFocusMessage: {
-                UserInDrag = false;
-                CallWidgetUnlockFocusID();
+				MouseDragged.Emit();
+				MouseDraggedPosition.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
 
-                break;
-            }
-        }
-    }
-}
+				break;
+			}
+			case VMessageType::KillFocusMessage: {
+				UserInDrag = false;
+				CallWidgetUnlockFocusID();
 
-VDragControlBaseOnPushButton::VDragControlBaseOnPushButton(VUIObject* Parent)
-    : VPushButton(Parent) {
+				break;
+			}
+			}
+		}
+	}
 
-}
-VDragControlBaseOnPushButton::VDragControlBaseOnPushButton(const int& Width, const int& Height, VUIObject* Parent)
-    : VPushButton(Width, Height, Parent) {
+	VDragControlBaseOnPushButton::VDragControlBaseOnPushButton(VUIObject* Parent)
+		: VPushButton(Parent) {
 
-}
-void VDragControlBaseOnPushButton::MouseLeftClicked(VMouseClickedFlag ClickedFlag) {
-    VPushButton::MouseLeftClicked(ClickedFlag);
-    switch (ClickedFlag) {
-        case VMouseClickedFlag::Down: {
-            UserInDrag = true;
-            CallWidgetLockFocusID();
+	}
+	VDragControlBaseOnPushButton::VDragControlBaseOnPushButton(const int& Width, const int& Height, VUIObject* Parent)
+		: VPushButton(Width, Height, Parent) {
 
-            BeginDrag();
+	}
+	void VDragControlBaseOnPushButton::MouseLeftClicked(const VMouseClickedFlag& ClickedFlag) {
+		VPushButton::MouseLeftClicked(ClickedFlag);
+		switch (ClickedFlag) {
+		case VMouseClickedFlag::Down: {
+			UserInDrag = true;
+			CallWidgetLockFocusID();
 
-            break;
-        }
-        case VMouseClickedFlag::Up: {
-            UserInDrag = false;
-            CallWidgetUnlockFocusID();
-            
-            VPushButton::LosedMouseFocus();
+			BeginDrag();
 
-            EndDrag();
+			break;
+		}
+		case VMouseClickedFlag::Up: {
+			UserInDrag = false;
+			CallWidgetUnlockFocusID();
 
-            break;
-        }
-    }
-}
-void VDragControlBaseOnPushButton::OnMessage(Core::VMessage *Message) {
-    if (UserInDrag) {
-        switch (Message->GetType()) {
-            case VMessageType::MouseClickedMessage: {
-                VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
-                if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
-                    UserInDrag = false;
-                    CallWidgetUnlockFocusID();
+			VPushButton::LostMouseFocus();
 
-                    CallWidgetSendMessage(Message);
+			EndDrag();
 
-                    VPushButton::LosedMouseFocus();
+			break;
+		}
+		}
+	}
+	void VDragControlBaseOnPushButton::OnMessage(Core::VMessage* Message) {
+		if (UserInDrag) {
+			switch (Message->GetType()) {
+			case VMessageType::MouseClickedMessage: {
+				VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
+				if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
+					UserInDrag = false;
+					CallWidgetUnlockFocusID();
 
-                    EndDrag();
-                } else {
-                    MouseDragged.Emit(ClickedMessage->MousePosition.X, ClickedMessage->MousePosition.Y);
-                }
+					CallWidgetSendMessage(Message);
 
-                break;
-            }
-            case VMessageType::MouseMoveMessage: {
-                VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
-                MouseDragged.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
+					VPushButton::LostMouseFocus();
 
-                break;
-            }
-            case VMessageType::KillFocusMessage: {
-                UserInDrag = false;
-                CallWidgetUnlockFocusID();
+					EndDrag();
+				}
+				else {
+					MouseDragged.Emit(ClickedMessage->MousePosition.X, ClickedMessage->MousePosition.Y);
+				}
 
-                VPushButton::LosedMouseFocus();
+				break;
+			}
+			case VMessageType::MouseMoveMessage: {
+				VMouseMoveMessage* MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+				MouseDragged.Emit(MouseMoveMessage->MousePosition.X, MouseMoveMessage->MousePosition.Y);
 
-                EndDrag();
+				break;
+			}
+			case VMessageType::KillFocusMessage: {
+				UserInDrag = false;
+				CallWidgetUnlockFocusID();
 
-                break;
-            }
-        }
-    }
-}
+				VPushButton::LostMouseFocus();
+
+				EndDrag();
+
+				break;
+			}
+			}
+		}
+	}
 
 }
 

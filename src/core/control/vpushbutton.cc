@@ -44,12 +44,9 @@ VRect VPushButton::GetRegion() {
 void VPushButton::OnPaint(VCanvasPainter* Painter) {
     Painter->BeginDraw();
 
-    VSolidBrush BackgroundBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                                Theme->LocalTheme.BackgroundColor);
-    VPenBrush   PenBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                         Theme->LocalTheme.BorderColor, Theme->LocalTheme.BorderThickness);
-    VSolidBrush TextBrush(CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget(),
-                          Theme->LocalTheme.TextColor);
+    VSolidBrush BackgroundBrush(Theme->LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
+    VPenBrush   PenBrush(Theme->LocalTheme.BorderColor, CallWidgetGetRenderHandle(), Theme->LocalTheme.BorderThickness);
+    VSolidBrush TextBrush(Theme->LocalTheme.TextColor, CallWidgetGetRenderHandle());
 
     Painter->FillRoundedRectangle(
             {
@@ -149,7 +146,7 @@ void VPushButton::GotMouseFocus() {
 
     Update();
 }
-void VPushButton::LosedMouseFocus() {
+void VPushButton::LostMouseFocus() {
     InAnimation = true;
 
     OldTheme = Theme->LocalTheme;

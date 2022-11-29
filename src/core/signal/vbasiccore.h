@@ -34,7 +34,6 @@
 #include <crtdbg.h>
 #include <d2d1helper.h>
 
-#include "../debug/vdebug.h"
 #include "../win32base/vwin32base.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -58,20 +57,12 @@ namespace Core {
 	        _RPTFW0(_CRT_ASSERT, ErrorMessage);               \
 	    }
 	/*
-	 * VLIB_REPORT_IF_FAILED Marco:
+	 * VLIB_ERPORT_IF_FAILED Marco:
 	 *  Description : Check the Win32 operation (or any operation that return HRESULT as status code),
 	 *				  if the operation failed   (that is, ReturnValue != S_OK), it will report operation failed.
 	*/
 	#define VLIB_REPORT_IF_FAILED(Expression)				  \
-			{ if ((Expression) != S_OK) { VLIB_CHECK_REPORT(true, L"Operation failed!"); } }
-	/*
-	 * VLIB_REPORT_IF_FAILED_INFO Marco:
-	 *	Description : Check the Win32 operation (or any operation that return HRESULT as status code),
-	 *				  if the operation failed   (that is, ReturnValue != S_OK), it will report operation failed.
-	 *	Tips		: Not same as VLIB_RERPOT_IF_FAILED it can bring message to debug widget
-	*/
-	#define VLIB_REPORT_IF_FAILED_INFO(Expression, WidgetInformation) \
-			{ if ((Expression) != S_OK) { VLIB_CHECK_REPORT(true, WidgetInformation); } }
+			{ if (Expression != S_OK) { VLIB_CHECK_REPORT(true, L"Operation failed!"); } }
 	
 	/*
 	 * VCoreRect class (template):
@@ -340,11 +331,6 @@ namespace Core {
 	 *	Description : The point structure which only support double data type
 	*/
 	using VPointF   = VCorePoint<double>;
-	/*
-	 * VGeometry (alias from VCoreGeometry<int>):
-	 *	Description : The geometry structure which only support int data type
-	*/
-	using VGeometry = VCoreGeometry<int>;
 }
 
 VLIB_END_NAMESPACE

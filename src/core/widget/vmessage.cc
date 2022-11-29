@@ -54,9 +54,11 @@ VRepaintMessage::VRepaintMessage(HWND TriggerWidget, const VRect& RepaintRegion)
 }
 VGetRepaintAeraMessage::VGetRepaintAeraMessage(HWND TriggerWidget, VRect& RepaintRegions)
 	: VMessage(VMessageType::GetRepaintAeraMessage) {
-	RepaintAera = &RepaintRegions;
+	RepaintAera			 = &RepaintRegions;
 
     MessageTriggerWidget = TriggerWidget;
+}
+VGetRepaintAeraMessage::~VGetRepaintAeraMessage() {
 }
 VIMECharMessage::VIMECharMessage(HWND TriggerWidget, wchar_t CharInputed)
 	: VMessage(VMessageType::IMECharMessage) {

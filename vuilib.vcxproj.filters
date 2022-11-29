@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{6f25a06a-d0e2-4fe2-9887-e4f5952accbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core">
+      <UniqueIdentifier>{c2da9ec6-07d1-49b2-a5fc-cf2dbe99a94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\kits">
+      <UniqueIdentifier>{c66cfd17-ae83-410f-be28-d3af509f6aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\vml">
+      <UniqueIdentifier>{f51202fc-237e-43da-932f-9fe26e6c1645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\vss">
+      <UniqueIdentifier>{9d8303eb-4f8a-4817-8403-e29a00c38a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\win32base">
+      <UniqueIdentifier>{55708396-0038-4705-aece-4a266472c60a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{1ffd44a6-c676-498c-b22a-bf7760e0f011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{30196c66-b232-4076-aef0-16f08810ab30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kits">
+      <UniqueIdentifier>{4392f22b-6754-4082-88bc-ee2912508989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\win32base">
+      <UniqueIdentifier>{c2884031-9c4a-4e81-8348-56e99dd30668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\vss">
+      <UniqueIdentifier>{0a713bf7-5dc2-440d-a4c6-f9cfbf02af37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\vml">
+      <UniqueIdentifier>{bb9beeb9-468f-4409-8229-a63c98b0066e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\animation">
+      <UniqueIdentifier>{6a5db598-8ff1-4cfe-964b-e2799732b2ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\control">
+      <UniqueIdentifier>{1e52fc76-6c2a-415b-8b05-a3586cfa1f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\object">
+      <UniqueIdentifier>{46fdf468-8b56-4763-88a4-c968baac9044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\render">
+      <UniqueIdentifier>{3c9e82bf-dc28-4495-8121-c1243b688a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\signal">
+      <UniqueIdentifier>{730ec232-6173-46a5-867a-edb26a15643a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\uibasic">
+      <UniqueIdentifier>{5b346328-bfbf-49e6-a4e2-c6afb53de47b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\visual">
+      <UniqueIdentifier>{b2042b59-584a-481d-b990-33904b944b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\widget">
+      <UniqueIdentifier>{31bd3c53-fe2c-4d66-98b4-d8e67977aa75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\animation">
+      <UniqueIdentifier>{ed4db78e-69e0-485a-8008-9a31555f9032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\control">
+      <UniqueIdentifier>{41fb6231-5722-4482-8b80-e15af694afa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\widget">
+      <UniqueIdentifier>{d630cab1-d7c5-425b-a787-147821d9d9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\visual">
+      <UniqueIdentifier>{92bcb611-4325-490a-9475-fdd3e778fe41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\uibasic">
+      <UniqueIdentifier>{eb4388d5-9f80-46cd-9fa8-debc9f60e96a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\signal">
+      <UniqueIdentifier>{8128e482-e005-4310-a53f-386f5642d936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\render">
+      <UniqueIdentifier>{65402698-680c-433d-bc68-1a7b0bf07a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\object">
+      <UniqueIdentifier>{323360ab-ce93-4db6-b29c-c96d5704a1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\debug">
+      <UniqueIdentifier>{e8555800-dffa-4781-8180-b71bd8c64a79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\debug">
+      <UniqueIdentifier>{2d2a1c45-095b-495a-a55a-64aae5ddf73c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\core\animation\vanimationcurve.h">
+      <Filter>include\core\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\animation\vanimation.h">
+      <Filter>include\core\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vdragcontrolbase.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vfakecaption.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\viconbutton.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vimagelabel.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vlayout.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vlineeditor.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vpushbutton.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vradiobutton.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vscrollbar.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vscroller.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vswitchgroup.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vtextlabel.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vviewlabel.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vabstractbutton.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vblurlabel.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\object\vapplication.h">
+      <Filter>include\core\object</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\object\vuiobject.h">
+      <Filter>include\core\object</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vcolor.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vdirectxfactory.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vimage.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vpainter.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vpainterdevice.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vrenderbasic.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vwrite.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\render\vbrush.h">
+      <Filter>include\core\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\signal\vsignal.h">
+      <Filter>include\core\signal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\uibasic\vuiinterpolator.h">
+      <Filter>include\core\uibasic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\uibasic\vuitheme.h">
+      <Filter>include\core\uibasic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\uibasic\vsmarttimer.h">
+      <Filter>include\core\uibasic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\uibasic\vtimer.h">
+      <Filter>include\core\uibasic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\visual\vvisual.h">
+      <Filter>include\core\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\widget\vmessage.h">
+      <Filter>include\core\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\widget\vprivatewidget.h">
+      <Filter>include\core\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\widget\vwidget.h">
+      <Filter>include\core\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\vcontrol.h">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\vbasiccore.h">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\seal.lexical.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\seal.lexical.token.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\vcolorhelper.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\vparserhelper.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vml\vmlwidget.h">
+      <Filter>include\vml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vml\vml.h">
+      <Filter>include\vml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vml\vmlbuilder.h">
+      <Filter>include\vml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vml\vmlparser.h">
+      <Filter>include\vml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vss\vssbuilder.h">
+      <Filter>include\vss</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vss\vssparser.h">
+      <Filter>include\vss</Filter>
+    </ClInclude>
+    <ClInclude Include="include\win32base\vwin32base.h">
+      <Filter>include\win32base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\vallocator.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\debug\vdebug.h">
+      <Filter>include\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kits\seal.info.h">
+      <Filter>include\debug</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\animation\vanimation.cc">
+      <Filter>src\core\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\animation\vanimationcurve.cc">
+      <Filter>src\core\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vfakecaption.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\viconbutton.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vimagelabel.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vlayout.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vlineeditor.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vpushbutton.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vradiobutton.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vscrollbar.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vscroller.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vswitchgroup.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vtextlabel.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vviewlabel.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vabstractbutton.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vblurlabel.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vdragcontrolbase.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\object\vapplication.cc">
+      <Filter>src\core\object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\object\vuiobject.cc">
+      <Filter>src\core\object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vpainterdevice.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vrenderbasic.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vwrite.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vbrush.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vcolor.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vdirectxfactory.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vimage.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\render\vpainter.cc">
+      <Filter>src\core\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\signal\vsignal.cc">
+      <Filter>src\core\signal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\uibasic\vtimer.cc">
+      <Filter>src\core\uibasic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\uibasic\vuiinterpolator.cc">
+      <Filter>src\core\uibasic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\uibasic\vuitheme.cc">
+      <Filter>src\core\uibasic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\uibasic\vsmarttimer.cc">
+      <Filter>src\core\uibasic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\visual\vvisual.cc">
+      <Filter>src\core\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\widget\vwidget.cc">
+      <Filter>src\core\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\widget\vmessage.cc">
+      <Filter>src\core\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\widget\vprivatewidget.cc">
+      <Filter>src\core\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\seal.lexical.token.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\vcolorhelper.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\vparserhelper.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\seal.info.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\seal.lexical.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vml\vmlparser.cpp">
+      <Filter>src\vml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vml\vmlwidget.cpp">
+      <Filter>src\vml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vml\vml.cpp">
+      <Filter>src\vml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vml\vmlbuilder.cpp">
+      <Filter>src\vml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vss\vssparser.cc">
+      <Filter>src\vss</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vss\vssbuilder.cc">
+      <Filter>src\vss</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32base\vwin32base.cc">
+      <Filter>src\win32base</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\vuilib 3.0\vlib\src\core\vbasiccore.cc">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\vallocator.cc">
+      <Filter>src\kits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug\vdebug.cc">
+      <Filter>src\debug</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

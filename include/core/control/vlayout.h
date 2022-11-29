@@ -78,6 +78,7 @@ public:
     VScaleLayout(VUIObject* Parent, VUIObject* TargetWidget);
     VScaleLayout(VUIObject* Parent, VUIObject* TargetWidget,
                  const double& WidthPercent, const double& HeightPercent);
+    ~VScaleLayout();
 
     void SetWidthScalePercent(const double& Percent);
     void SetHeightScalePercent(const double& Percent);
@@ -99,6 +100,7 @@ public:
 
     VTextSizeLayout(VTextLabel* Parent, VUIObject* TargetWidget);
     VTextSizeLayout(VTextLabel* Parent, VUIObject* TargetWidget, const double& HeightPercent);
+    ~VTextSizeLayout();
 
     void SetScalePercent(const double& Percent);
 };

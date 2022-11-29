@@ -73,6 +73,7 @@ class VViewLabel : public VUIObject {
     VViewLabel(VUIObject* Parent);
     VViewLabel(const int& Width, const int& Height, VUIObject* Parent);
     VViewLabel(const int& Width, const int& Height, const int& ViewWidth, const int& ViewHeight,VUIObject* Parent);
+    ~VViewLabel();
 };
 
 }

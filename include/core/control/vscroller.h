@@ -27,7 +27,7 @@ class VScrollerPushButton : public VAbstractButton {
     VSignal<> LoseMouseFocus;
 
  public:
-    void MouseLeftClicked(VMouseClickedFlag ClickedFlag) override;
+    void MouseLeftClicked(const VMouseClickedFlag& ClickedFlag) override;
     void OnMessage(VMessage* Message) override;
 
  public:
@@ -54,7 +54,7 @@ class VScrollerPushButton : public VAbstractButton {
     void LeftClickedDown() override;
     void LeftClickedUp() override;
     void GotMouseFocus() override;
-    void LosedMouseFocus() override;
+    void LostMouseFocus() override;
 
  public:
     void OnPaint(VCanvasPainter* Painter) override;
@@ -107,7 +107,7 @@ class VScrollerVertical : public VAbstractButton {
     void SwitchDraggingStatusAnimation();
     void TurnToNormalStatusAnimation();
     void GotMouseFocus() override;
-    void LosedMouseFocus() override;
+    void LostMouseFocus() override;
 
  public:
     void OnPaint(VCanvasPainter* Painter) override;
@@ -171,7 +171,7 @@ class VScrollerHorizontal : public VAbstractButton {
     void SwitchDraggingStatusAnimation();
     void TurnToNormalStatusAnimation();
     void GotMouseFocus() override;
-    void LosedMouseFocus() override;
+    void LostMouseFocus() override;
 
  public:
     void OnPaint(VCanvasPainter* Painter) override;
