@@ -31,23 +31,14 @@ void testAllocatorWithout() {
 
 #define format_parameter(variable) ((const char* const)variable)
 
-HWND WindowHandle;
-Core::VSmartTimer* SmartTimer;
-
 fn main() -> int {
     var Application = Core::VApplication();
-    var MainWindow  = Core::VMainWindow(400, 400, &Application);
-    var Button      = Core::VPushButton(200, 100, L"Test", &MainWindow);
+    var MainWindow  = VML::VMLMainWindow(400, 400, &Application);
+    // var Button      = Core::VPushButton(200, 100, L"Test", &MainWindow);
 
-    SmartTimer = new Core::VSmartTimer(&Application);
-
-    Button.Move(40, 40);
-
-    // MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
+    MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
     MainWindow.Show();
-
-    WindowHandle = MainWindow.GetLocalWinId();
 
     return Application.Exec();
 }

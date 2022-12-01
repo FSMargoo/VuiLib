@@ -17,7 +17,8 @@ namespace Core {
 		);
 	}
 	VPenBrush::~VPenBrush() {
-	
+		Brush.Object->Release();
+		Brush.Object = NULL;
 	}
 	ID2D1SolidColorBrush* VPenBrush::GetDxBrush()     const {
 		return Brush.Get();
@@ -42,7 +43,8 @@ namespace Core {
 		);
 	}
 	VSolidBrush::~VSolidBrush() {
-		
+		Brush.Object->Release();
+		Brush.Object = NULL;
 	}
 	ID2D1SolidColorBrush* VSolidBrush::GetDxBrush() const {
 		return Brush.Get();
@@ -61,7 +63,8 @@ namespace Core {
 		);
 	}
 	VBitmapBrush::~VBitmapBrush() {
-		
+		Brush.Object->Release();
+		Brush.Object = NULL;
 	}
 	ID2D1BitmapBrush* VBitmapBrush::GetDxBrush() const {
 		return Brush.Get();

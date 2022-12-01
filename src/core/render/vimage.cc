@@ -93,7 +93,7 @@ namespace Core {
 
     }
     VImage::~VImage() {
-        
+        VDXObjectSafeFree(&DirectXBitmap.Object);
     }
     
     int VImage::GetWidth() const {

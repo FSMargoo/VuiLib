@@ -60,17 +60,17 @@ namespace Core {
 
 				EditCanvas(Canvas);
 
-				ID2D1Bitmap* Bitmap;
+				Microsoft::WRL::ComPtr<ID2D1Bitmap> Bitmap;
 				Canvas->GetDXObject()->GetBitmap(&Bitmap);
 
-				VImage ImageHelper(Bitmap);
+				VImage ImageHelper(Bitmap.Get());
 				VBitmapBrush BitmapBrush(&ImageHelper, CallWidgetGetRenderHandle());
 
 				GetParentCanvas()->SolidEllipse(GetRegion(), &BitmapBrush);
 
 				delete Canvas;
 
-				Canvas = nullptr;
+				Bitmap.ReleaseAndGetAddressOf();
 			}
 
 			return true;
@@ -115,15 +115,14 @@ namespace Core {
 				Canvas->EndDraw();
 
 				VCanvasPainter ViewCanvas(GetWidth(), GetHeight(), CallWidgetGetRenderHandle());
-
-				ID2D1Bitmap* Bitmap;
+				ID2D1Bitmap*   Bitmap;
 				Canvas->GetDXObject()->GetBitmap(&Bitmap);
 
 				VImage ImageHelper(Bitmap);
 
 				VBitmapBrush BitmapBrush(&ImageHelper, CallWidgetGetRenderHandle());
-				ID2D1PathGeometry* PathGeometry;
-				ID2D1GeometrySink* GeometrySink;
+				Microsoft::WRL::ComPtr<ID2D1PathGeometry> PathGeometry;
+				Microsoft::WRL::ComPtr<ID2D1GeometrySink> GeometrySink;
 				VDirectXD2DFactory.GetInstance()->CreatePathGeometry(&PathGeometry);
 				PathGeometry->Open(&GeometrySink);
 
@@ -144,7 +143,7 @@ namespace Core {
 				ViewCanvas.BeginDraw();
 
 				ViewCanvas.Clear(VColor(0.f, 0.f, 0.f, 0.f));
-				ViewCanvas.GetDXObject()->FillGeometry(PathGeometry, BitmapBrush.GetDxBrush());
+				ViewCanvas.GetDXObject()->FillGeometry(PathGeometry.Get(), BitmapBrush.GetDxBrush());
 
 				ViewCanvas.EndDraw();
 
@@ -156,11 +155,11 @@ namespace Core {
 					D2D1_POINT_2U OriginPoint = { 0, 0 };
 					D2D1_RECT_U   CopyRect = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
 
-					ID2D1Bitmap* CanvasSurface;
+					Microsoft::WRL::ComPtr<ID2D1Bitmap> CanvasSurface;
 
 					ViewCanvas.GetDXObject()->GetBitmap(&CanvasSurface);
 
-					VImage ShadowImage(CanvasSurface);
+					VImage ShadowImage(CanvasSurface.Get());
 					ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.Radius, ObjectVisual.Shadow.Color, CallWidgetGetRenderHandle(), &ObjectVisual.Shadow.Offset);
 
 					GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X),
@@ -168,14 +167,16 @@ namespace Core {
 												   static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X + ShadowImage.GetWidth()),
 												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
 						{ 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+
+					CanvasSurface.ReleaseAndGetAddressOf();
 				}
 
 				EditCanvas(Canvas);
 
 				GetParentCanvas()->DrawCanvas(GetRegion(), &ViewCanvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
 
-				VDXObjectSafeFree(&PathGeometry);
-				VDXObjectSafeFree(&GeometrySink);
+				PathGeometry.ReleaseAndGetAddressOf();
+				GeometrySink.ReleaseAndGetAddressOf();
 
 				delete[] PointArray;
 				delete Canvas;

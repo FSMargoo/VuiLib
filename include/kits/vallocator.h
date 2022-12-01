@@ -75,7 +75,10 @@ namespace VKits {
 		  template<>
 		  static void Free(IUnknown** Pointer) {
 			  if (*Pointer) {
-				  (*Pointer)->Release();
+				  vdbg::_v_debug_printf("COM Object FREE!\n");
+				  if ((*Pointer)->Release() > 0) {
+					  vdbg::_v_debug_printf("COM Object free failed!\n");
+				  }
 
 				  (*Pointer) = NULL;
 			  }
@@ -163,11 +166,11 @@ namespace VKits {
 		  }
 		  ~VCOMPointer() {
 			  if (Allocator) {
-				  vdbg::_v_debug_printf("pointer released\n");
 				  for (auto Iterator = Allocator->AllocatorMemory.begin(); Iterator != Allocator->AllocatorMemory.end(); ++Iterator) {
 					  if ((void*)(*Iterator).Pointer == (void*)this) {
 						  VCOMDeleter* Deleter = static_cast<VCOMDeleter*>((*Iterator).Deleter);
 
+						  vdbg::_v_debug_printf("COM Object FREE!\n");
 						  if (Object) {
 							  Object->Release();
 

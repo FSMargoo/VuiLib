@@ -40,7 +40,7 @@ namespace Core {
         );
     }
     VFont::~VFont() {
-        
+        TextFormat.ReleaseAndGetAddressOf();
     }
     void VFont::SetLineAlignment(const VFontAlignment& Alignment) {
         TextFormat->SetTextAlignment(Alignment);

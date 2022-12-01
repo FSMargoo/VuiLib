@@ -457,11 +457,11 @@ namespace Core {
 					D2D1_POINT_2U OriginPoint = { 0, 0 };
 					D2D1_RECT_U   CopyRect = { static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight()) };
 
-					ID2D1Bitmap* CanvasSurface;
+					Microsoft::WRL::ComPtr<ID2D1Bitmap> CanvasSurface;
 
 					Canvas->GetDXObject()->GetBitmap(&CanvasSurface);
 
-					VImage ShadowImage((ID2D1Bitmap1*)CanvasSurface);
+					VImage ShadowImage((ID2D1Bitmap1*)CanvasSurface.Get());
 					ShadowImage.ApplyShadowEffect(ObjectVisual.Shadow.Radius, ObjectVisual.Shadow.Color, CallWidgetGetRenderHandle(), &ObjectVisual.Shadow.Offset);
 
 					GetParentCanvas()->DrawImage({ static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X),
@@ -469,6 +469,8 @@ namespace Core {
 												   static_cast<int>(GetX() + ObjectVisual.Shadow.Offset.X + ShadowImage.GetWidth()),
 												   static_cast<int>(GetY() + ObjectVisual.Shadow.Offset.Y + ShadowImage.GetHeight()) }, &ShadowImage,
 						{ 0, 0, ShadowImage.GetWidth(), ShadowImage.GetHeight() }, ObjectVisual.Transparency);
+
+					CanvasSurface.ReleaseAndGetAddressOf();
 				}
 
 				if (ChildRepaintMessage != RepaintMessage) {

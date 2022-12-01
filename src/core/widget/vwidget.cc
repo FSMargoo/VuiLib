@@ -231,12 +231,11 @@ namespace Core {
 
 				Canvas			 = new VCanvasPainter(GetWidth(), GetHeight(),
 					VRenderHandle(nullptr, nullptr, nullptr, Direct2DRender->GetDirectXRenderTarget(), RepaintAllocator));
-
 				Canvas->BeginDraw();
 				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
 				if (!WindowConfig.EnableRadius) {
 					for (auto& Message : RepaintMessages) {
-						OnPaint(Canvas, Message->DirtyRectangle);
+						// OnPaint(Canvas, Message->DirtyRectangle);
 						SendMessageToChild(Message, false);
 
 						delete Message;
@@ -253,10 +252,10 @@ namespace Core {
 					OnPaint(Canvas, RepaintAll.DirtyRectangle);
 					SendMessageToChild(&RepaintAll, false);
 				}
+
 				Canvas->EndDraw();
 
 				RepaintMessages.clear();
-
 				if (WindowConfig.EnableRadius) {
 					HDC     WindowDC	  = GetDC(WindowHandle);
 					HBITMAP BorderImage	  = CreateCompatibleBitmap(WindowDC, GetWidth(), GetHeight());
@@ -319,7 +318,6 @@ namespace Core {
 					BufferPainter->EndDraw();
 				}
 
-				delete Canvas;
 				delete RepaintAllocator;
 			}
 		}
