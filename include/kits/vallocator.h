@@ -75,11 +75,6 @@ namespace VKits {
 		  template<>
 		  static void Free(IUnknown** Pointer) {
 			  if (*Pointer) {
-				  vdbg::_v_debug_printf("COM Object FREE!\n");
-				  if ((*Pointer)->Release() > 0) {
-					  vdbg::_v_debug_printf("COM Object free failed!\n");
-				  }
-
 				  (*Pointer) = NULL;
 			  }
 		  }
@@ -170,7 +165,6 @@ namespace VKits {
 					  if ((void*)(*Iterator).Pointer == (void*)this) {
 						  VCOMDeleter* Deleter = static_cast<VCOMDeleter*>((*Iterator).Deleter);
 
-						  vdbg::_v_debug_printf("COM Object FREE!\n");
 						  if (Object) {
 							  Object->Release();
 
