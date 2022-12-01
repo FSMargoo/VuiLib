@@ -31,14 +31,24 @@ void testAllocatorWithout() {
 
 #define format_parameter(variable) ((const char* const)variable)
 
+template<typename ...parameter>
+class metaFunction {
+public:
+    Core::VSignal<parameter...> signal;
+};
+
+void test() {
+    MessageBox(NULL, L"Meta function test", L"Meta function test", MB_OK);
+}
+
 fn main() -> int {
     var Application = Core::VApplication();
     var MainWindow  = VML::VMLMainWindow(400, 400, &Application);
-    // var Button      = Core::VPushButton(200, 100, L"Test", &MainWindow);
-
-    MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
     MainWindow.Show();
+    MainWindow.RegisterMetaFunction<>(VML_META_FUNCTION(test));
+
+    MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
     return Application.Exec();
 }

@@ -235,7 +235,7 @@ namespace Core {
 				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
 				if (!WindowConfig.EnableRadius) {
 					for (auto& Message : RepaintMessages) {
-						// OnPaint(Canvas, Message->DirtyRectangle);
+						OnPaint(Canvas, Message->DirtyRectangle);
 						SendMessageToChild(Message, false);
 
 						delete Message;
@@ -318,6 +318,7 @@ namespace Core {
 					BufferPainter->EndDraw();
 				}
 
+				delete Canvas;
 				delete RepaintAllocator;
 			}
 		}

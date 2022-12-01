@@ -78,13 +78,13 @@ namespace Core {
 		using object_functional_ptr = void (ObjectType::*)(Type ...);
 	
 	private:
-		ObjectType* object_ref;
+		ObjectType*			  object_ref;
 		object_functional_ptr object_functional;
 	
 	public:
 		connection(ObjectType* object, object_functional_ptr functional)
 			: connect_basic<Type...>([object, functional](Type... args) { (*object.*functional)(args...); }) {
-			object_ref = object;
+			object_ref		  = object;
 			object_functional = functional;
 		}
 	

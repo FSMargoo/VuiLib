@@ -7,6 +7,8 @@
 
 #include <algorithm>
 
+#define VML_META_FUNCTION(FunctionName) L#FunctionName, FunctionName
+
 VLIB_BEGIN_NAMESPACE
 
 namespace VML {

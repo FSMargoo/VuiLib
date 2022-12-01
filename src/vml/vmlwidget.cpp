@@ -17,6 +17,12 @@ namespace VML {
     VMLMainWindow::VMLMainWindow(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble)
             : VMainWindow(Width, Height, Parent, Sizble) {    }
     VMLMainWindow::~VMLMainWindow() {
+        for (auto& MetaFunction : MetaFunctionList) {
+            delete MetaFunction.second;
+        }
+
+        MetaFunctionList.clear();
+
         VUIObject::~VUIObject();
     }
     VMLWidgetLoadResult VMLMainWindow::LoadVML(const std::wstring VML, VMLParserParseMode StringMode) {
@@ -85,6 +91,16 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLPushButtonBuilder  Builder(GetRootFinder(), PushButton, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"on-clicked")) {
+                            if (Element.NodeValue[L"on-clicked"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"on-clicked"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    PushButton->ButtonPushed.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;

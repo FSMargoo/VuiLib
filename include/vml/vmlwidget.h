@@ -16,34 +16,51 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VML {
     class VMLMainWindow : public Core::VMainWindow {
-    protected:
-        std::vector<VMLObject*> ObjectList;
+     protected:
+         std::vector<VMLObject*       > ObjectList;
+         std::map<std::wstring, void* > MetaFunctionList;
+     
+     private:
+         VMLFinder GetRootFinder();
+     
+     private:
+         void SortVMLAstNode(std::vector<VMLNode>& Nodes);
+     
+     public:
+         VMLMainWindow(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
+         VMLMainWindow(Core::VApplication* Parent, const bool& Sizble = true);
+         ~VMLMainWindow();
+     
+     public:
+         VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);
+         VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent = nullptr);
+         VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent = nullptr);
+     
+     public:
+         void SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List);
+         void SetStyleSheet(VSS::VSSParserResult VSSParserResult);
+     
+         HWND GetLocalWinId() override;
+     
+     public:
+         VMLFinder Get(const std::wstring& ChildrenId);
+         VMLFinder operator[](const std::wstring& ChildrenId);
 
-    private:
-        VMLFinder GetRootFinder();
+     public:
+         template<class... Parameters>
+         inline void RegisterMetaFunction(const std::wstring& FunctionName, void (*Functional)(Parameters...)) {
+             Core::VSignal<Parameters...>* Signal = new Core::VSignal<Parameters...>;
+             Signal->Connect(Functional);
 
-    private:
-        void SortVMLAstNode(std::vector<VMLNode>& Nodes);
+             MetaFunctionList.insert(std::pair<std::wstring, void*>(FunctionName, (void*)Signal));
+         }
+         template<class ObjectType, class... Parameters>
+         inline void RegisterMetaFunction(const std::wstring& FunctionName, ObjectType* Object, void (ObjectType::* Functional)(Parameters...)) {
+             Core::VSignal<Parameters...>* Signal = new Core::VSignal<Parameters...>;
+             Signal->Connect(Object, Functional);
 
-    public:
-        VMLMainWindow(const int& Width, const int& Height, Core::VApplication* Parent, const bool& Sizble = true);
-        VMLMainWindow(Core::VApplication* Parent, const bool& Sizble = true);
-        ~VMLMainWindow();
-
-    public:
-        VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);
-        VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent = nullptr);
-        VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList* ObjectCacheList, VMLObject* UIParent = nullptr);
-
-    public:
-        void SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vector<VMLObject*> List);
-        void SetStyleSheet(VSS::VSSParserResult VSSParserResult);
-
-        HWND GetLocalWinId() override;
-
-    public:
-        VMLFinder Get(const std::wstring& ChildrenId);
-        VMLFinder operator[](const std::wstring& ChildrenId);
+             MetaFunctionList.insert(std::pair<std::wstring, void*>(FunctionName, (void*)Signal));
+         }
     };
 }
 
