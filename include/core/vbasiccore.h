@@ -291,7 +291,6 @@ namespace Core {
 	 
 	 public:
 		 VCoreGeometry();
-		 VCoreGeometry(const VCoreGeometry& GeomteryObject);
 		 VCoreGeometry(const DataType& TargetWidth, const DataType& TargetHeight);
 	 
 	 public:

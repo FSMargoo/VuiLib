@@ -396,14 +396,14 @@
       <Filter>src\win32base</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\..\vuilib 3.0\vlib\src\core\vbasiccore.cc">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="src\kits\vallocator.cc">
       <Filter>src\kits</Filter>
     </ClCompile>
     <ClCompile Include="src\debug\vdebug.cc">
       <Filter>src\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vbasiccore.cc">
+      <Filter>src\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

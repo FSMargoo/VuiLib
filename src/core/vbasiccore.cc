@@ -215,11 +215,6 @@ namespace Core {
         : Width(TargetWidth), Height(TargetHeight) {
     }
     template<>
-    VCoreGeometry<int>::VCoreGeomtery(const VCoreGeomtery<int>& GeomteryObject) {
-        Width  = GeomteryObject.Width;
-        Height = GeomteryObject.Height;
-    }
-    template<>
     void VCoreGeometry<int>::Resize(const int& TargetWidth, const int& TargetHeight) {
         Width  = TargetWidth;
         Height = TargetHeight;
