@@ -922,8 +922,8 @@ namespace VML {
                         VMLObject->UIObject = Widget;
                         VMLObject->VMLType = VMLObjectType::Widget;
 
-                        VMLControlBuildStatus BuildStatus;
-                        VMLWidgetBuilder  Builder(GetRootFinder(), Widget, Element.NodeValue, &BuildStatus);
+                        VMLControlBuildStatus      BuildStatus;
+                        VMLVerticalScrollerBuilder Builder(GetRootFinder(), Widget, Element.NodeValue, &BuildStatus);
 
                         if (Element.PropertyExsit(L"rectangle-changed")) {
                             if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {

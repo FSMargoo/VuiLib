@@ -25,7 +25,4 @@
     </main-title-view>
 
     <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
-
-    <test-btn type="pushbutton" x="@center" y="@center" width="200" height="60" text="test meta function" on-clicked="@test">
-    </test-btn>
 </widget>
