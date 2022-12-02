@@ -101,6 +101,42 @@ namespace VML {
                                 }
                             }
                         }
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    PushButton->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    PushButton->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    PushButton->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    PushButton->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -117,6 +153,43 @@ namespace VML {
                         VMLControlBuildStatus  BuildStatus;
                         VMLImageLabelBuilder   Builder(GetRootFinder(), ImageLabel, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ImageLabel->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ImageLabel->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ImageLabel->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ImageLabel->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -132,6 +205,43 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLTextLabelBuilder   Builder(GetRootFinder(), TextLabel, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    TextLabel->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    TextLabel->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    TextLabel->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    TextLabel->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -146,6 +256,43 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLCommonBuilder      Builder(GetRootFinder(), FakeCaption, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    FakeCaption->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    FakeCaption->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    FakeCaption->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    FakeCaption->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -166,6 +313,43 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLLayoutBuilder      Builder(GetRootFinder(), Layout, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -184,6 +368,43 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLScaleLayoutBuilder Builder(GetRootFinder(), Layout, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Layout->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -205,6 +426,43 @@ namespace VML {
 
                             VMLControlBuildStatus BuildStatus;
                             VMLTextSizeLayoutBuilder Builder(GetRootFinder(), Layout, Element.NodeValue, &BuildStatus);
+
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Layout->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Layout->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Layout->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"lost-focus")) {
+                                if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Layout->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
 
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -231,6 +489,52 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLSliderHorizontalBuilder Builder(GetRootFinder(), SliderHorizontal, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"value-changed")) {
+                            if (Element.NodeValue[L"value-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"value-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->ValueChanged.Connect((Core::VSignal<const double&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const double&>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -245,6 +549,52 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLSliderVerticalBuilder Builder(GetRootFinder(), SliderHorizontal, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"value-changed")) {
+                            if (Element.NodeValue[L"value-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"value-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    SliderHorizontal->ValueChanged.Connect((Core::VSignal<const double&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const double&>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -262,6 +612,43 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLMainWindowBuilder  Builder(this, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    this->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    this->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    this->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    this->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -278,6 +665,52 @@ namespace VML {
                             VMLControlBuildStatus BuildStatus;
                             VMLRadioButtonBuilder Builder(GetRootFinder(), RadioButton, Element.NodeValue,
                                                           &BuildStatus);
+
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"lost-focus")) {
+                                if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"on-clicked")) {
+                                if (Element.NodeValue[L"on-clicked"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"on-clicked"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->ButtonPushed.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
 
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -318,6 +751,43 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLCommonBuilder      Builder(GetRootFinder(), BlurLabel, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    BlurLabel->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    BlurLabel->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    BlurLabel->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    BlurLabel->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -326,13 +796,50 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"iconbutton") {
-                        Core::VIconButton* BlurLabel = new Core::VIconButton(UIParent->UIObject);
+                        Core::VIconButton* IconButton = new Core::VIconButton(UIParent->UIObject);
 
-                        VMLObject->UIObject = BlurLabel;
+                        VMLObject->UIObject = IconButton;
                         VMLObject->VMLType = VMLObjectType::IconButton;
 
                         VMLControlBuildStatus BuildStatus;
-                        VMLIconButtonBuilder  Builder(GetRootFinder(), BlurLabel, Element.NodeValue, &BuildStatus);
+                        VMLIconButtonBuilder  Builder(GetRootFinder(), IconButton, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    IconButton->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    IconButton->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    IconButton->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    IconButton->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -350,6 +857,52 @@ namespace VML {
                         VMLControlBuildStatus BuildStatus;
                         VMLLineEditorBuilder  Builder(GetRootFinder(), LineEditor, Element.NodeValue, &BuildStatus);
 
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    LineEditor->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    LineEditor->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    LineEditor->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"lost-focus")) {
+                            if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    LineEditor->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"inputed")) {
+                            if (Element.NodeValue[L"inputed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"inputed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    LineEditor->TextOnChange.Connect((Core::VSignal<const std::wstring&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const std::wstring&>::Emit);
+                                }
+                            }
+                        }
+
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
                             Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -364,13 +917,50 @@ namespace VML {
                         VMLObject->VMLType = VMLObjectType::SwitchGroup;
                     }
                     else if (ElementProperty.PropertyAsString == L"vertical-scroller") {
-                        Core::VScrollerVertical* VerticalScroller = new Core::VScrollerVertical(UIParent->UIObject);
+                        Core::VScrollerVertical* Widget = new Core::VScrollerVertical(UIParent->UIObject);
 
-                        VMLObject->UIObject = VerticalScroller;
-                        VMLObject->VMLType = VMLObjectType::VerticalScroller;
+                        VMLObject->UIObject = Widget;
+                        VMLObject->VMLType = VMLObjectType::Widget;
 
                         VMLControlBuildStatus BuildStatus;
-                        VMLVerticalScrollerBuilder  Builder(GetRootFinder(), VerticalScroller, Element.NodeValue, &BuildStatus);
+                        VMLWidgetBuilder  Builder(GetRootFinder(), Widget, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"value-changed")) {
+                            if (Element.NodeValue[L"value-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"value-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->ValueOnChange.Connect((Core::VSignal<const double&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const double&>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -380,13 +970,50 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"horizontal-scroller") {
-                        Core::VScrollerHorizontal* VerticalScroller = new Core::VScrollerHorizontal(UIParent->UIObject);
+                        Core::VScrollerHorizontal* Widget = new Core::VScrollerHorizontal(UIParent->UIObject);
 
-                        VMLObject->UIObject = VerticalScroller;
-                        VMLObject->VMLType = VMLObjectType::VerticalScroller;
+                        VMLObject->UIObject = Widget;
+                        VMLObject->VMLType = VMLObjectType::Widget;
 
                         VMLControlBuildStatus BuildStatus;
-                        VMLHorizontalScrollerBuilder Builder(GetRootFinder(), VerticalScroller, Element.NodeValue, &BuildStatus);
+                        VMLHorizontalScrollerBuilder Builder(GetRootFinder(), Widget, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"value-changed")) {
+                            if (Element.NodeValue[L"value-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"value-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Widget->ValueOnChange.Connect((Core::VSignal<const double&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const double&>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -403,6 +1030,34 @@ namespace VML {
 
                         VMLControlBuildStatus BuildStatus;
                         VMLViewLabelBuilder Builder(GetRootFinder(), ViewLabel, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ViewLabel->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ViewLabel->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    ViewLabel->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;
@@ -501,6 +1156,34 @@ namespace VML {
                             VMLControlBuildStatus BuildStatus;
                             VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
 
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;
                                 Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -517,6 +1200,34 @@ namespace VML {
                             VMLControlBuildStatus BuildStatus;
                             VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
 
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;
                                 Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
@@ -532,6 +1243,34 @@ namespace VML {
 
                             VMLControlBuildStatus BuildStatus;
                             VMLWidgetBuilder Builder(Widget, Element.NodeValue, &BuildStatus);
+
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        Widget->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
 
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;

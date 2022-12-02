@@ -15,27 +15,7 @@
 #define fn  auto
 #define var auto
 
-int* AllocatoredIntPointer;
-int* IntPointer;
-VKits::VAllocator ThreadAllocator;
-
-void testAllocator() {
-    VKits::VAllocator Allocator(ThreadAllocator);
-
-    AllocatoredIntPointer  = Allocator.Malloc<int>();
-    *AllocatoredIntPointer = 40;
-}
-void testAllocatorWithout() {
-    IntPointer = new int(40);
-}
-
 #define format_parameter(variable) ((const char* const)variable)
-
-template<typename ...parameter>
-class metaFunction {
-public:
-    Core::VSignal<parameter...> signal;
-};
 
 void test() {
     MessageBox(NULL, L"Meta function test", L"Meta function test", MB_OK);
@@ -46,7 +26,7 @@ fn main() -> int {
     var MainWindow  = VML::VMLMainWindow(400, 400, &Application);
 
     MainWindow.Show();
-    MainWindow.RegisterMetaFunction<>(VML_META_FUNCTION(test));
+    MainWindow.RegisterMetaFunction(VML_META_FUNCTION(test));
 
     MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
