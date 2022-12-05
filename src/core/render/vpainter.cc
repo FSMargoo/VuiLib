@@ -145,7 +145,6 @@ namespace Core {
 	void VCanvasPainter::FillEllipse(const VRect& EllipseRectangle, VPenBrush* BorderPen, VSolidBrush* FillBrush) {
 #ifndef _VLIB_CANVAS_DEBUING_S
 		SolidEllipse(EllipseRectangle, FillBrush);
-	    DrawRectangle(EllipseRectangle, BorderPen);
 #endif
 	}
 	void VCanvasPainter::FillRoundedRectangle(const VRect& Rectangle, const VPoint& Radius, VPenBrush* BorderPen, VSolidBrush* FillBrush) {

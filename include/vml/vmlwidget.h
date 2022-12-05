@@ -8,6 +8,7 @@
 #include "../core/control/vfakecaption.h"
 
 #include "vml.h"
+#include "vmlvariable.h"
 #include "vmlbuilder.h"
 
 #include <algorithm>
@@ -17,8 +18,9 @@ VLIB_BEGIN_NAMESPACE
 namespace VML {
     class VMLMainWindow : public Core::VMainWindow {
      protected:
-         std::vector<VMLObject*       > ObjectList;
-         std::map<std::wstring, void* > MetaFunctionList;
+         std::vector<VMLObject*        > ObjectList;
+         std::vector<VMLBasicVariable* > VariableList;
+         std::map<std::wstring, void*  > MetaFunctionList;
      
      private:
          VMLFinder GetRootFinder();

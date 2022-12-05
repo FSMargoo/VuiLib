@@ -20,13 +20,19 @@ namespace VML {
     };
 
     enum class VMLPropertyType {
-        IntValue, StringValue, DoubleValue, BooleanValue, NativeCall, ObjectCallParameter
+        IntValue, StringValue, DoubleValue, BooleanValue, NativeCall, ObjectCallParameter,
+        VariableDefine, VariableCall
+    };
+
+    enum class VMLVariableType {
+        UndefineType, StringType, IntType, DoubleType, BooleanType
     };
 
     struct VMLPropertyValue {
         std::wstring	 PropertyName = L"";
 
         VMLPropertyType  PropertyType = VMLPropertyType::IntValue;
+        VMLVariableType  VariableType = VMLVariableType::UndefineType;
 
         int				 PropertyAsInt = 0;
         std::wstring     PropertyAsString = L"";
@@ -38,6 +44,7 @@ namespace VML {
 
         std::wstring     NativeCallMethodName = L"";
         std::vector<VMLPropertyValue> NativeCallParameter;
+        std::vector<VMLPropertyValue> VariableInitValue;
     };
 
     struct VMLNode {
@@ -68,6 +75,8 @@ namespace VML {
         std::wstring         FilePath;
 
     private:
+        bool             CheckParameter(const std::vector<VMLPropertyValue>& CheckedObject, 
+                                        std::initializer_list<VMLPropertyType> CheckedList);
         void			 ThrowError(VMLParserResult* Result, const std::wstring& ErrorString);
         VMLPropertyValue ToPropertyValue(const std::wstring& String);
         int  BaseLine = 0;

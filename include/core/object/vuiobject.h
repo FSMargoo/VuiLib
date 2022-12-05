@@ -213,7 +213,14 @@ namespace Core {
          */
          virtual bool IsWidget() const;
 
-    protected:
+     public:
+         /*
+          * GetChildObjectByPosition:
+          *     Description : Get the child object by the position in memory
+         */
+         VUIObject* GetChildObjectByPosition(const int& Position);
+
+     protected:
          /*
           * GetParentCanvas function:
           *     Description : Get the canvas of parent

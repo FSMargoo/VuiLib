@@ -15,7 +15,23 @@ namespace VML {
 
         return false;
     }
+    bool VMLParser::CheckParameter(const std::vector<VMLPropertyValue>& CheckedObject,
+                std::initializer_list<VMLPropertyType> CheckedList) {
+        if (CheckedObject.size() != CheckedList.size()) {
+            return false;
+        }
 
+        auto Iterator = CheckedList.begin();
+        for (int Count = 0; Count < CheckedObject.size(); ++Count) {
+            if (CheckedObject[Count].PropertyType != *Iterator) {
+                return false;
+            }
+
+            ++Iterator;
+        }
+
+        return true;
+    }
     void VMLParser::ThrowError(VMLParserResult* Result, const std::wstring& ErrorString) {
         (*Result).ParserStatus = VMLParserStatus::Error;
         (*Result).ErrorInfo.push_back({ ErrorString, static_cast<int>(BaseLine + ParserLexical->get_line() + 1) });
@@ -23,6 +39,86 @@ namespace VML {
     VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring& String) {
         std::wstring ValueString = String.substr(1, String.size() - 2);
 
+        if (ValueString[0] == L'$') {
+            VMLPropertyValue Value;
+            Value.PropertyType = VMLPropertyType::VariableCall;
+
+            VKits::seal_lexical* VariableParameterLexical = new VKits::seal_lexical(ValueString);
+
+            // Skip $
+            VariableParameterLexical->get_token();
+
+            Value.NativeCallMethodName = VariableParameterLexical->get_token().token_string;
+
+            auto GrammarCheckToken = VariableParameterLexical->get_token();
+
+            if (GrammarCheckToken.token_string != L"(" ||
+                GrammarCheckToken.cache_token == EOF_TOKEN) {
+                return Value;
+            }
+
+            Value.PropertyType = VMLPropertyType::VariableDefine;
+
+            std::wstring PropertyValue;
+            while (!VariableParameterLexical->is_eof()) {
+                auto CacheToken = VariableParameterLexical->get_token();
+
+                if (CacheToken.cache_token != CONST_STRING) {
+                    CacheToken.token_string.insert(CacheToken.token_string.begin(), L'\"');
+                    CacheToken.token_string.insert(CacheToken.token_string.end(), L'\"');
+                }
+
+                PropertyValue = CacheToken.token_string;
+
+                auto TokenString = VariableParameterLexical->get_token().token_string;
+
+                if (TokenString == L".") {
+                    VMLPropertyValue ObjectCallValue;
+
+                    ObjectCallValue.PropertyType = VMLPropertyType::ObjectCallParameter;
+
+                    std::wstring PropertyValue;
+                    while (!VariableParameterLexical->is_eof()) {
+                        ObjectCallValue.PropertyAsObjectCallParameter.push_back(CacheToken.token_string);
+
+                        CacheToken = VariableParameterLexical->get_token();
+                        if (CacheToken.token_string != L"." || CacheToken.token_string == L")") {
+                            break;
+                        }
+
+                        CacheToken = VariableParameterLexical->get_token();
+                    }
+
+                    Value.NativeCallParameter.push_back(ObjectCallValue);
+                }
+                else if (TokenString != L"," || TokenString == L")") {
+                    Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
+                    PropertyValue.clear();
+
+                    break;
+                }
+                else {
+                    Value.NativeCallParameter.push_back(ToPropertyValue(PropertyValue));
+                }
+
+                PropertyValue.clear();
+            }
+
+            if (CheckParameter(Value.VariableInitValue, { VMLPropertyType::IntValue })) {
+                Value.VariableType = VMLVariableType::IntType;
+            }
+            if (CheckParameter(Value.VariableInitValue, { VMLPropertyType::StringValue })) {
+                Value.VariableType = VMLVariableType::StringType;
+            }
+            if (CheckParameter(Value.VariableInitValue, { VMLPropertyType::DoubleValue })) {
+                Value.VariableType = VMLVariableType::DoubleType;
+            }
+            if (CheckParameter(Value.VariableInitValue, { VMLPropertyType::BooleanValue })) {
+                Value.VariableType = VMLVariableType::BooleanType;
+            }
+
+            return Value;
+        }
         if (ValueString[0] == L'@') {
             VMLPropertyValue Value;
             Value.PropertyType = VMLPropertyType::NativeCall;

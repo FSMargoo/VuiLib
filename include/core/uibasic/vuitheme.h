@@ -90,6 +90,7 @@ struct VPushButtonTheme : public VLabelCommonTheme {
 struct VRadioButtonTheme : public VLabelCommonTheme {
  public:
      bool SwitchStatus = false;
+     std::wstring PlaneText;
 
  public:
      VRadioButtonTheme();

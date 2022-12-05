@@ -33,6 +33,7 @@ namespace Core {
 		VSignal<> UserStartDrag;
 		VSignal<const int&, const int&> MouseDragged;
 		VSignal<> UserEndDrag;
+		VSignal<> UserLeftUp;
 
 	public:
 		virtual void BeginDrag() {  }

@@ -1,0 +1,17 @@
+<widget type="mainwindow" width="962" height="480" sizable="false" title="3D Ellipse demo" class="widget" style-sheet-src="./style.css">
+    <canvas type="canvas" width="640" height="480" fps="1000" on-paint="@CanvasShow">
+    </canvas>
+    <canvas-info-text type="textlabel" width="180" height="60" x="26" y="18" class="canvas-info" text="Canvas : 721x706 \nFps: UNKNOWN" >
+    </canvas-info-text>
+
+    <points-amount type="textlabel" x="665" y="32" width="320" height="28" class="title-text" text="Point amount : 2500">
+    </points-amount>
+    <points-amount-changer type="horizontal-slider" x="658" y="72" width="262" height="22" value-changed="@PointSetted" value="0.5">
+    </points-amount-changer>
+
+    <reset-point type="pushbutton" width="262" height="68" x="658" y="162" text="Reset all points" on-clicked="@ResetAllPoints">
+    </reset-point>
+
+    <animation-start type="pushbutton" width="262" height="68" x="658" y="251" text="Stop animation" on-clicked="@AnimationStatusSwitch">
+    </animation-start>
+</widget>

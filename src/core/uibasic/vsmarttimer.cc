@@ -4,7 +4,7 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
-VSmartTimer::VSmartTimer(Core::VApplication* Parent) : VUIObject(Parent) {
+VSmartTimer::VSmartTimer(Core::VUIObject* Parent) : VUIObject(Parent) {
 
 }
 void VSmartTimer::Start(const unsigned long& TimerDuraction) {
@@ -13,7 +13,7 @@ void VSmartTimer::Start(const unsigned long& TimerDuraction) {
 
         StartClock = true;
     } else {
-        VLIB_REPORT_ERROR(L"VSmartTimer start as twice!");
+        VBasicTimer::Start(TimerDuraction);
     }
 }
 void VSmartTimer::CheckFrame() {

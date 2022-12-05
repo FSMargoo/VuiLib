@@ -5,6 +5,8 @@
 
 #include "../vss/vssparser.h"
 
+#include "vmlvariable.h"
+
 #include <algorithm>
 
 #define VML_META_FUNCTION(FunctionName) L#FunctionName, FunctionName
@@ -17,7 +19,7 @@ namespace VML {
         HorizontalSlider, VerticalSlider, FakeCaption, BlurLabel, IconButton, LineEditor,
         SwitchGroup, VerticalScroller, HorizontalScroller, ViewLabel,
         PositionAnimation, GeometryAnimation, OpacityAnimation, CircleView, PolygonView,
-        Widget
+        Widget, Canvas
     };
 
     struct VMLObject {
@@ -26,6 +28,9 @@ namespace VML {
         std::wstring     VMLID;
         std::wstring     VMLClass;
         std::wstring     VMLDOMID;
+
+        Core::VLayout*       VMLNativeLaytout;
+        Core::VScaleLayout*  VMLNativeScaleLaytout;
 
         VMLObjectType    VMLType = VMLObjectType::PushButton;
 
@@ -53,11 +58,14 @@ namespace VML {
 
     class VMLFinder {
     private:
-        std::vector<VMLObject*> ObjectList;
+        std::vector<VMLObject*>          ObjectList;
         VMLObject* OriginObject;
 
     public:
-        VMLFinder(VMLObject* Object, std::vector<VMLObject*> List);
+        std::vector<VMLBasicVariable* >* VariableList;
+
+    public:
+        VMLFinder(VMLObject* Object, std::vector<VMLObject*> List, std::vector<VMLBasicVariable* >* VariableList);
 
         VMLFinder operator[](const std::wstring& ChildrenId);
         VMLFinder Get(const std::wstring& ChildrenId);
@@ -67,6 +75,9 @@ namespace VML {
         Type* Get() {
             return static_cast<Type*>(OriginObject->UIObject);
         }
+
+        Core::VLayout*      GetVMLLaytout();
+        Core::VScaleLayout* GetVMLScaleLaytout();
 
         operator Core::VUIObject* ();
     };

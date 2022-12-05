@@ -352,9 +352,11 @@ namespace Core {
 			MoveWindow(GetLocalWinId(), WindowRect.left, WindowRect.top, GetWidth(), GetHeight(), FALSE);
 		}
 		else {
-			WindowConfig.InFrameless = false;
+			if (WindowConfig.InFrameless) {
+				SetWindowLongPtr(GetLocalWinId(), GWL_STYLE, 349110272ll);
+			}
 
-			SetWindowLongPtr(GetLocalWinId(), GWL_STYLE, 349110272ll);
+			WindowConfig.InFrameless = false;
 		}
 	}
 	void VMainWindow::SetSizable(const bool& Sizable) {

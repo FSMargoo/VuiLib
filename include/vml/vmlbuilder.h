@@ -13,6 +13,7 @@
 #include "../core/control/vlineeditor.h"
 #include "../core/control/vscroller.h"
 #include "../core/control/vviewlabel.h"
+#include "../core/control/vcanvas.h"
 
 #include "../core/visual/vvisual.h"
 
@@ -38,6 +39,14 @@ namespace VML {
     };
 
     class VMLCommonBuilder {
+    protected:
+        template<class DatatType, class ClassType>
+        ClassType* DefineVariable(Core::VUIObject* ObjectInstance, const DatatType& InitValue, const VMLFinder& Finder, const std::wstring& VariableName) {
+            ClassType* Variable = new ClassType(ObjectInstance, InitValue);
+
+            return Variable;
+        }
+
     protected:
         bool CheckNativeCallParameter(std::vector<VMLPropertyValue> Properties,
                                       std::vector<VMLPropertyType>  PropertiesType);
@@ -143,7 +152,7 @@ namespace VML {
     };
     class VMLRadioButtonBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VRadioButton* RadioButton, const bool& Status);
+        void Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VRadioButton* RadioButton, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
@@ -303,6 +312,16 @@ namespace VML {
     public:
         VMLWidgetBuilder(Core::VWidget* Widget, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                            VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLCanvasBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VCanvas* Canvas, const int& Fps);
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VCanvas* Canvas, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLCanvasBuilder(const VMLFinder& RootFinder, Core::VCanvas* Canvas, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus);
     };
 }
 

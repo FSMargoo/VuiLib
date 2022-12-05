@@ -23,6 +23,8 @@
         <version-text type="textlabel" width="@scale(0.3)" height="@scale(0.12)" size-layout="@scale(0.09)" x="65" y="@ratio(0.49)" class="version-text" text="Version 2.x.x">
         </version-text>
     </main-title-view>
+    <canvas-test type="canvas" x="@center" y="@center" width="640" height="480" on-paint="@OnPaint" fps="60">
+    </canvas-test>
 
     <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
 </widget>

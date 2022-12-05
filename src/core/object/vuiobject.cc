@@ -44,6 +44,9 @@ namespace Core {
 	bool VUIObject::IsWidget() const {
 		return false;
 	}
+	VUIObject* VUIObject::GetChildObjectByPosition(const int& Position) {
+		return ObjectKernel.ChildObjectContainer[Position];
+	}
 	std::vector<VBasicUITheme*> VUIObject::GetApplicationTheme() {
 		if (GetParent() != nullptr) {
 			return GetParent()->GetApplicationTheme();

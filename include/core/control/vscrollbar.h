@@ -54,6 +54,9 @@ private:
 private:
     void SliderButtonDraged(const int&, const int&);
 
+protected:
+    void OnMessage(VMessage* Message) override;
+
 public:
     VCircleScrollBarButton* GetScrollBarButtonInstance();
 
@@ -97,6 +100,9 @@ private:
 
 private:
     void SliderButtonDraged(const int&, const int&);
+
+protected:
+    void OnMessage(VMessage* Message) override;
 
 public:
     VCircleScrollBarButton* GetScrollBarButtonInstance();

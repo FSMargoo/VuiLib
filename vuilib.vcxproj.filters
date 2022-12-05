@@ -249,6 +249,12 @@
     <ClInclude Include="include\kits\seal.info.h">
       <Filter>include\debug</Filter>
     </ClInclude>
+    <ClInclude Include="include\vml\vmlvariable.h">
+      <Filter>include\vml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vcanvas.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -404,6 +410,12 @@
     </ClCompile>
     <ClCompile Include="src\core\vbasiccore.cc">
       <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vml\vmlvariable.cpp">
+      <Filter>src\vml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vcanvas.cc">
+      <Filter>src\core\control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -75,6 +75,9 @@ namespace VML {
         if (String == L"widget") {
             return VMLObjectType::Widget;
         }
+        if (String == L"canvas") {
+            return VMLObjectType::Canvas;
+        }
 
         return Type;
     }
@@ -145,6 +148,9 @@ namespace VML {
             }
             case VMLObjectType::Widget: {
                 return L"widget";
+            }
+            case VMLObjectType::Canvas: {
+                return L"canvas";
             }
         }
 
@@ -355,7 +361,7 @@ namespace VML {
             Objects->SetStyleSheet(Selector);
         }
     }
-    VMLFinder::VMLFinder(VML::VMLObject *Object, std::vector<VMLObject *> List) {
+    VMLFinder::VMLFinder(VML::VMLObject *Object, std::vector<VMLObject *> List, std::vector<VMLBasicVariable* >* VariableList) {
         ObjectList = List;
         OriginObject = Object;
     }
@@ -363,23 +369,29 @@ namespace VML {
     VMLFinder VMLFinder::operator[](const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
-                return VMLFinder(Object, Object->ChildrenObjects);
+                return VMLFinder(Object, Object->ChildrenObjects, VariableList);
             }
         }
 
-        return VMLFinder(nullptr, std::vector<VMLObject*>());
+        return VMLFinder(nullptr, std::vector<VMLObject*>(), VariableList);
     }
     VMLFinder VMLFinder::Get(const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
-                return VMLFinder(Object, Object->ChildrenObjects);
+                return VMLFinder(Object, Object->ChildrenObjects, VariableList);
             }
         }
 
-        return VMLFinder(nullptr, std::vector<VMLObject*>());
+        return VMLFinder(nullptr, std::vector<VMLObject*>(), VariableList);
     }
     bool      VMLFinder::IsValid() {
         return OriginObject != nullptr;
+    }
+    Core::VLayout* VMLFinder::GetVMLLaytout() {
+        return OriginObject->VMLNativeLaytout;
+    }
+    Core::VScaleLayout* VMLFinder::GetVMLScaleLaytout() {
+        return OriginObject->VMLNativeScaleLaytout;
     }
     VMLFinder::operator Core::VUIObject* () {
         return OriginObject->UIObject;

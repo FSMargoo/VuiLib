@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -133,6 +133,7 @@
     <ClInclude Include="include\core\animation\vanimationcurve.h" />
     <ClInclude Include="include\core\control\vabstractbutton.h" />
     <ClInclude Include="include\core\control\vblurlabel.h" />
+    <ClInclude Include="include\core\control\vcanvas.h" />
     <ClInclude Include="include\core\control\vdragcontrolbase.h" />
     <ClInclude Include="include\core\control\vfakecaption.h" />
     <ClInclude Include="include\core\control\viconbutton.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="include\vml\vml.h" />
     <ClInclude Include="include\vml\vmlbuilder.h" />
     <ClInclude Include="include\vml\vmlparser.h" />
+    <ClInclude Include="include\vml\vmlvariable.h" />
     <ClInclude Include="include\vml\vmlwidget.h" />
     <ClInclude Include="include\vss\vssbuilder.h" />
     <ClInclude Include="include\vss\vssparser.h" />
@@ -188,6 +190,7 @@
     <ClCompile Include="src\core\animation\vanimationcurve.cc" />
     <ClCompile Include="src\core\control\vabstractbutton.cc" />
     <ClCompile Include="src\core\control\vblurlabel.cc" />
+    <ClCompile Include="src\core\control\vcanvas.cc" />
     <ClCompile Include="src\core\control\vdragcontrolbase.cc" />
     <ClCompile Include="src\core\control\vfakecaption.cc" />
     <ClCompile Include="src\core\control\viconbutton.cc" />
@@ -231,6 +234,7 @@
     <ClCompile Include="src\vml\vml.cpp" />
     <ClCompile Include="src\vml\vmlbuilder.cpp" />
     <ClCompile Include="src\vml\vmlparser.cpp" />
+    <ClCompile Include="src\vml\vmlvariable.cpp" />
     <ClCompile Include="src\vml\vmlwidget.cpp" />
     <ClCompile Include="src\vss\vssbuilder.cc" />
     <ClCompile Include="src\vss\vssparser.cc" />

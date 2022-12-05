@@ -13,7 +13,7 @@ namespace Core {
     std::map<HWND, VWin32ThreadPipe*> _VMainConfigs;
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
-        if (Message == 134 || Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
+        if (Message == 28 || Message == 134 || Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
                 _VMainConfigs[Handle] == nullptr) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
         }

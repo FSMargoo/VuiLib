@@ -13,44 +13,45 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 
-class VRadioButton : public VAbstractButton {
- private:
-     VRadioButtonTheme*      Theme;
+	class VRadioButton : public VAbstractButton {
+	private:
+		VRadioButtonTheme* Theme;
 
- private:
-     VBasicTimer             AnimationFrameTimer;
-     VAnimationInterpolator* Interpolator;
+	private:
+		VBasicTimer             AnimationFrameTimer;
+		VAnimationInterpolator* Interpolator;
 
-     VLabelStatusTheme       OldTheme;
-     VLabelStatusTheme       TargetTheme;
+		VLabelStatusTheme       OldTheme;
+		VLabelStatusTheme       TargetTheme;
 
-     bool                    InAnimation = false;
+		bool                    InAnimation = false;
 
- private:
-     VRect GetRegion() override;
+	private:
+		VRect GetRegion() override;
 
- public:
-     void LeftClickedDown() override;
-     void GotMouseFocus() override;
-     void LostMouseFocus() override;
+	public:
+		void LeftClickedDown() override;
+		void GotMouseFocus() override;
+		void LostMouseFocus() override;
 
- public:
-     explicit VRadioButton(VUIObject* Parent);
-     VRadioButton(const int& Width, const int& Height, VUIObject* Parent);
-     ~VRadioButton() noexcept;
+	public:
+		explicit VRadioButton(VUIObject* Parent);
+		VRadioButton(const int& Width, const int& Height, VUIObject* Parent);
+		~VRadioButton() noexcept;
 
- public:
-     void SetSwitchStatus(const bool& Status);
-     bool GetSwitchStatus() const;
+	public:
+		void SetSwitchStatus(const bool& Status);
+		void SetPlaneText(const std::wstring& Text);
+		bool GetSwitchStatus() const;
 
- public:
-     VRadioButtonTheme* GetTheme();
-     void SetTheme(VRadioButtonTheme* Theme);
+	public:
+		VRadioButtonTheme* GetTheme();
+		void SetTheme(VRadioButtonTheme* Theme);
 
- public:
-     void OnPaint(VCanvasPainter* Painter) override;
-     void CheckFrame() override;
-};
+	public:
+		void OnPaint(VCanvasPainter* Painter) override;
+		void CheckFrame() override;
+	};
 
 }
 

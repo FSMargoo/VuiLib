@@ -301,6 +301,42 @@ namespace VSS {
                             }
                         }
                     }
+                    if (Property.first == L"font-weight") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->LabelFont->SetTextWidget(PropertyValue.PropertyAsInt);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-family") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetFamilyName(PropertyValue.PropertyAsString);
+                            }
+                        }
+                    }
+                    if (Property.first == L"font-size") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::IntValue) {
+                                Theme->LabelFont->SetTextSize(PropertyValue.PropertyAsInt);
+                            }
+                        }
+                    }
+                    if (Property.first == L"text-align") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetLineAlignment(VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
+                    if (Property.first == L"vertical-align") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::StringValue) {
+                                Theme->LabelFont->SetParagraphAlignment(
+                                    VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+                            }
+                        }
+                    }
 
                     if (Property.first == L"opacity") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -377,7 +413,13 @@ namespace VSS {
                             }
                         }
                     }
-
+                    if (Property.first == L"color") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
                     if (Property.first == L"border-width") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::IntValue) {
@@ -423,7 +465,13 @@ namespace VSS {
                             }
                         }
                     }
-
+                    if (Property.first == L"color") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
                     if (Property.first == L"border-width") {
                         for (auto &PropertyValue: Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::IntValue) {

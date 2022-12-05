@@ -3,7 +3,6 @@
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
-
 	VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode& DragTowards, VUIObject* Parent)
 		: VDragControlBaseOnPushButton(Parent) {
 		DragTowardsMode = DragTowards;
@@ -64,6 +63,21 @@ namespace Core {
 		}
 	}
 
+	void VSliderHorizontal::OnMessage(VMessage* Message) {
+		if (Message->GetType() == VMessageType::MouseClickedMessage) {
+			VMouseClickedMessage* MouseClickedMessage = static_cast<VMouseClickedMessage*>(Message);
+
+			if (MouseClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
+				MouseClickedMessage->ClickedMethod == VMouseClickedFlag::Down &&
+				MouseClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
+				SliderPercent = double(MouseClickedMessage->MousePosition.X - GetX()) / GetWidth();
+
+				SliderButton->Move(MouseClickedMessage->MousePosition.X - SliderButton->GetWidth() / 2, SliderButton->GetY());
+				SliderButton->MouseLeftClicked(VMouseClickedFlag::Down);
+				ValueChanged.Emit(SliderPercent);
+			}
+		}
+	}
 	VSliderHorizontal::VSliderHorizontal(VUIObject* Parent)
 		: VUIObject(Parent) {
 		Theme = new VSliderTheme(*(static_cast<VSliderTheme*>(GetTargetTheme(VUIThemeType::VSlider))));
@@ -244,6 +258,21 @@ namespace Core {
 		ValueChanged.Emit(SliderPercent);
 
 		Update();
+	}
+	void VSliderVertical::OnMessage(VMessage* Message) {
+		if (Message->GetType() == VMessageType::MouseClickedMessage) {
+			VMouseClickedMessage* MouseClickedMessage = static_cast<VMouseClickedMessage*>(Message);
+
+			if (MouseClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
+				MouseClickedMessage->ClickedMethod == VMouseClickedFlag::Down &&
+				MouseClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
+				SliderPercent = double(MouseClickedMessage->MousePosition.Y - GetY()) / GetHeight();
+
+				SliderButton->Move(SliderButton->GetX(), MouseClickedMessage->MousePosition.Y - SliderButton->GetHeight() / 2);
+				SliderButton->MouseLeftClicked(VMouseClickedFlag::Down);
+				ValueChanged.Emit(SliderPercent);
+			}
+		}
 	}
 	void VSliderVertical::Resize(const int& Width, const int& Height) {
 		VUIObject::Resize(4, Height);

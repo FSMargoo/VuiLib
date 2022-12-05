@@ -93,6 +93,8 @@ namespace Core {
 
 			EndDrag();
 
+			UserLeftUp.Emit();
+
 			break;
 		}
 		}
@@ -103,6 +105,17 @@ namespace Core {
 			case VMessageType::MouseClickedMessage: {
 				VMouseClickedMessage* ClickedMessage = static_cast<VMouseClickedMessage*>(Message);
 				if (!ClickedMessage->MousePosition.InsideRectangle(GetRegion())) {
+					UserInDrag = false;
+					CallWidgetUnlockFocusID();
+
+					CallWidgetSendMessage(Message);
+
+					VPushButton::LostMouseFocus();
+
+					EndDrag();
+				}
+				else if (ClickedMessage->ClickedMethod == VMouseClickedFlag::Up &&
+						 ClickedMessage->ClickedKey == VMouseKeyFlag::Left) {
 					UserInDrag = false;
 					CallWidgetUnlockFocusID();
 

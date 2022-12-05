@@ -49,6 +49,7 @@
     background-color: #ffffff;
     color: #000000;
 }
-.widget {
-    background-color: #ffffff;
+.main-window {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 8px;
 }

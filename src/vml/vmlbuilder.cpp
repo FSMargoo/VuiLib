@@ -42,6 +42,7 @@ namespace VML {
         Core::VScaleLayout* _NativeScaleLayout = new Core::VScaleLayout(Object, Object->GetParent());
         _NativeScaleLayout->SetWidthScalePercent(WidthRatio);
         _NativeScaleLayout->SetHeightScalePercent(HeightRatio);
+        _NativeScaleLayout->SetHeightScalePercent(HeightRatio);
 
         if (!Object->IsWidget()) {
             Object->Move(X, Y);
@@ -88,7 +89,9 @@ namespace VML {
         for (auto &ElementProperty: PropertyValueList) {
             if (ElementProperty.first == L"x") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
-                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
+                    ElementProperty.second.PropertyType != VMLPropertyType::NativeCall &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::VariableCall &&
+                    ElementProperty.second.PropertyType != VMLPropertyType::VariableDefine) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
                     BuildStatus->FailedReason = L"\"x\" Property must match the type \"int\" or \"native call functional\"";
 
@@ -98,16 +101,29 @@ namespace VML {
                 if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
                     X = ElementProperty.second.PropertyAsInt;
                 }
-                else {
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::NativeCall) {
                     if (ElementProperty.second.NativeCallMethodName == L"center") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"centeroffset") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModeMiddleOffset;
 
-                        if (ElementProperty.second.NativeCallParameter.size() == 1 &&
-                            CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
-                            XMiddleOffset = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
+                        if (ElementProperty.second.NativeCallParameter.size() == 1) { 
+                            if (CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, { VMLPropertyType::IntValue })) {
+                                XMiddleOffset = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
+                            }
+                            if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                                if (ElementProperty.second.VariableType == VMLVariableType::IntType) {
+                                    if (!ElementProperty.second.VariableInitValue.empty()) {
+                                        auto VariablePointer = DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                        XMiddleOffset = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                                    }
+                                    else {
+                                        DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                        XMiddleOffset = 0;
+                                    }
+                                }
+                            }
                         }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"relative") {
@@ -117,6 +133,18 @@ namespace VML {
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
                             RelativeX = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
+                        if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                            if (ElementProperty.second.VariableType == VMLVariableType::IntType) {
+                                if (!ElementProperty.second.VariableInitValue.empty()) {
+                                    DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    RelativeX = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                                }
+                                else {
+                                    DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    RelativeX = 0;
+                                }
+                            }
+                        }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
                         HorizontalLayoutMode = Core::VLayoutMode::LayoutModePercent;
@@ -124,6 +152,30 @@ namespace VML {
                         if (ElementProperty.second.NativeCallParameter.size() == 1 &&
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
                             VerticalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
+                        }
+                        if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                            if (ElementProperty.second.VariableType == VMLVariableType::DoubleType) {
+                                if (!ElementProperty.second.VariableInitValue.empty()) {
+                                    DefineVariable<double, VMLDoubleVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsDouble, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    VerticalLayoutPercent = ElementProperty.second.VariableInitValue[0].PropertyAsDouble;
+                                }
+                                else {
+                                    DefineVariable<double, VMLDoubleVariable>(Object, 0.f, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    VerticalLayoutPercent = 0.f;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                    if (ElementProperty.second.VariableType == VMLVariableType::IntType) {
+                        if (!ElementProperty.second.VariableInitValue.empty()) {
+                            DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            X = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                        }
+                        else {
+                            DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            X = 0;
                         }
                     }
                 }
@@ -150,6 +202,18 @@ namespace VML {
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
                             YMiddleOffset = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
+                        if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                            if (ElementProperty.second.VariableType == VMLVariableType::IntType) {
+                                if (!ElementProperty.second.VariableInitValue.empty()) {
+                                    DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    YMiddleOffset = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                                }
+                                else {
+                                    DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    YMiddleOffset = 0;
+                                }
+                            }
+                        }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"relative") {
                         VerticalLayoutMode = Core::VLayoutMode::LayoutModeRelative;
@@ -158,6 +222,18 @@ namespace VML {
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
                             RelativeY = ElementProperty.second.NativeCallParameter[0].PropertyAsInt;
                         }
+                        if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                            if (ElementProperty.second.VariableType == VMLVariableType::IntType) {
+                                if (!ElementProperty.second.VariableInitValue.empty()) {
+                                    DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    RelativeY = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                                }
+                                else {
+                                    DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    RelativeY = 0;
+                                }
+                            }
+                        }
                     }
                     if (ElementProperty.second.NativeCallMethodName == L"ratio") {
                         VerticalLayoutMode = Core::VLayoutMode::LayoutModePercent;
@@ -165,6 +241,18 @@ namespace VML {
                         if (ElementProperty.second.NativeCallParameter.size() == 1 &&
                             CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue})) {
                             HorizontalLayoutPercent = ElementProperty.second.NativeCallParameter[0].PropertyAsDouble;
+                        }
+                        if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                            if (ElementProperty.second.VariableType == VMLVariableType::DoubleType) {
+                                if (!ElementProperty.second.VariableInitValue.empty()) {
+                                    DefineVariable<double, VMLDoubleVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsDouble, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    HorizontalLayoutPercent = ElementProperty.second.VariableInitValue[0].PropertyAsDouble;
+                                }
+                                else {
+                                    DefineVariable<double, VMLDoubleVariable>(Object, 0.f, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                    HorizontalLayoutPercent = 0.f;
+                                }
+                            }
                         }
                     }
                 }
@@ -180,7 +268,8 @@ namespace VML {
 
                 if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
                     Width = ElementProperty.second.PropertyAsInt;
-                } else {
+                }
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::NativeCall) {
                     if (ElementProperty.second.NativeCallMethodName == L"fill") {
                         WidthRatio = 1.f;
                     }
@@ -189,6 +278,30 @@ namespace VML {
                             if (Property.PropertyType == VMLPropertyType::DoubleValue) {
                                 WidthRatio = Property.PropertyAsDouble;
                             }
+                            else if (Property.PropertyType == VMLPropertyType::VariableDefine) {
+                                if (Property.VariableType == VMLVariableType::DoubleType) {
+                                    if (!ElementProperty.second.VariableInitValue.empty()) {
+                                        DefineVariable<double, VMLDoubleVariable>(Object, Property.VariableInitValue[0].PropertyAsDouble, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                        WidthRatio = ElementProperty.second.VariableInitValue[0].PropertyAsDouble;
+                                    }
+                                    else {
+                                        DefineVariable<double, VMLDoubleVariable>(Object, 0.f, RootFinder, Property.NativeCallMethodName);
+                                        WidthRatio = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                    if (ElementProperty.second.VariableType == VMLVariableType::DoubleType) {
+                        if (!ElementProperty.second.VariableInitValue.empty()) {
+                            DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            Width = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                        }
+                        else {
+                            DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            Width = 0;
                         }
                     }
                 }
@@ -204,7 +317,8 @@ namespace VML {
 
                 if (ElementProperty.second.PropertyType == VMLPropertyType::IntValue) {
                     Height = ElementProperty.second.PropertyAsInt;
-                } else {
+                } 
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::NativeCall) {
                     if (ElementProperty.second.NativeCallMethodName == L"fill") {
                         HeightRatio = 1.f;
                     }
@@ -213,6 +327,30 @@ namespace VML {
                             if (Property.PropertyType == VMLPropertyType::DoubleValue) {
                                 HeightRatio = Property.PropertyAsDouble;
                             }
+                            else if (Property.PropertyType == VMLPropertyType::VariableDefine) {
+                                if (Property.VariableType == VMLVariableType::DoubleType) {
+                                    if (!ElementProperty.second.VariableInitValue.empty()) {
+                                        DefineVariable<double, VMLDoubleVariable>(Object, Property.VariableInitValue[0].PropertyAsDouble, RootFinder, ElementProperty.second.NativeCallMethodName);
+                                        HeightRatio = ElementProperty.second.VariableInitValue[0].PropertyAsDouble;
+                                    }
+                                    else {
+                                        DefineVariable<double, VMLDoubleVariable>(Object, 0.f, RootFinder, Property.NativeCallMethodName);
+                                        HeightRatio = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (ElementProperty.second.PropertyType == VMLPropertyType::VariableDefine) {
+                    if (ElementProperty.second.VariableType == VMLVariableType::DoubleType) {
+                        if (!ElementProperty.second.VariableInitValue.empty()) {
+                            DefineVariable<int, VMLIntVariable>(Object, ElementProperty.second.VariableInitValue[0].PropertyAsInt, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            Height = ElementProperty.second.VariableInitValue[0].PropertyAsInt;
+                        }
+                        else {
+                            DefineVariable<int, VMLIntVariable>(Object, 0, RootFinder, ElementProperty.second.NativeCallMethodName);
+                            Height = 0;
                         }
                     }
                 }
@@ -701,8 +839,9 @@ namespace VML {
                 AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status) {
+    void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText) {
         RadioButton->SetSwitchStatus(Status);
+        RadioButton->SetPlaneText(PlaneText);
     }
     void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder,
                                                 Core::VRadioButton *RadioButton,
@@ -710,7 +849,8 @@ namespace VML {
                                                 VML::VMLControlBuildStatus *BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(RootFinder, RadioButton, PropertyValueList, BuildStatus);
 
-        bool SwitchStatus = false;
+        bool         SwitchStatus = false;
+        std::wstring PlaneText;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"switch-status") {
@@ -723,9 +863,19 @@ namespace VML {
 
                 SwitchStatus = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"text") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"text\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                PlaneText = ElementProperty.second.PropertyAsString;
+            }
         }
 
-        Builder(RadioButton, SwitchStatus);
+        Builder(RadioButton, SwitchStatus, PlaneText);
     }
     VMLRadioButtonBuilder::VMLRadioButtonBuilder(const VMLFinder& RootFinder, Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus* BuildStatus)
@@ -1580,6 +1730,33 @@ namespace VML {
     VMLWidgetBuilder::VMLWidgetBuilder(Core::VWidget* Widget, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                        VMLControlBuildStatus* BuildStatus) {
         AnalyzeProperty(Widget, PropertyValueList, BuildStatus);
+    }
+    void VMLCanvasBuilder::Builder(Core::VCanvas* Canvas, const int& Fps) {
+        Canvas->SetFps(Fps);
+    }
+    void VMLCanvasBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VCanvas* Canvas, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+        VMLControlBuildStatus* BuildStatus) {
+        int Fps = 0;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"fps") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"fps\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                Fps = ElementProperty.second.PropertyAsInt;
+            }
+        }
+
+        Builder(Canvas, Fps);
+    }
+
+    VMLCanvasBuilder::VMLCanvasBuilder(const VMLFinder& RootFinder, Core::VCanvas* Canvas, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus) : VMLCommonBuilder(RootFinder, Canvas, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Canvas, PropertyValueList, BuildStatus);
     }
 }
 

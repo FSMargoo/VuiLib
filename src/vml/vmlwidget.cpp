@@ -32,7 +32,7 @@ namespace VML {
     }
 
     VMLFinder VMLMainWindow::GetRootFinder() {
-        return VMLFinder(nullptr, ObjectList);
+        return VMLFinder(nullptr, ObjectList, &VariableList);
     }
 
     VMLWidgetLoadResult VMLMainWindow::LoadVML(VMLParserResult VMLAstTree, VMLObject* UIParent) {
@@ -604,6 +604,8 @@ namespace VML {
                         }
                     }
                     else if (ElementProperty.PropertyAsString == L"mainwindow") {
+                        this->Show();
+
                         VMLObject->UIObject = this;
                         VMLObject->VMLType = VMLObjectType::MainWindow;
 
@@ -1066,6 +1068,59 @@ namespace VML {
                             return Result;
                         }
                     }
+                    else if (ElementProperty.PropertyAsString == L"canvas") {
+                        Core::VCanvas* Canvas = new Core::VCanvas(UIParent->UIObject);
+
+                        VMLObject->UIObject = Canvas;
+                        VMLObject->VMLType = VMLObjectType::Canvas;
+
+                        VMLControlBuildStatus BuildStatus;
+                        VMLCanvasBuilder      Builder(GetRootFinder(), Canvas, Element.NodeValue, &BuildStatus);
+
+                        if (Element.PropertyExsit(L"rectangle-changed")) {
+                            if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Canvas->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"position-changed")) {
+                            if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Canvas->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"got-focus")) {
+                            if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Canvas->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"on-paint")) {
+                            if (Element.NodeValue[L"on-paint"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"on-paint"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Canvas->OnPaintSignal.Connect((Core::VSignal<Core::VCanvasPainter*, const Core::VRenderHandle&>*)MetaFunctionList[NativeCallName], &Core::VSignal<Core::VCanvasPainter*, const Core::VRenderHandle&>::Emit);
+                                }
+                            }
+                        }
+
+                        if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
+                            Result.Status = VMLWidgetVMLLoadStats::Failed;
+                            Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID + L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+                            return Result;
+                        }
+                    }
                     else if (ElementProperty.PropertyAsString == L"geometry-animation") {
                         Core::VGeometryAnimation* Animation = new Core::VGeometryAnimation(UIParent->UIObject, nullptr, 0.f);
 
@@ -1365,6 +1420,11 @@ namespace VML {
                     SetStyleSheet(Parser.ParseVSS(), ObjectList);
                 }
             }
+
+            if (VMLObject->VMLType != VMLObjectType::Widget && VMLObject->VMLType != VMLObjectType::MainWindow) {
+                VMLObject->VMLNativeLaytout = (Core::VLayout*)VMLObject->UIObject->GetChildObjectByPosition(0);
+                VMLObject->VMLNativeScaleLaytout = (Core::VScaleLayout*)VMLObject->UIObject->GetChildObjectByPosition(1);
+            }
         }
 
         return Result;
@@ -1475,20 +1535,20 @@ namespace VML {
     VMLFinder VMLMainWindow::Get(const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
-                return VMLFinder(Object, Object->ChildrenObjects);
+                return VMLFinder(Object, Object->ChildrenObjects, &VariableList);
             }
         }
 
-        return VMLFinder(nullptr, std::vector<VMLObject*>());
+        return VMLFinder(nullptr, std::vector<VMLObject*>(), &VariableList);
     }
     VMLFinder VMLMainWindow::operator[](const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {
-                return VMLFinder(Object, Object->ChildrenObjects);
+                return VMLFinder(Object, Object->ChildrenObjects, &VariableList);
             }
         }
 
-        return VMLFinder(nullptr, std::vector<VMLObject*>());
+        return VMLFinder(nullptr, std::vector<VMLObject*>(), &VariableList);
     }
 
     HWND VMLMainWindow::GetLocalWinId() {
