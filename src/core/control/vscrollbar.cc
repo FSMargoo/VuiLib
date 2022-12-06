@@ -107,7 +107,7 @@ namespace Core {
 	}
 
 	int VSliderHorizontal::GetSliderButtonX() const {
-		return SliderPercent * GetWidth() + GetX();
+		return SliderPercent * GetWidth() + GetX() - SliderButton->GetWidth() / 2;
 	}
 	int VSliderHorizontal::GetSliderButtonY() const {
 		return GetY() - 6;
@@ -169,6 +169,7 @@ namespace Core {
 	}
 	void VSliderHorizontal::SetValue(const double& Value) {
 		SliderPercent = Value;
+		SliderButton->Move(GetX() + GetWidth() * SliderPercent - SliderButton->GetWidth() / 2, SliderButton->GetY());
 
 		Update();
 	}
@@ -208,7 +209,7 @@ namespace Core {
 		return GetX() - 6;
 	}
 	int VSliderVertical::GetSliderButtonY() const {
-		return SliderPercent * GetHeight() + GetY();
+		return SliderPercent * GetHeight() + GetY() - SliderButton->GetHeight() / 2;
 	}
 	VSliderTheme* VSliderVertical::GetTheme() {
 		return Theme;
