@@ -289,7 +289,6 @@ namespace Core {
 	VCircleScrollBarButton* VSliderVertical::GetScrollBarButtonInstance() {
 		return SliderButton;
 	}
-
 }
 
 VLIB_END_NAMESPACE

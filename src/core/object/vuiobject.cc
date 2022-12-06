@@ -117,6 +117,9 @@ namespace Core {
 
 		return Y;
 	}
+	float VUIObject::GetTransparency() const {
+		return ObjectVisual.Transparency;
+	}
 	VRect VUIObject::HelperGetSourceRect() {
 		return VRect{ 0, 0, ObjectVisual.Rectangle.GetWidth(), ObjectVisual.Rectangle.GetHeight() };
 	}
@@ -208,7 +211,7 @@ namespace Core {
 			RenderHandle._IRenderTarget = Canvas->GetDXObject();
 		}
 		else {
-			RenderHandle._IRenderTarget = GetParent()->Canvas->GetDXObject();
+			RenderHandle._IRenderTarget = GetParent()->CallWidgetGetRenderHandle()._IRenderTarget;
 		}
 
 		RenderHandle.Allocator	    = GetWidgetAllocator();
@@ -331,9 +334,6 @@ namespace Core {
 		ObjectVisual.Transparency = Transparency;
 
 		Update();
-	}
-	float VUIObject::GetTransparency() const {
-		return ObjectVisual.Transparency;
 	}
 	bool VUIObject::CheckUIFocusStatus(const VPoint& MousePosition, VMessage* SourceMessage) {
 		if ((IsAnimation() || !GetWidth() || !GetHeight()) ||
@@ -712,6 +712,12 @@ namespace Core {
 		}
 
 		return false;
+	}
+	const std::vector<VUIObject* > VUIObject::GetChildLayout() {
+		return ObjectKernel.ChildObjectContainer;
+	}
+	VCanvasPainter* VUIObject::GetCanvas() {
+		return Canvas;
 	}
 	void VUIObject::Hide() {
 		ObjectVisual.Stats = VUIObjectUIStats::Hidden;

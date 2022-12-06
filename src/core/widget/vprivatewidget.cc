@@ -31,7 +31,7 @@ namespace Core {
             case WM_NCHITTEST: {
                 VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless && !WindowConfig->EnableRadius) {
+                if (WindowConfig->InFrameless) {
                     POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
 
                     RECT WindowRect;
@@ -108,7 +108,7 @@ namespace Core {
             case WM_SETCURSOR: {
                 VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless && WindowConfig->Sizable && !WindowConfig->EnableRadius) {
+                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
                     switch (LOWORD(lParameter)) {
                     case HTTOP:
                     case HTBOTTOM: {
@@ -141,7 +141,7 @@ namespace Core {
             case WM_NCLBUTTONDOWN: {
                 VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
-                if (WindowConfig->InFrameless && !WindowConfig->EnableRadius && WindowConfig->Sizable) {
+                if (WindowConfig->InFrameless && WindowConfig->Sizable) {
                     POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
                     switch (wParameter) {
                     case HTTOP:

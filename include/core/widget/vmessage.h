@@ -13,7 +13,8 @@ enum VMessageType {
 	UnknowMessage, MouseMoveMessage, MouseClickedMessage,
 	KeyClickedMessage, RepaintMessage, GetRepaintAeraMessage,
 	IMECharMessage, MouseWheelMessage, FreeResourceMessage,
-	CheckLocalFocusMessage, KillFocusMessage, QuitWindowMessage
+	CheckLocalFocusMessage, KillFocusMessage, QuitWindowMessage,
+	BlurCombinationOnRend
 };
 
 typedef class VMessage {
@@ -31,6 +32,14 @@ typedef class VMessage {
 	   	 return MessageType;
 	 }
 } VBasicMessage;
+
+class VBlurCombinationOnRend : public VMessage {
+ public:
+ 	 VRect DirtyRectangle;
+
+ public:
+	 explicit VBlurCombinationOnRend(HWND TriggerWidget, const VRect& RepaintRegion);
+};
 
 class VFreeSourceMessage : public VMessage {
  public:

@@ -191,6 +191,9 @@ namespace Core {
          VCanvasPainter* CallWidgetGetCanvas() override;
     
          bool CheckQuitWindowMessage(VMessage* Message) override;
+
+    public:
+        VKits::VAllocator* GetWidgetAllocator() const override;
     
      public:
          HWND GetLocalWinId() override;

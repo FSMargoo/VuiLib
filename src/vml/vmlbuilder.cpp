@@ -1031,7 +1031,7 @@ namespace VML {
                     return;
                 }
 
-                Image = new Core::VImage(ElementProperty.second.PropertyAsString, Object->CallWidgetGetRenderHandle());
+                Image = new Core::VImage(ElementProperty.second.PropertyAsString, Object->CallWidgetGetDCRenderTarget());
             }
         }
 

@@ -131,6 +131,7 @@
     <ClCompile Include="..\..\src\core\animation\vanimationcurve.cc" />
     <ClCompile Include="..\..\src\core\control\vabstractbutton.cc" />
     <ClCompile Include="..\..\src\core\control\vblurlabel.cc" />
+    <ClCompile Include="..\..\src\core\control\vcanvas.cc" />
     <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc" />
     <ClCompile Include="..\..\src\core\control\vfakecaption.cc" />
     <ClCompile Include="..\..\src\core\control\viconbutton.cc" />
@@ -164,14 +165,17 @@
     <ClCompile Include="..\..\src\core\widget\vmessage.cc" />
     <ClCompile Include="..\..\src\core\widget\vprivatewidget.cc" />
     <ClCompile Include="..\..\src\core\widget\vwidget.cc" />
+    <ClCompile Include="..\..\src\debug\vdebug.cc" />
     <ClCompile Include="..\..\src\kits\seal.info.cc" />
     <ClCompile Include="..\..\src\kits\seal.lexical.cc" />
     <ClCompile Include="..\..\src\kits\seal.lexical.token.cc" />
+    <ClCompile Include="..\..\src\kits\vallocator.cc" />
     <ClCompile Include="..\..\src\kits\vcolorhelper.cc" />
     <ClCompile Include="..\..\src\kits\vparserhelper.cc" />
     <ClCompile Include="..\..\src\vml\vml.cpp" />
     <ClCompile Include="..\..\src\vml\vmlbuilder.cpp" />
     <ClCompile Include="..\..\src\vml\vmlparser.cpp" />
+    <ClCompile Include="..\..\src\vml\vmlvariable.cpp" />
     <ClCompile Include="..\..\src\vml\vmlwidget.cpp" />
     <ClCompile Include="..\..\src\vss\vssbuilder.cc" />
     <ClCompile Include="..\..\src\vss\vssparser.cc" />
@@ -186,6 +190,7 @@
     <ClInclude Include="..\..\include\core\animation\vanimationcurve.h" />
     <ClInclude Include="..\..\include\core\control\vabstractbutton.h" />
     <ClInclude Include="..\..\include\core\control\vblurlabel.h" />
+    <ClInclude Include="..\..\include\core\control\vcanvas.h" />
     <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h" />
     <ClInclude Include="..\..\include\core\control\vfakecaption.h" />
     <ClInclude Include="..\..\include\core\control\viconbutton.h" />
@@ -220,18 +225,22 @@
     <ClInclude Include="..\..\include\core\widget\vmessage.h" />
     <ClInclude Include="..\..\include\core\widget\vprivatewidget.h" />
     <ClInclude Include="..\..\include\core\widget\vwidget.h" />
+    <ClInclude Include="..\..\include\debug\vdebug.h" />
     <ClInclude Include="..\..\include\kits\seal.info.h" />
     <ClInclude Include="..\..\include\kits\seal.lexical.h" />
     <ClInclude Include="..\..\include\kits\seal.lexical.token.h" />
+    <ClInclude Include="..\..\include\kits\vallocator.h" />
     <ClInclude Include="..\..\include\kits\vcolorhelper.h" />
     <ClInclude Include="..\..\include\kits\vparserhelper.h" />
     <ClInclude Include="..\..\include\vml\vml.h" />
     <ClInclude Include="..\..\include\vml\vmlbuilder.h" />
     <ClInclude Include="..\..\include\vml\vmlparser.h" />
+    <ClInclude Include="..\..\include\vml\vmlvariable.h" />
     <ClInclude Include="..\..\include\vml\vmlwidget.h" />
     <ClInclude Include="..\..\include\vss\vssbuilder.h" />
     <ClInclude Include="..\..\include\vss\vssparser.h" />
     <ClInclude Include="..\..\include\win32base\vwin32base.h" />
+    <ClInclude Include="..\..\src\core\signal\vbasiccore.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

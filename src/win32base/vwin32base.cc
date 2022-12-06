@@ -363,7 +363,7 @@ namespace Win32Core {
 			RawWin32Msg.x = GET_X_LPARAM(lParameter);
 			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
 
-			RawWin32Msg.wheel = wParameter;
+			RawWin32Msg.wheel = GET_WHEEL_DELTA_WPARAM(wParameter);
 
 			RawWin32Msg.wParam = wParameter;
 			RawWin32Msg.lParam = lParameter;

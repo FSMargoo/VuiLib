@@ -67,7 +67,7 @@ void PVMainWindow::OnMessage(Core::VMessage* Message) {
 					--ViewingProject->LocalViewingFile;
 
 					ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile],
-						CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+						CallWidgetGetRenderHandle());
 
 					BlurBackgroundImage->SetImage(ViewingImage);
 					ViewingLabel->SetImage(ViewingImage);
@@ -97,7 +97,7 @@ void PVMainWindow::OnMessage(Core::VMessage* Message) {
 					++ViewingProject->LocalViewingFile;
 
 					ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile],
-						CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+						CallWidgetGetRenderHandle());
 
 					BlurBackgroundImage->SetImage(ViewingImage);
 					ViewingLabel->SetImage(ViewingImage);
@@ -176,7 +176,7 @@ void PVMainWindow::ImageOnDrag(const int& X, const int& Y) {
 	CenterOffsetPoint = { ViewingLabel->GetX() - CenterX , ViewingLabel->GetY() - CenterY };
 }
 
-PVMainWindow::PVMainWindow(Core::VApplication* Parent) : VMLWidget(Parent) {
+PVMainWindow::PVMainWindow(Core::VApplication* Parent) : VMLMainWindow(Parent) {
 	LoadVML(L"./mainui.xml", VML::VMLParserParseMode::FromFile);
 
 	MiniSizeButton	= operator[](L"photo-viewer-widget")[L"minisize-button"].Get<Core::VPushButton>();
@@ -222,7 +222,7 @@ PVMainWindow::PVMainWindow(Core::VApplication* Parent) : VMLWidget(Parent) {
 	ViewingProject	= nullptr;
 	ViewingImage		= nullptr;
 }
-PVMainWindow::PVMainWindow(Core::VApplication* Parent, const std::wstring& FilePath) : VMLWidget(Parent) {
+PVMainWindow::PVMainWindow(Core::VApplication* Parent, const std::wstring& FilePath) : VMLMainWindow(Parent) {
 	if (!Core::VImage::IsValidBitmapFile(FilePath)) {
 		exit(-1);
 	}
@@ -284,7 +284,7 @@ PVMainWindow::PVMainWindow(Core::VApplication* Parent, const std::wstring& FileP
 	CreateViewingProject(FilePath);
 
 	ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile],
-		CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+		CallWidgetGetRenderHandle());
 
 	BlurBackgroundImage->SetImage(ViewingImage);
 	ViewingLabel->SetImage(ViewingImage);
@@ -321,10 +321,10 @@ void PVMainWindow::MiniSizeButtonOnClicked() {
 }
 void PVMainWindow::MaxSizeButtonOnClicked() {
 	if (!InMaxSize) {
-		PostMessage(GetHWnd(), WM_SYSCOMMAND, SC_MAXIMIZE, NULL);
+		PostMessage(CallWidgetGetHWND(), WM_SYSCOMMAND, SC_MAXIMIZE, NULL);
 	}
 	else {
-		PostMessage(GetHWnd(), WM_SYSCOMMAND, SC_RESTORE, NULL);
+		PostMessage(CallWidgetGetHWND(), WM_SYSCOMMAND, SC_RESTORE, NULL);
 	}
 
 	InMaxSize = !InMaxSize;
@@ -399,7 +399,7 @@ void PVMainWindow::OpenViewProject() {
 
 	FileSelector->lStructSize = sizeof(OPENFILENAME);
 
-	FileSelector->hwndOwner = GetHWnd();
+	FileSelector->hwndOwner = CallWidgetGetHWND();
 	FileSelector->lpstrFile = FilePath;
 	FileSelector->lpstrFile[0] = '\0';
 
@@ -414,8 +414,8 @@ void PVMainWindow::OpenViewProject() {
 	if (GetOpenFileName(FileSelector) ) {
 		CreateViewingProject(FilePath);
 
-		ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile], 
-		CallWidgetGetDCRenderTarget()->GetDirectXRenderTarget());
+		ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile],
+			CallWidgetGetDCRenderTarget());
 
 		BlurBackgroundImage->SetImage(ViewingImage);
 		ViewingLabel->SetImage(ViewingImage);
@@ -444,5 +444,5 @@ void PVMainWindow::OpenViewProject() {
 
 		StartupuiContainer->Hide();
 		MainuiContainer->Show();
-	} 
+	}
 }

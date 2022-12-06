@@ -7,6 +7,12 @@ VMessage::VMessage(VMessageType Type)
 	: MessageType(Type) {
 
 }
+VBlurCombinationOnRend::VBlurCombinationOnRend(HWND TriggerWidget, const VRect& RepaintRegion)
+	: VMessage(VMessageType::RepaintMessage) {
+	DirtyRectangle = RepaintRegion;
+
+	MessageTriggerWidget = TriggerWidget;
+}
 VFreeSourceMessage::VFreeSourceMessage(HWND TriggerWidget)
 	: VMessage(VMessageType::FreeResourceMessage) {
     MessageTriggerWidget = TriggerWidget;

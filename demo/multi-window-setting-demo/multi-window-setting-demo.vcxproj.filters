@@ -14,6 +14,9 @@
     <ClCompile Include="..\..\src\core\control\vblurlabel.cc">
       <Filter>lib</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\control\vcanvas.cc">
+      <Filter>lib</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc">
       <Filter>lib</Filter>
     </ClCompile>
@@ -113,6 +116,9 @@
     <ClCompile Include="..\..\src\core\widget\vwidget.cc">
       <Filter>lib</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\debug\vdebug.cc">
+      <Filter>lib</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\kits\seal.info.cc">
       <Filter>lib</Filter>
     </ClCompile>
@@ -120,6 +126,9 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\kits\seal.lexical.token.cc">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kits\vallocator.cc">
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\kits\vcolorhelper.cc">
@@ -135,6 +144,9 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\vml\vmlparser.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vml\vmlvariable.cpp">
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\vml\vmlwidget.cpp">
@@ -169,6 +181,9 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vblurlabel.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\vcanvas.h">
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h">
@@ -273,6 +288,9 @@
     <ClInclude Include="..\..\include\core\widget\vwidget.h">
       <Filter>lib</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\debug\vdebug.h">
+      <Filter>lib</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\kits\seal.info.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -280,6 +298,9 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\kits\seal.lexical.token.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\kits\vallocator.h">
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\kits\vcolorhelper.h">
@@ -297,6 +318,9 @@
     <ClInclude Include="..\..\include\vml\vmlparser.h">
       <Filter>lib</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\vml\vmlvariable.h">
+      <Filter>lib</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\vml\vmlwidget.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -307,6 +331,9 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\win32base\vwin32base.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\signal\vbasiccore.h">
       <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>

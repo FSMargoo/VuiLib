@@ -320,6 +320,8 @@ namespace Core {
 
 				delete Canvas;
 				delete RepaintAllocator;
+
+				RepaintAllocator = nullptr;
 			}
 		}
 	}
@@ -440,9 +442,8 @@ namespace Core {
 		WindowConfig.OriginWindowProcess = reinterpret_cast<WNDPROC>(GetWindowLongPtr(WindowHandle, GWLP_WNDPROC));
 		SetWindowLongPtr(WindowHandle, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(_VWidgetWNDPROC));
 
-		Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(WindowHandle),
-			{ 0, 0, GetWidth(), GetHeight() }, true);
-		BufferPainter = new VPainter(CallWidgetGetRenderHandle());
+		Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(WindowHandle), { 0, 0, GetWidth(), GetHeight() }, true);
+		BufferPainter  = new VPainter(VRenderHandle(nullptr, nullptr, nullptr, Direct2DRender->GetDirectXRenderTarget(), nullptr));
 
 		WindowConfig.WindowOnSize = [this](auto PH1, auto PH2)
 		{ Win32ThreadResized(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); };
@@ -631,11 +632,12 @@ namespace Core {
 
 		RepaintMessages.push_back(new VRepaintMessage(CallWidgetGetHWND(), RepaintRect));
 	}
+	VKits::VAllocator* VWidget::GetWidgetAllocator() const {
+		return RepaintAllocator;
+	}
 
 	void VWidget::CheckFrame() {
 		if (FpsTimer.End()) {
-			RepaintAllocator = new VKits::VAllocator;
-
 			FpsTimer.Start(14);
 
 			if (Win32Cache.Repaint) {
@@ -652,20 +654,22 @@ namespace Core {
 			if (Win32Cache.UserSetGeomtery) {
 				Win32Cache.UserSetGeomtery = false;
 
-				VUIObject::Resize(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
+				ObjectVisual.Rectangle.Right = Win32Cache.UserSetWidth;
+				ObjectVisual.Rectangle.Bottom = Win32Cache.UserSetHeight;
 
-				Resized.Emit(Win32Cache.UserSetWidth, Win32Cache.UserSetHeight);
+				Update(ObjectVisual.Rectangle);
 
-				RECT NewRect = { 0, 0, GetWidth(), GetHeight() };
+				Resized.Emit(GetWidth(), GetHeight());
 
-				Direct2DRender->GetDirectXRenderTarget()->BindDC(GetDC(WindowHandle), &NewRect);
-
-				Update({ 0, 0, GetWidth(), GetHeight() });
+				RECT NewRect = { 0, 0, Win32Cache.UserSetWidth, Win32Cache.UserSetHeight };
+				Direct2DRender->DirectXDCTarget.Get()->BindDC(GetDC(WindowHandle), &NewRect);
 			}
 
 			if (!RepaintMessages.empty()) {
-				Canvas = new VCanvasPainter(GetWidth(), GetHeight(), CallWidgetGetRenderHandle());
+				RepaintAllocator = new VKits::VAllocator;
 
+				Canvas			 = new VCanvasPainter(GetWidth(), GetHeight(),
+					VRenderHandle(nullptr, nullptr, nullptr, Direct2DRender->GetDirectXRenderTarget(), RepaintAllocator));
 				Canvas->BeginDraw();
 				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
 				if (!WindowConfig.EnableRadius) {
@@ -687,10 +691,10 @@ namespace Core {
 					OnPaint(Canvas, RepaintAll.DirtyRectangle);
 					SendMessageToChild(&RepaintAll, false);
 				}
+
 				Canvas->EndDraw();
 
 				RepaintMessages.clear();
-
 				if (WindowConfig.EnableRadius) {
 					HDC     WindowDC = GetDC(WindowHandle);
 					HBITMAP BorderImage = CreateCompatibleBitmap(WindowDC, GetWidth(), GetHeight());
@@ -754,9 +758,10 @@ namespace Core {
 				}
 
 				delete Canvas;
-			}
+				delete RepaintAllocator;
 
-			delete RepaintAllocator;
+				RepaintAllocator = nullptr;
+			}
 		}
 	}
 

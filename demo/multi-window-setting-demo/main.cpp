@@ -17,6 +17,7 @@ int main() {
 
 	SettingWidget = VMLMainWindow[L"main-ui"][L"setting-widget"].Get<Core::VWidget>();
 
+	SettingWidget->SetQuitEvent([]() -> bool { SettingWidget->Hide(); return true; });
 	SettingWidget->Hide();
 
 	return Applicaiton.Exec();

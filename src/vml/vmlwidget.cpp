@@ -605,6 +605,8 @@ namespace VML {
                     }
                     else if (ElementProperty.PropertyAsString == L"mainwindow") {
                         this->Show();
+                        auto ScreenWidth  = GetSystemMetrics(SM_CXSCREEN);
+                        auto ScreenHeight = GetSystemMetrics(SM_CYSCREEN);
 
                         VMLObject->UIObject = this;
                         VMLObject->VMLType = VMLObjectType::MainWindow;
@@ -650,6 +652,9 @@ namespace VML {
                                 }
                             }
                         }
+
+                        MoveWindow(this->CallWidgetGetHWND(), ScreenWidth / 2 - GetWidth() / 2, ScreenHeight / 2 - GetHeight() / 2,
+                            GetWidth(), GetHeight(), FALSE);
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;

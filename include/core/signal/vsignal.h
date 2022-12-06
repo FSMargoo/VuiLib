@@ -190,7 +190,7 @@ namespace Core {
 	        slots = new std::list<std::shared_ptr<connect_basic<Type...> > >;
 	    }
 	    ~VSignal() {
-			delete slots;
+			
 	    }
 	
 	public:

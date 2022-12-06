@@ -10,6 +10,9 @@ class VBlurLabel : public VUIObject {
  private:
      VBlurLabelTheme* Theme;
 
+ private:
+     void RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object);
+
  public:
      VBlurLabel(VUIObject* Parent);
      ~VBlurLabel();

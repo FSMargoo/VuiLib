@@ -28,10 +28,13 @@ public:
 	}
 };
 
-class PVMainWindow : public VML::VMLWidget {
+class PVMainWindow : public VML::VMLMainWindow {
 private:
-	Core::VImageLabel*			BlurBackgroundImage;
-	Core::VImageLabel*			ViewingLabel;
+	bool				    InWorking = false;
+
+private:
+	Core::VImageLabel*		BlurBackgroundImage;
+	Core::VImageLabel*		ViewingLabel;
 
 private:
 	Core::VPushButton*		MiniSizeButton;

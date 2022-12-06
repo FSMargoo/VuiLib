@@ -1,9 +1,9 @@
-<main-ui type="mainwindow" width="800" height="800" sizable="false">
-	<setting-button type="pushbutton" width="100" height="20" width="100" height="40" x="@center" y="@center">
+<main-ui type="mainwindow" width="800" height="800" sizable="false" title="multi window demo">
+	<setting-button type="pushbutton" width="220" height="40" text="Open child widget" x="@center" y="@center">
 	</setting-button>
 
-	<setting-widget type="widget" width="400" height="500" sizable="false">
-		<scroll-view type="viewlabel" width="400" view-width="400" height="500" view-height="600">
+	<setting-widget type="widget" width="415" height="500" sizable="false" title="sub widget">
+		<scroll-view type="viewlabel" width="400" view-width="400" height="500" view-height="600" sizable="false">
 			<leader-text-1 type="textlabel" text="Selection 1: " auto-size="true" y="0">
 			</leader-text-1>
 			<leader-text-2 type="textlabel" text="Selection 2: " auto-size="true" y="60">

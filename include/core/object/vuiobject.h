@@ -256,6 +256,11 @@ namespace Core {
      
      public:
          /*
+          * GetTransparency function:
+          *     Description : Get the transparency of this object
+         */
+         float           GetTransparency() const;
+         /*
           * SetShadowStats function:
           *     Description : Set the shadow stats of this object
           *     Tips        : If the stats value is true, it will enable shadow effect,
@@ -531,11 +536,6 @@ namespace Core {
           *     Description : Set the transparency of this object
          */
          void  SetTransparency(const float& Transparency);
-         /*
-          * GetTransparency function:
-          *     Description : Get the transparency of this object
-         */
-         float GetTransparency() const;
      
      public:
          /*
@@ -580,6 +580,10 @@ namespace Core {
           *     Description : Check the object's element status by a specified message
          */
          bool CheckElementUIStatus(VMessage* SourceMessage);
+
+     public:
+         const std::vector<VUIObject* > GetChildLayout();
+         VCanvasPainter*                GetCanvas();
 
      public:
          /*
