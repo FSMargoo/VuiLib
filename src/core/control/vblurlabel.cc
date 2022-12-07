@@ -10,19 +10,34 @@ namespace Core {
 	VBlurLabel::~VBlurLabel() {
 		delete Theme;
 	}
-	void VBlurLabel::RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object) {
-		if (Object == this || (Object->GetWidth() == 0 && Object->GetHeight() == 0)) {
-			return;
+	bool VBlurLabel::RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object) {
+		if ((Object->GetWidth() == 0 && Object->GetHeight() == 0) || Object->GetCanvas() == nullptr) {
+			return false;
 		}
 
 		VCanvasPainter ChildCanvas(Object->GetWidth(), Object->GetHeight(), CallWidgetGetRenderHandle());
+		ChildCanvas.BeginDraw();
 		ChildCanvas.DrawCanvas(Object->GetRegion(), Object->GetCanvas(), { 0, 0, Object->GetWidth(), Object->GetHeight() }, 1.f);
 
-		for (auto& ChildObject : Object->GetChildLayout()) {
-			return RendBlurCanvas(&ChildCanvas, ChildObject);
+		auto ObjectChildLayout = Object->GetChildLayout();
+
+		for (auto ChildObject = ObjectChildLayout.begin(); ChildObject != ObjectChildLayout.end(); ++ChildObject) {
+			if (Object == this) {
+				return true;
+			}
+
+			if (RendBlurCanvas(&ChildCanvas, *ChildObject)) {
+				Painter->DrawCanvas(Object->GetRegion(), &ChildCanvas, { 0, 0, Object->GetWidth(), Object->GetHeight() }, 1.f);
+
+				return true;
+			}
 		}
 
-		Painter->DrawCanvas(Object->GetRegion(), &ChildCanvas, { 0, 0, Object->GetWidth(), Object->GetHeight() }, Object->GetTransparency());
+		ChildCanvas.EndDraw();
+
+		Painter->DrawCanvas(Object->GetRegion(), &ChildCanvas, { 0, 0, Object->GetWidth(), Object->GetHeight()}, Object->GetTransparency());
+
+		return false;
 	}
 	VBlurLabel::VBlurLabel(const int& Width, const int& Height, VUIObject* Parent) : VUIObject(Parent) {
 		Theme = new VBlurLabelTheme(*(static_cast<VBlurLabelTheme*>(GetTargetTheme(VUIThemeType::VBlurLabel))));
@@ -51,10 +66,7 @@ namespace Core {
 			WidgetObject = WidgetObject->GetParent();
 		}
 
-		VCanvasPainter RenderCanvas(WidgetObject->GetWidth(), WidgetObject->GetHeight(), WidgetObject->CallWidgetGetRenderHandle());
-		RendBlurCanvas(&RenderCanvas, WidgetObject);
-
-		auto Result =  BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, RenderCanvas.GetDXObject(), &RectArea);
+		auto Result = BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetParentCanvas()->GetDXObject(), &RectArea);
 		BlurImage.ApplyGassBlur(Theme->BlurRadius, CallWidgetGetRenderHandle());
 
 		VSolidBrush  SolidBrush(Theme->MixedColor, CallWidgetGetRenderHandle());

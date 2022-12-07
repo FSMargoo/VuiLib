@@ -1,3 +1,5 @@
+#include <Shlobj.h>
+
 #include "pvmainwindow.h"
 
 VDragbleImageLabel::VDragbleImageLabel(Core::VUIObject* Parent, Core::VImage* Image) : Core::VDragControlBase(Parent) {
@@ -394,24 +396,51 @@ void PVMainWindow::CreateViewingProject(const std::wstring& FilePath) {
 }
 
 void PVMainWindow::OpenViewProject() {
-	OPENFILENAME* FileSelector = new OPENFILENAME{ 0 };
-	TCHAR         FilePath[MAX_PATH];
+	LPWSTR  FilePath = new WCHAR[MAX_PATH];;
+	HRESULT OperationResult;
 
-	FileSelector->lStructSize = sizeof(OPENFILENAME);
+	std::thread FileDialogThread([](LPWSTR FilePath, HRESULT* OperationResult) -> void {
+		CoInitialize(NULL);
+		IFileDialog* FileDialog = NULL;
+		HRESULT		 Status = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&FileDialog));
 
-	FileSelector->hwndOwner = CallWidgetGetHWND();
-	FileSelector->lpstrFile = FilePath;
-	FileSelector->lpstrFile[0] = '\0';
+		DWORD			  OptionFlags;
+		COMDLG_FILTERSPEC FileFilter[] = { { L"All files", L"*.*" }, };
 
-	FileSelector->nMaxFile = sizeof(FilePath);
+		FileDialog->GetOptions(&OptionFlags);
+		FileDialog->SetOptions(OptionFlags | FOS_FORCEFILESYSTEM);
+		FileDialog->SetFileTypes(ARRAYSIZE(FileFilter), FileFilter);
+		FileDialog->SetFileTypeIndex(1);
 
-	FileSelector->lpstrFilter = L"All(*.*)\0*.*\0";
-	FileSelector->nFilterIndex = 1;
-	FileSelector->lpstrFileTitle = NULL;
-	FileSelector->nMaxFileTitle = 0;
-	FileSelector->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+		*OperationResult = FileDialog->Show(NULL);
 
-	if (GetOpenFileName(FileSelector) ) {
+		FileDialog->ClearClientData();
+		FileDialog->Close(*OperationResult);
+
+		if (SUCCEEDED((*OperationResult))) {
+			IShellItem* SellItem;
+			FileDialog->GetResult(&SellItem);
+			LPWSTR OpenPath;
+			SellItem->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &OpenPath);
+
+			SellItem->Release();
+			CoTaskMemFree(OpenPath);
+
+			FileDialog->ClearClientData();
+			FileDialog->Close(*OperationResult);
+
+			wcscpy_s(FilePath, MAX_PATH, OpenPath);
+		}
+
+		FileDialog->Release();
+
+		CoUninitialize();
+
+		}, FilePath, &OperationResult);
+
+	FileDialogThread.join();
+
+	if (SUCCEEDED(OperationResult)) {
 		CreateViewingProject(FilePath);
 
 		ViewingImage = new Core::VImage(ViewingProject->FileList[ViewingProject->LocalViewingFile],

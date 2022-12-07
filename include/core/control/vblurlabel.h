@@ -11,7 +11,7 @@ class VBlurLabel : public VUIObject {
      VBlurLabelTheme* Theme;
 
  private:
-     void RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object);
+     bool RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object);
 
  public:
      VBlurLabel(VUIObject* Parent);

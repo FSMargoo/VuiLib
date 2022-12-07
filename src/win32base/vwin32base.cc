@@ -3,7 +3,7 @@
 namespace Win32Core {
 	std::vector<VWin32Msg> VWin32MsgStack;
 
-	HWND					VLastWindowHandle;
+	HWND				   VLastWindowHandle;
 
 	LRESULT VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter, LPARAM lParameter) {
 		VWin32Msg RawWin32Msg { };
