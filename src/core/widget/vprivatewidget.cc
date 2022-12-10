@@ -13,13 +13,9 @@ namespace Core {
     std::map<HWND, VWin32ThreadPipe*> _VMainConfigs;
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
-        if (Message == WM_ENTERIDLE || Message == WM_GETICON || Message == 28 || Message == 134 || Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
+        if (Message == 642 || Message == WM_ENTERIDLE || Message == WM_GETICON || Message == 28 || Message == 134 || Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
                 _VMainConfigs[Handle] == nullptr) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
-        }
-        
-        if (Message != WM_GETICON) {
-            printf("%#X\n", Message);
         }
 
         WNDPROC _VExWindowProcess = _VMainConfigs[Handle]->OriginWindowProcess;
@@ -272,7 +268,7 @@ namespace Core {
 
                 break;
             }
-            case WM_KILLFOCUS: {
+            case WM_KILLFOCUS: case WM_NCMOUSELEAVE: {
                 VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (!WindowConfig->IMEInput) {

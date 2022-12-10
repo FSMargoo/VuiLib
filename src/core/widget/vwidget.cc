@@ -62,6 +62,10 @@ namespace Core {
 	void VMainWindow::InitWindow() {
 		WindowHandle = Win32Core::VWin32CreateWindow(GetWidth(), GetHeight(), L"", L"VuilibMainWindow", NULL);
 
+#ifdef VENABLE_DWM_ARCLIY_EFFECT
+		InitArcliyWindow();
+#endif
+
 		if (Theme->WindowSizble) {
 			SetWindowLong(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) | (WS_MAXIMIZEBOX));
 			SetWindowLong(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) | WS_THICKFRAME));
@@ -433,6 +437,10 @@ namespace Core {
 	}
 	void VWidget::InitWindow(const std::wstring& ClassName, HWND ParentWindow) {
 		WindowHandle = Win32Core::VWin32CreateWindow(GetWidth(), GetHeight(), L"", ClassName.c_str(), ParentWindow);
+
+#ifdef VENABLE_DWM_ARCLIY_EFFECT
+		InitArcliyWindow();
+#endif
 
 		if (Theme->WindowSizble) {
 			SetWindowLong(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) | (WS_MAXIMIZEBOX));
@@ -842,7 +850,6 @@ namespace Core {
 	HWND VWidget::GetLocalWinId() {
 		return WindowHandle;
 	}
-
 }
 
 VLIB_END_NAMESPACE

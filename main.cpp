@@ -1,5 +1,5 @@
-#define _SILENCE_AMP_DEPRECATION_WARNINGS
-#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+// #define _SILENCE_AMP_DEPRECATION_WARNINGS
+// #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 #include "./include/core/control/vlineeditor.h"
 #include "./include/core/control/vswitchgroup.h"
@@ -21,9 +21,8 @@
 
 fn main() -> int {
 	var Application = Core::VApplication();
-	var MainWindow = VML::VMLMainWindow(640, 540, &Application);
+	var MainWindow  = VML::VMLMainWindow(640, 540, &Application);
 
-	MoveWindow(MainWindow.GetLocalWinId(), 40, 40, 640, 540, FALSE);
 	MainWindow.Show();
 
 	MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
