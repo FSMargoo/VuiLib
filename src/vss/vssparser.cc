@@ -684,7 +684,7 @@ namespace VSS {
                     }
                         // Fake Element Selector with Fake Class
                     else if (PreToken.token_string == L":") {
-                        Selector = new VSSFakeElementWithClassSelector;
+                        Selector = new VSSClassWithFakeClassAndFakeElementSelector;
 
                         Token = ParserLexical->get_token();
                         if (Token.cache_token != UNKNOW_TOKEN) {
@@ -693,7 +693,7 @@ namespace VSS {
                             return Result;
                         }
 
-                        static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->ClassTag       = LevelOneTag;
+                        static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->ClassTag       = LevelTwoTag;
                         static_cast<VSSClassWithFakeClassAndFakeElementSelector *>(Selector)->FakeElementTag = Token.token_string;
 
                         Token = ParserLexical->get_token();

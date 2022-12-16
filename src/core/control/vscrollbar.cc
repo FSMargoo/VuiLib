@@ -43,28 +43,43 @@ namespace Core {
 		}
 	}
 	void VCircleScrollBarButton::UserOnDrag(const int& MouseX, const int& MouseY) {
-		switch (DragTowardsMode) {
-		case VDragTowardsMode::Vertical: {
-			if (MouseY >= DraggedRange.Top &&
-				MouseY <= DraggedRange.Bottom) {
-				Move(GetX(), MouseY);
-			}
+		if (Draggable) {
+			switch (DragTowardsMode) {
+			case VDragTowardsMode::Vertical: {
+				if (MouseY >= DraggedRange.Top &&
+					MouseY <= DraggedRange.Bottom) {
+					Move(GetX(), MouseY);
+				}
 
-			break;
-		}
-		case VDragTowardsMode::Horizontal: {
-			if (MouseX >= DraggedRange.Left &&
-				MouseX <= DraggedRange.Right) {
-				Move(MouseX, GetY());
+				break;
 			}
+			case VDragTowardsMode::Horizontal: {
+				if (MouseX >= DraggedRange.Left &&
+					MouseX <= DraggedRange.Right) {
+					Move(MouseX, GetY());
+				}
 
-			break;
+				break;
+			}
+			}
 		}
+	}
+	void VCircleScrollBarButton::SetDraggable(const bool& DraggableStatus) {
+		Draggable = DraggableStatus;
+	}
+	void VCircleScrollBarButton::MouseLeftClicked(const VMouseClickedFlag& ClickedFlag) {
+		if (Draggable) {
+			VDragControlBaseOnPushButton::MouseLeftClicked(ClickedFlag);
+		}
+	}
+	void VCircleScrollBarButton::OnMessage(VMessage* Message) {
+		if (Draggable) {
+			VDragControlBaseOnPushButton::OnMessage(Message);
 		}
 	}
 
 	void VSliderHorizontal::OnMessage(VMessage* Message) {
-		if (Message->GetType() == VMessageType::MouseClickedMessage) {
+		if (Message->GetType() == VMessageType::MouseClickedMessage && Draggable) {
 			VMouseClickedMessage* MouseClickedMessage = static_cast<VMouseClickedMessage*>(Message);
 
 			if (MouseClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
@@ -124,8 +139,24 @@ namespace Core {
 	int VSliderHorizontal::GetUnselectedAreaX() const {
 		return GetSelectedAreaWidth();
 	}
+	void VSliderHorizontal::SetDraggable(const bool& DraggableStatus) {
+		Draggable = DraggableStatus;
+
+		SliderButton->SetDraggable(Draggable);
+	}
 	void VSliderHorizontal::OnPaint(VCanvasPainter* Painter) {
 		Painter->BeginDraw();
+
+		// Draw Unselected area
+		{
+			VSolidBrush UnselectBrush(Theme->UnselectedArea.LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
+			VPenBrush   UnselectBorder(Theme->UnselectedArea.LocalTheme.BorderColor, CallWidgetGetRenderHandle(),
+				Theme->UnselectedArea.LocalTheme.BorderThickness);
+
+			Painter->FillRoundedRectangle({ 
+				0, 0, GetUnselectedAreaX() + GetUnselectedAreaWidth(), 4 },
+				VPoint{ 4, 4 }, &UnselectBorder, &UnselectBrush);
+		}
 
 		// Draw Selected area
 		{
@@ -137,15 +168,6 @@ namespace Core {
 				VPoint{ 4, 4 }, &SelectBorder, &SelectBrush);
 		}
 
-		// Draw Unselected area
-		{
-			VSolidBrush UnselectBrush(Theme->UnselectedArea.LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
-			VPenBrush   UnselectBorder(Theme->UnselectedArea.LocalTheme.BorderColor, CallWidgetGetRenderHandle(),
-				Theme->UnselectedArea.LocalTheme.BorderThickness);
-
-			Painter->FillRoundedRectangle({ GetUnselectedAreaX(), 0, GetUnselectedAreaX() + GetUnselectedAreaWidth(), 4 },
-				VPoint{ 4, 4 }, &UnselectBorder, &UnselectBrush);
-		}
 
 		Painter->EndDraw();
 	}
@@ -168,7 +190,10 @@ namespace Core {
 		return SliderPercent;
 	}
 	void VSliderHorizontal::SetValue(const double& Value) {
-		SliderPercent = Value;
+		auto TargetValue = Value >= 1.f ? 1.f : Value;
+		TargetValue = Value <= 0.f ? 0.f : Value;
+
+		SliderPercent = TargetValue;
 		SliderButton->Move(GetX() + GetWidth() * SliderPercent - SliderButton->GetWidth() / 2, SliderButton->GetY());
 
 		Update();
@@ -223,8 +248,23 @@ namespace Core {
 	int VSliderVertical::GetUnselectedAreaY() const {
 		return GetSelectedAreaHeight();
 	}
+	void VSliderVertical::SetDraggable(const bool& DraggableStatus) {
+		Draggable = DraggableStatus;
+
+		SliderButton->SetDraggable(Draggable);
+	}
 	void VSliderVertical::OnPaint(VCanvasPainter* Painter) {
 		Painter->BeginDraw();
+
+		// Draw Unselected area
+		{
+			VSolidBrush UnselectBrush(Theme->UnselectedArea.LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
+			VPenBrush   UnselectBorder(Theme->UnselectedArea.LocalTheme.BorderColor, CallWidgetGetRenderHandle(),
+				Theme->UnselectedArea.LocalTheme.BorderThickness);
+
+			Painter->FillRoundedRectangle({ 0, 0, 4, GetUnselectedAreaY() + GetUnselectedAreaHeight() },
+				VPoint{ 4, 4 }, &UnselectBorder, &UnselectBrush);
+		}
 
 		// Draw Selected area
 		{
@@ -234,16 +274,6 @@ namespace Core {
 
 			Painter->FillRoundedRectangle({ 0, 0, 4, GetSelectedAreaHeight() },
 				VPoint{ 4, 4 }, &SelectBorder, &SelectBrush);
-		}
-
-		// Draw Unselected area
-		{
-			VSolidBrush UnselectBrush(Theme->UnselectedArea.LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
-			VPenBrush   UnselectBorder(Theme->UnselectedArea.LocalTheme.BorderColor, CallWidgetGetRenderHandle(),
-				Theme->UnselectedArea.LocalTheme.BorderThickness);
-
-			Painter->FillRoundedRectangle({ 0, GetUnselectedAreaY(), 4, GetUnselectedAreaY() + GetUnselectedAreaHeight() },
-				VPoint{ 4, 4 }, &UnselectBorder, &UnselectBrush);
 		}
 
 		Painter->EndDraw();
@@ -261,7 +291,7 @@ namespace Core {
 		Update();
 	}
 	void VSliderVertical::OnMessage(VMessage* Message) {
-		if (Message->GetType() == VMessageType::MouseClickedMessage) {
+		if (Message->GetType() == VMessageType::MouseClickedMessage && Draggable) {
 			VMouseClickedMessage* MouseClickedMessage = static_cast<VMouseClickedMessage*>(Message);
 
 			if (MouseClickedMessage->ClickedKey == VMouseKeyFlag::Left &&
@@ -282,7 +312,12 @@ namespace Core {
 		return SliderPercent;
 	}
 	void VSliderVertical::SetValue(const double& Value) {
-		SliderPercent = Value;
+		auto TargetValue = Value >= 1.f ? 1.f : Value;
+		TargetValue = Value <= 0.f ? 0.f : Value;
+
+		SliderPercent = TargetValue;
+
+		SliderButton->Move(GetX(), SliderButton->GetY() + GetHeight() * SliderPercent - SliderButton->GetHeight() / 2);
 
 		Update();
 	}

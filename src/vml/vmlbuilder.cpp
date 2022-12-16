@@ -955,14 +955,16 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLSliderHorizontalBuilder::Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value) {
+    void VMLSliderHorizontalBuilder::Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value, const bool& Draggable) {
         SliderHorizontal->SetValue(Value);
+        SliderHorizontal->SetDraggable(Draggable);
     }
     void VMLSliderHorizontalBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderHorizontal* Horizontal, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(RootFinder, Horizontal, PropertyValueList, BuildStatus);
 
-        double Value = 0.f;
+        double Value     = 0.f;
+        bool   Draggable = true;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"value") {
@@ -975,23 +977,35 @@ namespace VML {
 
                 Value = ElementProperty.second.PropertyAsDouble;
             }
+            if (ElementProperty.first == L"draggable") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"draggable\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                Draggable = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Horizontal, Value);
+        Builder(Horizontal, Value, Draggable);
     }
     VMLSliderHorizontalBuilder::VMLSliderHorizontalBuilder(const VMLFinder& RootFinder, Core::VSliderHorizontal* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                VMLControlBuildStatus* BuildStatus)  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLSliderVerticalBuilder::Builder(Core::VSliderVertical* SliderHorizontal, const double& Value) {
+    void VMLSliderVerticalBuilder::Builder(Core::VSliderVertical* SliderHorizontal, const double& Value, const bool& Draggable) {
         SliderHorizontal->SetValue(Value);
+        SliderHorizontal->SetDraggable(Draggable);
     }
     void VMLSliderVerticalBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderVertical* Vertical, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                      VMLControlBuildStatus* BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(RootFinder, Vertical, PropertyValueList, BuildStatus);
 
-        double Value = 0.f;
+        double Value     = 0.f;
+        bool   Draggable = true;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"value") {
@@ -1004,9 +1018,19 @@ namespace VML {
 
                 Value = ElementProperty.second.PropertyAsDouble;
             }
+            if (ElementProperty.first == L"draggable") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"draggable\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                Draggable = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Vertical, Value);
+        Builder(Vertical, Value, Draggable);
     }
     VMLSliderVerticalBuilder::VMLSliderVerticalBuilder(const VMLFinder& RootFinder, Core::VSliderVertical* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                            VMLControlBuildStatus* BuildStatus)  : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
@@ -1322,7 +1346,7 @@ namespace VML {
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
                 }
-                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
                 }
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
@@ -1426,7 +1450,7 @@ namespace VML {
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
                 }
-                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
                 }
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
@@ -1524,7 +1548,7 @@ namespace VML {
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
                 }
-                else if (ElementProperty.second.PropertyAsString == L"ease-out-sineCurve") {
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
                 }
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {

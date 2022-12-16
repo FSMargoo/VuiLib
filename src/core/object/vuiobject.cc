@@ -482,7 +482,7 @@ namespace Core {
 
 				EditCanvas(Canvas);
 
-				GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
+				GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency / 255.f);
 
 				delete Canvas;
 				Canvas = nullptr;

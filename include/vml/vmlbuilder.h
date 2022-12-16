@@ -163,7 +163,7 @@ namespace VML {
     };
     class VMLSliderHorizontalBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value);
+        void Builder(Core::VSliderHorizontal* SliderHorizontal, const double& Value, const bool& Draggable);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderHorizontal* Horizontal, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
@@ -174,7 +174,7 @@ namespace VML {
     };
     class VMLSliderVerticalBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VSliderVertical* SliderHorizontal, const double& Value);
+        void Builder(Core::VSliderVertical* SliderHorizontal, const double& Value, const bool& Draggable);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VSliderVertical* Vertical, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);

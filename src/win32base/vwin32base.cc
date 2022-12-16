@@ -393,7 +393,7 @@ namespace Win32Core {
 		WNDCLASSEX WindowClass;
 		WindowClass.cbSize		  = sizeof(WindowClass);
 		WindowClass.style		  = CS_HREDRAW | CS_VREDRAW;
-		WindowClass.lpfnWndProc   = VWin32ProcFnc;
+		WindowClass.lpfnWndProc   = (WNDPROC)VWin32ProcFnc;
 		WindowClass.cbClsExtra	  = 0;
 		WindowClass.cbWndExtra    = 0;
 		WindowClass.hInstance	  = InstanceHandle;

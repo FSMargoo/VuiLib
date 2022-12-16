@@ -1099,9 +1099,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
-                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"circlebarbutton" &&
-                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover") {
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector *>(Selector)->TargetElement == L"circlebarbutton" &&
+                static_cast<VSSClassSelector *>(Selector)->ClassTag == L"hover") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
@@ -1152,9 +1152,9 @@ namespace VSS {
                     }
                 }
             }
-            if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
-                static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"circlebarbutton" &&
-                static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active") {
+            if (Selector->GetType() == VSSSelectorType::ClassSelector &&
+                static_cast<VSSClassSelector*>(Selector)->TargetElement == L"circlebarbutton" &&
+                static_cast<VSSClassSelector*>(Selector)->ClassTag == L"active") {
                 for (auto &Property: Selector->SelectorProperty) {
                     if (Property.first == L"background-color") {
                         for (auto &PropertyValue: Property.second.ValueList) {
