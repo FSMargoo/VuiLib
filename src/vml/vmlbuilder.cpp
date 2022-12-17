@@ -1215,7 +1215,7 @@ namespace VML {
         int ViewWidth = 0;
         int ViewHeight = 0;
 
-        Core::VViewLabelVerticalAlign VerticalAlign = Core::VViewLabelVerticalAlign::Right;
+        Core::VViewLabelVerticalAlign VerticalAlign     = Core::VViewLabelVerticalAlign::Right;
         Core::VViewLabelHorizontalAlign HorizontalAlign = Core::VViewLabelHorizontalAlign::Bottom;
 
         bool TieWheel = false;

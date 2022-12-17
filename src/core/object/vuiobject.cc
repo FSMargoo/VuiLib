@@ -512,7 +512,7 @@ namespace Core {
 			}
 		}
 
-		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden) {
+		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden || ObjectVisual.Transparency == 0) {
 			return false;
 		}
 
