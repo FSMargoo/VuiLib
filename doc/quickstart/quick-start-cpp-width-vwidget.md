@@ -127,42 +127,42 @@ PWSTR  FilePath = new WCHAR[MAX_PATH];
 
 HRESULT OperationResult;
 std::thread FileDialogThread([](LPWSTR FilePath, HRESULT* OperationResult) -> void {
-	CoInitialize(NULL);
-IFileDialog* FileDialog = NULL;
-HRESULT		 Status = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&FileDialog));
-DWORD			  OptionFlags;
+    CoInitialize(NULL);
+    IFileDialog* FileDialog = NULL;
+    HRESULT	     Status = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&FileDialog));
+    DWORD		 OptionFlags;
 
-COMDLG_FILTERSPEC FileFilter[] = { { L"All files", L"*.*" }, };
+    COMDLG_FILTERSPEC FileFilter[] = { { L"All files", L"*.*" }, };
 
-FileDialog->GetOptions(&OptionFlags);
-FileDialog->SetOptions(OptionFlags | FOS_FORCEFILESYSTEM);
-FileDialog->SetFileTypes(ARRAYSIZE(FileFilter), FileFilter);
-FileDialog->SetFileTypeIndex(1);
+    FileDialog->GetOptions(&OptionFlags);
+    FileDialog->SetOptions(OptionFlags | FOS_FORCEFILESYSTEM);
+    FileDialog->SetFileTypes(ARRAYSIZE(FileFilter), FileFilter);
+    FileDialog->SetFileTypeIndex(1);
 
-*OperationResult = FileDialog->Show(NULL);
+    *OperationResult = FileDialog->Show(NULL);
 
-FileDialog->ClearClientData();
-FileDialog->Close(*OperationResult);
-if (SUCCEEDED((*OperationResult))) {
-	IShellItem* SellItem;
+    FileDialog->ClearClientData();
+    FileDialog->Close(*OperationResult);
+    if (SUCCEEDED((*OperationResult))) {
+        IShellItem* SellItem;
 
-	FileDialog->GetResult(&SellItem);
-	LPWSTR OpenPath;
+        FileDialog->GetResult(&SellItem);
+        LPWSTR OpenPath;
 
-	SellItem->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &OpenPath);
-	SellItem->Release();
+        SellItem->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &OpenPath);
+        SellItem->Release();
 
-	CoTaskMemFree(OpenPath);
+        CoTaskMemFree(OpenPath);
 
-	FileDialog->ClearClientData();
-	FileDialog->Close(*OperationResult);
-	wcscpy_s(FilePath, MAX_PATH, OpenPath);
-}
+        FileDialog->ClearClientData();
+        FileDialog->Close(*OperationResult);
+        wcscpy_s(FilePath, MAX_PATH, OpenPath);
+    }
 
-FileDialog->Release();
+    FileDialog->Release();
 
-CoUninitialize();
-	}, FilePath, &OperationResult);
+    CoUninitialize();
+}, FilePath, &OperationResult);
 FileDialogThread.join();
 ```
 在调用 IFileDialog 获取文件路径以后，我们首先要检查其是否是一个可以被 VuiLib 正常加载的图片文件，而 VImage 中的 VImage::IsValidBitmapFile 就为我们提供了这种功能，但注意，VImage::IsValidBitmapFile 是一个静态函数，再确认其可以被正常加载以后，我们再把该文件加载到 VImage 中。
