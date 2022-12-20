@@ -120,9 +120,19 @@ VuiLib 主要适用于下列人员：
     C++ & VML & VSS 开发模式的缺点：
 
     * 对于编写者的要求很高，不仅需要了解 VuiLib，并且要求其能掌握 XML 语言与 VML 扩展特性。
+
+## VuiLib 架构图
+VuiLib 是高度模块化的，每个功能都由不同的模块组成，这样方便了后续维护与用户根据自己需要自行剔除不需要的模块，下图反映了 VuiLib 的模块结构与依赖关系：
+<div align="center">
+<img alt="demo-picture" src="./resource/overview/vuilib-framework.png"></img>
+</div>
+
+每一个模块在 VuiLib 中都有一个独立的命名空间，（VML-Lang，VSS-Lang 的命名空间分别为 VML 和 VSS，VuiLib 的命名空间默认关闭），尽管是相互依赖的模块，也只是使用对方模块暴露的接口，因此，VuiLib 可以被轻松的扩展，迭代，同时，这也方便了将任意一个 VuiLib 模块独立出来使用。
+
 _______________________________________________________________
 ^1：对于 Windows 版本的支持，一般取决于该系统是否支持 Direct2D，依据<a href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/direct2d-portal#run-time-requirements">微软官方文档</a>的解释，受到 Direct2D 支持的操作系统有：
 
 * Windows 7 或 Windows Vista 与 Service Pack 2 (SP2) 和 Platform Update for Windows Vista 及更高版本。
 
 * Windows Server 2008 R2 或 Windows Server 2008 和 Service Pack 2 (SP2) 和 Platform Update for Windows Server 2008 及更高版本。
+  
