@@ -11,10 +11,22 @@ VLIB_BEGIN_NAMESPACE
 
 namespace Core {
     std::map<HWND, VWin32ThreadPipe*> _VMainConfigs;
+    bool                              MainThreadEnd = false;
 
     LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter) {
-        if (Message == 642 || Message == WM_ENTERIDLE || Message == WM_GETICON || Message == 28 || Message == 134 || Message == 70 || Message == 144 || Message == 2 || _VMainConfigs.find(Handle) == _VMainConfigs.end() ||
-                _VMainConfigs[Handle] == nullptr) {
+        if (MainThreadEnd) {
+            return DefWindowProc(Handle, Message, wParameter, lParameter);
+        }
+        if (!(Message == WM_PAINT || Message == WM_NCHITTEST || Message == WM_SETCURSOR || Message == WM_NCLBUTTONDOWN ||
+              Message == WM_SIZING || Message == WM_SIZE || Message == WM_GETMINMAXINFO || Message == WM_IME_COMPOSITION ||
+              Message == WM_IME_CHAR || Message == WM_KILLFOCUS || Message == WM_NCMOUSELEAVE || Message == WM_CLOSE ||
+              Message == WM_LBUTTONDOWN || Message == WM_LBUTTONUP || Message == WM_MBUTTONDOWN || Message == WM_MBUTTONUP ||
+              Message == WM_RBUTTONUP || Message == WM_RBUTTONDOWN || Message == WM_MOUSEMOVE || Message == WM_IME_CHAR ||
+              Message == WM_KEYDOWN || Message == WM_KEYUP || Message == WM_MOUSEWHEEL || Message == WM_CLOSE)) {
+            return DefWindowProc(Handle, Message, wParameter, lParameter);
+        }
+
+        if (_VMainConfigs.find(Handle) == _VMainConfigs.end() || _VMainConfigs[Handle] == nullptr) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
         }
 
@@ -281,6 +293,8 @@ namespace Core {
                 VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                 if (WindowConfig->WindowQuitOnClicked()) {
+                    MainThreadEnd = true;
+
                     return 0;
                 }
 

@@ -67,8 +67,12 @@ namespace Core {
 #endif
 
 		if (Theme->WindowSizble) {
-			SetWindowLong(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) | (WS_MAXIMIZEBOX));
-			SetWindowLong(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) | WS_THICKFRAME));
+			SetWindowLongPtr(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) | (WS_MAXIMIZEBOX));
+			SetWindowLongPtr(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) | WS_THICKFRAME));
+		}
+		else {
+			SetWindowLongPtr(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) ^ (WS_MAXIMIZEBOX));
+			SetWindowLongPtr(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) ^ (WS_THICKFRAME)));
 		}
 
 		WindowConfig.OriginWindowProcess = reinterpret_cast<WNDPROC>(GetWindowLongPtr(WindowHandle, GWLP_WNDPROC));
@@ -445,6 +449,10 @@ namespace Core {
 		if (Theme->WindowSizble) {
 			SetWindowLong(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) | (WS_MAXIMIZEBOX));
 			SetWindowLong(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) | WS_THICKFRAME));
+		}
+		else {
+			SetWindowLong(WindowHandle, GWL_STYLE, GetWindowLong(WindowHandle, GWL_STYLE) ^ (WS_MAXIMIZEBOX));
+			SetWindowLong(WindowHandle, GWL_STYLE, (GetWindowLong(WindowHandle, GWL_STYLE) ^ (WS_THICKFRAME)));
 		}
 
 		WindowConfig.OriginWindowProcess = reinterpret_cast<WNDPROC>(GetWindowLongPtr(WindowHandle, GWLP_WNDPROC));

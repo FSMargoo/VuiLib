@@ -14,6 +14,8 @@
 #include "./include/vml/vmlwidget.h"
 #include "./include/kits/vallocator.h"
 
+#include <iostream>
+
 #define fn  auto
 #define var auto
 
@@ -22,15 +24,11 @@
 fn main() -> int {
 	var Application = Core::VApplication();
 	var MainWindow  = VML::VMLMainWindow(640, 540, &Application);
-
-	HWND LunarWindow = FindWindow(L"LWJGL", L"Lunar Client (1.8.9-93d4dd4/master)");
-
+	
 	MainWindow.Show();
 	MainWindow.GetLocalWinId();
 
 	MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
-
-	SetParent(LunarWindow, NULL);
 
 	return Application.Exec();
 }

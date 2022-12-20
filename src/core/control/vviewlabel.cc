@@ -112,14 +112,6 @@ namespace Core {
 
 			break;
 		}
-		case VMessageType::RepaintMessage: {
-			static_cast<VRepaintMessage*>(Message)->DirtyRectangle.Left += OffsetX;
-			static_cast<VRepaintMessage*>(Message)->DirtyRectangle.Top  += OffsetY;
-			static_cast<VRepaintMessage*>(Message)->DirtyRectangle.Bottom += OffsetY;
-			static_cast<VRepaintMessage*>(Message)->DirtyRectangle.Left += OffsetX;
-
-			break;
-		}
 		default: {
 			break;
 		}

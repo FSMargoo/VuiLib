@@ -38,19 +38,21 @@ VImageLabelTheme* VImageLabel::GetTheme() {
 void VImageLabel::OnPaint(VCanvasPainter* Painter) {
     Painter->BeginDraw();
 
-    Painter->DrawImage(VRect {
-                               0, 0,
-                               static_cast<int>(GetRegion().GetWidth()),
-                               static_cast<int>(GetRegion().GetHeight()),
-                       },
-                       Theme->Image,
-                       VRect {
-                               0, 0,
-                               static_cast<int>(Theme->Image->GetDirectXObject()->GetSize().width),
-                               static_cast<int>(Theme->Image->GetDirectXObject()->GetSize().height),
-                       },
-                       1.f
-                       );
+    if (Theme->Image) {
+        Painter->DrawImage(VRect {
+                                0, 0,
+                                static_cast<int>(GetRegion().GetWidth()),
+                                static_cast<int>(GetRegion().GetHeight()),
+                           },
+                           Theme->Image,
+                           VRect {
+                                0, 0,
+                                static_cast<int>(Theme->Image->GetDirectXObject()->GetSize().width),
+                                static_cast<int>(Theme->Image->GetDirectXObject()->GetSize().height),
+                           },
+                           1.f
+                           );
+    }
 
     Painter->EndDraw();
 }

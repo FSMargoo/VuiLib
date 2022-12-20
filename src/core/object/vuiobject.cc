@@ -336,6 +336,10 @@ namespace Core {
 		Update();
 	}
 	bool VUIObject::CheckUIFocusStatus(const VPoint& MousePosition, VMessage* SourceMessage) {
+		if (ObjectVisual.Stats == Hidden) {
+			return false;
+		}
+
 		if ((IsAnimation() || !GetWidth() || !GetHeight()) ||
 			(CallWidgetGetLockingStatus() && CallWidgetGetFocusID() != ObjectKernel.GlobalID)) {
 			return false;
@@ -378,7 +382,7 @@ namespace Core {
 				}
 			}
 
-			if (ObjectVisual.Stats != VUIObjectUIStats::OnFocus) {
+			if (ObjectVisual.Stats != VUIObjectUIStats::OnFocus && ObjectVisual.Stats != Hidden) {
 				ObjectVisual.Stats = VUIObjectUIStats::OnFocus;
 
 				Update();
@@ -482,7 +486,7 @@ namespace Core {
 
 				EditCanvas(Canvas);
 
-				GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency / 255.f);
+				GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, { 0, 0, GetRegion().GetWidth(), GetRegion().GetHeight() }, ObjectVisual.Transparency);
 
 				delete Canvas;
 				Canvas = nullptr;
@@ -494,6 +498,10 @@ namespace Core {
 		return false;
 	}
 	bool VUIObject::SysProcessMessage(Core::VMessage* Message) {
+		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden) {
+			return false;
+		}
+
 		if (IsApplication()) {
 			if (Message->GetType() != VMessageType::QuitWindowMessage) {
 				return SendMessageToChild(Message, false);
@@ -512,7 +520,7 @@ namespace Core {
 			}
 		}
 
-		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden || ObjectVisual.Transparency == 0) {
+		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden) {
 			return false;
 		}
 
@@ -677,6 +685,10 @@ namespace Core {
 		return Flag;
 	}
 	bool VUIObject::CheckElementUIStatus(VMessage* SourceMessage) {
+		if (ObjectVisual.Stats == Hidden) {
+			return false;
+		}
+
 		VPoint MousePosition;
 
 		switch (SourceMessage->GetType()) {

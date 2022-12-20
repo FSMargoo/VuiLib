@@ -154,15 +154,10 @@ void VOpacityAnimation::CheckFrame() {
         if (InAnimation && Animation.AnimationX < 1) {
             double Percent = Animation.AnimationCurve->CurveFunction(Animation.AnimationX);
 
-            GetParent()->SetTransparency(SourceValue + (TargetValue - SourceValue) * Percent);
+            GetParent()->SetTransparency((SourceValue + (TargetValue - SourceValue) * Percent) / 255);
 
             Animation.AnimationX += Animation.DeltaX;
-
-            if (Animation.AnimationX >= 1) {
-                GetParent()->SetTransparency(TargetValue);
-            }
-        }
-        else if (InAnimation) {
+        } else if (InAnimation) {
             InAnimation = false;
         }
     }
