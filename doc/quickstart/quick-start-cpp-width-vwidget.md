@@ -167,7 +167,7 @@ FileDialogThread.join();
 ```
 在调用 IFileDialog 获取文件路径以后，我们首先要检查其是否是一个可以被 VuiLib 正常加载的图片文件，而 VImage 中的 VImage::IsValidBitmapFile 就为我们提供了这种功能，但注意，VImage::IsValidBitmapFile 是一个静态函数，再确认其可以被正常加载以后，我们再把该文件加载到 VImage 中。
 
-值得一提的是，有关于任何渲染相关的设备（例如图片，笔刷，字体），都需要提供一个渲染上下文<sup>2</sup>来声明，而在基类 VUIObject::CallWidgetGetDCRenderTarget 中提供了一个获取我们所需要的句柄的方法。
+值得一提的是，有关于任何渲染相关的设备（例如图片，笔刷，字体），都需要提供一个渲染上下文<sup>2</sup>来声明，而在 VUIObject::CallWidgetGetDCRenderTarget 中提供了一个获取我们所需要的句柄的方法。
 
 而对于一开始用户用于打开文件的按钮，在正确加载图像以后已经没有任何用处，此处应该将其隐藏，即调用 VUIObject::Hide 方法，并且在调用 VImageLabel::SetImage 设置展示对象，和 VTextLabel::SetPlaneText 设置文件路径显示。
 
