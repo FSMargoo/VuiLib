@@ -119,5 +119,12 @@ namespace VKits {
 		//           @birth       :   2022/7.19
 		//  
 		se_int get_line();
+
+		//////////////////////////////////////////////////////////////////////////
+		//    get_buffer  :
+		//           @description :   Get raw code
+		//           @birth       :   2022/12.21
+		//  
+		std::wstring get_buffer() const;
 	} seal_lexical;
 }

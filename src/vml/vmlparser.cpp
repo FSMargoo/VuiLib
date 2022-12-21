@@ -327,7 +327,7 @@ namespace VML {
         }
 
         if (!FileExist) {
-            ParseResult.ErrorInfo.push_back({ L"Target File Dosen't Exsits!", 0 });
+            ParseResult.ErrorInfo.push_back({ L"Target file dosen't exists!", 0 });
             ParseResult.ParserStatus = VMLParserStatus::Failed;
 
             return ParseResult;
@@ -346,7 +346,7 @@ namespace VML {
 
             // If the Begin of the Code Isn't '<' That Certain Error
             if (Token.cache_token != LESS_THAN_TOKEN) {
-                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\", did you mean \"<\"?");
 
                 break;
             }
@@ -373,7 +373,7 @@ namespace VML {
                         Token = ParserLexical->get_token();
 
                         if (Token.token_string != L">") {
-                            ThrowError(&ParseResult, L"Unknow Character \"" + Token.token_string + L"\"");
+                            ThrowError(&ParseResult, L"Unknown Character \"" + Token.token_string + L"\"");
                         }
 
                         EndFlag = true;
@@ -392,13 +392,13 @@ namespace VML {
             }
 
             if (Token.cache_token != UNKNOW_TOKEN) {
-                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\".");
 
                 break;
             }
 
             if (ParseResult.Nodes.find(Token.token_string) != ParseResult.Nodes.end()) {
-                ThrowError(&ParseResult, L"The VML Node \"" + Token.token_string + L"\" Already Exists!");
+                ThrowError(&ParseResult, L"The VML node \"" + Token.token_string + L"\" already exists!");
 
                 return ParseResult;
             }
@@ -406,7 +406,8 @@ namespace VML {
             VMLNode NewNode;
             NewNode.NodeTag = Token.token_string;
 
-            bool EndFlag = false;
+            bool EndFlag      = false;
+            bool ScopeEndFlag = false;
 
             std::wstring PropertyName;
 
@@ -414,13 +415,32 @@ namespace VML {
             while (!ParserLexical->is_eof()) {
                 Token = ParserLexical->get_token();
 
+                if (Token.token_string == L"/") {
+                    Token = ParserLexical->get_token();
+
+                    if (Token.token_string != L">") {
+                        ThrowError(&ParseResult, L"Unknown token : \"" + Token.token_string + L"\", did you mean \">\"?");
+
+                        return ParseResult;
+                    }
+
+                    NewNode.ChildrenSequence = ChildrenSequence;
+
+                    ++ChildrenSequence;
+
+                    ParseResult.Nodes.insert(std::pair<std::wstring, VMLNode>(NewNode.NodeTag, NewNode));
+
+                    ScopeEndFlag = true;
+
+                    break;
+                }
                 if (Token.token_string == L">") {
                     EndFlag = true;
 
                     break;
                 }
                 if (Token.cache_token != UNKNOW_TOKEN) {
-                    ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                    ThrowError(&ParseResult, L"Unknown token : \"" + Token.token_string + L"\".");
 
                     return ParseResult;
                 }
@@ -430,7 +450,7 @@ namespace VML {
                 // Skip White Space
                 Token = ParserLexical->get_token();
                 if (Token.cache_token != EQUAL_SIGN_TOKEN) {
-                    ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                    ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\", did you mean \"=\"?");
 
                     return ParseResult;
                 }
@@ -438,7 +458,7 @@ namespace VML {
                 Token = ParserLexical->get_token();
 
                 if (Token.cache_token != CONST_STRING) {
-                    ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                    ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\" (All of the key value should be included by string).");
 
                     return ParseResult;
                 }
@@ -450,16 +470,31 @@ namespace VML {
                                                                                    Property));
             }
 
+            if (ScopeEndFlag) {
+                continue;
+            }
+
             // Parse the Sub Nodes of This Node
             std::wstring  SubContent;
 
             unsigned long LeftBracketCount = 0;
 
+            auto StartPosition  = ParserLexical->get_index();
+            auto EndPosition    = 0;
+
+            auto ChildStartLine = ParserLexical->get_line() + BaseLine;
             while (!ParserLexical->is_eof()) {
                 Token = ParserLexical->get_token();
 
+                if (Token.token_string == L"/") {
+                    auto ViewToken = ParserLexical->view_token();
+                    if (ViewToken.token_string == L">") {
+                        --LeftBracketCount;
+                    }
+                }
                 if (Token.token_string == L"<") {
-                    Token = ParserLexical->get_token();
+                    EndPosition = ParserLexical->get_index() - 1;
+                    Token       = ParserLexical->get_token();
 
                     bool BreakTokenTrigger = false;
 
@@ -481,7 +516,7 @@ namespace VML {
                                 Token = ParserLexical->get_token();
 
                                 if (Token.token_string != L">") {
-                                    ThrowError(&ParseResult, L"Unknow Character \"" + Token.token_string + L"\"");
+                                    ThrowError(&ParseResult, L"Unknown Character \"" + Token.token_string + L"\"");
                                 }
 
                                 EndFlag = true;
@@ -491,7 +526,7 @@ namespace VML {
                         }
 
                         if (!EndFlag) {
-                            ThrowError(&ParseResult, L"Could Not Find the Match End Block of the Comment");
+                            ThrowError(&ParseResult, L"Could not find the match end block of the comment, maybe you need add \"-->\" at the end of the comment.");
 
                             return ParseResult;
                         }
@@ -501,9 +536,8 @@ namespace VML {
                     if (Token.token_string == L"/") {
                         if (LeftBracketCount == 0) {
                             Token = ParserLexical->get_token();
-
                             if (Token.token_string != NewNode.NodeTag) {
-                                ThrowError(&ParseResult, L"Could Not Find the Match End Block of \"" + Token.token_string + L"\"");
+                                ThrowError(&ParseResult, L"Could not find the match end block of \"" + NewNode.NodeTag + L"\", maybe you need to add \"</" + NewNode.NodeTag + L"> at the end of this scope.");
 
                                 return ParseResult;
                             }
@@ -511,30 +545,27 @@ namespace VML {
                             Token = ParserLexical->get_token();
 
                             if (Token.cache_token != MORE_THAN_TOKEN) {
-                                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\"");
+                                ThrowError(&ParseResult, L"Unknown Token : \"" + Token.token_string + L"\", did you mean \">\"?");
 
                                 return ParseResult;
                             }
 
                             break;
                         }
-
-                        SubContent.append(L"<");
-
                         --LeftBracketCount;
                     }
                     else {
-                        SubContent.append(L"<");
-
                         ++LeftBracketCount;
                     }
                 }
+            }
 
-                SubContent.append(Token.token_string + L" ");
+            if (StartPosition != EndPosition) {
+                SubContent = ParserLexical->get_buffer().substr(StartPosition, EndPosition - StartPosition - 1);
             }
 
             if (!SubContent.empty()) {
-                VMLParser* SubContentParser = new VMLParser(SubContent, VMLParserParseMode::FromString, ParserLexical->get_line());
+                VMLParser* SubContentParser = new VMLParser(SubContent, VMLParserParseMode::FromString, ChildStartLine);
                 auto Result = SubContentParser->ParseVML();
 
                 if (Result.ParserStatus == VMLParserStatus::Error) {
@@ -547,8 +578,7 @@ namespace VML {
                     return ParseResult;
                 }
                 for (auto& ChildrenNode : Result.Nodes) {
-                    NewNode.ChildrenNodes.insert(
-                            std::pair<std::wstring, VMLNode>(ChildrenNode.first, ChildrenNode.second));
+                    NewNode.ChildrenNodes.insert(std::pair<std::wstring, VMLNode>(ChildrenNode.first, ChildrenNode.second));
                 }
             }
 
@@ -559,7 +589,7 @@ namespace VML {
             ParseResult.Nodes.insert(std::pair<std::wstring, VMLNode>(NewNode.NodeTag, NewNode));
 
             if (!EndFlag) {
-                ThrowError(&ParseResult, L"Could Not Found The Match Symbol Of \"<\"");
+                ThrowError(&ParseResult, L"The end symbol \"<\" lost, maybe you need to add \"</" + Token.token_string + L"> at the end of this scope.");
 
                 break;
             }

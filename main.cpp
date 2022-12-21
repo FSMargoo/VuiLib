@@ -21,7 +21,7 @@
 
 #define format_parameter(variable) ((const char* const)variable)
 
-fn main() -> int {
+fn m() -> int {
 	var Application = Core::VApplication();
 	var MainWindow  = VML::VMLMainWindow(640, 540, &Application);
 	

@@ -1,30 +1,18 @@
-<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css"
-        class="main-window">
-    <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill">
-    </background-image>
-    <blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label"></blur-label>
+<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css" class="main-window">
+    <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill"/>
+    <blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label"/>
 
     <welcome-text-view type="polygon-view" x="@ratio(0.5)" y="@ratio(0.35)" width="@scale(0.52)" height="@scale(0.34)" points="@parallelogram(0.385, 0.0, 0.0, 0.0)" class="welcome-ui-view">
-        <background type="textlabel" width="@fill" height="@fill" class="welcome-backgruond"> 
-        </background>
-        <welcome-use-text type="textlabel" x="@ratio(0.30)" y="@ratio(0.35)" width="@scale(0.62)" height="@scale(0.20)" size-layout="@scale(0.14)" text="欢迎使用" class="welcome-use-text">
-        </welcome-use-text>
-        <welcome-use-sub-text type="textlabel" x="@ratio(0.20)" y="@ratio(0.50)" width="@scale(0.32)" height="@scale(0.15)" size-layout="@scale(0.10)" text="全新的 VuiLib" class="welcome-sub-text">
-        </welcome-use-sub-text>
+        <background type="textlabel" width="@fill" height="@fill" class="welcome-backgruond"/>
+        <welcome-use-text type="textlabel" x="@ratio(0.30)" y="@ratio(0.35)" width="@scale(0.62)" height="@scale(0.20)" size-layout="@scale(0.14)" text="欢迎使用" class="welcome-use-text"/>
+        <welcome-use-sub-text type="textlabel" x="@ratio(0.20)" y="@ratio(0.50)" width="@scale(0.32)" height="@scale(0.15)" size-layout="@scale(0.10)" text="全新的 VuiLib" class="welcome-sub-text"/>
     </welcome-text-view>
 
     <main-title-view type="polygon-view" x="0" y="@ratio(0.35)" width="@scale(0.70)" height="@scale(0.34)" points="@parallelogram(0.0, 0.0, 0.285, 0.0)" class="main-ui-view">
-        <background type="textlabel" width="@fill" height="@fill" class="title-backgruond">
-        </background>
-
-        <vuilib-text type="textlabel" width="@scale(0.6)" height="@scale(0.30)" size-layout="@scale(0.20)" x="65" y="@ratio(0.29)" class="title-text" text="VUILIB">
-        </vuilib-text>
-
-        <version-text type="textlabel" width="@scale(0.3)" height="@scale(0.12)" size-layout="@scale(0.09)" x="65" y="@ratio(0.49)" class="version-text" text="Version 2.x.x">
-        </version-text>
+        <background type="textlabel" width="@fill" height="@fill" class="title-backgruond"/>
+        <vuilib-text type="textlabel" width="@scale(0.6)" height="@scale(0.30)" size-layout="@scale(0.20)" x="65" y="@ratio(0.29)" class="title-text" text="VUILIB"/>
+        <version-text type="textlabel" width="@scale(0.3)" height="@scale(0.12)" size-layout="@scale(0.09)" x="65" y="@ratio(0.49)" class="version-text" text="Version 2.x.x"/>
     </main-title-view>
-    <canvas-test type="canvas" x="@center" y="@center" width="640" height="480" on-paint="@OnPaint" fps="60">
-    </canvas-test>
 
-    <fake-caption type="fake-caption" width="@fill" height="@fill"></fake-caption>
+    <fake-caption type="fake-caption" width="@fill" height="@fill"/>
 </widget>

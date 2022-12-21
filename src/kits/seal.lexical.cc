@@ -39,7 +39,7 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 	core_info.lexical_token.token_string = L"";
 
 	// If it's over
-	if (!(core_info.lexical_index + 1 < core_info.lexical_code.size())) {
+	if (!(core_info.lexical_index + 1 <= core_info.lexical_code.size())) {
 		// Set eof status
 		core_info.lexical_eof = true;
 
@@ -634,4 +634,14 @@ se_int _lexical_core::get_index() {
 se_int _lexical_core::get_line() {
 	return core_info.lexical_line;
 }
+
+//////////////////////////////////////////////////////////////////////////
+//    get_buffer  :
+//           @description :   Get raw code
+//           @birth       :   2022/12.21
+//  
+std::wstring _lexical_core::get_buffer() const {
+	return core_info.lexical_code;
+}
+
 }

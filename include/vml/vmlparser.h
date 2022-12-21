@@ -51,8 +51,8 @@ namespace VML {
         std::wstring							 NodeTag;
         std::map<std::wstring, VMLPropertyValue> NodeValue;
 
-        std::map<std::wstring, VMLNode>		  ChildrenNodes;
-        int                                       ChildrenSequence = 0;
+        std::map<std::wstring, VMLNode>		     ChildrenNodes;
+        int                                      ChildrenSequence = 0;
 
         VMLPropertyValue GetProperty(const std::wstring& Type);
         bool PropertyExsit(const std::wstring& Type);
