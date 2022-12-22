@@ -6,10 +6,6 @@ Core::VTextLabel* Page1Label;
 Core::VTextLabel* Page2Label;
 Core::VTextLabel* Page3Label;
 
-Core::VRadioButton* SwitchButton1;
-Core::VRadioButton* SwitchButton2;
-Core::VRadioButton* SwitchButton3;
-
 void SwitchToPage1() {
 	if (CurrentLabel != Page1Label) {
 		Page1Label->Move(0, 40);
@@ -26,9 +22,6 @@ void SwitchToPage1() {
 		FadeInOpacityInAnimation->Start();
 
 		CurrentLabel = Page1Label;
-	}
-	else {
-		SwitchButton1->SetSwitchStatus(true);
 	}
 }
 void SwitchToPage2() {
@@ -48,9 +41,6 @@ void SwitchToPage2() {
 
 		CurrentLabel = Page2Label;
 	}
-	else {
-		SwitchButton2->SetSwitchStatus(true);
-	}
 }
 void SwitchToPage3() {
 	if (CurrentLabel != Page3Label) {
@@ -69,9 +59,6 @@ void SwitchToPage3() {
 
 		CurrentLabel = Page3Label;
 	}
-	else {
-		SwitchButton3->SetSwitchStatus(true);
-	}
 }
 
 int main() {
@@ -87,10 +74,6 @@ int main() {
 	Page1Label = VMLWindow[L"main-window"][L"purple-block"].Get<Core::VTextLabel>();
 	Page2Label = VMLWindow[L"main-window"][L"orange-block"].Get<Core::VTextLabel>();
 	Page3Label = VMLWindow[L"main-window"][L"blue-block"].Get<Core::VTextLabel>();
-
-	SwitchButton1 = VMLWindow[L"main-window"][L"switch-group"][L"switch-button-1"].Get<Core::VRadioButton>();
-	SwitchButton2 = VMLWindow[L"main-window"][L"switch-group"][L"switch-button-2"].Get<Core::VRadioButton>();
-	SwitchButton3 = VMLWindow[L"main-window"][L"switch-group"][L"switch-button-3"].Get<Core::VRadioButton>();
 
 	CurrentLabel = Page1Label;
 
