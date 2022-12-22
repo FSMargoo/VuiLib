@@ -17,8 +17,7 @@
 ```
 git clone https://github.com/FSMargoo/VuiLib.git
 ```
-2. 使用 CMake 进行构造得到 vkitlib.lib vkits.lib vmllib.lib vsslib.lib vuilib.lib
-3. 配置到你的开发环境中，然后就可以使用 VuiLib 了
+2. 将 include 与 src 拷贝到您的项目目录中，即可开始使用 vuilib（您也可以选择自己构造静态链接库或动态链接库的 vuilib）
 ## Features - 特点
 * 基于 D2D，编译出的程序体积极小。
 * DirectX2D 渲染效率极高。
