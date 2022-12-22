@@ -1,0 +1,70 @@
+<main-window type="mainwindow" title="welcome to vuilib" width="847" height="325" sizable="false" class="main-widget" style-sheet-src="./style-sheet.css">
+    <purple-block type="textlabel" class="purple-block" width="@fill" height="@fill">
+        <background type="textlabel" width="@fill" height="@fill" class="main-widget"/>
+        <circle type="textlabel" class="purple-circle" x="619" y="-172" width="407" height="396"/>
+        <blur-label type="blurlabel" class="blur-label" x="0" y="0" width="@fill" height="@fill"/>
+
+        <first-text type="textlabel" class="purple-title-text" x="69" y="80" text="W" auto-size="true"/>
+        <second-text type="textlabel" class="title-text" x="128" y="80" text="elcome to VuiLib" auto-size="true"/>
+
+        <sub-text type="textlabel" class="sub-title" x="72" y="141" text="Here is a demo for you, hope you enjoy." auto-size="true"/>
+
+        <white-label type="textlabel" class="white-label" x="69" y="204" width="96" height="11"/>
+        <purple-label type="textlabel" class="purple-label" x="165" y="204" width="96" height="11"/>
+        <deeply-purple-label type="textlabel" class="light-purple-label" x="261" y="204" width="96" height="11"/>
+
+        <fade-out-animation type="position-animation" target-position="@point(0, -40)" duration="300"/>
+        <fade-in-animation type="position-animation" target-position="@point(0, 0)" duration="300"/> 
+        <fade-out-opacity-animation type="opacity-animation" target-opacity="0" duration="300"/>
+        <fade-in-opacity-animation type="opacity-animation" target-opacity="1" duration="300"/>
+    </purple-block>
+    
+    <orange-block type="textlabel" class="orange-block" width="@fill" height="@fill">
+        <background type="textlabel" width="@fill" height="@fill" class="main-widget"/>
+
+        <circle type="textlabel" class="orange-circle" x="619" y="-172" width="407" height="396"/>
+        <blur-label type="blurlabel" class="blur-label" x="0" y="0" width="@fill" height="@fill"/>
+
+        <first-text type="textlabel" class="orange-title-text" x="69" y="80" text="W" auto-size="true"/>
+        <second-text type="textlabel" class="title-text" x="128" y="80" text="elcome to VuiLib" auto-size="true"/>
+
+        <sub-text type="textlabel" class="sub-title" x="72" y="141" text="Here is a demo for you, hope you enjoy." auto-size="true"/>
+
+        <white-label type="textlabel" class="white-label" x="69" y="204" width="96" height="11"/>
+        <orange-label type="textlabel" class="orange-label" x="165" y="204" width="96" height="11"/>
+        <deeply-purple-label type="textlabel" class="light-purple-label" x="261" y="204" width="96" height="11"/>
+
+        <fade-out-animation type="position-animation" target-position="@point(0, -40)" duration="300"/>
+        <fade-in-animation type="position-animation" target-position="@point(0, 0)" duration="300"/>
+        <fade-out-opacity-animation type="opacity-animation" target-opacity="0" duration="300"/>
+        <fade-in-opacity-animation type="opacity-animation" target-opacity="1" duration="300"/>
+    </orange-block>
+
+    <blue-block type="textlabel" class="blue-block" width="@fill" height="@fill">
+        <background type="textlabel" width="@fill" height="@fill" class="main-widget"/>
+
+        <circle type="textlabel" class="blue-circle" x="619" y="-172" width="407" height="396"/>
+        <blur-label type="blurlabel" class="blur-label" x="0" y="0" width="@fill" height="@fill"/>
+
+        <first-text type="textlabel" class="blue-title-text" x="69" y="80" text="W" auto-size="true"/>
+        <second-text type="textlabel" class="title-text" x="128" y="80" text="elcome to VuiLib" auto-size="true"/>
+
+        <sub-text type="textlabel" class="sub-title" x="72" y="141" text="Here is a demo for you, hope you enjoy." auto-size="true"/>
+
+        <white-label type="textlabel" class="white-label" x="69" y="204" width="96" height="11"/>
+        <orange-label type="textlabel" class="blue-label" x="165" y="204" width="96" height="11"/>
+        <deeply-purple-label type="textlabel" class="light-purple-label" x="261" y="204" width="96" height="11"/>
+
+        <fade-out-animation type="position-animation" target-position="@point(0, -40)" duration="300"/>
+        <fade-in-animation type="position-animation" target-position="@point(0, 0)" duration="300"/>
+        <fade-out-opacity-animation type="opacity-animation" target-opacity="0" duration="300"/>
+        <fade-in-opacity-animation type="opacity-animation" target-opacity="1" duration="300"/>
+    </blue-block>
+
+
+    <switch-group type="switchgroup">
+        <switch-button-1 type="radiobutton" class="page-switch-button" x="811" y="110" width="8" height="8" switch-status="true" lock-back="true" on-clicked="@SwitchToPage1"/>
+        <switch-button-2 type="radiobutton" class="page-switch-button" x="811" y="139" width="8" height="8" lock-back="true" on-clicked="@SwitchToPage2"/>
+        <switch-button-3 type="radiobutton" class="page-switch-button" x="811" y="168" width="8" height="8" lock-back="true" on-clicked="@SwitchToPage3"/>
+    </switch-group>
+</main-window>

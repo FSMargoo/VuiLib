@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #define VML_META_FUNCTION(FunctionName) L#FunctionName, FunctionName
+#define VML_CLASS_META_FUNCTION(ThisPtr, FunctionName) L#FunctionName, ThisPtr, FunctionName
 
 VLIB_BEGIN_NAMESPACE
 

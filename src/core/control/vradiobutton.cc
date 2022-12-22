@@ -110,10 +110,44 @@ namespace Core {
 
 		Painter->EndDraw();
 	};
+	void VRadioButton::SetLockBackStatus(const bool& Status) {
+		LockBack = Status;
+	}
+	bool VRadioButton::GetLockBackStatus() const {
+		return LockBack;
+	}
 	bool VRadioButton::GetSwitchStatus() const {
 		return Theme->SwitchStatus;
 	}
+	void VRadioButton::SwitchStatusIgnoreLockBack() {
+		Theme->SwitchStatus = !Theme->SwitchStatus;
+
+		if (Theme->SwitchStatus) {
+			InAnimation = true;
+
+			OldTheme = Theme->LocalTheme;
+			TargetTheme = Theme->ActiveTheme;
+
+			Interpolator->Reset();
+			AnimationFrameTimer.Start(0);
+		}
+		else {
+			InAnimation = true;
+
+			OldTheme = Theme->LocalTheme;
+			TargetTheme = Theme->StaticTheme;
+
+			Interpolator->Reset();
+			AnimationFrameTimer.Start(0);
+		}
+
+		Update();
+	}
 	void VRadioButton::LeftClickedDown() {
+		if (LockBack && Theme->SwitchStatus) {
+			return;
+		}
+
 		Theme->SwitchStatus = !Theme->SwitchStatus;
 
 		if (Theme->SwitchStatus) {

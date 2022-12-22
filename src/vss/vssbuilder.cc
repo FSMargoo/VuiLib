@@ -503,7 +503,13 @@ namespace VSS {
 
         Theme->LocalTheme = Theme->StaticTheme;
 
-        if (TargetControl != nullptr) { TargetControl->Update(); }
+        if (TargetControl != nullptr) {
+            TargetControl->Update();
+
+            if (TargetControl->GetSwitchStatus()) {
+                Theme->LocalTheme = Theme->ActiveTheme;
+            }
+        }
     }
     VSSVRadioButtonBuilder::VSSVRadioButtonBuilder(Core::VRadioButton *TargetControl,
                                                  std::vector<VSSBasicSelector *> SelectorSet,

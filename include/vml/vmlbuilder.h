@@ -152,7 +152,7 @@ namespace VML {
     };
     class VMLRadioButtonBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText);
+        void Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText, const bool& LockBack);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VRadioButton* RadioButton, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);

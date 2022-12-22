@@ -261,7 +261,8 @@ namespace VML {
                     }
                 }
                 else {
-                    Type = VMLPropertyType::StringValue;
+                    DotExsit = true;
+                    Type     = VMLPropertyType::StringValue;
                 }
             }
         }

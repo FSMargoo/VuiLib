@@ -9,9 +9,11 @@ VSwitchGroup::VSwitchGroup(VUIObject* Parent) : VUIObject(Parent) {
 }
 
 void VSwitchGroup::ElementOnTrigger(Core::VAbstractButton* TriggerObject) {
-    for (auto Element : RadioSet) {
-        if (Element != TriggerObject && Element->GetSwitchStatus() == true) {
-            ((VRadioButton*)Element)->LeftClickedDown();
+    if (((VRadioButton*)TriggerObject)->GetSwitchStatus() == true) {
+        for (auto Element : RadioSet) {
+            if (Element != TriggerObject && Element->GetSwitchStatus() == true) {
+                ((VRadioButton*)Element)->SwitchStatusIgnoreLockBack();
+            }
         }
     }
 }

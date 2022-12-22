@@ -8,6 +8,7 @@ namespace Core {
 
 VBasicAnimation::VBasicAnimation(Core::VAnimationCurve *Curve, const int &Duration) {
     AnimationCurve = Curve;
+
     AnimationX = 0;
     DeltaX = 16.f / (double) Duration;
 }
@@ -40,7 +41,11 @@ void VPositionAnimation::SetDuration(const int& Duration) {
 
 void VPositionAnimation::Start() {
     SourcePoint = { GetParent()->GetX(), GetParent()->GetY() };
+
     InAnimation = true;
+    Animation.AnimationX = 0;
+
+    Timer.Start(12);
 }
 
 void VPositionAnimation::Pause() {
@@ -58,6 +63,10 @@ void VPositionAnimation::CheckFrame() {
                               SourcePoint.Y + (TargetPoint.Y - SourcePoint.Y) * Percent);
 
             Animation.AnimationX += Animation.DeltaX;
+
+            if (Animation.AnimationX >= 1.f) {
+                GetParent()->Move(TargetPoint.X, TargetPoint.Y);
+            }
         } else if (InAnimation) {
             InAnimation = false;
         }
@@ -90,6 +99,7 @@ void VGeometryAnimation::SetDuration(const int& Duration) {
 void VGeometryAnimation::Start() {
     SourcePoint = { GetParent()->GetWidth(), GetParent()->GetHeight() };
     InAnimation = true;
+    Animation.AnimationX = 0;
 }
 
 void VGeometryAnimation::Pause() {
@@ -141,6 +151,10 @@ void VOpacityAnimation::SetDuration(const int& Duration) {
 void VOpacityAnimation::Start() {
     SourceValue = GetParent()->GetTransparency();
     InAnimation = true;
+
+    Timer.Start(12);
+
+    Animation.AnimationX = 0;
 }
 
 void VOpacityAnimation::Pause() {
@@ -154,10 +168,15 @@ void VOpacityAnimation::CheckFrame() {
         if (InAnimation && Animation.AnimationX < 1) {
             double Percent = Animation.AnimationCurve->CurveFunction(Animation.AnimationX);
 
-            GetParent()->SetTransparency((SourceValue + (TargetValue - SourceValue) * Percent) / 255);
+            GetParent()->SetTransparency((SourceValue + (TargetValue - SourceValue) * Percent));
 
             Animation.AnimationX += Animation.DeltaX;
-        } else if (InAnimation) {
+
+            if (Animation.AnimationX >= 1) {
+                GetParent()->SetTransparency(TargetValue);
+            }
+        }
+        else if (InAnimation) {
             InAnimation = false;
         }
     }

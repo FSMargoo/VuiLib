@@ -739,6 +739,52 @@ namespace VML {
                             VMLRadioButtonBuilder Builder(GetRootFinder(), RadioButton, Element.NodeValue,
                                                           &BuildStatus);
 
+                            if (Element.PropertyExsit(L"rectangle-changed")) {
+                                if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->Resized.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"position-changed")) {
+                                if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->Moved.Connect((Core::VSignal<const int&, const int&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const int&, const int&>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"got-focus")) {
+                                if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->InFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"lost-focus")) {
+                                if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->LostFocus.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+                            if (Element.PropertyExsit(L"on-clicked")) {
+                                if (Element.NodeValue[L"on-clicked"].PropertyType == VMLPropertyType::NativeCall) {
+                                    auto NativeCallName = Element.NodeValue[L"on-clicked"].NativeCallMethodName;
+
+                                    if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                        RadioButton->ButtonPushed.Connect((Core::VSignal<>*)MetaFunctionList[NativeCallName], &Core::VSignal<>::Emit);
+                                    }
+                                }
+                            }
+
                             if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                                 Result.Status = VMLWidgetVMLLoadStats::Failed;
                                 Result.FailedMessage =
@@ -1426,7 +1472,7 @@ namespace VML {
                 }
             }
 
-            if (VMLObject->VMLType != VMLObjectType::Widget && VMLObject->VMLType != VMLObjectType::MainWindow) {
+            if (VMLObject->VMLType != VMLObjectType::Widget && VMLObject->VMLType != VMLObjectType::MainWindow && VMLObject->VMLType != VMLObjectType::SwitchGroup) {
                 VMLObject->VMLNativeLaytout = (Core::VLayout*)VMLObject->UIObject->GetChildObjectByPosition(0);
                 VMLObject->VMLNativeScaleLaytout = (Core::VScaleLayout*)VMLObject->UIObject->GetChildObjectByPosition(1);
             }

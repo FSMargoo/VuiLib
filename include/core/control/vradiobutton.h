@@ -25,9 +25,13 @@ namespace Core {
 		VLabelStatusTheme       TargetTheme;
 
 		bool                    InAnimation = false;
+		bool					LockBack    = false;
 
 	private:
 		VRect GetRegion() override;
+
+	public:
+		void SwitchStatusIgnoreLockBack();
 
 	public:
 		void LeftClickedDown() override;
@@ -42,7 +46,9 @@ namespace Core {
 	public:
 		void SetSwitchStatus(const bool& Status);
 		void SetPlaneText(const std::wstring& Text);
+		void SetLockBackStatus(const bool& LockBack);
 		bool GetSwitchStatus() const;
+		bool GetLockBackStatus() const;
 
 	public:
 		VRadioButtonTheme* GetTheme();

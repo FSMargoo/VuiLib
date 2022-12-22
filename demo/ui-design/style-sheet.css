@@ -1,0 +1,109 @@
+.page-switch-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+}
+
+.page-switch-button:hover {
+    background-color: rgba(255, 255, 255, 0.64);
+    border-color: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+}
+
+.page-switch-button:enabled {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    border-radius: 8px;
+}
+
+.purple-circle {
+    background-color: #9071FB;
+    border-color: #9071FB;
+    border-radius: 407px;
+}
+.purple-title-text {
+    font-family: "Nirmala UI";
+    font-size: 60px;
+    color: #7147FF;
+    font-weight: 600px;
+}
+.purple-label {
+    background-color: #7147FF;
+    border-color: #7147FF;
+    border-radius: 0px;
+}
+
+.orange-circle {
+    background-color: #DB5656;
+    border-color: #DB5656;
+    border-radius: 407px;
+}
+.orange-title-text {
+    font-family: "Nirmala UI";
+    font-size: 60px;
+    color: #DB5656;
+    font-weight: 600px;
+}
+.orange-label {
+    background-color: #DB5656;
+    border-color: #DB5656;
+    border-radius: 0px;
+}
+.orange-block {
+    opacity: 0%;
+}
+
+.blue-circle {
+    background-color: #4593D8;
+    border-color: #4593D8;
+    border-radius: 407px;
+}
+.blue-title-text {
+    font-family: "Nirmala UI";
+    font-size: 60px;
+    color: #4593D8;
+    font-weight: 600px;
+}
+.blue-label {
+    background-color: #4593D8;
+    border-color: #4593D8;
+    border-radius: 0px;
+}
+.blue-block {
+    opacity: 0%;
+}
+
+
+.title-text {
+    font-family: "Nirmala UI";
+    font-size: 60px;
+    color: #FFFFFF;
+    font-weight: 600px;
+}
+
+.white-label {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    border-radius: 0px;
+}
+.light-purple-label {
+    background-color: #9071FB;
+    border-color: #9071FB;
+    border-radius: 0px;
+}
+
+.sub-title {
+    font-family: "Nirmala UI";
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.blur-label {
+    radius: 30px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.main-widget {
+    background-color: rgb(17, 17, 17);
+}

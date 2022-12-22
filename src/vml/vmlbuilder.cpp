@@ -60,12 +60,12 @@ namespace VML {
                                            Core::VUIObject* Object,
                                            std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                            VMLControlBuildStatus* BuildStatus) {
-        int X = 0;
-        int Y = 0;
-        int Height = 0;
-        int Width = 0;
-        int Transparency = 255;
-        bool Visble = true;
+        int   X = 0;
+        int   Y = 0;
+        int   Height = 0;
+        int   Width = 0;
+        float Transparency = 1.f;
+        bool  Visble = true;
 
         Core::VLayoutMode  VerticalLayoutMode   = Core::VLayoutMode::LayoutModeDontUse;
         Core::VLayoutMode  HorizontalLayoutMode = Core::VLayoutMode::LayoutModeDontUse;
@@ -363,7 +363,7 @@ namespace VML {
                     return;
                 }
 
-                Transparency = ElementProperty.second.PropertyAsInt;
+                Transparency = ElementProperty.second.PropertyAsInt / 255.f;
             }
             if (ElementProperty.first == L"visible") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
@@ -839,9 +839,10 @@ namespace VML {
                 AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText) {
+    void VMLRadioButtonBuilder::Builder(Core::VRadioButton* RadioButton, const bool& Status, const std::wstring& PlaneText, const bool& LockBack) {
         RadioButton->SetSwitchStatus(Status);
         RadioButton->SetPlaneText(PlaneText);
+        RadioButton->SetLockBackStatus(LockBack);
     }
     void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder& RootFinder,
                                                 Core::VRadioButton *RadioButton,
@@ -849,7 +850,8 @@ namespace VML {
                                                 VML::VMLControlBuildStatus *BuildStatus) {
         VMLCommonBuilder::AnalyzeProperty(RootFinder, RadioButton, PropertyValueList, BuildStatus);
 
-        bool         SwitchStatus = false;
+        bool         SwitchStatus   = false;
+        bool         LockBackStatus = false;
         std::wstring PlaneText;
 
         for (auto& ElementProperty : PropertyValueList) {
@@ -863,6 +865,16 @@ namespace VML {
 
                 SwitchStatus = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"lock-back") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"lock-back\" Property Must Match the Type \"bool\"";
+
+                    return;
+                }
+
+                LockBackStatus = ElementProperty.second.PropertyAsBool;
+            }
             if (ElementProperty.first == L"text") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
@@ -875,7 +887,7 @@ namespace VML {
             }
         }
 
-        Builder(RadioButton, SwitchStatus, PlaneText);
+        Builder(RadioButton, SwitchStatus, PlaneText, LockBackStatus);
     }
     VMLRadioButtonBuilder::VMLRadioButtonBuilder(const VMLFinder& RootFinder, Core::VRadioButton* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                                                  VMLControlBuildStatus* BuildStatus)
@@ -1420,18 +1432,18 @@ namespace VML {
         int Duration = 0;
 
         for (auto &ElementProperty: PropertyValueList) {
-            if (ElementProperty.first == L"target-size") {
+            if (ElementProperty.first == L"target-position") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"target-size\" Property Must Match the Type \"size-native\"";
+                    BuildStatus->FailedReason = L"\"target-position\" Property Must Match the Type \"size-native\"";
 
                     return;
                 }
 
-                if (ElementProperty.second.NativeCallMethodName == L"size") {
+                if (ElementProperty.second.NativeCallMethodName == L"point") {
                     if (ElementProperty.second.NativeCallParameter.size() == 2 &&
-                        CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::IntValue})) {
-                        TargetPoint = { ElementProperty.second.NativeCallParameter[0].PropertyAsInt, ElementProperty.second.NativeCallParameter[0].PropertyAsInt };
+                        CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, { VMLPropertyType::IntValue, VMLPropertyType::IntValue })) {
+                        TargetPoint = { ElementProperty.second.NativeCallParameter[0].PropertyAsInt, ElementProperty.second.NativeCallParameter[1].PropertyAsInt };
                     }
                 }
             }
@@ -1450,7 +1462,7 @@ namespace VML {
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
                 }
-                else if (ElementProperty.second.PropertyAsString == L"ease-out-sine-curve") {
+                else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curveease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
                 }
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {
