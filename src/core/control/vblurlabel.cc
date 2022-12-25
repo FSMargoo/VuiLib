@@ -17,7 +17,9 @@ namespace Core {
 
 		VCanvasPainter ChildCanvas(Object->GetWidth(), Object->GetHeight(), CallWidgetGetRenderHandle());
 		ChildCanvas.BeginDraw();
-		ChildCanvas.DrawCanvas(Object->GetRegion(), Object->GetCanvas(), { 0, 0, Object->GetWidth(), Object->GetHeight() }, 1.f);
+		ChildCanvas.Clear(VColor::FromBYTERGBA(0, 0, 0, 0));
+		
+		Object->OnPaint(&ChildCanvas);
 
 		auto ObjectChildLayout = Object->GetChildLayout();
 
@@ -59,14 +61,8 @@ namespace Core {
 		D2D1_RECT_U   RectArea = { static_cast<unsigned int>(GetOriginX()), static_cast<unsigned int>(GetOriginY()),
 									  static_cast<unsigned int>(GetOriginX()) + static_cast<unsigned int>(GetWidth()),
 									  static_cast<unsigned int>(GetHeight()) + static_cast<unsigned int>(GetOriginY()) };
-
-		VUIObject* WidgetObject = this;
-
-		while (!WidgetObject->IsWidget()) {
-			WidgetObject = WidgetObject->GetParent();
-		}
-
-		auto Result = BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetParentCanvas()->GetDXObject(), &RectArea);
+		
+		auto Result = BlurImage.GetDirectXObject()->CopyFromRenderTarget(&SourcePoint, GetParent()->GetCanvas()->GetDXObject(), &RectArea);
 		BlurImage.ApplyGassBlur(Theme->BlurRadius, CallWidgetGetRenderHandle());
 
 		VSolidBrush  SolidBrush(Theme->MixedColor, CallWidgetGetRenderHandle());

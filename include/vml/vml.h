@@ -20,7 +20,7 @@ namespace VML {
         HorizontalSlider, VerticalSlider, FakeCaption, BlurLabel, IconButton, LineEditor,
         SwitchGroup, VerticalScroller, HorizontalScroller, ViewLabel,
         PositionAnimation, GeometryAnimation, OpacityAnimation, CircleView, PolygonView,
-        Widget, Canvas
+        Widget, Canvas, UserDefine
     };
 
     struct VMLObject {

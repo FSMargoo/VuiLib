@@ -1,5 +1,6 @@
 <widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" style-sheet-src="./testcss.css" class="main-window">
     <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill"/>
+
     <blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label"/>
 
     <welcome-text-view type="polygon-view" x="@ratio(0.5)" y="@ratio(0.35)" width="@scale(0.52)" height="@scale(0.34)" points="@parallelogram(0.385, 0.0, 0.0, 0.0)" class="welcome-ui-view">

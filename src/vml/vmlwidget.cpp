@@ -148,7 +148,7 @@ namespace VML {
                     else if (ElementProperty.PropertyAsString == L"imagelabel") {
                         Core::VImageLabel* ImageLabel = new Core::VImageLabel(0, 0, nullptr, UIParent->UIObject);
                         VMLObject->UIObject = ImageLabel;
-                        VMLObject->VMLType = VMLObjectType::ImageLabel;
+                        VMLObject->VMLType  = VMLObjectType::ImageLabel;
 
                         VMLControlBuildStatus  BuildStatus;
                         VMLImageLabelBuilder   Builder(GetRootFinder(), ImageLabel, Element.NodeValue, &BuildStatus);
@@ -1387,9 +1387,27 @@ namespace VML {
                         }
                     }
                     else {
-                        delete VMLObject;
+                        VUIObject*            Object = nullptr;
+                        VMLControlBuildStatus BuildStatus;
 
-                        return { VMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.NodeTag + L"\" Don't Owns an Valid Type" };
+                        bool Flag = false;
+
+                        for (auto& UserFunction : UserDefineList) {
+                            if (UserFunction(ElementProperty.PropertyAsString, GetRootFinder(), &Object, UIParent->UIObject, Element.NodeValue, &BuildStatus)) {
+                                Flag = true;
+
+                                VMLObject->UIObject = Object;
+                                VMLObject->VMLType  = VMLObjectType::UserDefine;
+                                
+                                break;
+                            }
+                        }
+
+                        if (!Flag) {
+                            delete VMLObject;
+
+                            return { VMLWidgetVMLLoadStats::Failed, L"Element \"" + Element.NodeTag + L"\" Don't Owns an Valid Type" };
+                        }
                     }
                 }
                 else {
@@ -1604,6 +1622,13 @@ namespace VML {
 
     HWND VMLMainWindow::GetLocalWinId() {
         return Core::VMainWindow::CallWidgetGetHWND();
+    }
+
+    void VMLMainWindow::PushUserDefineFunction(std::function<bool(const std::wstring&,
+        const VMLFinder& RootFinder,
+        Core::VUIObject**, Core::VUIObject*, std::map<std::wstring, VMLPropertyValue>&,
+        VMLControlBuildStatus*)> FunctionObject) {
+        UserDefineList.push_back(FunctionObject);
     }
 }
 

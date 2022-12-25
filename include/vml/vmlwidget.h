@@ -18,9 +18,16 @@ VLIB_BEGIN_NAMESPACE
 namespace VML {
     class VMLMainWindow : public Core::VMainWindow {
      protected:
-         std::vector<VMLObject*        > ObjectList;
-         std::vector<VMLBasicVariable* > VariableList;
-         std::map<std::wstring, void*  > MetaFunctionList;
+         std::vector<VMLObject*        >                 ObjectList;
+         std::vector<VMLBasicVariable* >                 VariableList;
+         std::map<std::wstring, void*  >                 MetaFunctionList;
+         std::vector<std::function<bool(
+             const std::wstring&,
+             const VMLFinder&,
+             Core::VUIObject**,
+             Core::VUIObject*, 
+             std::map<std::wstring, VMLPropertyValue>&,
+             VMLControlBuildStatus*)> >                  UserDefineList;
      
      private:
          VMLFinder GetRootFinder();
@@ -43,6 +50,11 @@ namespace VML {
          void SetStyleSheet(VSS::VSSParserResult VSSParserResult);
      
          HWND GetLocalWinId() override;
+
+     public:
+         void PushUserDefineFunction(std::function<bool(const std::wstring&, const VMLFinder&,
+             Core::VUIObject**, Core::VUIObject*, std::map<std::wstring, VMLPropertyValue>&,
+             VMLControlBuildStatus*)> FunctionObject);
      
      public:
          VMLFinder Get(const std::wstring& ChildrenId);

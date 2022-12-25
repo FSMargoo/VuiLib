@@ -405,7 +405,7 @@ namespace Core {
          */
          void Update();
      
-     protected:
+     public:
          /*
           * OnPaint function:
           *     Description : This function is provided to paint a object on surface
