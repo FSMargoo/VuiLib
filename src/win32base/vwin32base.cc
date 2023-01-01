@@ -5,11 +5,14 @@ namespace Win32Core {
 
 	HWND				   VLastWindowHandle;
 
-	LRESULT VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter, LPARAM lParameter) {
+	LRESULT CALLBACK VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter, LPARAM lParameter) {
 		VWin32Msg RawWin32Msg { };
 		bool flag = false;
 
 		switch (MessageType) {
+		case WM_ERASEBKGND: {
+			return 0;
+		}
 		case WM_LBUTTONDOWN: {
 			flag = true;
 
@@ -255,42 +258,23 @@ namespace Win32Core {
 
 			break;
 		}
-		case WM_IME_CHAR: {
-			flag = true;
-
-			RawWin32Msg.wHandle = Handle;
-			RawWin32Msg.ctrl	 = false;
-			RawWin32Msg.shift	 = false;
-			RawWin32Msg.lbutton = false;
-			RawWin32Msg.mbutton = false;
-			RawWin32Msg.rbutton = false;
-
-			RawWin32Msg.message = WM_CHAR;
-
-			if (lParameter >> 24) {
-				RawWin32Msg.extended = true;
-			}
-
-			RawWin32Msg.ch = wParameter;
-
-			break;
-		}
 		case WM_CHAR: {
 			flag = true;
 
-			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.wHandle  = Handle;
 			RawWin32Msg.ctrl	 = false;
 			RawWin32Msg.shift	 = false;
-			RawWin32Msg.lbutton = false;
-			RawWin32Msg.mbutton = false;
-			RawWin32Msg.rbutton = false;
-
-			RawWin32Msg.message = WM_CHAR;
+			RawWin32Msg.lbutton  = false;
+			RawWin32Msg.mbutton  = false;
+			RawWin32Msg.rbutton  = false;
+								 
+			RawWin32Msg.message  = WM_CHAR;
 
 			RawWin32Msg.extended = lParameter >> 24;
 			RawWin32Msg.prevdown = lParameter >> 30;
 
-			RawWin32Msg.vkcode = wParameter;
+			RawWin32Msg.ch	     = wParameter;
+			RawWin32Msg.vkcode   = wParameter;
 
 			break;
 		}
@@ -360,8 +344,12 @@ namespace Win32Core {
 
 			RawWin32Msg.message = MessageType;
 
-			RawWin32Msg.x = GET_X_LPARAM(lParameter);
-			RawWin32Msg.y = GET_Y_LPARAM(lParameter);
+			POINT ScreenPoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
+
+			ScreenToClient(Handle, &ScreenPoint);
+
+			RawWin32Msg.x = ScreenPoint.x;
+			RawWin32Msg.y = ScreenPoint.y;
 
 			RawWin32Msg.wheel = GET_WHEEL_DELTA_WPARAM(wParameter);
 
@@ -406,15 +394,14 @@ namespace Win32Core {
 
 		RegisterClassEx(&WindowClass);
 
-		HWND WindowHandle = CreateWindowEx(0, ClassName, WindowTitle, WS_OVERLAPPEDWINDOW,
+		HWND WindowHandle = CreateWindow(ClassName, WindowTitle, WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, ParentWindow, NULL, InstanceHandle, NULL);
-		UpdateWindow(WindowHandle);
 
 		MSG WinMsg {};
 
 		VLastWindowHandle = WindowHandle;
 
-		while (GetMessage(&WinMsg, WindowHandle, 0, 0)) {
+		while (GetMessage(&WinMsg, 0, 0, 0)) {
 			TranslateMessage(&WinMsg);
 			DispatchMessage(&WinMsg);
 		}

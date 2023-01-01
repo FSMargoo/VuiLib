@@ -94,6 +94,8 @@ namespace Core {
          void                CallWidgetUnlockFocusID() override;
          bool                CallWidgetGetLockingStatus() override;
          void                CallWidgetSendMessage(VMessage *Message) override;
+         void                CallWidgetSetIMEFontStyle(const LOGFONT& LogfontStyle) override;
+         LOGFONT             GetWidgetIMEFontStlye() const override;
          HWND                CallWidgetGetHWND() override;
          VCanvasPainter*     CallWidgetGetCanvas() override;
          Core::VRenderHandle CallWidgetGetDCRenderTarget() const override;

@@ -81,7 +81,7 @@ namespace Core {
 		Direct2DRender = new VDCRender(VDirectXD2DFactory.GetInstance(), GetDC(WindowHandle), { 0, 0, GetWidth(), GetHeight() }, true);
 		BufferPainter  = new VPainter(VRenderHandle(nullptr, nullptr, nullptr, Direct2DRender->GetDirectXRenderTarget(), nullptr));
 
-		WindowConfig.WindowOnSize		 = [this](auto PH1, auto PH2) { 
+		WindowConfig.WindowOnSize = [this](auto PH1, auto PH2) {
 			Win32ThreadResized(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); 
 		};
 		WindowConfig.LosedUserFocus		 = [this]() -> void { Win32LoseFocus(); };
@@ -105,7 +105,9 @@ namespace Core {
 		WindowConfig.IMEY = Y;
 	}
 	void VMainWindow::CallWidgetSetFocusID(const std::wstring& ObjectID) {
-		WindowConfig.GlobalFocusID = ObjectID;
+		if (!WindowConfig.LockFocus) {
+			WindowConfig.GlobalFocusID = ObjectID;
+		}
 	}
 	std::wstring VMainWindow::CallWidgetGetFocusID() const {
 		return WindowConfig.GlobalFocusID;
@@ -119,6 +121,14 @@ namespace Core {
 	bool VMainWindow::CallWidgetGetLockingStatus() {
 		return WindowConfig.LockFocus;
 	}
+	void VMainWindow::CallWidgetSetIMEFontStyle(const LOGFONT& LogfontStyle) {
+		WindowConfig.IMEFontStyle = LogfontStyle;
+	}
+
+	LOGFONT VMainWindow::GetWidgetIMEFontStlye() const {
+		return WindowConfig.IMEFontStyle;
+	}
+
 	void VMainWindow::CallWidgetSendMessage(VMessage* Message) {
 		SendMessageToChild(Message);
 	}

@@ -108,7 +108,8 @@ void VPushButton::CheckFrame() {
 
             Update();
         }
-    } else if (InAnimation) {
+    }
+    else if (InAnimation) {
         InAnimation = false;
     }
 }

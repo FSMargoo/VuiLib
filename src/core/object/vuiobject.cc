@@ -204,6 +204,21 @@ namespace Core {
 		return NULL;
 	}
 
+	void VUIObject::CallWidgetSetIMEFontStyle(const LOGFONT& LogfontStyle) {
+		if (GetParent() != nullptr) {
+			return GetParent()->CallWidgetSetIMEFontStyle(LogfontStyle);
+		}
+
+		return;
+	}
+	LOGFONT VUIObject::GetWidgetIMEFontStlye() const {
+		if (GetParent() != nullptr) {
+			return GetParent()->GetWidgetIMEFontStlye();
+		}
+
+		return LOGFONT();
+	}
+
 	Core::VRenderHandle VUIObject::CallWidgetGetRenderHandle()  const {
 		VRenderHandle RenderHandle;
 
@@ -213,6 +228,8 @@ namespace Core {
 		else {
 			RenderHandle._IRenderTarget = GetParent()->CallWidgetGetRenderHandle()._IRenderTarget;
 		}
+
+		RenderHandle._IDWriteFactory = VDirectXWriteFactory.GetInstance();
 
 		RenderHandle.Allocator	    = GetWidgetAllocator();
 

@@ -357,6 +357,16 @@ namespace Core {
           *     Description : The function will get the win32 window handle of parent widget
          */
          virtual HWND         CallWidgetGetHWND();
+         /*
+          * CallWidgetSetIMEFontStyle:
+          *     Description : Set the IME font style by widget
+         */
+         virtual void         CallWidgetSetIMEFontStyle(const LOGFONT& LogfontStyle);
+         /*
+          * GetWidgetIMEFontStlye:
+          *     Description : Get the IME font style of widget
+         */
+         virtual LOGFONT      GetWidgetIMEFontStlye() const;
      
      public:
          /*

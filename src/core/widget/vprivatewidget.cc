@@ -17,9 +17,10 @@ namespace Core {
         if (MainThreadEnd) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
         }
+
         if (!(Message == WM_PAINT || Message == WM_NCHITTEST || Message == WM_SETCURSOR || Message == WM_NCLBUTTONDOWN ||
               Message == WM_SIZING || Message == WM_SIZE || Message == WM_GETMINMAXINFO || Message == WM_IME_COMPOSITION ||
-              Message == WM_IME_CHAR || Message == WM_KILLFOCUS || Message == WM_NCMOUSELEAVE || Message == WM_CLOSE ||
+              Message == WM_CHAR || Message == WM_KILLFOCUS || Message == WM_NCMOUSELEAVE || Message == WM_CLOSE ||
               Message == WM_LBUTTONDOWN || Message == WM_LBUTTONUP || Message == WM_MBUTTONDOWN || Message == WM_MBUTTONUP ||
               Message == WM_RBUTTONUP || Message == WM_RBUTTONDOWN || Message == WM_MOUSEMOVE || Message == WM_IME_CHAR ||
               Message == WM_KEYDOWN || Message == WM_KEYUP || Message == WM_MOUSEWHEEL || Message == WM_CLOSE)) {
@@ -263,7 +264,7 @@ namespace Core {
                     Composition.ptCurrentPos.x = WindowConfig->IMEX;
                     Composition.ptCurrentPos.y = WindowConfig->IMEY;
 
-                    ImmAssociateContext(Handle, IMCHandle);
+                    ImmAssociateContextEx(Handle, IMCHandle, IACE_CHILDREN);
                     ImmSetCompositionFont(IMCHandle, &WindowConfig->IMEFontStyle);
                     ImmSetCompositionWindow(IMCHandle, &Composition);
                 }

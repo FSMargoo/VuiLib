@@ -1215,7 +1215,7 @@ namespace Core {
 			INT_MAX,
 			GetHeight(),
 			&TextLayout
-		), L"Failed to create TextLayout object!");
+		) != S_OK, L"Failed to create TextLayout object!");
 
 		if (InSelectMode) {
 			TextLayout->SetDrawingEffect(SelectedColor.GetDxBrush(), TextSelectRange);
