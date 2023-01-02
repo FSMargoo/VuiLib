@@ -53,3 +53,21 @@
     background-color: rgba(0, 0, 0, 0);
     border-radius: 8px;
 }
+.test-editor {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+
+    font-family: "JetBrains Mono";
+    font-size: 20px;
+}
+.test-editor:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+}
+.test-editor:active {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+}

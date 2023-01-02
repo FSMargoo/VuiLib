@@ -11,6 +11,7 @@
 #include "../core/control/vblurlabel.h"
 #include "../core/control/viconbutton.h"
 #include "../core/control/vlineeditor.h"
+#include "../core/control/veditor.h"
 #include "../core/control/vscroller.h"
 #include "../core/control/vviewlabel.h"
 #include "../core/control/vcanvas.h"
@@ -204,6 +205,17 @@ namespace VML {
     public:
         VMLLineEditorBuilder(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);
+    };
+    class VMLEditorBuilder : public VMLCommonBuilder {
+    protected:
+        void Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY);
+
+        void AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus);
+
+    public:
+        VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+            VMLControlBuildStatus* BuildStatus);
     };
     class VMLVerticalScrollerBuilder : public VMLCommonBuilder {
     protected:

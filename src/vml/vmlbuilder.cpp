@@ -1110,6 +1110,46 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
+    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY) {
+        Editor->SetPlaneText(PlaneText);
+        Editor->SetDeltaY(DeltaY);
+    }
+    void VMLEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+        VMLControlBuildStatus* BuildStatus) {
+        std::wstring PlaneText;
+        int          DeltaY = 25;
+
+        for (auto& ElementProperty : PropertyValueList) {
+            if (ElementProperty.first == L"text") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"text\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                PlaneText = ElementProperty.second.PropertyAsString;
+            }
+            if (ElementProperty.first == L"delta-y") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"delta-y\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                DeltaY = ElementProperty.second.PropertyAsInt;
+            }
+        }
+
+        Builder(Object, PlaneText, DeltaY);
+    }
+    VMLEditorBuilder::VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
+        VMLControlBuildStatus* BuildStatus)
+        : VMLCommonBuilder(RootFinder, Object, PropertyValueList, BuildStatus) {
+        AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
+    }
+
     void VMLVerticalScrollerBuilder::Builder(Core::VScrollerVertical *Scroller, const int &Value,
                                              const int &ViewValue) {
         Scroller->SetViewPoint(ViewValue);

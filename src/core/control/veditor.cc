@@ -1,3 +1,5 @@
+#pragma warning(disable : 4018)
+
 #include "../../../include/core/control/veditor.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -1134,7 +1136,7 @@ namespace Core {
 	void VEditor::ResetTextLayout() {
 		LocalTextLayout.Reset();
 		
-		VDirectXWriteFactory.GetInstance()->CreateTextLayout(InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
+		auto Result = VDirectXWriteFactory.GetInstance()->CreateTextLayout(InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
 			GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
 			LocalTextLayout.GetAddressOf());
 
@@ -1152,6 +1154,10 @@ namespace Core {
 	}
 
 	void VEditor::OnPaint(VCanvasPainter* Painter) {
+		if (GetWidth() == 0 || GetHeight() == 0) {
+			return;
+		}
+
 		Painter->BeginDraw();
 
 		VSolidBrush TextBrush(Theme->LocalTheme.TextColor, CallWidgetGetRenderHandle());
@@ -1213,6 +1219,10 @@ namespace Core {
 		CallWidgetLockFocusID();
 
 		Update();
+	}
+
+	void VEditor::SetDeltaY(const int& Delta) {
+		YDelta = Delta;
 	}
 
 	void VEditor::CheckFrame() {
@@ -1388,7 +1398,32 @@ namespace Core {
 		return Theme;
 	}
 
+	std::wstring VEditor::GetPlaneText() const {
+		return InEditingText;
+	}
+
+	void VEditor::Resize(const int& Width, const int& Height) {
+		VUIObject::Resize(Width, Height);
+
+		ResetTextLayout();
+	}
+
 	void VEditor::OnMessage(VMessage* Message) {
+		if (Message->GetType() == VMessageType::KillFocusMessage) {
+			UserInOperating = false;
+			ShowCaret = false;
+			InAnimation = true;
+
+			OldTheme = Theme->LocalTheme;
+			TargetTheme = Theme->StaticTheme;
+
+			Interpolator->Reset();
+			AnimationFrameTimer.Start(0);
+
+			Update();
+
+			CallWidgetUnlockFocusID();
+		}
 		if (Message->GetType() == VMessageType::MouseClickedMessage) {
 			auto MouseMessage = static_cast<VMouseClickedMessage*>(Message);
 
@@ -1435,6 +1470,18 @@ namespace Core {
 				}
 			}
 		}
+		if (Message->GetType() == VMessageType::MouseMoveMessage) {
+			auto MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
+
+			if (MouseMoveMessage->MousePosition.InsideRectangle(GetRegion())) {
+				HCURSOR ArrowCursor = LoadCursor(NULL, IDC_IBEAM);
+				SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+			}
+			else {
+				HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+				SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+			}
+		}
 		if (Message->GetType() == VMessageType::MouseMoveMessage && InMouseDragSelecting) {
 			auto MouseMoveMessage = static_cast<VMouseMoveMessage*>(Message);
 
@@ -1462,6 +1509,8 @@ namespace Core {
 
 			if (IMECharMessage->IMEChar != L'\b') {
 				AddCharaceter(IMECharMessage->IMEChar);
+
+				TextOnChange.Emit(InEditingText);
 			}
 		}
 		if (Message->GetType() == VMessageType::KeyClickedMessage && UserInOperating) {
@@ -1481,6 +1530,8 @@ namespace Core {
 			}
 			else if (KeyMessage->KeyVKCode == VK_DELETE) {
 				DeleteCharacter();
+
+				TextOnChange.Emit(InEditingText);
 			}
 			else if (KeyMessage->KeyVKCode == VK_HOME) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
@@ -1525,6 +1576,8 @@ namespace Core {
 
 					ClearSelectArea();
 					CopyClipboard();
+
+					TextOnChange.Emit(InEditingText);
 				}
 			}
 			else if (KeyMessage->KeyVKCode == 'V' && !KeyMessage->KeyPrevDown) {
@@ -1533,6 +1586,8 @@ namespace Core {
 
 					ClearSelectArea();
 					WriteClipboard();
+
+					TextOnChange.Emit(InEditingText);
 				}
 			}
 			else if (KeyMessage->KeyVKCode == VK_UP && KeyMessage->KeyPrevDown) {

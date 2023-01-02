@@ -78,6 +78,9 @@ namespace VML {
         if (String == L"canvas") {
             return VMLObjectType::Canvas;
         }
+        if (String == L"editor") {
+            return VMLObjectType::Editor;
+        }
 
         return Type;
     }
@@ -151,6 +154,9 @@ namespace VML {
             }
             case VMLObjectType::Canvas: {
                 return L"canvas";
+            }
+            case VMLObjectType::Editor: {
+                return L"editor";
             }
         }
 
@@ -235,6 +241,11 @@ namespace VML {
             }
             case VMLObjectType::Widget: {
                 VSS::VSSVWidgetBuilder Builder(static_cast<Core::VWidget*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector});
+
+                break;
+            }
+            case VMLObjectType::Editor: {
+                VSS::VSSVEditorBuilder Builder(static_cast<Core::VEditor*>(UIObject), std::vector<VSS::VSSBasicSelector*>{Selector}, nullptr);
 
                 break;
             }

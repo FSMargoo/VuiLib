@@ -62,6 +62,7 @@ namespace Core {
 
 	public:
 		void SetPlaneText(const std::wstring& PlaneText);
+		std::wstring GetPlaneText() const;
 
 	public:
 		void ResetCaretStatus();
@@ -72,11 +73,19 @@ namespace Core {
 		void GotMouseFocus() override;
 		void OnMessage(VMessage* Message) override;
 
+		void Resize(const int& Width, const int& Height) override;
+
 	public:
 		void CheckFrame() override;
 
 	public:
+		void SetDeltaY(const int& Delta);
+
+	public:
 		VTextEditorTheme* GetTheme();
+
+	public:
+		VSignal<const std::wstring&> TextOnChange;
 
 	private:
 		bool ClearSelectArea();

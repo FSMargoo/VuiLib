@@ -12,6 +12,7 @@
 #include "../core/control/viconbutton.h"
 #include "../core/control/vlineeditor.h"
 #include "../core/control/vscroller.h"
+#include "../core/control/veditor.h"
 #include "../core/control/vviewlabel.h"
 
 #include "../core/visual/vvisual.h"
@@ -155,6 +156,18 @@ namespace VSS {
         VSSVLineEditorBuilder(Core::VLineEditor *TargetControl,
                               std::vector<VSSBasicSelector *> SelectorSet,
                               Core::VTextEditorTheme *TextEditorTheme);
+    };
+
+    class VSSVEditorBuilder {
+    private:
+        void BuildVSSObject(Core::VEditor* TargetControl,
+            std::vector<VSSBasicSelector*> SelectorSet,
+            Core::VTextEditorTheme* TextEditorTheme);
+
+    public:
+        VSSVEditorBuilder(Core::VEditor* TargetControl,
+            std::vector<VSSBasicSelector*> SelectorSet,
+            Core::VTextEditorTheme* TextEditorTheme);
     };
 
     class VSSScrollerButtonBuilder {
