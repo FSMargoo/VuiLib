@@ -27,6 +27,8 @@ namespace Core {
 		void				   CaretSelectionTurnLeft();
 		void				   CaretSelectionTurnRight();
 
+		void				   ResetSelect();
+
 		void				   CaretSelectionTurnLineHead(IDWriteTextLayout* TextLayout);
 		void				   CaretSelectionTurnLineEnd(IDWriteTextLayout* TextLayout);
 
@@ -67,6 +69,9 @@ namespace Core {
 	public:
 		void ResetCaretStatus();
 		void ResetTextLayout();
+
+		bool GetAllowEditStatus();
+		void SetAllowEditStatus(const bool& Status);
 
 	public:
 		void LeftClickedDown() override;
@@ -140,6 +145,8 @@ namespace Core {
 
 		VLabelStatusTheme       OldTheme;
 		VLabelStatusTheme       TargetTheme;
+
+		bool					AllowEdit;
 
 		bool                    InAnimation = false;
 	};

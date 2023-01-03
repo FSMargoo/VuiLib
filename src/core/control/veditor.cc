@@ -448,6 +448,11 @@ namespace Core {
 		SetValidCaretRange();
 	}
 
+	void VEditorCaret::ResetSelect() {
+		CaretStart = 0;
+		CaretEnd   = CaretStart;
+	}
+
 	void VEditorCaret::CaretTurnUp(IDWriteTextLayout* TextLayout) {
 		if (CaretStart == CaretEnd) {
 			DWRITE_TEXT_METRICS				 TextMetrics;
@@ -1091,6 +1096,8 @@ namespace Core {
 
 		ResetTextLayout();
 
+		AllowEdit = true;
+
 		CaretTimer.Start(1000);
 		CaretTimer.OnTime.Connect(this, &VEditor::ResetCaretStatus);
 	}
@@ -1116,6 +1123,8 @@ namespace Core {
 		Resize(Width, Height);
 
 		ResetTextLayout();
+
+		AllowEdit = true;
 
 		CaretTimer.Start(500);
 		CaretTimer.OnTime.Connect(this, &VEditor::ResetCaretStatus);
@@ -1146,7 +1155,12 @@ namespace Core {
 
 		Update();
 	}
-
+	bool VEditor::GetAllowEditStatus() {
+		return AllowEdit;
+	}
+	void VEditor::SetAllowEditStatus(const bool& Status) {
+		AllowEdit = Status;
+	}
 	void VEditor::SetPlaneText(const std::wstring& PlaneText) {
 		InEditingText = PlaneText;
 
@@ -1267,41 +1281,47 @@ namespace Core {
 	}
 
 	void VEditor::BackCharacter() {
-		if (ClearSelectArea()) {
-			return;
+		if (AllowEdit) {
+			if (ClearSelectArea()) {
+				return;
+			}
+
+			if (Caret.CaretStart - 1 >= 0) {
+				InEditingText.erase(InEditingText.begin() + Caret.CaretStart - 1);
+			}
+
+			Caret.CaretTurnLeft();
+
+			ResetTextLayout();
 		}
-
-		if (Caret.CaretStart - 1 >= 0) {
-			InEditingText.erase(InEditingText.begin() + Caret.CaretStart - 1);
-		}
-
-		Caret.CaretTurnLeft();
-
-		ResetTextLayout();
 	}
 	void VEditor::DeleteCharacter() {
-		if (ClearSelectArea()) {
-			return;
-		}
+		if (AllowEdit) {
+			if (ClearSelectArea()) {
+				return;
+			}
 
-		if (Caret.CaretStart < InEditingText.size()) {
-			InEditingText.erase(InEditingText.begin() + Caret.CaretStart);
-		}
+			if (Caret.CaretStart < InEditingText.size()) {
+				InEditingText.erase(InEditingText.begin() + Caret.CaretStart);
+			}
 
-		ResetTextLayout();
+			ResetTextLayout();
+		}
 	}
 	void VEditor::AddCharaceter(const wchar_t& Character) {
-		ClearSelectArea();
+		if (AllowEdit) {
+			ClearSelectArea();
 
-		InEditingText.insert(InEditingText.begin() + Caret.CaretStart, Character);
+			InEditingText.insert(InEditingText.begin() + Caret.CaretStart, Character);
 
-		Caret.CaretTurnRight();
+			Caret.CaretTurnRight();
 
-		ResetTextLayout();
+			ResetTextLayout();
+		}
 	}
 
 	bool VEditor::ClearSelectArea() {
-		if (Caret.InSelecting) {
+		if (Caret.InSelecting && AllowEdit) {
 			Caret.InSelecting = false;
 
 			InEditingText.erase(Caret.CaretStart, Caret.CaretEnd - Caret.CaretStart);
@@ -1412,10 +1432,13 @@ namespace Core {
 		if (Message->GetType() == VMessageType::KillFocusMessage) {
 			UserInOperating = false;
 			ShowCaret = false;
+			InMouseDragSelecting = false;
 			InAnimation = true;
 
 			OldTheme = Theme->LocalTheme;
 			TargetTheme = Theme->StaticTheme;
+
+			Caret.ResetSelect();
 
 			Interpolator->Reset();
 			AnimationFrameTimer.Start(0);
@@ -1570,7 +1593,7 @@ namespace Core {
 					CopyClipboard();
 				}
 			}
-			else if (KeyMessage->KeyVKCode == 'X' && !KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == 'X' && !KeyMessage->KeyPrevDown && AllowEdit) {
 				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
 					UsedComboKey = true;
 

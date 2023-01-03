@@ -1110,14 +1110,16 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY) {
+    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit) {
         Editor->SetPlaneText(PlaneText);
         Editor->SetDeltaY(DeltaY);
+        Editor->SetAllowEditStatus(AllowEdit);
     }
     void VMLEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus) {
         std::wstring PlaneText;
-        int          DeltaY = 25;
+        int          DeltaY     = 25;
+        bool         EditStatus = true;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"text") {
@@ -1140,9 +1142,19 @@ namespace VML {
 
                 DeltaY = ElementProperty.second.PropertyAsInt;
             }
+            if (ElementProperty.first == L"allow-edit") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"allow-edit\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                EditStatus = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Object, PlaneText, DeltaY);
+        Builder(Object, PlaneText, DeltaY, EditStatus);
     }
     VMLEditorBuilder::VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus)
