@@ -20,6 +20,9 @@
     <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\control\veditor.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\core\control\vfakecaption.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
@@ -164,10 +167,13 @@
   </ItemGroup>
   <ItemGroup>
     <Filter Include="vuilib">
-      <UniqueIdentifier>{7d11ca98-4ca6-44c7-9a15-7f029ad0682d}</UniqueIdentifier>
+      <UniqueIdentifier>{512d8da3-62c8-4199-83c2-3bb4f7225dc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\core\signal\vbasiccore.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\core\animation\vanimation.h">
       <Filter>vuilib</Filter>
     </ClInclude>
@@ -184,6 +190,9 @@
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\veditor.h">
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vfakecaption.h">
@@ -328,9 +337,6 @@
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\win32base\vwin32base.h">
-      <Filter>vuilib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\signal\vbasiccore.h">
       <Filter>vuilib</Filter>
     </ClInclude>
   </ItemGroup>

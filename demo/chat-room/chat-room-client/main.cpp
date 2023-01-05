@@ -1,8 +1,11 @@
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <comutil.h>
+#include <regex>
 
 #include "../../../include/vml/vmlwidget.h"
 
@@ -240,6 +243,13 @@ private:
 		auto SplitSymbol = IPString.find(":");
 		auto Port		 = IPString.substr(SplitSymbol + 1, IPString.size() - SplitSymbol - 1);
 		auto IP			 = IPString.substr(0, SplitSymbol);
+
+
+		std::regex IPRegx("(25[0-4]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])[.](25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.](25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.](25[0-4]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])");
+		if (!std::regex_match(IP, IPRegx)) {
+			auto Host = gethostbyname(IP.c_str());
+			IP = inet_ntoa(*(struct in_addr*)Host->h_addr_list[0]);
+		}
 
 		IN_ADDR InAddress;
 		inet_pton(AF_INET, IP.c_str(), (PVOID)&InAddress);

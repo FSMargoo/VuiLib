@@ -134,6 +134,7 @@
     <ClCompile Include="..\..\src\core\control\vblurlabel.cc" />
     <ClCompile Include="..\..\src\core\control\vcanvas.cc" />
     <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc" />
+    <ClCompile Include="..\..\src\core\control\veditor.cc" />
     <ClCompile Include="..\..\src\core\control\vfakecaption.cc" />
     <ClCompile Include="..\..\src\core\control\viconbutton.cc" />
     <ClCompile Include="..\..\src\core\control\vimagelabel.cc" />
@@ -197,6 +198,7 @@
     <ClInclude Include="..\..\include\core\control\vblurlabel.h" />
     <ClInclude Include="..\..\include\core\control\vcanvas.h" />
     <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h" />
+    <ClInclude Include="..\..\include\core\control\veditor.h" />
     <ClInclude Include="..\..\include\core\control\vfakecaption.h" />
     <ClInclude Include="..\..\include\core\control\viconbutton.h" />
     <ClInclude Include="..\..\include\core\control\vimagelabel.h" />

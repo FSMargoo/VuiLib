@@ -4,6 +4,7 @@
     <ClCompile Include="pvmainwindow.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="..\..\src\core\animation\vanimation.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
@@ -20,6 +21,9 @@
       <Filter>vuilib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc">
+      <Filter>vuilib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\control\veditor.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\control\vfakecaption.cc">
@@ -163,7 +167,6 @@
     <ClCompile Include="..\..\src\win32base\vwin32base.cc">
       <Filter>vuilib</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mainui.xml" />
@@ -179,12 +182,15 @@
       <UniqueIdentifier>{a3747e26-64c2-4026-82a6-0df5cb7cc248}</UniqueIdentifier>
     </Filter>
     <Filter Include="vuilib">
-      <UniqueIdentifier>{1923de6d-df50-4172-8cc6-ef12d7ec8498}</UniqueIdentifier>
+      <UniqueIdentifier>{85917bbf-86ce-419b-b289-e1583e4e1797}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pvmainwindow.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\signal\vbasiccore.h">
+      <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\animation\vanimation.h">
       <Filter>vuilib</Filter>
@@ -202,6 +208,9 @@
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h">
+      <Filter>vuilib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\core\control\veditor.h">
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\core\control\vfakecaption.h">
@@ -346,9 +355,6 @@
       <Filter>vuilib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\win32base\vwin32base.h">
-      <Filter>vuilib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\signal\vbasiccore.h">
       <Filter>vuilib</Filter>
     </ClInclude>
   </ItemGroup>
