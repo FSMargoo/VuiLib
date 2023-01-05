@@ -29,9 +29,11 @@ git clone https://github.com/FSMargoo/VuiLib.git
 * 若对原样式不满意，可以使用 VSS 来自定义主题和控件样式，实现一键切换软件皮肤等操作。
 ## Visual - 使用 VuiLib 创造的界面
 <div align=center>
-    <img src="./readme-resource/capture 1.png">
-    <img src="./readme-resource/capture 2.png">
-    <img src="./readme-resource/capture 3.png">
+    <img src="./readme-resource/capture 1.png"/>
+    <img src="./readme-resource/capture 2.png"/>
+    <img src="./readme-resource/capture 3.png"/>
+    <img src="./readme-resource/capture 4.png"/>
+    <img src="./readme-resource/capture 5.png"/>
 </div>
 
 ## Support - 支持
