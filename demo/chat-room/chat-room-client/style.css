@@ -1,0 +1,99 @@
+.logo-block {
+    background-color: #222324;
+}
+.login-block {
+    background-color: #292A2B;
+}
+
+.welcome-sub-text {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 17px;
+    font-weight: 300px;
+    text-align: center; 
+}
+.welcome-text {
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+
+.tips-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 19px;
+}
+
+.login-button {
+    font-size: 16px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.59);
+    background-color: rgba(255, 255, 255, 0.10);
+    vertical-align: center;
+}
+.login-button:hover {
+    color: rgba(255, 255, 255, 0.59);
+    background-color: rgba(255, 255, 255, 0.10);
+}
+.login-button:active {
+    color: rgba(255, 255, 255, 0.59);
+    background-color: rgba(255, 255, 255, 0.40);
+}
+
+.info-editor {
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.11);
+    border-color: rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+    vertical-align: center;
+}
+.info-editor:hover {
+    background-color: rgba(0, 0, 0, 0.11);
+    border-color: rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+}
+.info-editor:active {
+    background-color: rgba(0, 0, 0, 0.11);
+    border-color: rgba(0, 0, 0, 0.11);
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+
+.error-text {
+    font-size: 16px;
+    text-align: center;
+    color: rgb(255, 75, 75);
+}
+
+.chat-text {
+    background-color: #222324;
+    border-color: rgba(0, 0, 0, 0.0);
+    color: #ffffff;
+    font-size: 16px;
+}
+.chat-text:hover {
+    background-color: #222324;
+    border-color: rgba(0, 0, 0, 0.0);
+    color: #ffffff;
+}
+.chat-text:active {
+    background-color: #222324;
+    border-color: rgba(0, 0, 0, 0.0);
+    color: #ffffff;
+}
+
+.chating-editor {
+    background-color: #292A2B;
+    border-color: #292A2B;
+    color:#ffffff;
+    font-size: 16px;
+}
+.chating-editor:hover {
+    background-color: #292A2B;
+    border-color: #292A2B;
+    color:#ffffff;
+}
+.chating-editor:active {
+    background-color: #292A2B;
+    border-color: #292A2B;
+    color:#ffffff;
+}

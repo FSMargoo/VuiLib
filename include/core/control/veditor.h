@@ -72,6 +72,8 @@ namespace Core {
 
 		bool GetAllowEditStatus();
 		void SetAllowEditStatus(const bool& Status);
+		
+		void ScrollToEnd();
 
 	public:
 		void LeftClickedDown() override;
@@ -112,7 +114,7 @@ namespace Core {
 		void WriteClipboard();
 
 	public:
-		std::map<ID2D1Effect*, DWRITE_TEXT_RANGE> TextEffect;
+		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>> TextEffect;
 
 	private:
 		VSmartTimer								  CaretTimer;

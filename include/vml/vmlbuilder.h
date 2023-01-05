@@ -197,7 +197,7 @@ namespace VML {
     };
     class VMLLineEditorBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VLineEditor* LineEditor, std::wstring PlaneText);
+        void Builder(Core::VLineEditor* LineEditor, const std::wstring& PlaneText, const std::wstring& LeadText);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                              VMLControlBuildStatus* BuildStatus);

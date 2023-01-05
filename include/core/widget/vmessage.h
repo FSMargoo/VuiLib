@@ -120,10 +120,12 @@ class VIMECharMessage : public VMessage {
 
 class VCheckFocusMessage : public VMessage {
  public:
-	 VPoint FocusPoint;
+	 VPoint	FocusPoint;
+	 void*	Object;
+	 bool	Click;
 
  public:
-	 explicit VCheckFocusMessage(HWND TriggerWidget, const VPoint& Point);
+	 explicit VCheckFocusMessage(HWND TriggerWidget, const VPoint& Point, void* MessageObject, const bool& MouseClick = false);
 };
 
 class VKillFocusMessage : public VMessage {

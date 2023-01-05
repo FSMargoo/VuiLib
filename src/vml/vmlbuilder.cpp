@@ -502,6 +502,7 @@ namespace VML {
 
         TextLabel->SetLineAlignment(Alignment);
         TextLabel->SetParagraphAlignment(LineAlignment);
+
         TextLabel->SetAutoSize(AutoSize);
     }
 
@@ -1082,12 +1083,14 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLLineEditorBuilder::Builder(Core::VLineEditor* LineEditor, std::wstring PlaneText) {
+    void VMLLineEditorBuilder::Builder(Core::VLineEditor* LineEditor, const std::wstring& PlaneText, const std::wstring& LeadText) {
         LineEditor->SetPlaneText(PlaneText);
+        LineEditor->SetLeadText(LeadText);
     }
     void VMLLineEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus) {
         std::wstring PlaneText;
+        std::wstring LeadText;
 
         for (auto &ElementProperty: PropertyValueList) {
             if (ElementProperty.first == L"plane-text") {
@@ -1100,9 +1103,19 @@ namespace VML {
 
                 PlaneText = ElementProperty.second.PropertyAsString;
             }
+            if (ElementProperty.first == L"lead-text") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"lead-text\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                LeadText = ElementProperty.second.PropertyAsString;
+            }
         }
 
-        Builder(Object, PlaneText);
+        Builder(Object, PlaneText, LeadText);
     }
     VMLLineEditorBuilder::VMLLineEditorBuilder(const VMLFinder& RootFinder, Core::VLineEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
                          VMLControlBuildStatus* BuildStatus)

@@ -235,6 +235,17 @@ namespace Core {
 
 		return RenderHandle;
 	}
+	Core::VRenderHandle VUIObject::CallWidgetGetStaticRenderHandle()  const {
+		VRenderHandle RenderHandle;
+
+		RenderHandle._IRenderTarget  = CallWidgetGetDCRenderTarget()._IRenderTarget;
+
+		RenderHandle._IDWriteFactory = VDirectXWriteFactory.GetInstance();
+
+		RenderHandle.Allocator = GetWidgetAllocator();
+
+		return RenderHandle;
+	}
 	Core::VRenderHandle VUIObject::CallWidgetGetDCRenderTarget() const {
 		if (GetParent() != nullptr) {
 			return GetParent()->CallWidgetGetDCRenderTarget();
@@ -397,6 +408,11 @@ namespace Core {
 					break;
 				}
 				}
+
+				VCheckFocusMessage* CheckFocus = new VCheckFocusMessage(CallWidgetGetHWND(), MousePosition, (void*)this, true);
+
+				CallWidgetSendMessage(CheckFocus);
+				delete CheckFocus;
 			}
 
 			if (ObjectVisual.Stats != VUIObjectUIStats::OnFocus && ObjectVisual.Stats != Hidden) {
@@ -410,7 +426,7 @@ namespace Core {
 
 				InFocus.Emit();
 
-				VCheckFocusMessage* CheckFocus = new VCheckFocusMessage(CallWidgetGetHWND(), MousePosition);
+				VCheckFocusMessage* CheckFocus = new VCheckFocusMessage(CallWidgetGetHWND(), MousePosition, (void*)this);
 
 				CallWidgetSendMessage(CheckFocus);
 				delete CheckFocus;
@@ -637,7 +653,7 @@ namespace Core {
 		switch (Message->GetType()) {
 		case VMessageType::CheckLocalFocusMessage: {
 			FocusMessage = new VCheckFocusMessage(*(static_cast<VCheckFocusMessage*>(Message)));
-				static_cast<VCheckFocusMessage*>(FocusMessage)->FocusPoint.Offset(-GetRegion().Left, -GetRegion().Top);
+			static_cast<VCheckFocusMessage*>(FocusMessage)->FocusPoint.Offset(-GetRegion().Left, -GetRegion().Top);
 
 			break;
 		}

@@ -1,5 +1,4 @@
-﻿// #define _SILENCE_AMP_DEPRECATION_WARNINGS
-// #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+﻿// #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 #include "./include/core/control/vlineeditor.h"
 #include "./include/core/control/vswitchgroup.h"

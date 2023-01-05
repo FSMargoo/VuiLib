@@ -140,6 +140,10 @@ namespace Core {
 	void VTextLabel::SetPlaneText(const std::wstring& PlaneText) {
 		Theme->PlaneText = PlaneText;
 
+		if (AutoSize) {
+			ResizeByText();
+		}
+
 		Update();
 	}
 	void VTextLabel::SetTextColor(const VColor& TextColor) {

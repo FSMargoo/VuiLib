@@ -375,6 +375,11 @@ namespace Core {
          */
          Core::VRenderHandle CallWidgetGetRenderHandle() const;
          /*
+          * CallWidgetGetStaticRenderHandle function:
+          *     Description : The function will call the widget to get the render handle
+         */
+         Core::VRenderHandle CallWidgetGetStaticRenderHandle() const;
+         /*
           * CallWidgetGetDCRenderTarget function:
           *     Description : The function will call the widget to get the render handle
          */

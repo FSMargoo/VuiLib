@@ -934,6 +934,7 @@ namespace VSS {
             if (TargetControl->GetAutoSizeStatus()) {
                 TargetControl->ResizeByText();
             }
+
             TargetControl->Update();
         }
     }
@@ -1611,10 +1612,11 @@ namespace VSS {
                             }
                         }
                     }
-                    if (Property.first == L"text-align") {
-                        for (auto &PropertyValue: Property.second.ValueList) {
+                    if (Property.first == L"vertical-align") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
                             if (PropertyValue.Type == VSSPropertyType::StringValue) {
-                                Theme->LabelFont->SetLineAlignment(VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+                                Theme->LabelFont->SetParagraphAlignment(
+                                    VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
                             }
                         }
                     }

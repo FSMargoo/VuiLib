@@ -966,8 +966,14 @@ namespace Core {
 
 		TextLayout->HitTestPoint(X, Y, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
-		CaretStart = HitTestMetrics.textPosition;
-		CaretEnd   = HitTestMetrics.textPosition;
+		if (IsTrailingHit) {
+			CaretStart = HitTestMetrics.textPosition + HitTestMetrics.length;
+		}
+		else {
+			CaretStart = HitTestMetrics.textPosition;
+		}
+
+		CaretEnd = CaretStart;
 	}
 	void VEditorCaret::SetCaretSelectionByMousePosition(const int& X, const int& Y, IDWriteTextLayout* TextLayout) {
 		BOOL					IsTrailingHit = FALSE;
@@ -975,6 +981,9 @@ namespace Core {
 		DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
 		TextLayout->HitTestPoint(X, Y, &IsTrailingHit, &IsInside, &HitTestMetrics);
+		if (IsTrailingHit) {
+			HitTestMetrics.textPosition += HitTestMetrics.length;
+		}
 
 		if (!InSelecting) {
 			if (HitTestMetrics.textPosition > CaretEnd) {
@@ -1150,7 +1159,7 @@ namespace Core {
 			LocalTextLayout.GetAddressOf());
 
 		for (auto& Effect : TextEffect) {
-			LocalTextLayout->SetDrawingEffect(Effect.first, Effect.second);
+			LocalTextLayout->SetDrawingEffect(std::get<0>(Effect), std::get<1>(Effect));
 		}
 
 		Update();
@@ -1161,8 +1170,13 @@ namespace Core {
 	void VEditor::SetAllowEditStatus(const bool& Status) {
 		AllowEdit = Status;
 	}
+	void VEditor::ScrollToEnd() {
+		OffsetY = GetMaxOffsetY();
+	}
 	void VEditor::SetPlaneText(const std::wstring& PlaneText) {
 		InEditingText = PlaneText;
+		Caret.CaretStart = PlaneText.size();
+		Caret.CaretEnd   = Caret.CaretStart;
 
 		ResetTextLayout();
 	}
@@ -1216,7 +1230,6 @@ namespace Core {
 		AnimationFrameTimer.Start(0);
 
 		CallWidgetSetFocusID(ObjectKernel.GlobalID);
-		CallWidgetLockFocusID();
 
 		Update();
 	}
@@ -1230,7 +1243,6 @@ namespace Core {
 		AnimationFrameTimer.Start(0);
 
 		CallWidgetSetFocusID(ObjectKernel.GlobalID);
-		CallWidgetLockFocusID();
 
 		Update();
 	}
@@ -1350,10 +1362,14 @@ namespace Core {
 	}
 	int VEditor::GetMaxOffsetY() {
 		DWRITE_TEXT_METRICS Metrics;
-
 		LocalTextLayout->GetMetrics(&Metrics);
 
-		return GetHeight() - Metrics.height - Theme->LabelFont->GetTextSize() - Theme->LocalTheme.BorderThickness - Theme->LocalTheme.Radius.X;
+		if (Metrics.height + Theme->LabelFont->GetTextSize() > GetHeight()) {
+			return GetHeight() - Metrics.height - Theme->LabelFont->GetTextSize() - Theme->LocalTheme.BorderThickness - Theme->LocalTheme.Radius.X;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	void VEditor::CopyClipboard() {
@@ -1429,11 +1445,14 @@ namespace Core {
 	}
 
 	void VEditor::OnMessage(VMessage* Message) {
-		if (Message->GetType() == VMessageType::KillFocusMessage) {
+		if (Message->GetType() == VMessageType::KillFocusMessage && !UserInOperating) {
 			UserInOperating = false;
 			ShowCaret = false;
 			InMouseDragSelecting = false;
 			InAnimation = true;
+
+			Caret.CaretStart = 0;
+			Caret.CaretEnd   = Caret.CaretStart;
 
 			OldTheme = Theme->LocalTheme;
 			TargetTheme = Theme->StaticTheme;
@@ -1444,8 +1463,31 @@ namespace Core {
 			AnimationFrameTimer.Start(0);
 
 			Update();
+		}
+		if (Message->GetType() == VMessageType::CheckLocalFocusMessage) {
+			auto* CheckFocus = static_cast<VCheckFocusMessage*>(Message);
+			
+			if (CheckFocus->Object != this && UserInOperating) {
+				if (CheckFocus->Click) {
+					UserInOperating = false;
+					ShowCaret = false;
+					InAnimation = true;
 
-			CallWidgetUnlockFocusID();
+					Caret.CaretStart = 0;
+					Caret.CaretEnd = Caret.CaretStart;
+
+					OldTheme = Theme->LocalTheme;
+					TargetTheme = Theme->StaticTheme;
+
+					Interpolator->Reset();
+					AnimationFrameTimer.Start(0);
+
+					Update();
+				}
+
+				HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+				SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+			}
 		}
 		if (Message->GetType() == VMessageType::MouseClickedMessage) {
 			auto MouseMessage = static_cast<VMouseClickedMessage*>(Message);
@@ -1463,8 +1505,6 @@ namespace Core {
 				AnimationFrameTimer.Start(0);
 
 				Update();
-
-				CallWidgetUnlockFocusID();
 			}
 			if (MouseMessage->ClickedKey == Left && MouseMessage->ClickedMethod == Up) {
 				InMouseDragSelecting = false;
@@ -1535,11 +1575,7 @@ namespace Core {
 
 				TextOnChange.Emit(InEditingText);
 			}
-		}
-		if (Message->GetType() == VMessageType::KeyClickedMessage && UserInOperating) {
-			auto KeyMessage = static_cast<VKeyClickedMessage*>(Message);
-
-			if (KeyMessage->KeyVKCode == VK_BACK && KeyMessage->KeyPrevDown && BackoffTimer.End()) {
+			else {
 				if (FirstBackOff) {
 					FirstBackOff = false;
 
@@ -1551,7 +1587,11 @@ namespace Core {
 
 				BackCharacter();
 			}
-			else if (KeyMessage->KeyVKCode == VK_DELETE) {
+		}
+		if (Message->GetType() == VMessageType::KeyClickedMessage && UserInOperating) {
+			auto KeyMessage = static_cast<VKeyClickedMessage*>(Message);
+
+			if (KeyMessage->KeyVKCode == VK_DELETE) {
 				DeleteCharacter();
 
 				TextOnChange.Emit(InEditingText);

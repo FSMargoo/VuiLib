@@ -1179,8 +1179,11 @@ namespace Core {
 	const std::wstring VLineEditor::GetPlaneText() {
 		return InputStringCache;
 	}
-	const int         VLineEditor::GetCurrentCursorPosition() {
+	const int VLineEditor::GetCurrentCursorPosition() {
 		return CursorPosition;
+	}
+	void VLineEditor::SetLeadText(const std::wstring& Text) {
+		LeadText = Text;
 	}
 
 	VTextEditorTheme* VLineEditor::GetTheme() {
@@ -1208,22 +1211,40 @@ namespace Core {
 
 		IDWriteTextLayout* TextLayout;
 
-		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-			InputStringCache.c_str(),
-			InputStringCache.size(),
-			Theme->LabelFont->GetDXObject(),
-			INT_MAX,
-			GetHeight(),
-			&TextLayout
-		) != S_OK, L"Failed to create TextLayout object!");
+		if (!InputStringCache.empty()) {
+			VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+				InputStringCache.c_str(),
+				InputStringCache.size(),
+				Theme->LabelFont->GetDXObject(),
+				INT_MAX,
+				GetHeight(),
+				&TextLayout
+			) != S_OK, L"Failed to create TextLayout object!");
 
-		if (InSelectMode) {
-			TextLayout->SetDrawingEffect(SelectedColor.GetDxBrush(), TextSelectRange);
+			if (InSelectMode) {
+				TextLayout->SetDrawingEffect(SelectedColor.GetDxBrush(), TextSelectRange);
+			}
+		}
+		else {
+			VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+				LeadText.c_str(),
+				LeadText.size(),
+				Theme->LabelFont->GetDXObject(),
+				INT_MAX,
+				GetHeight(),
+				&TextLayout
+			) != S_OK, L"Failed to create TextLayout object!");
 		}
 
 		TextCanvas.BeginDraw();
 		TextCanvas.Clear(VColor(0.f, 0.f, 0.f, 0.f));
-		TextCanvas.GetDXObject()->DrawTextLayout({ static_cast<float>(OffsetX), 0 }, TextLayout, TextBrush.GetDxBrush());
+		if (!InputStringCache.empty()) {
+			TextCanvas.GetDXObject()->DrawTextLayout({ static_cast<float>(OffsetX), 0 }, TextLayout, TextBrush.GetDxBrush());
+		}
+		else {
+			VSolidBrush TextBrush(Theme->StaticTheme.TextColor, CallWidgetGetRenderHandle());
+			TextCanvas.GetDXObject()->DrawTextLayout({ static_cast<float>(OffsetX), 0 }, TextLayout, TextBrush.GetDxBrush());
+		}
 		TextCanvas.EndDraw();
 
 		Painter->DrawCanvas({ static_cast<int>(Theme->LocalTheme.BorderThickness), 0,

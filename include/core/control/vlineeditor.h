@@ -22,6 +22,8 @@ private:
     VLabelStatusTheme       OldTheme;
     VLabelStatusTheme       TargetTheme;
 
+    std::wstring            LeadText;
+
     bool                    InAnimation = false;
 
     unsigned int            TextPosition = 0;
@@ -74,6 +76,8 @@ public:
     void               SetPlaneText(const std::wstring& PlaneText);
     const std::wstring GetPlaneText();
     const int          GetCurrentCursorPosition();
+
+    void               SetLeadText(const std::wstring& Text);
 
 public:
     void LeftClickedDown() override;

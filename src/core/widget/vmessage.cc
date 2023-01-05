@@ -72,11 +72,13 @@ VIMECharMessage::VIMECharMessage(HWND TriggerWidget, wchar_t CharInputed)
 
     MessageTriggerWidget = TriggerWidget;
 }
-VCheckFocusMessage::VCheckFocusMessage(HWND TriggerWidget, const VPoint& Point)
+VCheckFocusMessage::VCheckFocusMessage(HWND TriggerWidget, const VPoint& Point, void* MessageObject, const bool& MouseClick)
 	: VMessage(VMessageType::CheckLocalFocusMessage) {
 	FocusPoint = Point;
 
+	Click				 = MouseClick;
     MessageTriggerWidget = TriggerWidget;
+	Object				 = MessageObject;
 }
 VKillFocusMessage::VKillFocusMessage(HWND TriggerWidget)
 	: VMessage(VMessageType::KillFocusMessage) {
