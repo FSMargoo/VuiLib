@@ -2,7 +2,6 @@
     <background-image type="imagelabel" src="./background.png" width="@fill" height="@fill"/>
 
     <blur-label type="blurlabel" width="@fill" height="@fill" class="background-blur-label"/>
-
     <welcome-text-view type="polygon-view" x="@ratio(0.5)" y="@ratio(0.35)" width="@scale(0.52)" height="@scale(0.34)" points="@parallelogram(0.385, 0.0, 0.0, 0.0)" class="welcome-ui-view">
         <background type="textlabel" width="@fill" height="@fill" class="welcome-backgruond"/>
         <welcome-use-text type="textlabel" x="@ratio(0.30)" y="@ratio(0.35)" width="@scale(0.62)" height="@scale(0.20)" size-layout="@scale(0.14)" text="欢迎使用" class="welcome-use-text"/>

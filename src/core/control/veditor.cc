@@ -1181,6 +1181,9 @@ namespace Core {
 		for (auto& Effect : TextEffect) {
 			LocalTextLayout->SetDrawingEffect(std::get<0>(Effect), std::get<1>(Effect));
 		}
+		for (auto& Effect : TextStyle) {
+			LocalTextLayout->SetFontStyle(std::get<0>(Effect), std::get<1>(Effect));
+		}
 
 		Update();
 	}
@@ -1797,12 +1800,12 @@ namespace Core {
 				return;
 			}
 
-			if (IMECharMessage->IMEChar != L'\b') {
+			if (IMECharMessage->IMEChar != L'\b' && IMECharMessage->IMEChar != L'\x13') {
 				TextBeforeChange.Emit(InEditingText);
 
 				AddCharaceter(IMECharMessage->IMEChar);
 			}
-			else {
+			else if (IMECharMessage->IMEChar == L'\b') {
 				if (FirstKeyPress) {
 					FirstKeyPress		= false;
 					LastKeyPressTime	= time(NULL);

@@ -122,7 +122,8 @@ namespace Core {
 		void WriteClipboard();
 
 	public:
-		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>> TextEffect;
+		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>>		TextEffect;
+		std::vector<std::tuple<DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE>>	TextStyle;
 
 	protected:
 		VSmartTimer								  CaretTimer;

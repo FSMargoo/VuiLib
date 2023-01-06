@@ -578,10 +578,23 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 _lexical_info::seal_lexical_token _lexical_core::view_token() {
     bool update_status_cache                 = lexical_update_line;
     seal_lexical_type_info kernel_cache      = core_info;
+
+	kernel_cache.lexical_index	= core_info.lexical_index;
+	kernel_cache.lexical_eof	= core_info.lexical_eof;
+	kernel_cache.lexical_line	= core_info.lexical_line;
+
+	kernel_cache.lexical_token.cache_token	= core_info.lexical_token.cache_token;
+	kernel_cache.lexical_token.token_string	= core_info.lexical_token.token_string;
+
     auto token_cache = get_token();
 
-    core_info           = kernel_cache;
-    lexical_update_line = update_status_cache;
+    core_info.lexical_index = kernel_cache.lexical_index;
+	core_info.lexical_eof	= kernel_cache.lexical_eof;
+	core_info.lexical_line	= kernel_cache.lexical_line;
+    lexical_update_line		= update_status_cache;
+
+	core_info.lexical_token.cache_token		= kernel_cache.lexical_token.cache_token;
+	core_info.lexical_token.token_string	= kernel_cache.lexical_token.token_string;
 
     return token_cache;
 }

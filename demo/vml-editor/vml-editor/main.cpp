@@ -9,6 +9,7 @@ public:
 	Core::VColor		LabelColor;
 	Core::VColor		TypeColor;
 	Core::VColor		MetaCallColor;
+	Core::VColor		CommentColor;
 
 	Core::VSolidBrush	SymbolBrush;
 	Core::VSolidBrush	KeyWorldBrush;
@@ -16,6 +17,7 @@ public:
 	Core::VSolidBrush	TypeBrush;
 	Core::VSolidBrush	MetaCallBrush;
 	Core::VSolidBrush	LabelBrush;
+	Core::VSolidBrush	CommentBrush;
 
 	std::vector<std::wstring>		LastString;
 	std::vector<Core::VEditorCaret> LastCaret;
@@ -29,12 +31,14 @@ public:
 			LabelColor(VKits::VSSColorHelper::HexToColor(L"#E5C07B")),
 			MetaCallColor(VKits::VSSColorHelper::HexToColor(L"#E06C75")),
 			TypeColor(VKits::VSSColorHelper::HexToColor(L"#98C379")),
+			CommentColor(VKits::VSSColorHelper::HexToColor(L"#5C6370")),
 			SymbolBrush(SymbolColor, CallWidgetGetStaticRenderHandle()),
 			StringBrush(StringColor, CallWidgetGetStaticRenderHandle()),
 			KeyWorldBrush(KeyWorldColor, CallWidgetGetStaticRenderHandle()),
 			MetaCallBrush(MetaCallColor, CallWidgetGetStaticRenderHandle()),
 			LabelBrush(LabelColor, CallWidgetGetStaticRenderHandle()),
-			TypeBrush(TypeColor, CallWidgetGetStaticRenderHandle()) {
+			TypeBrush(TypeColor, CallWidgetGetStaticRenderHandle()),
+			CommentBrush(CommentColor, CallWidgetGetStaticRenderHandle()) {
 		auto Theme = GetTheme();
 
 		SetAllowFontSizeDragStatus(true);
@@ -45,7 +49,7 @@ public:
 
 		delete Theme->LabelFont;
 
-		Theme->LabelFont = new Core::VFont(L"Jetbrains Mono", Core::VFont::FontWeight::WEIGHT_NORMAL, Core::VFont::FontStyle::STYLE_NORMAL, Core::VFont::FontStretch::STRETCH_NORMAL,
+		Theme->LabelFont = new Core::VFont(L"Consolas", Core::VFont::FontWeight::WEIGHT_NORMAL, Core::VFont::FontStyle::STYLE_NORMAL, Core::VFont::FontStretch::STRETCH_NORMAL,
 			18, L"ZH-CN");
 
 		Theme->ActiveTheme = Theme->LocalTheme;
@@ -63,12 +67,14 @@ public:
 			LabelColor(VKits::VSSColorHelper::HexToColor(L"#E5C07B")),
 			MetaCallColor(VKits::VSSColorHelper::HexToColor(L"#E06C75")),
 			TypeColor(VKits::VSSColorHelper::HexToColor(L"#98C379")),
+			CommentColor(VKits::VSSColorHelper::HexToColor(L"#5C6370")),
 			SymbolBrush(SymbolColor, CallWidgetGetStaticRenderHandle()),
 			StringBrush(StringColor, CallWidgetGetStaticRenderHandle()),
 			KeyWorldBrush(KeyWorldColor, CallWidgetGetStaticRenderHandle()),
 			MetaCallBrush(MetaCallColor, CallWidgetGetStaticRenderHandle()),
 			LabelBrush(LabelColor, CallWidgetGetStaticRenderHandle()),
-			TypeBrush(TypeColor, CallWidgetGetStaticRenderHandle()) {
+			TypeBrush(TypeColor, CallWidgetGetStaticRenderHandle()),
+			CommentBrush(CommentColor, CallWidgetGetStaticRenderHandle()) {
 		auto Theme = GetTheme();
 
 		SetAllowFontSizeDragStatus(true);
@@ -79,7 +85,7 @@ public:
 
 		delete Theme->LabelFont;
 
-		Theme->LabelFont = new Core::VFont(L"Jetbrains Mono", Core::VFont::FontWeight::WEIGHT_NORMAL, Core::VFont::FontStyle::STYLE_NORMAL, Core::VFont::FontStretch::STRETCH_NORMAL,
+		Theme->LabelFont = new Core::VFont(L"Consolas", Core::VFont::FontWeight::WEIGHT_NORMAL, Core::VFont::FontStyle::STYLE_NORMAL, Core::VFont::FontStretch::STRETCH_NORMAL,
 			18, L"ZH-CN");
 
 		Theme->ActiveTheme	= Theme->LocalTheme;
@@ -95,20 +101,30 @@ public:
 		if (NewChar == L'\"') {
 			auto Text = GetPlaneText();
 
-			if (Text.size() > Caret.CaretStart && Text[Caret.CaretStart] != L'\"') {
+			if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'\"') {
 				*Flag = true;
 			}
-			else if (Text.size() > Caret.CaretStart) {
+			else if (Text.size() > Caret.CaretStart - 1) {
 				*Flag = false;
 			}
 		}
-		if (NewChar == L'\b') {
+		if (NewChar == L'>') {
 			auto Text = GetPlaneText();
 
-			if (Text.size() > Caret.CaretStart && Text[Caret.CaretStart - 1] == L'\"' && Text[Caret.CaretStart] == L'\"') {
+			if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'<') {
+				*Flag = true;
+			}
+			else if (Text.size() > Caret.CaretStart - 1) {
+				*Flag = false;
+			}
+		}
+		if (NewChar == L'\b' && GetPlaneText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0) {
+			auto Text = GetPlaneText();
+
+			if (Text[Caret.CaretStart - 1] == L'\"' && Text[Caret.CaretStart] == L'\"') {
 				Text.erase(Text.begin() + Caret.CaretStart);
 			}
-			if (Text.size() > Caret.CaretStart && Text[Caret.CaretStart - 1] == L'<' && Text[Caret.CaretStart] == L'>') {
+			if (Text[Caret.CaretStart - 1] == L'<' && Text[Caret.CaretStart] == L'>') {
 				Text.erase(Text.begin() + Caret.CaretStart);
 			}
 
@@ -163,6 +179,7 @@ public:
 		auto InType		= false;
 
 		TextEffect.clear();
+		TextStyle.clear();
 
 		while (!Lexical.is_eof()) {
 			DWRITE_TEXT_RANGE Range;
@@ -171,7 +188,36 @@ public:
 
 			if (Token.cache_token == LESS_THAN_TOKEN || Token.cache_token == MORE_THAN_TOKEN ||
 				Token.cache_token == EQUAL_SIGN_TOKEN || Token.cache_token == SLASH_TOKEN) {
-				TextEffect.push_back(std::pair<ID2D1Effect*, DWRITE_TEXT_RANGE>((ID2D1Effect*)SymbolBrush.GetDxBrush(), Range));
+				if (Token.cache_token == LESS_THAN_TOKEN) {
+					LastToken = Token;
+					Token	  = Lexical.view_token();
+				}
+
+				if (Token.cache_token == EXCLAMATION_MARK && LastToken.cache_token == LESS_THAN_TOKEN) {
+					while (!Lexical.is_eof()) {
+						Token = Lexical.get_token();
+
+						if (Token.cache_token == DOUBLE_MINUS_TOKEN) {
+							Token = Lexical.get_token();
+
+							if (Token.cache_token == MORE_THAN_TOKEN) {
+								break;
+							}
+						}
+					}
+
+					Range.length = Lexical.get_index() - Range.startPosition;
+
+					TextEffect.push_back(std::pair<ID2D1Effect*, DWRITE_TEXT_RANGE>((ID2D1Effect*)CommentBrush.GetDxBrush(), Range));
+					TextStyle.push_back(std::pair<DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE>(DWRITE_FONT_STYLE::DWRITE_FONT_STYLE_ITALIC, Range));
+				}
+				else {
+					TextEffect.push_back(std::pair<ID2D1Effect*, DWRITE_TEXT_RANGE>((ID2D1Effect*)SymbolBrush.GetDxBrush(), Range));
+				}
+
+				Token = Lexical.get_token();
+
+				continue;
 			}
 			if (Token.cache_token == UNKNOW_TOKEN && (LastToken.cache_token == LESS_THAN_TOKEN || LastToken.cache_token == SLASH_TOKEN)) {
 				TextEffect.push_back(std::pair<ID2D1Effect*, DWRITE_TEXT_RANGE>((ID2D1Effect*)LabelBrush.GetDxBrush(), Range));
