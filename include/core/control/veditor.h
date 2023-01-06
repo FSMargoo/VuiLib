@@ -72,6 +72,8 @@ namespace Core {
 
 		bool GetAllowEditStatus();
 		void SetAllowEditStatus(const bool& Status);
+		bool GetAllowFontSizeDragStatus();
+		void SetAllowFontSizeDragStatus(const bool& Status);
 		
 		void ScrollToEnd();
 
@@ -92,35 +94,43 @@ namespace Core {
 		VTextEditorTheme* GetTheme();
 
 	public:
-		VSignal<const std::wstring&> TextOnChange;
+		VSignal<const std::wstring&>	TextOnChange;
+		VSignal<const std::wstring&>	TextBeforeChange;
+		VSignal<const wchar_t&>			PushNewCharacter;
+		VSignal<const wchar_t&, bool*>	CheckInput;
 
-	private:
+	protected:
+		void ResetOffsetYByCaret();
+
+	protected:
 		bool ClearSelectArea();
 		void BackCharacter();
 		void DeleteCharacter();
 		void AddCharaceter(const wchar_t& Character);
 
-	private:
+	protected:
 		int GetMaxOffsetY();
 
-	private:
+	protected:
 		void SetScroller();
 
-	private:
+	protected:
 		bool IsASCIICharacter(const wchar_t& ASCIICode);
 
-	private:
+	protected:
 		void CopyClipboard();
 		void WriteClipboard();
 
 	public:
 		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>> TextEffect;
 
-	private:
+	protected:
 		VSmartTimer								  CaretTimer;
 		bool									  ShowCaret;
 		bool									  UserInOperating;
-		bool									  FirstBackOff;
+		bool									  FirstKeyPress;
+
+		bool									  DragResetFontSize;
 
 		long int								  OffsetY;
 		long int								  OffsetX;
@@ -132,17 +142,17 @@ namespace Core {
 
 		Microsoft::WRL::ComPtr<IDWriteTextLayout> LocalTextLayout;
 
-	private:
+	protected:
 		bool InMouseDragSelecting;
 		bool UsedComboKey;
 
-	private:
+	protected:
 		VBasicTimer             AnimationFrameTimer;
-		VBasicTimer				BackoffTimer;
-		VBasicTimer				BackoffResetTimer;
+		VBasicTimer				KeyPressTimer;
+		VBasicTimer				KeyPressResetTimer;
 		VAnimationInterpolator* Interpolator;
 
-		time_t					LastBackOffTime;
+		time_t					LastKeyPressTime;
 		int						YDelta;
 
 		VLabelStatusTheme       OldTheme;

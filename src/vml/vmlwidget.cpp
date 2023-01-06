@@ -1140,6 +1140,33 @@ namespace VML {
                                 }
                             }
                         }
+                        if (Element.PropertyExsit(L"check-input")) {
+                            if (Element.NodeValue[L"check-input"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"check-input"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Editor->CheckInput.Connect((Core::VSignal<const wchar_t &, bool *>*)MetaFunctionList[NativeCallName], &Core::VSignal<const wchar_t&, bool*>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"before-input")) {
+                            if (Element.NodeValue[L"check-input"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"before-input"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Editor->TextBeforeChange.Connect((Core::VSignal<const std::wstring&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const std::wstring&>::Emit);
+                                }
+                            }
+                        }
+                        if (Element.PropertyExsit(L"new-char")) {
+                            if (Element.NodeValue[L"new-char"].PropertyType == VMLPropertyType::NativeCall) {
+                                auto NativeCallName = Element.NodeValue[L"new-char"].NativeCallMethodName;
+
+                                if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end()) {
+                                    Editor->PushNewCharacter.Connect((Core::VSignal<const wchar_t&>*)MetaFunctionList[NativeCallName], &Core::VSignal<const wchar_t&>::Emit);
+                                }
+                            }
+                        }
 
                         if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok) {
                             Result.Status = VMLWidgetVMLLoadStats::Failed;

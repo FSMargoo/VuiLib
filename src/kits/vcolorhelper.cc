@@ -25,7 +25,10 @@ namespace VKits {
         }
     }
     Core::VColor VSSColorHelper::HexToColor(const std::wstring& HexString) {
-        auto RawHexString = HexString.substr(1, HexString.size() - 1);
+        std::wstring Hex = HexString;
+        HexStringLowerToUpper(Hex);
+
+        auto RawHexString = Hex.substr(1, HexString.size() - 1);
         short ColorArrary[3] = { 0, 0, 0 };
 
         for (short Count = 2; Count <= RawHexString.size(); Count += 2) {

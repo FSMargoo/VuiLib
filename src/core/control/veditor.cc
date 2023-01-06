@@ -810,6 +810,11 @@ namespace Core {
 		}
 	}
 	void VEditorCaret::CaretTurnLineHead(IDWriteTextLayout* TextLayout) {
+		if (CaretStart != CaretEnd) {
+			CaretStart	= max(CaretStart, CaretEnd);
+			CaretEnd	= CaretStart;
+		}
+
 		DWRITE_TEXT_METRICS				 TextMetrics;
 		std::vector<DWRITE_LINE_METRICS> LineMetrics;
 
@@ -840,6 +845,11 @@ namespace Core {
 		CaretEnd   = CaretStart;
 	}
 	void VEditorCaret::CaretTurnLineEnd(IDWriteTextLayout* TextLayout) {
+		if (CaretStart != CaretEnd) {
+			CaretStart	= max(CaretStart, CaretEnd);
+			CaretEnd	= CaretStart;
+		}
+
 		DWRITE_TEXT_METRICS				 TextMetrics;
 		std::vector<DWRITE_LINE_METRICS> LineMetrics;
 
@@ -947,13 +957,19 @@ namespace Core {
 		CaretEnd   = CaretStart;
 	}
 	void VEditorCaret::CaretTurnLeft() {
-		if (CaretStart - 1 >= 0) {
+		if (CaretStart != CaretEnd) {
+			CaretEnd = CaretStart;
+		}
+		else if (CaretStart - 1 >= 0) {
 			CaretStart -= 1;
 			CaretEnd    = CaretStart;
 		}
 	}
 	void VEditorCaret::CaretTurnRight() {
-		if (CaretEnd + 1 <= CacheTargetPtr->size()) {
+		if (CaretStart != CaretEnd) {
+			CaretStart = CaretEnd;
+		}
+		else if (CaretEnd + 1 <= CacheTargetPtr->size()) {
 			CaretEnd  += 1;
 			CaretStart = CaretEnd;
 		}
@@ -1090,7 +1106,7 @@ namespace Core {
 
 		Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-		FirstBackOff	= true;
+		FirstKeyPress	= true;
 
 		UsedComboKey	= false;
 
@@ -1099,9 +1115,11 @@ namespace Core {
 
 		UserInOperating = false;
 
-		Caret.CacheTargetPtr = &InEditingText;
-		Caret.InSelecting	 = false;
-		InMouseDragSelecting = false;
+		Caret.CacheTargetPtr	= &InEditingText;
+		Caret.InSelecting		= false;
+		InMouseDragSelecting	= false;
+
+		DragResetFontSize		= false;
 
 		ResetTextLayout();
 
@@ -1116,7 +1134,7 @@ namespace Core {
 		
 		Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-		FirstBackOff	= true;
+		FirstKeyPress	= true;
 
 		UsedComboKey	= false;
 
@@ -1125,9 +1143,11 @@ namespace Core {
 
 		UserInOperating = false;
 
-		Caret.CacheTargetPtr = &InEditingText;
-		Caret.InSelecting	 = false;
-		InMouseDragSelecting = false;
+		Caret.CacheTargetPtr	= &InEditingText;
+		Caret.InSelecting		= false;
+		InMouseDragSelecting	= false;
+
+		DragResetFontSize		= false;
 
 		Resize(Width, Height);
 
@@ -1170,6 +1190,12 @@ namespace Core {
 	void VEditor::SetAllowEditStatus(const bool& Status) {
 		AllowEdit = Status;
 	}
+	bool VEditor::GetAllowFontSizeDragStatus() {
+		return DragResetFontSize;
+	}
+	void VEditor::SetAllowFontSizeDragStatus(const bool& Status) {
+		DragResetFontSize = Status;
+	}
 	void VEditor::ScrollToEnd() {
 		OffsetY = GetMaxOffsetY();
 	}
@@ -1179,6 +1205,8 @@ namespace Core {
 		Caret.CaretEnd   = Caret.CaretStart;
 
 		ResetTextLayout();
+
+		TextOnChange.Emit(GetPlaneText());
 	}
 
 	void VEditor::OnPaint(VCanvasPainter* Painter) {
@@ -1252,8 +1280,8 @@ namespace Core {
 	}
 
 	void VEditor::CheckFrame() {
-		if (BackoffResetTimer.End() && time(NULL) - LastBackOffTime >= 1000) {
-			FirstBackOff = true;
+		if (KeyPressResetTimer.End() && time(NULL) - LastKeyPressTime >= 1000) {
+			FirstKeyPress = true;
 		}
 		if (UserInOperating) {
 			auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
@@ -1331,7 +1359,16 @@ namespace Core {
 			ResetTextLayout();
 		}
 	}
+	void VEditor::ResetOffsetYByCaret() {
+		auto CaretY = Caret.GetCaretPosition(LocalTextLayout.Get()).Y;
 
+		if (CaretY >= GetHeight()) {
+			OffsetY = CaretY;
+		}
+		else {
+			OffsetY = 0;
+		}
+	}
 	bool VEditor::ClearSelectArea() {
 		if (Caret.InSelecting && AllowEdit) {
 			Caret.InSelecting = false;
@@ -1351,21 +1388,27 @@ namespace Core {
 	}
 
 	void VEditor::SetScroller() {
-		auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
+		auto CaretPosition	= Caret.GetCaretPosition(LocalTextLayout.Get());
 
-		if (CaretPosition.Y + Theme->LabelFont->GetTextSize() + 4 >= GetHeight() - OffsetY) {
-			OffsetY = -(CaretPosition.Y + Theme->LabelFont->GetTextSize() + 4 - GetHeight()) - Theme->LabelFont->GetTextSize() - 4;
+		if (CaretPosition.Y <= -OffsetY) {
+			OffsetY = -CaretPosition.Y;
 		}
-		if (CaretPosition.Y < -OffsetY) {
-			OffsetY = OffsetY - (OffsetY + CaretPosition.Y);
+		if (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 >= -OffsetY + GetHeight()) {
+			OffsetY -= (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 - (-OffsetY + GetHeight()));
 		}
 	}
 	int VEditor::GetMaxOffsetY() {
 		DWRITE_TEXT_METRICS Metrics;
 		LocalTextLayout->GetMetrics(&Metrics);
 
+		auto CaretCopy			= Caret;
+		CaretCopy.CaretStart	= InEditingText.size() + 1;
+		CaretCopy.CaretEnd		= InEditingText.size() + 1;
+
+		auto Result = CaretCopy.GetCaretPosition(LocalTextLayout.Get()).Y + Theme->LabelFont->GetTextSize() + Theme->LabelFont->GetTextSize();
+
 		if (Metrics.height + Theme->LabelFont->GetTextSize() > GetHeight()) {
-			return GetHeight() - Metrics.height - Theme->LabelFont->GetTextSize() - Theme->LocalTheme.BorderThickness - Theme->LocalTheme.Radius.X;
+			return -(Result - Theme->LabelFont->GetTextSize());
 		}
 		else {
 			return 0;
@@ -1418,8 +1461,8 @@ namespace Core {
 				if (Memory != NULL) {
 					InEditingText.insert(Caret.CaretStart, CString, StringCount);
 
-					Caret.CaretStart += StringCount;
-					Caret.CaretEnd = Caret.CaretStart;
+					Caret.CaretStart	+= StringCount;
+					Caret.CaretEnd		= Caret.CaretStart;
 
 					GlobalUnlock(ClipboardDataHandle);
 				}
@@ -1442,6 +1485,7 @@ namespace Core {
 		VUIObject::Resize(Width, Height);
 
 		ResetTextLayout();
+		SetScroller();
 	}
 
 	void VEditor::OnMessage(VMessage* Message) {
@@ -1560,38 +1604,15 @@ namespace Core {
 			Y -= Theme->LabelFont->GetTextSize();
 
 			Caret.SetCaretSelectionByMousePosition(X, Y, LocalTextLayout.Get());
+
+			Update();
 		}
-		if (Message->GetType() == VMessageType::IMECharMessage && UserInOperating) {
-			auto IMECharMessage = static_cast<VIMECharMessage*>(Message);
-
-			if (UsedComboKey) {
-				UsedComboKey = false;
-
-				return;
-			}
-
-			if (IMECharMessage->IMEChar != L'\b') {
-				AddCharaceter(IMECharMessage->IMEChar);
-
-				TextOnChange.Emit(InEditingText);
-			}
-			else {
-				if (FirstBackOff) {
-					FirstBackOff = false;
-
-					LastBackOffTime = time(NULL);
-
-					BackoffResetTimer.Start(1000);
-					BackoffTimer.Start(250);
-				}
-
-				BackCharacter();
-			}
-		}
-		if (Message->GetType() == VMessageType::KeyClickedMessage && UserInOperating) {
+		if (Message->GetType() == VMessageType::KeyClickedMessage && UserInOperating && Message->Win32ID == WM_KEYDOWN) {
 			auto KeyMessage = static_cast<VKeyClickedMessage*>(Message);
 
 			if (KeyMessage->KeyVKCode == VK_DELETE) {
+				TextBeforeChange.Emit(InEditingText);
+
 				DeleteCharacter();
 
 				TextOnChange.Emit(InEditingText);
@@ -1600,15 +1621,15 @@ namespace Core {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnLineHead(LocalTextLayout.Get());
 				}
-				else if (KeyMessage->KeyPrevDown) {
+				else {
 					Caret.CaretSelectionTurnLineHead(LocalTextLayout.Get());
 				}
 			}
-			else if (KeyMessage->KeyVKCode == VK_END && KeyMessage->KeyPrevDown){
+			else if (KeyMessage->KeyVKCode == VK_END){
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnLineEnd(LocalTextLayout.Get());
 				}
-				else if (KeyMessage->KeyPrevDown) {
+				else  {
 					Caret.CaretSelectionTurnLineEnd(LocalTextLayout.Get());
 				}
 			}
@@ -1619,23 +1640,26 @@ namespace Core {
 			else if (KeyMessage->KeyVKCode == VK_NEXT) {
 				Caret.CaretPageEnd();
 			}
-			else if (KeyMessage->KeyVKCode == 'A' && !KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == 'A') {
 				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
 					UsedComboKey = true;
 
 					Caret.CaretSelectAll();
+					ResetOffsetYByCaret();
 				}
 			}
-			else if (KeyMessage->KeyVKCode == 'C' && !KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == 'C') {
 				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
 					UsedComboKey = true;
 
 					CopyClipboard();
 				}
 			}
-			else if (KeyMessage->KeyVKCode == 'X' && !KeyMessage->KeyPrevDown && AllowEdit) {
+			else if (KeyMessage->KeyVKCode == 'X' && AllowEdit) {
 				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
 					UsedComboKey = true;
+
+					TextBeforeChange.Emit(InEditingText);
 
 					ClearSelectArea();
 					CopyClipboard();
@@ -1643,8 +1667,12 @@ namespace Core {
 					TextOnChange.Emit(InEditingText);
 				}
 			}
-			else if (KeyMessage->KeyVKCode == 'V' && !KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == 'V') {
 				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
+					TextBeforeChange.Emit(InEditingText);
+
+					TextBeforeChange.Emit(InEditingText);
+
 					UsedComboKey = true;
 
 					ClearSelectArea();
@@ -1653,7 +1681,7 @@ namespace Core {
 					TextOnChange.Emit(InEditingText);
 				}
 			}
-			else if (KeyMessage->KeyVKCode == VK_UP && KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == VK_UP) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnUp(LocalTextLayout.Get());
 				}
@@ -1661,7 +1689,7 @@ namespace Core {
 					Caret.CaretSelectionTurnUp(LocalTextLayout.Get());
 				}
 			}
-			else if (KeyMessage->KeyVKCode == VK_DOWN && KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == VK_DOWN) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnDown(LocalTextLayout.Get());
 				}
@@ -1669,7 +1697,7 @@ namespace Core {
 					Caret.CaretSelectionTurnDown(LocalTextLayout.Get());
 				}
 			}
-			else if (KeyMessage->KeyVKCode == VK_RIGHT && KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == VK_RIGHT) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnRight();
 				}
@@ -1677,7 +1705,7 @@ namespace Core {
 					Caret.CaretSelectionTurnRight();
 				}
 			}
-			else if (KeyMessage->KeyVKCode == VK_LEFT && KeyMessage->KeyPrevDown) {
+			else if (KeyMessage->KeyVKCode == VK_LEFT) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.CaretTurnLeft();
 				}
@@ -1698,24 +1726,97 @@ namespace Core {
 
 			if (MouseWheelMessage->MousePosition.InsideRectangle(GetRegion())) {
 				if (MouseWheelMessage->WheelValue < 0) {
-					OffsetY -= YDelta;
+					if (!DragResetFontSize) {
+						OffsetY -= YDelta;
 
-					auto MaxOffset = GetMaxOffsetY();
+						auto MaxOffset = GetMaxOffsetY();
 
-					if (OffsetY < MaxOffset) {
-						OffsetY = MaxOffset;
+						if (OffsetY < MaxOffset) {
+							OffsetY = MaxOffset;
+						}
+					}
+					else {
+						if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
+							if (Theme->LabelFont->GetTextSize() - 1 >= 12) {
+								Theme->LabelFont->SetTextSize(Theme->LabelFont->GetTextSize() - 1);
+							}
+						}
+						else {
+							OffsetY -= YDelta;
+
+							auto MaxOffset = GetMaxOffsetY();
+
+							if (OffsetY < MaxOffset) {
+								OffsetY = MaxOffset;
+							}
+						}
 					}
 				}
 				else {
-					OffsetY += YDelta;
+					if (!DragResetFontSize) {
+						OffsetY += YDelta;
 
-					if (OffsetY > 0) {
-						OffsetY = 0;
+						if (OffsetY > 0) {
+							OffsetY = 0;
+						}
+					}
+					else {
+						if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
+							if (Theme->LabelFont->GetTextSize() + 1 <= 82) {
+								Theme->LabelFont->SetTextSize(Theme->LabelFont->GetTextSize() + 1);
+							}
+						}
+						else {
+							OffsetY += YDelta;
+
+							if (OffsetY > 0) {
+								OffsetY = 0;
+							}
+						}
 					}
 				}
 			}
 
+			ResetTextLayout();
+
 			Update();
+		}
+		if (Message->GetType() == VMessageType::IMECharMessage && UserInOperating) {
+			auto IMECharMessage = static_cast<VIMECharMessage*>(Message);
+
+			if (UsedComboKey) {
+				UsedComboKey = false;
+
+				return;
+			}
+
+			bool Result = true;
+			CheckInput.Emit(IMECharMessage->IMEChar, &Result);
+
+			if (!Result) {
+				return;
+			}
+
+			if (IMECharMessage->IMEChar != L'\b') {
+				TextBeforeChange.Emit(InEditingText);
+
+				AddCharaceter(IMECharMessage->IMEChar);
+			}
+			else {
+				if (FirstKeyPress) {
+					FirstKeyPress		= false;
+					LastKeyPressTime	= time(NULL);
+
+					KeyPressResetTimer.Start(250);
+				}
+
+				TextBeforeChange.Emit(InEditingText);
+
+				BackCharacter();
+			}
+
+			TextOnChange.Emit(GetPlaneText());
+			PushNewCharacter.Emit(IMECharMessage->IMEChar);
 		}
 	}
 }

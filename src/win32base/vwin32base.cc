@@ -284,9 +284,9 @@ namespace Win32Core {
 			RawWin32Msg.wHandle = Handle;
 			RawWin32Msg.ctrl	 = false;
 			RawWin32Msg.shift	 = false;
-			RawWin32Msg.lbutton = false;
-			RawWin32Msg.mbutton = false;
-			RawWin32Msg.rbutton = false;
+			RawWin32Msg.lbutton  = false;
+			RawWin32Msg.mbutton  = false;
+			RawWin32Msg.rbutton  = false;
 
 			RawWin32Msg.message = WM_KEYDOWN;
 
@@ -396,6 +396,16 @@ namespace Win32Core {
 
 		HWND WindowHandle = CreateWindow(ClassName, WindowTitle, WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, ParentWindow, NULL, InstanceHandle, NULL);
+
+		RECT WindowRect;
+		RECT ClientRect;
+
+		GetWindowRect(WindowHandle, &WindowRect);
+		GetClientRect(WindowHandle, &ClientRect);
+		
+		int TitleBarHeight = WindowRect.bottom - WindowRect.top - ClientRect.bottom;
+
+		MoveWindow(WindowHandle, 0, 0, Width, Height + TitleBarHeight, FALSE);
 
 		MSG WinMsg {};
 

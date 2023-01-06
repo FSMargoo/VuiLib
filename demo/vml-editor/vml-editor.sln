@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vml-editor", "vml-editor\vml-editor.vcxproj", "{36135803-12B5-4A52-998E-5A7413325F1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Debug|x64.ActiveCfg = Debug|x64
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Debug|x64.Build.0 = Debug|x64
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Debug|x86.ActiveCfg = Debug|Win32
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Debug|x86.Build.0 = Debug|Win32
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Release|x64.ActiveCfg = Release|x64
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Release|x64.Build.0 = Release|x64
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Release|x86.ActiveCfg = Release|Win32
+		{36135803-12B5-4A52-998E-5A7413325F1E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AFFDF3EF-822F-40B4-AB8C-7704C9E8A21F}
+	EndGlobalSection
+EndGlobal

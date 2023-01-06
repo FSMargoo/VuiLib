@@ -84,9 +84,9 @@ class VMouseClickedMessage : public VMessage {
 
 class VKeyClickedMessage : public VMessage {
  public:
-	 byte			KeyVKCode;
-	 bool			KeyPrevDown;
-	 bool			KeyExtened;
+	 byte			 KeyVKCode;
+	 bool			 KeyPrevDown;
+	 bool			 KeyExtened;
 	 VkeyClickedFlag KeyStats;
 
  public:

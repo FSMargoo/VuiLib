@@ -39,18 +39,21 @@ namespace Core {
 			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
 				VMouseClickedFlag::Up, VMouseKeyFlag::Left);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_LBUTTONDOWN: {
 			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
 				VMouseClickedFlag::Down, VMouseKeyFlag::Left);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_RBUTTONUP: {
 			ResultEvent = new VMouseClickedMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y,
 				VMouseClickedFlag::Up, VMouseKeyFlag::Right);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_RBUTTONDOWN: {
@@ -59,6 +62,7 @@ namespace Core {
 
 			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_MBUTTONUP: {
@@ -67,6 +71,7 @@ namespace Core {
 
 			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_MBUTTONDOWN: {
@@ -75,6 +80,7 @@ namespace Core {
 
 			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_MOUSEMOVE: {
@@ -82,26 +88,31 @@ namespace Core {
 
 			ResultEvent->MessageTriggerWidget = Win32Message.wHandle;
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_MOUSEWHEEL: {
 			ResultEvent = new VMouseWheelMessage(Win32Message.wHandle, Win32Message.x, Win32Message.y, Win32Message.wheel);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_KEYUP: {
 			ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Up);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_KEYDOWN: {
 			ResultEvent = new VKeyClickedMessage(Win32Message.wHandle, Win32Message.vkcode, Win32Message.prevdown, Win32Message.extended, VkeyClickedFlag::Down);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		case WM_CHAR: {
 			ResultEvent = new VIMECharMessage(Win32Message.wHandle, Win32Message.ch);
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 
@@ -110,6 +121,7 @@ namespace Core {
 
 			ResultEvent->Win32ID = Win32Message.message;
 
+			ResultEvent->Win32ID = Win32Message.message;
 			return ResultEvent;
 		}
 		}

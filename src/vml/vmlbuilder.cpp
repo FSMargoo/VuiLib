@@ -1123,16 +1123,18 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit) {
+    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange) {
         Editor->SetPlaneText(PlaneText);
         Editor->SetDeltaY(DeltaY);
         Editor->SetAllowEditStatus(AllowEdit);
+        Editor->SetAllowFontSizeDragStatus(AllowDragFontSizeChange);
     }
     void VMLEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus) {
         std::wstring PlaneText;
-        int          DeltaY     = 25;
-        bool         EditStatus = true;
+        int          DeltaY         = 25;
+        bool         EditStatus     = true;
+        bool         FontDragChange = false;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"text") {
@@ -1165,9 +1167,19 @@ namespace VML {
 
                 EditStatus = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"allow-font-size-drag") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"allow-font-size-drag\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                FontDragChange = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Object, PlaneText, DeltaY, EditStatus);
+        Builder(Object, PlaneText, DeltaY, EditStatus, FontDragChange);
     }
     VMLEditorBuilder::VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus)

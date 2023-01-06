@@ -231,16 +231,24 @@ namespace Core {
 			}
 
 			if (Win32Cache.UserSetGeomtery) {
+				RECT WindowRect;
+				RECT ClientRect;
+
+				GetWindowRect(WindowHandle, &WindowRect);
+				GetClientRect(WindowHandle, &ClientRect);
+
+				int TitleBarHeight = WindowRect.bottom - WindowRect.top - ClientRect.bottom;
+
 				Win32Cache.UserSetGeomtery = false;
 
 				ObjectVisual.Rectangle.Right  = Win32Cache.UserSetWidth;
-				ObjectVisual.Rectangle.Bottom = Win32Cache.UserSetHeight;
+				ObjectVisual.Rectangle.Bottom = Win32Cache.UserSetHeight - TitleBarHeight;
 
 				Update(ObjectVisual.Rectangle);
 
 				Resized.Emit(GetWidth(), GetHeight());
 
-				RECT NewRect = {0, 0, Win32Cache.UserSetWidth, Win32Cache.UserSetHeight };
+				RECT NewRect = {0, 0, Win32Cache.UserSetWidth, Win32Cache.UserSetHeight - TitleBarHeight };
 				Direct2DRender->DirectXDCTarget.Get()->BindDC(GetDC(WindowHandle), &NewRect);
 			}
 
@@ -413,10 +421,15 @@ namespace Core {
 		VUIObject::Resize(Width, Height);
 
 		if (Width > 0 && Height > 0) {
-			RECT Rect;
-			GetWindowRect(WindowHandle, &Rect);
+			RECT WindowRect;
+			RECT ClientRect;
 
-			MoveWindow(WindowHandle, Rect.left, Rect.right, Width, Height, FALSE);
+			GetWindowRect(WindowHandle, &WindowRect);
+			GetClientRect(WindowHandle, &ClientRect);
+
+			int TitleBarHeight = WindowRect.bottom - WindowRect.top - ClientRect.bottom;
+
+			MoveWindow(WindowHandle, ClientRect.left, ClientRect.right, Width, Height + TitleBarHeight, FALSE);
 		}
 	}
 
