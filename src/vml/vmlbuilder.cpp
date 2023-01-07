@@ -1123,18 +1123,23 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange) {
+    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange,
+                                   const bool& AllowOperationBack, const int& MaxOperationCache) {
         Editor->SetPlaneText(PlaneText);
         Editor->SetDeltaY(DeltaY);
         Editor->SetAllowEditStatus(AllowEdit);
         Editor->SetAllowFontSizeDragStatus(AllowDragFontSizeChange);
+        Editor->SetOperationBackStatus(AllowOperationBack);
+        Editor->SetMaxOperationCache(MaxOperationCache);
     }
     void VMLEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus) {
         std::wstring PlaneText;
-        int          DeltaY         = 25;
-        bool         EditStatus     = true;
-        bool         FontDragChange = false;
+        int          DeltaY             = 25;
+        int          MaxOperationCache  = 20;
+        bool         AllowBack          = true;
+        bool         EditStatus         = true;
+        bool         FontDragChange     = false;
 
         for (auto& ElementProperty : PropertyValueList) {
             if (ElementProperty.first == L"text") {
@@ -1177,9 +1182,29 @@ namespace VML {
 
                 FontDragChange = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"allow-operation-back") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"allow-operation-back\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                AllowBack = ElementProperty.second.PropertyAsBool;
+            }
+            if (ElementProperty.first == L"max-operation-cache") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"max-operation-cache\" Property Must Match the Type \"int\"";
+
+                    return;
+                }
+
+                MaxOperationCache = ElementProperty.second.PropertyAsInt;
+            }
         }
 
-        Builder(Object, PlaneText, DeltaY, EditStatus, FontDragChange);
+        Builder(Object, PlaneText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache);
     }
     VMLEditorBuilder::VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus)

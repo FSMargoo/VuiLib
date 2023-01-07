@@ -252,35 +252,6 @@ public:
 
 		ResetTextLayout();
 	}
-	void OnMessage(Core::VMessage* Message) {
-		VEditor::OnMessage(Message);
-
-		if (Message->GetType() == Core::VMessageType::KeyClickedMessage && UserInOperating) {
-			auto KeyMessage = static_cast<Core::VKeyClickedMessage*>(Message);
-
-			if (KeyMessage->KeyVKCode == 'Z' && KeyMessage->KeyPrevDown) {
-				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && !LastString.empty()) {
-					UsedComboKey = true;
-
-					SetPlaneText(LastString[LastString.size() - 1]);
-
-					Caret = LastCaret[LastCaret.size() - 1];
-
-					LastString.erase(LastString.end() - 1);
-					LastCaret.erase(LastCaret.end() - 1);
-
-					TextOnChange.Emit(InEditingText);
-				}
-			}
-
-			CaretTimer.Start(500);
-			ShowCaret = true;
-
-			SetScroller();
-
-			Update();
-		}
-	}
 };
 
 int main() {

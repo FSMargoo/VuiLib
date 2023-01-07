@@ -3,7 +3,7 @@
 #pragma warning(disable : 26451)
 
 /////////////////////////////////////////////////////////////////////////////
-//         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-lang.org)
+//           S E A L  P R O G R A M M I N G  L A N G U A G E
 //  
 //  seal.lexical.h : 
 //       @description :  This header file defines the token cutting in seal's lexical analyzer
@@ -35,6 +35,8 @@ namespace VKits {
 		se_int lexical_index = 0;
 		// read the line relative to the code
 		se_int lexical_line = 0;
+		// ignore the comment token when lexical is parsing
+		bool   ignore_comment = true;
 
 		// lexical temporarily stored script code to be interpreted
 		std::wstring lexical_code;
@@ -76,9 +78,10 @@ namespace VKits {
 		//    _lexical_core[constructor]  :
 		//           @description :   The default constructor of lexical core
 		//           @birth       :   2021/2.15
+		//			 @last change :	  2023/1.7
 		//           
 		//           
-		_lexical_core(std::wstring core_code = L"");
+		_lexical_core(std::wstring core_code = L"", bool ignore_comment = true);
 
 		//////////////////////////////////////////////////////////////////////////
 		//    get_token  :
@@ -86,18 +89,18 @@ namespace VKits {
 		//           @birth       :   2021/2.15
 		//           
 		_lexical_info::seal_lexical_token get_token();
-        //////////////////////////////////////////////////////////////////////////
-        //    view_token  :
-        //           @description :   Cut a token from code_string ( in view mode )
-        //           @birth       :   2022/8.26
-        //
-        _lexical_info::seal_lexical_token view_token();
-        //////////////////////////////////////////////////////////////////////////
-        //    view_token  :
-        //           @description :   Cut a token from code_string ( in view mode )
-        //           @birth       :   2022/8.26
-        //
-        _lexical_info::seal_lexical_token view_token(int count);
+		//////////////////////////////////////////////////////////////////////////
+		//    view_token  :
+		//           @description :   Cut a token from code_string ( in view mode )
+		//           @birth       :   2022/8.26
+		//
+		_lexical_info::seal_lexical_token view_token();
+		//////////////////////////////////////////////////////////////////////////
+		//    view_token  :
+		//           @description :   Cut a token from code_string ( in view mode )
+		//           @birth       :   2022/8.26
+		//
+		_lexical_info::seal_lexical_token view_token(int count);
 
 		//////////////////////////////////////////////////////////////////////////
 		//    is_eof  :

@@ -120,7 +120,7 @@ struct VImageLabelTheme : public VBasicUITheme {
     VImage* Image;
 
     VImageLabelTheme() {
-
+        Image = nullptr;
     }
     ~VImageLabelTheme() {
         delete Image;

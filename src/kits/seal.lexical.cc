@@ -16,8 +16,9 @@
 #include "../../include/kits/seal.lexical.h"
 
 namespace VKits {
-_lexical_core::_lexical_core(std::wstring core_code) {
-	core_info.lexical_code = core_code;
+_lexical_core::_lexical_core(std::wstring core_code, bool ignore_comment) {
+	core_info.lexical_code		= core_code;
+	core_info.ignore_comment	= ignore_comment;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -61,19 +62,32 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 			if (core_info.lexical_index + 1 < core_info.lexical_code.size() &&
 				core_info.lexical_code[core_info.lexical_index] == L'*' &&
 				core_info.lexical_code[core_info.lexical_index + 1] == L'/') {
-				core_info.lexical_token.cache_token = NO_STATUS_TOKEN;
-				core_info.lexical_token.token_string = L"";
+				if (core_info.ignore_comment) {
+					core_info.lexical_token.cache_token		= NO_STATUS_TOKEN;
+					core_info.lexical_token.token_string	= L"";
 
-				core_info.lexical_index += 2;
+					core_info.lexical_index += 2;
 
-				if (!(core_info.lexical_index < core_info.lexical_code.size())) {
-					// Set eof status
-					core_info.lexical_eof = true;
+					if (!(core_info.lexical_index < core_info.lexical_code.size())) {
+						// Set eof status
+						core_info.lexical_eof = true;
 
-					return _lexical_info::_lexical_token_type{ EOF_TOKEN, L"" };
+						return _lexical_info::_lexical_token_type{ EOF_TOKEN, L"" };
+					}
+
+					continue;
 				}
+				else {
+					core_info.lexical_index					+= 2;
+					core_info.lexical_token.token_string	+= L"*/";
 
-				continue;
+					return core_info.lexical_token;
+				}
+			}
+			else {
+				if (!core_info.ignore_comment) {
+					core_info.lexical_token.token_string += core_info.lexical_code[core_info.lexical_index];
+				}
 			}
 		}
 		else {
@@ -390,6 +404,7 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 						break;
 					}
 					if (core_info.lexical_code[core_info.lexical_index] == '*') {
+						core_info.lexical_token.token_string += '/';
 						core_info.lexical_token.token_string += '*';
 						core_info.lexical_token.cache_token = COMMENT_TOKEN;
 

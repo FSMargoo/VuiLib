@@ -1,4 +1,5 @@
 #pragma warning(disable : 4018)
+#pragma warning(disable : 26451)
 
 #include "../../../include/core/control/veditor.h"
 
@@ -120,13 +121,15 @@ namespace Core {
 					CaretStart = CacheTargetPtr->size();
 				}
 
+				if (CaretEnd > CaretStart) {
+					SelectMode = VEditorCaretSelectMode::Left;
+				}
+
 				SetValidCaretRange();
 
 				return;
 			}
 			case VEditorCaretSelectMode::Right: {
-				CaretEnd = CaretStart;
-
 				DWRITE_TEXT_METRICS				 TextMetrics;
 				std::vector<DWRITE_LINE_METRICS> LineMetrics;
 
@@ -144,7 +147,7 @@ namespace Core {
 					LinePosition	 = NextLinePosition;
 					NextLinePosition = LinePosition + LineMetrics[Line].length;
 
-					if (NextLinePosition > CaretStart) {
+					if (NextLinePosition > CaretEnd) {
 						break;
 					}
 				}
@@ -169,14 +172,18 @@ namespace Core {
 				BOOL  IsInside		  = FALSE;
 				BOOL  IsTrailingHit	  = FALSE;
 
-				TextLayout->HitTestTextPosition(CaretStart, FALSE, &CaretX, &CaretY, &HitTestMetrics);
+				TextLayout->HitTestTextPosition(CaretEnd, FALSE, &CaretX, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestTextPosition(LinePosition, FALSE, &UnusedParemeter, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestPoint(CaretX, CaretY, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
-				CaretStart = HitTestMetrics.textPosition;
+				CaretEnd = HitTestMetrics.textPosition;
 
 				if (IsTrailingHit) {
-					CaretStart = CacheTargetPtr->size();
+					CaretEnd = CacheTargetPtr->size();
+				}
+
+				if (CaretEnd < CaretStart) {
+					SelectMode = VEditorCaretSelectMode::Left;
 				}
 
 				SetValidCaretRange();
@@ -237,15 +244,13 @@ namespace Core {
 			TextLayout->HitTestTextPosition(LinePosition, FALSE, &UnusedParemeter, &CaretY, &HitTestMetrics);
 			TextLayout->HitTestPoint(CaretX, CaretY, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
-			CaretStart = HitTestMetrics.textPosition;
+			CaretEnd = HitTestMetrics.textPosition;
 
 			if (IsTrailingHit) {
-				CaretStart = CacheTargetPtr->size();
+				CaretEnd = CacheTargetPtr->size();
 			}
 
-			CaretEnd = CaretStart;
-
-			SetValidCaretRange();
+			SelectMode = VEditorCaretSelectMode::Right;
 
 			return;
 		}
@@ -305,13 +310,15 @@ namespace Core {
 					CaretStart = CacheTargetPtr->size();
 				}
 
+				if (CaretStart > CaretEnd) {
+					SelectMode = VEditorCaretSelectMode::Right;
+				}
+
 				SetValidCaretRange();
 
 				return;
 			}
 			case VEditorCaretSelectMode::Right: {
-				CaretEnd = CaretStart;
-
 				DWRITE_TEXT_METRICS				 TextMetrics;
 				std::vector<DWRITE_LINE_METRICS> LineMetrics;
 
@@ -321,7 +328,7 @@ namespace Core {
 
 				TextLayout->GetLineMetrics(&LineMetrics[0], TextMetrics.lineCount, &TextMetrics.lineCount);
 
-				UINT32 Line = 0;
+				UINT32 Line				= 0;
 				UINT32 LinePosition		= 0;
 				UINT32 NextLinePosition = 0;
 				UINT32 LineCount	    = static_cast<UINT32>(LineMetrics.size());
@@ -329,7 +336,7 @@ namespace Core {
 					LinePosition	 = NextLinePosition;
 					NextLinePosition = LinePosition + LineMetrics[Line].length;
 
-					if (NextLinePosition > CaretStart) {
+					if (NextLinePosition > CaretEnd) {
 						break;
 					}
 				}
@@ -355,14 +362,14 @@ namespace Core {
 				BOOL  IsInside		  = FALSE;
 				BOOL  IsTrailingHit	  = FALSE;
 
-				TextLayout->HitTestTextPosition(CaretStart, FALSE, &CaretX, &CaretY, &HitTestMetrics);
+				TextLayout->HitTestTextPosition(CaretEnd, FALSE, &CaretX, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestTextPosition(LinePosition, FALSE, &UnusedParemeter, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestPoint(CaretX, CaretY, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
-				CaretStart = HitTestMetrics.textPosition;
+				CaretEnd = HitTestMetrics.textPosition;
 
 				if (IsTrailingHit) {
-					CaretStart = CacheTargetPtr->size();
+					CaretEnd = CacheTargetPtr->size();
 				}
 
 				SetValidCaretRange();
@@ -767,7 +774,7 @@ namespace Core {
 					LinePosition = NextLinePosition;
 					NextLinePosition = LinePosition + LineMetrics[Line].length;
 
-					if (NextLinePosition > CaretStart) {
+					if (NextLinePosition > CaretEnd) {
 						break;
 					}
 				}
@@ -872,10 +879,6 @@ namespace Core {
 
 		CaretStart = LinePosition - 1;
 
-		if (LinePosition < CacheTargetPtr->size() &&
-			CacheTargetPtr->at(LinePosition) == L'\n') {
-			--CaretStart;
-		}
 		if (LinePosition >= CacheTargetPtr->size()) {
 			++CaretStart;
 		}
@@ -892,13 +895,19 @@ namespace Core {
 
 		TextLayout->GetLineMetrics(&LineMetrics[0], TextMetrics.lineCount, &TextMetrics.lineCount);
 
+		int CaretPosition = CaretStart;
+
+		if (SelectMode == VEditorCaretSelectMode::Right) {
+			CaretPosition = CaretEnd;
+		}
+
 		UINT32 Line = 0;
 		UINT32 LinePosition = 0;
 		UINT32 LineCount = static_cast<UINT32>(LineMetrics.size());
 		for (; Line < LineCount; ++Line) {
 			LinePosition += LineMetrics[Line].length;
 
-			if (LinePosition > CaretStart) {
+			if (LinePosition > CaretPosition) {
 				break;
 			}
 		}
@@ -909,10 +918,20 @@ namespace Core {
 
 		LinePosition -= LineMetrics[Line].length;
 
-		CaretStart = LinePosition;
+		if (SelectMode == VEditorCaretSelectMode::Right) {
+			CaretEnd = LinePosition;
+		}
+		else {
+			CaretStart = LinePosition;
+		}
 
 		InSelecting = true;
-		SelectMode = VEditorCaretSelectMode::Left;
+
+		if (CaretStart > CaretEnd) {
+			SelectMode = VEditorCaretSelectMode::Left;
+		}
+
+		SetValidCaretRange();
 	}
 	void VEditorCaret::CaretSelectionTurnLineEnd(IDWriteTextLayout* TextLayout) {
 		DWRITE_TEXT_METRICS				 TextMetrics;
@@ -924,22 +943,37 @@ namespace Core {
 
 		TextLayout->GetLineMetrics(&LineMetrics[0], TextMetrics.lineCount, &TextMetrics.lineCount);
 
+		int CaretPosition = CaretStart;
+
+		if (SelectMode == VEditorCaretSelectMode::Right) {
+			CaretPosition = CaretEnd;
+		}
+
 		UINT32 Line = 0;
 		UINT32 LinePosition = 0;
 		UINT32 LineCount = static_cast<UINT32>(LineMetrics.size());
 		for (; Line < LineCount; ++Line) {
 			LinePosition += LineMetrics[Line].length;
 
-			if (LinePosition > CaretStart) {
+			if (LinePosition > CaretPosition) {
 				break;
 			}
 		}
 
-		CaretStart = CaretEnd;
-		CaretEnd = LinePosition - 1;
+		if (SelectMode == VEditorCaretSelectMode::Right) {
+			CaretEnd = LinePosition - 1;
+		}
+		else {
+			CaretStart = LinePosition - 1;
+		}
 
 		InSelecting = true;
-		SelectMode = VEditorCaretSelectMode::Right;
+
+		if (CaretStart > CaretEnd) {
+			SelectMode = VEditorCaretSelectMode::Right;
+		}
+
+		SetValidCaretRange();
 	}
 	void VEditorCaret::CaretSelectAll() {
 		CaretStart = 0;
@@ -1101,19 +1135,27 @@ namespace Core {
 	}
 
 	VEditor::VEditor(VUIObject* Parent) : VAbstractButton(Parent), CaretTimer(this), ShowCaret(false) {
-		Theme			= new VTextEditorTheme(*(static_cast<VTextEditorTheme*>(GetTargetTheme(VUIThemeType::VTextEditor))));
-		Interpolator	= new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
+		InitEditor();
+	}
+	VEditor::VEditor(const int& Width, const int& Height, VUIObject* Parent) : VAbstractButton(Parent), CaretTimer(this), ShowCaret(false) {
+		VUIObject::Resize(Width, Height);
+
+		InitEditor();
+	}
+	void VEditor::InitEditor() {
+		Theme					= new VTextEditorTheme(*(static_cast<VTextEditorTheme*>(GetTargetTheme(VUIThemeType::VTextEditor))));
+		Interpolator			= new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
 		Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-		FirstKeyPress	= true;
-
-		UsedComboKey	= false;
-
-		OffsetX			= 5;
-		YDelta			= 25;
-
-		UserInOperating = false;
+		FirstKeyPress			= true;
+								
+		UsedComboKey			= false;
+								
+		OffsetX					= 5;
+		YDelta					= 25;
+								
+		UserInOperating			= false;
 
 		Caret.CacheTargetPtr	= &InEditingText;
 		Caret.InSelecting		= false;
@@ -1123,40 +1165,25 @@ namespace Core {
 
 		ResetTextLayout();
 
-		AllowEdit = true;
+		AllowEdit				= true;
+
+		EnableOperationBack		= true;
+		OperationCacheMax		= 20;
 
 		CaretTimer.Start(1000);
 		CaretTimer.OnTime.Connect(this, &VEditor::ResetCaretStatus);
+
+		TextBeforeChange.Connect(this, &VEditor::CacheOperation);
 	}
-	VEditor::VEditor(const int& Width, const int& Height, VUIObject* Parent) : VAbstractButton(Parent), CaretTimer(this), ShowCaret(false) {
-		Theme			= new VTextEditorTheme(*(static_cast<VTextEditorTheme*>(GetTargetTheme(VUIThemeType::VTextEditor))));
-		Interpolator	= new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
+
+	void VEditor::CacheOperation(const std::wstring& OldText) {
+		if (OperationCacheMax > 0 && OperationCacheMax < OldStringSet.size() + 1) {
+			OldStringSet.erase(OldStringSet.begin());
+			CaretSet.erase(CaretSet.begin());
+		}
 		
-		Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
-
-		FirstKeyPress	= true;
-
-		UsedComboKey	= false;
-
-		OffsetX			= 5;
-		YDelta			= 25;
-
-		UserInOperating = false;
-
-		Caret.CacheTargetPtr	= &InEditingText;
-		Caret.InSelecting		= false;
-		InMouseDragSelecting	= false;
-
-		DragResetFontSize		= false;
-
-		Resize(Width, Height);
-
-		ResetTextLayout();
-
-		AllowEdit = true;
-
-		CaretTimer.Start(500);
-		CaretTimer.OnTime.Connect(this, &VEditor::ResetCaretStatus);
+		OldStringSet.push_back(OldText);
+		CaretSet.push_back(Caret);
 	}
 
 	void VEditor::ResetCaretStatus() {
@@ -1187,25 +1214,42 @@ namespace Core {
 
 		Update();
 	}
-	bool VEditor::GetAllowEditStatus() {
+
+	bool VEditor::GetAllowEditStatus() const {
 		return AllowEdit;
 	}
 	void VEditor::SetAllowEditStatus(const bool& Status) {
 		AllowEdit = Status;
 	}
-	bool VEditor::GetAllowFontSizeDragStatus() {
+
+	bool VEditor::GetAllowFontSizeDragStatus() const {
 		return DragResetFontSize;
 	}
 	void VEditor::SetAllowFontSizeDragStatus(const bool& Status) {
 		DragResetFontSize = Status;
 	}
+
+	bool VEditor::GetOperationBackStatus() const {
+		return EnableOperationBack;
+	}
+	void VEditor::SetOperationBackStatus(const bool& Status) {
+		EnableOperationBack = Status;
+	}
+
+	int VEditor::GetMaxOperationCache() const {
+		return OperationCacheMax;
+	}
+	void VEditor::SetMaxOperationCache(const int& Status) {
+		OperationCacheMax = Status;
+	}
+
 	void VEditor::ScrollToEnd() {
 		OffsetY = GetMaxOffsetY();
 	}
 	void VEditor::SetPlaneText(const std::wstring& PlaneText) {
 		InEditingText = PlaneText;
-		Caret.CaretStart = PlaneText.size();
-		Caret.CaretEnd   = Caret.CaretStart;
+		Caret.CaretStart = 0;
+		Caret.CaretEnd   = 0;
 
 		ResetTextLayout();
 
@@ -1355,11 +1399,20 @@ namespace Core {
 		if (AllowEdit) {
 			ClearSelectArea();
 
-			InEditingText.insert(InEditingText.begin() + Caret.CaretStart, Character);
+			if (Character != L'\r') {
+				InEditingText.insert(InEditingText.begin() + Caret.CaretStart, Character);
 
-			Caret.CaretTurnRight();
+				Caret.CaretTurnRight();
 
-			ResetTextLayout();
+				ResetTextLayout();
+			}
+			else {
+				InEditingText.insert(InEditingText.begin() + Caret.CaretStart, L'\n');
+
+				Caret.CaretTurnRight();
+
+				ResetTextLayout();
+			}
 		}
 	}
 	void VEditor::ResetOffsetYByCaret() {
@@ -1459,6 +1512,10 @@ namespace Core {
 
 				const wchar_t* CString = reinterpret_cast<const wchar_t*>(Memory);
 
+				if (CString == NULL) {
+					return;
+				}
+
 				UINT StringCount = static_cast<UINT32>(wcsnlen(CString, MemoryByteSize / sizeof(wchar_t)));
 
 				if (Memory != NULL) {
@@ -1478,6 +1535,16 @@ namespace Core {
 	}
 	VTextEditorTheme* VEditor::GetTheme() {
 		return Theme;
+	}
+
+	VEditorCaret VEditor::GetCaret() {
+		return Caret;
+	}
+	void VEditor::SetCaret(const VEditorCaret& CaretValue) {
+		Caret = CaretValue;
+
+		SetScroller();
+		Update();
 	}
 
 	std::wstring VEditor::GetPlaneText() const {
@@ -1567,11 +1634,12 @@ namespace Core {
 				X -= OffsetX;
 				
 				Y -= Theme->LabelFont->GetTextSize();
+				Y -= OffsetY;
 
 				InMouseDragSelecting = true;
 
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
-					Caret.SetCaretByMousePosition(X, Y - OffsetY, LocalTextLayout.Get());
+					Caret.SetCaretByMousePosition(X, Y, LocalTextLayout.Get());
 				}
 				else {
 					Caret.SetCaretSelectionByMousePosition(X, Y, LocalTextLayout.Get());
@@ -1619,6 +1687,20 @@ namespace Core {
 				DeleteCharacter();
 
 				TextOnChange.Emit(InEditingText);
+			}
+			else if (KeyMessage->KeyVKCode == L'Z' && EnableOperationBack) {
+				if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && !OldStringSet.empty()) {
+					UsedComboKey = true;
+
+					SetPlaneText(OldStringSet[OldStringSet.size() - 1]);
+
+					Caret = CaretSet[CaretSet.size() - 1];
+
+					OldStringSet.erase(OldStringSet.end() - 1);
+					CaretSet.erase(CaretSet.end() - 1);
+
+					TextOnChange.Emit(InEditingText);
+				}
 			}
 			else if (KeyMessage->KeyVKCode == VK_HOME) {
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
@@ -1715,6 +1797,9 @@ namespace Core {
 				else {
 					Caret.CaretSelectionTurnLeft();
 				}
+			}
+			else {
+				return;
 			}
 			
 			CaretTimer.Start(500);

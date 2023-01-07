@@ -208,10 +208,11 @@ namespace VML {
     };
     class VMLEditorBuilder : public VMLCommonBuilder {
     protected:
-        void Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange);
+        void Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange,
+                     const bool& AllowOperationBack, const int& MaxOperationCache);
 
         void AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
-            VMLControlBuildStatus* BuildStatus);
+                             VMLControlBuildStatus* BuildStatus);
 
     public:
         VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,

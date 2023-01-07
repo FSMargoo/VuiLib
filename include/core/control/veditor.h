@@ -70,11 +70,18 @@ namespace Core {
 		void ResetCaretStatus();
 		void ResetTextLayout();
 
-		bool GetAllowEditStatus();
+		bool GetAllowEditStatus() const;
 		void SetAllowEditStatus(const bool& Status);
-		bool GetAllowFontSizeDragStatus();
+
+		bool GetAllowFontSizeDragStatus() const;
 		void SetAllowFontSizeDragStatus(const bool& Status);
-		
+
+		bool GetOperationBackStatus() const;
+		void SetOperationBackStatus(const bool& Status);
+
+		int	 GetMaxOperationCache() const;
+		void SetMaxOperationCache(const int& Value);
+				
 		void ScrollToEnd();
 
 	public:
@@ -94,10 +101,17 @@ namespace Core {
 		VTextEditorTheme* GetTheme();
 
 	public:
+		VEditorCaret GetCaret();
+		void		 SetCaret(const VEditorCaret& CaretValue);
+
+	public:
 		VSignal<const std::wstring&>	TextOnChange;
 		VSignal<const std::wstring&>	TextBeforeChange;
 		VSignal<const wchar_t&>			PushNewCharacter;
 		VSignal<const wchar_t&, bool*>	CheckInput;
+
+	private:
+		void InitEditor();
 
 	protected:
 		void ResetOffsetYByCaret();
@@ -143,25 +157,34 @@ namespace Core {
 
 		Microsoft::WRL::ComPtr<IDWriteTextLayout> LocalTextLayout;
 
+	private:
+		void CacheOperation(const std::wstring& OldText);
+
 	protected:
 		bool InMouseDragSelecting;
 		bool UsedComboKey;
 
 	protected:
-		VBasicTimer             AnimationFrameTimer;
-		VBasicTimer				KeyPressTimer;
-		VBasicTimer				KeyPressResetTimer;
-		VAnimationInterpolator* Interpolator;
+		VBasicTimer					AnimationFrameTimer;
+		VBasicTimer					KeyPressTimer;
+		VBasicTimer					KeyPressResetTimer;
+		VAnimationInterpolator*		Interpolator;
 
-		time_t					LastKeyPressTime;
-		int						YDelta;
+		time_t						LastKeyPressTime;
+		int							YDelta;
 
-		VLabelStatusTheme       OldTheme;
-		VLabelStatusTheme       TargetTheme;
+		VLabelStatusTheme			OldTheme;
+		VLabelStatusTheme			TargetTheme;
 
-		bool					AllowEdit;
+		bool						AllowEdit;
 
-		bool                    InAnimation = false;
+		bool						InAnimation;
+
+	protected:
+		bool						EnableOperationBack;
+		int							OperationCacheMax;
+		std::vector<VEditorCaret>	CaretSet;
+		std::vector<std::wstring>	OldStringSet;
 	};
 }
 

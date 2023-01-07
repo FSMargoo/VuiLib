@@ -11,6 +11,7 @@
 #include "./include/core/control/vcanvas.h"
 
 #include "./include/core/control/veditor.h"
+#include "./include/core/control/veditorhighlighter.h"
 
 #include "./include/vml/vmlwidget.h"
 #include "./include/kits/vallocator.h"

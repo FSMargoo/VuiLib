@@ -258,6 +258,9 @@
     <ClInclude Include="include\core\control\veditor.h">
       <Filter>include\core\control</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\control\veditorhighlighter.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -421,6 +424,9 @@
       <Filter>src\core\control</Filter>
     </ClCompile>
     <ClCompile Include="src\core\control\veditor.cc">
+      <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\veditorhighlighter.cc">
       <Filter>src\core\control</Filter>
     </ClCompile>
   </ItemGroup>
