@@ -1332,7 +1332,7 @@ namespace Core {
 		}
 		if (UserInOperating) {
 			auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
-			CallWidgetSetIME(GetX() + CaretPosition.X + 5, GetY() + CaretPosition.Y + Theme->LabelFont->GetTextSize() + 3);
+			CallWidgetSetIME(GetOriginX() + CaretPosition.X + 5, GetOriginY() + CaretPosition.Y + Theme->LabelFont->GetTextSize());
 		}
 		if (!Interpolator->IsEnd() && InAnimation) {
 			if (AnimationFrameTimer.End()) {
@@ -1444,13 +1444,15 @@ namespace Core {
 	}
 
 	void VEditor::SetScroller() {
-		auto CaretPosition	= Caret.GetCaretPosition(LocalTextLayout.Get());
+		if (LocalTextLayout) {
+			auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
 
-		if (CaretPosition.Y <= -OffsetY) {
-			OffsetY = -CaretPosition.Y;
-		}
-		if (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 >= -OffsetY + GetHeight()) {
-			OffsetY -= (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 - (-OffsetY + GetHeight()));
+			if (CaretPosition.Y <= -OffsetY) {
+				OffsetY = -CaretPosition.Y;
+			}
+			if (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 >= -OffsetY + GetHeight()) {
+				OffsetY -= (CaretPosition.Y + Theme->LabelFont->GetTextSize() * 2 + 4 - (-OffsetY + GetHeight()));
+			}
 		}
 	}
 	int VEditor::GetMaxOffsetY() {
@@ -1905,6 +1907,8 @@ namespace Core {
 
 			TextOnChange.Emit(GetPlaneText());
 			PushNewCharacter.Emit(IMECharMessage->IMEChar);
+
+			Update();
 		}
 	}
 }

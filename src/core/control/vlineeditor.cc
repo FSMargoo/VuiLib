@@ -29,7 +29,7 @@ namespace Core {
 		VUIObject::Move(X, Y);
 
 		if (InTyping) {
-			CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+			CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 		}
 	}
 
@@ -150,8 +150,8 @@ namespace Core {
 					&TextLayout
 				));
 
-				auto MouseRelativeX = MouseMessage->MousePosition.X - GetX() - Theme->LocalTheme.BorderThickness - OffsetX;
-				auto MouseRelativeY = MouseMessage->MousePosition.Y - GetY();
+				auto MouseRelativeX = MouseMessage->MousePosition.X - GetOriginX() - Theme->LocalTheme.BorderThickness - OffsetX;
+				auto MouseRelativeY = MouseMessage->MousePosition.Y - GetOriginY();
 
 				DWRITE_HIT_TEST_METRICS HitTestMetrics;
 
@@ -189,7 +189,7 @@ namespace Core {
 
 					ShowCursor = true;
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 				}
 
 				VDXObjectSafeFree(&TextLayout);
@@ -288,7 +288,7 @@ namespace Core {
 						VDXObjectSafeFree(&TextLayout);
 					}
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 					Update();
 
 					return;
@@ -326,7 +326,7 @@ namespace Core {
 
 						VDXObjectSafeFree(&TextLayout);
 
-						CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+						CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 						Update();
 					}
@@ -380,8 +380,8 @@ namespace Core {
 
 						VDXObjectSafeFree(&TextLayout);
 
-						CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
-							GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+						CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+							GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 					}
 
 					if (InSelectMode) {
@@ -449,8 +449,8 @@ namespace Core {
 
 					VDXObjectSafeFree(&TextLayout);
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
-						GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+						GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 					Update();
 
@@ -531,7 +531,7 @@ namespace Core {
 
 					VDXObjectSafeFree(&TextLayout);
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 				}
 			}
 			if (KeyMessage->KeyVKCode == VK_DELETE && KeyMessage->KeyStats == VkeyClickedFlag::Down) {
@@ -592,7 +592,7 @@ namespace Core {
 						ShowCursor = true;
 					}
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 					Update();
 
@@ -673,7 +673,7 @@ namespace Core {
 
 				VDXObjectSafeFree(&TextLayout);
 
-				CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+				CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 				Update();
 			}
@@ -747,8 +747,8 @@ namespace Core {
 
 						delete[] WideString;
 
-						CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness,
-							GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+						CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness,
+							GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 						TextOnChange.Emit(InputStringCache);
 					}
@@ -791,7 +791,7 @@ namespace Core {
 
 					VDXObjectSafeFree(&TextLayout);
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 					Update();
 
@@ -887,7 +887,7 @@ namespace Core {
 
 				VDXObjectSafeFree(&TextLayout);
 
-				CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+				CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 				Update();
 			}
@@ -968,8 +968,8 @@ namespace Core {
 						ShowCursor = true;
 					}
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
-						GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+						GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 					Update();
 
@@ -1015,8 +1015,8 @@ namespace Core {
 
 					VDXObjectSafeFree(&TextLayout);
 
-					CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
-						GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+					CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+						GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 					TextOnChange.Emit(InputStringCache);
 				}
@@ -1086,8 +1086,8 @@ namespace Core {
 
 			TextOnChange.Emit(InputStringCache);
 
-			CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
-				GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+			CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX,
+				GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 			Update();
 
@@ -1108,7 +1108,7 @@ namespace Core {
 
 		CallWidgetSetFocusID(ObjectKernel.GlobalID);
 		CallWidgetLockFocusID();
-		CallWidgetSetIME(GetX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
+		CallWidgetSetIME(GetOriginX() + CursorGraphicsX + Theme->LocalTheme.BorderThickness + OffsetX, GetOriginY() + GetHeight() / 2 - Theme->LabelFont->GetTextSize() / 2);
 
 		ShowCursor = true;
 

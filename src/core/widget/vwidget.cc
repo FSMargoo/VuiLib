@@ -201,7 +201,10 @@ namespace Core {
 			}
 		}
 
-		RepaintMessages.push_back(std::move(new VRepaintMessage(CallWidgetGetHWND(), *(RepaintMessage.RepaintAera))));
+		auto				NewRect = RepaintMessage.RepaintAera->Clone();
+		VRepaintMessage*	Message = new VRepaintMessage(CallWidgetGetHWND(), NewRect);
+
+		RepaintMessages.push_back(Message);
 	}
 
 	void VMainWindow::Show() {
@@ -260,11 +263,21 @@ namespace Core {
 				Canvas->BeginDraw();
 				Canvas->Clear(VColor(0.f, 0.f, 0.f, 0.f));
 				if (!WindowConfig.EnableRadius) {
-					for (auto& Message : RepaintMessages) {
-						OnPaint(Canvas, Message->DirtyRectangle);
-						SendMessageToChild(Message, false);
+					std::vector<decltype(RepaintMessages)::iterator> IteratorSet;
 
-						delete Message;
+					size_t Count = 0;
+					for (auto Message = RepaintMessages.begin(); ;) {
+						OnPaint(Canvas, (*Message)->DirtyRectangle);
+						SendMessageToChild((*Message), false);
+
+						delete (*Message);
+
+						RepaintMessages.erase(Message);
+						if (RepaintMessages.empty()) {
+							break;
+						}
+
+						Message = RepaintMessages.begin();
 					}
 				}
 				else {

@@ -112,7 +112,7 @@ namespace Core {
 	}
 	int VUIObject::GetOriginY(const int& Y) {
 		if (IsWidget() == false) {
-			return GetParent()->GetOriginX(GetY() + Y);
+			return GetParent()->GetOriginY(GetY() + Y);
 		}
 
 		return Y;
