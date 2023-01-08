@@ -8,8 +8,8 @@
             <welcome-text type="textlabel" height="@scale(0.066)" x="@ratio(0.13857)" y="@ratio(0.10734)" text="Chat Room" auto-size="true" size-layout="@scale(0.055)" class="welcome-text"/>
             <welcome-sub-text type="textlabel" height="@scale(0.043)" x="@ratio(0.13857)" y="@ratio(0.18293)" text="Let's chat" auto-size="true" size-layout="@scale(0.048)" class="welcome-sub-text"/>
 
-            <server-ip-editor type="lineeditor" width="@scale(0.76)" height="@scale(0.107)" x="@ratio(0.13857)" y="@ratio(0.353)" lead-text="Your server IP (e.g. 1.1.1.1:400)" class="info-editor"/>
-            <user-name-editor type="lineeditor" width="@scale(0.76)" height="@scale(0.107)" x="@ratio(0.13857)" y="@ratio(0.519)" lead-text="Your user name" class="info-editor"/>
+            <server-ip-editor type="lineeditor" width="@scale(0.76)" height="@scale(0.107)" x="@ratio(0.13857)" y="@ratio(0.353)" placeholder="Your server IP (e.g. 1.1.1.1:400)" class="info-editor"/>
+            <user-name-editor type="lineeditor" width="@scale(0.76)" height="@scale(0.107)" x="@ratio(0.13857)" y="@ratio(0.519)" placeholder="Your user name" class="info-editor"/>
             
             <error-text type="textlabel" height="@scale(0.066)" x="@ratio(0.13857)" y="@ratio(0.64)" auto-size="true" size-layout="@scale(0.036)" class="error-text"/>
 
@@ -19,7 +19,8 @@
 
     <main-ui type="textlabel" width="@fill" height="@fill" visible="false">
         <chat-editor type="editor" width="@fill" height="@scale(0.613)" allow-edit="false" class="chat-text"/>
-        <editor type="editor" width="@fill" height="@scale(0.387)" y="@ratio(0.613)" class="chating-editor"/>
+        <editor type="editor" width="@fill" height="@scale(0.387)" y="@ratio(0.613)" placeholder="Let's start your chat~" class="chating-editor"/>
         <send-button type="pushbutton" width="240" height="50" x="@ratio(0.680)" y="@ratio(0.790)" text="send" on-clicked="@SendChatMessage" class="login-button"/>
     </main-ui>
+    <editor type="editor" width="@fill" height="@scale(0.387)" y="@ratio(0.613)" placeholder="Let's start your chat~" class="chating-editor"/>
 </main-widget>

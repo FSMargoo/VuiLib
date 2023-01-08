@@ -224,6 +224,8 @@ public:
     VColor       OnSelectedColor;
     VColor       OnSelectedBackgroundColor;
 
+    VColor       PlaceHolderColor;
+
 public:
     VTextEditorTheme();
     VTextEditorTheme(const VTextEditorTheme& Theme);

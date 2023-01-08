@@ -10,6 +10,8 @@ namespace Core {
 	struct VHightlighterTheme {
 		Core::VColor		SymbolColor;
 		Core::VColor		BackgroundColor;
+		Core::VColor		SelectBackgroundColor;
+		Core::VColor		SelectTextColor;
 		Core::VColor		KeyWorldColor;
 		Core::VColor		StringColor;
 		Core::VColor		LabelColor;

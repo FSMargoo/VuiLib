@@ -1103,10 +1103,10 @@ namespace VML {
 
                 PlaneText = ElementProperty.second.PropertyAsString;
             }
-            if (ElementProperty.first == L"lead-text") {
+            if (ElementProperty.first == L"placeholder") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
                     BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-                    BuildStatus->FailedReason = L"\"lead-text\" Property Must Match the Type \"string\"";
+                    BuildStatus->FailedReason = L"\"placeholder\" Property Must Match the Type \"string\"";
 
                     return;
                 }
@@ -1123,9 +1123,10 @@ namespace VML {
         AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
     }
 
-    void VMLEditorBuilder::Builder(Core::VEditor* Editor, std::wstring PlaneText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange,
-                                   const bool& AllowOperationBack, const int& MaxOperationCache) {
+    void VMLEditorBuilder::Builder(Core::VEditor* Editor, const std::wstring& PlaneText, const std::wstring& LeadingText, const int& DeltaY, const bool& AllowEdit, const bool& AllowDragFontSizeChange,
+                     const bool& AllowOperationBack, const int& MaxOperationCache) {
         Editor->SetPlaneText(PlaneText);
+        Editor->SetLeadingText(LeadingText);
         Editor->SetDeltaY(DeltaY);
         Editor->SetAllowEditStatus(AllowEdit);
         Editor->SetAllowFontSizeDragStatus(AllowDragFontSizeChange);
@@ -1135,6 +1136,7 @@ namespace VML {
     void VMLEditorBuilder::AnalyzeProperty(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus) {
         std::wstring PlaneText;
+        std::wstring LeadingText;
         int          DeltaY             = 25;
         int          MaxOperationCache  = 20;
         bool         AllowBack          = true;
@@ -1151,6 +1153,16 @@ namespace VML {
                 }
 
                 PlaneText = ElementProperty.second.PropertyAsString;
+            }
+            if (ElementProperty.first == L"placeholder") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"placeholder\" Property Must Match the Type \"string\"";
+
+                    return;
+                }
+
+                LeadingText = ElementProperty.second.PropertyAsString;
             }
             if (ElementProperty.first == L"delta-y") {
                 if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue) {
@@ -1204,7 +1216,7 @@ namespace VML {
             }
         }
 
-        Builder(Object, PlaneText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache);
+        Builder(Object, PlaneText, LeadingText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache);
     }
     VMLEditorBuilder::VMLEditorBuilder(const VMLFinder& RootFinder, Core::VEditor* Object, std::map<std::wstring, VMLPropertyValue>& PropertyValueList,
         VMLControlBuildStatus* BuildStatus)

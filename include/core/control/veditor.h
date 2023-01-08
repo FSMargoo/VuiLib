@@ -65,6 +65,8 @@ namespace Core {
 	public:
 		void SetPlaneText(const std::wstring& PlaneText);
 		std::wstring GetPlaneText() const;
+		void SetLeadingText(const std::wstring& Text);
+		std::wstring GetLedingText() const;
 
 	public:
 		void ResetCaretStatus();
@@ -158,6 +160,9 @@ namespace Core {
 		Microsoft::WRL::ComPtr<IDWriteTextLayout> LocalTextLayout;
 
 	private:
+		void DrawSelectedRange(Core::VCanvasPainter* Painter);
+
+	private:
 		void CacheOperation(const std::wstring& OldText);
 
 	protected:
@@ -185,6 +190,9 @@ namespace Core {
 		int							OperationCacheMax;
 		std::vector<VEditorCaret>	CaretSet;
 		std::vector<std::wstring>	OldStringSet;
+
+	protected:
+		std::wstring LeadText;
 	};
 }
 

@@ -216,7 +216,15 @@ namespace Core {
                     VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
 
                     if (wParameter != SIZE_RESTORED) {
-                        WindowConfig->WindowOnSize(LOWORD(lParameter), HIWORD(lParameter));
+                        RECT WindowRect;
+                        RECT ClientRect;
+
+                        GetWindowRect(Handle, &WindowRect);
+                        GetClientRect(Handle, &ClientRect);
+
+                        int TitleBarHeight = WindowRect.bottom - WindowRect.top - ClientRect.bottom;
+
+                        WindowConfig->WindowOnSize(LOWORD(lParameter), HIWORD(lParameter) + TitleBarHeight);
                     }
                     else {
                         RECT Rect;

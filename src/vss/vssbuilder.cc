@@ -2053,6 +2053,26 @@ namespace VSS {
                             }
                         }
                     }
+                    if (Property.first == L"background-color") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->OnSelectedBackgroundColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+                static_cast<VSSFakeElementSelector*>(Selector)->ElementTag == L"editor" &&
+                static_cast<VSSFakeElementSelector*>(Selector)->FakeElementTag == L"placeholder") {
+                for (auto& Property : Selector->SelectorProperty) {
+                    if (Property.first == L"color") {
+                        for (auto& PropertyValue : Property.second.ValueList) {
+                            if (PropertyValue.Type == VSSPropertyType::ColorValue) {
+                                Theme->PlaceHolderColor = PropertyValue.PropertyAsColorValue;
+                            }
+                        }
+                    }
                 }
             }
         }

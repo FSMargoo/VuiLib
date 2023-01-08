@@ -20,6 +20,10 @@ namespace Core {
 		SubElementColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E06C75"));
 		IgnoreGrayColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#ABB2BF"));
 
+		SelectBackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#3E4451"));
+		SelectTextColor		  = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#000000"));
+		SelectTextColor.SetA(0);
+
 		SymbolBrush		= new Core::VSolidBrush(SymbolColor, StaticRenderHandle);
 		StringBrush		= new Core::VSolidBrush(StringColor, StaticRenderHandle);
 		KeyWorldBrush	= new Core::VSolidBrush(KeyWorldColor, StaticRenderHandle);
@@ -46,6 +50,10 @@ namespace Core {
 			TagColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#C477DB"));
 			SubElementColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E06C75"));
 			IgnoreGrayColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#ABB2BF"));
+
+			SelectBackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#3E4451"));
+			SelectTextColor		  = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#000000"));
+			SelectTextColor.SetA(0);
 
 			SymbolBrush		= new Core::VSolidBrush(SymbolColor, StaticRenderHandle);
 			StringBrush		= new Core::VSolidBrush(StringColor, StaticRenderHandle);
@@ -92,6 +100,9 @@ namespace Core {
 		auto Theme = TargetEditor->GetTheme();
 
 		TargetEditor->SetAllowFontSizeDragStatus(true);
+
+		Theme->OnSelectedBackgroundColor	= HighlightTheme.SelectBackgroundColor;
+		Theme->OnSelectedColor				= HighlightTheme.SelectTextColor;
 
 		Theme->LocalTheme.BackgroundColor	= HighlightTheme.BackgroundColor;
 		Theme->LocalTheme.BorderColor		= HighlightTheme.BackgroundColor;

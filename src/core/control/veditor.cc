@@ -1247,15 +1247,45 @@ namespace Core {
 		OffsetY = GetMaxOffsetY();
 	}
 	void VEditor::SetPlaneText(const std::wstring& PlaneText) {
-		InEditingText = PlaneText;
-		Caret.CaretStart = 0;
-		Caret.CaretEnd   = 0;
+		InEditingText		= PlaneText;
+		Caret.CaretStart	= 0;
+		Caret.CaretEnd		= 0;
 
 		ResetTextLayout();
 
 		TextOnChange.Emit(GetPlaneText());
 	}
+	void VEditor::SetLeadingText(const std::wstring& PlaneText) {
+		LeadText			= PlaneText;
+		Caret.CaretStart	= 0;
+		Caret.CaretEnd		= 0;
 
+		ResetTextLayout();
+
+		TextOnChange.Emit(GetPlaneText());
+	}
+	void VEditor::DrawSelectedRange(Core::VCanvasPainter* Painter) {
+		auto HitCount		= UINT32(0);
+		auto SelectRange	= Caret.GetTextRange();
+
+		if (SelectRange.length > 0 && Caret.InSelecting) {
+			LocalTextLayout->HitTestTextRange(SelectRange.startPosition, SelectRange.length, 0, 0, 0, 0, &HitCount);
+
+			auto HitTestMetrics = std::vector<DWRITE_HIT_TEST_METRICS>(HitCount);
+
+			LocalTextLayout->HitTestTextRange(SelectRange.startPosition, SelectRange.length, 0, OffsetY, &HitTestMetrics[0], static_cast<UINT32>(HitTestMetrics.size()), &HitCount);
+
+			VSolidBrush FillRectangleBrush(Theme->OnSelectedBackgroundColor, CallWidgetGetRenderHandle());
+			for (auto Count = UINT32(0); Count < HitCount; ++Count) {
+				auto HitTestMetric = HitTestMetrics[Count];
+
+				HitTestMetric.left		+= OffsetX;
+				HitTestMetric.top		+= OffsetY + Theme->LabelFont->GetTextSize();
+
+				Painter->SolidRectangle(VRect(HitTestMetric.left, HitTestMetric.top, HitTestMetric.left + HitTestMetric.width, HitTestMetric.top + HitTestMetric.height), &FillRectangleBrush);
+			}
+		}
+	}
 	void VEditor::OnPaint(VCanvasPainter* Painter) {
 		if (GetWidth() == 0 || GetHeight() == 0) {
 			return;
@@ -1269,13 +1299,30 @@ namespace Core {
 		VPenBrush	CaretBrush(Theme->CursorColor, CallWidgetGetRenderHandle(), 1.f);
 		VPenBrush   BorderBrush(Theme->LocalTheme.BorderColor, CallWidgetGetRenderHandle(), Theme->LocalTheme.BorderThickness);
 
-		LocalTextLayout->SetDrawingEffect(SelectedBrush.GetDxBrush(), Caret.GetTextRange());
+		if (Theme->OnSelectedColor.GetA() != 0) {
+			LocalTextLayout->SetDrawingEffect(SelectedBrush.GetDxBrush(), Caret.GetTextRange());
+		}
 
 		Painter->FillRoundedRectangle(VRect(Theme->LocalTheme.BorderThickness, Theme->LocalTheme.BorderThickness,
 			GetWidth() - Theme->LocalTheme.BorderThickness, GetHeight() - Theme->LocalTheme.BorderThickness),
 			Theme->LocalTheme.Radius, &BorderBrush, &BackgroundBrush);
-		Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
-			LocalTextLayout.Get(), TextBrush.GetDxBrush());
+
+		if (!InEditingText.empty()) {
+			DrawSelectedRange(Painter);
+
+			Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
+				LocalTextLayout.Get(), TextBrush.GetDxBrush());
+		}
+		else {
+			VSolidBrush									LeadingTextBrush(Theme->PlaceHolderColor, CallWidgetGetRenderHandle());
+			Microsoft::WRL::ComPtr<IDWriteTextLayout>	LeadingTextLayout;
+
+			VDirectXWriteFactory.GetInstance()->CreateTextLayout(LeadText.c_str(), LeadText.size(), Theme->LabelFont->GetDXObject(),
+				GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
+				LeadingTextLayout.GetAddressOf());
+			Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
+				LeadingTextLayout.Get(), LeadingTextBrush.GetDxBrush());
+		}
 
 		if (ShowCaret) {
 			auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
@@ -1551,6 +1598,9 @@ namespace Core {
 
 	std::wstring VEditor::GetPlaneText() const {
 		return InEditingText;
+	}
+	std::wstring VEditor::GetLedingText() const {
+		return LeadText;
 	}
 
 	void VEditor::Resize(const int& Width, const int& Height) {
