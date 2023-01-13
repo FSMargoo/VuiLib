@@ -63,15 +63,10 @@ namespace Core {
 
      public:
          /*
-          * GetInstance function:
-          *     Description : Get the only instance of VApplication
-         */
-         static VApplication* GetInstance();
-         /*
           * IsApplication override function:
           *     Description : To mark this object is a application object
          */
-         bool                 IsApplication() override;
+         bool IsApplication() override;
 
      public:
          VApplication();
@@ -80,8 +75,6 @@ namespace Core {
      private:
          std::vector<VBasicUITheme*> ThemeList;
     };
-    
-    extern VApplication* VLib_Application;
 }
 
 VLIB_END_NAMESPACE

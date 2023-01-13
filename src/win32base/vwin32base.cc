@@ -366,6 +366,16 @@ namespace Win32Core {
 
 			break;
 		}
+		default: {
+			flag = true;
+
+			RawWin32Msg.wHandle = Handle;
+			RawWin32Msg.message = MessageType;
+			RawWin32Msg.wParam = wParameter;
+			RawWin32Msg.lParam = lParameter;
+
+			break;
+		}
 		}
 
 		if (flag) {

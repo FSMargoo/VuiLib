@@ -382,6 +382,9 @@ namespace Core {
 		WindowConfig.UseMaxMinSize = true;
 		WindowConfig.WindowMiniSize = MiniSize;
 	}
+	void VMainWindow::SetBorderLess(const bool& BorderLessStatus) {
+		WindowConfig.BorderLess = BorderLessStatus;
+	}
 	void VMainWindow::SetFrameless(const bool& FramelessStatus) {
 		if (FramelessStatus) {
 			WindowConfig.InFrameless = true;

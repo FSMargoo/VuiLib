@@ -121,6 +121,7 @@ namespace Core {
     
          void SetRadius(VPoint Radius = { 0, 0 });
     
+         void SetBorderLess(const bool& BorderLessStatus);
          void SetFrameless(const bool& FramelessStatus);
     
          void Resize(const int& Width, const int& Height) override;
@@ -143,7 +144,7 @@ namespace Core {
 
       private:
          VBasicTimer                   FpsTimer;
-                                       
+                   
          VMainWindowTheme*             Theme;
          VWin32ThreadPipe              WindowConfig;
          VWin32StatusCache             Win32Cache;

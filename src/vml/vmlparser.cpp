@@ -407,6 +407,8 @@ namespace VML {
             VMLNode NewNode;
             NewNode.NodeTag = Token.token_string;
 
+            NewNode.BlockStart = ParserLexical->get_index();
+
             bool EndFlag      = false;
             bool ScopeEndFlag = false;
 
@@ -494,6 +496,8 @@ namespace VML {
                     }
                 }
                 if (Token.token_string == L"<") {
+                    NewNode.BlockEnd = ParserLexical->get_index();
+
                     EndPosition = ParserLexical->get_index() - 1;
                     Token       = ParserLexical->get_token();
 

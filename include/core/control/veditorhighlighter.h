@@ -1,10 +1,12 @@
 #include "veditor.h"
 
+#include "../../../include/vml/vmlparser.h"
+
 VLIB_BEGIN_NAMESPACE
 
 namespace Core {
 	enum class VBuiltInHightlighterTheme {
-		OneDarkPro
+		OneDarkPro, FleetDark
 	};
 
 	struct VHightlighterTheme {
@@ -36,7 +38,7 @@ namespace Core {
 		std::wstring		FontFamily;
 
 		VHightlighterTheme(const VRenderHandle& StaticRenderHandle);
-		VHightlighterTheme(const VHightlighterTheme& Theme) = default;
+		VHightlighterTheme(const VHightlighterTheme& Theme);
 		VHightlighterTheme(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme);
 
 		~VHightlighterTheme();
@@ -64,6 +66,7 @@ namespace Core {
 	public:
 		VVMLHighlighter(VEditor* Editor);
 		VVMLHighlighter(const VRenderHandle& StaticRenderHandle);
+		VVMLHighlighter(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme);
 		VVMLHighlighter(const VHightlighterTheme& Theme);
 
 		void CheckInputChar(const wchar_t& NewChar, bool* AllowEditFlag) override;
@@ -71,6 +74,9 @@ namespace Core {
 		void RenderColor(const std::wstring& PlaneText) override;
 
 		void BindEditor(VEditor* TargetEditor) override;
+
+	private:
+		int CountSpace(VML::VMLNode Node, const int& PreSpaceCount = 0);
 	};
 	class VVSSHighlighter : public VBasicHightlighter {
 	private:

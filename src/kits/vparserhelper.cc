@@ -10,10 +10,17 @@ namespace VKits {
         std::string TempLine;
         std::string TotalFile;
 
-        while (!FileStream.eof()) {
+        while (true) {
             std::getline(FileStream, TempLine);
 
-            TotalFile += TempLine + "\n";
+            if (!FileStream.eof()) {
+                TotalFile += TempLine + "\n";
+            }
+            else {
+                TotalFile += TempLine;
+
+                break;
+            }
         }
 
         FileStream.close();

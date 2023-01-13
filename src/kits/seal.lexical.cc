@@ -94,14 +94,15 @@ _lexical_info::seal_lexical_token _lexical_core::get_token() {
 			// Skip null characters
 			if (core_info.lexical_code[core_info.lexical_index] == '\t' ||
 				core_info.lexical_code[core_info.lexical_index] == ' ' ||
-				core_info.lexical_code[core_info.lexical_index] == '\n') {
+				core_info.lexical_code[core_info.lexical_index] == '\n' ||
+				core_info.lexical_code[core_info.lexical_index] == '\r') {
 				if (core_info.lexical_token.cache_token != NO_STATUS_TOKEN) {
 					break;
 				}
 
 				// If there is a newline
 				if (core_info.lexical_index - 1 >= 0) {
-					if (core_info.lexical_code[core_info.lexical_index - 1] == '\n') {
+					if (core_info.lexical_code[core_info.lexical_index - 1] == '\n' || core_info.lexical_code[core_info.lexical_index - 1] == '\r') {
 						if (core_info.lexical_token.cache_token != NO_STATUS_TOKEN) {
 							lexical_update_line = true;
 						}

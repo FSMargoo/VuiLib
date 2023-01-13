@@ -15,14 +15,7 @@ namespace Core {
 		ThemeList.clear();
 	}
 	VApplication::VApplication() : VUIObject(nullptr) {
-		if (VLib_Application == nullptr) {
-			InitTheme();
-
-			VLib_Application = this;
-		}
-		else {
-			VLIB_REPORT_ERROR(L"The VApplication object should only be created as once!");
-		}
+		InitTheme();
 	}
 	VMessage* VApplication::PatchEvent() {
 		VMessage* ResultEvent = nullptr;
@@ -121,7 +114,18 @@ namespace Core {
 
 			ResultEvent->Win32ID = Win32Message.message;
 
-			ResultEvent->Win32ID = Win32Message.message;
+			return ResultEvent;
+		}
+
+		default: {
+			ResultEvent							= new VMessage;
+			ResultEvent->MessageTriggerWidget	= Win32Message.wHandle;
+
+			ResultEvent->Win32ID	= Win32Message.message;
+
+			ResultEvent->wParameter = Win32Message.wParam;
+			ResultEvent->lParameter = Win32Message.lParam;
+
 			return ResultEvent;
 		}
 		}
@@ -168,9 +172,6 @@ namespace Core {
 		}
 
 		return -1;
-	}
-	VApplication* VApplication::GetInstance() {
-		return VLib_Application;
 	}
 	bool VApplication::IsApplication() {
 		return true;

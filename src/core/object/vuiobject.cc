@@ -524,6 +524,9 @@ namespace Core {
 				delete Canvas;
 				Canvas = nullptr;
 			}
+			else {
+				return false;
+			}
 
 			return true;
 		}
@@ -531,7 +534,7 @@ namespace Core {
 		return false;
 	}
 	bool VUIObject::SysProcessMessage(Core::VMessage* Message) {
-		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden) {
+		if (ObjectVisual.Stats == VUIObjectUIStats::Hidden || ObjectVisual.Transparency == 0) {
 			return false;
 		}
 
@@ -558,6 +561,10 @@ namespace Core {
 		}
 
 		OnMessage(Message);
+
+		if (CatchMessage(Message)) {
+			return true;
+		}
 
 		switch (Message->GetType()) {
 		case VMessageType::QuitWindowMessage: {

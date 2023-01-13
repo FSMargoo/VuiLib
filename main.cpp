@@ -15,6 +15,7 @@
 
 #include "./include/vml/vmlwidget.h"
 #include "./include/kits/vallocator.h"
+#include "./include/core/control/vtitlebar.h"
 
 #include <iostream>
 
@@ -26,10 +27,13 @@
 fn main() -> int {
 	var Application = Core::VApplication();
 	var MainWindow  = VML::VMLMainWindow(640, 800, &Application);
+	var PushButton	= Core::VPushButton(100, 40, L"Hello World", &MainWindow);
+	PushButton.Move(40, 40);
+	var VWidgetTitleBar = Core::VWidgetTitleBar(&MainWindow);
 	
 	MainWindow.Show();
 
-	MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
+	// MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
 	return Application.Exec();
 }

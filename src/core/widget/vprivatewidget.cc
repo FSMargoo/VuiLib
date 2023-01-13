@@ -1,11 +1,12 @@
 #include "../../../include/core/widget/vprivatewidget.h"
 #include "../../../include/core/render/vdirectxfactory.h"
 
-#include <stdio.h>
-
-#include <gdiplus.h>
-
-#pragma comment(lib, "gdiplus.lib")
+#include <windows.h>
+#include <uxtheme.h>
+#include <vssym32.h>
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "uxtheme.lib")
 
 VLIB_BEGIN_NAMESPACE
 
@@ -23,7 +24,7 @@ namespace Core {
               Message == WM_CHAR || Message == WM_KILLFOCUS || Message == WM_NCMOUSELEAVE || Message == WM_CLOSE ||
               Message == WM_LBUTTONDOWN || Message == WM_LBUTTONUP || Message == WM_MBUTTONDOWN || Message == WM_MBUTTONUP ||
               Message == WM_RBUTTONUP || Message == WM_RBUTTONDOWN || Message == WM_MOUSEMOVE || Message == WM_IME_CHAR ||
-              Message == WM_KEYDOWN || Message == WM_KEYUP || Message == WM_MOUSEWHEEL || Message == WM_CLOSE)) {
+              Message == WM_KEYDOWN || Message == WM_KEYUP || Message == WM_MOUSEWHEEL || Message == WM_CLOSE || Message == WM_NCCALCSIZE)) {
             return DefWindowProc(Handle, Message, wParameter, lParameter);
         }
 
@@ -116,6 +117,26 @@ namespace Core {
                     }
                 }
 
+                if (WindowConfig->BorderLess && WindowConfig->Sizable) {
+                    POINT MousePoint = { GET_X_LPARAM(lParameter), GET_Y_LPARAM(lParameter) };
+                    RECT  WindowRect;
+                    ScreenToClient(Handle, &MousePoint);
+                    GetClientRect(Handle, &WindowRect);
+
+                    if (MousePoint.y > 0 && MousePoint.y < 5) {
+                        return HTTOP;
+                    }
+
+                    WindowRect.bottom -= WindowRect.top;
+                    WindowRect.bottom -= GetSystemMetrics(SM_CYCAPTION);
+                    WindowRect.bottom += 5;
+
+                    if (MousePoint.y <= WindowRect.bottom &&
+                        MousePoint.y >= WindowRect.bottom - 5) {
+                        return HTBOTTOM;
+                    }
+                }
+
                 break;
             }
             case WM_SETCURSOR: {
@@ -144,6 +165,15 @@ namespace Core {
                     case HTTOPRIGHT:
                     case HTBOTTOMLEFT: {
                         SetCursor(LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENESW)));
+                        return TRUE;
+                    }
+                    }
+                }
+                if (WindowConfig->BorderLess) {
+                    switch (LOWORD(lParameter)) {
+                    case HTTOP:
+                    case HTBOTTOM: {
+                        SetCursor(LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENS)));
                         return TRUE;
                     }
                     }
@@ -210,6 +240,30 @@ namespace Core {
                 WindowConfig->WindowOnSize(Rect->right - Rect->left, Rect->bottom - Rect->top);
 
                 break;
+            }
+            case WM_NCCALCSIZE: {
+                if (!wParameter) {
+                    break;
+                }
+                VWin32ThreadPipe* WindowConfig = _VMainConfigs.find(Handle)->second;
+
+                if (WindowConfig->BorderLess) {
+                    int OffsetX = GetSystemMetrics(SM_CXFRAME);
+                    int OffsetY = GetSystemMetrics(SM_CYFRAME);
+                    int Margin = GetSystemMetrics(SM_CXPADDEDBORDER);
+
+                    NCCALCSIZE_PARAMS* Parameter = (NCCALCSIZE_PARAMS*)lParameter;
+                    RECT* ClientRect = Parameter->rgrc;
+
+                    ClientRect->right -= OffsetY + Margin;
+                    ClientRect->left += OffsetX + Margin;
+                    ClientRect->bottom -= OffsetY + Margin - GetSystemMetrics(SM_CYCAPTION);
+
+                    return 0;
+                }
+                else {
+                    break;
+                }
             }
             case WM_SIZE: {
                 if (wParameter != SIZE_MINIMIZED) {

@@ -559,6 +559,11 @@ namespace Core {
          */
          virtual void OnMessage(VMessage* Message) {  }
          /*
+          * CatchMessage function:
+          *     Description : When a object received a message, this function will be called
+         */
+         virtual bool CatchMessage(VMessage* Message) { return false; }
+         /*
           * CheckMousePosition function:
           *     Description : Do more detailed judgment if object need
          */

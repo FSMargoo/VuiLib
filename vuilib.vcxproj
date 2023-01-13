@@ -149,6 +149,7 @@
     <ClInclude Include="include\core\control\vscroller.h" />
     <ClInclude Include="include\core\control\vswitchgroup.h" />
     <ClInclude Include="include\core\control\vtextlabel.h" />
+    <ClInclude Include="include\core\control\vtitlebar.h" />
     <ClInclude Include="include\core\control\vviewlabel.h" />
     <ClInclude Include="include\core\object\vapplication.h" />
     <ClInclude Include="include\core\object\vuiobject.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="src\core\control\vscroller.cc" />
     <ClCompile Include="src\core\control\vswitchgroup.cc" />
     <ClCompile Include="src\core\control\vtextlabel.cc" />
+    <ClCompile Include="src\core\control\vtitlebar.cc" />
     <ClCompile Include="src\core\control\vviewlabel.cc" />
     <ClCompile Include="src\core\object\vapplication.cc" />
     <ClCompile Include="src\core\object\vuiobject.cc" />

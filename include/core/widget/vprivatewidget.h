@@ -23,14 +23,16 @@ namespace Core {
         bool      InFrameless    = false;
         bool      UseMaxMinSize  = false;
         bool      Sizable        = false;
+        bool      BorderLess     = false;
     
         VGeometry WindowMaxSize;
         VGeometry WindowMiniSize;
     
         std::wstring GlobalFocusID;
     
-        bool LockFocus = false;
-        bool IMEInput  = false;
+        bool LockFocus       = false;
+        bool IMEInput        = false;
+        bool SelfDrawCaption = false;
     
         bool   EnableRadius = false;
         VPoint BorderRadius = { 0, 0 };

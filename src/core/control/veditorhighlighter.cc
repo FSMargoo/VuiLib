@@ -2,7 +2,6 @@
 
 #include "../../../include/core/control/veditorhighlighter.h"
 #include "../../../include/kits/vcolorhelper.h"
-#include "../../../include/kits/seal.lexical.h"
 
 VLIB_BEGIN_NAMESPACE
 
@@ -37,6 +36,36 @@ namespace Core {
 
 		FontFamily		= L"Consolas";
 	}
+	VHightlighterTheme::VHightlighterTheme(const VHightlighterTheme& Theme) {
+		BackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#282C34"));
+			KeyWorldColor	= Theme.KeyWorldColor;
+			StringColor		= Theme.StringColor;
+			LabelColor		= Theme.LabelColor;
+			MetaCallColor	= Theme.MetaCallColor;
+			TypeColor		= Theme.TypeColor;
+			CommentColor	= Theme.CommentColor;
+			SymbolColor		= Theme.SymbolColor;
+			TagColor		= Theme.TagColor;
+			SubElementColor = Theme.SubElementColor;
+			IgnoreGrayColor = Theme.IgnoreGrayColor;
+
+			SelectBackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#3E4451"));
+			SelectTextColor		  = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#000000"));
+			SelectTextColor.SetA(0);
+
+			SymbolBrush		= Theme.SymbolBrush;
+			StringBrush		= Theme.StringBrush;
+			KeyWorldBrush	= Theme.KeyWorldBrush;
+			MetaCallBrush	= Theme.MetaCallBrush;
+			LabelBrush		= Theme.LabelBrush;
+			TypeBrush		= Theme.TypeBrush;
+			CommentBrush	= Theme.CommentBrush;
+			TagBrush		= Theme.TagBrush;
+			SubElementBrush = Theme.SubElementBrush;
+			IgnoreGrayBrush = Theme.IgnoreGrayBrush;
+
+			FontFamily		= Theme.FontFamily;
+	}
 	VHightlighterTheme::VHightlighterTheme(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme) {
 		if (Theme == VBuiltInHightlighterTheme::OneDarkPro) {
 			BackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#282C34"));
@@ -47,6 +76,36 @@ namespace Core {
 			TypeColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#98C379"));
 			CommentColor	= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#5C6370"));
 			SymbolColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#179FFF"));
+			TagColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#C477DB"));
+			SubElementColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E06C75"));
+			IgnoreGrayColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#ABB2BF"));
+
+			SelectBackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#3E4451"));
+			SelectTextColor		  = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#000000"));
+			SelectTextColor.SetA(0);
+
+			SymbolBrush		= new Core::VSolidBrush(SymbolColor, StaticRenderHandle);
+			StringBrush		= new Core::VSolidBrush(StringColor, StaticRenderHandle);
+			KeyWorldBrush	= new Core::VSolidBrush(KeyWorldColor, StaticRenderHandle);
+			MetaCallBrush	= new Core::VSolidBrush(MetaCallColor, StaticRenderHandle);
+			LabelBrush		= new Core::VSolidBrush(LabelColor, StaticRenderHandle);
+			TypeBrush		= new Core::VSolidBrush(TypeColor, StaticRenderHandle);
+			CommentBrush	= new Core::VSolidBrush(CommentColor, StaticRenderHandle);
+			TagBrush		= new Core::VSolidBrush(TagColor, StaticRenderHandle);
+			SubElementBrush = new Core::VSolidBrush(SubElementColor, StaticRenderHandle);
+			IgnoreGrayBrush = new Core::VSolidBrush(IgnoreGrayColor, StaticRenderHandle);
+
+			FontFamily		= L"Consolas";
+		}
+		if (Theme == VBuiltInHightlighterTheme::FleetDark) {
+			BackgroundColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#181818"));
+			KeyWorldColor	= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#AF9CFF"));
+			StringColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E394DC"));
+			LabelColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#87C3FF"));
+			MetaCallColor	= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#CC5CC2"));
+			TypeColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E394DC"));
+			CommentColor	= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#898989"));
+			SymbolColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#898989"));
 			TagColor		= Core::VColor(VKits::VSSColorHelper::HexToColor(L"#C477DB"));
 			SubElementColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#E06C75"));
 			IgnoreGrayColor = Core::VColor(VKits::VSSColorHelper::HexToColor(L"#ABB2BF"));
@@ -83,8 +142,34 @@ namespace Core {
 		: HighlightTheme(Editor->CallWidgetGetStaticRenderHandle()) {
 		BindEditor(Editor);
 	}
+	int VVMLHighlighter::CountSpace(VML::VMLNode Node, const int& PreSpaceCount) {
+		auto Caret = Editor->GetCaret();
+
+		if (Node.BlockStart <= Caret.CaretStart && Node.BlockEnd > Caret.CaretStart) {
+			int Result = PreSpaceCount;
+
+			if (!Node.ChildrenNodes.empty()) {
+				for (auto& SubNode : Node.ChildrenNodes) {
+					auto ChildSpace = CountSpace(SubNode.second, PreSpaceCount + 1);
+					if (ChildSpace != -1) {
+						return ChildSpace;
+					}
+				}
+			}
+			else {
+				return PreSpaceCount + 1;
+			}
+		}
+		else {
+			return -1;
+		}
+	}
 	VVMLHighlighter::VVMLHighlighter(const VRenderHandle& StaticRenderHandle) 
 		: HighlightTheme(StaticRenderHandle) {
+
+	}
+	VVMLHighlighter::VVMLHighlighter(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme)
+		: HighlightTheme(StaticRenderHandle, Theme) {
 
 	}
 	VVMLHighlighter::VVMLHighlighter(const VHightlighterTheme& Theme) : HighlightTheme(Theme) {
@@ -111,6 +196,7 @@ namespace Core {
 		Theme->LabelFont->SetFamilyName(HighlightTheme.FontFamily);
 
 		Theme->ActiveTheme	= Theme->LocalTheme;
+		Theme->StaticTheme	= Theme->LocalTheme;
 		Theme->OnHoverTheme = Theme->LocalTheme;
 
 		TargetEditor->TextOnChange.Connect(this, &VVMLHighlighter::RenderColor);

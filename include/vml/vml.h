@@ -69,6 +69,7 @@ namespace VML {
         VMLFinder(VMLObject* Object, std::vector<VMLObject*> List, std::vector<VMLBasicVariable* >* VariableList);
 
         VMLFinder operator[](const std::wstring& ChildrenId);
+        Core::VUIObject* operator->();
         VMLFinder Get(const std::wstring& ChildrenId);
         bool      IsValid();
 

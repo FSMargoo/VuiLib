@@ -24,6 +24,8 @@ typedef class VMessage {
  public:
      UINT         Win32ID;
      HWND         MessageTriggerWidget = NULL;
+	 WPARAM		  wParameter;
+	 LPARAM		  lParameter;
 
  public:
 	 explicit VMessage(VMessageType Type = UnknowMessage);

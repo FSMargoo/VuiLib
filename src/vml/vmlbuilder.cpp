@@ -595,7 +595,8 @@ namespace VML {
     }
 
     void VMLMainWindowBuilder::Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height,
-                                        const std::wstring &Title, const bool &Sizble, const bool &FramelessStatus) {
+                                        const std::wstring &Title, const bool &Sizble, const bool &FramelessStatus,
+                                        const bool& BorderlessStatus) {
         MainWindow->Resize(Width, Height);
 
         if (!Title.empty()) {
@@ -604,6 +605,7 @@ namespace VML {
 
         MainWindow->SetSizable(Sizble);
         MainWindow->SetFrameless(FramelessStatus);
+        MainWindow->SetBorderLess(BorderlessStatus);
     }
 
     void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow *Object,
@@ -614,8 +616,9 @@ namespace VML {
 
         std::wstring Title;
 
-        bool Sizble = true;
-        bool FramelessStatus = false;
+        bool Sizble             = true;
+        bool FramelessStatus    = false;
+        bool BorderlessStatus   = false;
 
         for (auto &ElementProperty: PropertyValueList) {
             if (ElementProperty.first == L"width") {
@@ -668,9 +671,19 @@ namespace VML {
 
                 FramelessStatus = ElementProperty.second.PropertyAsBool;
             }
+            if (ElementProperty.first == L"borderless") {
+                if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue) {
+                    BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+                    BuildStatus->FailedReason = L"\"borderless\" Property Must Match the Type \"boolean\"";
+
+                    return;
+                }
+
+                BorderlessStatus = ElementProperty.second.PropertyAsBool;
+            }
         }
 
-        Builder(Object, Width, Height, Title, Sizble, FramelessStatus);
+        Builder(Object, Width, Height, Title, Sizble, FramelessStatus, BorderlessStatus);
     }
 
     VMLMainWindowBuilder::VMLMainWindowBuilder(Core::VMainWindow *MainWindow,
@@ -1576,7 +1589,7 @@ namespace VML {
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseInSineCurve;
                 }
-                else if (ElementProperty.second.PropertyAsString == L"ease-in-sine-curveease-in-sine-curve") {
+                else if (ElementProperty.second.PropertyAsString == L"ease-out-sine-curve") {
                     AnimationCurve = Core::VAnimationCurveFlag::EaseOutSineCurve;
                 }
                 else if (ElementProperty.second.PropertyAsString == L"ease-in-out-sine-curve") {

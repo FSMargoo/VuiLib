@@ -43,8 +43,10 @@ namespace Core {
 		);
 	}
 	VSolidBrush::~VSolidBrush() {
-		Brush.Object->Release();
-		Brush.Object = NULL;
+		if (Brush.Object != nullptr) {
+			Brush.Object->Release();
+			Brush.Object = NULL;
+		}
 	}
 	ID2D1SolidColorBrush* VSolidBrush::GetDxBrush() const {
 		return Brush.Get();

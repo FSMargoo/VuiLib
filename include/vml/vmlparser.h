@@ -54,6 +54,9 @@ namespace VML {
         std::map<std::wstring, VMLNode>		     ChildrenNodes;
         int                                      ChildrenSequence = 0;
 
+        int                                      BlockStart;
+        int                                      BlockEnd;
+
         VMLPropertyValue GetProperty(const std::wstring& Type);
         bool PropertyExsit(const std::wstring& Type);
     };

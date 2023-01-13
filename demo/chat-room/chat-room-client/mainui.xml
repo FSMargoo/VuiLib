@@ -12,7 +12,6 @@
             <user-name-editor type="lineeditor" width="@scale(0.76)" height="@scale(0.107)" x="@ratio(0.13857)" y="@ratio(0.519)" placeholder="Your user name" class="info-editor"/>
             
             <error-text type="textlabel" height="@scale(0.066)" x="@ratio(0.13857)" y="@ratio(0.64)" auto-size="true" size-layout="@scale(0.036)" class="error-text"/>
-
             <login-button type="pushbutton" width="@scale(0.331)" height="@scale(0.107)" x="@center" y="@ratio(0.7)" text="Start Chat" on-clicked="@LoginToServer" class="login-button"/>
         </login-block>
     </login-interface>
@@ -22,5 +21,4 @@
         <editor type="editor" width="@fill" height="@scale(0.387)" y="@ratio(0.613)" placeholder="Let's start your chat~" class="chating-editor"/>
         <send-button type="pushbutton" width="240" height="50" x="@ratio(0.680)" y="@ratio(0.790)" text="send" on-clicked="@SendChatMessage" class="login-button"/>
     </main-ui>
-    <editor type="editor" width="@fill" height="@scale(0.387)" y="@ratio(0.613)" placeholder="Let's start your chat~" class="chating-editor"/>
 </main-widget>

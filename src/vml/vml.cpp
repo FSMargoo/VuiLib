@@ -386,6 +386,9 @@ namespace VML {
 
         return VMLFinder(nullptr, std::vector<VMLObject*>(), VariableList);
     }
+    Core::VUIObject* VMLFinder::operator->() {
+        return Get();
+    }
     VMLFinder VMLFinder::Get(const std::wstring& ChildrenId) {
         for (auto& Object : ObjectList) {
             if (Object->VMLID == ChildrenId) {

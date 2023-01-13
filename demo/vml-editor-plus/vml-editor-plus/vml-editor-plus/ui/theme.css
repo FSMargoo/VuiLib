@@ -1,0 +1,178 @@
+.error-report-widget {
+    background-color: #181818;
+}
+.caption-background {
+    background-color: #292929;
+    border-color: #292929;
+    border-radius: 0px;
+}
+.split-line {
+    background-color: #383838;
+    border-color: #383838;
+    border-radius: 0px;
+}
+.caption-title {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.close-button{
+    font-family: "vml-editor-plus";
+    background-color: rgba(194, 43, 28, 0);
+    border-color: rgba(194, 43, 28, 0);
+    border-radius: 0px;
+    text-align: center;
+    vertical-align: center;
+    color: #FFFFFF;
+    font-weight: 200px;
+    font-size: 10px;
+}
+.close-button:hover {
+    background-color: #C22B1C;
+    border-color: #C22B1C;
+    border-radius: 0px;
+    color: #FFFFFF;
+}
+.close-button:active {
+    background-color: #BA3821;
+    border-color: #BA3821;
+    border-radius: 0px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.mini-size-button {
+    font-family: "vml-editor-plus";
+    background-color: rgba(53, 53, 53, 0);
+    border-color: rgba(53, 53, 53, 0);
+    border-radius: 0px;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+    font-weight: 10px;
+    font-size: 1px;
+}
+.mini-size-button:hover {
+    background-color: #353535;
+    border-color: #353535;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+.mini-size-button:active {
+    background-color: #323232;
+    border-color: #323232;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+
+.max-size-button {
+    font-family: "vml-editor-plus";
+    background-color: rgba(53, 53, 53, 0);
+    border-color: rgba(53, 53, 53, 0);
+    border-radius: 0px;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+    font-weight: 10px;
+    font-size: 100px;
+}
+.max-size-button:hover {
+    background-color: #353535;
+    border-color: #353535;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+.max-size-button:active {
+    background-color: #323232;
+    border-color: #323232;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+
+.startup-text {
+    color: rgba(58, 58, 58, 0.81);
+    font-size: 19px;
+    font-weight: 800px;
+}
+
+.selection-button {
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
+    color:rgba(255, 255, 255, 0.67);
+
+    font-size: 17px;
+    text-align: center;
+    vertical-align: center;
+}
+.selection-button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.08);
+    color:rgba(255, 255, 255, 0.67);
+}
+.selection-button:active {
+    background-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.18);
+    color:rgba(255, 255, 255, 0.67);
+}
+
+.start-vml-view-button {
+    font-family: "icomoon";
+    background-color: rgba(53, 53, 53, 0);
+    border-color: rgba(53, 53, 53, 0);
+    border-radius: 0px;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+    font-weight: 10px;
+    font-size: 20px;
+}
+.start-vml-view-button:hover {
+    background-color: #353535;
+    border-color: #353535;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+.start-vml-view-button:active {
+    background-color: #323232;
+    border-color: #323232;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+
+.run-failed-note-box {
+    background-color: #272727;
+    border-color: #484848;
+    box-shadow: rgba(0, 0, 0, 0.53) 8px;
+    border-radius: 6px;
+    opacity: 0.0px;
+}
+
+.failure-title {
+    color: #EA4B67;
+    font-size: 16px;
+}
+
+.failure-icon {
+    font-family: "icomoon";
+    color: #EA4B67;
+    font-size: 20px;
+    font-weight: 400px;
+}
+
+.failure-sub-content-table {
+    background-color: #242424;
+    border-radius: 0px;
+}
+
+.view-failure-table {
+    background-color: #242424;
+    border-color: #484848;
+    box-shadow: rgba(0, 0, 0, 0.53) 8px;
+    border-radius: 6px;
+    opacity: 0.0px;
+}
+
+
+.failure-info {
+    color: #FFFFFF;
+    font-size: 14px;
+}

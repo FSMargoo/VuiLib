@@ -396,7 +396,7 @@ void PVMainWindow::CreateViewingProject(const std::wstring& FilePath) {
 }
 
 void PVMainWindow::OpenViewProject() {
-	LPWSTR  FilePath = new WCHAR[MAX_PATH];;
+	LPWSTR  FilePath = new WCHAR[MAX_PATH];
 	HRESULT OperationResult;
 
 	std::thread FileDialogThread([](LPWSTR FilePath, HRESULT* OperationResult) -> void {

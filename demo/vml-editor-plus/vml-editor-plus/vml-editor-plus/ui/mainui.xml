@@ -1,0 +1,49 @@
+<main-widget type="mainwindow" width="1126" height="685" class="error-report-widget" style-sheet-src="./vml-editor-plus/ui/theme.css" borderless="true">
+    <caption type="fake-caption" width="@fill" height="49">
+        <background type="textlabel" width="@fill" height="@fill" class="caption-background"/>
+        <icon type="imagelabel" src="./vml-editor-plus/resource/min-logo.png" x="38" y="17" width="18" height="14"/>
+        <title type="textlabel" x="81" y="15" text="VStudio" class="caption-title" auto-size="true"/>
+        <split-line type="textlabel" width="@fill" height="1" y="48" class="split-line"/>
+    </caption>
+
+    <main-ui type="textlabel" width="@fill" height="@scale(0.89)" y="49" visible="false">
+        <code-editor type="editor" width="@fill" height="@fill"/>
+    </main-ui>
+    <startup-ui type="textlabel" width="@fill" height="@scale(0.89)" y="49">
+        <startup-icon type="imagelabel" src="./vml-editor-plus/resource/big-logo.png" width="88" height="67" x="@center" y="94"/>
+        <startup-text type="textlabel" text="Startup" width="74" height="25" x="@center" y="179" class="startup-text"/>
+
+        <open-file-button type="pushbutton" text="Open VML File" width="192" height="55" x="@center" y="@centeroffset(55)" class="selection-button" on-clicked="@OpenFile"/>
+    </startup-ui>
+
+    <run-failed-note type="textlabel" width="317" height="93" x="@relative(417)" class="run-failed-note-box">
+        <failure-title type="textlabel" text="Can not start VML view" x="33" y="12" auto-size="true" class="failure-title"/>
+
+        <failure-sub-content-table type="textlabel" width="314" height="50" x="2" y="42" class="failure-sub-content-table">
+            <failure-icon type="textlabel" x="31" y="15" text="" auto-size="true" class="failure-icon"/>
+            <failure-info type="textlabel" x="60" y="18" text="Not valid VML file found!" auto-size="true" class="failure-info"/>
+        </failure-sub-content-table>
+
+        <run-in-animation type="position-animation" curve="ease-in-sine-curve" duration="100"/>
+        <run-out-animation type="position-animation" curve="ease-out-sine-curve" duration="100"/>
+        <fade-in-animation type="opacity-animation" curve="ease-in-sine-curve" target-opacity="1" duration="100"/>
+        <fade-out-animation type="opacity-animation" curve="ease-out-sine-curve" target-opacity="0" duration="100"/>
+    </run-failed-note>
+
+    <view-failed-note type="textlabel" width="457" height="123" x="@center" y="@relative(217)" class="view-failure-table">
+        <failure-title type="textlabel" x="62" y="22" text="Can not start VML view" auto-size="true" class="failure-title"/>
+
+        <failure-icon type="textlabel" x="32" y="21" text="" auto-size="true" class="failure-icon"/>
+        <failure-info type="textlabel" x="33" y="47" text="Not valid VML file found!" width="390" height="105" class="failure-info"/>
+
+        <run-in-animation type="position-animation" curve="ease-in-sine-curve" duration="100"/>
+        <run-out-animation type="position-animation" curve="ease-out-sine-curve" duration="100"/>
+        <fade-in-animation type="opacity-animation" curve="ease-in-sine-curve" target-opacity="1" duration="100"/>
+        <fade-out-animation type="opacity-animation" curve="ease-out-sine-curve" target-opacity="0" duration="100"/>
+    </view-failed-note>
+
+    <start-vml-view-button type="pushbutton" width="53" height="49" x="@relative(226)" y="0" text="" class="start-vml-view-button" on-clicked="@StartVMLView"/>
+    <max-size-button type="pushbutton" width="53" height="49" x="@relative(116)" y="0" text="" class="max-size-button" on-clicked="@MaxsizeWindow"/>
+    <mini-size-button type="pushbutton" width="53" height="49" x="@relative(164)" y="0" text="" class="mini-size-button" on-clicked="@MinisizeWindow"/>
+    <close-button type="pushbutton" width="53" height="49" x="@relative(68)" y="0" text="" class="close-button" on-clicked="@ExitApp"/>
+</main-widget>

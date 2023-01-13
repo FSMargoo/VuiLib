@@ -62,6 +62,9 @@ namespace Core {
 				CaretStart = CacheTargetPtr->size();
 			}
 
+			InSelecting = true;
+			SelectMode  = VEditorCaretSelectMode::Left;
+
 			SetValidCaretRange();
 
 			return;
@@ -117,13 +120,11 @@ namespace Core {
 
 				CaretStart = HitTestMetrics.textPosition;
 
-				if (IsTrailingHit) {
-					CaretStart = CacheTargetPtr->size();
+				if (CaretEnd < CaretStart) {
+					SelectMode = VEditorCaretSelectMode::Right;
 				}
 
-				if (CaretEnd > CaretStart) {
-					SelectMode = VEditorCaretSelectMode::Left;
-				}
+				InSelecting = true;
 
 				SetValidCaretRange();
 
@@ -306,10 +307,6 @@ namespace Core {
 
 				CaretStart = HitTestMetrics.textPosition;
 
-				if (IsTrailingHit) {
-					CaretStart = CacheTargetPtr->size();
-				}
-
 				if (CaretStart > CaretEnd) {
 					SelectMode = VEditorCaretSelectMode::Right;
 				}
@@ -367,10 +364,6 @@ namespace Core {
 				TextLayout->HitTestPoint(CaretX, CaretY, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
 				CaretEnd = HitTestMetrics.textPosition;
-
-				if (IsTrailingHit) {
-					CaretEnd = CacheTargetPtr->size();
-				}
 
 				SetValidCaretRange();
 
@@ -593,7 +586,7 @@ namespace Core {
 					LinePosition = NextLinePosition;
 					NextLinePosition = LinePosition + LineMetrics[Line].length;
 
-					if (NextLinePosition > CaretStart) {
+					if (NextLinePosition > CaretEnd) {
 						break;
 					}
 				}
@@ -618,16 +611,16 @@ namespace Core {
 				BOOL  IsInside = FALSE;
 				BOOL  IsTrailingHit = FALSE;
 
-				TextLayout->HitTestTextPosition(CaretStart, FALSE, &CaretX, &CaretY, &HitTestMetrics);
+				TextLayout->HitTestTextPosition(CaretEnd, FALSE, &CaretX, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestTextPosition(LinePosition, FALSE, &UnusedParemeter, &CaretY, &HitTestMetrics);
 
 				CaretY += 12;
 
 				TextLayout->HitTestPoint(CaretX, CaretY, &IsTrailingHit, &IsInside, &HitTestMetrics);
 
-				CaretStart = HitTestMetrics.textPosition;
+				CaretEnd = HitTestMetrics.textPosition;
 
-				CaretEnd = CaretStart;
+				CaretStart = CaretEnd;
 
 				return;
 			}
@@ -800,7 +793,7 @@ namespace Core {
 				BOOL  IsInside = FALSE;
 				BOOL  IsTrailingHit = FALSE;
 
-				TextLayout->HitTestTextPosition(CaretStart, FALSE, &CaretX, &CaretY, &HitTestMetrics);
+				TextLayout->HitTestTextPosition(CaretEnd, FALSE, &CaretX, &CaretY, &HitTestMetrics);
 				TextLayout->HitTestTextPosition(LinePosition, FALSE, &UnusedParemeter, &CaretY, &HitTestMetrics);
 
 				CaretY += 12;
@@ -883,7 +876,7 @@ namespace Core {
 			++CaretStart;
 		}
 
-		CaretEnd   = CaretStart;
+		CaretEnd = CaretStart;
 	}
 	void VEditorCaret::CaretSelectionTurnLineHead(IDWriteTextLayout* TextLayout) {
 		DWRITE_TEXT_METRICS				 TextMetrics;
@@ -1201,18 +1194,20 @@ namespace Core {
 	void VEditor::ResetTextLayout() {
 		LocalTextLayout.Reset();
 		
-		auto Result = VDirectXWriteFactory.GetInstance()->CreateTextLayout(InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
-			GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
-			LocalTextLayout.GetAddressOf());
+		if (GetWidth() > 0 && GetHeight() > 0) {
+			auto Result = VDirectXWriteFactory.GetInstance()->CreateTextLayout(InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
+				GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
+				LocalTextLayout.GetAddressOf());
 
-		for (auto& Effect : TextEffect) {
-			LocalTextLayout->SetDrawingEffect(std::get<0>(Effect), std::get<1>(Effect));
-		}
-		for (auto& Effect : TextStyle) {
-			LocalTextLayout->SetFontStyle(std::get<0>(Effect), std::get<1>(Effect));
-		}
+			for (auto& Effect : TextEffect) {
+				LocalTextLayout->SetDrawingEffect(std::get<0>(Effect), std::get<1>(Effect));
+			}
+			for (auto& Effect : TextStyle) {
+				LocalTextLayout->SetFontStyle(std::get<0>(Effect), std::get<1>(Effect));
+			}
 
-		Update();
+			Update();
+		}
 	}
 
 	bool VEditor::GetAllowEditStatus() const {
@@ -1955,8 +1950,10 @@ namespace Core {
 				BackCharacter();
 			}
 
-			TextOnChange.Emit(GetPlaneText());
-			PushNewCharacter.Emit(IMECharMessage->IMEChar);
+			if (IMECharMessage->IMEChar != L'\x13') {
+				TextOnChange.Emit(GetPlaneText());
+				PushNewCharacter.Emit(IMECharMessage->IMEChar);
+			}
 
 			Update();
 		}
