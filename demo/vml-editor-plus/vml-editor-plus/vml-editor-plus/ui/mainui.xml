@@ -1,12 +1,12 @@
 <main-widget type="mainwindow" width="1126" height="685" class="error-report-widget" style-sheet-src="./vml-editor-plus/ui/theme.css" borderless="true">
     <caption type="fake-caption" width="@fill" height="49">
         <background type="textlabel" width="@fill" height="@fill" class="caption-background"/>
-        <icon type="imagelabel" src="./vml-editor-plus/resource/min-logo.png" x="38" y="17" width="18" height="14"/>
-        <title type="textlabel" x="81" y="15" text="VStudio" class="caption-title" auto-size="true"/>
-        <split-line type="textlabel" width="@fill" height="1" y="48" class="split-line"/>
+        <icon type="imagelabel" src="./vml-editor-plus/resource/min-logo.png" x="38" y="@center" width="18" height="14"/>
+        <title type="textlabel" x="@center" y="@center" text="VStudio" class="caption-title" auto-size="true"/>
+        <split-line type="textlabel" width="@centeroffset(200)" height="1" y="48" class="split-line"/>
     </caption>
 
-    <main-ui type="textlabel" width="@fill" height="@scale(0.89)" y="49" visible="false">
+    <main-ui type="textlabel" width="@fill" height="@scale(0.91)" y="49" visible="false">
         <code-editor type="editor" width="@fill" height="@fill"/>
     </main-ui>
     <startup-ui type="textlabel" width="@fill" height="@scale(0.89)" y="49">
@@ -14,6 +14,7 @@
         <startup-text type="textlabel" text="Startup" width="74" height="25" x="@center" y="179" class="startup-text"/>
 
         <open-file-button type="pushbutton" text="Open VML File" width="192" height="55" x="@center" y="@centeroffset(55)" class="selection-button" on-clicked="@OpenFile"/>
+        <create-file-button type="pushbutton" text="Create VML File" width="192" height="55" x="@center" y="@centeroffset(125)" class="selection-button" on-clicked="@CreateVMLFile"/>
     </startup-ui>
 
     <run-failed-note type="textlabel" width="317" height="93" x="@relative(417)" class="run-failed-note-box">

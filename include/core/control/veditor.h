@@ -107,6 +107,9 @@ namespace Core {
 		void		 SetCaret(const VEditorCaret& CaretValue);
 
 	public:
+		IDWriteTextLayout* GetTextLayout();
+
+	public:
 		VSignal<const std::wstring&>	TextOnChange;
 		VSignal<const std::wstring&>	TextBeforeChange;
 		VSignal<const wchar_t&>			PushNewCharacter;
@@ -140,6 +143,7 @@ namespace Core {
 	public:
 		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>>		TextEffect;
 		std::vector<std::tuple<DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE>>	TextStyle;
+		std::vector<DWRITE_TEXT_RANGE>									UnderlineStyle;
 
 	protected:
 		VSmartTimer								  CaretTimer;

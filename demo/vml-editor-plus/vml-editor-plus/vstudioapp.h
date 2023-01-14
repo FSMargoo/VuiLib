@@ -15,6 +15,7 @@ private:
 	std::wstring	GetWorkspacePath(const std::wstring& FilePath);
 	void			OpenFile();
 	void			SaveFile();
+	void			CreateVMLFile();
 
 private:
 	void ExecInfoBoxAnimation();

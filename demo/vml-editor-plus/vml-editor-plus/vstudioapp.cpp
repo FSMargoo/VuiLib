@@ -70,6 +70,84 @@ void VStudioApp::SaveFile() {
 		SetTitle();
 	}
 }
+void VStudioApp::CreateVMLFile() {
+	LPWSTR  FilePath = new WCHAR[MAX_PATH];
+	HRESULT OperationResult;
+
+	std::thread FileDialogThread([&](LPWSTR FilePath, HRESULT* OperationResult) -> void {
+	if (CoInitialize(NULL));
+
+	IFileSaveDialog*	FileDialog = NULL;
+	HRESULT				Status = CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&FileDialog));
+
+	DWORD				OptionFlags;
+	COMDLG_FILTERSPEC	FileFilter[] = { { L"XML files", L"*.xml" }, { L"VML files", L"*.vml" }, { L"All files", L"*.*" } };
+
+	FileDialog->GetOptions(&OptionFlags);
+	FileDialog->SetOptions(OptionFlags | FOS_FORCEFILESYSTEM | FOS_FORCEFILESYSTEM | FOS_OVERWRITEPROMPT);
+	FileDialog->SetDefaultExtension(L"xml");
+	FileDialog->SetFileTypes(_countof(FileFilter), FileFilter);
+	FileDialog->SetFileTypeIndex(1);
+
+	*OperationResult = FileDialog->Show(GetLocalWinId());
+
+	if (SUCCEEDED((*OperationResult))) {
+		IShellItem* SellItem;
+		FileDialog->GetResult(&SellItem);
+
+		LPWSTR OpenPath = new wchar_t[MAX_PATH];
+		SellItem->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &OpenPath);
+
+		wcscpy_s(FilePath, MAX_PATH, OpenPath);
+
+		SellItem->Release();
+		CoTaskMemFree(OpenPath);
+	}
+
+	FileDialog->ClearClientData();
+	FileDialog->Close(*OperationResult);
+	FileDialog->Release();
+
+	CoUninitialize();
+
+		}, FilePath, &OperationResult);
+
+	FileDialogThread.join();
+
+	if (SUCCEEDED(OperationResult)) {
+		FileName			= GetFileName(FilePath);
+		CodeFilePath		= FilePath;
+		CodeWorkspacePath	= GetWorkspacePath(FilePath);
+
+		if (_waccess(CodeWorkspacePath.c_str(), 06) != 0) {
+			PopFailureDialog(L"Can not open target file", L"The file can't be created!");
+
+			return;
+		}
+
+		HANDLE FileHandle = CreateFile(CodeFilePath.c_str(), GENERIC_ALL, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		if (FileHandle == INVALID_HANDLE_VALUE) {
+			PopFailureDialog(L"Can not open target file", L"The file can't be created!");
+
+			return;
+		}
+
+		CloseHandle(FileHandle);
+
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName + L")");
+
+		operator[](L"main-widget")[L"main-ui"]->Show();
+		operator[](L"main-widget")[L"startup-ui"]->Hide();
+
+		CodeEditor->SetPlaneText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
+
+		InEditMode = true;
+	}
+	else {
+		PopFailureDialog(L"Can not open target file", L"The file can't be open!");
+	}
+}
 void VStudioApp::SetTitle() {
 	if (FileSaved) {
 		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName + L")*");
@@ -228,18 +306,18 @@ void VStudioApp::OpenFile() {
 		if (SUCCEEDED((*OperationResult))) {
 			IShellItem* SellItem;
 			FileDialog->GetResult(&SellItem);
-			LPWSTR OpenPath;
+
+			LPWSTR OpenPath = new wchar_t[MAX_PATH];
 			SellItem->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &OpenPath);
+
+			wcscpy_s(FilePath, MAX_PATH, OpenPath);
 
 			SellItem->Release();
 			CoTaskMemFree(OpenPath);
-
-			FileDialog->ClearClientData();
-			FileDialog->Close(*OperationResult);
-
-			wcscpy_s(FilePath, MAX_PATH, OpenPath);
 		}
 
+		FileDialog->ClearClientData();
+		FileDialog->Close(*OperationResult);
 		FileDialog->Release();
 
 		CoUninitialize();
@@ -295,6 +373,7 @@ VStudioApp::VStudioApp(Core::VApplication* App) : VMLMainWindow(App), NoteBoxAni
 	RegisterMetaFunction(VML_CLASS_META_FUNCTION(this, &VStudioApp::ExitApp, ExitApp));
 	RegisterMetaFunction(VML_CLASS_META_FUNCTION(this, &VStudioApp::OpenFile, OpenFile));
 	RegisterMetaFunction(VML_CLASS_META_FUNCTION(this, &VStudioApp::StartVMLView, StartVMLView));
+	RegisterMetaFunction(VML_CLASS_META_FUNCTION(this, &VStudioApp::CreateVMLFile, CreateVMLFile));
 
 	auto Result = LoadVML(L"./vml-editor-plus/ui/mainui.xml", VML::VMLParserParseMode::FromFile);
 
@@ -385,7 +464,6 @@ VStudioApp::VStudioApp(Core::VApplication* App, const std::wstring& FilePath) : 
 		PopFailureDialog(L"Can not open target file", L"The file can't be open!");
 	}
 }
-
 
 bool VStudioApp::CatchMessage(Core::VMessage* Message) {
 	if (Message->GetType() == Core::VMessageType::KeyClickedMessage && Message->Win32ID == WM_KEYDOWN && InEditMode) {

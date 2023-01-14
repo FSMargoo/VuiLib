@@ -128,12 +128,19 @@ namespace Core {
 					GetWidth(), GetHeight()
 			},
 			Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
-		Painter->DrawString(Theme->PlaneText,
-			{
-					static_cast<int>(Theme->LocalTheme.BorderThickness),
-					static_cast<int>(Theme->LocalTheme.BorderThickness),
-					GetWidth(), GetHeight()
-			}, Theme->LabelFont, &TextBrush);
+
+		IDWriteTextLayout* TextLayout;
+
+		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
+			Theme->PlaneText.c_str(), Theme->PlaneText.size(),
+			Theme->LabelFont->GetDXObject(),
+			GetWidth(), GetHeight(),
+			&TextLayout
+		), L"Failed to create TextLayout object!");
+
+		Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(0, 0), TextLayout, TextBrush.GetDxBrush());
+
+		VDXObjectSafeFree(&TextLayout);
 
 		Painter->EndDraw();
 	}
@@ -230,15 +237,15 @@ namespace Core {
 		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
 			Text.c_str(), Text.size(),
 			Theme->LabelFont->GetDXObject(),
-			INT_MAX,
-			INT_MAX,
+			FLT_MAX,
+			FLT_MAX,
 			&TextLayout
 		), L"Failed to create TextLayout object!");
 
 		DWRITE_TEXT_METRICS TextMetrics;
 		TextLayout->GetMetrics(&TextMetrics);
 
-		Resize(TextMetrics.width + TextMetrics.left, TextMetrics.height + TextMetrics.top);
+		Resize(TextMetrics.width + 1, TextMetrics.height);
 
 		VDXObjectSafeFree(&TextLayout);
 	}
@@ -248,15 +255,15 @@ namespace Core {
 		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
 			Theme->PlaneText.c_str(), Theme->PlaneText.size(),
 			Theme->LabelFont->GetDXObject(),
-			0.f,
-			0.f,
+			FLT_MAX,
+			FLT_MAX,
 			&TextLayout
 		), L"Failed to create TextLayout object!");
 
-		DWRITE_OVERHANG_METRICS TextMetrics;
-		TextLayout->GetOverhangMetrics(&TextMetrics);
+		DWRITE_TEXT_METRICS TextMetrics;
+		TextLayout->GetMetrics(&TextMetrics);
 
-		Resize(ceil(TextMetrics.bottom), (Theme->LabelFont->GetDXObject()->GetFontWeight()));
+		Resize(TextMetrics.width + 1, TextMetrics.height);
 
 		VDXObjectSafeFree(&TextLayout);
 	}

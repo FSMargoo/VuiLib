@@ -88,6 +88,54 @@
     border-radius: 0px;
 }
 
+.max-size-button {
+    font-family: "vml-editor-plus";
+    background-color: rgba(53, 53, 53, 0);
+    border-color: rgba(53, 53, 53, 0);
+    border-radius: 0px;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+    font-weight: 10px;
+    font-size: 100px;
+}
+.max-size-button:hover {
+    background-color: #353535;
+    border-color: #353535;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+.max-size-button:active {
+    background-color: #323232;
+    border-color: #323232;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+
+.back-button {
+    font-family: "icomoon";
+    background-color: rgba(53, 53, 53, 0);
+    border-color: rgba(53, 53, 53, 0);
+    border-radius: 0px;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+    font-weight: 10px;
+    font-size: 18px;
+}
+.back-button:hover {
+    background-color: #353535;
+    border-color: #353535;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+.back-button:active {
+    background-color: #323232;
+    border-color: #323232;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+
 .startup-text {
     color: rgba(58, 58, 58, 0.81);
     font-size: 19px;

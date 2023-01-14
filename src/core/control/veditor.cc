@@ -1193,7 +1193,7 @@ namespace Core {
 	}
 	void VEditor::ResetTextLayout() {
 		LocalTextLayout.Reset();
-		
+
 		if (GetWidth() > 0 && GetHeight() > 0) {
 			auto Result = VDirectXWriteFactory.GetInstance()->CreateTextLayout(InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
 				GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
@@ -1204,6 +1204,9 @@ namespace Core {
 			}
 			for (auto& Effect : TextStyle) {
 				LocalTextLayout->SetFontStyle(std::get<0>(Effect), std::get<1>(Effect));
+			}
+			for (auto& Effect : UnderlineStyle) {
+				LocalTextLayout->SetUnderline(true, Effect);
 			}
 
 			Update();
@@ -1589,6 +1592,10 @@ namespace Core {
 
 		SetScroller();
 		Update();
+	}
+
+	IDWriteTextLayout* VEditor::GetTextLayout() {
+		return LocalTextLayout.Get();
 	}
 
 	std::wstring VEditor::GetPlaneText() const {
