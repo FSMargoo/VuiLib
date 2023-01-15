@@ -114,6 +114,7 @@ namespace Core {
 		VSignal<const std::wstring&>	TextBeforeChange;
 		VSignal<const wchar_t&>			PushNewCharacter;
 		VSignal<const wchar_t&, bool*>	CheckInput;
+		VSignal<const int&>				TextClicked;
 
 	private:
 		void InitEditor();

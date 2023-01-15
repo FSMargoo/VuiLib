@@ -202,6 +202,7 @@ namespace Core {
 		TargetEditor->TextOnChange.Connect(this, &VVMLHighlighter::RenderColor);
 		TargetEditor->CheckInput.Connect(this, &VVMLHighlighter::CheckInputChar);
 		TargetEditor->PushNewCharacter.Connect(this, &VVMLHighlighter::NewCharacter);
+		TargetEditor->TextClicked.Connect(this, &VVMLHighlighter::MouseClicked);
 	}
 	void VVMLHighlighter::CheckInputChar(const wchar_t& NewChar, bool* Flag) {
 		auto Caret = Editor->GetCaret();
@@ -351,9 +352,72 @@ namespace Core {
 
 		Editor->ResetTextLayout();
 	}
+	void VVMLHighlighter::MouseClicked(const int& TextPosition) {
+		if (!DoubleClickTimer.End()) {
+			VKits::seal_lexical Lexical(Editor->GetPlaneText());
+			auto Token		= Lexical.get_token();
+			auto InType		= false;
 
+			while (!Lexical.is_eof()) {
+				DWRITE_TEXT_RANGE Range;
+				Range.startPosition = Lexical.get_index() - Token.token_string.size();
+				Range.length		= Range.startPosition + (Token.token_string.size() == 1 ? 1 : Token.token_string.size());
+
+				if (TextPosition >= Range.startPosition && TextPosition <= Range.length) {
+					if (Token.cache_token == CONST_STRING) {
+						VKits::seal_lexical SubLexical(Token.token_string.substr(1, Token.token_string.size() - 2));
+
+						while (!SubLexical.is_eof()) {
+							Token = SubLexical.get_token();
+
+							DWRITE_TEXT_RANGE SubRange;
+
+							SubRange.startPosition	= SubLexical.get_index() - Token.token_string.size() + 1 + Range.startPosition;
+							SubRange.length			= SubRange.startPosition + (Token.token_string.size() == 1 ? 1 : Token.token_string.size());
+
+							if (TextPosition >= SubRange.startPosition &&
+								TextPosition <= SubRange.length) {
+								auto Caret = Editor->GetCaret();
+
+								Caret.CaretStart	= SubRange.startPosition;
+								Caret.CaretEnd		= SubRange.length;
+								Caret.SelectMode	= VEditorCaretSelectMode::Right;
+								Caret.InSelecting	= true;
+
+								Editor->SetCaret(Caret);
+
+								break;
+							}
+						}
+					}
+					else {
+						auto Caret = Editor->GetCaret();
+
+						Caret.CaretStart	= Range.startPosition;
+						Caret.CaretEnd		= Range.length;
+						Caret.SelectMode	= VEditorCaretSelectMode::Right;
+						Caret.InSelecting	= true;
+
+						Editor->SetCaret(Caret);
+					}
+					Editor->Update();
+
+					break;
+				}
+
+				Token = Lexical.get_token();
+			}
+		}
+		else {
+			DoubleClickTimer.Start(500);
+		}
+	}
 	VVSSHighlighter::VVSSHighlighter(const VRenderHandle& StaticRenderHandle)
 		: HighlightTheme(StaticRenderHandle) {
+
+	}
+	VVSSHighlighter::VVSSHighlighter(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme)
+		: HighlightTheme(StaticRenderHandle, Theme) {
 
 	}
 	VVSSHighlighter::VVSSHighlighter(VEditor* Editor)
@@ -386,6 +450,7 @@ namespace Core {
 		TargetEditor->TextOnChange.Connect(this, &VVSSHighlighter::RenderColor);
 		TargetEditor->CheckInput.Connect(this, &VVSSHighlighter::CheckInputChar);
 		TargetEditor->PushNewCharacter.Connect(this, &VVSSHighlighter::NewCharacter);
+		TargetEditor->TextClicked.Connect(this, &VVSSHighlighter::MouseClicked);
 	}
 	void VVSSHighlighter::CheckInputChar(const wchar_t& NewChar, bool* Flag) {
 		auto Caret = Editor->GetCaret();
@@ -498,6 +563,39 @@ namespace Core {
 		}
 
 		Editor->ResetTextLayout();
+	}
+	void VVSSHighlighter::MouseClicked(const int& TextPosition) {
+		if (!DoubleClickTimer.End()) {
+			VKits::seal_lexical Lexical(Editor->GetPlaneText());
+			auto Token = Lexical.get_token();
+			auto InType = false;
+
+			while (!Lexical.is_eof()) {
+				DWRITE_TEXT_RANGE Range;
+				Range.startPosition = Lexical.get_index() - Token.token_string.size();
+				Range.length = Range.startPosition + (Token.token_string.size() == 1 ? 1 : Token.token_string.size());
+
+				if (TextPosition >= Range.startPosition && TextPosition <= Range.length) {
+					auto Caret = Editor->GetCaret();
+
+					Caret.CaretStart = Range.startPosition;
+					Caret.CaretEnd = Range.length;
+					Caret.SelectMode = VEditorCaretSelectMode::Right;
+					Caret.InSelecting = true;
+
+					Editor->SetCaret(Caret);
+
+					Editor->Update();
+
+					break;
+				}
+
+				Token = Lexical.get_token();
+			}
+		}
+		else {
+			DoubleClickTimer.Start(500);
+		}
 	}
 
 	VBasicHightlighter::VBasicHightlighter() {

@@ -1694,11 +1694,27 @@ namespace Core {
 
 				if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
 					Caret.SetCaretByMousePosition(X, Y, LocalTextLayout.Get());
+
+					TextClicked.Emit(Caret.CaretStart);
 				}
 				else {
 					Caret.SetCaretSelectionByMousePosition(X, Y, LocalTextLayout.Get());
 
 					Update();
+
+					switch (Caret.SelectMode) {
+					case VEditorCaretSelectMode::Left: {
+						TextClicked.Emit(Caret.CaretStart);
+
+						break;
+					}
+
+					default: {
+						TextClicked.Emit(Caret.CaretEnd);
+
+						break;
+					}
+					}
 				}
 			}
 		}

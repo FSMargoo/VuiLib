@@ -55,6 +55,7 @@ namespace Core {
 		virtual void NewCharacter(const wchar_t& NewChar)							{  }
 		virtual void BeforeChange(const std::wstring& PlaneText)					{  }
 		virtual void RenderColor(const std::wstring& PlaneText)						{  }
+		virtual void MouseClicked(const int& TextPosition)							{  }
 
 		virtual void BindEditor(VEditor* TargetEditor);
 	};
@@ -72,11 +73,15 @@ namespace Core {
 		void CheckInputChar(const wchar_t& NewChar, bool* AllowEditFlag) override;
 		void NewCharacter(const wchar_t& NewChar) override;
 		void RenderColor(const std::wstring& PlaneText) override;
+		void MouseClicked(const int& TextPosition) override;
 
 		void BindEditor(VEditor* TargetEditor) override;
 
 	private:
 		int CountSpace(VML::VMLNode Node, const int& PreSpaceCount = 0);
+
+	private:
+		VBasicTimer DoubleClickTimer;
 	};
 	class VVSSHighlighter : public VBasicHightlighter {
 	private:
@@ -85,13 +90,18 @@ namespace Core {
 	public:
 		VVSSHighlighter(VEditor* Editor);
 		VVSSHighlighter(const VRenderHandle& StaticRenderHandle);
+		VVSSHighlighter(const VRenderHandle& StaticRenderHandle, const VBuiltInHightlighterTheme& Theme);
 		VVSSHighlighter(const VHightlighterTheme& Theme);
 
 		void CheckInputChar(const wchar_t& NewChar, bool* AllowEditFlag) override;
 		void NewCharacter(const wchar_t& NewChar) override;
 		void RenderColor(const std::wstring& PlaneText) override;
+		void MouseClicked(const int& TextPosition) override;
 
 		void BindEditor(VEditor* TargetEditor) override;
+
+	private:
+		VBasicTimer DoubleClickTimer;
 	};
 }
 
