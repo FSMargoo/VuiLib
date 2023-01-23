@@ -6,21 +6,23 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
-    class VSmartTimer : public VBasicTimer, public VUIObject {
-     private:
-         bool StartClock = false;
+namespace Core
+{
+class VSmartTimer : public VBasicTimer, public VUIObject
+{
+private:
+	bool StartClock = false;
 
-     public:
-         VSignal<> OnTime;
+public:
+	VSignal<> OnTime;
 
-     public:
-         explicit VSmartTimer(VUIObject* Parent);
+public:
+	explicit VSmartTimer(VUIObject *Parent);
 
-         void Start(const unsigned long& TimerDuraction) override;
+	void Start(const unsigned long &TimerDuraction) override;
 
-         void CheckFrame() override;
-    };
-}
+	void CheckFrame() override;
+};
+} // namespace Core
 
 VLIB_END_NAMESPACE

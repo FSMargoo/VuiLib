@@ -3,7 +3,8 @@
 #include "../../include/vml/vml.h"
 #include "../../include/vml/vmlwidget.h"
 
-struct PVFileReadingProject {
+struct PVFileReadingProject
+{
 	std::vector<std::wstring> FileList;
 
 	unsigned int LocalViewingFile = 0;
@@ -11,61 +12,65 @@ struct PVFileReadingProject {
 	double LocalScalePercent = 1.f;
 };
 
-class VDragbleImageLabel : public Core::VDragControlBase {
+class VDragbleImageLabel : public Core::VDragControlBase
+{
 private:
-	Core::VImage* ViewImage;
+	Core::VImage *ViewImage;
 
 public:
-	VDragbleImageLabel(Core::VUIObject* Parent, Core::VImage* Image);
+	VDragbleImageLabel(Core::VUIObject *Parent, Core::VImage *Image);
 
-	void SetImage(Core::VImage* Image);
-	void OnPaint(Core::VCanvasPainter* Painter) override;
+	void SetImage(Core::VImage *Image);
+	void OnPaint(Core::VCanvasPainter *Painter) override;
 
-	~VDragbleImageLabel() {
-		if (ViewImage != nullptr) {
+	~VDragbleImageLabel()
+	{
+		if (ViewImage != nullptr)
+		{
 			delete ViewImage;
 		}
 	}
 };
 
-class PVMainWindow : public VML::VMLMainWindow {
+class PVMainWindow : public VML::VMLMainWindow
+{
 private:
-	bool				    InWorking = false;
+	bool InWorking = false;
 
 private:
-	Core::VImageLabel*		BlurBackgroundImage;
-	Core::VImageLabel*		ViewingLabel;
+	Core::VImageLabel *BlurBackgroundImage;
+	Core::VImageLabel *ViewingLabel;
 
 private:
-	Core::VPushButton*		MiniSizeButton;
-	Core::VPushButton*		MaxSizeButton;
-	Core::VPushButton*		CloseButton;
+	Core::VPushButton *MiniSizeButton;
+	Core::VPushButton *MaxSizeButton;
+	Core::VPushButton *CloseButton;
 
 	bool InMaxSize = false;
 
 private:
-	Core::VPushButton*		FileOpenButton;
+	Core::VPushButton *FileOpenButton;
 
 private:
-	Core::VUIObject*			MainuiContainer;
-	Core::VUIObject*			StartupuiContainer;
+	Core::VUIObject *MainuiContainer;
+	Core::VUIObject *StartupuiContainer;
 
 private:
-	Core::VTextLabel*		TitleText;
-	Core::VTextLabel*		PercentTagText;
+	Core::VTextLabel *TitleText;
+	Core::VTextLabel *PercentTagText;
 
 private:
-	Core::VPushButton*		ZoomUpButton;
-	Core::VPushButton*		ZoomDownButton;
-	Core::VPushButton*		OneToOneButton;
+	Core::VPushButton *ZoomUpButton;
+	Core::VPushButton *ZoomDownButton;
+	Core::VPushButton *OneToOneButton;
 
 private:
-	Core::VDragControlBase* ImageDragger;
-	Core::VScaleLayout*	    ImageDraggerLayout;
-							
-private:				  
-	PVFileReadingProject*	ViewingProject;
-	Core::VImage*			ViewingImage;
+	Core::VDragControlBase *ImageDragger;
+	Core::VScaleLayout	   *ImageDraggerLayout;
+
+private:
+	PVFileReadingProject *ViewingProject;
+	Core::VImage		 *ViewingImage;
 
 protected:
 	void MiniSizeButtonOnClicked();
@@ -76,7 +81,7 @@ protected:
 	void ZoomDownButtonOnClicked();
 	void OneToOneButtonOnClicked();
 
-	void WindowOnResize(const int&, const int&);
+	void WindowOnResize(const int &, const int &);
 
 protected:
 	Core::VPoint OffsetPoint;
@@ -85,23 +90,23 @@ protected:
 	bool StartDrag = false;
 
 	void ImageStartDrag();
-	void ImageOnDrag(const int& X, const int &Y);
+	void ImageOnDrag(const int &X, const int &Y);
 
 private:
-	std::wstring GetFileName(const std::wstring& FilePath);
-	std::wstring GetFolderPath(const std::wstring& FilePath);
-	std::wstring GetPercentString(const double& ScalePercent);
+	std::wstring GetFileName(const std::wstring &FilePath);
+	std::wstring GetFolderPath(const std::wstring &FilePath);
+	std::wstring GetPercentString(const double &ScalePercent);
 
 private:
-	void CreateViewingProject(const std::wstring& FilePath);
+	void CreateViewingProject(const std::wstring &FilePath);
 
 private:
 	void OpenViewProject();
 
 public:
-	void OnMessage(Core::VMessage* Message) override;
+	void OnMessage(Core::VMessage *Message) override;
 
 public:
-	PVMainWindow(Core::VApplication* Parent);
-	PVMainWindow(Core::VApplication* Parent, const std::wstring& FilePath);
+	PVMainWindow(Core::VApplication *Parent);
+	PVMainWindow(Core::VApplication *Parent, const std::wstring &FilePath);
 };

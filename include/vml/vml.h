@@ -9,81 +9,110 @@
 
 #include <algorithm>
 
-#define VML_META_FUNCTION(FunctionName) L#FunctionName, FunctionName
+#define VML_META_FUNCTION(FunctionName)									 L#FunctionName, FunctionName
 #define VML_CLASS_META_FUNCTION(ThisPtr, FunctionInstance, FunctionName) L#FunctionName, ThisPtr, FunctionInstance
 
 VLIB_BEGIN_NAMESPACE
 
-namespace VML {
-    enum class VMLObjectType {
-        PushButton, ImageLabel, TextLabel, MainWindow, Layout, ScaleLayout, RadioButton,
-        HorizontalSlider, VerticalSlider, FakeCaption, BlurLabel, IconButton, LineEditor,
-        SwitchGroup, VerticalScroller, HorizontalScroller, ViewLabel,
-        PositionAnimation, GeometryAnimation, OpacityAnimation, CircleView, PolygonView,
-        Widget, Canvas, Editor, UserDefine
-    };
+namespace VML
+{
+enum class VMLObjectType
+{
+	PushButton,
+	ImageLabel,
+	TextLabel,
+	MainWindow,
+	Layout,
+	ScaleLayout,
+	RadioButton,
+	HorizontalSlider,
+	VerticalSlider,
+	FakeCaption,
+	BlurLabel,
+	IconButton,
+	LineEditor,
+	SwitchGroup,
+	VerticalScroller,
+	HorizontalScroller,
+	ViewLabel,
+	PositionAnimation,
+	GeometryAnimation,
+	OpacityAnimation,
+	CircleView,
+	PolygonView,
+	Widget,
+	Canvas,
+	Editor,
+	UserDefine
+};
 
-    struct VMLObject {
-        Core::VUIObject* UIObject;
+struct VMLObject
+{
+	Core::VUIObject *UIObject;
 
-        std::wstring     VMLID;
-        std::wstring     VMLClass;
-        std::wstring     VMLDOMID;
+	std::wstring VMLID;
+	std::wstring VMLClass;
+	std::wstring VMLDOMID;
 
-        Core::VLayout*       VMLNativeLaytout;
-        Core::VScaleLayout*  VMLNativeScaleLaytout;
+	Core::VLayout	   *VMLNativeLaytout;
+	Core::VScaleLayout *VMLNativeScaleLaytout;
 
-        VMLObjectType    VMLType = VMLObjectType::PushButton;
+	VMLObjectType VMLType = VMLObjectType::PushButton;
 
-        std::vector<VMLObject*> ChildrenObjects;
+	std::vector<VMLObject *> ChildrenObjects;
 
-        static VMLObjectType      StringToObjectType(const std::wstring& String);
-        static const std::wstring ObjectTypeToString(VMLObjectType ObjectType);
-        void SetNativeStyleSheet(VSS::VSSBasicSelector* Selector);
-        void SetStyleSheet(VSS::VSSBasicSelector* Selector);
-    };
+	static VMLObjectType	  StringToObjectType(const std::wstring &String);
+	static const std::wstring ObjectTypeToString(VMLObjectType ObjectType);
+	void					  SetNativeStyleSheet(VSS::VSSBasicSelector *Selector);
+	void					  SetStyleSheet(VSS::VSSBasicSelector *Selector);
+};
 
-    enum class VMLWidgetVMLLoadStats {
-        Ok, Failed, InvalidAstTree
-    };
+enum class VMLWidgetVMLLoadStats
+{
+	Ok,
+	Failed,
+	InvalidAstTree
+};
 
-    struct VMLWidgetLoadResult {
-        VMLWidgetVMLLoadStats Status = VMLWidgetVMLLoadStats::Ok;
+struct VMLWidgetLoadResult
+{
+	VMLWidgetVMLLoadStats Status = VMLWidgetVMLLoadStats::Ok;
 
-        std::wstring           FailedMessage;
-    };
+	std::wstring FailedMessage;
+};
 
-    struct VMLWidgetVMLObjectList {
-        std::vector<VMLObject*> Objects;
-    };
+struct VMLWidgetVMLObjectList
+{
+	std::vector<VMLObject *> Objects;
+};
 
-    class VMLFinder {
-    private:
-        std::vector<VMLObject*>          ObjectList;
-        VMLObject* OriginObject;
+class VMLFinder
+{
+private:
+	std::vector<VMLObject *> ObjectList;
+	VMLObject				*OriginObject;
 
-    public:
-        std::vector<VMLBasicVariable* >* VariableList;
+public:
+	std::vector<VMLBasicVariable *> *VariableList;
 
-    public:
-        VMLFinder(VMLObject* Object, std::vector<VMLObject*> List, std::vector<VMLBasicVariable* >* VariableList);
+public:
+	VMLFinder(VMLObject *Object, std::vector<VMLObject *> List, std::vector<VMLBasicVariable *> *VariableList);
 
-        VMLFinder operator[](const std::wstring& ChildrenId);
-        Core::VUIObject* operator->();
-        VMLFinder Get(const std::wstring& ChildrenId);
-        bool      IsValid();
+	VMLFinder		 operator[](const std::wstring &ChildrenId);
+	Core::VUIObject *operator->();
+	VMLFinder		 Get(const std::wstring &ChildrenId);
+	bool			 IsValid();
 
-        template<class Type = Core::VUIObject>
-        Type* Get() {
-            return static_cast<Type*>(OriginObject->UIObject);
-        }
+	template <class Type = Core::VUIObject> Type *Get()
+	{
+		return static_cast<Type *>(OriginObject->UIObject);
+	}
 
-        Core::VLayout*      GetVMLLaytout();
-        Core::VScaleLayout* GetVMLScaleLaytout();
+	Core::VLayout	   *GetVMLLaytout();
+	Core::VScaleLayout *GetVMLScaleLaytout();
 
-        operator Core::VUIObject* ();
-    };
-}
+	operator Core::VUIObject *();
+};
+} // namespace VML
 
 VLIB_END_NAMESPACE
-

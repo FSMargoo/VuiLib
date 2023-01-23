@@ -4,20 +4,22 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
-	class VWidgetTitleBar : public VUIObject {
-	private:
-		void WidgetOnSize(const int& Width, const int& Height);
+namespace Core
+{
+class VWidgetTitleBar : public VUIObject
+{
+private:
+	void WidgetOnSize(const int &Width, const int &Height);
 
-	public:
-		VWidgetTitleBar(VMainWindow* MainWindow);
+public:
+	VWidgetTitleBar(VMainWindow *MainWindow);
 
-	public:
-		void OnMessage(VMessage* Message);
+public:
+	void OnMessage(VMessage *Message);
 
-	private:
-		bool InDrag;
-	};
-}
+private:
+	bool InDrag;
+};
+} // namespace Core
 
 VLIB_END_NAMESPACE

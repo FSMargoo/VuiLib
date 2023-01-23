@@ -1,71 +1,73 @@
 #pragma once
 
-#include "vabstractbutton.h"
 #include "../uibasic/vtimer.h"
+#include "vabstractbutton.h"
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
+namespace Core
+{
 
-class VTextLabel : public VAbstractButton {
+class VTextLabel : public VAbstractButton
+{
 private:
-    VTextLabelTheme* Theme;
+	VTextLabelTheme *Theme;
 
-    bool             AutoSize = false;
-
-private:
-    VRect GetRegion() override;
+	bool AutoSize = false;
 
 private:
-    VBasicTimer             AnimationFrameTimer;
-    VAnimationInterpolator* Interpolator;
+	VRect GetRegion() override;
 
-    VLabelStatusTheme       OldTheme;
-    VLabelStatusTheme       TargetTheme;
+private:
+	VBasicTimer				AnimationFrameTimer;
+	VAnimationInterpolator *Interpolator;
 
-    bool                    InAnimation = false;
+	VLabelStatusTheme OldTheme;
+	VLabelStatusTheme TargetTheme;
 
-public:
-    void LeftClickedDown() override;
-    void LeftClickedUp() override;
-    void GotMouseFocus() override;
-    void LostMouseFocus() override;
+	bool InAnimation = false;
 
 public:
-    void SetTheme(VTextLabelTheme* Theme);
-    VTextLabelTheme* GetTheme();
+	void LeftClickedDown() override;
+	void LeftClickedUp() override;
+	void GotMouseFocus() override;
+	void LostMouseFocus() override;
 
 public:
-    VTextLabel(VUIObject* Parent);
-    VTextLabel(int Width, int Height, VUIObject* Parent);
-    VTextLabel(int Width, int Height, const std::wstring& PlaneText, VUIObject* Parent);
-    ~VTextLabel();
+	void			 SetTheme(VTextLabelTheme *Theme);
+	VTextLabelTheme *GetTheme();
 
 public:
-    void SetPlaneText(const std::wstring& PlaneText);
-    void SetTextColor(const VColor& TextColor);
-    void SetBackgroundColor(const VColor& BackgroundColor);
-    void SetRadius(const VPoint& Radius);
-    void SetTextSize(const int& TextSize);
-    void SetLineAlignment(const Core::VFontAlignment& Alignment);
-    void SetParagraphAlignment(const Core::VFontParagraphAlignment& Alignment);
-    void SetAutoSize(const bool& Status);
+	VTextLabel(VUIObject *Parent);
+	VTextLabel(int Width, int Height, VUIObject *Parent);
+	VTextLabel(int Width, int Height, const std::wstring &PlaneText, VUIObject *Parent);
+	~VTextLabel();
 
 public:
-    std::wstring GetPlaneText() const;
-    bool         GetAutoSizeStatus() const;
+	void SetPlaneText(const std::wstring &PlaneText);
+	void SetTextColor(const VColor &TextColor);
+	void SetBackgroundColor(const VColor &BackgroundColor);
+	void SetRadius(const VPoint &Radius);
+	void SetTextSize(const int &TextSize);
+	void SetLineAlignment(const Core::VFontAlignment &Alignment);
+	void SetParagraphAlignment(const Core::VFontParagraphAlignment &Alignment);
+	void SetAutoSize(const bool &Status);
 
 public:
-    void ResizeByText(const std::wstring& Text);
-    void ResizeByText();
+	std::wstring GetPlaneText() const;
+	bool		 GetAutoSizeStatus() const;
 
 public:
-   void OnPaint(VCanvasPainter* Painter) override;
+	void ResizeByText(const std::wstring &Text);
+	void ResizeByText();
 
 public:
-    void CheckFrame() override;
+	void OnPaint(VCanvasPainter *Painter) override;
+
+public:
+	void CheckFrame() override;
 };
 
-}
+} // namespace Core
 
 VLIB_END_NAMESPACE

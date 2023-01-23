@@ -4,49 +4,64 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
+namespace Core
+{
 
-namespace VInterpolatorFunctional {
-    double AnticipateInterpolator(double x) {
-        return x * x * (static_cast<double>(2 + 1) * x - 2);
-    }
-    double AccelerateDecelerateInterpolator(double x) {
-        return (cos((x + 1) * 3.14) / 2.0) + 0.5;
-    }
-    double AccelerateInterpolator(double x) {
-        return pow(x, 2);
-    }
-    double AnticipateOvershootInterpolator(double x) {
-        if (x <= 0.5) {
-            return 0.5 * 2 * x * 2 * x * (static_cast<double>(3 + 1) * 2 * x - 3);
-        }
-        else {
-            return 0.5 * ((2 * x - 2) * (2 * x - 2) * (static_cast<double>(3 + 1) * (2 * x - 2) + 3) + 2);
-        }
-    }
-    double DecelerateInterpolator(double x) {
-        return 1.0 - pow((1.0 - x), 2 * 1);
-    }
-    double LinearInterpolator(double x) {
-        return x;
-    }
-    double OvershootInterpolator(double x) {
-        return (x - 1) * (x - 1) * (static_cast<double>(2 + 1) * (x - 1) + 2) + 1;
-    }
-    double CycleInterpolator(double x) {
-        return sin(2 * 1 * 3.14 * x);
-    }
+namespace VInterpolatorFunctional
+{
+double AnticipateInterpolator(double x)
+{
+	return x * x * (static_cast<double>(2 + 1) * x - 2);
 }
+double AccelerateDecelerateInterpolator(double x)
+{
+	return (cos((x + 1) * 3.14) / 2.0) + 0.5;
+}
+double AccelerateInterpolator(double x)
+{
+	return pow(x, 2);
+}
+double AnticipateOvershootInterpolator(double x)
+{
+	if (x <= 0.5)
+	{
+		return 0.5 * 2 * x * 2 * x * (static_cast<double>(3 + 1) * 2 * x - 3);
+	}
+	else
+	{
+		return 0.5 * ((2 * x - 2) * (2 * x - 2) * (static_cast<double>(3 + 1) * (2 * x - 2) + 3) + 2);
+	}
+}
+double DecelerateInterpolator(double x)
+{
+	return 1.0 - pow((1.0 - x), 2 * 1);
+}
+double LinearInterpolator(double x)
+{
+	return x;
+}
+double OvershootInterpolator(double x)
+{
+	return (x - 1) * (x - 1) * (static_cast<double>(2 + 1) * (x - 1) + 2) + 1;
+}
+double CycleInterpolator(double x)
+{
+	return sin(2 * 1 * 3.14 * x);
+}
+} // namespace VInterpolatorFunctional
 
-VAnimationInterpolator::VAnimationInterpolator(const double& Dx, const VInterpolatorType& Interpolator) {
+VAnimationInterpolator::VAnimationInterpolator(const double &Dx, const VInterpolatorType &Interpolator)
+{
 	InterpolatorDuration = Dx;
 
 	_SetInterpolator(Interpolator);
 }
-void VAnimationInterpolator::_SetInterpolator(const VInterpolatorType& Interpolator) {
+void VAnimationInterpolator::_SetInterpolator(const VInterpolatorType &Interpolator)
+{
 	using namespace VInterpolatorFunctional;
 
-	switch (Interpolator) {
+	switch (Interpolator)
+	{
 	case VInterpolatorType::AnticipateInterpolator:
 		InterpolatorFunction = AnticipateInterpolator;
 
@@ -85,60 +100,73 @@ void VAnimationInterpolator::_SetInterpolator(const VInterpolatorType& Interpola
 		break;
 	}
 }
-VAnimationInterpolator::VAnimationInterpolator(const double& Dx, std::function<double(double)> Interpolator) {
+VAnimationInterpolator::VAnimationInterpolator(const double &Dx, std::function<double(double)> Interpolator)
+{
 	InterpolatorDuration = Dx;
 	InterpolatorFunction = std::move(Interpolator);
 }
-bool VAnimationInterpolator::IsEnd() const {
+bool VAnimationInterpolator::IsEnd() const
+{
 	return (LocalX >= 1 + InterpolatorDuration);
 }
-void VAnimationInterpolator::SetInterpolator(const VInterpolatorType& Interpolator) {
+void VAnimationInterpolator::SetInterpolator(const VInterpolatorType &Interpolator)
+{
 	_SetInterpolator(Interpolator);
 }
-double VAnimationInterpolator::GetOneFrame() {
-	if (IsEnd() == true) {
+double VAnimationInterpolator::GetOneFrame()
+{
+	if (IsEnd() == true)
+	{
 		return 1.f;
 	}
 
-	if (LocalX <= 1) {
+	if (LocalX <= 1)
+	{
 		double Result = InterpolatorFunction(LocalX);
 		LocalX += InterpolatorDuration;
 
 		return Result;
 	}
-	else {
+	else
+	{
 		LocalX += InterpolatorDuration;
 		return 1.f;
 	}
 
 	return 0.f;
 }
-void VAnimationInterpolator::Reset() {
+void VAnimationInterpolator::Reset()
+{
 	LocalX = 0;
 }
-void VAnimationInterpolator::SetDeltaX(const double& Dx) {
+void VAnimationInterpolator::SetDeltaX(const double &Dx)
+{
 	InterpolatorDuration = Dx;
 }
 
-VColorInterpolator::VColorInterpolator(const unsigned int& Duraction, const VInterpolatorType& Interpolator)
-	: VAnimationInterpolator(16.f / Duraction, Interpolator),
-	TargetColor(0, 0, 0, 0), SourceColor(0, 0, 0, 0) {
+VColorInterpolator::VColorInterpolator(const unsigned int &Duraction, const VInterpolatorType &Interpolator)
+	: VAnimationInterpolator(16.f / Duraction, Interpolator), TargetColor(0, 0, 0, 0), SourceColor(0, 0, 0, 0)
+{
 }
-void VColorInterpolator::Start(const VColor& Target, const VColor& Source) {
+void VColorInterpolator::Start(const VColor &Target, const VColor &Source)
+{
 	Reset();
 
 	TargetColor = Target;
 	SourceColor = Source;
 }
-VColor VColorInterpolator::GetTheColorByPercent(const VColor& SourceColor, const VColor& TargetColor, const double& Percent) {
-    float ResultR = TargetColor.GetR() + (SourceColor.GetR() - TargetColor.GetR()) * (1.f - Percent);
-    float ResultG = TargetColor.GetG() + (SourceColor.GetG() - TargetColor.GetG()) * (1.f - Percent);
-    float ResultB = TargetColor.GetB() + (SourceColor.GetB() - TargetColor.GetB()) * (1.f - Percent);
-    float ResultA = TargetColor.GetA() + (SourceColor.GetA() - TargetColor.GetA()) * (1.f - Percent);
+VColor VColorInterpolator::GetTheColorByPercent(const VColor &SourceColor, const VColor &TargetColor,
+												const double &Percent)
+{
+	float ResultR = TargetColor.GetR() + (SourceColor.GetR() - TargetColor.GetR()) * (1.f - Percent);
+	float ResultG = TargetColor.GetG() + (SourceColor.GetG() - TargetColor.GetG()) * (1.f - Percent);
+	float ResultB = TargetColor.GetB() + (SourceColor.GetB() - TargetColor.GetB()) * (1.f - Percent);
+	float ResultA = TargetColor.GetA() + (SourceColor.GetA() - TargetColor.GetA()) * (1.f - Percent);
 
-    return VColor(ResultR, ResultG, ResultB, ResultA);
+	return VColor(ResultR, ResultG, ResultB, ResultA);
 }
-VColor VColorInterpolator::GetFrame() {
+VColor VColorInterpolator::GetFrame()
+{
 	double DeltaX = GetOneFrame();
 
 	float ResultR = TargetColor.GetR() + (SourceColor.GetR() - TargetColor.GetR()) * (1.f - DeltaX);
@@ -149,26 +177,28 @@ VColor VColorInterpolator::GetFrame() {
 	return VColor(ResultR, ResultG, ResultB, ResultA);
 }
 
-VPositionInterpolator::VPositionInterpolator(const unsigned int& Duraction, const VPoint& Target, const VPoint& Source, 
-	const VInterpolatorType& Interpolator)
-	: VAnimationInterpolator(16.f / Duraction, Interpolator), TargetPosition(0, 0), SourcePosition(0, 0) {
-	
+VPositionInterpolator::VPositionInterpolator(const unsigned int &Duraction, const VPoint &Target, const VPoint &Source,
+											 const VInterpolatorType &Interpolator)
+	: VAnimationInterpolator(16.f / Duraction, Interpolator), TargetPosition(0, 0), SourcePosition(0, 0)
+{
 }
-void VPositionInterpolator::Start(const VPoint& Target, const VPoint& Source) {
+void VPositionInterpolator::Start(const VPoint &Target, const VPoint &Source)
+{
 	Reset();
 
 	TargetPosition = Target;
 	SourcePosition = Source;
 }
-VPoint VPositionInterpolator::GetFrame() {
+VPoint VPositionInterpolator::GetFrame()
+{
 	double DeltaX = GetOneFrame();
 
 	int ResultX = TargetPosition.X + (SourcePosition.X - TargetPosition.X) * (1.f - DeltaX);
 	int ResultY = TargetPosition.Y + (SourcePosition.Y - TargetPosition.Y) * (1.f - DeltaX);
 
-	return VPoint{ ResultX, ResultY };
+	return VPoint{ResultX, ResultY};
 }
 
-}
+} // namespace Core
 
 VLIB_END_NAMESPACE

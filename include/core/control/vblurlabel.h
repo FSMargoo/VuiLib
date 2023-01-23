@@ -4,27 +4,29 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
+namespace Core
+{
 
-class VBlurLabel : public VUIObject {
- private:
-     VBlurLabelTheme* Theme;
+class VBlurLabel : public VUIObject
+{
+private:
+	VBlurLabelTheme *Theme;
 
- private:
-     bool RendBlurCanvas(VCanvasPainter* Painter, VUIObject* Object);
+private:
+	bool RendBlurCanvas(VCanvasPainter *Painter, VUIObject *Object);
 
- public:
-     VBlurLabel(VUIObject* Parent);
-     ~VBlurLabel();
-     VBlurLabel(const int& Width, const int &Height, VUIObject* Parent);
-     VBlurLabel(const int& Width, const int &Height, const int& Radius, VUIObject* Parent);
+public:
+	VBlurLabel(VUIObject *Parent);
+	~VBlurLabel();
+	VBlurLabel(const int &Width, const int &Height, VUIObject *Parent);
+	VBlurLabel(const int &Width, const int &Height, const int &Radius, VUIObject *Parent);
 
-     VBlurLabelTheme* GetTheme();
+	VBlurLabelTheme *GetTheme();
 
- public:
-     void OnPaint(VCanvasPainter* Painter) override;
+public:
+	void OnPaint(VCanvasPainter *Painter) override;
 };
 
-};
+}; // namespace Core
 
 VLIB_END_NAMESPACE

@@ -4,35 +4,41 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
+namespace Core
+{
 
-class VVisualView : public VUIObject {
+class VVisualView : public VUIObject
+{
 public:
-    VVisualView(VUIObject* Parent) : VUIObject(Parent) { }
+	VVisualView(VUIObject *Parent) : VUIObject(Parent)
+	{
+	}
 };
 
-class VCircleView : public VUIObject {
+class VCircleView : public VUIObject
+{
 public:
-    VCircleView(VUIObject* Parent);
+	VCircleView(VUIObject *Parent);
 
 public:
-    bool OnMessageTrigger(VRepaintMessage* RepaintMessage) override;
+	bool OnMessageTrigger(VRepaintMessage *RepaintMessage) override;
 };
 
-class VPolygonView : public VUIObject {
+class VPolygonView : public VUIObject
+{
 private:
-    std::vector<VPointF> PolygonPoint;
+	std::vector<VPointF> PolygonPoint;
 
 public:
-    void AddPoint(const VPointF& Point);
+	void AddPoint(const VPointF &Point);
 
 public:
-    VPolygonView(VUIObject* Parent);
+	VPolygonView(VUIObject *Parent);
 
 public:
-    bool OnMessageTrigger(VRepaintMessage* RepaintMessage) override;
+	bool OnMessageTrigger(VRepaintMessage *RepaintMessage) override;
 };
 
-}
+} // namespace Core
 
 VLIB_END_NAMESPACE

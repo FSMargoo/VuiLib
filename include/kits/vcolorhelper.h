@@ -2,19 +2,21 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace VKits {
-    class VSSColorHelper {
-    public:
-        static short        SingleHexLetterToNum(const wchar_t& Hex);
+namespace VKits
+{
+class VSSColorHelper
+{
+public:
+	static short SingleHexLetterToNum(const wchar_t &Hex);
 
-    public:
-        static short        HexStringToNum(const std::wstring& HexNumberString);
-        static void         HexStringLowerToUpper(std::wstring& HexStringNumber);
+public:
+	static short HexStringToNum(const std::wstring &HexNumberString);
+	static void	 HexStringLowerToUpper(std::wstring &HexStringNumber);
 
-    public:
-        static Core::VColor HexToColor(const std::wstring& HexString);
-        static bool         IsValidHex(const std::wstring& HexString);
-    };
-}
+public:
+	static Core::VColor HexToColor(const std::wstring &HexString);
+	static bool			IsValidHex(const std::wstring &HexString);
+};
+} // namespace VKits
 
 VLIB_END_NAMESPACE

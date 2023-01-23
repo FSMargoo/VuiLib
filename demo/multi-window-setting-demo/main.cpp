@@ -1,12 +1,14 @@
 #include "../../include/vml/vmlwidget.h"
 
-Core::VWidget* SettingWidget;
+Core::VWidget *SettingWidget;
 
-void SettingBtnOnClick() {
+void SettingBtnOnClick()
+{
 	SettingWidget->Show();
 }
 
-int main() {
+int main()
+{
 	Core::VApplication Applicaiton;
 	VML::VMLMainWindow VMLMainWindow(0, 0, &Applicaiton);
 
@@ -17,7 +19,10 @@ int main() {
 
 	SettingWidget = VMLMainWindow[L"main-ui"][L"setting-widget"].Get<Core::VWidget>();
 
-	SettingWidget->SetQuitEvent([]() -> bool { SettingWidget->Hide(); return true; });
+	SettingWidget->SetQuitEvent([]() -> bool {
+		SettingWidget->Hide();
+		return true;
+	});
 	SettingWidget->Hide();
 
 	return Applicaiton.Exec();

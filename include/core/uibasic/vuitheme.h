@@ -3,278 +3,326 @@
 // This is the native theme in vuilib
 #pragma once
 
+#include "../render/vpainter.h"
 #include "../vbasiccore.h"
 #include "vuiinterpolator.h"
-#include "../render/vpainter.h"
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
+namespace Core
+{
 
-enum class VUIThemeType {
-	VUnknown, VMainWindow, VPushButton, VTextLabel, VImageLabel, VRadioButton, VCircleBarButton, VSlider, VBlurLabel,
-    VIconButton, VTextEditor, VViewScroller, VViewScrollerPushButton, VViewLabel
+enum class VUIThemeType
+{
+	VUnknown,
+	VMainWindow,
+	VPushButton,
+	VTextLabel,
+	VImageLabel,
+	VRadioButton,
+	VCircleBarButton,
+	VSlider,
+	VBlurLabel,
+	VIconButton,
+	VTextEditor,
+	VViewScroller,
+	VViewScrollerPushButton,
+	VViewLabel
 };
 
-struct VBasicUITheme {
- public:
-	 VBasicUITheme() = default;
+struct VBasicUITheme
+{
+public:
+	VBasicUITheme() = default;
 
- public:
-	 virtual VUIThemeType GetThemeType() {
-		 return VUIThemeType::VUnknown;
-	 }
+public:
+	virtual VUIThemeType GetThemeType()
+	{
+		return VUIThemeType::VUnknown;
+	}
 };
 
-class VMainWindowTheme : public VBasicUITheme {
- public:
-     VColor       BackgroundColor;
-     bool         WindowSizble;
-     std::wstring WindowPlaneText;
+class VMainWindowTheme : public VBasicUITheme
+{
+public:
+	VColor		 BackgroundColor;
+	bool		 WindowSizble;
+	std::wstring WindowPlaneText;
 
-     VMainWindowTheme() {
-         BackgroundColor = VColor::FromBYTERGBA(41, 42, 43, 255);
-         WindowSizble    = true;
-     }
+	VMainWindowTheme()
+	{
+		BackgroundColor = VColor::FromBYTERGBA(41, 42, 43, 255);
+		WindowSizble	= true;
+	}
 
-     VUIThemeType GetThemeType() override {
-         return VUIThemeType::VMainWindow;
-     }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VMainWindow;
+	}
 };
 
-struct VLabelStatusTheme {
-	VColor  BackgroundColor;
-	VColor  BorderColor;
-	VColor  TextColor;
+struct VLabelStatusTheme
+{
+	VColor BackgroundColor;
+	VColor BorderColor;
+	VColor TextColor;
 
-	float   BorderThickness;
+	float BorderThickness;
 
-    VPoint  Radius;
+	VPoint Radius;
 
-	VInterpolatorType
-		AnimationInterpolatorType;
+	VInterpolatorType AnimationInterpolatorType;
 
-    VLabelStatusTheme() = default;
-    VLabelStatusTheme(const VLabelStatusTheme& Theme);
+	VLabelStatusTheme() = default;
+	VLabelStatusTheme(const VLabelStatusTheme &Theme);
 };
 
-struct VLabelCommonTheme : public VBasicUITheme {
- public:
-	 VLabelStatusTheme StaticTheme;
-	 VLabelStatusTheme OnHoverTheme;
-	 VLabelStatusTheme ActiveTheme;
-	 VLabelStatusTheme LocalTheme;
-     VFont*            LabelFont;
+struct VLabelCommonTheme : public VBasicUITheme
+{
+public:
+	VLabelStatusTheme StaticTheme;
+	VLabelStatusTheme OnHoverTheme;
+	VLabelStatusTheme ActiveTheme;
+	VLabelStatusTheme LocalTheme;
+	VFont			 *LabelFont;
 
- public:
-	 VLabelCommonTheme(const VLabelCommonTheme& LabelObject);
-	 VLabelCommonTheme();
+public:
+	VLabelCommonTheme(const VLabelCommonTheme &LabelObject);
+	VLabelCommonTheme();
 
-     ~VLabelCommonTheme();
+	~VLabelCommonTheme();
 };
 
-struct VPushButtonTheme : public VLabelCommonTheme {
- public:
-     std::wstring PlaneText;
+struct VPushButtonTheme : public VLabelCommonTheme
+{
+public:
+	std::wstring PlaneText;
 
- public:
-	 VPushButtonTheme();
-     VPushButtonTheme(const VPushButtonTheme& Theme);
+public:
+	VPushButtonTheme();
+	VPushButtonTheme(const VPushButtonTheme &Theme);
 
- public:
-	 VUIThemeType GetThemeType() override {
-		 return VUIThemeType::VPushButton;
-	 }
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VPushButton;
+	}
 };
 
-struct VRadioButtonTheme : public VLabelCommonTheme {
- public:
-     bool SwitchStatus = false;
-     std::wstring PlaneText;
+struct VRadioButtonTheme : public VLabelCommonTheme
+{
+public:
+	bool		 SwitchStatus = false;
+	std::wstring PlaneText;
 
- public:
-     VRadioButtonTheme();
-     VRadioButtonTheme(const VRadioButtonTheme& Theme);
+public:
+	VRadioButtonTheme();
+	VRadioButtonTheme(const VRadioButtonTheme &Theme);
 
- public:
-     VUIThemeType GetThemeType() override {
-         return VUIThemeType::VRadioButton;
-     }
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VRadioButton;
+	}
 };
 
-struct VTextLabelTheme : public VLabelCommonTheme {
- public:
-    std::wstring PlaneText;
+struct VTextLabelTheme : public VLabelCommonTheme
+{
+public:
+	std::wstring PlaneText;
 
- public:
-     VTextLabelTheme();
-     VTextLabelTheme(const VTextLabelTheme& Theme);
+public:
+	VTextLabelTheme();
+	VTextLabelTheme(const VTextLabelTheme &Theme);
 
- public:
-     VUIThemeType GetThemeType() override {
-        return VUIThemeType::VTextLabel;
-     }
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VTextLabel;
+	}
 };
 
-struct VImageLabelTheme : public VBasicUITheme {
-    VImage* Image;
+struct VImageLabelTheme : public VBasicUITheme
+{
+	VImage *Image;
 
-    VImageLabelTheme() {
-        Image = nullptr;
-    }
-    ~VImageLabelTheme() {
-        delete Image;
-    }
+	VImageLabelTheme()
+	{
+		Image = nullptr;
+	}
+	~VImageLabelTheme()
+	{
+		delete Image;
+	}
 
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VImageLabel;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VImageLabel;
+	}
 };
 
-class VCircleScrollBarTheme : public VPushButtonTheme {
+class VCircleScrollBarTheme : public VPushButtonTheme
+{
 public:
-    VCircleScrollBarTheme();
-    VCircleScrollBarTheme(const VCircleScrollBarTheme& Theme);
+	VCircleScrollBarTheme();
+	VCircleScrollBarTheme(const VCircleScrollBarTheme &Theme);
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VCircleBarButton;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VCircleBarButton;
+	}
 };
 
-struct VSliderStatusTheme {
-    VColor  BackgroundColor;
-    VColor  BorderColor;
+struct VSliderStatusTheme
+{
+	VColor BackgroundColor;
+	VColor BorderColor;
 
-    float   BorderThickness;
+	float BorderThickness;
 
-    VInterpolatorType
-    AnimationInterpolatorType;
+	VInterpolatorType AnimationInterpolatorType;
 
-    VSliderStatusTheme() = default;
-    VSliderStatusTheme(const VSliderStatusTheme& Theme);
+	VSliderStatusTheme() = default;
+	VSliderStatusTheme(const VSliderStatusTheme &Theme);
 };
 
-struct VSliderAreaTheme {
-    VSliderStatusTheme LocalTheme;
+struct VSliderAreaTheme
+{
+	VSliderStatusTheme LocalTheme;
 
-    VSliderAreaTheme() = default;
-    VSliderAreaTheme(const VSliderAreaTheme& Theme);
+	VSliderAreaTheme() = default;
+	VSliderAreaTheme(const VSliderAreaTheme &Theme);
 };
 
-class VSliderTheme : public VBasicUITheme {
+class VSliderTheme : public VBasicUITheme
+{
 public:
-    VSliderAreaTheme UnselectedArea;
-    VSliderAreaTheme SelectedArea;
+	VSliderAreaTheme UnselectedArea;
+	VSliderAreaTheme SelectedArea;
 
 public:
-    VSliderTheme(const VSliderTheme& ThemeObject);
-    VSliderTheme();
+	VSliderTheme(const VSliderTheme &ThemeObject);
+	VSliderTheme();
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VSlider;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VSlider;
+	}
 };
 
-class VBlurLabelTheme : public VBasicUITheme {
+class VBlurLabelTheme : public VBasicUITheme
+{
 public:
-    VColor MixedColor;
-    int    BlurRadius;
+	VColor MixedColor;
+	int	   BlurRadius;
 
-    VPoint BorderRadius;
-
-public:
-    VBlurLabelTheme(const VBlurLabelTheme& ThemeObject);
-    VBlurLabelTheme();
+	VPoint BorderRadius;
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VBlurLabel;
-    }
+	VBlurLabelTheme(const VBlurLabelTheme &ThemeObject);
+	VBlurLabelTheme();
+
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VBlurLabel;
+	}
 };
 
-struct VIconButtonStatus {
-    VImage* Image;
-    float   Opacity;
+struct VIconButtonStatus
+{
+	VImage *Image;
+	float	Opacity;
 
-    VIconButtonStatus();
-    VIconButtonStatus(const VIconButtonStatus& Status);
+	VIconButtonStatus();
+	VIconButtonStatus(const VIconButtonStatus &Status);
 };
 
-class VIconButtonTheme  : public VLabelCommonTheme {
+class VIconButtonTheme : public VLabelCommonTheme
+{
 public:
-    VImage* Image = nullptr;
+	VImage *Image = nullptr;
 
 public:
-    VIconButtonTheme();
-    VIconButtonTheme(const VIconButtonTheme& Theme);
+	VIconButtonTheme();
+	VIconButtonTheme(const VIconButtonTheme &Theme);
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VIconButton;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VIconButton;
+	}
 };
 
-struct VTextEditorTheme : public VLabelCommonTheme {
+struct VTextEditorTheme : public VLabelCommonTheme
+{
 public:
-    std::wstring PlaneText;
+	std::wstring PlaneText;
 
-    VColor       CursorColor;
-    VColor       OnSelectedColor;
-    VColor       OnSelectedBackgroundColor;
+	VColor CursorColor;
+	VColor OnSelectedColor;
+	VColor OnSelectedBackgroundColor;
 
-    VColor       PlaceHolderColor;
-
-public:
-    VTextEditorTheme();
-    VTextEditorTheme(const VTextEditorTheme& Theme);
+	VColor PlaceHolderColor;
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VTextEditor;
-    }
+	VTextEditorTheme();
+	VTextEditorTheme(const VTextEditorTheme &Theme);
+
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VTextEditor;
+	}
 };
 
-struct VViewScrollerButtonTheme : public VLabelCommonTheme {
+struct VViewScrollerButtonTheme : public VLabelCommonTheme
+{
 public:
-    VViewScrollerButtonTheme();
-    VViewScrollerButtonTheme(const VViewScrollerButtonTheme& Theme);
+	VViewScrollerButtonTheme();
+	VViewScrollerButtonTheme(const VViewScrollerButtonTheme &Theme);
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VViewScrollerPushButton;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VViewScrollerPushButton;
+	}
 };
 
-struct VViewScrollerTheme : public VLabelCommonTheme {
+struct VViewScrollerTheme : public VLabelCommonTheme
+{
 public:
-    VViewScrollerTheme();
-    VViewScrollerTheme(const VViewScrollerTheme& Theme);
+	VViewScrollerTheme();
+	VViewScrollerTheme(const VViewScrollerTheme &Theme);
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VViewScroller;
-    }
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VViewScroller;
+	}
 };
 
-class VViewLabelTheme : public VBasicUITheme {
+class VViewLabelTheme : public VBasicUITheme
+{
 public:
-    VColor BackgroundColor;
-    VColor BorderColor;
+	VColor BackgroundColor;
+	VColor BorderColor;
 
-    VPoint Radius;
-
-public:
-    VViewLabelTheme();
-    VViewLabelTheme(const VViewLabelTheme& Theme);
+	VPoint Radius;
 
 public:
-    VUIThemeType GetThemeType() override {
-        return VUIThemeType::VViewLabel;
-    }
+	VViewLabelTheme();
+	VViewLabelTheme(const VViewLabelTheme &Theme);
+
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VViewLabel;
+	}
 };
 
-}
+} // namespace Core
 
 VLIB_END_NAMESPACE

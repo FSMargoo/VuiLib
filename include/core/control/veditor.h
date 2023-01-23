@@ -8,197 +8,204 @@
 
 VLIB_BEGIN_NAMESPACE
 
-namespace Core {
-	enum class VEditorCaretSelectMode {
-		Left, Right, Up, Down
-	};
-	struct VEditorCaret {
-		std::wstring*		   CacheTargetPtr;
+namespace Core
+{
+enum class VEditorCaretSelectMode
+{
+	Left,
+	Right,
+	Up,
+	Down
+};
+struct VEditorCaret
+{
+	std::wstring *CacheTargetPtr;
 
-		bool				   InSelecting;
+	bool InSelecting;
 
-		VEditorCaretSelectMode SelectMode;
+	VEditorCaretSelectMode SelectMode;
 
-		int					   CaretStart;
-		int					   CaretEnd;
-							   
-		void				   CaretSelectionTurnUp(IDWriteTextLayout* TextLayout);
-		void				   CaretSelectionTurnDown(IDWriteTextLayout* TextLayout);
-		void				   CaretSelectionTurnLeft();
-		void				   CaretSelectionTurnRight();
+	int CaretStart;
+	int CaretEnd;
 
-		void				   ResetSelect();
+	void CaretSelectionTurnUp(IDWriteTextLayout *TextLayout);
+	void CaretSelectionTurnDown(IDWriteTextLayout *TextLayout);
+	void CaretSelectionTurnLeft();
+	void CaretSelectionTurnRight();
 
-		void				   CaretSelectionTurnLineHead(IDWriteTextLayout* TextLayout);
-		void				   CaretSelectionTurnLineEnd(IDWriteTextLayout* TextLayout);
+	void ResetSelect();
 
-		void				   CaretSelectAll();
+	void CaretSelectionTurnLineHead(IDWriteTextLayout *TextLayout);
+	void CaretSelectionTurnLineEnd(IDWriteTextLayout *TextLayout);
 
-		void				   CaretTurnLeft();
-		void				   CaretTurnRight();
-		void				   CaretTurnUp(IDWriteTextLayout* TextLayout);
-		void				   CaretTurnDown(IDWriteTextLayout* TextLayout);
+	void CaretSelectAll();
 
-		void				   CaretTurnLineHead(IDWriteTextLayout* TextLayout);
-		void				   CaretTurnLineEnd(IDWriteTextLayout* TextLayout);
+	void CaretTurnLeft();
+	void CaretTurnRight();
+	void CaretTurnUp(IDWriteTextLayout *TextLayout);
+	void CaretTurnDown(IDWriteTextLayout *TextLayout);
 
-		void				   CaretPageUp();
-		void				   CaretPageEnd();
+	void CaretTurnLineHead(IDWriteTextLayout *TextLayout);
+	void CaretTurnLineEnd(IDWriteTextLayout *TextLayout);
 
-		void				   SetValidCaretRange();
+	void CaretPageUp();
+	void CaretPageEnd();
 
-		void				   SetCaretByMousePosition(const int& X, const int& Y, IDWriteTextLayout* TextLayout);
-		void				   SetCaretSelectionByMousePosition(const int& X, const int& Y, IDWriteTextLayout* TextLayout);
+	void SetValidCaretRange();
 
-		VPoint				   GetCaretPosition(IDWriteTextLayout* TextLayout);
-		DWRITE_TEXT_RANGE	   GetTextRange();
-	};
+	void SetCaretByMousePosition(const int &X, const int &Y, IDWriteTextLayout *TextLayout);
+	void SetCaretSelectionByMousePosition(const int &X, const int &Y, IDWriteTextLayout *TextLayout);
 
-	class VEditor : public VAbstractButton {
-	public:
-		VEditor(VUIObject* Parent);
-		VEditor(const int& Width, const int& Height, VUIObject* Parent);
+	VPoint			  GetCaretPosition(IDWriteTextLayout *TextLayout);
+	DWRITE_TEXT_RANGE GetTextRange();
+};
 
-	public:
-		void OnPaint(VCanvasPainter* Painter) override;
+class VEditor : public VAbstractButton
+{
+public:
+	VEditor(VUIObject *Parent);
+	VEditor(const int &Width, const int &Height, VUIObject *Parent);
 
-	public:
-		void SetPlaneText(const std::wstring& PlaneText);
-		std::wstring GetPlaneText() const;
-		void SetLeadingText(const std::wstring& Text);
-		std::wstring GetLedingText() const;
+public:
+	void OnPaint(VCanvasPainter *Painter) override;
 
-	public:
-		void ResetCaretStatus();
-		void ResetTextLayout();
+public:
+	void		 SetPlaneText(const std::wstring &PlaneText);
+	std::wstring GetPlaneText() const;
+	void		 SetLeadingText(const std::wstring &Text);
+	std::wstring GetLedingText() const;
 
-		bool GetAllowEditStatus() const;
-		void SetAllowEditStatus(const bool& Status);
+public:
+	void ResetCaretStatus();
+	void ResetTextLayout();
 
-		bool GetAllowFontSizeDragStatus() const;
-		void SetAllowFontSizeDragStatus(const bool& Status);
+	bool GetAllowEditStatus() const;
+	void SetAllowEditStatus(const bool &Status);
 
-		bool GetOperationBackStatus() const;
-		void SetOperationBackStatus(const bool& Status);
+	bool GetAllowFontSizeDragStatus() const;
+	void SetAllowFontSizeDragStatus(const bool &Status);
 
-		int	 GetMaxOperationCache() const;
-		void SetMaxOperationCache(const int& Value);
-				
-		void ScrollToEnd();
+	bool GetOperationBackStatus() const;
+	void SetOperationBackStatus(const bool &Status);
 
-	public:
-		void LeftClickedDown() override;
-		void GotMouseFocus() override;
-		void OnMessage(VMessage* Message) override;
+	int	 GetMaxOperationCache() const;
+	void SetMaxOperationCache(const int &Value);
 
-		void Resize(const int& Width, const int& Height) override;
+	void ScrollToEnd();
 
-	public:
-		void CheckFrame() override;
+public:
+	void LeftClickedDown() override;
+	void GotMouseFocus() override;
+	void OnMessage(VMessage *Message) override;
 
-	public:
-		void SetDeltaY(const int& Delta);
+	void Resize(const int &Width, const int &Height) override;
 
-	public:
-		VTextEditorTheme* GetTheme();
+public:
+	void CheckFrame() override;
 
-	public:
-		VEditorCaret GetCaret();
-		void		 SetCaret(const VEditorCaret& CaretValue);
+public:
+	void SetDeltaY(const int &Delta);
 
-	public:
-		IDWriteTextLayout* GetTextLayout();
+public:
+	VTextEditorTheme *GetTheme();
 
-	public:
-		VSignal<const std::wstring&>	TextOnChange;
-		VSignal<const std::wstring&>	TextBeforeChange;
-		VSignal<const wchar_t&>			PushNewCharacter;
-		VSignal<const wchar_t&, bool*>	CheckInput;
-		VSignal<const int&>				TextClicked;
+public:
+	VEditorCaret GetCaret();
+	void		 SetCaret(const VEditorCaret &CaretValue);
 
-	private:
-		void InitEditor();
+public:
+	IDWriteTextLayout *GetTextLayout();
 
-	protected:
-		void ResetOffsetYByCaret();
+public:
+	VSignal<const std::wstring &>	 TextOnChange;
+	VSignal<const std::wstring &>	 TextBeforeChange;
+	VSignal<const wchar_t &>		 PushNewCharacter;
+	VSignal<const wchar_t &, bool *> CheckInput;
+	VSignal<const int &>			 TextClicked;
 
-	protected:
-		bool ClearSelectArea();
-		void BackCharacter();
-		void DeleteCharacter();
-		void AddCharaceter(const wchar_t& Character);
+private:
+	void InitEditor();
 
-	protected:
-		int GetMaxOffsetY();
+protected:
+	void ResetOffsetYByCaret();
 
-	protected:
-		void SetScroller();
+protected:
+	bool ClearSelectArea();
+	void BackCharacter();
+	void DeleteCharacter();
+	void AddCharaceter(const wchar_t &Character);
 
-	protected:
-		bool IsASCIICharacter(const wchar_t& ASCIICode);
+protected:
+	int GetMaxOffsetY();
 
-	protected:
-		void CopyClipboard();
-		void WriteClipboard();
+protected:
+	void SetScroller();
 
-	public:
-		std::vector<std::tuple<ID2D1Effect*, DWRITE_TEXT_RANGE>>		TextEffect;
-		std::vector<std::tuple<DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE>>	TextStyle;
-		std::vector<DWRITE_TEXT_RANGE>									UnderlineStyle;
+protected:
+	bool IsASCIICharacter(const wchar_t &ASCIICode);
 
-	protected:
-		VSmartTimer								  CaretTimer;
-		bool									  ShowCaret;
-		bool									  UserInOperating;
-		bool									  FirstKeyPress;
+protected:
+	void CopyClipboard();
+	void WriteClipboard();
 
-		bool									  DragResetFontSize;
+public:
+	std::vector<std::tuple<ID2D1Effect *, DWRITE_TEXT_RANGE>>	  TextEffect;
+	std::vector<std::tuple<DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE>> TextStyle;
+	std::vector<DWRITE_TEXT_RANGE>								  UnderlineStyle;
 
-		long int								  OffsetY;
-		long int								  OffsetX;
+protected:
+	VSmartTimer CaretTimer;
+	bool		ShowCaret;
+	bool		UserInOperating;
+	bool		FirstKeyPress;
 
-		std::wstring							  InEditingText;
-		VTextEditorTheme*						  Theme;
+	bool DragResetFontSize;
 
-		VEditorCaret							  Caret;
+	long int OffsetY;
+	long int OffsetX;
 
-		Microsoft::WRL::ComPtr<IDWriteTextLayout> LocalTextLayout;
+	std::wstring	  InEditingText;
+	VTextEditorTheme *Theme;
 
-	private:
-		void DrawSelectedRange(Core::VCanvasPainter* Painter);
+	VEditorCaret Caret;
 
-	private:
-		void CacheOperation(const std::wstring& OldText);
+	Microsoft::WRL::ComPtr<IDWriteTextLayout> LocalTextLayout;
 
-	protected:
-		bool InMouseDragSelecting;
-		bool UsedComboKey;
+private:
+	void DrawSelectedRange(Core::VCanvasPainter *Painter);
 
-	protected:
-		VBasicTimer					AnimationFrameTimer;
-		VBasicTimer					KeyPressTimer;
-		VBasicTimer					KeyPressResetTimer;
-		VAnimationInterpolator*		Interpolator;
+private:
+	void CacheOperation(const std::wstring &OldText);
 
-		time_t						LastKeyPressTime;
-		int							YDelta;
+protected:
+	bool InMouseDragSelecting;
+	bool UsedComboKey;
 
-		VLabelStatusTheme			OldTheme;
-		VLabelStatusTheme			TargetTheme;
+protected:
+	VBasicTimer				AnimationFrameTimer;
+	VBasicTimer				KeyPressTimer;
+	VBasicTimer				KeyPressResetTimer;
+	VAnimationInterpolator *Interpolator;
 
-		bool						AllowEdit;
+	time_t LastKeyPressTime;
+	int	   YDelta;
 
-		bool						InAnimation;
+	VLabelStatusTheme OldTheme;
+	VLabelStatusTheme TargetTheme;
 
-	protected:
-		bool						EnableOperationBack;
-		int							OperationCacheMax;
-		std::vector<VEditorCaret>	CaretSet;
-		std::vector<std::wstring>	OldStringSet;
+	bool AllowEdit;
 
-	protected:
-		std::wstring LeadText;
-	};
-}
+	bool InAnimation;
+
+protected:
+	bool					  EnableOperationBack;
+	int						  OperationCacheMax;
+	std::vector<VEditorCaret> CaretSet;
+	std::vector<std::wstring> OldStringSet;
+
+protected:
+	std::wstring LeadText;
+};
+} // namespace Core
 
 VLIB_END_NAMESPACE
