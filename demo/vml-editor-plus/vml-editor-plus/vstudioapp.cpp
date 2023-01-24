@@ -446,9 +446,9 @@ VStudioApp::VStudioApp(Core::VApplication *App)
 	AddFontResource(L"./vml-editor-plus/font/vml-editor-plus.ttf");
 	AddFontResource(L"./vml-editor-plus/font/icomoon.ttf");
 
-	StartupInfo				= {sizeof(StartupInfo)};
-	ProcessInfo				= PROCESS_INFORMATION{};
-	ThreadCurrentRunning	= false;
+	StartupInfo			 = {sizeof(StartupInfo)};
+	ProcessInfo			 = PROCESS_INFORMATION{};
+	ThreadCurrentRunning = false;
 
 	SetQuitEvent([&]() -> bool {
 		if (InViewing)
