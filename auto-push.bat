@@ -19,6 +19,5 @@ set /p commit_info="Git commit info: "
 git commit -m "%commit_info%"
 :pushlabel
 git push vlib main
-pause
 set /p repeat="Dose the push finished? Try again? (y/n)"
-if %repeat% == "y" (goto pushlabel)
+if %repeat% == "y" goto pushlabel
