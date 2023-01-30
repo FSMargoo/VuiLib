@@ -1,22 +1,18 @@
 ﻿// #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 #include "./include/core/animation/vanimation.h"
+#include "./include/core/control/vcanvas.h"
+#include "./include/core/control/veditor.h"
+#include "./include/core/control/veditorhighlighter.h"
 #include "./include/core/control/vlineeditor.h"
 #include "./include/core/control/vscroller.h"
 #include "./include/core/control/vswitchgroup.h"
-#include "./include/core/control/vviewlabel.h"
-#include "./include/core/visual/vvisual.h"
-
-#include "./include/core/control/vcanvas.h"
-#include "./include/core/uibasic/vsmarttimer.h"
-
-#include "./include/core/control/veditor.h"
-#include "./include/core/control/veditorhighlighter.h"
-
 #include "./include/core/control/vtitlebar.h"
+#include "./include/core/control/vviewlabel.h"
+#include "./include/core/uibasic/vsmarttimer.h"
+#include "./include/core/visual/vvisual.h"
 #include "./include/kits/vallocator.h"
 #include "./include/vml/vmlwidget.h"
-
 #include <iostream>
 
 #define fn	auto

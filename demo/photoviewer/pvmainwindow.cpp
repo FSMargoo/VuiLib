@@ -1,6 +1,6 @@
-#include <Shlobj.h>
-
 #include "pvmainwindow.h"
+
+#include <Shlobj.h>
 
 VDragbleImageLabel::VDragbleImageLabel(Core::VUIObject *Parent, Core::VImage *Image) : Core::VDragControlBase(Parent)
 {

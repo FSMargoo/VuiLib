@@ -6,14 +6,15 @@
 //         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-lang.org)
 //
 //  seal.lexical.h :
-//       @description :  This header file defines the token cutting in seal's lexical analyzer
+//       @description :  This header file defines the token cutting in seal's
+//       lexical analyzer
 //       @birth       :  2021/2.15
 //       @operator    :  Margoo
 //
 
-#include <string>
-
 #include "../../include/kits/seal.lexical.h"
+
+#include <string>
 
 namespace VKits
 {
@@ -180,7 +181,8 @@ _lexical_info::seal_lexical_token _lexical_core::get_token()
 						break;
 					}
 				}
-				// If it is not UNKNOW_TOKEN, then encountering a symbol means the end of a token
+				// If it is not UNKNOW_TOKEN, then encountering a symbol means the end
+				// of a token
 				else if (core_info.lexical_token.cache_token != NO_STATUS_TOKEN)
 				{
 					break;

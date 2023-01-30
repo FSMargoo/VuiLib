@@ -3,7 +3,6 @@
 #include "../object/vuiobject.h"
 #include "../uibasic/vsmarttimer.h"
 #include "vabstractbutton.h"
-
 #include <map>
 
 VLIB_BEGIN_NAMESPACE

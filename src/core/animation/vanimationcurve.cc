@@ -34,15 +34,15 @@ double VEaseInOutQuadCurve::CurveFunction(const double &X)
 {
 	return X < 0.5 ? 2 * X * X : 1 - pow(-2 * X + 2, 2) / 2;
 }
-double VEaseInCubicCurve::CurveFunction(double const &X)
+double VEaseInCubicCurve::CurveFunction(const double &X)
 {
 	return X * X * X;
 }
-double VEaseOutCubicCurve::CurveFunction(double const &X)
+double VEaseOutCubicCurve::CurveFunction(const double &X)
 {
 	return 1 - pow(1 - X, 3);
 }
-double VEaseInOutCubicCurve::CurveFunction(double const &X)
+double VEaseInOutCubicCurve::CurveFunction(const double &X)
 {
 	return X < 0.5 ? 4 * X * X * X : 1 - pow(-2 * X + 2, 3) / 2;
 }

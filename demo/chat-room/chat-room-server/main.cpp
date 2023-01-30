@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <string>
 #include <thread>
-#include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+
+#include <windows.h>
 
 #pragma comment(lib, "ws2_32")
 
@@ -173,7 +174,8 @@ int main()
 					auto RecResult = RecData<ChatPackHeader>(ClientSocket, 0);
 					if (!std::get<1>(RecResult))
 					{
-						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with client will shutdown!");
+						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with "
+												  "client will shutdown!");
 						shutdown(ClientSocket, 2);
 
 						continue;
@@ -184,7 +186,8 @@ int main()
 					if (Header->ChatVersion != LOCAL_SERVER_VERSION)
 					{
 						ThreadPrintInfo(ThreadID,
-										"Error : Received Incompatible client version {0x%x}, send the error pack to "
+										"Error : Received Incompatible client version {0x%x}, send "
+										"the error pack to "
 										"client, the connection with client will shutdown!",
 										(const char *)Header->ChatVersion);
 
@@ -199,7 +202,8 @@ int main()
 					auto UserNameWebPack = RecData<char>(ClientSocket, Header->UserNameLength, 0);
 					if (!std::get<1>(UserNameWebPack))
 					{
-						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with client will shutdown!");
+						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with "
+												  "client will shutdown!");
 						shutdown(ClientSocket, 2);
 
 						continue;
@@ -255,17 +259,19 @@ int main()
 
 						if (ClientOperation->OperationCode == CLIENT_NEWMESSAGE)
 						{
-							ThreadPrintInfo(
-								ThreadID,
-								"User {%s} try to send message, now trying to received message from client...",
-								(const char *)UserName);
+							ThreadPrintInfo(ThreadID,
+											"User {%s} try to send message, now trying to received "
+											"message from client...",
+											(const char *)UserName);
 
 							auto UserSentMessage = RecData<char>(ClientSocket, ClientOperation->MessageLength, 0);
 
 							if (!std::get<1>(UserSentMessage))
 							{
 								ThreadPrintInfo(ThreadID,
-												"Error : User {%s} tried to send message, but server received a "
+												"Error : User {%s} tried to send message, but server "
+												"received "
+												"a "
 												"unexpected web pack, the connection will shutdown!",
 												(const char *)UserName);
 

@@ -2,7 +2,6 @@
 #include "../../../include/core/control/vpushbutton.h"
 #include "../../../include/core/control/vtextlabel.h"
 #include "../../../include/core/widget/vwidget.h"
-
 #include <shobjidl.h>
 
 class SimpleDemo : public Core::VMainWindow

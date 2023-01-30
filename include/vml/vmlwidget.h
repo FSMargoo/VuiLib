@@ -1,16 +1,12 @@
 #pragma once
 
-#include "../core/vcontrol.h"
-#include "../vss/vssbuilder.h"
-
-#include "../core/visual/vvisual.h"
-
 #include "../core/control/vfakecaption.h"
-
+#include "../core/vcontrol.h"
+#include "../core/visual/vvisual.h"
+#include "../vss/vssbuilder.h"
 #include "vml.h"
 #include "vmlbuilder.h"
 #include "vmlvariable.h"
-
 #include <algorithm>
 
 VLIB_BEGIN_NAMESPACE

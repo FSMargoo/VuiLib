@@ -2,7 +2,8 @@
  * File name	: vpainter.h
  * Author		: Margoo
  * Date			: 11/13/2022
- * Description	: This head define the painter class to paint on surface
+ * Description
+ * : This head define the painter class to paint on surface
  */
 #pragma once
 
@@ -17,21 +18,27 @@ namespace Core
 {
 /*
  * VCanvasPainter class:
- *	Description : This class provide a painter to paint on canvas surface which is
- *				  created by this class
+ *	Description : This class provide a painter to paint on canvas surface
+ *which is
+ * created by this class
  */
 class VCanvasPainter
 {
 public:
 	/*
-	 * VCanvasPainter constructor:
-	 *		Description : The VCanvasPainter of class VImage
-	 *		Values Tip	: {
-	 *			[const int&			 ] Width		: The width of canvas
-	 *			[const int&			 ] Height		: The height of canvas
-	 *			[const VRenderHandle&] RenderHandle : The render handle of renderer environment
-	 *		}
-	 */
+   * VCanvasPainter constructor:
+   *		Description : The VCanvasPainter of class VImage
+   *
+	 * Values Tip	: {
+   *			[const int&			 ] Width		: The
+   *width of
+
+	 * *canvas [const int&			 ] Height		: The height of
+   *canvas [const VRenderHandle&]
+	 * RenderHandle : The render handle of renderer
+   *environment
+   *		}
+   */
 	VCanvasPainter(const int &Width, const int &Height, const VRenderHandle &RenderHandle);
 	~VCanvasPainter();
 
@@ -80,18 +87,22 @@ private:
 /*
  * VPainter class:
  *	Description : This class provide a painter on a surface, but this class
- *				  won't create a surface through render handle
+ * won't create a
+ * surface through render handle
  */
 class VPainter
 {
 public:
 	/*
-	 * VPainter constructor:
-	 *		Description : The VPainter of class VImage
-	 *		Values Tip	: {
-	 *			[const VRenderHandle&] RenderHandle : The render handle of renderer environment
-	 *		}
-	 */
+   * VPainter constructor:
+   *		Description : The VPainter of class VImage
+   *		Values
+	 * Tip	: {
+   *			[const VRenderHandle&] RenderHandle : The render handle
+   *of renderer
+	 * environment
+   *		}
+   */
 	explicit VPainter(const VRenderHandle &RenderHandle);
 	~VPainter();
 

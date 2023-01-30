@@ -2,7 +2,8 @@
  * File name	: vwrite.h
  * Author		: Margoo
  * Date			: 11/14/2022
- * Description	: This head defines the writer
+ * Description
+ * : This head defines the writer
  */
 #pragma once
 
@@ -14,12 +15,14 @@ namespace Core
 {
 /*
  * VFontAlignment (alias of DWRITE_TEXT_ALIGNMENT):
- *	Description : This object defines the alignment of text in line
+ *	Description : This object defines the alignment of text
+ * in line
  */
 using VFontAlignment = DWRITE_TEXT_ALIGNMENT;
 /*
  * VFontParagraphAlignment (alias of DWRITE_PARAGRAPH_ALIGNMENT)
- * 	Description : This object defines the alignment of text in paragraph
+ * 	Description : This object defines the
+ * alignment of text in paragraph
  */
 using VFontParagraphAlignment = DWRITE_PARAGRAPH_ALIGNMENT;
 
@@ -31,9 +34,9 @@ class VFont
 {
 public:
 	/*
-	 * FontStretch enum:
-	 *		Description : This enum defines the stretch preset style of font
-	 */
+   * FontStretch enum:
+   *		Description : This enum defines the stretch preset style of font
+   */
 	enum FontStretch
 	{
 		STRETCH_UNDEFINED		= 0,
@@ -49,9 +52,9 @@ public:
 		STRETCH_ULTRA_EXPANDED	= 9
 	};
 	/*
-	 * FontStretch enum:
-	 *		Description : This enum defines the font preset style of font
-	 */
+   * FontStretch enum:
+   *		Description : This enum defines the font preset style of font
+   */
 	enum FontStyle
 	{
 		STYLE_NORMAL  = ::DWRITE_FONT_STYLE::DWRITE_FONT_STYLE_NORMAL,
@@ -59,9 +62,9 @@ public:
 		STYLE_ITALIC  = ::DWRITE_FONT_STYLE::DWRITE_FONT_STYLE_ITALIC
 	};
 	/*
-	 * FontStretch enum:
-	 *		Description : This enum defines the weight preset style of font
-	 */
+   * FontStretch enum:
+   *		Description : This enum defines the weight preset style of font
+   */
 	enum FontWeight
 	{
 		WEIGHT_THIN		   = 100,
@@ -85,94 +88,103 @@ public:
 
 public:
 	/*
-	 * VImage constructor:
-	 *		Description : The constructor of class VFont
-	 *		Values Tip	: {
-	 *			[const VFont&] FontObject : The specified font
-	 *		}
-	 */
+   * VImage constructor:
+   *		Description : The constructor of class VFont
+   *		Values
+	 * Tip	: {
+   *			[const VFont&] FontObject : The specified font
+   *		}
+   */
 	VFont(const VFont &FontObject);
 	/*
-	 * VImage constructor:
-	 *		Description : The constructor of class VFont
-	 *		Values Tip	: {
-	 *			[const std::wstring&] FamilyName  : The font family name of this font
-	 *			[const FontWeight&  ] TextWidget  : The weight of this font
-	 * 		[const FontStyle&   ] TextStyle   : The style of this font
-	 *  		[const FontStretch& ] TextStretch : The stretch style of this font
-	 *  		[const float&		] TextSize	  : The size of this font (pixel)
-	 *   		[const std::wstring&] TextSize	  : The local of this font
-	 *		}
-	 */
+   * VImage constructor:
+   *		Description : The constructor of class VFont
+   *		Values
+	 * Tip	: {
+   *			[const std::wstring&] FamilyName  : The font family name
+   *of this font
+	 * [const FontWeight&  ] TextWidget  : The weight of this font
+   *[const FontStyle&   ] TextStyle   : The style
+	 * of this font [const
+   *FontStretch& ] TextStretch : The stretch style of this font [const float&
+   *]
+	 * TextSize	  : The size of this font (pixel) [const std::wstring&] TextSize
+   *: The local of this font
+
+	 * *		}
+   */
 	VFont(const std::wstring &FamilyName, const FontWeight &TextWidget, const FontStyle &TextStyle,
 		  const FontStretch &TextStretch, const float &TextSize, const std::wstring &Local);
 	~VFont();
 
 public:
 	/*
-	 * SetLineAlignment function£º
-	 *		Description : Set the line alignment mode of this font
+   * SetLineAlignment function£º
+   *		Description : Set the line alignment mode of this font
+
 	 */
 	void SetLineAlignment(const VFontAlignment &Alignment);
 	/*
-	 * SetParagraphAlignment function£º
-	 *		Description : Set the paragraph alignment mode of this font
-	 */
+   * SetParagraphAlignment function£º
+   *		Description : Set the paragraph alignment mode of this
+	 * font
+   */
 	void SetParagraphAlignment(const VFontParagraphAlignment &Alignment);
 	/*
-	 * SetFamilyName function£º
-	 *		Description : Set the font family name of this font
-	 */
+   * SetFamilyName function£º
+   *		Description : Set the font family name of this font
+   */
 	void SetFamilyName(const std::wstring &FontFamilyName);
 	/*
-	 * SetTextSize function£º
-	 *		Description : Set the text size of this font
-	 */
+   * SetTextSize function£º
+   *		Description : Set the text size of this font
+   */
 	void SetTextSize(const int &Size);
 	/*
-	 * SetTextWidget function£º
-	 *		Description : Set the text weight of this font
-	 */
+   * SetTextWidget function£º
+   *		Description : Set the text weight of this font
+   */
 	void SetTextWidget(const int &Widget);
 
 public:
 	/*
-	 * GetFamilyName function£º
-	 *		Description : Get the family name of this font
-	 */
+   * GetFamilyName function£º
+   *		Description : Get the family name of this font
+   */
 	std::wstring GetFamilyName() const;
 	/*
-	 * GetLocaleName function£º
-	 *		Description : Get the locale name of this font
-	 */
+   * GetLocaleName function£º
+   *		Description : Get the locale name of this font
+   */
 	std::wstring GetLocaleName() const;
 	/*
-	 * GetTextWeightStyle function£º
-	 *		Description : Get the font weight name of this font
-	 */
+   * GetTextWeightStyle function£º
+   *		Description : Get the font weight name of this font
+ */
 	FontWeight GetTextWeightStyle() const;
 	/*
-	 * GetTextFontStyle function£º
-	 *		Description : Get the text font of this font
-	 */
+   * GetTextFontStyle function£º
+   *		Description : Get the text font of this font
+   */
 	FontStyle GetTextFontStyle() const;
 	/*
-	 * GetFontStretchStyle function£º
-	 *		Description : Get the font stretch of this font
-	 */
+   * GetFontStretchStyle function£º
+   *		Description : Get the font stretch of this font
+   */
 	FontStretch GetFontStretchStyle() const;
 	/*
-	 * GetTextSize function£º
-	 *		Description : Get the text size of this font
-	 */
+   * GetTextSize function£º
+   *		Description : Get the text size of this font
+   */
 	int GetTextSize() const;
 
 public:
 	/*
-	 * GetDXObject function:
-	 *		Description : Get the pointer of DirectX2D object
-	 *		Tips		: The pointer which returned is unchangeable
-	 */
+   * GetDXObject function:
+   *		Description : Get the pointer of DirectX2D object
+   *
+	 * Tips		: The pointer which returned is unchangeable
+   */
 	IDWriteTextFormat *GetDXObject() VRENDER_HELPER const
 	{
 		return TextFormat.Get();

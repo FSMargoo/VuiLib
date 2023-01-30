@@ -1,6 +1,7 @@
 #pragma warning(disable : 26495)
 
 #include "../../../include/core/control/veditorhighlighter.h"
+
 #include "../../../include/kits/vcolorhelper.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -301,6 +302,52 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 
 		Editor->SetPlaneText(Text);
 		Editor->SetCaret(Caret);
+	}
+	if (NewChar == L'\n')
+	{
+		IDWriteTextLayout				*TextLayout = Editor->GetTextLayout();
+		DWRITE_TEXT_METRICS				 TextMetrics;
+		std::vector<DWRITE_LINE_METRICS> LineMetrics;
+
+		TextLayout->GetMetrics(&TextMetrics);
+
+		LineMetrics.resize(TextMetrics.lineCount);
+
+		TextLayout->GetLineMetrics(&LineMetrics[0], TextMetrics.lineCount, &TextMetrics.lineCount);
+
+		UINT32 Line				= 0;
+		UINT32 LinePosition		= 0;
+		UINT32 NextLinePosition = 0;
+		UINT32 LineCount		= static_cast<UINT32>(LineMetrics.size());
+		UINT32 CodePosition		= 0;
+		for (; Line < LineCount; ++Line)
+		{
+			LinePosition	 = NextLinePosition;
+			NextLinePosition = LinePosition + LineMetrics[Line].length;
+
+			if (NextLinePosition > Editor->GetCaret().CaretStart)
+			{
+				break;
+			}
+
+			CodePosition += LinePosition;
+		}
+
+		std::wstring PlaneText = Editor->GetPlaneText();
+
+		UINT32 LeadingPosition = CodePosition - 1;
+		UINT32 StringIndex	   = LeadingPosition;
+		UINT32 AlignCharCount  = 0;
+
+		while (true)
+		{
+			if (PlaneText[StringIndex] != L'\t')
+			{
+				break;
+			}
+
+			++(AlignCharCount, StringIndex);
+		}
 	}
 }
 void VVMLHighlighter::RenderColor(const std::wstring &PlaneText)

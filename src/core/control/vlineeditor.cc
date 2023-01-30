@@ -264,7 +264,8 @@ void VLineEditor::OnMessage(VMessage *Message)
 					}
 					else
 					{
-						DWRITE_TEXT_METRICS StringMetrics;
+						DWRITE_TEXT_METRICS
+						StringMetrics;
 
 						TextLayout->GetMetrics(&StringMetrics);
 
@@ -392,7 +393,8 @@ void VLineEditor::OnMessage(VMessage *Message)
 					}
 					else
 					{
-						DWRITE_TEXT_METRICS StringMetrics;
+						DWRITE_TEXT_METRICS
+						StringMetrics;
 
 						TextLayout->GetMetrics(&StringMetrics);
 
@@ -510,7 +512,6 @@ void VLineEditor::OnMessage(VMessage *Message)
 						}
 						else
 						{
-
 							TextSelectRange.startPosition += 1;
 							TextSelectRange.length -= 1;
 

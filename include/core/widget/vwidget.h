@@ -2,14 +2,14 @@
  * File name	: vapplicaiton.h
  * Author		: Margoo
  * Date			: 11/22/2022
- * Description	: The widget class in vuilib
+ * Description
+ * : The widget class in vuilib
  */
 #pragma once
 
 #include "../control/vswitchgroup.h"
 #include "../object/vapplication.h"
 #include "vprivatewidget.h"
-
 #include <map>
 
 VLIB_BEGIN_NAMESPACE
@@ -37,55 +37,59 @@ class VMainWindow : public VUIObject
 {
 private:
 	/*
-	 * DefaultOnQuitFunction function:
-	 *     Description : The default on quit event's responsive function
-	 *     Tips        : It will return true directly in every condition
-	 */
+   * DefaultOnQuitFunction function:
+   *     Description : The default on quit event's responsive function
+
+	 * *     Tips        : It will return true directly in every condition
+   */
 	bool DefaultOnQuitFunction();
 
 public:
 	/*
-	 * SetQuitEvent function:
-	 *     Description : Set the on quit event's responsive function
-	 */
+   * SetQuitEvent function:
+   *     Description : Set the on quit event's responsive function
+   */
 	void SetQuitEvent(const std::function<bool()> &QEventFunction);
 
 public:
 	/*
-	 * IsWidget override function:
-	 *     Description : Mark the object as widget
-	 */
+   * IsWidget override function:
+   *     Description : Mark the object as widget
+   */
 	bool IsWidget() const override;
 
 private:
 	/*
-	 * InitKernel:
-	 *     Description : Initialize the kernel of widget
-	 */
+   * InitKernel:
+   *     Description : Initialize the kernel of widget
+   */
 	void InitKernel();
 	/*
-	 * InitKernel:
-	 *     Description : Create the win32 widget
-	 */
+   * InitKernel:
+   *     Description : Create the win32 widget
+   */
 	void InitWindow();
 	/*
-	 * InitIME:
-	 *     Description : Initialize the IME input box style
-	 */
+   * InitIME:
+   *     Description : Initialize the IME input box style
+   */
 	void InitIME();
 
 private:
 	/*
-	 * Win32ThreadResized function:
-	 *     Description : When the widget got the message from win32 message loop,
-	 *                   the WNDPROC function will call this function through std::function
-	 */
+   * Win32ThreadResized function:
+   *     Description : When the widget got the message from win32 message
+	 * loop,
+   *                   the WNDPROC function will call this function through
+   * std::function
+   */
 	void Win32ThreadResized(int Width, int Height);
 	/*
-	 * Win32ThreadRepaint function:
-	 *     Description : If the widget received the WM_PAINT message, this function will be
-	 *                   called from WNDPROC through std::function
-	 */
+   * Win32ThreadRepaint function:
+   *     Description : If the widget received the WM_PAINT message, this
+
+	 * * function will be called from WNDPROC through std::function
+   */
 	void Win32ThreadRepaint();
 	void Win32LoseFocus();
 

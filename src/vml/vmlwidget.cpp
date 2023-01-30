@@ -646,10 +646,10 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 					}
 					else
 					{
-						Result.Status = VMLWidgetVMLLoadStats::Failed;
-						Result.FailedMessage =
-							L"In Control VMLID[" + VMLObject->VMLID +
-							L"] Build Failed, Reason : \"\'text-size-layout\' should match parent \'text-label\'\"";
+						Result.Status		 = VMLWidgetVMLLoadStats::Failed;
+						Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID +
+											   L"] Build Failed, Reason : \"\'text-size-layout\' "
+											   L"should match parent \'text-label\'\"";
 
 						return Result;
 					}

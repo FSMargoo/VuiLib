@@ -3,7 +3,6 @@
 #include "../core/vbasiccore.h"
 #include "../kits/seal.lexical.h"
 #include "../kits/vparserhelper.h"
-
 #include <map>
 #include <vector>
 

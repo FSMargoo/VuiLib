@@ -1,7 +1,6 @@
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 #include "../../../include/vml/vmlwidget.h"
-
 #include <comutil.h>
 
 #pragma comment(lib, "comsuppw.lib")

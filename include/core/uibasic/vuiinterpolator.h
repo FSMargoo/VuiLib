@@ -2,7 +2,6 @@
 
 #include "../render/vcolor.h"
 #include "../vbasiccore.h"
-
 #include <cmath>
 #include <functional>
 
@@ -28,13 +27,14 @@ enum class VInterpolatorType
 	AnticipateInterpolator,			  // x * x* ((2 + 1)* x - 2)
 	AccelerateDecelerateInterpolator, // (cos((x+ 1) * 3.14) / 2.0) + 0.5
 	AccelerateInterpolator,			  // pow(x, 2)
-	AnticipateOvershootInterpolator,  // 0.5*2*x * 2*x * ((3 + 1) * 2*x - 3)             0 < x < 0.5
-									  // 0.5 * ((2 * x - 2) * (2 * x - 2) * ((3 + 1) * (2 * x - 2) + 3) + 2)  0.5 <= x
-									  // < 1.0
-	DecelerateInterpolator,			  // 1.0 - pow((1.0 - x), 2 * 1)
-	LinearInterpolator,				  // x
-	OvershootInterpolator,			  // (x-1) * (x-1) * ((2+ 1) *( x-1) + 2)+1
-	CycleInterpolator				  // sin(2 * 1 * Pai * x)
+	AnticipateOvershootInterpolator,  // 0.5*2*x * 2*x * ((3 + 1) * 2*x - 3) 0 < x
+	// < 0.5 0.5 * ((2 * x - 2) * (2 * x - 2) *
+	// ((3 + 1) * (2 * x - 2) + 3) + 2)  0.5 <=
+	// x < 1.0
+	DecelerateInterpolator, // 1.0 - pow((1.0 - x), 2 * 1)
+	LinearInterpolator,		// x
+	OvershootInterpolator,	// (x-1) * (x-1) * ((2+ 1) *( x-1) + 2)+1
+	CycleInterpolator		// sin(2 * 1 * Pai * x)
 };
 
 class VAnimationInterpolator

@@ -33,6 +33,7 @@ VMainWindow::~VMainWindow()
 {
 	_VMainConfigs.erase(WindowHandle);
 	_VMainConfigs[WindowHandle] = nullptr;
+	MainThreadEnd				= true;
 
 	VUIObject::~VUIObject();
 }

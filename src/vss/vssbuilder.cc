@@ -12,11 +12,11 @@ Core::VFontAlignment VSSParserHelper::StringToAlignment(const std::wstring &Stri
 	}
 	if (String == L"left")
 	{
-		return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_TRAILING;
+		return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
 	}
 	if (String == L"right")
 	{
-		return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING;
+		return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_TRAILING;
 	}
 	if (String == L"justify")
 	{

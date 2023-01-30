@@ -6,15 +6,15 @@
 //           S E A L  P R O G R A M M I N G  L A N G U A G E
 //
 //  seal.lexical.h :
-//       @description :  This header file defines the token cutting in seal's lexical analyzer
+//       @description :  This header file defines the token cutting in seal's
+//       lexical analyzer
 //       @birth       :  2021/2.15
 //       @operator    :  Margoo
 //
 
-#include <string>
-
 #include "seal.info.h"
 #include "seal.lexical.token.h"
+#include <string>
 
 namespace VKits
 {

@@ -619,7 +619,8 @@ VMLParserResult VMLParser::ParseVML()
 
 					if (!EndFlag)
 					{
-						ThrowError(&ParseResult, L"Could not find the match end block of the comment, maybe you need "
+						ThrowError(&ParseResult, L"Could not find the match end block of the comment, "
+												 L"maybe you need "
 												 L"add \"-->\" at the end of the comment.");
 
 						return ParseResult;

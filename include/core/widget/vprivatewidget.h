@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../vbasiccore.h"
-
 #include <functional>
 #include <map>
 
@@ -14,6 +13,7 @@ namespace Core
 /*
  * VWin32ThreadPipe structure:
  *  Description : This structure is like a pipe between win32 thread and widget
+
  */
 struct VWin32ThreadPipe
 {
@@ -49,6 +49,7 @@ struct VWin32ThreadPipe
 	WNDPROC OriginWindowProcess;
 };
 
+extern bool								  MainThreadEnd;
 extern std::map<HWND, VWin32ThreadPipe *> _VMainConfigs;
 
 LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lParameter);

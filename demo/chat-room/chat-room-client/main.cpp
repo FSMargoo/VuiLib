@@ -2,12 +2,11 @@
 
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
+#include "../../../include/vml/vmlwidget.h"
 #include <comutil.h>
 #include <regex>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-
-#include "../../../include/vml/vmlwidget.h"
 
 #pragma comment(lib, "comsuppw")
 #pragma comment(lib, "ws2_32")
@@ -287,9 +286,10 @@ private:
 		auto Port		 = IPString.substr(SplitSymbol + 1, IPString.size() - SplitSymbol - 1);
 		auto IP			 = IPString.substr(0, SplitSymbol);
 
-		std::regex IPRegx(
-			"(25[0-4]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])[.](25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.]"
-			"(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.](25[0-4]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])");
+		std::regex IPRegx("(25[0-4]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])[.](25[0-5]|2[0-4]["
+						  "0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.]"
+						  "(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[.](25[0-4]|2[0-4]["
+						  "0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])");
 		if (!std::regex_match(IP, IPRegx))
 		{
 			auto Host = gethostbyname(IP.c_str());

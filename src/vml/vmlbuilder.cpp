@@ -97,7 +97,8 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 				ElementProperty.second.PropertyType != VMLPropertyType::VariableDefine)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason = L"\"x\" Property must match the type \"int\" or \"native call functional\"";
+				BuildStatus->FailedReason	 = L"\"x\" Property must match the type \"int\" or \"native call "
+											L"functional\"";
 
 				return;
 			}
@@ -231,8 +232,8 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 				ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"y\" Property must match the type \"int\"  or \"native call functional\"";
+				BuildStatus->FailedReason	 = L"\"y\" Property must match the type \"int\"  or \"native call "
+											L"functional\"";
 
 				return;
 			}
@@ -416,8 +417,8 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 				ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"height\" Property must match the type \"int\" or \"native call functional\"";
+				BuildStatus->FailedReason	 = L"\"height\" Property must match the type \"int\" or \"native call "
+											L"functional\"";
 
 				return;
 			}
@@ -527,7 +528,6 @@ void VMLPushButtonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VP
 										   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 										   VMLControlBuildStatus					*BuildStatus)
 {
-
 	int			 TextSize = 0;
 	std::wstring Text;
 
@@ -579,7 +579,6 @@ void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VI
 										   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 										   VMLControlBuildStatus					*BuildStatus)
 {
-
 	Core::VImage *Image = nullptr;
 
 	for (auto &ElementProperty : PropertyValueList)
@@ -665,7 +664,6 @@ void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VTe
 										  std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 										  VMLControlBuildStatus					   *BuildStatus)
 {
-
 	std::wstring Text;
 	int			 TextSize = 0;
 	bool		 AutoSize = false;
@@ -716,7 +714,8 @@ void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VTe
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason	 = L"\"line-alignment\" Property Must Match the Type \"alignment-string\"";
+				BuildStatus->FailedReason	 = L"\"line-alignment\" Property Must Match the Type "
+											L"\"alignment-string\"";
 
 				return;
 			}
@@ -740,8 +739,8 @@ void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VTe
 			if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"size-layout\" Property must match the type \"size-layout native function\"";
+				BuildStatus->FailedReason	 = L"\"size-layout\" Property must match the type \"size-layout "
+											L"native function\"";
 
 				return;
 			}
@@ -750,7 +749,6 @@ void VMLTextLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VTe
 				ElementProperty.second.NativeCallMethodName == L"scale" &&
 				CheckNativeCallParameter(ElementProperty.second.NativeCallParameter, {VMLPropertyType::DoubleValue}))
 			{
-
 				Core::VTextSizeLayout *Layout = new Core::VTextSizeLayout(Object, Object->GetParent());
 				Layout->SetScalePercent(ElementProperty.second.NativeCallParameter[0].PropertyAsDouble);
 			}
@@ -902,7 +900,6 @@ void VMLLayoutBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VLayou
 									   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 									   VMLControlBuildStatus					*BuildStatus)
 {
-
 	Core::VLayoutMode VerticalLayoutMode   = Core::VLayoutMode::LayoutModeCenter;
 	Core::VLayoutMode HorizontalLayoutMode = Core::VLayoutMode::LayoutModeCenter;
 
@@ -1156,7 +1153,6 @@ void VMLScaleLayoutBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::V
 											std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 											VMLControlBuildStatus					 *BuildStatus)
 {
-
 	double WidthScale  = 1.f;
 	double HeightScale = 1.f;
 
@@ -1205,7 +1201,6 @@ void VMLTextSizeLayoutBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core
 											   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 											   VMLControlBuildStatus					*BuildStatus)
 {
-
 	double Scale = 1.f;
 
 	for (auto &ElementProperty : PropertyValueList)
@@ -1508,7 +1503,8 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason	 = L"\"allow-font-size-drag\" Property Must Match the Type \"boolean\"";
+				BuildStatus->FailedReason	 = L"\"allow-font-size-drag\" Property Must Match the Type "
+											L"\"boolean\"";
 
 				return;
 			}
@@ -1520,7 +1516,8 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason	 = L"\"allow-operation-back\" Property Must Match the Type \"boolean\"";
+				BuildStatus->FailedReason	 = L"\"allow-operation-back\" Property Must Match the Type "
+											L"\"boolean\"";
 
 				return;
 			}
@@ -1583,8 +1580,8 @@ void VMLVerticalScrollerBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Co
 				ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"view-point\" Property must match the type \"int\" or \"native call functional\"";
+				BuildStatus->FailedReason	 = L"\"view-point\" Property must match the type \"int\" or \"native "
+											L"call functional\"";
 
 				return;
 			}
@@ -1651,8 +1648,8 @@ void VMLHorizontalScrollerBuilder::AnalyzeProperty(const VMLFinder &RootFinder, 
 				ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"view-point\" Property must match the type \"int\" or \"native call functional\"";
+				BuildStatus->FailedReason	 = L"\"view-point\" Property must match the type \"int\" or \"native "
+											L"call functional\"";
 
 				return;
 			}
@@ -1739,8 +1736,8 @@ void VMLViewLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VVi
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"vertical-align\" Property Must Match the Type \"vertical-align-string\"";
+				BuildStatus->FailedReason	 = L"\"vertical-align\" Property Must Match the Type "
+											L"\"vertical-align-string\"";
 
 				return;
 			}
@@ -1756,8 +1753,8 @@ void VMLViewLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VVi
 			else
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"vertical-align\" Property Must Match the Type \"vertical-align-string\"";
+				BuildStatus->FailedReason	 = L"\"vertical-align\" Property Must Match the Type "
+											L"\"vertical-align-string\"";
 
 				return;
 			}
@@ -1767,8 +1764,8 @@ void VMLViewLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VVi
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"horizontal-align\" Property Must Match the Type \"horizontal-align-string\"";
+				BuildStatus->FailedReason	 = L"\"horizontal-align\" Property Must Match the Type "
+											L"\"horizontal-align-string\"";
 
 				return;
 			}
@@ -1784,8 +1781,8 @@ void VMLViewLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VVi
 			else
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"horizontal-align\" Property Must Match the Type \"horizontal-align-string\"";
+				BuildStatus->FailedReason	 = L"\"horizontal-align\" Property Must Match the Type "
+											L"\"horizontal-align-string\"";
 
 				return;
 			}
@@ -1858,8 +1855,8 @@ void VMLGeometryAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, C
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -1919,8 +1916,8 @@ void VMLGeometryAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, C
 			else
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -1995,8 +1992,8 @@ void VMLPositionAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, C
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -2056,8 +2053,8 @@ void VMLPositionAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, C
 			else
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -2122,8 +2119,8 @@ void VMLOpacityAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Co
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -2183,8 +2180,8 @@ void VMLOpacityAnimationBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Co
 			else
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason =
-					L"\"animation-curve\" Property Must Match the Type \"animation-curve-string\"";
+				BuildStatus->FailedReason	 = L"\"animation-curve\" Property Must Match the Type "
+											L"\"animation-curve-string\"";
 
 				return;
 			}
@@ -2234,7 +2231,8 @@ void VMLPolygonViewBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::V
 			if (ElementProperty.second.PropertyType != VMLPropertyType::NativeCall)
 			{
 				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-				BuildStatus->FailedReason	 = L"\"points\" Property Must Match the Type \"points-native-function\"";
+				BuildStatus->FailedReason	 = L"\"points\" Property Must Match the Type "
+											L"\"points-native-function\"";
 
 				return;
 			}
@@ -2245,7 +2243,8 @@ void VMLPolygonViewBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::V
 					Element.NativeCallMethodName != L"parallelogram")
 				{
 					BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
-					BuildStatus->FailedReason = L"Unexpected parameters type, is should be \"point-native-function\" "
+					BuildStatus->FailedReason	 = L"Unexpected parameters type, is should be "
+												L"\"point-native-function\" "
 												L"in points-native-function or parallelogram-native-function";
 
 					return;

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../core/vbasiccore.h"
-
+#include "../core/animation/vanimation.h"
 #include "../core/control/vblurlabel.h"
 #include "../core/control/vcanvas.h"
 #include "../core/control/veditor.h"
@@ -15,16 +14,11 @@
 #include "../core/control/vscroller.h"
 #include "../core/control/vtextlabel.h"
 #include "../core/control/vviewlabel.h"
-
+#include "../core/vbasiccore.h"
 #include "../core/visual/vvisual.h"
-
-#include "../core/animation/vanimation.h"
-
 #include "../core/widget/vwidget.h"
-
 #include "vml.h"
 #include "vmlparser.h"
-
 #include <map>
 
 VLIB_BEGIN_NAMESPACE

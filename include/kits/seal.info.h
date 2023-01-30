@@ -4,7 +4,8 @@
 //         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-lang.org)
 //
 //  seal.info.h :
-//       @description :  This header folder defines the token required by leixcal
+//       @description :  This header folder defines the token required by
+//       leixcal
 //       @birth       :  2021/2.15
 //       @operator    :  Margoo
 //
@@ -12,7 +13,10 @@
 ///////////////////////////////////////////////////////////////
 //   se_large_int, se_int[Selective definition] :
 //          @description :   [se_large_int] (Large integer type in seal)
-//							 [se_int] (Common integer types in the seal source code)
+//							 [se_int] (Common integer
+// types
+// in
+// the seal source code)
 //          @birth       :   2021/2.15
 //          @operator    :   Margoo
 #ifdef _WIN64

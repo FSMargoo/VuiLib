@@ -2,11 +2,8 @@
 
 #include "../core/vcontrol.h"
 #include "../vss/vssbuilder.h"
-
 #include "../vss/vssparser.h"
-
 #include "vmlvariable.h"
-
 #include <algorithm>
 
 #define VML_META_FUNCTION(FunctionName)									 L#FunctionName, FunctionName

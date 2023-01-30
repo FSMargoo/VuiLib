@@ -2,7 +2,8 @@
  * File name	: vpainter.h
  * Author		: Margoo
  * Date			: 11/13/2022
- * Description	: This head define the painter device (wrapper of render target)
+ * Description
+ * : This head define the painter device (wrapper of render target)
  */
 #pragma once
 

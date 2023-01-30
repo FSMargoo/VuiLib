@@ -2,7 +2,9 @@
  * File name	: vallocator.h
  * Author		: Margoo
  * Date			: 11/25/2022
- * Description	: The allocator in vuilib, that can able to manage pointer centrally
+ * Description
+ * : The allocator in vuilib, that can able to manage pointer
+ * centrally
  */
 #pragma once
 
@@ -111,9 +113,9 @@ public:
 	~VAllocator();
 
 	/*
-	 * Malloc function:
-	 *	Description : Allocate a memory with target type
-	 */
+   * Malloc function:
+   *	Description : Allocate a memory with target type
+   */
 	template <class Type, class Allocator = VDefaultAllocator, class Deleter = VDefaultDeleter> Type *Malloc()
 	{
 		Allocator AllocatorInstance;
@@ -126,9 +128,9 @@ public:
 
 private:
 	/*
-	 * FreeAllocator function:
-	 *	Description : Release the allocator
-	 */
+   * FreeAllocator function:
+   *	Description : Release the allocator
+   */
 	void FreeAllocator();
 
 private:

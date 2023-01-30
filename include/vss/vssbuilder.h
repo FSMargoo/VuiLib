@@ -1,7 +1,5 @@
 #pragma once
 
-#include "vssparser.h"
-
 #include "../core/control/vblurlabel.h"
 #include "../core/control/veditor.h"
 #include "../core/control/viconbutton.h"
@@ -14,10 +12,9 @@
 #include "../core/control/vscroller.h"
 #include "../core/control/vtextlabel.h"
 #include "../core/control/vviewlabel.h"
-
 #include "../core/visual/vvisual.h"
-
 #include "../core/widget/vwidget.h"
+#include "vssparser.h"
 
 VLIB_BEGIN_NAMESPACE
 

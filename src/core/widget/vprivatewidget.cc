@@ -1,8 +1,9 @@
 #include "../../../include/core/widget/vprivatewidget.h"
-#include "../../../include/core/render/vdirectxfactory.h"
 
+#include "../../../include/core/render/vdirectxfactory.h"
 #include <uxtheme.h>
 #include <vssym32.h>
+
 #include <windows.h>
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdi32.lib")

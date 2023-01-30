@@ -2,12 +2,12 @@
  * File name	: vsignal.h
  * Author		: Margoo
  * Date			: 11/9/2022
- * Description	: This head provide a light signal's implementation
+ * Description
+ * : This head provide a light signal's implementation
  */
 #pragma once
 
 #include "../vbasiccore.h"
-
 #include <functional>
 #include <list>
 #include <memory>
@@ -18,8 +18,10 @@ namespace Core
 {
 /*
  * connect_basic class:
- *	Description : The basic connect object of the signal (function connection)
- *  Tips		: In connect_basic, use std::function for event hosting
+ *	Description : The basic connect object of the signal (function
+ *connection) Tips
+ * : In connect_basic, use std::function for event
+ *hosting
  */
 template <class... Type> class connect_basic
 {
@@ -66,9 +68,9 @@ public:
 	}
 
 	/*
-	 * get_raw_function function:
-	 *	Description : Get the pointer of the target function
-	 */
+   * get_raw_function function:
+   *	Description : Get the pointer of the target function
+   */
 	inline functional_ptr get_raw_function()
 	{
 		return functional;
@@ -97,9 +99,9 @@ public:
 	}
 
 	/*
-	 * get_raw_object function
-	 *	Description : Get the target object
-	 */
+   * get_raw_object function
+   *	Description : Get the target object
+   */
 	inline void *get_raw_object()
 	{
 		return object_ref;
@@ -113,7 +115,9 @@ public:
 /*
  * VSignal class (template):
  *	Description : The signal class in vuilib
- *	Tips		: The signal's connection function doesn't support the return value
+ *	Tips		: The signal's connection
+ * function doesn't support the
+ *return value
  */
 template <class... Type> class VSignal
 {
@@ -215,18 +219,20 @@ public:
 
 public:
 	/*
-	 * Connect function:
-	 *	Description : Connect the function to this signal by function pointer
-	 */
+   * Connect function:
+   *	Description : Connect the function to this signal by function pointer
+   */
 	inline void Connect(void (*functional)(Type...))
 	{
 		std::shared_ptr<connect_functional<Type...>> functional_ptr(new connect_functional<Type...>(functional));
 		slots->push_back(functional_ptr);
 	}
 	/*
-	 * Connect function:
-	 *	Description : Connect the function to this signal by object pointer and class's function pointer
-	 */
+   * Connect function:
+   *	Description : Connect the function to this signal by object pointer and
+
+	 * *class's function pointer
+   */
 	template <class ObjectType> inline void Connect(ObjectType *object, void (ObjectType::*functional)(Type...))
 	{
 		std::shared_ptr<connection<ObjectType, Type...>> functional_ptr(
@@ -236,34 +242,34 @@ public:
 	}
 
 	/*
-	 * Disconnect function:
-	 *	Description : Disconnect the connection with target function pointer
-	 */
+   * Disconnect function:
+   *	Description : Disconnect the connection with target function pointer
+ */
 	inline void Disconnect(void (*functional)(Type...))
 	{
 		_operator(functional, 0);
 	}
 	/*
-	 * Disconnect function:
-	 *	Description : Disconnect the connection with target object pointer
-	 */
+   * Disconnect function:
+   *	Description : Disconnect the connection with target object pointer
+   */
 	template <class ObjectType> inline void Disconnect(ObjectType *object, void (ObjectType::*functional)(Type...))
 	{
 		_operator(object, functional, 0);
 	}
 
 	/*
-	 * Block function:
-	 *	Description : Set the block status of target function pointer
-	 */
+   * Block function:
+   *	Description : Set the block status of target function pointer
+   */
 	void Block(void (*functional)(Type...), bool block_stats)
 	{
 		_operator(functional, block_stats ? 1 : 2);
 	}
 	/*
-	 * Block function:
-	 *	Description : Set the block status of target object pointer
-	 */
+   * Block function:
+   *	Description : Set the block status of target object pointer
+   */
 	template <class ObjectType>
 	void Block(ObjectType *object, void (ObjectType::*functional)(Type...), bool block_stats)
 	{
@@ -271,9 +277,9 @@ public:
 	}
 
 	/*
-	 * Emit function:
-	 *	Description : Emit the signal with parameters
-	 */
+   * Emit function:
+   *	Description : Emit the signal with parameters
+   */
 	void Emit(Type... args)
 	{
 		for (auto iterator = slots->begin(); iterator != slots->end(); ++iterator)

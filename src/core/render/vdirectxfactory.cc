@@ -28,8 +28,8 @@ VDirectXD2DFactory::VDirectXD2DFactory(const VDirectXFactoryThreadMode &FactoryM
 	}
 	}
 
-	VLIB_REPORT_IF_FAILED_INFO(D2D1CreateFactory(FactoryType, &Factory),
-							   L"In VDirectXD2DFactory::VDirectXD2DFactory, failed to create ID2D1Factory");
+	VLIB_REPORT_IF_FAILED_INFO(D2D1CreateFactory(FactoryType, &Factory), L"In VDirectXD2DFactory::VDirectXD2DFactory, "
+																		 L"failed to create ID2D1Factory");
 }
 VDirectXD2DFactory::~VDirectXD2DFactory()
 {
@@ -52,8 +52,8 @@ VDirectXIWICImagingFactory::~VDirectXIWICImagingFactory()
 VNativeDirectX2D2Factory::VNativeDirectX2D2Factory()
 {
 	HRESULT ResultHandle = D2D1CreateFactory(D2D1_FACTORY_TYPE::D2D1_FACTORY_TYPE_MULTI_THREADED, &Factory);
-	VLIB_CHECK_REPORT(FAILED(ResultHandle),
-					  L"In VNativeDirectX2D2Factory::VNativeDirectX2D2Factory, failed to create native factory object");
+	VLIB_CHECK_REPORT(FAILED(ResultHandle), L"In VNativeDirectX2D2Factory::VNativeDirectX2D2Factory, "
+											L"failed to create native factory object");
 }
 VNativeDirectX2D2Factory::~VNativeDirectX2D2Factory()
 {
@@ -67,9 +67,8 @@ VNativeDirectXIWICImagingFactory::VNativeDirectXIWICImagingFactory()
 
 	ResultHandle =
 		CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS((&(this->Factory))));
-	VLIB_CHECK_REPORT(
-		FAILED(ResultHandle),
-		L"In VNativeDirectXIWICImagingFactory::VNativeDirectXIWICImagingFactory, failed to create ID2D1Factory");
+	VLIB_CHECK_REPORT(FAILED(ResultHandle), L"In VNativeDirectXIWICImagingFactory::VNativeDirectXIWICImagingFactory, "
+											L"failed to create ID2D1Factory");
 }
 VNativeDirectXIWICImagingFactory::~VNativeDirectXIWICImagingFactory()
 {

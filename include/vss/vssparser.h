@@ -1,10 +1,9 @@
 #pragma once
 
+#include "../core/render/vcolor.h"
 #include "../kits/seal.lexical.h"
 #include "../kits/vcolorhelper.h"
 #include "../kits/vparserhelper.h"
-
-#include "../core/render/vcolor.h"
 
 VLIB_BEGIN_NAMESPACE
 

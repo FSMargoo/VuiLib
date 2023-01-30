@@ -1,5 +1,4 @@
 #include "pvmainwindow.h"
-
 #include <comutil.h>
 
 #ifdef _DEBUG

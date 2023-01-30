@@ -4,9 +4,7 @@
 #pragma once
 
 #include "../object/vuiobject.h"
-
 #include "../uibasic/vtimer.h"
-
 #include "vabstractbutton.h"
 
 VLIB_BEGIN_NAMESPACE

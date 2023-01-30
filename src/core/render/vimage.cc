@@ -1,6 +1,7 @@
 #pragma warning(disable : 26495)
 
 #include "../../../include/core/render/vimage.h"
+
 #include "../../../include/core/render/vpainterdevice.h"
 
 VLIB_BEGIN_NAMESPACE

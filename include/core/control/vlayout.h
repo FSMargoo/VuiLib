@@ -43,8 +43,8 @@ private:
 
 public:
 	/*
-	 * Build up Functional
-	 */
+   * Build up Functional
+   */
 
 	VLayout(VUIObject *Parent, VUIObject *TargetWidget);
 	VLayout(VUIObject *Parent, VUIObject *TargetWidget, const VLayoutMode &VerticalMode,
@@ -80,8 +80,8 @@ private:
 
 public:
 	/*
-	 * Build up Functional
-	 */
+   * Build up Functional
+   */
 
 	VScaleLayout(VUIObject *Parent, VUIObject *TargetWidget);
 	VScaleLayout(VUIObject *Parent, VUIObject *TargetWidget, const double &WidthPercent, const double &HeightPercent);
@@ -103,8 +103,8 @@ private:
 
 public:
 	/*
-	 * Build up Functional
-	 */
+   * Build up Functional
+   */
 
 	VTextSizeLayout(VTextLabel *Parent, VUIObject *TargetWidget);
 	VTextSizeLayout(VTextLabel *Parent, VUIObject *TargetWidget, const double &HeightPercent);

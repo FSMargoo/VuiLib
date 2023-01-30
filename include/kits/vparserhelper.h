@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../core/vbasiccore.h"
-
 #include <codecvt>
 #include <fstream>
 #include <io.h>

@@ -1,6 +1,5 @@
-#include "veditor.h"
-
 #include "../../../include/vml/vmlparser.h"
+#include "veditor.h"
 
 VLIB_BEGIN_NAMESPACE
 

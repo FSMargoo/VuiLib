@@ -55,14 +55,14 @@ void VStudioApp::SaveFile()
 	if (FileSaved)
 	{
 		std::ofstream FileStream(CodeFilePath);
-
-		auto PlaneText = CodeEditor->GetPlaneText();
+		auto		  PlaneText = CodeEditor->GetPlaneText();
 
 		FileStream.imbue(std::locale("chs"));
 
 		std::wstring_convert<std::codecvt_utf8<wchar_t>> CodeConvert;
-		auto											 Result	  = CodeConvert.to_bytes(PlaneText);
-		size_t											 Position = 0;
+
+		auto   Result	= CodeConvert.to_bytes(PlaneText);
+		size_t Position = 0;
 
 		while (true)
 		{
@@ -95,7 +95,9 @@ void VStudioApp::CreateVMLFile()
 	std::thread FileDialogThread(
 		[&](LPWSTR FilePath, HRESULT *OperationResult) -> void {
 			if (CoInitialize(NULL))
+			{
 				;
+			}
 
 			IFileSaveDialog *FileDialog = NULL;
 			HRESULT			 Status =
@@ -373,7 +375,9 @@ void VStudioApp::OpenFile()
 	std::thread FileDialogThread(
 		[](LPWSTR FilePath, HRESULT *OperationResult) -> void {
 			if (CoInitialize(NULL))
+			{
 				;
+			}
 
 			IFileDialog *FileDialog = NULL;
 			HRESULT		 Status =

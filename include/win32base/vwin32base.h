@@ -2,12 +2,14 @@
  * File name	: vwin32base.h
  * Author		: Margoo
  * Date			: 11/22/2022
- * Description	: The basic win32 operation's wrapper in vuilib
+ * Description
+ * : The basic win32 operation's wrapper in vuilib
  */
 #pragma once
 
 #include <thread>
 #include <vector>
+
 #include <windows.h>
 
 #define GET_X_LPARAM(lp) ((int)(short)LOWORD(lp))

@@ -2,8 +2,10 @@
  * File name	: vdirectxfactory.h
  * Author		: Margoo
  * Date			: 11/11/2022
+ *
  * Description	: This head provide a wrapper for DirectX2D factory and
- *				  global factory instance for renderer
+ *				  global factory
+ * instance for renderer
  */
 #pragma once
 
@@ -130,7 +132,9 @@ private:
 /*
  * VNativeDirectX2D2Factory class:
  *	Description : The wrapper of ID2D1Factory
- *	Tips		: Not same as VDirectXD2DFactory, this factory is the global variable class for factory
+ *	Tips		: Not same as
+ * VDirectXD2DFactory, this factory is the
+ *global variable class for factory
  */
 VRENDER_HELPER class VNativeDirectX2D2Factory
 {
@@ -150,7 +154,9 @@ private:
 /*
  * VNativeDirectXIWICImagingFactory class:
  *	Description : The wrapper of IWICImagingFactory
- *	Tips		: Not same as VDirectXIWICImagingFactory, this factory is the global variable class for factory
+ *	Tips		:
+ * Not same as VDirectXIWICImagingFactory, this factory
+ *is the global variable class for factory
  */
 VRENDER_HELPER class VNativeDirectXIWICImagingFactory
 {
@@ -170,7 +176,9 @@ private:
 /*
  * VNativeDirectXWriteFactory class:
  *	Description : The wrapper of IDWriteFactory
- *	Tips		: Not same as VDirectXWriteFactory, this factory is the global variable class for factory
+ *	Tips		: Not same as
+ * VDirectXWriteFactory, this factory is the
+ *global variable class for factory
  */
 VRENDER_HELPER class VNativeDirectXWriteFactory : public VDirectXFactory
 {
@@ -206,7 +214,9 @@ VRENDER_HELPER extern VNativeDirectXWriteFactory	   VDirectXWriteFactory;
 /*
  * VRenderHandle class:
  *	Description : The handle of a render environment
- *	Tips		: A render environment handle is required for any environment-related render component's creation
+ *	Tips		: A render environment
+ * handle is required for any
+ *environment-related render component's creation
  */
 class VRenderHandle
 {
@@ -221,10 +231,13 @@ public:
 
 public:
 	/*
-	 * CheckHandleValid function:
-	 *		Description : Check this handle is valid or not, if handle is valid, return true, nor false
-	 *		Tips		: This function will return false when any class member is a null pointer
-	 */
+   * CheckHandleValid function:
+   *		Description : Check this handle is valid or not, if handle is
+
+	 * *valid, return true, nor false Tips		: This function will return
+   *false when any class member is a
+	 * null pointer
+   */
 	bool CheckHandleValid() const;
 
 public:

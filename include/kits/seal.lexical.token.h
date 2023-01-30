@@ -4,7 +4,8 @@
 //         S E A L  P R O G R A M M I N G  L A N G U A G E (seal-lang.org)
 //
 //  seal.lexical.token.h :
-//       @description :  This header folder defines the token required by leixcal
+//       @description :  This header folder defines the token required by
+//       leixcal
 //       @birth       :  2021/2.15
 //       @operator    :  Margoo
 //
