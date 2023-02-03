@@ -46,43 +46,43 @@ private:
 
 public:
 	/*
-   * SetQuitEvent function:
-   *     Description : Set the on quit event's responsive function
-   */
+	 * SetQuitEvent function:
+	 *     Description : Set the on quit event's responsive function
+	 */
 	void SetQuitEvent(const std::function<bool()> &QEventFunction);
 
 public:
 	/*
-   * IsWidget override function:
-   *     Description : Mark the object as widget
-   */
+	 * IsWidget override function:
+	 *     Description : Mark the object as widget
+	 */
 	bool IsWidget() const override;
 
 private:
 	/*
-   * InitKernel:
-   *     Description : Initialize the kernel of widget
-   */
+	 * InitKernel:
+	 *     Description : Initialize the kernel of widget
+	 */
 	void InitKernel();
 	/*
-   * InitKernel:
-   *     Description : Create the win32 widget
-   */
+	 * InitKernel:
+	 *     Description : Create the win32 widget
+	 */
 	void InitWindow();
 	/*
-   * InitIME:
-   *     Description : Initialize the IME input box style
-   */
+	 * InitIME:
+	 *     Description : Initialize the IME input box style
+	 */
 	void InitIME();
 
 private:
 	/*
-   * Win32ThreadResized function:
-   *     Description : When the widget got the message from win32 message
+	 * Win32ThreadResized function:
+	 *     Description : When the widget got the message from win32 message
 	 * loop,
-   *                   the WNDPROC function will call this function through
-   * std::function
-   */
+	 *                   the WNDPROC function will call this function through
+	 * std::function
+	 */
 	void Win32ThreadResized(int Width, int Height);
 	/*
    * Win32ThreadRepaint function:
@@ -254,6 +254,15 @@ public:
 public:
 	void CheckFrame() override;
 
+public:
+	Core::VSignal<std::vector<std::wstring>> FileOnDrag;
+
+public:
+	void SetFileDragStatus(const bool &Status);
+
+private:
+	void WindowOnFileDrag(std::vector<std::wstring> FilePath);
+
 private:
 	std::vector<VRepaintMessage *> RepaintMessages;
 	VPainter					  *BufferPainter;
@@ -269,6 +278,9 @@ private:
 	VDCRender *Direct2DRender;
 
 	VKits::VAllocator *RepaintAllocator;
+
+	bool					  FileDropped;
+	std::vector<std::wstring> DropFilePath;
 };
 } // namespace Core
 

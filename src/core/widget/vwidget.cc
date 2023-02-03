@@ -275,6 +275,7 @@ void VMainWindow::CheckFrame()
 	{
 		if (FileDropped)
 		{
+			FileDropped = false;
 			FileOnDrag.Emit(DropFilePath);
 		}
 
@@ -617,6 +618,9 @@ void VWidget::InitWindow(const std::wstring &ClassName, HWND ParentWindow)
 	WindowConfig.LosedUserFocus		 = [this]() -> void { Win32LoseFocus(); };
 	WindowConfig.WinRepaintMessage	 = [this]() { Win32ThreadRepaint(); };
 	WindowConfig.WindowQuitOnClicked = [this]() -> bool { return OnQuit(); };
+	WindowConfig.WindowOnFileDrag	 = [this](std::vector<std::wstring> FilePath) -> void {
+		   return WindowOnFileDrag(FilePath);
+	};
 
 	WindowConfig.IMEFontStyle.lfHeight = 16;
 	WindowConfig.IMEFontStyle.lfWeight = FW_NORMAL;
@@ -771,6 +775,27 @@ void VWidget::OnPaint(VCanvasPainter *Canvas, const VRect &Rect)
 	Canvas->SolidRectangle(Rect, &BackgroundColor);
 }
 
+void VWidget::SetFileDragStatus(const bool &Status)
+{
+	auto Style = GetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE);
+
+	if (Status)
+	{
+		Style |= WS_EX_ACCEPTFILES;
+	}
+	else
+	{
+		Style = 349110272ll;
+	}
+
+	SetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE, Style);
+}
+void VWidget::WindowOnFileDrag(std::vector<std::wstring> FilePath)
+{
+	FileDropped	 = true;
+	DropFilePath = FilePath;
+}
+
 bool VWidget::CheckQuitWindowMessage(VMessage *Message)
 {
 	if (Message->GetType() == VMessageType::QuitWindowMessage && Message->MessageTriggerWidget == WindowHandle)
@@ -839,6 +864,12 @@ void VWidget::CheckFrame()
 	if (FpsTimer.End())
 	{
 		FpsTimer.Start(14);
+
+		if (FileDropped)
+		{
+			FileDropped = false;
+			FileOnDrag.Emit(DropFilePath);
+		}
 
 		if (Win32Cache.Repaint)
 		{
