@@ -111,6 +111,9 @@ public:
 	bool CheckQuitWindowMessage(VMessage *Message) override;
 
 public:
+	VSignal<std::vector<std::wstring>> FileOnDrag;
+
+public:
 	HWND GetLocalWinId() override;
 
 public:
@@ -141,8 +144,14 @@ public:
 	void CheckFrame() override;
 
 public:
+	void SetFileDragStatus(const bool &Status);
+
+public:
 	VMainWindow(const int &Width, const int &Height, VApplication *Parent, const bool &Sizble = true);
 	~VMainWindow();
+
+private:
+	void WindowOnFileDrag(std::vector<std::wstring> FilePath);
 
 private:
 	std::vector<VRepaintMessage *> RepaintMessages;
@@ -157,6 +166,9 @@ private:
 	VWin32StatusCache Win32Cache;
 
 	VDCRender *Direct2DRender;
+
+	bool					  FileDropped;
+	std::vector<std::wstring> DropFilePath;
 
 	VKits::VAllocator *RepaintAllocator;
 };

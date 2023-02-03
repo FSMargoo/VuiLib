@@ -858,6 +858,20 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							}
 						}
 					}
+					if (Element.PropertyExsit(L"file-drag"))
+					{
+						if (Element.NodeValue[L"file-drag"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"file-drag"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								this->FileOnDrag.Connect(
+									(Core::VSignal<std::vector<std::wstring>> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<std::vector<std::wstring>>::Emit);
+							}
+						}
+					}
 					if (Element.PropertyExsit(L"position-changed"))
 					{
 						if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall)

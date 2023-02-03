@@ -768,7 +768,7 @@ VMLTextLabelBuilder::VMLTextLabelBuilder(const VMLFinder &RootFinder, Core::VTex
 
 void VMLMainWindowBuilder::Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height,
 								   const std::wstring &Title, const bool &Sizble, const bool &FramelessStatus,
-								   const bool &BorderlessStatus)
+								   const bool &BorderlessStatus, const bool &AllowFileDrag)
 {
 	MainWindow->Resize(Width, Height);
 
@@ -780,6 +780,7 @@ void VMLMainWindowBuilder::Builder(Core::VMainWindow *MainWindow, const int &Wid
 	MainWindow->SetSizable(Sizble);
 	MainWindow->SetFrameless(FramelessStatus);
 	MainWindow->SetBorderLess(BorderlessStatus);
+	MainWindow->SetFileDragStatus(AllowFileDrag);
 }
 
 void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow						*Object,
@@ -794,6 +795,7 @@ void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow						*Object,
 	bool Sizble			  = true;
 	bool FramelessStatus  = false;
 	bool BorderlessStatus = false;
+	bool AllowFileDrag	  = false;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
@@ -832,6 +834,18 @@ void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow						*Object,
 			}
 
 			Title = ElementProperty.second.PropertyAsString;
+		}
+		if (ElementProperty.first == L"allow-file-drag")
+		{
+			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
+			{
+				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+				BuildStatus->FailedReason	 = L"\"allow-file-drag\" Property Must Match the Type \"boolean\"";
+
+				return;
+			}
+
+			AllowFileDrag = ElementProperty.second.PropertyAsBool;
 		}
 		if (ElementProperty.first == L"sizable")
 		{

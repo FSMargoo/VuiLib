@@ -64,6 +64,11 @@ void VMainWindow::SetQuitEvent(const std::function<bool()> &QEventFunction)
 {
 	WindowConfig.WindowQuitOnClicked = QEventFunction;
 }
+void VMainWindow::WindowOnFileDrag(std::vector<std::wstring> FilePath)
+{
+	FileDropped	 = true;
+	DropFilePath = FilePath;
+}
 
 void VMainWindow::InitKernel()
 {
@@ -103,6 +108,9 @@ void VMainWindow::InitWindow()
 	WindowConfig.LosedUserFocus		 = [this]() -> void { Win32LoseFocus(); };
 	WindowConfig.WinRepaintMessage	 = [this]() { Win32ThreadRepaint(); };
 	WindowConfig.WindowQuitOnClicked = [this]() -> bool { return DefaultOnQuitFunction(); };
+	WindowConfig.WindowOnFileDrag	 = [this](std::vector<std::wstring> FilePath) -> void {
+		   return WindowOnFileDrag(FilePath);
+	};
 
 	WindowConfig.IMEFontStyle.lfHeight	= 16;
 	WindowConfig.IMEFontStyle.lfWeight	= FW_NORMAL;
@@ -265,6 +273,11 @@ void VMainWindow::CheckFrame()
 {
 	if (FpsTimer.End())
 	{
+		if (FileDropped)
+		{
+			FileOnDrag.Emit(DropFilePath);
+		}
+
 		FpsTimer.Start(14);
 
 		if (Win32Cache.Repaint)
@@ -416,6 +429,22 @@ void VMainWindow::CheckFrame()
 			RepaintAllocator = nullptr;
 		}
 	}
+}
+
+void VMainWindow::SetFileDragStatus(const bool &Status)
+{
+	auto Style = GetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE);
+
+	if (Status)
+	{
+		Style |= WS_EX_ACCEPTFILES;
+	}
+	else
+	{
+		Style = 349110272ll;
+	}
+
+	SetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE, Style);
 }
 
 void VMainWindow::SetTitle(const std::wstring &WindowText)

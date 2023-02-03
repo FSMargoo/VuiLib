@@ -29,7 +29,7 @@ LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lPa
 		  Message == WM_LBUTTONDOWN || Message == WM_LBUTTONUP || Message == WM_MBUTTONDOWN ||
 		  Message == WM_MBUTTONUP || Message == WM_RBUTTONUP || Message == WM_RBUTTONDOWN || Message == WM_MOUSEMOVE ||
 		  Message == WM_IME_CHAR || Message == WM_KEYDOWN || Message == WM_KEYUP || Message == WM_MOUSEWHEEL ||
-		  Message == WM_CLOSE || Message == WM_NCCALCSIZE))
+		  Message == WM_CLOSE || Message == WM_NCCALCSIZE || Message == WM_DROPFILES))
 	{
 		return DefWindowProc(Handle, Message, wParameter, lParameter);
 	}
@@ -45,6 +45,30 @@ LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lPa
 	{
 		switch (Message)
 		{
+		case WM_DROPFILES: {
+			VWin32ThreadPipe *WindowConfig = _VMainConfigs.find(Handle)->second;
+
+			wchar_t FileName[MAX_PATH];
+
+			HDROP DropInstance = (HDROP)wParameter;
+			UINT  FileCount	   = DragQueryFile(DropInstance, -1, NULL, 0);
+
+			std::vector<std::wstring> FileSets;
+
+			for (; FileCount > 0; --FileCount)
+			{
+				if (DragQueryFile(DropInstance, FileCount - 1, FileName, sizeof(FileName)))
+				{
+					FileSets.push_back(FileName);
+				}
+			}
+
+			DragFinish(DropInstance);
+
+			WindowConfig->WindowOnFileDrag(FileSets);
+
+			break;
+		}
 		case WM_PAINT: {
 			VWin32ThreadPipe *WindowConfig = _VMainConfigs.find(Handle)->second;
 			WindowConfig->WinRepaintMessage();

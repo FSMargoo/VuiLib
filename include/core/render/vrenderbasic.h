@@ -35,17 +35,14 @@ namespace Core
 {
 /*
  * VDXObjectSafeFree function:
- *	Description : This function provide a safely way to release DirectX
- *object
- * Tips		: 1> Since the function will makes a security judgments
- *with null value, it's safe to let the Object
- * parameter as null value 2> Since
- *the function is marked with VRENDER_HELPER Marco, we don't recommend you to
-
- * *call this function directly in your code 3> The function can ONLY RELEASE the
- *COM object, it's illegal to set
- * the Object parameter as a pointer which isn't
- *refer to a COM object, it will make the function crash
+ *	Description : This function provide a safely way to release DirectX object
+ * Tips		:	1>	Since the function will makes a security judgments
+ *					with null value, it's safe to let the Object parameter as null value
+ *				2>	Since the function is marked with VRENDER_HELPER Marco, we don't recommend you to
+ *					call this function directly in your code
+ *				3>	The function can ONLY RELEASE the COM object, it's illegal to set the Object
+ *					parameter as a pointer which isn't refer to a COM object, it will make the
+ *					function crash
  */
 template <class Type> void VDXObjectSafeFree(Type **Object) VRENDER_HELPER
 {
@@ -71,18 +68,18 @@ enum VSurfaceAlphaMode
 	VSF_ALPHA_MODE_UNKNOWN = 0,
 
 	/*
-   * Treat the alpha as premultipled
-   */
+	 * Treat the alpha as premultipled
+	 */
 	VSF_ALPHA_MODE_PREMULTIPLIED = 1,
 
 	/*
-   * Opacity is in the 'A' component only
-   */
+	 * Opacity is in the 'A' component only
+	 */
 	VSF_ALPHA_MODE_STRAIGHT = 2,
 
 	/*
-   * Ignore any alpha channel information
-   */
+	 * Ignore any alpha channel information
+	 */
 	VSF_ALPHA_MODE_IGNORE = 3
 };
 

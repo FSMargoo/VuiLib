@@ -365,7 +365,8 @@ class VMLMainWindowBuilder
 {
 protected:
 	void Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height, const std::wstring &Title,
-				 const bool &Sizable, const bool &FramelessStatus, const bool &BorderlessStatus);
+				 const bool &Sizable, const bool &FramelessStatus, const bool &BorderlessStatus,
+				 const bool &AllowFileDrag);
 
 	void AnalyzeProperty(Core::VMainWindow *Object, std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 						 VMLControlBuildStatus *BuildStatus);
