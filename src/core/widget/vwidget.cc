@@ -337,8 +337,6 @@ void VMainWindow::CheckFrame()
 					OnPaint(Canvas, (*Message)->DirtyRectangle);
 					SendMessageToChild((*Message), false);
 
-					delete (*Message);
-
 					RepaintMessages.erase(Message);
 					if (RepaintMessages.empty())
 					{
@@ -442,7 +440,7 @@ void VMainWindow::SetFileDragStatus(const bool &Status)
 	}
 	else
 	{
-		Style = 349110272ll;
+		Style = Style & ~WS_EX_ACCEPTFILES;
 	}
 
 	SetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE, Style);

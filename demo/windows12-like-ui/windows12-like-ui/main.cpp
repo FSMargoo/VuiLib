@@ -7,8 +7,14 @@ int main()
 	Core::VApplication App;
 	VML::VMLMainWindow Widget(640, 480, &App);
 
-	StatusPercentBar PercentBar(&Widget, 240, 12);
-	PercentBar.SetRange(0.f, 0.4f);
+	Widget.PushUserDefineFunction(StatusBarBuilderFunction);
+	Widget.LoadVML(L"./ui.xml", VML::VMLParserParseMode::FromFile);
+
+	/* StatusPercentBar	  PercentBar(&Widget, 240, 4); */
+	StatusPercentBarAnimation Animation(
+		Widget[L"main-widget"][L"logo-ui"][L"status-percent-bar"].Get<StatusPercentBar>());
+
+	Animation.Play();
 
 	Widget.Show();
 

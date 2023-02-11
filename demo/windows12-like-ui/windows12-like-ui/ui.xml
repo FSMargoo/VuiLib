@@ -1,0 +1,6 @@
+<main-widget type="mainwindow" width="1920" height="1080" style-sheet-src="./style.css" borderless="true" class="main-window">
+    <logo-ui type="textlabel" width="@fill" height="@fill">
+        <logo-image type="imagelabel" src="./resource/asset/obe-icon.png" x="@center" y="@ratio(0.40)" width="82" height="82"/>
+        <status-percent-bar type="status-percent-bar" x="@center" y="@ratio(0.55)" width="145" height="4"/>
+    </logo-ui>
+</main-widget>
