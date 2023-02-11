@@ -885,7 +885,7 @@ void VMLMainWindowBuilder::AnalyzeProperty(Core::VMainWindow						*Object,
 		}
 	}
 
-	Builder(Object, Width, Height, Title, Sizble, FramelessStatus, BorderlessStatus);
+	Builder(Object, Width, Height, Title, Sizble, FramelessStatus, BorderlessStatus, AllowFileDrag);
 }
 
 VMLMainWindowBuilder::VMLMainWindowBuilder(Core::VMainWindow						*MainWindow,
