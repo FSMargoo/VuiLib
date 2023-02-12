@@ -1,6 +1,22 @@
-<main-widget type="mainwindow" width="1920" height="1080" style-sheet-src="./style.css" borderless="true" class="main-window">
+<main-widget type="mainwindow" width="1920" height="1080" style-sheet-src="./style.css" borderless="true" class="main-window" sizable="false"
+        style-sheet=".main-window {
+                        background-color: #0C111E;
+                    }"
+        styly-sheet-src="./style.css">
     <logo-ui type="textlabel" width="@fill" height="@fill">
         <logo-image type="imagelabel" src="./resource/asset/obe-icon.png" x="@center" y="@ratio(0.40)" width="82" height="82"/>
         <status-percent-bar type="status-percent-bar" x="@center" y="@ratio(0.55)" width="145" height="4"/>
+        <transparent-animation type="opacity-animation" duration="200" target-opacity="0" animation-curve="ease-in-out-sine-curve"/>
     </logo-ui>
+    <intrdouct-ui type="textlabel" width="@fill" height="@fill" transparency="0">
+        <wallpaper type="imagelabel" width="@fill" height="@fill" src="./resource/asset/wallpaper.png"/>
+        <blur-label type="blurlabel" width="@fill" height="@fill" class="blur-label"
+            style-sheet=".blur-label {
+                radius: 24px;
+                background-color: rgba(0, 0, 0, 0.5);
+            }"/>
+        <white-logo type="imagelabel" auto-size="true" src="./resource/asset/obe-icon.png" x="@ratio(0.39)" y="@center"/>
+        <logo-text type="textlabel" auto-size="true" text="Windows 12" x="@ratio(0.45)" y="@center" class="logo-text"/>
+        <transparent-animation type="opacity-animation" duration="200" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+    </intrdouct-ui>
 </main-widget>

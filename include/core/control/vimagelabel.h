@@ -21,6 +21,9 @@ public:
 	void SetImage(VImage *Image);
 
 public:
+	void ResizeByImage();
+
+public:
 	VImageLabelTheme *GetTheme();
 
 public:

@@ -71,6 +71,14 @@ void VImageLabel::OnPaint(VCanvasPainter *Painter)
 	Painter->EndDraw();
 }
 
+void VImageLabel::ResizeByImage()
+{
+	if (Theme->Image != nullptr)
+	{
+		Resize(Theme->Image->GetWidth(), Theme->Image->GetHeight());
+	}
+}
+
 void VImageLabel::SetImage(VImage *Image)
 {
 	if (Image != nullptr)

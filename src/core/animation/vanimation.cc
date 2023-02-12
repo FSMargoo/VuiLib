@@ -83,6 +83,7 @@ void VPositionAnimation::CheckFrame()
 		else if (InAnimation)
 		{
 			InAnimation = false;
+			AnimationEnd.Emit();
 		}
 	}
 }
@@ -142,6 +143,7 @@ void VGeometryAnimation::CheckFrame()
 		else if (InAnimation)
 		{
 			InAnimation = false;
+			AnimationEnd.Emit();
 		}
 	}
 }
@@ -212,6 +214,7 @@ void VOpacityAnimation::CheckFrame()
 		else if (InAnimation)
 		{
 			InAnimation = false;
+			AnimationEnd.Emit();
 		}
 	}
 }

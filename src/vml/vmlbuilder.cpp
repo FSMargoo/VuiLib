@@ -570,16 +570,22 @@ VMLPushButtonBuilder::VMLPushButtonBuilder(const VMLFinder &RootFinder, Core::VP
 	AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 }
 
-void VMLImageLabelBuilder::Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image)
+void VMLImageLabelBuilder::Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize)
 {
 	ImageLabel->SetImage(Image);
+
+	if (AutoSize)
+	{
+		ImageLabel->ResizeByImage();
+	}
 }
 
 void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VImageLabel *Object,
 										   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
 										   VMLControlBuildStatus					*BuildStatus)
 {
-	Core::VImage *Image = nullptr;
+	Core::VImage *Image	   = nullptr;
+	bool		  AutoSize = false;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
@@ -595,9 +601,21 @@ void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VI
 
 			Image = new Core::VImage(ElementProperty.second.PropertyAsString, Object->CallWidgetGetDCRenderTarget());
 		}
+		if (ElementProperty.first == L"auto-size")
+		{
+			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
+			{
+				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+				BuildStatus->FailedReason	 = L"\"auto-size\" Property Must Match the Type \"boolean\"";
+
+				return;
+			}
+
+			AutoSize = ElementProperty.second.PropertyAsBool;
+		}
 	}
 
-	Builder(Object, Image);
+	Builder(Object, Image, AutoSize);
 }
 
 VMLImageLabelBuilder::VMLImageLabelBuilder(const VMLFinder &RootFinder, Core::VImageLabel *Object,

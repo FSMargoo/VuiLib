@@ -44,6 +44,9 @@ public:
 	void Pause();
 
 	void CheckFrame() override;
+
+public:
+	VSignal<> AnimationEnd;
 };
 
 class VGeometryAnimation : public VUIObject
@@ -70,6 +73,9 @@ public:
 	void Pause();
 
 	void CheckFrame() override;
+
+public:
+	VSignal<> AnimationEnd;
 };
 
 class VOpacityAnimation : public VUIObject
@@ -96,6 +102,9 @@ public:
 	void Pause();
 
 	void CheckFrame() override;
+
+public:
+	VSignal<> AnimationEnd;
 };
 } // namespace Core
 

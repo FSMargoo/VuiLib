@@ -1,3 +1,6 @@
-.main-window {
-    background-color: #0C111E;
+.logo-text {
+    font-family: "Microsoft YaHei UI";
+    color: #ffffff;
+    font-weight: 200px;
+    font-size: 48px;
 }
