@@ -4,3 +4,10 @@
     font-weight: 200px;
     font-size: 48px;
 }
+.date-text {
+    font-family: "MiSans";
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400px;
+    vertical-align: center;
+}
