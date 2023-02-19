@@ -264,6 +264,9 @@
     <ClInclude Include="include\core\control\vtitlebar.h">
       <Filter>include\core\control</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\visual\veffect.h">
+      <Filter>include\core\visual</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -434,6 +437,9 @@
     </ClCompile>
     <ClCompile Include="src\core\control\vtitlebar.cc">
       <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\visual\veffect.cc">
+      <Filter>src\core\visual</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ VUIObjectKernel::VUIObjectKernel()
 {
 	Parent	 = nullptr;
 	ParentID = 0;
+	Effect	 = nullptr;
 
 	GlobalID = L"[VObject]";
 }
@@ -566,6 +567,10 @@ void VUIObject::SetShadowRadius(const float &Radius)
 
 	Update();
 }
+void VUIObject::SetEffect(VBasicEffect *Effect)
+{
+	ObjectKernel.Effect = Effect;
+}
 bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage)
 {
 	if (RepaintMessage->DirtyRectangle.Overlap(GetRegion()) &&
@@ -629,6 +634,11 @@ bool VUIObject::OnMessageTrigger(Core::VRepaintMessage *RepaintMessage)
 			}
 
 			EditCanvas(Canvas);
+
+			if (ObjectKernel.Effect != nullptr)
+			{
+				ObjectKernel.Effect->ApplyEffect(CallWidgetGetRenderHandle(), Canvas);
+			}
 
 			GetParentCanvas()->DrawCanvas(GetRegion(), Canvas, {0, 0, GetRegion().GetWidth(), GetRegion().GetHeight()},
 										  ObjectVisual.Transparency);

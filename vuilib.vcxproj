@@ -168,6 +168,7 @@
     <ClInclude Include="include\core\uibasic\vuitheme.h" />
     <ClInclude Include="include\core\vbasiccore.h" />
     <ClInclude Include="include\core\vcontrol.h" />
+    <ClInclude Include="include\core\visual\veffect.h" />
     <ClInclude Include="include\core\visual\vvisual.h" />
     <ClInclude Include="include\core\widget\vmessage.h" />
     <ClInclude Include="include\core\widget\vprivatewidget.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="src\core\uibasic\vuiinterpolator.cc" />
     <ClCompile Include="src\core\uibasic\vuitheme.cc" />
     <ClCompile Include="src\core\vbasiccore.cc" />
+    <ClCompile Include="src\core\visual\veffect.cc" />
     <ClCompile Include="src\core\visual\vvisual.cc" />
     <ClCompile Include="src\core\widget\vmessage.cc" />
     <ClCompile Include="src\core\widget\vprivatewidget.cc" />

@@ -362,6 +362,11 @@ void VMainWindow::CheckFrame()
 
 			Canvas->EndDraw();
 
+			if (ObjectKernel.Effect != nullptr)
+			{
+				ObjectKernel.Effect->ApplyEffect(CallWidgetGetRenderHandle(), Canvas);
+			}
+
 			RepaintMessages.clear();
 			if (WindowConfig.EnableRadius)
 			{
