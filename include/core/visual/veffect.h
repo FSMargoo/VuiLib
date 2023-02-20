@@ -36,6 +36,25 @@ public:
 private:
 	float Exposure;
 };
+class VGrayScaleEffect : public VBasicEffect
+{
+public:
+	VGrayScaleEffect();
+
+	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VCanvasPainter *Image) override;
+	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VImage *Image) override;
+};
+class VSepiaEffect : public VBasicEffect
+{
+public:
+	VSepiaEffect(const float &SepiaIntensity);
+
+	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VCanvasPainter *Image) override;
+	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VImage *Image) override;
+
+private:
+	float Intensity;
+};
 } // namespace Core
 
 VLIB_END_NAMESPACE
