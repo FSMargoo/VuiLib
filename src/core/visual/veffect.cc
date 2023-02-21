@@ -14,7 +14,6 @@ VGassuinBlurEffect::VGassuinBlurEffect(const float &BlurRadius)
 {
 	Radius = BlurRadius;
 }
-
 void VGassuinBlurEffect::ApplyEffect(const VRenderHandle &RenderHandle, Core::VCanvasPainter *Image)
 {
 	ID2D1Bitmap *Bitmap;
@@ -156,7 +155,6 @@ void VExposureEffect::ApplyEffect(const VRenderHandle &RenderHandle, Core::VImag
 VGrayScaleEffect::VGrayScaleEffect()
 {
 }
-
 void VGrayScaleEffect::ApplyEffect(const VRenderHandle &RenderHandle, Core::VCanvasPainter *Image)
 {
 	ID2D1Bitmap *Bitmap;
@@ -275,6 +273,7 @@ void VGrayScaleEffect::ApplyEffect(const VRenderHandle &RenderHandle, Core::VIma
 		}
 	}
 }
+
 VSepiaEffect::VSepiaEffect(const float &SepiaIntensity)
 {
 	Intensity = SepiaIntensity;

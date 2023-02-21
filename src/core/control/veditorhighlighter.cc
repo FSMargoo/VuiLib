@@ -178,6 +178,8 @@ int VVMLHighlighter::CountSpace(VML::VMLNode Node, const int &PreSpaceCount)
 	{
 		return -1;
 	}
+
+	return -1;
 }
 VVMLHighlighter::VVMLHighlighter(const VRenderHandle &StaticRenderHandle) : HighlightTheme(StaticRenderHandle)
 {

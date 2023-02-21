@@ -4,6 +4,8 @@ namespace Win32Core
 {
 std::vector<VWin32Msg> VWin32MsgStack;
 
+bool VWin32Mutex = false;
+
 HWND VLastWindowHandle;
 
 LRESULT CALLBACK VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter, LPARAM lParameter)
@@ -423,7 +425,16 @@ LRESULT CALLBACK VWin32ProcFnc(HWND Handle, UINT MessageType, WPARAM wParameter,
 
 	if (flag)
 	{
+		while (VWin32Mutex)
+		{
+			Sleep(1);
+		}
+
+		VWin32Mutex = true;
+
 		VWin32MsgStack.push_back(RawWin32Msg);
+
+		VWin32Mutex = false;
 	}
 
 	return DefWindowProc(Handle, MessageType, wParameter, lParameter);
@@ -475,10 +486,19 @@ bool VPeekMessage(VWin32Msg *MsgStructure)
 {
 	if (!VWin32MsgStack.empty())
 	{
+		while (VWin32Mutex)
+		{
+			Sleep(1);
+		}
+
+		VWin32Mutex = true;
+
 		auto Win32Msg = VWin32MsgStack.begin().operator*();
 		*MsgStructure = Win32Msg;
 
 		VWin32MsgStack.erase(VWin32MsgStack.begin());
+
+		VWin32Mutex = false;
 
 		return true;
 	}

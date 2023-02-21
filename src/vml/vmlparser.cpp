@@ -507,6 +507,7 @@ VMLParserResult VMLParser::ParseVML()
 				ParseResult.Nodes.insert(std::pair<std::wstring, VMLNode>(NewNode.NodeTag, NewNode));
 
 				ScopeEndFlag = true;
+				EndFlag		 = true;
 
 				break;
 			}
@@ -550,10 +551,20 @@ VMLParserResult VMLParser::ParseVML()
 			NewNode.NodeValue.insert(std::pair<std::wstring, VMLPropertyValue>(PropertyName, Property));
 		}
 
+		if (!EndFlag)
+		{
+			ThrowError(&ParseResult,
+					   L"The end symbol \">\" lost, maybe you need to add \">\" at the end of this scope.");
+
+			return ParseResult;
+		}
+
 		if (ScopeEndFlag)
 		{
 			continue;
 		}
+
+		EndFlag = false;
 
 		// Parse the Sub Nodes of This Node
 		std::wstring SubContent;
@@ -652,6 +663,8 @@ VMLParserResult VMLParser::ParseVML()
 							return ParseResult;
 						}
 
+						EndFlag = true;
+
 						break;
 					}
 					--LeftBracketCount;
@@ -698,8 +711,8 @@ VMLParserResult VMLParser::ParseVML()
 
 		if (!EndFlag)
 		{
-			ThrowError(&ParseResult, L"The end symbol \"<\" lost, maybe you need to add \"</" + Token.token_string +
-										 L"> at the end of this scope.");
+			ThrowError(&ParseResult, L"The end symbol \"<\" lost, maybe you need to add \"</" + NewNode.NodeTag +
+										 L">\" at the end of this scope.");
 
 			break;
 		}

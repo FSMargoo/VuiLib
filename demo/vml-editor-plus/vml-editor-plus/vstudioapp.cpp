@@ -269,23 +269,23 @@ void VStudioApp::StartVMLView()
 	}
 	else
 	{
-		VML::VMLParser GrammarChecker(CodeEditor->GetPlaneText());
-		auto		   ParseResult = GrammarChecker.ParseVML();
-
-		if (ParseResult.ParserStatus != VML::VMLParserStatus::Ok)
-		{
-			PopSyntaxErrorDialog(L"Failed to start view", L"Syntax Error (line " +
-															  std::to_wstring(ParseResult.ErrorInfo[0].Line) + L") : " +
-															  ParseResult.ErrorInfo[0].ErrorString);
-
-			return;
-		}
-
 		SaveFile();
 		std::wstring CommandLine = L"./viewer.exe " + std::wstring(L"\"") + CodeFilePath + L"\"";
 
 		if (!InViewing)
 		{
+			VML::VMLParser GrammarChecker(CodeEditor->GetPlaneText());
+			auto		   ParseResult = GrammarChecker.ParseVML();
+
+			if (ParseResult.ParserStatus != VML::VMLParserStatus::Ok)
+			{
+				PopSyntaxErrorDialog(L"Failed to start view", L"Syntax Error (line " +
+																  std::to_wstring(ParseResult.ErrorInfo[0].Line) +
+																  L") : " + ParseResult.ErrorInfo[0].ErrorString);
+
+				return;
+			}
+
 			if (CreateProcess(NULL, (LPWSTR)CommandLine.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &StartupInfo,
 							  &ProcessInfo))
 			{
@@ -632,4 +632,12 @@ VStudioApp::~VStudioApp()
 {
 	RemoveFontResource(L"./vml-editor-plus/font/vml-editor-plus.ttf");
 	RemoveFontResource(L"./vml-editor-plus/font/icomoon.ttf");
+
+	if (ThreadCurrentRunning)
+	{
+		TerminateProcess(ProcessInfo.hProcess, 4);
+
+		CloseHandle(ProcessInfo.hProcess);
+		CloseHandle(ProcessInfo.hThread);
+	}
 }
