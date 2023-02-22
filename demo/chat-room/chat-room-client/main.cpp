@@ -28,6 +28,7 @@ struct ChatPackHeader
 #define SUCCESS				0
 #define ERROR_VERSION		1
 #define USER_ALREADY_EXISTS 3
+#define BANNED				4
 
 struct ChatBackPack
 {
@@ -255,12 +256,27 @@ private:
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
 				->SetPlaneText(L"The version of client is not compatible with the server's");
+
+			shutdown(ClientSocket, 2);
+			closesocket(ClientSocket);
 		}
 		else if (BackPack->ServerCheckCode == USER_ALREADY_EXISTS)
 		{
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
 				->SetPlaneText(L"The user name already exists!");
+
+			shutdown(ClientSocket, 2);
+			closesocket(ClientSocket);
+		}
+		else if (BackPack->ServerCheckCode == BANNED)
+		{
+			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
+				.Get<Core::VTextLabel>()
+				->SetPlaneText(L"You have been be banned from this server!");
+
+			shutdown(ClientSocket, 2);
+			closesocket(ClientSocket);
 		}
 	}
 	void LoginToServer()
@@ -295,6 +311,8 @@ private:
 			auto Host = gethostbyname(IP.c_str());
 			IP		  = inet_ntoa(*(struct in_addr *)Host->h_addr_list[0]);
 		}
+
+		ClientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 		IN_ADDR InAddress;
 		inet_pton(AF_INET, IP.c_str(), (PVOID)&InAddress);

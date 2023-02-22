@@ -1,7 +1,9 @@
+#include <iostream>
 #include <map>
 #include <stdio.h>
 #include <string>
 #include <thread>
+#include <vector>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -23,6 +25,7 @@ struct ChatPackHeader
 #define SUCCESS				0
 #define ERROR_VERSION		1
 #define USER_ALREADY_EXSITS 3
+#define BANNED				4
 
 struct ChatBackPack
 {
@@ -88,9 +91,14 @@ void ThreadPrintInfo(int ThreadID, const char *FormatString, const char *List, .
 
 template <class Type> std::tuple<Type *, bool> RecData(SOCKET Socket, const int &Length, const int &RecvFlag)
 {
-	char *Data = new char[Length];
+	char *Data	 = new char[Length];
+	auto  Result = recv(Socket, Data, Length, RecvFlag);
 
-	if (recv(Socket, Data, Length, RecvFlag) != Length)
+	if (Result != Length && Result != 0)
+	{
+		return {nullptr, true};
+	}
+	if (Result == 0)
 	{
 		return {nullptr, false};
 	}
@@ -99,9 +107,14 @@ template <class Type> std::tuple<Type *, bool> RecData(SOCKET Socket, const int 
 }
 template <class Type> std::tuple<Type *, bool> RecData(SOCKET Socket, const int &RecvFlag)
 {
-	char *Data = new char[sizeof(Type)];
+	char *Data	 = new char[sizeof(Type)];
+	auto  Result = recv(Socket, Data, sizeof(Type), RecvFlag);
 
-	if (recv(Socket, Data, sizeof(Type), RecvFlag) != sizeof(Type))
+	if (Result != sizeof(Type) && Result > 0)
+	{
+		return {nullptr, true};
+	}
+	if (Result <= 0)
 	{
 		return {nullptr, false};
 	}
@@ -121,6 +134,7 @@ int main()
 {
 	WSAData							 Data;
 	std::map<const char *, ChatUser> UserPool;
+	std::vector<std::string>		 BlackList;
 
 	_CHECK_RETURN_VALUE_(WSAStartup(MAKEWORD(2, 2), &Data));
 
@@ -177,8 +191,9 @@ int main()
 						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with "
 												  "client will shutdown!");
 						shutdown(ClientSocket, 2);
+						closesocket(ClientSocket);
 
-						continue;
+						break;
 					}
 
 					auto Header = std::get<0>(RecResult);
@@ -195,6 +210,7 @@ int main()
 						SendData<ChatBackPack>(ClientSocket, &ServerBackPack, 0);
 
 						shutdown(ClientSocket, 2);
+						closesocket(ClientSocket);
 
 						continue;
 					}
@@ -205,6 +221,7 @@ int main()
 						ThreadPrintInfo(ThreadID, "Error : Unexpected EOF, the connection with "
 												  "client will shutdown!");
 						shutdown(ClientSocket, 2);
+						closesocket(ClientSocket);
 
 						continue;
 					}
@@ -217,6 +234,7 @@ int main()
 						ChatBackPack ServerBackPack{USER_ALREADY_EXSITS, -1};
 						SendData<ChatBackPack>(ClientSocket, &ServerBackPack, 0);
 						shutdown(ClientSocket, 2);
+						closesocket(ClientSocket);
 
 						continue;
 					}
@@ -233,6 +251,33 @@ int main()
 
 					ThreadPrintInfo(ThreadID, "USER CONNECTED : {%s:%d}", (const char *)IPAddress, (const char *)Port);
 
+					bool Flag = false;
+
+					for (auto &BannedIP : BlackList)
+					{
+						if (BannedIP == IPAddress)
+						{
+							ThreadPrintInfo(
+								ThreadID,
+								"USER CONNECTED : {%s:%d} has been be banned, refuse the connection with server!",
+								(const char *)IPAddress, (const char *)Port);
+
+							ChatBackPack ServerBackPack{BANNED, -1};
+							SendData<ChatBackPack>(ClientSocket, &ServerBackPack, 0);
+							shutdown(ClientSocket, 2);
+							closesocket(ClientSocket);
+
+							Flag = true;
+
+							break;
+						}
+					}
+
+					if (Flag)
+					{
+						continue;
+					}
+
 					ChatBackPack ServerBackPack{SUCCESS, MAX_USER};
 					SendData<ChatBackPack>(ClientSocket, &ServerBackPack, 0);
 
@@ -243,7 +288,13 @@ int main()
 						auto OperatPack = RecData<ClientOperationPack>(ClientSocket, 0);
 						if (!std::get<1>(OperatPack))
 						{
-							continue;
+							ThreadPrintInfo(ThreadID, "User {%s} disconnected", (const char *)UserName);
+							shutdown(ClientSocket, 2);
+							closesocket(ClientSocket);
+
+							UserPool.erase(UserName);
+
+							break;
 						}
 
 						auto ClientOperation = std::get<0>(OperatPack);
@@ -251,6 +302,7 @@ int main()
 						{
 							ThreadPrintInfo(ThreadID, "User {%s} disconnected", (const char *)UserName);
 							shutdown(ClientSocket, 2);
+							closesocket(ClientSocket);
 
 							UserPool.erase(UserName);
 
@@ -278,6 +330,7 @@ int main()
 								UserPool.erase(UserName);
 
 								shutdown(ClientSocket, 2);
+								closesocket(ClientSocket);
 
 								break;
 							}
@@ -300,10 +353,53 @@ int main()
 					}
 
 					shutdown(ClientSocket, 2);
+					closesocket(ClientSocket);
 				}
 			},
 			ThreadCount);
 		SockThread.detach();
+	}
+
+	std::string Command;
+
+	while (true)
+	{
+		printf("Server > ");
+		std::cin >> Command;
+
+		if (Command == "ban")
+		{
+			printf("IP to ban > ");
+			std::cin >> Command;
+
+			printf("Banned %s successfully!\n", Command.c_str());
+
+			BlackList.push_back(Command);
+		}
+		if (Command == "unban")
+		{
+			printf("IP to unban > ");
+			std::cin >> Command;
+
+			for (auto Iterator = BlackList.begin(); Iterator != BlackList.end(); ++Iterator)
+			{
+				if (Command == *Iterator)
+				{
+					BlackList.erase(Iterator);
+
+					break;
+				}
+			}
+
+			printf("Unbanned %s successfully!\n", Command.c_str());
+		}
+		if (Command == "online-list")
+		{
+			for (auto &Iterator : UserPool)
+			{
+				printf("%s - ONLINE \n", Iterator.first);
+			}
+		}
 	}
 
 	getchar();
