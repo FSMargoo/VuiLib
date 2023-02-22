@@ -32,7 +32,7 @@
 	</startup-ui>
 
 	<!-- 标题文字 -->
-	<title-text type="textlabel" height="40" width="@fill" x="@center" y="17" class="title-text" text="PhotoViewer v1.2.8">
+	<title-text type="textlabel" height="40" width="@fill" x="@center" y="17" class="title-text" text="PhotoViewer v1.3.0">
 	</title-text>
 	
 	<!-- 标题栏拖拽控件 -->

@@ -81,8 +81,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 				CacheToken.token_string.insert(CacheToken.token_string.end(), L'\"');
 			}
 
-			PropertyValue = CacheToken.token_string;
-
+			PropertyValue	 = CacheToken.token_string;
 			auto TokenString = VariableParameterLexical->get_token().token_string;
 
 			if (TokenString == L".")

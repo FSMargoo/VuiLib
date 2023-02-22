@@ -23,11 +23,23 @@
     font-size: 18px;
     color: #ffffff;
     text-align: center;
+    box-shadow: 20px;
 }
 .zoom-tag {
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.8);
     text-align: center;
+    box-shadow: 20px;
+}
+
+.zoomdown-button {
+    box-shadow: 20px;
+}
+.zoom-up-button {
+    box-shadow: 20px;
+}
+.one-to-one-button {
+    box-shadow: 20px;
 }
 
 .close-button:hover {
@@ -37,4 +49,18 @@
 .close-button:active {
     background-color: rgba(230, 9, 9, 0.32);
     border-color: rgba(230, 9, 9, 0.32);
+}
+
+.viewing-image {
+    box-shadow: 8px, rgba(0, 0, 0, 0.1);
+}
+
+.minisize-button {
+    box-shadow: 20px;
+}
+.maxsize-button {
+    box-shadow: 20px;
+}
+.close-button {
+    box-shadow: 20px;
 }

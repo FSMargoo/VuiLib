@@ -24,10 +24,12 @@ fn main()->int
 {
 	var Application = Core::VApplication();
 	var MainWindow	= VML::VMLMainWindow(640, 800, &Application);
+	var PushButton	= Core::VPushButton(100, 40, L"A TEXT", &MainWindow);
 
 	MainWindow.Show();
+	MainWindow.SetBackgroundColor(Core::VColor(0, 0, 0, 0));
 
-	MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
+	// MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
 	return Application.Exec();
 }
