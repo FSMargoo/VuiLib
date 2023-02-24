@@ -1459,6 +1459,11 @@ void VEditor::DrawSelectedRange(Core::VCanvasPainter *Painter)
 			HitTestMetric.left += OffsetX;
 			HitTestMetric.top += OffsetY + Theme->LabelFont->GetTextSize();
 
+			if (HitTestMetric.width == 0)
+			{
+				HitTestMetric.width = 10;
+			}
+
 			Painter->SolidRectangle(VRect(HitTestMetric.left, HitTestMetric.top,
 										  HitTestMetric.left + HitTestMetric.width,
 										  HitTestMetric.top + HitTestMetric.height),
