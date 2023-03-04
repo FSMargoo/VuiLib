@@ -2549,6 +2549,16 @@ void VSSVEditorBuilder::BuildVSSObject(Core::VEditor *TargetControl, std::vector
 						}
 					}
 				}
+				if (Property.first == L"font-weight")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->LabelFont->SetTextWidget(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
 				if (Property.first == L"text-align")
 				{
 					for (auto &PropertyValue : Property.second.ValueList)
