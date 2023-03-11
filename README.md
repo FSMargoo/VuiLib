@@ -10,7 +10,7 @@
 ### Requirements - 必要条件
 * 编译目标平台：x64 x32
 * 操作系统： Windows Vista 及以上
-* 构造工具: CMake
+* 构造工具: VS2010 及以上
 * API：D2D9 及以上
 ### Steps - 安装过程
 1. 拉取仓库代码
