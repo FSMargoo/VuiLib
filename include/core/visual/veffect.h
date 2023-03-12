@@ -22,6 +22,9 @@ public:
 	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VCanvasPainter *Image) override;
 	void ApplyEffect(const VRenderHandle &RenderHandle, Core::VImage *Image) override;
 
+	void  SetRadius(const float &BlurRadius);
+	float GetRadius() const;
+
 private:
 	float Radius;
 };

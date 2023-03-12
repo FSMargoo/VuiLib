@@ -48,11 +48,13 @@ void VFont::SetParagraphAlignment(const VFontParagraphAlignment &Alignment)
 }
 void VFont::SetFamilyName(const std::wstring &FontFamilyName)
 {
-	auto Widget	 = GetTextWeightStyle();
-	auto Style	 = GetTextFontStyle();
-	auto Stretch = GetFontStretchStyle();
-	auto Size	 = GetTextSize();
-	auto Locale	 = GetLocaleName();
+	auto Widget		   = GetTextWeightStyle();
+	auto Style		   = GetTextFontStyle();
+	auto Stretch	   = GetFontStretchStyle();
+	auto Size		   = GetTextSize();
+	auto Locale		   = GetLocaleName();
+	auto TextAlignment = TextFormat->GetTextAlignment();
+	auto LineAlignment = TextFormat->GetParagraphAlignment();
 
 	TextFormat.ReleaseAndGetAddressOf();
 
@@ -61,6 +63,9 @@ void VFont::SetFamilyName(const std::wstring &FontFamilyName)
 								   (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(),
 								   &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
+
+	TextFormat->SetTextAlignment(TextAlignment);
+	TextFormat->SetParagraphAlignment(LineAlignment);
 }
 std::wstring VFont::GetFamilyName() const
 {
@@ -97,11 +102,13 @@ VFont::FontStretch VFont::GetFontStretchStyle() const
 }
 void VFont::SetTextSize(const int &Size)
 {
-	auto Widget	 = GetTextWeightStyle();
-	auto Family	 = GetFamilyName();
-	auto Style	 = GetTextFontStyle();
-	auto Stretch = GetFontStretchStyle();
-	auto Locale	 = GetLocaleName();
+	auto Widget		   = GetTextWeightStyle();
+	auto Family		   = GetFamilyName();
+	auto Style		   = GetTextFontStyle();
+	auto Stretch	   = GetFontStretchStyle();
+	auto Locale		   = GetLocaleName();
+	auto TextAlignment = TextFormat->GetTextAlignment();
+	auto LineAlignment = TextFormat->GetParagraphAlignment();
 
 	TextFormat.ReleaseAndGetAddressOf();
 
@@ -109,6 +116,9 @@ void VFont::SetTextSize(const int &Size)
 								   Family.c_str(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
 								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
+
+	TextFormat->SetTextAlignment(TextAlignment);
+	TextFormat->SetParagraphAlignment(LineAlignment);
 }
 void VFont::SetTextWidget(const int &Widget)
 {

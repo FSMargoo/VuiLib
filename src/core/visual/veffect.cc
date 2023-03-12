@@ -26,6 +26,14 @@ void VGassuinBlurEffect::ApplyEffect(const VRenderHandle &RenderHandle, Core::VI
 {
 	Image->ApplyGassBlur(Radius, RenderHandle);
 }
+void VGassuinBlurEffect::SetRadius(const float &BlurRadius)
+{
+	Radius = BlurRadius;
+}
+float VGassuinBlurEffect::GetRadius() const
+{
+	return Radius;
+}
 
 VExposureEffect::VExposureEffect(const float &ExposureValue)
 {

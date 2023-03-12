@@ -1,0 +1,50 @@
+<mainwindow type="mainwindow" class="mainwindow" style-sheet="
+.mainwindow {
+    background-color: #000000;
+}
+.selection-button {
+    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 15px;
+    font-family: 'SF Mono';
+}
+.selection-button:hover {
+    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 15px;
+    font-family: 'SF Mono';
+}
+.selection-button:active {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 1);
+    font-size: 15px;
+    font-family: 'SF Mono';
+}
+" borderless="true" width="640" height="680" sizable="false">
+    <main-text type="textlabel" width="640" height="100" x="@center" y="170" class="main-text" 
+            style-sheet="
+            .main-text {
+                font-family:'SF Mono';
+                color: #ffffff;
+                font-size:25px;
+                text-align: center;
+                vertical-align: center;
+            }
+            ">
+        <move-in-animation type="position-animation" duration="800" target-position="@point(0, 0)" animation-curve="ease-in-out-quart-curve"/>
+    </main-text>
+    <selection-box type="textlabel" width="@fill" height="100" x="0" y="310" class="selection-box" style-sheet="
+    .selection-box {
+        opacity: 0.0%;
+    }">
+        <selection-1 type="pushbutton" width="400" height="40" x="@center" y="0" text="Let's go :)" on-clicked="@LetsGo" class="selection-button"/>
+        <selection-2 type="pushbutton" width="400" height="40" x="@center" y="60" text="No, no yet :(" on-clicked="@NoYet" class="selection-button"/>
+
+        <move-in-animation type="position-animation" duration="800" target-position="@point(0, 296)" animation-curve="ease-in-out-quart-curve"/>
+        <transparent-animation type="opacity-animation" duration="800" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+        <move-out-animation type="position-animation" duration="800" target-position="@point(0, 310)" animation-curve="ease-in-out-quart-curve"/>
+        <fade-out-animation type="opacity-animation" duration="800" target-opacity="0" animation-curve="ease-in-out-sine-curve"/>
+    </selection-box>
+</mainwindow>
