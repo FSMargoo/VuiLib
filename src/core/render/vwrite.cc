@@ -18,20 +18,20 @@ VFont::VFont(const VFont &FontObject)
 	auto LineAlignment = FontObject.TextFormat->GetParagraphAlignment();
 
 	VLIB_REPORT_IF_FAILED_INFO(VDirectXWriteFactory.GetInstance()->CreateTextFormat(
-								   Family.c_str(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
-								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat),
+								   Family.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
+								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.CStyleString(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
 
 	TextFormat->SetTextAlignment(TextAlignment);
 	TextFormat->SetParagraphAlignment(LineAlignment);
 }
-VFont::VFont(const std::wstring &FamilyName, const FontWeight &TextWidget, const FontStyle &TextStyle,
-			 const FontStretch &TextStretch, const float &TextSize, const std::wstring &Local)
+VFont::VFont(const VString &FamilyName, const FontWeight &TextWidget, const FontStyle &TextStyle,
+			 const FontStretch &TextStretch, const float &TextSize, const VString &Local)
 {
 	VLIB_REPORT_IF_FAILED_INFO(VDirectXWriteFactory.GetInstance()->CreateTextFormat(
-								   FamilyName.c_str(), nullptr, (DWRITE_FONT_WEIGHT)TextWidget,
+								   FamilyName.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)TextWidget,
 								   (DWRITE_FONT_STYLE)TextStyle, (DWRITE_FONT_STRETCH)TextStretch, TextSize,
-								   Local.c_str(), &TextFormat),
+								   Local.CStyleString(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
 }
 VFont::~VFont()
@@ -46,7 +46,7 @@ void VFont::SetParagraphAlignment(const VFontParagraphAlignment &Alignment)
 {
 	TextFormat->SetParagraphAlignment(Alignment);
 }
-void VFont::SetFamilyName(const std::wstring &FontFamilyName)
+void VFont::SetFamilyName(const VString &FontFamilyName)
 {
 	auto Widget		   = GetTextWeightStyle();
 	auto Style		   = GetTextFontStyle();
@@ -59,29 +59,29 @@ void VFont::SetFamilyName(const std::wstring &FontFamilyName)
 	TextFormat.ReleaseAndGetAddressOf();
 
 	VLIB_REPORT_IF_FAILED_INFO(VDirectXWriteFactory.GetInstance()->CreateTextFormat(
-								   FontFamilyName.c_str(), nullptr, (DWRITE_FONT_WEIGHT)Widget,
-								   (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(),
+								   FontFamilyName.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)Widget,
+								   (DWRITE_FONT_STYLE)Style, (DWRITE_FONT_STRETCH)Stretch, Size, Locale.CStyleString(),
 								   &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
 
 	TextFormat->SetTextAlignment(TextAlignment);
 	TextFormat->SetParagraphAlignment(LineAlignment);
 }
-std::wstring VFont::GetFamilyName() const
+VString VFont::GetFamilyName() const
 {
 	WCHAR FamilyName[LF_FACESIZE];
 	TextFormat->GetFontFamilyName(FamilyName, LF_FACESIZE);
 
 	return FamilyName;
 }
-std::wstring VFont::GetLocaleName() const
+VString VFont::GetLocaleName() const
 {
 	wchar_t *LocaleCache = new wchar_t[TextFormat->GetLocaleNameLength() + 1];
 	TextFormat->GetLocaleName(LocaleCache, TextFormat->GetLocaleNameLength() + 1);
 
 	VLIB_CHECK_REPORT(LocaleCache == nullptr, L"Get font locale name failed!");
 
-	const std::wstring Locale(LocaleCache);
+	const VString Locale(LocaleCache);
 
 	delete LocaleCache;
 
@@ -113,8 +113,8 @@ void VFont::SetTextSize(const int &Size)
 	TextFormat.ReleaseAndGetAddressOf();
 
 	VLIB_REPORT_IF_FAILED_INFO(VDirectXWriteFactory.GetInstance()->CreateTextFormat(
-								   Family.c_str(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
-								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat),
+								   Family.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
+								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.CStyleString(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
 
 	TextFormat->SetTextAlignment(TextAlignment);
@@ -131,8 +131,8 @@ void VFont::SetTextWidget(const int &Widget)
 	TextFormat.ReleaseAndGetAddressOf();
 
 	VLIB_REPORT_IF_FAILED_INFO(VDirectXWriteFactory.GetInstance()->CreateTextFormat(
-								   Family.c_str(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
-								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.c_str(), &TextFormat),
+								   Family.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
+								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.CStyleString(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
 }
 int VFont::GetTextSize() const

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/stl-ex/vstring.h"
 #include "../core/vbasiccore.h"
 #include <codecvt>
 #include <fstream>
@@ -22,10 +23,9 @@ public:
 	{
 	}
 
-	static std::wstring ReadFromFile(const std::wstring &FilePath,
-									 VDocumentEncoding	 DocumentEncoding = VDocumentEncoding::UTF8);
+	static VString ReadFromFile(const VString &FilePath, VDocumentEncoding DocumentEncoding = VDocumentEncoding::UTF8);
 
-	static bool FileExist(const std::wstring &FilePath);
+	static bool FileExist(const VString &FilePath);
 };
 } // namespace VKits
 

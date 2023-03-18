@@ -29,7 +29,7 @@ VMLMainWindow::~VMLMainWindow()
 
 	VUIObject::~VUIObject();
 }
-VMLWidgetLoadResult VMLMainWindow::LoadVML(const std::wstring VML, VMLParserParseMode StringMode)
+VMLWidgetLoadResult VMLMainWindow::LoadVML(const VString VML, VMLParserParseMode StringMode)
 {
 	VMLParser Parser(VML, StringMode);
 
@@ -45,7 +45,7 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(VMLParserResult VMLAstTree, VMLObject
 {
 	if (VMLAstTree.ParserStatus == VMLParserStatus::Error)
 	{
-		std::wstring ASTError;
+		VString ASTError;
 
 		for (auto &ErrorString : VMLAstTree.ErrorInfo)
 		{
@@ -66,7 +66,7 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(VMLParserResult VMLAstTree, VMLObject
 
 	return LoadResult;
 }
-VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAstTree,
+VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<VString, VMLNode> VMLAstTree,
 										   VMLWidgetVMLObjectList *ObjectCacheList, VMLObject *UIParent)
 {
 	VMLWidgetLoadResult Result;
@@ -91,9 +91,9 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 
 	for (auto &Element : VMLAstOrderlyNodes)
 	{
-		std::wstring StyleSheetString;
-		VMLObject	*VMLObject = new struct VMLObject;
-		VMLObject->VMLID	   = Element.NodeTag;
+		VString	   StyleSheetString;
+		VMLObject *VMLObject = new struct VMLObject;
+		VMLObject->VMLID	 = Element.NodeTag;
 
 		if (Element.PropertyExsit(L"type"))
 		{
@@ -867,8 +867,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								this->FileOnDrag.Connect(
-									(Core::VSignal<std::vector<std::wstring>> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<std::vector<std::wstring>>::Emit);
+									(Core::VSignal<std::vector<VString>> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<std::vector<VString>>::Emit);
 							}
 						}
 					}
@@ -1323,8 +1323,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								LineEditor->TextOnChange.Connect(
-									(Core::VSignal<const std::wstring &> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<const std::wstring &>::Emit);
+									(Core::VSignal<const VString &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const VString &>::Emit);
 							}
 						}
 					}
@@ -1411,8 +1411,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								LineEditor->TextOnChange.Connect(
-									(Core::VSignal<const std::wstring &> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<const std::wstring &>::Emit);
+									(Core::VSignal<const VString &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const VString &>::Emit);
 							}
 						}
 					}
@@ -1499,8 +1499,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								LineEditor->TextOnChange.Connect(
-									(Core::VSignal<const std::wstring &> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<const std::wstring &>::Emit);
+									(Core::VSignal<const VString &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const VString &>::Emit);
 							}
 						}
 					}
@@ -1587,8 +1587,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								Editor->TextOnChange.Connect(
-									(Core::VSignal<const std::wstring &> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<const std::wstring &>::Emit);
+									(Core::VSignal<const VString &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const VString &>::Emit);
 							}
 						}
 					}
@@ -1615,8 +1615,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 							{
 								Editor->TextBeforeChange.Connect(
-									(Core::VSignal<const std::wstring &> *)MetaFunctionList[NativeCallName],
-									&Core::VSignal<const std::wstring &>::Emit);
+									(Core::VSignal<const VString &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const VString &>::Emit);
 							}
 						}
 					}
@@ -2071,8 +2071,8 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<std::wstring, VMLNode> VMLAs
 								if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
 								{
 									Widget->FileOnDrag.Connect(
-										(Core::VSignal<std::vector<std::wstring>> *)MetaFunctionList[NativeCallName],
-										&Core::VSignal<std::vector<std::wstring>>::Emit);
+										(Core::VSignal<std::vector<VString>> *)MetaFunctionList[NativeCallName],
+										&Core::VSignal<std::vector<VString>>::Emit);
 								}
 							}
 						}
@@ -2384,7 +2384,7 @@ void VMLMainWindow::SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vec
 		if (Selector->GetType() == VSS::VSSSelectorType::ElementSelector ||
 			Selector->GetType() == VSS::VSSSelectorType::FakeClassSelector)
 		{
-			std::wstring ElementTag = static_cast<VSS::VSSElementSelector *>(Selector)->ElementTag;
+			VString ElementTag = static_cast<VSS::VSSElementSelector *>(Selector)->ElementTag;
 
 			if (ElementTag == L"pushbutton")
 			{
@@ -2494,7 +2494,7 @@ void VMLMainWindow::SetStyleSheet(VSS::VSSParserResult VSSParserResult)
 
 	VSSParserResult.SelectorSet.clear();
 }
-VMLFinder VMLMainWindow::Get(const std::wstring &ChildrenId)
+VMLFinder VMLMainWindow::Get(const VString &ChildrenId)
 {
 	for (auto &Object : ObjectList)
 	{
@@ -2506,7 +2506,7 @@ VMLFinder VMLMainWindow::Get(const std::wstring &ChildrenId)
 
 	return VMLFinder(nullptr, std::vector<VMLObject *>(), &VariableList);
 }
-VMLFinder VMLMainWindow::operator[](const std::wstring &ChildrenId)
+VMLFinder VMLMainWindow::operator[](const VString &ChildrenId)
 {
 	for (auto &Object : ObjectList)
 	{
@@ -2525,8 +2525,8 @@ HWND VMLMainWindow::GetLocalWinId()
 }
 
 void VMLMainWindow::PushUserDefineFunction(
-	std::function<bool(const std::wstring &, const VMLFinder &RootFinder, Core::VUIObject **, Core::VUIObject *,
-					   std::map<std::wstring, VMLPropertyValue> &, VMLControlBuildStatus *)>
+	std::function<bool(const VString &, const VMLFinder &RootFinder, Core::VUIObject **, Core::VUIObject *,
+					   std::map<VString, VMLPropertyValue> &, VMLControlBuildStatus *)>
 		FunctionObject)
 {
 	UserDefineList.push_back(FunctionObject);

@@ -34,7 +34,7 @@ enum class VMLControlBuildResultStatus
 struct VMLControlBuildStatus
 {
 	VMLControlBuildResultStatus BuildStatusCode = VMLControlBuildResultStatus::Ok;
-	std::wstring				FailedReason;
+	VString						FailedReason;
 };
 
 class VMLCommonBuilder
@@ -42,7 +42,7 @@ class VMLCommonBuilder
 protected:
 	template <class DatatType, class ClassType>
 	ClassType *DefineVariable(Core::VUIObject *ObjectInstance, const DatatType &InitValue, const VMLFinder &Finder,
-							  const std::wstring &VariableName)
+							  const VString &VariableName)
 	{
 		ClassType *Variable = new ClassType(ObjectInstance, InitValue);
 
@@ -65,12 +65,12 @@ protected:
 				 const double &HeightRatio, const VMLFinder &RootFinder);
 
 	virtual void AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObject *Object,
-								 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-								 VMLControlBuildStatus					  *BuildStatus);
+								 std::map<VString, VMLPropertyValue> &PropertyValueList,
+								 VMLControlBuildStatus				 *BuildStatus);
 
 public:
 	VMLCommonBuilder(const VMLFinder &RootFinder, Core::VUIObject *Object,
-					 std::map<std::wstring, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus)
+					 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus)
 		: VMLObjectFinder(RootFinder)
 	{
 		AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
@@ -79,16 +79,14 @@ public:
 class VMLPushButtonBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VPushButton *PushButton, const std::wstring &PlaneText, const int &TextSize = 0);
+	void Builder(Core::VPushButton *PushButton, const VString &PlaneText, const int &TextSize = 0);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VPushButton *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLPushButtonBuilder(const VMLFinder &RootFinder, Core::VPushButton *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLImageLabelBuilder : public VMLCommonBuilder
 {
@@ -96,33 +94,29 @@ protected:
 	void Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VImageLabel *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLImageLabelBuilder(const VMLFinder &RootFinder, Core::VImageLabel *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLTextLabelBuilder : public VMLCommonBuilder
 {
 private:
-	Core::VFontAlignment		  ConvertAlignment(std::wstring AlignmentString);
-	Core::VFontParagraphAlignment ConvertParagraphAlignment(std::wstring ParagraphString);
+	Core::VFontAlignment		  ConvertAlignment(VString AlignmentString);
+	Core::VFontParagraphAlignment ConvertParagraphAlignment(VString ParagraphString);
 
 protected:
-	void Builder(Core::VTextLabel *TextLabel, const std::wstring &PlaneText, const int &TextSize,
+	void Builder(Core::VTextLabel *TextLabel, const VString &PlaneText, const int &TextSize,
 				 const Core::VFontAlignment &Alignment, const Core::VFontParagraphAlignment &LineAlignment,
 				 const bool &AutoSize);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VTextLabel *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLTextLabelBuilder(const VMLFinder &RootFinder, Core::VTextLabel *Object,
-						std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						VMLControlBuildStatus					 *BuildStatus);
+						std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLLayoutBuilder : public VMLCommonBuilder
 {
@@ -132,12 +126,11 @@ protected:
 				 int XMiddleOffset, int YMiddleOffset);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VLayout *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLLayoutBuilder(const VMLFinder &RootFinder, Core::VLayout *Object,
-					 std::map<std::wstring, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
+					 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLScaleLayoutBuilder : public VMLCommonBuilder
 {
@@ -145,13 +138,11 @@ protected:
 	void Builder(Core::VScaleLayout *Layout, const double &ScaleWidthPercent, const double &ScaleHeightPercent);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VScaleLayout *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLScaleLayoutBuilder(const VMLFinder &RootFinder, Core::VScaleLayout *Object,
-						  std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						  VMLControlBuildStatus					   *BuildStatus);
+						  std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLTextSizeLayoutBuilder : public VMLCommonBuilder
 {
@@ -159,28 +150,24 @@ protected:
 	void Builder(Core::VTextSizeLayout *Layout, const double &Scale);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VTextSizeLayout *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLTextSizeLayoutBuilder(const VMLFinder &RootFinder, Core::VTextSizeLayout *Object,
-							 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-							 VMLControlBuildStatus					  *BuildStatus);
+							 std::map<VString, VMLPropertyValue> &PropertyValueList,
+							 VMLControlBuildStatus				 *BuildStatus);
 };
 class VMLRadioButtonBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VRadioButton *RadioButton, const bool &Status, const std::wstring &PlaneText,
-				 const bool &LockBack);
+	void Builder(Core::VRadioButton *RadioButton, const bool &Status, const VString &PlaneText, const bool &LockBack);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VRadioButton *RadioButton,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLRadioButtonBuilder(const VMLFinder &RootFinder, Core::VRadioButton *Object,
-						  std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						  VMLControlBuildStatus					   *BuildStatus);
+						  std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLSliderHorizontalBuilder : public VMLCommonBuilder
 {
@@ -188,13 +175,12 @@ protected:
 	void Builder(Core::VSliderHorizontal *SliderHorizontal, const double &Value, const bool &Draggable);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VSliderHorizontal *Horizontal,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLSliderHorizontalBuilder(const VMLFinder &RootFinder, Core::VSliderHorizontal *Object,
-							   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-							   VMLControlBuildStatus					*BuildStatus);
+							   std::map<VString, VMLPropertyValue> &PropertyValueList,
+							   VMLControlBuildStatus			   *BuildStatus);
 };
 class VMLSliderVerticalBuilder : public VMLCommonBuilder
 {
@@ -202,13 +188,12 @@ protected:
 	void Builder(Core::VSliderVertical *SliderHorizontal, const double &Value, const bool &Draggable);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VSliderVertical *Vertical,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLSliderVerticalBuilder(const VMLFinder &RootFinder, Core::VSliderVertical *Object,
-							 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-							 VMLControlBuildStatus					  *BuildStatus);
+							 std::map<VString, VMLPropertyValue> &PropertyValueList,
+							 VMLControlBuildStatus				 *BuildStatus);
 };
 class VMLIconButtonBuilder : public VMLCommonBuilder
 {
@@ -216,42 +201,37 @@ protected:
 	void Builder(Core::VIconButton *IconButton, Core::VImage *Image);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VIconButton *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLIconButtonBuilder(const VMLFinder &RootFinder, Core::VIconButton *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLLineEditorBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VLineEditor *LineEditor, const std::wstring &PlaneText, const std::wstring &LeadText);
+	void Builder(Core::VLineEditor *LineEditor, const VString &PlaneText, const VString &LeadText);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VLineEditor *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLLineEditorBuilder(const VMLFinder &RootFinder, Core::VLineEditor *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLEditorBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VEditor *Editor, const std::wstring &PlaneText, const std::wstring &LeadingText,
-				 const int &DeltaY, const bool &AllowEdit, const bool &AllowDragFontSizeChange,
-				 const bool &AllowOperationBack, const int &MaxOperationCache);
+	void Builder(Core::VEditor *Editor, const VString &PlaneText, const VString &LeadingText, const int &DeltaY,
+				 const bool &AllowEdit, const bool &AllowDragFontSizeChange, const bool &AllowOperationBack,
+				 const int &MaxOperationCache);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VEditor *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLEditorBuilder(const VMLFinder &RootFinder, Core::VEditor *Object,
-					 std::map<std::wstring, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
+					 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 class VMLVerticalScrollerBuilder : public VMLCommonBuilder
 {
@@ -259,13 +239,12 @@ protected:
 	void Builder(Core::VScrollerVertical *Scroller, const int &Value, const int &ViewValue);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VScrollerVertical *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLVerticalScrollerBuilder(const VMLFinder &RootFinder, Core::VScrollerVertical *Object,
-							   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-							   VMLControlBuildStatus					*BuildStatus);
+							   std::map<VString, VMLPropertyValue> &PropertyValueList,
+							   VMLControlBuildStatus			   *BuildStatus);
 };
 class VMLHorizontalScrollerBuilder : public VMLCommonBuilder
 {
@@ -273,13 +252,12 @@ protected:
 	void Builder(Core::VScrollerHorizontal *Scroller, const int &Value, const int &ViewValue);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VScrollerHorizontal *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLHorizontalScrollerBuilder(const VMLFinder &RootFinder, Core::VScrollerHorizontal *Object,
-								 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-								 VMLControlBuildStatus					  *BuildStatus);
+								 std::map<VString, VMLPropertyValue> &PropertyValueList,
+								 VMLControlBuildStatus				 *BuildStatus);
 };
 
 class VMLViewLabelBuilder : public VMLCommonBuilder
@@ -290,13 +268,11 @@ protected:
 				 const Core::VViewLabelHorizontalAlign &HorizontalAlign, const bool &TieWheel);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VViewLabel *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLViewLabelBuilder(const VMLFinder &RootFinder, Core::VViewLabel *Object,
-						std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						VMLControlBuildStatus					 *BuildStatus);
+						std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 
 class VMLGeometryAnimationBuilder : public VMLCommonBuilder
@@ -306,13 +282,12 @@ protected:
 				 const Core::VAnimationCurveFlag &Flag, const int &Duration);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VGeometryAnimation *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLGeometryAnimationBuilder(const VMLFinder &RootFinder, Core::VGeometryAnimation *Object,
-								std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-								VMLControlBuildStatus					 *BuildStatus);
+								std::map<VString, VMLPropertyValue> &PropertyValueList,
+								VMLControlBuildStatus				*BuildStatus);
 };
 class VMLPositionAnimationBuilder : public VMLCommonBuilder
 {
@@ -321,13 +296,12 @@ protected:
 				 const Core::VAnimationCurveFlag &Flag, const int &Duration);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VPositionAnimation *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLPositionAnimationBuilder(const VMLFinder &RootFinder, Core::VPositionAnimation *Object,
-								std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-								VMLControlBuildStatus					 *BuildStatus);
+								std::map<VString, VMLPropertyValue> &PropertyValueList,
+								VMLControlBuildStatus				*BuildStatus);
 };
 
 class VMLOpacityAnimationBuilder : public VMLCommonBuilder
@@ -337,13 +311,12 @@ protected:
 				 const int &Duration);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VOpacityAnimation *Object,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLOpacityAnimationBuilder(const VMLFinder &RootFinder, Core::VOpacityAnimation *Object,
-							   std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-							   VMLControlBuildStatus					*BuildStatus);
+							   std::map<VString, VMLPropertyValue> &PropertyValueList,
+							   VMLControlBuildStatus			   *BuildStatus);
 };
 
 class VMLPolygonViewBuilder : public VMLCommonBuilder
@@ -352,40 +325,38 @@ protected:
 	void Builder(Core::VPolygonView *PolygonView, const std::vector<Core::VPointF> &Points);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VPolygonView *PolygonView,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLPolygonViewBuilder(const VMLFinder &RootFinder, Core::VPolygonView *PolygonView,
-						  std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						  VMLControlBuildStatus					   *BuildStatus);
+						  std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 
 class VMLMainWindowBuilder
 {
 protected:
-	void Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height, const std::wstring &Title,
+	void Builder(Core::VMainWindow *MainWindow, const int &Width, const int &Height, const VString &Title,
 				 const bool &Sizable, const bool &FramelessStatus, const bool &BorderlessStatus,
 				 const bool &AllowFileDrag);
 
-	void AnalyzeProperty(Core::VMainWindow *Object, std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
+	void AnalyzeProperty(Core::VMainWindow *Object, std::map<VString, VMLPropertyValue> &PropertyValueList,
 						 VMLControlBuildStatus *BuildStatus);
 
 public:
-	VMLMainWindowBuilder(Core::VMainWindow *MainWindow, std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
+	VMLMainWindowBuilder(Core::VMainWindow *MainWindow, std::map<VString, VMLPropertyValue> &PropertyValueList,
 						 VMLControlBuildStatus *BuildStatus);
 };
 
 class VMLWidgetBuilder
 {
 protected:
-	void Builder(Core::VWidget *Widget, const int &Width, const int &Height, const std::wstring &Title,
-				 const bool &Sizable, const bool &FramelessStatus, const bool &Visible);
-	void AnalyzeProperty(Core::VWidget *Widget, std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
+	void Builder(Core::VWidget *Widget, const int &Width, const int &Height, const VString &Title, const bool &Sizable,
+				 const bool &FramelessStatus, const bool &Visible);
+	void AnalyzeProperty(Core::VWidget *Widget, std::map<VString, VMLPropertyValue> &PropertyValueList,
 						 VMLControlBuildStatus *BuildStatus);
 
 public:
-	VMLWidgetBuilder(Core::VWidget *Widget, std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
+	VMLWidgetBuilder(Core::VWidget *Widget, std::map<VString, VMLPropertyValue> &PropertyValueList,
 					 VMLControlBuildStatus *BuildStatus);
 };
 class VMLCanvasBuilder : public VMLCommonBuilder
@@ -393,12 +364,11 @@ class VMLCanvasBuilder : public VMLCommonBuilder
 protected:
 	void Builder(Core::VCanvas *Canvas, const int &Fps);
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VCanvas *Canvas,
-						 std::map<std::wstring, VMLPropertyValue> &PropertyValueList,
-						 VMLControlBuildStatus					  *BuildStatus);
+						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 
 public:
 	VMLCanvasBuilder(const VMLFinder &RootFinder, Core::VCanvas *Canvas,
-					 std::map<std::wstring, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
+					 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 } // namespace VML
 

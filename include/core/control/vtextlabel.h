@@ -40,11 +40,11 @@ public:
 public:
 	VTextLabel(VUIObject *Parent);
 	VTextLabel(int Width, int Height, VUIObject *Parent);
-	VTextLabel(int Width, int Height, const std::wstring &PlaneText, VUIObject *Parent);
+	VTextLabel(int Width, int Height, const VString &PlaneText, VUIObject *Parent);
 	~VTextLabel();
 
 public:
-	void SetPlaneText(const std::wstring &PlaneText);
+	void SetPlaneText(const VString &PlaneText);
 	void SetTextColor(const VColor &TextColor);
 	void SetBackgroundColor(const VColor &BackgroundColor);
 	void SetRadius(const VPoint &Radius);
@@ -54,11 +54,11 @@ public:
 	void SetAutoSize(const bool &Status);
 
 public:
-	std::wstring GetPlaneText() const;
-	bool		 GetAutoSizeStatus() const;
+	VString GetPlaneText() const;
+	bool	GetAutoSizeStatus() const;
 
 public:
-	void ResizeByText(const std::wstring &Text);
+	void ResizeByText(const VString &Text);
 	void ResizeByText();
 
 public:

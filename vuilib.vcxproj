@@ -162,6 +162,7 @@
     <ClInclude Include="include\core\render\vrenderbasic.h" />
     <ClInclude Include="include\core\render\vwrite.h" />
     <ClInclude Include="include\core\signal\vsignal.h" />
+    <ClInclude Include="include\core\stl-ex\vstring.h" />
     <ClInclude Include="include\core\uibasic\vsmarttimer.h" />
     <ClInclude Include="include\core\uibasic\vtimer.h" />
     <ClInclude Include="include\core\uibasic\vuiinterpolator.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="src\core\render\vrenderbasic.cc" />
     <ClCompile Include="src\core\render\vwrite.cc" />
     <ClCompile Include="src\core\signal\vsignal.cc" />
+    <ClCompile Include="src\core\stl-ex\vstring.cpp" />
     <ClCompile Include="src\core\uibasic\vsmarttimer.cc" />
     <ClCompile Include="src\core\uibasic\vtimer.cc" />
     <ClCompile Include="src\core\uibasic\vuiinterpolator.cc" />

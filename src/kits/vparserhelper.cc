@@ -4,7 +4,7 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VKits
 {
-std::wstring VParserHelper::ReadFromFile(const std::wstring &FilePath, VDocumentEncoding DocumentEncoding)
+VString VParserHelper::ReadFromFile(const VString &FilePath, VDocumentEncoding DocumentEncoding)
 {
 	std::ifstream FileStream(FilePath);
 
@@ -45,9 +45,9 @@ std::wstring VParserHelper::ReadFromFile(const std::wstring &FilePath, VDocument
 
 	return L"Unknown File";
 }
-bool VParserHelper::FileExist(const std::wstring &FilePath)
+bool VParserHelper::FileExist(const VString &FilePath)
 {
-	return (_waccess(FilePath.c_str(), 04) != -1);
+	return (_waccess(FilePath.CStyleString(), 04) != -1);
 }
 } // namespace VKits
 

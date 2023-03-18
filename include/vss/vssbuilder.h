@@ -23,8 +23,8 @@ namespace VSS
 class VSSParserHelper
 {
 public:
-	static Core::VFontAlignment			 StringToAlignment(const std::wstring &String);
-	static Core::VFontParagraphAlignment StringToParagraphAlignment(const std::wstring &String);
+	static Core::VFontAlignment			 StringToAlignment(const VString &String);
+	static Core::VFontParagraphAlignment StringToParagraphAlignment(const VString &String);
 };
 
 class VSSVPushButtonBuilder

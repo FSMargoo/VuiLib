@@ -71,13 +71,13 @@ public:
 	 *		Description : The constructor of class VImage
 	 *		Values
 	 * Tip	: {
-	 *			[const std::wstring&] Width		: The width of
+	 *			[const VString&] Width		: The width of
 	 *image surface [const
 	 * VRenderHandle&	 ] RenderHandle : The height of image
 	 *surface
 	 *		}
 	 */
-	VImage(const std::wstring &FilePath, const VRenderHandle &RenderHandle);
+	VImage(const VString &FilePath, const VRenderHandle &RenderHandle);
 	/*
 	 * VImage constructor:
 	 *		Description : The constructor of class VImage
@@ -142,7 +142,7 @@ public:
 *therefore, it function may return false even though the file is valid
 *
 */
-	static const bool IsValidBitmapFile(const std::wstring &FilePath);
+	static const bool IsValidBitmapFile(const VString &FilePath);
 
 public:
 	/*

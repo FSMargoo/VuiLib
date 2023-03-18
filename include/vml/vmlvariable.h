@@ -59,17 +59,17 @@ public:
 class VMLStringVariable : public VMLBasicVariable
 {
 private:
-	std::wstring Value;
+	VString Value;
 
 public:
-	VMLStringVariable(Core::VUIObject *TargetObject, const std::wstring &IValue);
+	VMLStringVariable(Core::VUIObject *TargetObject, const VString &IValue);
 	VMLStringVariable *operator=(const VMLStringVariable &TargetVariable);
-	VMLStringVariable *operator=(const std::wstring &TargetVariable);
+	VMLStringVariable *operator=(const VString &TargetVariable);
 	bool			   operator==(const VMLStringVariable &JudgetValue);
 	bool			   operator!=(const VMLStringVariable &JudgetValue);
-	bool			   operator==(const std::wstring &JudgetValue);
-	bool			   operator!=(const std::wstring &JudgetValue);
-					   operator std::wstring();
+	bool			   operator==(const VString &JudgetValue);
+	bool			   operator!=(const VString &JudgetValue);
+					   operator VString();
 };
 class VMLBooleanVariable : public VMLBasicVariable
 {

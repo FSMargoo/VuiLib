@@ -66,8 +66,7 @@ public:
 	void FillRoundedRectangle(const VRect &Rectangle, const VPoint &Radius, VPenBrush *BorderPen,
 							  VSolidBrush *FillBrush);
 
-	void DrawString(const std::wstring &String, const VRect &StringRectangle, VFont *TargetFont,
-					VSolidBrush *TextBrush);
+	void DrawString(const VString &String, const VRect &StringRectangle, VFont *TargetFont, VSolidBrush *TextBrush);
 
 	void DrawImage(const VRect &TargetRectangle, VImage *SourceImage, const VRect &SourceRectangle,
 				   const float &ImageOpacity);
@@ -94,15 +93,15 @@ class VPainter
 {
 public:
 	/*
-   * VPainter constructor:
-   *		Description : The VPainter of class VImage
-   *		Values
+	 * VPainter constructor:
+	 *		Description : The VPainter of class VImage
+	 *		Values
 	 * Tip	: {
-   *			[const VRenderHandle&] RenderHandle : The render handle
-   *of renderer
+	 *			[const VRenderHandle&] RenderHandle : The render handle
+	 *of renderer
 	 * environment
-   *		}
-   */
+	 *		}
+	 */
 	explicit VPainter(const VRenderHandle &RenderHandle);
 	~VPainter();
 
@@ -130,7 +129,7 @@ public:
 	void FillRoundedRectangle(const VRect &Rectangle, const VPoint &Radius, VPenBrush *BorderPen,
 							  VSolidBrush *FillBrush);
 
-	void DrawString(const std::wstring &String, const VRect &StringRectangle, VFont *TargetFont, VPenBrush *TextBrush);
+	void DrawString(const VString &String, const VRect &StringRectangle, VFont *TargetFont, VPenBrush *TextBrush);
 
 	void DrawImage(const VRect &TargetRectangle, VImage *SourceImage, const VRect &SourceRectangle,
 				   const float &ImageOpacity);

@@ -5,7 +5,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core
 {
 
-VPushButton::VPushButton(const int &Width, const int &Height, const std::wstring &PlaneText, VUIObject *Parent)
+VPushButton::VPushButton(const int &Width, const int &Height, const VString &PlaneText, VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VPushButtonTheme(*(static_cast<VPushButtonTheme *>(GetTargetTheme(VUIThemeType::VPushButton))));
@@ -68,13 +68,13 @@ void VPushButton::OnPaint(VCanvasPainter *Painter)
 	Painter->EndDraw();
 }
 
-void VPushButton::SetPlaneText(const std::wstring &PlaneText)
+void VPushButton::SetPlaneText(const VString &PlaneText)
 {
 	Theme->PlaneText = PlaneText;
 
 	Update();
 }
-const std::wstring &VPushButton::GetPlaneString()
+const VString &VPushButton::GetPlaneString()
 {
 	return Theme->PlaneText;
 }

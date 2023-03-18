@@ -121,7 +121,7 @@ VMLDoubleVariable::operator double()
 	return Value;
 }
 
-VMLStringVariable::VMLStringVariable(Core::VUIObject *TargetObject, const std::wstring &IValue)
+VMLStringVariable::VMLStringVariable(Core::VUIObject *TargetObject, const VString &IValue)
 	: VMLBasicVariable(TargetObject), Value(IValue)
 {
 }
@@ -133,7 +133,7 @@ VMLStringVariable *VMLStringVariable::operator=(const VMLStringVariable &TargetV
 
 	return this;
 }
-VMLStringVariable *VMLStringVariable::operator=(const std::wstring &TargetVariable)
+VMLStringVariable *VMLStringVariable::operator=(const VString &TargetVariable)
 {
 	Value = TargetVariable;
 	BindObject->Update();
@@ -141,11 +141,11 @@ VMLStringVariable *VMLStringVariable::operator=(const std::wstring &TargetVariab
 
 	return this;
 }
-bool VMLStringVariable::operator!=(const std::wstring &JudgetValue)
+bool VMLStringVariable::operator!=(const VString &JudgetValue)
 {
 	return Value != JudgetValue;
 }
-bool VMLStringVariable::operator==(const std::wstring &JudgetValue)
+bool VMLStringVariable::operator==(const VString &JudgetValue)
 {
 	return Value == JudgetValue;
 }
@@ -157,7 +157,7 @@ bool VMLStringVariable::operator==(const VMLStringVariable &JudgetValue)
 {
 	return Value == JudgetValue.Value;
 }
-VMLStringVariable::operator std::wstring()
+VMLStringVariable::operator VString()
 {
 	return Value;
 }

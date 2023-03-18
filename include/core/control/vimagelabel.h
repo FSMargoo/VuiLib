@@ -14,7 +14,7 @@ private:
 public:
 	VImageLabel(const int &Width, const int &Height, VUIObject *Parent);
 	VImageLabel(const int &Width, const int &Height, VImage *Image, VUIObject *Parent);
-	VImageLabel(const int &Width, const int &Height, const std::wstring &ImagePath, VUIObject *Parent);
+	VImageLabel(const int &Width, const int &Height, const VString &ImagePath, VUIObject *Parent);
 	~VImageLabel();
 
 public:

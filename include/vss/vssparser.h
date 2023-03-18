@@ -38,14 +38,14 @@ struct VSSPropertyValue
 
 	Core::VColor PropertyAsColorValue;
 	int			 PropertyAsInt	  = 0;
-	std::wstring PropertyAsString = L"";
+	VString		 PropertyAsString = L"";
 	double		 PropertyAsDouble = 0.f;
 	bool		 PropertyAsBool	  = false;
 };
 
 struct VSSSelectorProperty
 {
-	std::wstring				  PropertyTag;
+	VString						  PropertyTag;
 	std::vector<VSSPropertyValue> ValueList;
 };
 
@@ -67,7 +67,7 @@ enum class VSSSelectorType
 class VSSBasicSelector
 {
 public:
-	std::map<std::wstring, VSSSelectorProperty> SelectorProperty;
+	std::map<VString, VSSSelectorProperty> SelectorProperty;
 
 	virtual VSSSelectorType GetType()
 	{
@@ -81,7 +81,7 @@ public:
 class VSSElementSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ElementTag;
+	VString ElementTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -91,7 +91,7 @@ public:
 class VSSIDSelector : public VSSBasicSelector
 {
 public:
-	std::wstring IDTag;
+	VString IDTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -101,8 +101,8 @@ public:
 class VSSClassSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ClassTag;
-	std::wstring TargetElement;
+	VString ClassTag;
+	VString TargetElement;
 
 	VSSSelectorType GetType() override
 	{
@@ -112,8 +112,8 @@ public:
 class VSSFakeClassSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ElementTag;
-	std::wstring ClassTag;
+	VString ElementTag;
+	VString ClassTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -123,9 +123,9 @@ public:
 class VSSClassWithFakeClassSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ClassTag;
-	std::wstring ElementTag;
-	std::wstring FakeClassTag;
+	VString ClassTag;
+	VString ElementTag;
+	VString FakeClassTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -135,8 +135,8 @@ public:
 class VSSClassWithFakeElementSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ElementTag;
-	std::wstring ClassTag;
+	VString ElementTag;
+	VString ClassTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -146,9 +146,9 @@ public:
 class VSSClassWithFakeClassAndFakeElementSelector : public VSSBasicSelector
 {
 public:
-	std::wstring FakeElementTag;
-	std::wstring FakeClassTag;
-	std::wstring ClassTag;
+	VString FakeElementTag;
+	VString FakeClassTag;
+	VString ClassTag;
 
 	VSSSelectorType GetType() override
 	{
@@ -166,8 +166,8 @@ public:
 class VSSFakeElementSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ElementTag;
-	std::wstring FakeElementTag;
+	VString ElementTag;
+	VString FakeElementTag;
 
 public:
 	VSSSelectorType GetType() override
@@ -178,9 +178,9 @@ public:
 class VSSFakeElementWithClassSelector : public VSSBasicSelector
 {
 public:
-	std::wstring ElementTag;
-	std::wstring ClassTag;
-	std::wstring FakeElementTag;
+	VString ElementTag;
+	VString ClassTag;
+	VString FakeElementTag;
 
 public:
 	VSSSelectorType GetType() override
@@ -191,7 +191,7 @@ public:
 
 struct VSSParserError
 {
-	std::wstring ErrorInformation;
+	VString		 ErrorInformation;
 	unsigned int ErrorLine = 0;
 };
 
@@ -211,20 +211,19 @@ private:
 	unsigned int BaseLine = 0;
 
 private:
-	std::map<std::wstring, VSSSelectorProperty> ParserProperty(const std::wstring &PropertyString,
-															   VSSParserResult	  *Result);
+	std::map<VString, VSSSelectorProperty> ParserProperty(const VString &PropertyString, VSSParserResult *Result);
 
 private:
-	void ThrowError(VSSParserResult *Result, const std::wstring &ErrorString)
+	void ThrowError(VSSParserResult *Result, const VString &ErrorString)
 	{
 		(*Result).ParserStatus = VVVSParserStatus::Error;
 		(*Result).ErrorInfo	   = {ErrorString, BaseLine + ParserLexical->get_line() + 1};
 	}
 
 private:
-	std::wstring GetPropertyString(VSSParserResult *Result)
+	VString GetPropertyString(VSSParserResult *Result)
 	{
-		std::wstring									  PropertyString;
+		VString											  PropertyString;
 		bool											  EndFlag = false;
 		VKits::seal_lexical_type_info::seal_lexical_token Token;
 
@@ -253,7 +252,7 @@ private:
 	}
 
 public:
-	VSSParser(const std::wstring &VSString, VVVSParserParseMode VVSParserMode = VVVSParserParseMode::FromString,
+	VSSParser(const VString &VSString, VVVSParserParseMode VVSParserMode = VVVSParserParseMode::FromString,
 			  const int &Line = 0);
 	~VSSParser();
 

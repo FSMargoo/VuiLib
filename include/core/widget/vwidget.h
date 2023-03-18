@@ -95,8 +95,8 @@ private:
 
 public:
 	void				CallWidgetSetIME(const int &X, const int &Y) override;
-	void				CallWidgetSetFocusID(const std::wstring &ObjectID) override;
-	std::wstring		CallWidgetGetFocusID() const override;
+	void				CallWidgetSetFocusID(const VString &ObjectID) override;
+	VString				CallWidgetGetFocusID() const override;
 	void				CallWidgetLockFocusID() override;
 	void				CallWidgetUnlockFocusID() override;
 	bool				CallWidgetGetLockingStatus() override;
@@ -111,7 +111,7 @@ public:
 	bool CheckQuitWindowMessage(VMessage *Message) override;
 
 public:
-	VSignal<std::vector<std::wstring>> FileOnDrag;
+	VSignal<std::vector<VString>> FileOnDrag;
 
 public:
 	HWND GetLocalWinId() override;
@@ -123,7 +123,7 @@ public:
 	void OnPaint(VCanvasPainter *Canvas, const VRect &Rect);
 
 public:
-	void SetTitle(const std::wstring &WindowText);
+	void SetTitle(const VString &WindowText);
 	void SetBackgroundColor(const VColor &Color);
 	void SetMaxSize(const VGeometry &MaxSize);
 	void SetMiniSize(const VGeometry &MiniSize);
@@ -151,7 +151,7 @@ public:
 	~VMainWindow();
 
 private:
-	void WindowOnFileDrag(std::vector<std::wstring> FilePath);
+	void WindowOnFileDrag(std::vector<VString> FilePath);
 
 private:
 	std::vector<VRepaintMessage *> RepaintMessages;
@@ -167,8 +167,8 @@ private:
 
 	VDCRender *Direct2DRender;
 
-	bool					  FileDropped;
-	std::vector<std::wstring> DropFilePath;
+	bool				 FileDropped;
+	std::vector<VString> DropFilePath;
 
 	VKits::VAllocator *RepaintAllocator;
 };
@@ -183,7 +183,7 @@ public:
 
 private:
 	void InitKernel();
-	void InitWindow(const std::wstring &ClassName, HWND ParentWindow);
+	void InitWindow(const VString &ClassName, HWND ParentWindow);
 	void InitIME();
 
 private:
@@ -201,18 +201,17 @@ public:
 	void SetQuitEvent(const std::function<bool()> &QEventFunction);
 
 public:
-	VWidget(const int &Width, const int &Height, VApplication *Parent, const std::wstring &ClassName,
+	VWidget(const int &Width, const int &Height, VApplication *Parent, const VString &ClassName,
 			const bool &Sizble = true);
-	VWidget(const int &Width, const int &Height, VMainWindow *Parent, const std::wstring &ClassName,
+	VWidget(const int &Width, const int &Height, VMainWindow *Parent, const VString &ClassName,
 			const bool &Sizble = true);
-	VWidget(const int &Width, const int &Height, VWidget *Parent, const std::wstring &ClassName,
-			const bool &Sizble = true);
+	VWidget(const int &Width, const int &Height, VWidget *Parent, const VString &ClassName, const bool &Sizble = true);
 	~VWidget();
 
 public:
 	void			CallWidgetSetIME(const int &X, const int &Y) override;
-	void			CallWidgetSetFocusID(const std::wstring &ObjectID) override;
-	std::wstring	CallWidgetGetFocusID() const override;
+	void			CallWidgetSetFocusID(const VString &ObjectID) override;
+	VString			CallWidgetGetFocusID() const override;
 	void			CallWidgetLockFocusID() override;
 	void			CallWidgetUnlockFocusID() override;
 	bool			CallWidgetGetLockingStatus() override;
@@ -239,7 +238,7 @@ public:
 	void Hide() override;
 
 public:
-	void SetTitle(const std::wstring &WindowText);
+	void SetTitle(const VString &WindowText);
 	void SetBackgroundColor(const VColor &Color);
 	void SetMaxSize(const VGeometry &MaxSize);
 	void SetMiniSize(const VGeometry &MiniSize);
@@ -255,13 +254,13 @@ public:
 	void CheckFrame() override;
 
 public:
-	Core::VSignal<std::vector<std::wstring>> FileOnDrag;
+	Core::VSignal<std::vector<VString>> FileOnDrag;
 
 public:
 	void SetFileDragStatus(const bool &Status);
 
 private:
-	void WindowOnFileDrag(std::vector<std::wstring> FilePath);
+	void WindowOnFileDrag(std::vector<VString> FilePath);
 
 private:
 	std::vector<VRepaintMessage *> RepaintMessages;
@@ -279,8 +278,8 @@ private:
 
 	VKits::VAllocator *RepaintAllocator;
 
-	bool					  FileDropped;
-	std::vector<std::wstring> DropFilePath;
+	bool				 FileDropped;
+	std::vector<VString> DropFilePath;
 };
 } // namespace Core
 

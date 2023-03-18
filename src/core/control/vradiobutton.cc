@@ -51,7 +51,7 @@ void VRadioButton::SetSwitchStatus(const bool &Status)
 
 	Update();
 }
-void VRadioButton::SetPlaneText(const std::wstring &PlaneText)
+void VRadioButton::SetPlaneText(const VString &PlaneText)
 {
 	Theme->PlaneText = PlaneText;
 

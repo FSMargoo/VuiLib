@@ -18,9 +18,9 @@ class VMLMainWindow : public Core::VMainWindow
 protected:
 	std::vector<VMLObject *>		ObjectList;
 	std::vector<VMLBasicVariable *> VariableList;
-	std::map<std::wstring, void *>	MetaFunctionList;
-	std::vector<std::function<bool(const std::wstring &, const VMLFinder &, Core::VUIObject **, Core::VUIObject *,
-								   std::map<std::wstring, VMLPropertyValue> &, VMLControlBuildStatus *)>>
+	std::map<VString, void *>		MetaFunctionList;
+	std::vector<std::function<bool(const VString &, const VMLFinder &, Core::VUIObject **, Core::VUIObject *,
+								   std::map<VString, VMLPropertyValue> &, VMLControlBuildStatus *)>>
 		UserDefineList;
 
 private:
@@ -35,9 +35,9 @@ public:
 	~VMLMainWindow();
 
 public:
-	VMLWidgetLoadResult LoadVML(const std::wstring VML, VMLParserParseMode StringMode);
+	VMLWidgetLoadResult LoadVML(const VString VML, VMLParserParseMode StringMode);
 	VMLWidgetLoadResult LoadVML(VMLParserResult VMLAstTree, VMLObject *UIParent = nullptr);
-	VMLWidgetLoadResult LoadVML(std::map<std::wstring, VMLNode> VMLAstTree, VMLWidgetVMLObjectList *ObjectCacheList,
+	VMLWidgetLoadResult LoadVML(std::map<VString, VMLNode> VMLAstTree, VMLWidgetVMLObjectList *ObjectCacheList,
 								VMLObject *UIParent = nullptr);
 
 public:
@@ -48,31 +48,31 @@ public:
 
 public:
 	void PushUserDefineFunction(
-		std::function<bool(const std::wstring &, const VMLFinder &, Core::VUIObject **, Core::VUIObject *,
-						   std::map<std::wstring, VMLPropertyValue> &, VMLControlBuildStatus *)>
+		std::function<bool(const VString &, const VMLFinder &, Core::VUIObject **, Core::VUIObject *,
+						   std::map<VString, VMLPropertyValue> &, VMLControlBuildStatus *)>
 			FunctionObject);
 
 public:
-	VMLFinder Get(const std::wstring &ChildrenId);
-	VMLFinder operator[](const std::wstring &ChildrenId);
+	VMLFinder Get(const VString &ChildrenId);
+	VMLFinder operator[](const VString &ChildrenId);
 
 public:
 	template <class... Parameters>
-	inline void RegisterMetaFunction(const std::wstring &FunctionName, void (*Functional)(Parameters...))
+	inline void RegisterMetaFunction(const VString &FunctionName, void (*Functional)(Parameters...))
 	{
 		Core::VSignal<Parameters...> *Signal = new Core::VSignal<Parameters...>;
 		Signal->Connect(Functional);
 
-		MetaFunctionList.insert(std::pair<std::wstring, void *>(FunctionName, (void *)Signal));
+		MetaFunctionList.insert(std::pair<VString, void *>(FunctionName, (void *)Signal));
 	}
 	template <class ObjectType, class... Parameters>
-	inline void RegisterMetaFunction(const std::wstring &FunctionName, ObjectType *Object,
+	inline void RegisterMetaFunction(const VString &FunctionName, ObjectType *Object,
 									 void (ObjectType::*Functional)(Parameters...))
 	{
 		Core::VSignal<Parameters...> *Signal = new Core::VSignal<Parameters...>;
 		Signal->Connect(Object, Functional);
 
-		MetaFunctionList.insert(std::pair<std::wstring, void *>(FunctionName, (void *)Signal));
+		MetaFunctionList.insert(std::pair<VString, void *>(FunctionName, (void *)Signal));
 	}
 };
 } // namespace VML

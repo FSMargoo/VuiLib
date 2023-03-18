@@ -33,7 +33,7 @@ VImage::VImage(const int &Width, const int &Height, const VRenderHandle &RenderH
 
 	);
 }
-VImage::VImage(const std::wstring &FilePath, const VRenderHandle &RenderHandle) : DirectXBitmap(RenderHandle.Allocator)
+VImage::VImage(const VString &FilePath, const VRenderHandle &RenderHandle) : DirectXBitmap(RenderHandle.Allocator)
 {
 	IWICBitmapDecoder	  *IWICDecoder	 = nullptr;
 	IWICBitmapFrameDecode *IWICFrame	 = nullptr;
@@ -44,7 +44,7 @@ VImage::VImage(const std::wstring &FilePath, const VRenderHandle &RenderHandle) 
 		L"Failed to create bitmap decoder");
 	VLIB_REPORT_IF_FAILED_INFO(
 		VDirectXIWICImagingFactory.GetInstance()->CreateDecoderFromFilename(
-			FilePath.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &IWICDecoder),
+			FilePath.CStyleString(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &IWICDecoder),
 		L"Failed to create decoder from file name");
 
 	VLIB_REPORT_IF_FAILED_INFO(IWICDecoder->GetFrame(0, &IWICFrame),
@@ -213,7 +213,7 @@ void VImage::ApplyShadowEffect(const float &ShadowRadius, const VColor &ShadowCo
 	}
 }
 
-const bool VImage::IsValidBitmapFile(const std::wstring &FilePath)
+const bool VImage::IsValidBitmapFile(const VString &FilePath)
 {
 	IWICBitmapDecoder	  *IWICDecoder	 = nullptr;
 	IWICBitmapFrameDecode *IWICFrame	 = nullptr;
@@ -229,7 +229,7 @@ const bool VImage::IsValidBitmapFile(const std::wstring &FilePath)
 	}
 
 	Result = VDirectXIWICImagingFactory.GetInstance()->CreateDecoderFromFilename(
-		FilePath.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &IWICDecoder);
+		FilePath.CStyleString(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &IWICDecoder);
 	if (FAILED(Result))
 	{
 		VDXObjectSafeFree(&IWICDecoder);

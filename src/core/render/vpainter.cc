@@ -160,7 +160,7 @@ void VCanvasPainter::FillRoundedRectangle(const VRect &Rectangle, const VPoint &
 	DrawRoundedRectangle(Rectangle, Radius, BorderPen);
 #endif
 }
-void VCanvasPainter::DrawString(const std::wstring &String, const VRect &StringRectangle, VFont *TargetFont,
+void VCanvasPainter::DrawString(const VString &String, const VRect &StringRectangle, VFont *TargetFont,
 								VSolidBrush *TextBrush)
 {
 #ifndef _VLIB_CANVAS_DEBUING_S
@@ -168,11 +168,11 @@ void VCanvasPainter::DrawString(const std::wstring &String, const VRect &StringR
 						   static_cast<FLOAT>(StringRectangle.Right), static_cast<FLOAT>(StringRectangle.Bottom)};
 
 #ifdef UNICODE
-	TargetDevice->DrawTextW(String.c_str(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(), D2DRECT,
-							TextBrush->GetDxBrush());
+	TargetDevice->DrawTextW(String.CStyleString(), static_cast<UINT32>(String.Length()), TargetFont->GetDXObject(),
+							D2DRECT, TextBrush->GetDxBrush());
 #else
-	TargetDevice->DrawTextA(String.c_str(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(), D2DRECT,
-							TextBrush->GetDxBrush());
+	TargetDevice->DrawTextA(String.CStyleString(), static_cast<UINT32>(String.Length()), TargetFont->GetDXObject(),
+							D2DRECT, TextBrush->GetDxBrush());
 #endif
 #endif
 }
@@ -365,18 +365,17 @@ void VPainter::FillRoundedRectangle(const VRect &Rectangle, const VPoint &Radius
 	DrawRoundedRectangle(Rectangle, Radius, BorderPen);
 #endif
 }
-void VPainter::DrawString(const std::wstring &String, const VRect &StringRectangle, VFont *TargetFont,
-						  VPenBrush *TextBrush)
+void VPainter::DrawString(const VString &String, const VRect &StringRectangle, VFont *TargetFont, VPenBrush *TextBrush)
 {
 #ifndef _VLIB_CANVAS_DEBUING_S
 	D2D1_RECT_F D2DRECT = {static_cast<FLOAT>(StringRectangle.Left), static_cast<FLOAT>(StringRectangle.Top),
 						   static_cast<FLOAT>(StringRectangle.Right), static_cast<FLOAT>(StringRectangle.Bottom)};
 #ifdef UNICODE
-	TargetDevice->DrawTextW(String.c_str(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(), D2DRECT,
-							TextBrush->GetDxBrush());
+	TargetDevice->DrawTextW(String.CStyleString(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(),
+							D2DRECT, TextBrush->GetDxBrush());
 #else
-	TargetDevice->DrawTextA(String.c_str(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(), D2DRECT,
-							TextBrush->GetDxBrush());
+	TargetDevice->DrawTextA(String.CStyleString(), static_cast<UINT32>(String.length()), TargetFont->GetDXObject(),
+							D2DRECT, TextBrush->GetDxBrush());
 #endif
 #endif
 }

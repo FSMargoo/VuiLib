@@ -101,20 +101,20 @@ public:
    *		Description : The constructor of class VFont
    *		Values
 	 * Tip	: {
-   *			[const std::wstring&] FamilyName  : The font family name
+   *			[const VString&] FamilyName  : The font family name
    *of this font
 	 * [const FontWeight&  ] TextWidget  : The weight of this font
    *[const FontStyle&   ] TextStyle   : The style
 	 * of this font [const
    *FontStretch& ] TextStretch : The stretch style of this font [const float&
    *]
-	 * TextSize	  : The size of this font (pixel) [const std::wstring&] TextSize
+	 * TextSize	  : The size of this font (pixel) [const VString&] TextSize
    *: The local of this font
 
 	 * *		}
    */
-	VFont(const std::wstring &FamilyName, const FontWeight &TextWidget, const FontStyle &TextStyle,
-		  const FontStretch &TextStretch, const float &TextSize, const std::wstring &Local);
+	VFont(const VString &FamilyName, const FontWeight &TextWidget, const FontStyle &TextStyle,
+		  const FontStretch &TextStretch, const float &TextSize, const VString &Local);
 	~VFont();
 
 public:
@@ -134,7 +134,7 @@ public:
    * SetFamilyName function£º
    *		Description : Set the font family name of this font
    */
-	void SetFamilyName(const std::wstring &FontFamilyName);
+	void SetFamilyName(const VString &FontFamilyName);
 	/*
    * SetTextSize function£º
    *		Description : Set the text size of this font
@@ -151,12 +151,12 @@ public:
    * GetFamilyName function£º
    *		Description : Get the family name of this font
    */
-	std::wstring GetFamilyName() const;
+	VString GetFamilyName() const;
 	/*
    * GetLocaleName function£º
    *		Description : Get the locale name of this font
    */
-	std::wstring GetLocaleName() const;
+	VString GetLocaleName() const;
 	/*
    * GetTextWeightStyle function£º
    *		Description : Get the font weight name of this font

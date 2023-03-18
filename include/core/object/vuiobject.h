@@ -55,7 +55,7 @@ struct VUIObjectKernel
 	 * will also change, as the global
 	 * object's layout has changed
 	 */
-	std::wstring GlobalID;
+	VString GlobalID;
 
 	/*
 	 * ChildObjectContainer variable:
@@ -342,7 +342,7 @@ private:
 	 * GeneratedGlobalID function:
 	 *     Description : Generated a global id for this object
 	 */
-	std::wstring GeneratedGlobalID(std::wstring TargetID = L"");
+	VString GeneratedGlobalID(VString TargetID = L"");
 
 protected:
 	/*
@@ -367,14 +367,14 @@ protected:
 	 * global focus
 	 * object's id
 	 */
-	virtual void CallWidgetSetFocusID(const std::wstring &ObjectID);
+	virtual void CallWidgetSetFocusID(const VString &ObjectID);
 	/*
 	 * CallWidgetSetFocusID function:
 	 *     Description : The function will call the widget to get the
 	 * global focus
 	 * object's id
 	 */
-	virtual std::wstring CallWidgetGetFocusID() const;
+	virtual VString CallWidgetGetFocusID() const;
 	/*
 	 * CallWidgetSetFocusID function:
 	 *     Description : The function will call the widget to lock the

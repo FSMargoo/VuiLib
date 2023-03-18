@@ -158,7 +158,7 @@ VRect VUIObject::HelperGetSourceRect()
 {
 	return VRect{0, 0, ObjectVisual.Rectangle.GetWidth(), ObjectVisual.Rectangle.GetHeight()};
 }
-std::wstring VUIObject::GeneratedGlobalID(std::wstring TargetID)
+VString VUIObject::GeneratedGlobalID(VString TargetID)
 {
 	if (!GetParent()->IsApplication())
 	{
@@ -176,7 +176,7 @@ void VUIObject::CallWidgetSetIME(const int &X, const int &Y)
 		return GetParent()->CallWidgetSetIME(X, Y);
 	}
 }
-void VUIObject::CallWidgetSetFocusID(const std::wstring &ObjectID)
+void VUIObject::CallWidgetSetFocusID(const VString &ObjectID)
 {
 	if (GetParent() != nullptr)
 	{
@@ -188,7 +188,7 @@ void VUIObject::RestoreMousePosition(VPoint *MousePosition)
 	MousePosition->X += GetX();
 	MousePosition->Y += GetY();
 }
-std::wstring VUIObject::CallWidgetGetFocusID() const
+VString VUIObject::CallWidgetGetFocusID() const
 {
 	if (GetParent() != nullptr)
 	{

@@ -4,13 +4,12 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VSS
 {
-std::map<std::wstring, VSSSelectorProperty> VSSParser::ParserProperty(const std::wstring &PropertyString,
-																	  VSSParserResult	 *Result)
+std::map<VString, VSSSelectorProperty> VSSParser::ParserProperty(const VString &PropertyString, VSSParserResult *Result)
 {
 	VKits::seal_lexical								  PropertyLexical(PropertyString);
 	VKits::seal_lexical_type_info::seal_lexical_token Token;
 
-	std::map<std::wstring, VSSSelectorProperty> ReturnValue;
+	std::map<VString, VSSSelectorProperty> ReturnValue;
 
 	while (!PropertyLexical.is_eof())
 	{
@@ -58,7 +57,7 @@ std::map<std::wstring, VSSSelectorProperty> VSSParser::ParserProperty(const std:
 			{
 				VSSPropertyValue PropertyValue;
 
-				std::wstring HexString;
+				VString HexString;
 
 				while (true)
 				{
@@ -236,20 +235,20 @@ std::map<std::wstring, VSSSelectorProperty> VSSParser::ParserProperty(const std:
 			{
 				VSSPropertyValue NumberProperty;
 
-				std::wstring NumberCache = Token.token_string;
-				Token					 = PropertyLexical.get_token();
+				VString NumberCache = Token.token_string;
+				Token				= PropertyLexical.get_token();
 
 				if (Token.token_string == L"px")
 				{
 					if (NumberCache.find(L".") != Token.token_string.npos)
 					{
 						NumberProperty.Type				= VSSPropertyType::DoubleValue;
-						NumberProperty.PropertyAsDouble = _wtof(NumberCache.c_str());
+						NumberProperty.PropertyAsDouble = _wtof(NumberCache.CStyleString());
 					}
 					else
 					{
 						NumberProperty.Type			 = VSSPropertyType::IntValue;
-						NumberProperty.PropertyAsInt = _wtoi(NumberCache.c_str());
+						NumberProperty.PropertyAsInt = _wtoi(NumberCache.CStyleString());
 					}
 				}
 				else if (Token.token_string == L"%")
@@ -257,12 +256,12 @@ std::map<std::wstring, VSSSelectorProperty> VSSParser::ParserProperty(const std:
 					if (NumberCache.find(L".") != Token.token_string.npos)
 					{
 						NumberProperty.Type				= VSSPropertyType::DoubleValue;
-						NumberProperty.PropertyAsDouble = _wtof(NumberCache.c_str()) / 100.f;
+						NumberProperty.PropertyAsDouble = _wtof(NumberCache.CStyleString()) / 100.f;
 					}
 					else
 					{
 						NumberProperty.Type				= VSSPropertyType::DoubleValue;
-						NumberProperty.PropertyAsDouble = double(_wtoi(NumberCache.c_str())) / 100.f;
+						NumberProperty.PropertyAsDouble = double(_wtoi(NumberCache.CStyleString())) / 100.f;
 					}
 				}
 				else
@@ -329,12 +328,12 @@ std::map<std::wstring, VSSSelectorProperty> VSSParser::ParserProperty(const std:
 			return ReturnValue;
 		}
 
-		ReturnValue.insert(std::pair<std::wstring, VSSSelectorProperty>(Property.PropertyTag, Property));
+		ReturnValue.insert(std::pair<VString, VSSSelectorProperty>(Property.PropertyTag, Property));
 	}
 
 	return ReturnValue;
 }
-VSSParser::VSSParser(const std::wstring &VSString, VVVSParserParseMode VVSParserMode, const int &Line)
+VSSParser::VSSParser(const VString &VSString, VVVSParserParseMode VVSParserMode, const int &Line)
 {
 	switch (VVSParserMode)
 	{
@@ -393,7 +392,7 @@ VSSParserResult VSSParser::ParseVSS()
 			break;
 		}
 
-		std::wstring LevelOneTag;
+		VString LevelOneTag;
 
 		if (Token.cache_token == UNKNOW_TOKEN)
 		{
@@ -407,7 +406,7 @@ VSSParserResult VSSParser::ParseVSS()
 
 				static_cast<VSSElementSelector *>(Selector)->ElementTag = LevelOneTag;
 
-				std::wstring PropertyString = GetPropertyString(&Result);
+				VString PropertyString = GetPropertyString(&Result);
 				if (Result.ParserStatus == VVVSParserStatus::Error)
 				{
 					return Result;
@@ -429,7 +428,7 @@ VSSParserResult VSSParser::ParseVSS()
 			{
 				Token = ParserLexical->get_token();
 
-				std::wstring LevelTwoTag = Token.token_string;
+				VString LevelTwoTag = Token.token_string;
 
 				if (Token.cache_token != UNKNOW_TOKEN)
 				{
@@ -448,7 +447,7 @@ VSSParserResult VSSParser::ParseVSS()
 					static_cast<VSSClassSelector *>(Selector)->ClassTag		 = LevelTwoTag;
 					static_cast<VSSClassSelector *>(Selector)->TargetElement = LevelOneTag;
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -479,7 +478,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring LevelThreeTag = Token.token_string;
+					VString LevelThreeTag = Token.token_string;
 
 					static_cast<VSSClassWithFakeClassSelector *>(Selector)->ClassTag	 = LevelTwoTag;
 					static_cast<VSSClassWithFakeClassSelector *>(Selector)->ElementTag	 = LevelOneTag;
@@ -493,7 +492,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -534,7 +533,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -576,7 +575,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -635,7 +634,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -672,7 +671,7 @@ VSSParserResult VSSParser::ParseVSS()
 		{
 			Token = ParserLexical->get_token();
 
-			std::wstring LevelTwoTag = Token.token_string;
+			VString LevelTwoTag = Token.token_string;
 
 			if (Token.cache_token != UNKNOW_TOKEN)
 			{
@@ -688,7 +687,7 @@ VSSParserResult VSSParser::ParseVSS()
 				Selector											= new VSSClassSelector;
 				static_cast<VSSClassSelector *>(Selector)->ClassTag = LevelTwoTag;
 
-				std::wstring PropertyString = GetPropertyString(&Result);
+				VString PropertyString = GetPropertyString(&Result);
 				if (Result.ParserStatus == VVVSParserStatus::Error)
 				{
 					return Result;
@@ -728,7 +727,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -770,7 +769,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -831,7 +830,7 @@ VSSParserResult VSSParser::ParseVSS()
 						return Result;
 					}
 
-					std::wstring PropertyString = GetPropertyString(&Result);
+					VString PropertyString = GetPropertyString(&Result);
 					if (Result.ParserStatus == VVVSParserStatus::Error)
 					{
 						return Result;
@@ -885,7 +884,7 @@ VSSParserResult VSSParser::ParseVSS()
 				return Result;
 			}
 
-			std::wstring PropertyString = GetPropertyString(&Result);
+			VString PropertyString = GetPropertyString(&Result);
 			if (Result.ParserStatus == VVVSParserStatus::Error)
 			{
 				return Result;
@@ -916,7 +915,7 @@ VSSParserResult VSSParser::ParseVSS()
 				return Result;
 			}
 
-			std::wstring PropertyString = GetPropertyString(&Result);
+			VString PropertyString = GetPropertyString(&Result);
 			if (Result.ParserStatus == VVVSParserStatus::Error)
 			{
 				return Result;

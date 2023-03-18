@@ -28,7 +28,7 @@ VTextLabel::VTextLabel(int Width, int Height, VUIObject *Parent) : VAbstractButt
 
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 }
-VTextLabel::VTextLabel(int Width, int Height, const std::wstring &PlaneText, Core::VUIObject *Parent)
+VTextLabel::VTextLabel(int Width, int Height, const VString &PlaneText, Core::VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VTextLabelTheme(*(static_cast<VTextLabelTheme *>(GetTargetTheme(VUIThemeType::VTextLabel))));
@@ -142,7 +142,7 @@ void VTextLabel::OnPaint(VCanvasPainter *Painter)
 	IDWriteTextLayout *TextLayout;
 
 	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-						  Theme->PlaneText.c_str(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(),
+						  Theme->PlaneText.CStyleString(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(),
 						  GetWidth(), GetHeight(), &TextLayout),
 					  L"Failed to create TextLayout object!");
 
@@ -152,7 +152,7 @@ void VTextLabel::OnPaint(VCanvasPainter *Painter)
 
 	Painter->EndDraw();
 }
-void VTextLabel::SetPlaneText(const std::wstring &PlaneText)
+void VTextLabel::SetPlaneText(const VString &PlaneText)
 {
 	Theme->PlaneText = PlaneText;
 
@@ -244,7 +244,7 @@ void VTextLabel::SetAutoSize(const bool &Status)
 	Update();
 }
 
-std::wstring VTextLabel::GetPlaneText() const
+VString VTextLabel::GetPlaneText() const
 {
 	return Theme->PlaneText;
 }
@@ -253,12 +253,13 @@ bool VTextLabel::GetAutoSizeStatus() const
 	return AutoSize;
 }
 
-void VTextLabel::ResizeByText(const std::wstring &Text)
+void VTextLabel::ResizeByText(const VString &Text)
 {
 	IDWriteTextLayout *TextLayout;
 
-	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-						  Text.c_str(), Text.size(), Theme->LabelFont->GetDXObject(), FLT_MAX, FLT_MAX, &TextLayout),
+	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(Text.CStyleString(), Text.size(),
+																		   Theme->LabelFont->GetDXObject(), FLT_MAX,
+																		   FLT_MAX, &TextLayout),
 					  L"Failed to create TextLayout object!");
 
 	DWRITE_TEXT_METRICS TextMetrics;
@@ -273,8 +274,8 @@ void VTextLabel::ResizeByText()
 	IDWriteTextLayout *TextLayout;
 
 	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-						  Theme->PlaneText.c_str(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(), FLT_MAX,
-						  FLT_MAX, &TextLayout),
+						  Theme->PlaneText.CStyleString(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(),
+						  FLT_MAX, FLT_MAX, &TextLayout),
 					  L"Failed to create TextLayout object!");
 
 	DWRITE_TEXT_METRICS TextMetrics;

@@ -37,13 +37,13 @@ public:
 public:
 	explicit VPushButton(VUIObject *Parent);
 	VPushButton(const int &Width, const int &Height, VUIObject *Parent);
-	VPushButton(const int &Width, const int &Height, const std::wstring &PlaneText, VUIObject *Parent);
+	VPushButton(const int &Width, const int &Height, const VString &PlaneText, VUIObject *Parent);
 	~VPushButton() noexcept;
 
 public:
-	void				SetPlaneText(const std::wstring &PlaneText);
-	void				SetTextSize(const int &TextSize);
-	const std::wstring &GetPlaneString();
+	void		   SetPlaneText(const VString &PlaneText);
+	void		   SetTextSize(const int &TextSize);
+	const VString &GetPlaneString();
 
 public:
 	VPushButtonTheme *GetTheme();

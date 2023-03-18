@@ -18,7 +18,7 @@ VLineEditor::VLineEditor(const int &Width, const int &Height, VUIObject *Parent)
 
 	Resize(Width, Height);
 }
-VLineEditor::VLineEditor(const int &Width, const int &Height, std::wstring PlaneText, VUIObject *Parent)
+VLineEditor::VLineEditor(const int &Width, const int &Height, VString PlaneText, VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VTextEditorTheme(*(static_cast<VTextEditorTheme *>(GetTargetTheme(VUIThemeType::VTextEditor))));
@@ -163,7 +163,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 			IDWriteTextLayout *TextLayout;
 
 			VLIB_REPORT_IF_FAILED(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-				InputStringCache.c_str(), InputStringCache.size(), Theme->LabelFont->GetDXObject(), INT_MAX,
+				InputStringCache.CStyleString(), InputStringCache.size(), Theme->LabelFont->GetDXObject(), INT_MAX,
 				GetHeight(), &TextLayout));
 
 			auto MouseRelativeX =
@@ -240,7 +240,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 					IDWriteTextLayout *TextLayout;
 
 					VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-										  InputStringCache.c_str(), InputStringCache.size(),
+										  InputStringCache.CStyleString(), InputStringCache.size(),
 										  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 									  L"Failed to create TextLayout object!");
 
@@ -293,7 +293,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 					IDWriteTextLayout *TextLayout;
 
 					VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-										  InputStringCache.c_str(), InputStringCache.size(),
+										  InputStringCache.CStyleString(), InputStringCache.size(),
 										  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 									  L"Failed to create TextLayout object!");
 
@@ -332,7 +332,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 					IDWriteTextLayout *TextLayout;
 
 					VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-										  InputStringCache.c_str(), InputStringCache.size(),
+										  InputStringCache.CStyleString(), InputStringCache.size(),
 										  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 									  L"Failed to create TextLayout object!");
 
@@ -369,7 +369,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 					IDWriteTextLayout *TextLayout;
 
 					VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-										  InputStringCache.c_str(), InputStringCache.size(),
+										  InputStringCache.CStyleString(), InputStringCache.size(),
 										  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 									  L"Failed to create TextLayout object!");
 
@@ -443,7 +443,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -531,7 +531,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -577,7 +577,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 			{
 				InSelectMode = false;
 
-				InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+				InputStringCache.Erase(TextSelectRange.startPosition, TextSelectRange.length);
 
 				CursorPosition = TextSelectRange.startPosition;
 
@@ -589,7 +589,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -647,11 +647,11 @@ void VLineEditor::OnMessage(VMessage *Message)
 
 				if (CursorPosition > -1)
 				{
-					InputStringCache.erase(InputStringCache.begin() + CursorPosition + 1);
+					InputStringCache.Erase(InputStringCache.begin() + CursorPosition + 1);
 				}
 				else
 				{
-					InputStringCache.erase(InputStringCache.begin());
+					InputStringCache.Erase(InputStringCache.begin());
 				}
 
 				TextOnChange.Emit(InputStringCache);
@@ -694,8 +694,8 @@ void VLineEditor::OnMessage(VMessage *Message)
 			IDWriteTextLayout *TextLayout;
 
 			VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-								  InputStringCache.c_str(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
-								  INT_MAX, GetHeight(), &TextLayout),
+								  InputStringCache.CStyleString(), InputStringCache.size(),
+								  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 							  L"Failed to create TextLayout object!");
 
 			DWRITE_HIT_TEST_METRICS HitTestMetrics;
@@ -744,26 +744,26 @@ void VLineEditor::OnMessage(VMessage *Message)
 
 				MultiByteToWideChar(CP_ACP, 0, ClipBoardBuffer, -1, WideString, ConvertedLength);
 
-				std::wstring TestString = InputStringCache;
+				VString TestString = InputStringCache;
 
 				if (CursorPosition == -1)
 				{
-					TestString.insert(0, WideString);
+					TestString.Insert(0, WideString);
 				}
 				else if (CursorPosition < InputStringCache.size())
 				{
-					TestString.insert(CursorPosition + 1, WideString);
+					TestString.Insert(CursorPosition + 1, WideString);
 				}
 				else
 				{
-					TestString.insert(CursorPosition, WideString);
+					TestString.Insert(CursorPosition, WideString);
 				}
 
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  TestString.c_str(), TestString.size(), Theme->LabelFont->GetDXObject(), INT_MAX,
-									  GetHeight(), &TextLayout),
+									  TestString.CStyleString(), TestString.size(), Theme->LabelFont->GetDXObject(),
+									  INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
 				DWRITE_TEXT_METRICS TestMetrics;
@@ -824,7 +824,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -854,17 +854,18 @@ void VLineEditor::OnMessage(VMessage *Message)
 			{
 				KeyboardUsed = true;
 
-				std::wstring ClipString;
+				VString ClipString;
 				ClipString = InputStringCache.substr(
 					TextSelectRange.startPosition > 0 ? TextSelectRange.startPosition - 1 : 0, TextSelectRange.length);
 
 				std::string ANSIString;
 
-				int ConvertedLength = WideCharToMultiByte(CP_ACP, 0, ClipString.c_str(), -1, NULL, 0, NULL, NULL);
+				int ConvertedLength =
+					WideCharToMultiByte(CP_ACP, 0, ClipString.CStyleString(), -1, NULL, 0, NULL, NULL);
 
 				ANSIString.resize(ConvertedLength);
-				WideCharToMultiByte(CP_ACP, 0, ClipString.c_str(), -1, &ANSIString[0], (int)ANSIString.size(), NULL,
-									NULL);
+				WideCharToMultiByte(CP_ACP, 0, ClipString.CStyleString(), -1, &ANSIString[0], (int)ANSIString.size(),
+									NULL, NULL);
 
 				HANDLE ClipBoardHandle;
 				char  *ClipBoardBuffer;
@@ -927,8 +928,8 @@ void VLineEditor::OnMessage(VMessage *Message)
 			IDWriteTextLayout *TextLayout;
 
 			VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-								  InputStringCache.c_str(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
-								  INT_MAX, GetHeight(), &TextLayout),
+								  InputStringCache.CStyleString(), InputStringCache.size(),
+								  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 							  L"Failed to create TextLayout object!");
 
 			DWRITE_TEXT_METRICS StringMetrics;
@@ -977,7 +978,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 
 				CursorPosition = TextSelectRange.startPosition;
 
-				InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+				InputStringCache.Erase(TextSelectRange.startPosition, TextSelectRange.length);
 
 				TextSelectRange.startPosition = 0;
 				TextSelectRange.length		  = 0;
@@ -987,7 +988,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -1043,14 +1044,14 @@ void VLineEditor::OnMessage(VMessage *Message)
 
 				Update();
 
-				InputStringCache.erase(InputStringCache.begin() + CursorPosition);
+				InputStringCache.Erase(InputStringCache.begin() + CursorPosition);
 
 				--CursorPosition;
 
 				IDWriteTextLayout *TextLayout;
 
 				VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-									  InputStringCache.c_str(), InputStringCache.size(),
+									  InputStringCache.CStyleString(), InputStringCache.size(),
 									  Theme->LabelFont->GetDXObject(), INT_MAX, GetHeight(), &TextLayout),
 								  L"Failed to create TextLayout object!");
 
@@ -1088,7 +1089,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 			{
 				InSelectMode = false;
 
-				InputStringCache.erase(TextSelectRange.startPosition, TextSelectRange.length);
+				InputStringCache.Erase(TextSelectRange.startPosition, TextSelectRange.length);
 
 				CursorPosition = TextSelectRange.startPosition;
 
@@ -1104,21 +1105,21 @@ void VLineEditor::OnMessage(VMessage *Message)
 
 		if (CursorPosition == -1)
 		{
-			InputStringCache.insert(InputStringCache.begin(), IMECharMessage->IMEChar);
+			InputStringCache.Insert(InputStringCache.begin(), IMECharMessage->IMEChar);
 		}
 		else if (CursorPosition < InputStringCache.size())
 		{
-			InputStringCache.insert(InputStringCache.begin() + CursorPosition + 1, IMECharMessage->IMEChar);
+			InputStringCache.Insert(InputStringCache.begin() + CursorPosition + 1, IMECharMessage->IMEChar);
 		}
 		else
 		{
-			InputStringCache.insert(InputStringCache.begin() + CursorPosition, IMECharMessage->IMEChar);
+			InputStringCache.Insert(InputStringCache.begin() + CursorPosition, IMECharMessage->IMEChar);
 		}
 
 		IDWriteTextLayout *TestTextLayout;
 
 		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-							  InputStringCache.c_str(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
+							  InputStringCache.CStyleString(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
 							  INT_MAX, GetHeight(), &TestTextLayout),
 						  L"Failed to create TextLayout object!");
 
@@ -1235,7 +1236,7 @@ void VLineEditor::LostMouseFocus()
 	}
 }
 
-void VLineEditor::SetPlaneText(const std::wstring &PlaneText)
+void VLineEditor::SetPlaneText(const VString &PlaneText)
 {
 	InputStringCache = PlaneText;
 
@@ -1246,7 +1247,7 @@ void VLineEditor::SetPlaneText(const std::wstring &PlaneText)
 	Update();
 }
 
-const std::wstring VLineEditor::GetPlaneText()
+const VString VLineEditor::GetPlaneText()
 {
 	return InputStringCache;
 }
@@ -1254,7 +1255,7 @@ const int VLineEditor::GetCurrentCursorPosition()
 {
 	return CursorPosition;
 }
-void VLineEditor::SetLeadText(const std::wstring &Text)
+void VLineEditor::SetLeadText(const VString &Text)
 {
 	LeadText = Text;
 }
@@ -1288,7 +1289,7 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter)
 	if (!InputStringCache.empty())
 	{
 		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-							  InputStringCache.c_str(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
+							  InputStringCache.CStyleString(), InputStringCache.size(), Theme->LabelFont->GetDXObject(),
 							  INT_MAX, GetHeight(), &TextLayout) != S_OK,
 						  L"Failed to create TextLayout object!");
 
@@ -1299,7 +1300,7 @@ void VLineEditor::OnPaint(Core::VCanvasPainter *Painter)
 	}
 	else
 	{
-		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(LeadText.c_str(), LeadText.size(),
+		VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(LeadText.CStyleString(), LeadText.size(),
 																			   Theme->LabelFont->GetDXObject(), INT_MAX,
 																			   GetHeight(), &TextLayout) != S_OK,
 						  L"Failed to create TextLayout object!");

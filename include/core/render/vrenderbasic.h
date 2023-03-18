@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../../kits/vallocator.h"
+#include "../stl-ex/vstring.h"
 #include "../vbasiccore.h"
 
 VLIB_BEGIN_NAMESPACE

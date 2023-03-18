@@ -47,9 +47,9 @@ struct VMLObject
 {
 	Core::VUIObject *UIObject;
 
-	std::wstring VMLID;
-	std::wstring VMLClass;
-	std::wstring VMLDOMID;
+	VString VMLID;
+	VString VMLClass;
+	VString VMLDOMID;
 
 	Core::VLayout	   *VMLNativeLaytout;
 	Core::VScaleLayout *VMLNativeScaleLaytout;
@@ -58,10 +58,10 @@ struct VMLObject
 
 	std::vector<VMLObject *> ChildrenObjects;
 
-	static VMLObjectType	  StringToObjectType(const std::wstring &String);
-	static const std::wstring ObjectTypeToString(VMLObjectType ObjectType);
-	void					  SetNativeStyleSheet(VSS::VSSBasicSelector *Selector);
-	void					  SetStyleSheet(VSS::VSSBasicSelector *Selector);
+	static VMLObjectType StringToObjectType(const VString &String);
+	static const VString ObjectTypeToString(VMLObjectType ObjectType);
+	void				 SetNativeStyleSheet(VSS::VSSBasicSelector *Selector);
+	void				 SetStyleSheet(VSS::VSSBasicSelector *Selector);
 };
 
 enum class VMLWidgetVMLLoadStats
@@ -75,7 +75,7 @@ struct VMLWidgetLoadResult
 {
 	VMLWidgetVMLLoadStats Status = VMLWidgetVMLLoadStats::Ok;
 
-	std::wstring FailedMessage;
+	VString FailedMessage;
 };
 
 struct VMLWidgetVMLObjectList
@@ -95,9 +95,9 @@ public:
 public:
 	VMLFinder(VMLObject *Object, std::vector<VMLObject *> List, std::vector<VMLBasicVariable *> *VariableList);
 
-	VMLFinder		 operator[](const std::wstring &ChildrenId);
+	VMLFinder		 operator[](const VString &ChildrenId);
 	Core::VUIObject *operator->();
-	VMLFinder		 Get(const std::wstring &ChildrenId);
+	VMLFinder		 Get(const VString &ChildrenId);
 	bool			 IsValid();
 
 	template <class Type = Core::VUIObject> Type *Get()

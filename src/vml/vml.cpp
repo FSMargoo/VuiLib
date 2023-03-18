@@ -4,7 +4,7 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VML
 {
-VMLObjectType VMLObject::StringToObjectType(const std::wstring &String)
+VMLObjectType VMLObject::StringToObjectType(const VString &String)
 {
 	VMLObjectType Type = VMLObjectType::PushButton;
 
@@ -111,7 +111,7 @@ VMLObjectType VMLObject::StringToObjectType(const std::wstring &String)
 
 	return Type;
 }
-const std::wstring VMLObject::ObjectTypeToString(VMLObjectType ObjectType)
+const VString VMLObject::ObjectTypeToString(VMLObjectType ObjectType)
 {
 	switch (ObjectType)
 	{
@@ -443,7 +443,7 @@ VMLFinder::VMLFinder(VML::VMLObject *Object, std::vector<VMLObject *> List,
 	OriginObject = Object;
 }
 
-VMLFinder VMLFinder::operator[](const std::wstring &ChildrenId)
+VMLFinder VMLFinder::operator[](const VString &ChildrenId)
 {
 	for (auto &Object : ObjectList)
 	{
@@ -459,7 +459,7 @@ Core::VUIObject *VMLFinder::operator->()
 {
 	return Get();
 }
-VMLFinder VMLFinder::Get(const std::wstring &ChildrenId)
+VMLFinder VMLFinder::Get(const VString &ChildrenId)
 {
 	for (auto &Object : ObjectList)
 	{

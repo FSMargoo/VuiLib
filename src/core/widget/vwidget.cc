@@ -64,7 +64,7 @@ void VMainWindow::SetQuitEvent(const std::function<bool()> &QEventFunction)
 {
 	WindowConfig.WindowQuitOnClicked = QEventFunction;
 }
-void VMainWindow::WindowOnFileDrag(std::vector<std::wstring> FilePath)
+void VMainWindow::WindowOnFileDrag(std::vector<VString> FilePath)
 {
 	FileDropped	 = true;
 	DropFilePath = FilePath;
@@ -108,7 +108,7 @@ void VMainWindow::InitWindow()
 	WindowConfig.LosedUserFocus		 = [this]() -> void { Win32LoseFocus(); };
 	WindowConfig.WinRepaintMessage	 = [this]() { Win32ThreadRepaint(); };
 	WindowConfig.WindowQuitOnClicked = [this]() -> bool { return DefaultOnQuitFunction(); };
-	WindowConfig.WindowOnFileDrag	 = [this](std::vector<std::wstring> FilePath) -> void {
+	WindowConfig.WindowOnFileDrag	 = [this](std::vector<VString> FilePath) -> void {
 		   return WindowOnFileDrag(FilePath);
 	};
 
@@ -131,14 +131,14 @@ void VMainWindow::CallWidgetSetIME(const int &X, const int &Y)
 	WindowConfig.IMEX = X;
 	WindowConfig.IMEY = Y;
 }
-void VMainWindow::CallWidgetSetFocusID(const std::wstring &ObjectID)
+void VMainWindow::CallWidgetSetFocusID(const VString &ObjectID)
 {
 	if (!WindowConfig.LockFocus)
 	{
 		WindowConfig.GlobalFocusID = ObjectID;
 	}
 }
-std::wstring VMainWindow::CallWidgetGetFocusID() const
+VString VMainWindow::CallWidgetGetFocusID() const
 {
 	return WindowConfig.GlobalFocusID;
 }
@@ -451,10 +451,10 @@ void VMainWindow::SetFileDragStatus(const bool &Status)
 	SetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE, Style);
 }
 
-void VMainWindow::SetTitle(const std::wstring &WindowText)
+void VMainWindow::SetTitle(const VString &WindowText)
 {
 	Theme->WindowPlaneText = WindowText;
-	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.c_str());
+	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.CStyleString());
 }
 void VMainWindow::SetBackgroundColor(const VColor &Color)
 {
@@ -588,9 +588,9 @@ void VWidget::InitKernel()
 	FpsTimer.Start(14);
 	_VMainConfigs.insert(std::pair<HWND, VWin32ThreadPipe *>(WindowHandle, &WindowConfig));
 }
-void VWidget::InitWindow(const std::wstring &ClassName, HWND ParentWindow)
+void VWidget::InitWindow(const VString &ClassName, HWND ParentWindow)
 {
-	WindowHandle = Win32Core::VWin32CreateWindow(GetWidth(), GetHeight(), L"", ClassName.c_str(), ParentWindow);
+	WindowHandle = Win32Core::VWin32CreateWindow(GetWidth(), GetHeight(), L"", ClassName.CStyleString(), ParentWindow);
 
 #ifdef VENABLE_DWM_ARCLIY_EFFECT
 	InitArcliyWindow();
@@ -621,7 +621,7 @@ void VWidget::InitWindow(const std::wstring &ClassName, HWND ParentWindow)
 	WindowConfig.LosedUserFocus		 = [this]() -> void { Win32LoseFocus(); };
 	WindowConfig.WinRepaintMessage	 = [this]() { Win32ThreadRepaint(); };
 	WindowConfig.WindowQuitOnClicked = [this]() -> bool { return OnQuit(); };
-	WindowConfig.WindowOnFileDrag	 = [this](std::vector<std::wstring> FilePath) -> void {
+	WindowConfig.WindowOnFileDrag	 = [this](std::vector<VString> FilePath) -> void {
 		   return WindowOnFileDrag(FilePath);
 	};
 
@@ -636,8 +636,7 @@ void VWidget::InitIME()
 	WindowConfig.IMEY = -1;
 }
 
-VWidget::VWidget(const int &Width, const int &Height, VMainWindow *Parent, const std::wstring &ClassName,
-				 const bool &Sizble)
+VWidget::VWidget(const int &Width, const int &Height, VMainWindow *Parent, const VString &ClassName, const bool &Sizble)
 	: VUIObject(Parent)
 {
 	Theme = static_cast<VMainWindowTheme *>(GetTargetTheme(VUIThemeType::VMainWindow));
@@ -661,8 +660,7 @@ VWidget::VWidget(const int &Width, const int &Height, VMainWindow *Parent, const
 	Update({0, 0, GetWidth(), GetHeight()});
 }
 
-VWidget::VWidget(const int &Width, const int &Height, VWidget *Parent, const std::wstring &ClassName,
-				 const bool &Sizble)
+VWidget::VWidget(const int &Width, const int &Height, VWidget *Parent, const VString &ClassName, const bool &Sizble)
 	: VUIObject(Parent)
 {
 	Theme = static_cast<VMainWindowTheme *>(GetTargetTheme(VUIThemeType::VMainWindow));
@@ -686,7 +684,7 @@ VWidget::VWidget(const int &Width, const int &Height, VWidget *Parent, const std
 	Update({0, 0, GetWidth(), GetHeight()});
 }
 
-VWidget::VWidget(const int &Width, const int &Height, VApplication *Parent, const std::wstring &ClassName,
+VWidget::VWidget(const int &Width, const int &Height, VApplication *Parent, const VString &ClassName,
 				 const bool &Sizble)
 	: VUIObject(Parent)
 {
@@ -738,11 +736,11 @@ void VWidget::CallWidgetSetIME(const int &X, const int &Y)
 	WindowConfig.IMEX = X;
 	WindowConfig.IMEY = Y;
 }
-void VWidget::CallWidgetSetFocusID(const std::wstring &ObjectID)
+void VWidget::CallWidgetSetFocusID(const VString &ObjectID)
 {
 	WindowConfig.GlobalFocusID = ObjectID;
 }
-std::wstring VWidget::CallWidgetGetFocusID() const
+VString VWidget::CallWidgetGetFocusID() const
 {
 	return WindowConfig.GlobalFocusID;
 }
@@ -793,7 +791,7 @@ void VWidget::SetFileDragStatus(const bool &Status)
 
 	SetWindowLongPtr(GetLocalWinId(), GWL_EXSTYLE, Style);
 }
-void VWidget::WindowOnFileDrag(std::vector<std::wstring> FilePath)
+void VWidget::WindowOnFileDrag(std::vector<VString> FilePath)
 {
 	FileDropped	 = true;
 	DropFilePath = FilePath;
@@ -1006,10 +1004,10 @@ void VWidget::CheckFrame()
 	}
 }
 
-void VWidget::SetTitle(const std::wstring &WindowText)
+void VWidget::SetTitle(const VString &WindowText)
 {
 	Theme->WindowPlaneText = WindowText;
-	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.c_str());
+	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.CStyleString());
 }
 void VWidget::SetBackgroundColor(const VColor &Color)
 {

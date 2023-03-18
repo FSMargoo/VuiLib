@@ -18,7 +18,7 @@ enum class VEditorCaretSelectMode
 };
 struct VEditorCaret
 {
-	std::wstring *CacheTargetPtr;
+	VString *CacheTargetPtr;
 
 	bool InSelecting;
 
@@ -69,10 +69,10 @@ public:
 	void OnPaint(VCanvasPainter *Painter) override;
 
 public:
-	void		 SetPlaneText(const std::wstring &PlaneText);
-	std::wstring GetPlaneText() const;
-	void		 SetLeadingText(const std::wstring &Text);
-	std::wstring GetLedingText() const;
+	void	SetPlaneText(const VString &PlaneText);
+	VString GetPlaneText() const;
+	void	SetLeadingText(const VString &Text);
+	VString GetLedingText() const;
 
 public:
 	void ResetCaretStatus();
@@ -116,8 +116,8 @@ public:
 	IDWriteTextLayout *GetTextLayout();
 
 public:
-	VSignal<const std::wstring &>	 TextOnChange;
-	VSignal<const std::wstring &>	 TextBeforeChange;
+	VSignal<const VString &>		 TextOnChange;
+	VSignal<const VString &>		 TextBeforeChange;
 	VSignal<const wchar_t &>		 PushNewCharacter;
 	VSignal<const wchar_t &, bool *> CheckInput;
 	VSignal<const int &>			 TextClicked;
@@ -163,7 +163,7 @@ protected:
 	long int OffsetY;
 	long int OffsetX;
 
-	std::wstring	  InEditingText;
+	VString			  InEditingText;
 	VTextEditorTheme *Theme;
 
 	VEditorCaret Caret;
@@ -174,7 +174,7 @@ private:
 	void DrawSelectedRange(Core::VCanvasPainter *Painter);
 
 private:
-	void CacheOperation(const std::wstring &OldText);
+	void CacheOperation(const VString &OldText);
 
 protected:
 	bool InMouseDragSelecting;
@@ -200,10 +200,10 @@ protected:
 	bool					  EnableOperationBack;
 	int						  OperationCacheMax;
 	std::vector<VEditorCaret> CaretSet;
-	std::vector<std::wstring> OldStringSet;
+	std::vector<VString>	  OldStringSet;
 
 protected:
-	std::wstring LeadText;
+	VString LeadText;
 };
 } // namespace Core
 

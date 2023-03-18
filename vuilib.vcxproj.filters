@@ -91,6 +91,12 @@
     <Filter Include="src\debug">
       <UniqueIdentifier>{2d2a1c45-095b-495a-a55a-64aae5ddf73c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\stl-ex">
+      <UniqueIdentifier>{01986f5b-dc2b-4ed0-aea6-9a17c1aad460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\stl-ex">
+      <UniqueIdentifier>{0e13e765-7d25-4af5-b491-aa68e047931a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\animation\vanimationcurve.h">
@@ -267,6 +273,9 @@
     <ClInclude Include="include\core\visual\veffect.h">
       <Filter>include\core\visual</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\stl-ex\vstring.h">
+      <Filter>include\core\stl-ex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -440,6 +449,9 @@
     </ClCompile>
     <ClCompile Include="src\core\visual\veffect.cc">
       <Filter>src\core\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\stl-ex\vstring.cpp">
+      <Filter>src\core\stl-ex</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

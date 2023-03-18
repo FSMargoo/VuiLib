@@ -53,7 +53,7 @@ LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lPa
 			HDROP DropInstance = (HDROP)wParameter;
 			UINT  FileCount	   = DragQueryFile(DropInstance, -1, NULL, 0);
 
-			std::vector<std::wstring> FileSets;
+			std::vector<VString> FileSets;
 
 			for (; FileCount > 0; --FileCount)
 			{

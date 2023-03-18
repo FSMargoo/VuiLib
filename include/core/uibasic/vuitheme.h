@@ -45,9 +45,9 @@ public:
 class VMainWindowTheme : public VBasicUITheme
 {
 public:
-	VColor		 BackgroundColor;
-	bool		 WindowSizble;
-	std::wstring WindowPlaneText;
+	VColor	BackgroundColor;
+	bool	WindowSizble;
+	VString WindowPlaneText;
 
 	VMainWindowTheme()
 	{
@@ -96,7 +96,7 @@ public:
 struct VPushButtonTheme : public VLabelCommonTheme
 {
 public:
-	std::wstring PlaneText;
+	VString PlaneText;
 
 public:
 	VPushButtonTheme();
@@ -112,8 +112,8 @@ public:
 struct VRadioButtonTheme : public VLabelCommonTheme
 {
 public:
-	bool		 SwitchStatus = false;
-	std::wstring PlaneText;
+	bool	SwitchStatus = false;
+	VString PlaneText;
 
 public:
 	VRadioButtonTheme();
@@ -129,7 +129,7 @@ public:
 struct VTextLabelTheme : public VLabelCommonTheme
 {
 public:
-	std::wstring PlaneText;
+	VString PlaneText;
 
 public:
 	VTextLabelTheme();
@@ -259,7 +259,7 @@ public:
 struct VTextEditorTheme : public VLabelCommonTheme
 {
 public:
-	std::wstring PlaneText;
+	VString PlaneText;
 
 	VColor CursorColor;
 	VColor OnSelectedColor;

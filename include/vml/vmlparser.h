@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/stl-ex/vstring.h"
 #include "../core/vbasiccore.h"
 #include "../kits/seal.lexical.h"
 #include "../kits/vparserhelper.h"
@@ -19,8 +20,8 @@ enum class VMLParserStatus
 
 struct VMLParserError
 {
-	std::wstring ErrorString;
-	int			 Line;
+	VString ErrorString;
+	int		Line;
 };
 
 enum class VMLPropertyType
@@ -46,44 +47,44 @@ enum class VMLVariableType
 
 struct VMLPropertyValue
 {
-	std::wstring PropertyName = L"";
+	VString PropertyName = L"";
 
 	VMLPropertyType PropertyType = VMLPropertyType::IntValue;
 	VMLVariableType VariableType = VMLVariableType::UndefineType;
 
-	int			 PropertyAsInt	  = 0;
-	std::wstring PropertyAsString = L"";
-	double		 PropertyAsDouble = 0.f;
-	bool		 PropertyAsBool	  = false;
+	int		PropertyAsInt	 = 0;
+	VString PropertyAsString = L"";
+	double	PropertyAsDouble = 0.f;
+	bool	PropertyAsBool	 = false;
 
-	std::vector<std::wstring> PropertyAsObjectCallParameter;
+	std::vector<VString> PropertyAsObjectCallParameter;
 
-	std::wstring				  NativeCallMethodName = L"";
+	VString						  NativeCallMethodName = L"";
 	std::vector<VMLPropertyValue> NativeCallParameter;
 	std::vector<VMLPropertyValue> VariableInitValue;
 };
 
 struct VMLNode
 {
-	std::wstring							 NodeTag;
-	std::map<std::wstring, VMLPropertyValue> NodeValue;
+	VString								NodeTag;
+	std::map<VString, VMLPropertyValue> NodeValue;
 
-	std::map<std::wstring, VMLNode> ChildrenNodes;
-	int								ChildrenSequence = 0;
+	std::map<VString, VMLNode> ChildrenNodes;
+	int						   ChildrenSequence = 0;
 
 	int BlockStart;
 	int BlockEnd;
 
-	VMLPropertyValue GetProperty(const std::wstring &Type);
-	bool			 PropertyExsit(const std::wstring &Type);
+	VMLPropertyValue GetProperty(const VString &Type);
+	bool			 PropertyExsit(const VString &Type);
 };
 
 struct VMLParserResult
 {
-	std::wstring					FilePath;
-	std::vector<VMLParserError>		ErrorInfo;
-	std::map<std::wstring, VMLNode> Nodes;
-	VMLParserStatus					ParserStatus = VMLParserStatus::Ok;
+	VString						FilePath;
+	std::vector<VMLParserError> ErrorInfo;
+	std::map<VString, VMLNode>	Nodes;
+	VMLParserStatus				ParserStatus = VMLParserStatus::Ok;
 };
 
 enum class VMLParserParseMode
@@ -96,20 +97,20 @@ class VMLParser
 {
 private:
 	VKits::seal_lexical *ParserLexical = nullptr;
-	std::wstring		 FilePath;
+	VString				 FilePath;
 
 private:
 	bool			 CheckParameter(const std::vector<VMLPropertyValue>	  &CheckedObject,
 									std::initializer_list<VMLPropertyType> CheckedList);
-	void			 ThrowError(VMLParserResult *Result, const std::wstring &ErrorString);
-	VMLPropertyValue ToPropertyValue(const std::wstring &String);
+	void			 ThrowError(VMLParserResult *Result, const VString &ErrorString);
+	VMLPropertyValue ToPropertyValue(const VString &String);
 	int				 BaseLine = 0;
 
 private:
 	bool FileExist = true;
 
 public:
-	VMLParser(const std::wstring &VMLString, VMLParserParseMode VMLParserMode = VMLParserParseMode::FromString,
+	VMLParser(const VString &VMLString, VMLParserParseMode VMLParserMode = VMLParserParseMode::FromString,
 			  const int &Line = 0);
 	~VMLParser();
 

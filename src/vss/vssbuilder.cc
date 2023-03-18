@@ -4,7 +4,7 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VSS
 {
-Core::VFontAlignment VSSParserHelper::StringToAlignment(const std::wstring &String)
+Core::VFontAlignment VSSParserHelper::StringToAlignment(const VString &String)
 {
 	if (String == L"center")
 	{
@@ -25,7 +25,7 @@ Core::VFontAlignment VSSParserHelper::StringToAlignment(const std::wstring &Stri
 
 	return Core::VFontAlignment::DWRITE_TEXT_ALIGNMENT_CENTER;
 }
-Core::VFontParagraphAlignment VSSParserHelper::StringToParagraphAlignment(const std::wstring &String)
+Core::VFontParagraphAlignment VSSParserHelper::StringToParagraphAlignment(const VString &String)
 {
 	if (String == L"top")
 	{

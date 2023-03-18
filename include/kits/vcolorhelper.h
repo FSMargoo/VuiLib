@@ -10,12 +10,12 @@ public:
 	static short SingleHexLetterToNum(const wchar_t &Hex);
 
 public:
-	static short HexStringToNum(const std::wstring &HexNumberString);
-	static void	 HexStringLowerToUpper(std::wstring &HexStringNumber);
+	static short HexStringToNum(const VString &HexNumberString);
+	static void	 HexStringLowerToUpper(VString &HexStringNumber);
 
 public:
-	static Core::VColor HexToColor(const std::wstring &HexString);
-	static bool			IsValidHex(const std::wstring &HexString);
+	static Core::VColor HexToColor(const VString &HexString);
+	static bool			IsValidHex(const VString &HexString);
 };
 } // namespace VKits
 

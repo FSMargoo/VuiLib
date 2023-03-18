@@ -1322,7 +1322,7 @@ void VEditor::InitEditor()
 	TextBeforeChange.Connect(this, &VEditor::CacheOperation);
 }
 
-void VEditor::CacheOperation(const std::wstring &OldText)
+void VEditor::CacheOperation(const VString &OldText)
 {
 	if (OperationCacheMax > 0 && OperationCacheMax < OldStringSet.size() + 1)
 	{
@@ -1356,7 +1356,7 @@ void VEditor::ResetTextLayout()
 	if (GetWidth() > 0 && GetHeight() > 0)
 	{
 		auto Result = VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-			InEditingText.c_str(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
+			InEditingText.CStyleString(), InEditingText.size(), Theme->LabelFont->GetDXObject(),
 			GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
 			LocalTextLayout.GetAddressOf());
 
@@ -1417,7 +1417,7 @@ void VEditor::ScrollToEnd()
 {
 	OffsetY = GetMaxOffsetY();
 }
-void VEditor::SetPlaneText(const std::wstring &PlaneText)
+void VEditor::SetPlaneText(const VString &PlaneText)
 {
 	InEditingText	 = PlaneText;
 	Caret.CaretStart = 0;
@@ -1427,7 +1427,7 @@ void VEditor::SetPlaneText(const std::wstring &PlaneText)
 
 	TextOnChange.Emit(GetPlaneText());
 }
-void VEditor::SetLeadingText(const std::wstring &PlaneText)
+void VEditor::SetLeadingText(const VString &PlaneText)
 {
 	LeadText		 = PlaneText;
 	Caret.CaretStart = 0;
@@ -1510,7 +1510,7 @@ void VEditor::OnPaint(VCanvasPainter *Painter)
 		Microsoft::WRL::ComPtr<IDWriteTextLayout> LeadingTextLayout;
 
 		VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-			LeadText.c_str(), LeadText.size(), Theme->LabelFont->GetDXObject(),
+			LeadText.CStyleString(), LeadText.size(), Theme->LabelFont->GetDXObject(),
 			GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
 			LeadingTextLayout.GetAddressOf());
 		Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
@@ -1626,7 +1626,7 @@ void VEditor::BackCharacter()
 
 		if (Caret.CaretStart - 1 >= 0)
 		{
-			InEditingText.erase(InEditingText.begin() + Caret.CaretStart - 1);
+			InEditingText.Erase(InEditingText.begin() + Caret.CaretStart - 1);
 		}
 
 		Caret.CaretTurnLeft();
@@ -1643,9 +1643,9 @@ void VEditor::DeleteCharacter()
 			return;
 		}
 
-		if (Caret.CaretStart < InEditingText.size())
+		if (Caret.CaretStart < InEditingText.Size())
 		{
-			InEditingText.erase(InEditingText.begin() + Caret.CaretStart);
+			InEditingText.Erase(InEditingText.Begin() + Caret.CaretStart);
 		}
 
 		ResetTextLayout();
@@ -1659,7 +1659,7 @@ void VEditor::AddCharaceter(const wchar_t &Character)
 
 		if (Character != L'\r')
 		{
-			InEditingText.insert(InEditingText.begin() + Caret.CaretStart, Character);
+			InEditingText.Insert(InEditingText.Begin() + Caret.CaretStart, Character);
 
 			Caret.CaretTurnRight();
 
@@ -1667,7 +1667,7 @@ void VEditor::AddCharaceter(const wchar_t &Character)
 		}
 		else
 		{
-			InEditingText.insert(InEditingText.begin() + Caret.CaretStart, L'\n');
+			InEditingText.Insert(InEditingText.begin() + Caret.CaretStart, L'\n');
 
 			Caret.CaretTurnRight();
 
@@ -1694,7 +1694,7 @@ bool VEditor::ClearSelectArea()
 	{
 		Caret.InSelecting = false;
 
-		InEditingText.erase(Caret.CaretStart, Caret.CaretEnd - Caret.CaretStart);
+		InEditingText.Erase(Caret.CaretStart, Caret.CaretEnd - Caret.CaretStart);
 
 		Caret.CaretEnd = Caret.CaretStart;
 
@@ -1768,7 +1768,7 @@ void VEditor::CopyClipboard()
 
 				if (LockMemory != NULL)
 				{
-					const wchar_t *CString = InEditingText.c_str();
+					const wchar_t *CString = InEditingText.CStyleString();
 
 					memcpy(LockMemory, &CString[TextRange.startPosition], DataByteSize);
 
@@ -1807,7 +1807,7 @@ void VEditor::WriteClipboard()
 
 			if (Memory != NULL)
 			{
-				InEditingText.insert(Caret.CaretStart, CString, StringCount);
+				InEditingText.Insert(Caret.CaretStart, CString, StringCount);
 
 				Caret.CaretStart += StringCount;
 				Caret.CaretEnd = Caret.CaretStart;
@@ -1843,11 +1843,11 @@ IDWriteTextLayout *VEditor::GetTextLayout()
 	return LocalTextLayout.Get();
 }
 
-std::wstring VEditor::GetPlaneText() const
+VString VEditor::GetPlaneText() const
 {
 	return InEditingText;
 }
-std::wstring VEditor::GetLedingText() const
+VString VEditor::GetLedingText() const
 {
 	return LeadText;
 }

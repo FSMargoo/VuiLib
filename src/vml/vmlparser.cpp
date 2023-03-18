@@ -4,13 +4,13 @@ VLIB_BEGIN_NAMESPACE
 
 namespace VML
 {
-VMLPropertyValue VMLNode::GetProperty(const std::wstring &Type)
+VMLPropertyValue VMLNode::GetProperty(const VString &Type)
 {
 	VMLPropertyValue Value = NodeValue.find(Type)->second;
 
 	return Value;
 }
-bool VMLNode::PropertyExsit(const std::wstring &Type)
+bool VMLNode::PropertyExsit(const VString &Type)
 {
 	if (NodeValue.find(Type) != NodeValue.end())
 	{
@@ -40,14 +40,14 @@ bool VMLParser::CheckParameter(const std::vector<VMLPropertyValue>	 &CheckedObje
 
 	return true;
 }
-void VMLParser::ThrowError(VMLParserResult *Result, const std::wstring &ErrorString)
+void VMLParser::ThrowError(VMLParserResult *Result, const VString &ErrorString)
 {
 	(*Result).ParserStatus = VMLParserStatus::Error;
 	(*Result).ErrorInfo.push_back({ErrorString, static_cast<int>(BaseLine + ParserLexical->get_line() + 1)});
 }
-VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
+VMLPropertyValue VMLParser::ToPropertyValue(const VString &String)
 {
-	std::wstring ValueString = String.substr(1, String.size() - 2);
+	VString ValueString = String.substr(1, String.size() - 2);
 
 	if (ValueString[0] == L'$')
 	{
@@ -70,7 +70,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 
 		Value.PropertyType = VMLPropertyType::VariableDefine;
 
-		std::wstring PropertyValue;
+		VString PropertyValue;
 		while (!VariableParameterLexical->is_eof())
 		{
 			auto CacheToken = VariableParameterLexical->get_token();
@@ -90,7 +90,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 
 				ObjectCallValue.PropertyType = VMLPropertyType::ObjectCallParameter;
 
-				std::wstring PropertyValue;
+				VString PropertyValue;
 				while (!VariableParameterLexical->is_eof())
 				{
 					ObjectCallValue.PropertyAsObjectCallParameter.push_back(CacheToken.token_string);
@@ -159,7 +159,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 			return Value;
 		}
 
-		std::wstring PropertyValue;
+		VString PropertyValue;
 		while (!NativeCallLexical->is_eof())
 		{
 			auto CacheToken = NativeCallLexical->get_token();
@@ -180,7 +180,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 
 				ObjectCallValue.PropertyType = VMLPropertyType::ObjectCallParameter;
 
-				std::wstring PropertyValue;
+				VString PropertyValue;
 				while (!NativeCallLexical->is_eof())
 				{
 					ObjectCallValue.PropertyAsObjectCallParameter.push_back(CacheToken.token_string);
@@ -251,7 +251,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 		switch (Type)
 		{
 		case VMLPropertyType::IntValue: {
-			Value.PropertyAsInt = _wtoi(ValueString.c_str());
+			Value.PropertyAsInt = _wtoi(ValueString.CStyleString());
 			break;
 		}
 		case VMLPropertyType::StringValue: {
@@ -259,7 +259,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 			break;
 		}
 		case VMLPropertyType::DoubleValue: {
-			Value.PropertyAsDouble = _wtof(ValueString.c_str());
+			Value.PropertyAsDouble = _wtof(ValueString.CStyleString());
 			break;
 		}
 		}
@@ -319,7 +319,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 	switch (Type)
 	{
 	case VMLPropertyType::IntValue: {
-		Value.PropertyAsInt = _wtoi(ValueString.c_str());
+		Value.PropertyAsInt = _wtoi(ValueString.CStyleString());
 		break;
 	}
 	case VMLPropertyType::StringValue: {
@@ -327,14 +327,14 @@ VMLPropertyValue VMLParser::ToPropertyValue(const std::wstring &String)
 		break;
 	}
 	case VMLPropertyType::DoubleValue: {
-		Value.PropertyAsDouble = _wtof(ValueString.c_str());
+		Value.PropertyAsDouble = _wtof(ValueString.CStyleString());
 		break;
 	}
 	}
 
 	return Value;
 }
-VMLParser::VMLParser(const std::wstring &VMLString, VMLParserParseMode VMLParserMode, const int &Line)
+VMLParser::VMLParser(const VString &VMLString, VMLParserParseMode VMLParserMode, const int &Line)
 {
 	switch (VMLParserMode)
 	{
@@ -481,7 +481,7 @@ VMLParserResult VMLParser::ParseVML()
 		bool EndFlag	  = false;
 		bool ScopeEndFlag = false;
 
-		std::wstring PropertyName;
+		VString PropertyName;
 
 		// Parse Node Property
 		while (!ParserLexical->is_eof())
@@ -503,7 +503,7 @@ VMLParserResult VMLParser::ParseVML()
 
 				++ChildrenSequence;
 
-				ParseResult.Nodes.insert(std::pair<std::wstring, VMLNode>(NewNode.NodeTag, NewNode));
+				ParseResult.Nodes.insert(std::pair<VString, VMLNode>(NewNode.NodeTag, NewNode));
 
 				ScopeEndFlag = true;
 				EndFlag		 = true;
@@ -547,7 +547,7 @@ VMLParserResult VMLParser::ParseVML()
 			auto Property		  = ToPropertyValue(Token.token_string);
 			Property.PropertyName = PropertyName;
 
-			NewNode.NodeValue.insert(std::pair<std::wstring, VMLPropertyValue>(PropertyName, Property));
+			NewNode.NodeValue.insert(std::pair<VString, VMLPropertyValue>(PropertyName, Property));
 		}
 
 		if (!EndFlag)
@@ -566,7 +566,7 @@ VMLParserResult VMLParser::ParseVML()
 		EndFlag = false;
 
 		// Parse the Sub Nodes of This Node
-		std::wstring SubContent;
+		VString SubContent;
 
 		unsigned long LeftBracketCount = 0;
 
@@ -698,7 +698,7 @@ VMLParserResult VMLParser::ParseVML()
 			}
 			for (auto &ChildrenNode : Result.Nodes)
 			{
-				NewNode.ChildrenNodes.insert(std::pair<std::wstring, VMLNode>(ChildrenNode.first, ChildrenNode.second));
+				NewNode.ChildrenNodes.insert(std::pair<VString, VMLNode>(ChildrenNode.first, ChildrenNode.second));
 			}
 		}
 
@@ -706,7 +706,7 @@ VMLParserResult VMLParser::ParseVML()
 
 		++ChildrenSequence;
 
-		ParseResult.Nodes.insert(std::pair<std::wstring, VMLNode>(NewNode.NodeTag, NewNode));
+		ParseResult.Nodes.insert(std::pair<VString, VMLNode>(NewNode.NodeTag, NewNode));
 
 		if (!EndFlag)
 		{

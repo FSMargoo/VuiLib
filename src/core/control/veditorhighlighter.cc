@@ -258,11 +258,11 @@ void VVMLHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 
 		if (Text[Caret.CaretStart - 1] == L'\"' && Text[Caret.CaretStart] == L'\"')
 		{
-			Text.erase(Text.begin() + Caret.CaretStart);
+			Text.Erase(Text.begin() + Caret.CaretStart);
 		}
 		if (Text[Caret.CaretStart - 1] == L'<' && Text[Caret.CaretStart] == L'>')
 		{
-			Text.erase(Text.begin() + Caret.CaretStart);
+			Text.Erase(Text.begin() + Caret.CaretStart);
 		}
 
 		Editor->SetPlaneText(Text);
@@ -282,7 +282,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 		{
 			if (Text[Caret.CaretStart] != L'\"')
 			{
-				Text.insert(Text.begin() + Caret.CaretStart, L'\"');
+				Text.Insert(Text.begin() + Caret.CaretStart, L'\"');
 
 				Editor->SetPlaneText(Text);
 				Editor->SetCaret(Caret);
@@ -290,7 +290,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 		}
 		else
 		{
-			Text.insert(Text.begin() + Caret.CaretStart, L'\"');
+			Text.Insert(Text.begin() + Caret.CaretStart, L'\"');
 
 			Editor->SetPlaneText(Text);
 			Editor->SetCaret(Caret);
@@ -300,7 +300,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 	{
 		auto Text = Editor->GetPlaneText();
 
-		Text.insert(Text.begin() + Caret.CaretStart, L'>');
+		Text.Insert(Text.begin() + Caret.CaretStart, L'>');
 
 		Editor->SetPlaneText(Text);
 		Editor->SetCaret(Caret);
@@ -335,7 +335,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 			CodePosition += LinePosition;
 		}
 
-		std::wstring PlaneText = Editor->GetPlaneText();
+		VString PlaneText = Editor->GetPlaneText();
 
 		UINT32 LeadingPosition = CodePosition - 1;
 		UINT32 StringIndex	   = LeadingPosition;
@@ -352,7 +352,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 		}
 	}
 }
-void VVMLHighlighter::RenderColor(const std::wstring &PlaneText)
+void VVMLHighlighter::RenderColor(const VString &PlaneText)
 {
 	VKits::seal_lexical Lexical(PlaneText);
 	auto				Token	  = Lexical.get_token();
@@ -431,7 +431,7 @@ void VVMLHighlighter::RenderColor(const std::wstring &PlaneText)
 		{
 			Range.length += 1;
 
-			if (Token.token_string.find(L"@") == std::wstring::npos)
+			if (Token.token_string.find(L"@") == VString::npos)
 			{
 				Editor->TextEffect.push_back(std::pair<ID2D1Effect *, DWRITE_TEXT_RANGE>(
 					(ID2D1Effect *)HighlightTheme.StringBrush->GetDxBrush(), Range));
@@ -591,7 +591,7 @@ void VVSSHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 
 		if (Text[Caret.CaretStart - 1] == L'{' && Text[Caret.CaretStart] == L'}')
 		{
-			Text.erase(Text.begin() + Caret.CaretStart);
+			Text.Erase(Text.begin() + Caret.CaretStart);
 		}
 
 		Editor->SetPlaneText(Text);
@@ -606,7 +606,7 @@ void VVSSHighlighter::NewCharacter(const wchar_t &NewChar)
 	{
 		auto Text = Editor->GetPlaneText();
 
-		Text.insert(Text.begin() + Caret.CaretStart, L'}');
+		Text.Insert(Text.begin() + Caret.CaretStart, L'}');
 
 		Editor->SetPlaneText(Text);
 		Editor->SetCaret(Caret);
@@ -617,14 +617,14 @@ void VVSSHighlighter::NewCharacter(const wchar_t &NewChar)
 
 		if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'/')
 		{
-			Text.insert(Caret.CaretStart, L"*/");
+			Text.Insert(Caret.CaretStart, L"*/");
 
 			Editor->SetPlaneText(Text);
 			Editor->SetCaret(Caret);
 		}
 	}
 }
-void VVSSHighlighter::RenderColor(const std::wstring &PlaneText)
+void VVSSHighlighter::RenderColor(const VString &PlaneText)
 {
 	VKits::seal_lexical Lexical(PlaneText, false);
 	auto				Token	  = Lexical.get_token();

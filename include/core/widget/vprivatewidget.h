@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../stl-ex/vstring.h"
 #include "../vbasiccore.h"
 #include <functional>
 #include <map>
@@ -30,7 +31,7 @@ struct VWin32ThreadPipe
 	VGeometry WindowMaxSize;
 	VGeometry WindowMiniSize;
 
-	std::wstring GlobalFocusID;
+	VString GlobalFocusID;
 
 	bool LockFocus		 = false;
 	bool IMEInput		 = false;
@@ -39,13 +40,13 @@ struct VWin32ThreadPipe
 	bool   EnableRadius = false;
 	VPoint BorderRadius = {0, 0};
 
-	std::function<void()>						   WinRepaintMessage;
-	std::function<void()>						   StartIMEInput;
-	std::function<void()>						   EndIMEInput;
-	std::function<void()>						   LosedUserFocus;
-	std::function<bool()>						   WindowQuitOnClicked;
-	std::function<void(std::vector<std::wstring>)> WindowOnFileDrag;
-	std::function<void(int, int)>				   WindowOnSize;
+	std::function<void()>					  WinRepaintMessage;
+	std::function<void()>					  StartIMEInput;
+	std::function<void()>					  EndIMEInput;
+	std::function<void()>					  LosedUserFocus;
+	std::function<bool()>					  WindowQuitOnClicked;
+	std::function<void(std::vector<VString>)> WindowOnFileDrag;
+	std::function<void(int, int)>			  WindowOnSize;
 
 	WNDPROC OriginWindowProcess;
 };

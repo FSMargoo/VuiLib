@@ -13,14 +13,14 @@ short VSSColorHelper::SingleHexLetterToNum(const wchar_t &Hex)
 
 	return Hex - 87;
 }
-short VSSColorHelper::HexStringToNum(const std::wstring &HexNumberString)
+short VSSColorHelper::HexStringToNum(const VString &HexNumberString)
 {
 	short FirstCount  = SingleHexLetterToNum(HexNumberString[0]) * 16;
 	short SecondCount = SingleHexLetterToNum(HexNumberString[1]);
 
 	return FirstCount + SecondCount;
 }
-void VSSColorHelper::HexStringLowerToUpper(std::wstring &HexStringNumber)
+void VSSColorHelper::HexStringLowerToUpper(VString &HexStringNumber)
 {
 	int StringLength = HexStringNumber.size();
 	for (int Count = 0; Count < StringLength; ++Count)
@@ -31,9 +31,9 @@ void VSSColorHelper::HexStringLowerToUpper(std::wstring &HexStringNumber)
 		}
 	}
 }
-Core::VColor VSSColorHelper::HexToColor(const std::wstring &HexString)
+Core::VColor VSSColorHelper::HexToColor(const VString &HexString)
 {
-	std::wstring Hex = HexString;
+	VString Hex = HexString;
 	HexStringLowerToUpper(Hex);
 
 	auto  RawHexString	 = Hex.substr(1, HexString.size() - 1);
@@ -46,7 +46,7 @@ Core::VColor VSSColorHelper::HexToColor(const std::wstring &HexString)
 
 	return Core::VColor::FromBYTERGBA(ColorArrary[0], ColorArrary[1], ColorArrary[2]);
 }
-bool VSSColorHelper::IsValidHex(const std::wstring &HexString)
+bool VSSColorHelper::IsValidHex(const VString &HexString)
 {
 	if (HexString[0] != L'#')
 	{
