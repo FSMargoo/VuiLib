@@ -69,6 +69,13 @@ struct VUIObjectKernel
 	 */
 	VBasicEffect *Effect;
 
+	/*
+	 * ViewOnly variable:
+	 *	Description : If a object is a view-only object, it won't
+	 *				  deal with any mouse or key input message.
+	 */
+	bool ViewOnly;
+
 	VUIObjectKernel();
 };
 
@@ -243,6 +250,10 @@ public:
 	 *     Description : Is the object a widget
 	 */
 	virtual bool IsWidget() const;
+
+public:
+	void SetViewOnly(const bool &ViewOnlySwitch);
+	bool IsViewOnly() const;
 
 public:
 	/*

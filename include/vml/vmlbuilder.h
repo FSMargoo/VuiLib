@@ -62,7 +62,7 @@ protected:
 				 const Core::VLayoutMode &HorizontalLayoutMode, const double &VerticalLayoutPercent,
 				 const double &HorizontalLayoutPercent, const int &RelativeX, const int &RelativeY,
 				 const int &XMiddleOffset, const int &YMiddleOffset, const double &WidthRatio,
-				 const double &HeightRatio, const VMLFinder &RootFinder);
+				 const double &HeightRatio, const bool &ViewOnly, const VMLFinder &RootFinder);
 
 	virtual void AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObject *Object,
 								 std::map<VString, VMLPropertyValue> &PropertyValueList,

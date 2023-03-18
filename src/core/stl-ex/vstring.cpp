@@ -51,8 +51,13 @@ const wchar_t *vstring_convert(const char *OriginString)
 VString::VString() : VProxyString()
 {
 }
-VString::VString(const VProxyString &String) : VProxyString(String)
+VString::VString(const std::wstring &String)
 {
+	Set(FromWideString(String));
+}
+VString::VString(const std::string &String)
+{
+	Set(FromString(String));
 }
 VString::VString(const VChar *String) : VProxyString(String)
 {
@@ -62,6 +67,10 @@ VString::VString(VChar *String) : VProxyString(String)
 }
 
 VString VString::Split(const size_t &Begin, const size_t &SplitCount)
+{
+	return substr(Begin, SplitCount);
+}
+VString VString::Split(const size_t &Begin, const size_t &SplitCount) const
 {
 	return substr(Begin, SplitCount);
 }
@@ -191,6 +200,14 @@ VString VString::FromNumber(const unsigned long &NumberConvert)
 VString VString::FromNumber(const unsigned long long &NumberConvert)
 {
 	return VSTCStr(NumberConvert);
+}
+VString VString::FromString(const std::string &String)
+{
+	return vstring_convert(String.c_str());
+}
+VString VString::FromWideString(const std::wstring &String)
+{
+	return vstring_convert(String.c_str());
 }
 VString VString::Args(VString FormatInstance)
 {

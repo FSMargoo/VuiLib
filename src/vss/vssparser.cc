@@ -240,7 +240,7 @@ std::map<VString, VSSSelectorProperty> VSSParser::ParserProperty(const VString &
 
 				if (Token.token_string == L"px")
 				{
-					if (NumberCache.find(L".") != Token.token_string.npos)
+					if (NumberCache.IndexOf(L".") != Token.token_string.npos)
 					{
 						NumberProperty.Type				= VSSPropertyType::DoubleValue;
 						NumberProperty.PropertyAsDouble = _wtof(NumberCache.CStyleString());
@@ -253,7 +253,7 @@ std::map<VString, VSSSelectorProperty> VSSParser::ParserProperty(const VString &
 				}
 				else if (Token.token_string == L"%")
 				{
-					if (NumberCache.find(L".") != Token.token_string.npos)
+					if (NumberCache.IndexOf(L".") != Token.token_string.npos)
 					{
 						NumberProperty.Type				= VSSPropertyType::DoubleValue;
 						NumberProperty.PropertyAsDouble = _wtof(NumberCache.CStyleString()) / 100.f;

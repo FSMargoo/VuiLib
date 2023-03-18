@@ -2,6 +2,7 @@
 // Athuor: Margoo
 // This is the native theme in vuilib
 #pragma once
+#pragma warning(disable : 26495)
 
 #include "../render/vpainter.h"
 #include "../vbasiccore.h"

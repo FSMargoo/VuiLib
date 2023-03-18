@@ -27,7 +27,7 @@ void VMLCommonBuilder::Builder(Core::VUIObject *Object, const int &X, const int 
 							   const Core::VLayoutMode &HorizontalLayoutMode, const double &VerticalLayoutPercent,
 							   const double &HorizontalLayoutPercent, const int &RelativeX, const int &RelativeY,
 							   const int &XMiddleOffset, const int &YMiddleOffset, const double &WidthRatio,
-							   const double &HeightRatio, const VMLFinder &ObjectFinder)
+							   const double &HeightRatio, const bool &ViewOnly, const VMLFinder &ObjectFinder)
 {
 	Core::VLayout *_NativeLayout = new Core::VLayout(Object, Object->GetParent());
 	_NativeLayout->SetHorizontalLayoutMode(HorizontalLayoutMode);
@@ -55,6 +55,8 @@ void VMLCommonBuilder::Builder(Core::VUIObject *Object, const int &X, const int 
 	{
 		Object->Hide();
 	}
+
+	Object->SetViewOnly(ViewOnly);
 }
 
 void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObject *Object,
@@ -71,7 +73,7 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 	Core::VLayoutMode VerticalLayoutMode   = Core::VLayoutMode::LayoutModeDontUse;
 	Core::VLayoutMode HorizontalLayoutMode = Core::VLayoutMode::LayoutModeDontUse;
 
-	Core::VUIObject *LayoutParent;
+	Core::VUIObject *LayoutParent = nullptr;
 
 	double VerticalLayoutPercent   = 0.f;
 	double HorizontalLayoutPercent = 0.f;
@@ -85,10 +87,24 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 	double WidthRatio  = 0.f;
 	double HeightRatio = 0.f;
 
+	bool ViewOnly = false;
+
 	BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Ok;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
+		if (ElementProperty.first == L"view-only")
+		{
+			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
+			{
+				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+				BuildStatus->FailedReason	 = L"\"view-only\" Property must match the type \"bolean\"";
+
+				return;
+			}
+
+			ViewOnly = ElementProperty.second.PropertyAsBool;
+		}
 		if (ElementProperty.first == L"x")
 		{
 			if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue &&
@@ -511,7 +527,7 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 
 	VMLCommonBuilder::Builder(Object, X, Y, Width, Height, Transparency, Visble, VerticalLayoutMode,
 							  HorizontalLayoutMode, VerticalLayoutPercent, HorizontalLayoutPercent, RelativeX,
-							  RelativeY, XMiddleOffset, YMiddleOffset, WidthRatio, HeightRatio, RootFinder);
+							  RelativeY, XMiddleOffset, YMiddleOffset, WidthRatio, HeightRatio, ViewOnly, RootFinder);
 }
 
 void VMLPushButtonBuilder::Builder(Core::VPushButton *PushButton, const VString &PlaneText, const int &TextSize)

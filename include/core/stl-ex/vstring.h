@@ -47,7 +47,8 @@ public:
 
 public:
 	VString();
-	VString(const VProxyString &String);
+	VString(const std::wstring &String);
+	VString(const std::string &String);
 	VString(const VChar *String);
 	VString(VChar *String);
 
@@ -58,9 +59,12 @@ public:
 	static VString FromNumber(const unsigned int &NumberConvert);
 	static VString FromNumber(const unsigned long &NumberConvert);
 	static VString FromNumber(const unsigned long long &NumberConvert);
+	static VString FromString(const std::string &String);
+	static VString FromWideString(const std::wstring &String);
 
 public:
 	VString Split(const size_t &Begin, const size_t &SplitCount);
+	VString Split(const size_t &Begin, const size_t &SplitCount) const;
 	VString SplitRange(const size_t &Begin, const size_t &End);
 
 	void Append(const VString &AppendString);

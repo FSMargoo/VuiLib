@@ -9,6 +9,7 @@ VUIObjectKernel::VUIObjectKernel()
 	Parent	 = nullptr;
 	ParentID = 0;
 	Effect	 = nullptr;
+	ViewOnly = false;
 
 	GlobalID = L"[VObject]";
 }
@@ -42,6 +43,14 @@ VUIObject::~VUIObject()
 	}
 
 	ObjectKernel.ChildObjectContainer.clear();
+}
+void VUIObject::SetViewOnly(const bool &ViewOnlySwitch)
+{
+	ObjectKernel.ViewOnly = ViewOnlySwitch;
+}
+bool VUIObject::IsViewOnly() const
+{
+	return ObjectKernel.ViewOnly;
 }
 bool VUIObject::IsAnimation()
 {
@@ -122,6 +131,8 @@ VKits::VAllocator *VUIObject::GetWidgetAllocator() const
 	{
 		return GetParent()->GetWidgetAllocator();
 	}
+
+	return nullptr;
 }
 VCanvasPainter *VUIObject::GetWidgetCanvas()
 {
@@ -716,17 +727,30 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message)
 		return false;
 	}
 	case VMessageType::MouseMoveMessage: {
-		return CheckElementUIStatus(Message);
+		if (!ObjectKernel.ViewOnly)
+		{
+			return CheckElementUIStatus(Message);
+		}
+
+		break;
 	}
 	case VMessageType::MouseClickedMessage: {
-		return CheckElementUIStatus(Message);
+		if (!ObjectKernel.ViewOnly)
+		{
+			return CheckElementUIStatus(Message);
+		}
+
+		break;
 	}
 	case VMessageType::IMECharMessage: {
-		auto IMEMessage = static_cast<VIMECharMessage *>(Message);
-
-		if (!IMECharInputed(IMEMessage->IMEChar))
+		if (!ObjectKernel.ViewOnly)
 		{
-			SendMessageToChild(IMEMessage);
+			auto IMEMessage = static_cast<VIMECharMessage *>(Message);
+
+			if (!IMECharInputed(IMEMessage->IMEChar))
+			{
+				SendMessageToChild(IMEMessage);
+			}
 		}
 
 		break;
@@ -737,18 +761,26 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message)
 		return OnMessageTrigger(RepaintMessage);
 	}
 	case VMessageType::MouseWheelMessage: {
-		auto WheelMessage = static_cast<VMouseWheelMessage *>(Message);
+		if (!ObjectKernel.ViewOnly)
+		{
+			auto WheelMessage = static_cast<VMouseWheelMessage *>(Message);
 
-		MouseMiddleDragged(WheelMessage->WheelValue);
+			MouseMiddleDragged(WheelMessage->WheelValue);
 
-		return SendMessageToChild(WheelMessage, false);
+			return SendMessageToChild(WheelMessage, false);
+		}
+
+		break;
 	}
 	case VMessageType::KeyClickedMessage: {
-		auto KeyMessage = static_cast<VKeyClickedMessage *>(Message);
-
-		if (!CheckDown(KeyMessage))
+		if (!ObjectKernel.ViewOnly)
 		{
-			SendMessageToChild(KeyMessage);
+			auto KeyMessage = static_cast<VKeyClickedMessage *>(Message);
+
+			if (!CheckDown(KeyMessage))
+			{
+				SendMessageToChild(KeyMessage);
+			}
 		}
 
 		break;

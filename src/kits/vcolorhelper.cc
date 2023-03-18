@@ -36,12 +36,12 @@ Core::VColor VSSColorHelper::HexToColor(const VString &HexString)
 	VString Hex = HexString;
 	HexStringLowerToUpper(Hex);
 
-	auto  RawHexString	 = Hex.substr(1, HexString.size() - 1);
+	auto  RawHexString	 = Hex.Split(1, HexString.size() - 1);
 	short ColorArrary[3] = {0, 0, 0};
 
 	for (short Count = 2; Count <= RawHexString.size(); Count += 2)
 	{
-		ColorArrary[Count / 2 - 1] = HexStringToNum(RawHexString.substr(Count - 2, 2));
+		ColorArrary[Count / 2 - 1] = HexStringToNum(RawHexString.Split(Count - 2, 2));
 	}
 
 	return Core::VColor::FromBYTERGBA(ColorArrary[0], ColorArrary[1], ColorArrary[2]);

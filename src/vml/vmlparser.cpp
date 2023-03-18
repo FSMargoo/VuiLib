@@ -47,7 +47,7 @@ void VMLParser::ThrowError(VMLParserResult *Result, const VString &ErrorString)
 }
 VMLPropertyValue VMLParser::ToPropertyValue(const VString &String)
 {
-	VString ValueString = String.substr(1, String.size() - 2);
+	VString ValueString = String.Split(1, String.Size() - 2);
 
 	if (ValueString[0] == L'$')
 	{
@@ -215,7 +215,7 @@ VMLPropertyValue VMLParser::ToPropertyValue(const VString &String)
 	}
 	if (ValueString[0] == L'-')
 	{
-		auto SpiltString = ValueString.substr(1, ValueString.size() - 1);
+		auto SpiltString = ValueString.Split(1, ValueString.size() - 1);
 
 		bool DotExsit = false;
 
@@ -377,11 +377,11 @@ VMLParserResult VMLParser::ParseVML()
 
 	if (FilePath.find(L"/") != -1)
 	{
-		ParseResult.FilePath = FilePath.substr(0, FilePath.find_last_of(L"/"));
+		ParseResult.FilePath = FilePath.Split(0, FilePath.find_last_of(L"/"));
 	}
 	else
 	{
-		ParseResult.FilePath = FilePath.substr(0, FilePath.find_last_of(L"\\"));
+		ParseResult.FilePath = FilePath.Split(0, FilePath.find_last_of(L"\\"));
 	}
 
 	if (!FileExist)

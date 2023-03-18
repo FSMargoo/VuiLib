@@ -1,3 +1,6 @@
+#pragma warning(disable : 4018)
+#pragma warning(disable : 6530)
+
 #include "../../../include/core/control/vlineeditor.h"
 
 VLIB_BEGIN_NAMESPACE
@@ -769,7 +772,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				DWRITE_TEXT_METRICS TestMetrics;
 				TextLayout->GetMetrics(&TestMetrics);
 
-				if (TestString.find(L"\n") == -1)
+				if (TestString.IndexOf(L"\n") == -1)
 				{
 					InputStringCache = TestString;
 
@@ -855,7 +858,7 @@ void VLineEditor::OnMessage(VMessage *Message)
 				KeyboardUsed = true;
 
 				VString ClipString;
-				ClipString = InputStringCache.substr(
+				ClipString = InputStringCache.Split(
 					TextSelectRange.startPosition > 0 ? TextSelectRange.startPosition - 1 : 0, TextSelectRange.length);
 
 				std::string ANSIString;

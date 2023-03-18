@@ -1,4 +1,5 @@
 #pragma warning(disable : 26495)
+#pragma warning(disable : 4018)
 
 #include "../../../include/core/control/veditorhighlighter.h"
 
