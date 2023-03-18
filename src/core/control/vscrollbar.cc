@@ -142,7 +142,14 @@ VSliderHorizontal::~VSliderHorizontal()
 
 int VSliderHorizontal::GetSliderButtonX() const
 {
-	return SliderPercent * GetWidth() + GetX() - SliderButton->GetWidth() / 2;
+	if (SliderPercent != 0)
+	{
+		return SliderPercent * GetWidth() + GetX() - SliderButton->GetWidth() / 2;
+	}
+	else
+	{
+		return SliderPercent * GetWidth() + GetX();
+	}
 }
 int VSliderHorizontal::GetSliderButtonY() const
 {
@@ -223,7 +230,15 @@ void VSliderHorizontal::SetValue(const double &Value)
 	TargetValue		 = Value <= 0.f ? 0.f : Value;
 
 	SliderPercent = TargetValue;
-	SliderButton->Move(GetX() + GetWidth() * SliderPercent - SliderButton->GetWidth() / 2, SliderButton->GetY());
+
+	if (SliderPercent != 0)
+	{
+		SliderButton->Move(GetX() + GetWidth() * SliderPercent - SliderButton->GetWidth() / 2, SliderButton->GetY());
+	}
+	else
+	{
+		SliderButton->Move(GetX() + GetWidth(), SliderButton->GetY());
+	}
 
 	Update();
 }
@@ -267,7 +282,14 @@ int VSliderVertical::GetSliderButtonX() const
 }
 int VSliderVertical::GetSliderButtonY() const
 {
-	return SliderPercent * GetHeight() + GetY() - SliderButton->GetHeight() / 2;
+	if (SliderPercent != 0)
+	{
+		return SliderPercent * GetHeight() + GetY() - SliderButton->GetHeight() / 2;
+	}
+	else
+	{
+		return SliderPercent * GetHeight() + GetY();
+	}
 }
 VSliderTheme *VSliderVertical::GetTheme()
 {
@@ -364,7 +386,14 @@ void VSliderVertical::SetValue(const double &Value)
 
 	SliderPercent = TargetValue;
 
-	SliderButton->Move(GetX(), SliderButton->GetY() + GetHeight() * SliderPercent - SliderButton->GetHeight() / 2);
+	if (SliderPercent != 0)
+	{
+		SliderButton->Move(GetX(), SliderButton->GetY() + GetHeight() * SliderPercent - SliderButton->GetHeight() / 2);
+	}
+	else
+	{
+		SliderButton->Move(GetX(), SliderButton->GetY() + GetHeight());
+	}
 
 	Update();
 }

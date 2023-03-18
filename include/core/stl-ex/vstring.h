@@ -49,8 +49,10 @@ public:
 	VString();
 	VString(const std::wstring &String);
 	VString(const std::string &String);
-	VString(const VChar *String);
-	VString(VChar *String);
+	VString(const wchar_t *String);
+	VString(wchar_t *String);
+	VString(const char *String);
+	VString(char *String);
 
 public:
 	static VString FromNumber(const int &NumberConvert);

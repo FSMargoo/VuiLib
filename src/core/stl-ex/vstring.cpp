@@ -59,11 +59,21 @@ VString::VString(const std::string &String)
 {
 	Set(FromString(String));
 }
-VString::VString(const VChar *String) : VProxyString(String)
+VString::VString(const wchar_t *String)
 {
+	assign(vstring_convert(String));
 }
-VString::VString(VChar *String) : VProxyString(String)
+VString::VString(wchar_t *String)
 {
+	Set(vstring_convert(String));
+}
+VString::VString(const char *String)
+{
+	Set(vstring_convert(String));
+}
+VString::VString(char *String)
+{
+	Set(vstring_convert(String));
 }
 
 VString VString::Split(const size_t &Begin, const size_t &SplitCount)
@@ -151,7 +161,7 @@ VString::ReverseIterator VString::ReverseEnd()
 }
 void VString::Set(const VString &String)
 {
-	*this = String;
+	assign(String);
 }
 void VString::Erase(const size_t &Begin, const size_t &Count)
 {

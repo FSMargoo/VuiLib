@@ -31,7 +31,7 @@ VImageLabel::VImageLabel(const int &Width, const int &Height, const VString &Ima
 	: VUIObject(Parent)
 {
 	Theme		 = new VImageLabelTheme;
-	Theme->Image = new VImage(ImagePath.CStyleString(), CallWidgetGetRenderHandle());
+	Theme->Image = new VImage(ImagePath.CStyleString(), CallWidgetGetStaticRenderHandle());
 
 	Resize(Width, Height);
 }
