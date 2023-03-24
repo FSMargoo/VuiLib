@@ -18,7 +18,8 @@ public:
 	~VImageLabel();
 
 public:
-	void SetImage(VImage *Image);
+	void	SetImage(VImage *Image);
+	VImage *GetImage();
 
 public:
 	void ResizeByImage();

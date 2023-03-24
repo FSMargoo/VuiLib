@@ -78,7 +78,10 @@ void VImageLabel::ResizeByImage()
 		Resize(Theme->Image->GetWidth(), Theme->Image->GetHeight());
 	}
 }
-
+VImage *VImageLabel::GetImage()
+{
+	return Theme->Image;
+}
 void VImageLabel::SetImage(VImage *Image)
 {
 	if (Image != nullptr)

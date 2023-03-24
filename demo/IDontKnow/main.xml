@@ -1,0 +1,39 @@
+<main-window type="mainwindow" sizable="false" width="1200" height="900" class="mainwindow"
+			 style-sheet=".mainwindow {
+				background-color:#000000;
+			 }">
+	<background-text type="textlabel" width="@fill" height="@fill" class="background-text"
+					 style-sheet=".background-text {
+						opacity:0%;
+						font-height:800px;
+						font-size:80px;
+						color:rgb(255, 0, 0);
+						text-align:center;
+						vertical-align:center;
+					 }
+					 ">
+		<fade-in-animation type="opacity-animation" duration="180" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+        <fade-out-animation type="opacity-animation" duration="180" target-opacity="0" animation-curve="ease-in-out-sine-curve"/>
+	</background-text>
+	<eye-container type="textlabel" width="@fill" height="@fill">
+		<left-eye type="imagelabel" src="./resource/eye.png" x="@ratio(0.25)" y="@center" auto-size="true"/>
+		<right-eye type="imagelabel" src="./resource/eye.png" x="@ratio(0.55)" y="@center" auto-size="true"/>
+	
+		<fade-in-animation type="opacity-animation" duration="1800" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+        <fade-out-animation type="opacity-animation" duration="1800" target-opacity="0" animation-curve="ease-in-out-sine-curve"/>
+	</eye-container>
+
+	<conversation-label type="textlabel" width="@fill" height="23" class="conversation-text"
+						style-sheet=".conversation-text {
+							color:#ffffff;
+							text-align:center;
+							vertical-align:center;
+							font-height:200px;
+							font-size:22px;
+							opacity:0%;
+						}
+						" y="700">
+		<fade-in-animation type="opacity-animation" duration="1000" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+        <fade-out-animation type="opacity-animation" duration="1000" target-opacity="0" animation-curve="ease-in-out-sine-curve"/>
+	</conversation-label>
+</main-window>
