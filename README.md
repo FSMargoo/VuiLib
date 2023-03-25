@@ -35,6 +35,7 @@ git clone https://github.com/FSMargoo/VuiLib.git
     <img src="./readme-resource/capture 4.png"/>
     <img src="./readme-resource/capture 5.png"/>
     <img src="./readme-resource/capture 6.png"/>
+    <img src="./readme-resource/capture 7.png"/>
 </div>
 
 ## Support - 支持
