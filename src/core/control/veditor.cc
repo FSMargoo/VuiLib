@@ -1569,6 +1569,10 @@ void VEditor::SetDeltaY(const int &Delta)
 {
 	YDelta = Delta;
 }
+void VEditor::SetLeftMargin(const int &LeftMargin)
+{
+	OffsetX = LeftMargin;
+}
 
 void VEditor::CheckFrame()
 {
@@ -1807,9 +1811,22 @@ void VEditor::WriteClipboard()
 
 			if (Memory != NULL)
 			{
-				InEditingText.Insert(Caret.CaretStart, CString, StringCount);
+				bool AllowFlag			 = true;
+				int	 ActuallyStringCount = 0;
+				for (UINT Count = 0; Count < StringCount; ++Count)
+				{
+					CheckInput.Emit(CString[Count], &AllowFlag);
 
-				Caret.CaretStart += StringCount;
+					if (AllowFlag == true)
+					{
+						InEditingText.Insert(InEditingText.begin() + Caret.CaretStart + ActuallyStringCount,
+											 CString[Count]);
+
+						++ActuallyStringCount;
+					}
+				}
+
+				Caret.CaretStart += ActuallyStringCount;
 				Caret.CaretEnd = Caret.CaretStart;
 
 				GlobalUnlock(ClipboardDataHandle);

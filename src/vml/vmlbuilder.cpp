@@ -1473,7 +1473,7 @@ VMLLineEditorBuilder::VMLLineEditorBuilder(const VMLFinder &RootFinder, Core::VL
 
 void VMLEditorBuilder::Builder(Core::VEditor *Editor, const VString &PlaneText, const VString &LeadingText,
 							   const int &DeltaY, const bool &AllowEdit, const bool &AllowDragFontSizeChange,
-							   const bool &AllowOperationBack, const int &MaxOperationCache)
+							   const bool &AllowOperationBack, const int &MaxOperationCache, const int &LeftMargin)
 {
 	Editor->SetPlaneText(PlaneText);
 	Editor->SetLeadingText(LeadingText);
@@ -1482,6 +1482,7 @@ void VMLEditorBuilder::Builder(Core::VEditor *Editor, const VString &PlaneText, 
 	Editor->SetAllowFontSizeDragStatus(AllowDragFontSizeChange);
 	Editor->SetOperationBackStatus(AllowOperationBack);
 	Editor->SetMaxOperationCache(MaxOperationCache);
+	Editor->SetLeftMargin(LeftMargin);
 }
 void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEditor *Object,
 									   std::map<VString, VMLPropertyValue> &PropertyValueList,
@@ -1491,12 +1492,25 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 	VString LeadingText;
 	int		DeltaY			  = 25;
 	int		MaxOperationCache = 20;
+	int		LeftMargin		  = 6;
 	bool	AllowBack		  = true;
 	bool	EditStatus		  = true;
 	bool	FontDragChange	  = false;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
+		if (ElementProperty.first == L"left-margin")
+		{
+			if (ElementProperty.second.PropertyType != VMLPropertyType::IntValue)
+			{
+				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+				BuildStatus->FailedReason	 = L"\"left-margin\" Property Must Match the Type \"int\"";
+
+				return;
+			}
+
+			LeftMargin = ElementProperty.second.PropertyAsInt;
+		}
 		if (ElementProperty.first == L"text")
 		{
 			if (ElementProperty.second.PropertyType != VMLPropertyType::StringValue)
@@ -1585,7 +1599,8 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 		}
 	}
 
-	Builder(Object, PlaneText, LeadingText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache);
+	Builder(Object, PlaneText, LeadingText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache,
+			LeftMargin);
 }
 VMLEditorBuilder::VMLEditorBuilder(const VMLFinder &RootFinder, Core::VEditor *Object,
 								   std::map<VString, VMLPropertyValue> &PropertyValueList,

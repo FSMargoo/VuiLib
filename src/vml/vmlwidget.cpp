@@ -2283,6 +2283,13 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<VString, VMLNode> VMLAstTree
 				VMLObject->ChildrenObjects.push_back(ChildObject);
 			}
 		}
+		else
+		{
+			Result.Status		 = VMLWidgetVMLLoadStats::Failed;
+			Result.FailedMessage = VString("Object \"") + Element.NodeTag + VString("\" dosen't provide a type!");
+
+			return Result;
+		}
 		if (Element.PropertyExsit(L"id"))
 		{
 			VMLPropertyValue ElementId = Element.GetProperty(L"id");

@@ -224,7 +224,7 @@ class VMLEditorBuilder : public VMLCommonBuilder
 protected:
 	void Builder(Core::VEditor *Editor, const VString &PlaneText, const VString &LeadingText, const int &DeltaY,
 				 const bool &AllowEdit, const bool &AllowDragFontSizeChange, const bool &AllowOperationBack,
-				 const int &MaxOperationCache);
+				 const int &MaxOperationCache, const int &LeftMargin);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VEditor *Object,
 						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);

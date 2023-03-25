@@ -104,6 +104,7 @@ public:
 
 public:
 	void SetDeltaY(const int &Delta);
+	void SetLeftMargin(const int &LeftMargin);
 
 public:
 	VTextEditorTheme *GetTheme();

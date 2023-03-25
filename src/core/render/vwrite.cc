@@ -122,11 +122,13 @@ void VFont::SetTextSize(const int &Size)
 }
 void VFont::SetTextWidget(const int &Widget)
 {
-	auto Family	 = GetFamilyName();
-	auto Style	 = GetTextFontStyle();
-	auto Stretch = GetFontStretchStyle();
-	auto Locale	 = GetLocaleName();
-	auto Size	 = GetTextSize();
+	auto Family		   = GetFamilyName();
+	auto Style		   = GetTextFontStyle();
+	auto Stretch	   = GetFontStretchStyle();
+	auto Locale		   = GetLocaleName();
+	auto Size		   = GetTextSize();
+	auto TextAlignment = TextFormat->GetTextAlignment();
+	auto LineAlignment = TextFormat->GetParagraphAlignment();
 
 	TextFormat.ReleaseAndGetAddressOf();
 
@@ -134,6 +136,9 @@ void VFont::SetTextWidget(const int &Widget)
 								   Family.CStyleString(), nullptr, (DWRITE_FONT_WEIGHT)Widget, (DWRITE_FONT_STYLE)Style,
 								   (DWRITE_FONT_STRETCH)Stretch, Size, Locale.CStyleString(), &TextFormat),
 							   L"Failed to create IDWriteTextFormat object");
+
+	TextFormat->SetTextAlignment(TextAlignment);
+	TextFormat->SetParagraphAlignment(LineAlignment);
 }
 int VFont::GetTextSize() const
 {

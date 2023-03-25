@@ -1,0 +1,80 @@
+<mainwindow type="mainwindow" width="1445" height="904" sizable="false">
+    <background-image type="imagelabel" width="@fill" height="@fill" src="./resource/main.jpg"/>
+	<login-card type="blurlabel" x="87" y="@center" width="551" height="667" class="login-card"
+                style-sheet=".login-card {
+                    border-radius:12px;
+                    radius:50px;
+                    background-color:rgba(0, 0, 0, 0.65);
+                }">
+		<title-text type="textlabel" class="title-text" x="60" y="174" auto-size="true" style-sheet=".title-text {
+                color: rgba(255, 255, 255, 0.92);
+                font-size: 39px;
+                font-weight: 600px;
+				opacity:0%;
+            }">
+			<position-animation type="position-animation" duration="300" target-position="@point(0, 0)" animation-curve="ease-in-out-quart-curve"/>
+			<transparent-animation type="opacity-animation" duration="300" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+		</title-text>
+		<description-text type="textlabel" class="description-text" x="60" y="226" auto-size="true" style-sheet=".description-text {
+                color: rgba(255, 255, 255, 0.17);
+                font-size: 23px;
+				opacity:0%;
+            }">
+			<position-animation type="position-animation" duration="400" target-position="@point(0, 0)" animation-curve="ease-in-out-quart-curve"/>
+			<transparent-animation type="opacity-animation" duration="400" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+		</description-text>
+		<inputbox type="editor" class="inputor" x="60" y="281" check-input="@ValidCheck" width="432" height="62" left-margin="21"
+				  style-sheet=".inputor {
+                        background-color: rgba(255, 255, 255, 0.24);
+                        color: rgba(255, 255, 255, 0.52);
+                        font-size:18px;
+                        border-color:color: rgba(255, 255, 255, 0.0);
+                        border-radius: 31px;
+						opacity:0%;
+                      }
+                      .inputor:hover {
+                        background-color: rgba(255, 255, 255, 0.24);
+                        color: rgba(255, 255, 255, 0.52);
+                        border-color:color: rgba(255, 255, 255, 0.0);
+                        border-radius: 31px;
+                      }
+                      .inputor:active {
+                        background-color: rgba(255, 255, 255, 0.24);
+                        color: rgba(255, 255, 255, 0.52);
+                        border-color:color: rgba(255, 255, 255, 0.0);
+                        border-radius: 31px;
+                      }
+                      .inputor:placeholder {
+                        color: rgba(255, 255, 255, 0.72);
+                      }">
+			<position-animation type="position-animation" duration="500" target-position="@point(0, 0)" animation-curve="ease-in-out-quart-curve"/>
+			<transparent-animation type="opacity-animation" duration="500" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+		</inputbox>
+		<next-stage type="pushbutton" class="next-stage-button" x="60" y="373" width="146" height="56"
+					text="下一步"
+					style-sheet=".next-stage-button {
+						    background-color:rgba(78, 76, 218, 0);
+						    border-color:rgb(78, 76, 218);
+							border-radius:28px;
+							font-weight:200px;
+							font-size:18px;
+							color:rgb(255, 255, 255);
+							opacity:0%;
+						}
+						.next-stage-button:hover {
+						    background-color:rgba(78, 76, 218, 1);
+						    border-color:rgb(78, 76, 218);
+							border-radius:28px;
+							color:rgb(255, 255, 255);
+						}
+						.next-stage-button:active {
+						    background-color:rgba(88, 86, 228, 1);
+						    border-color:rgb(88, 86, 228);
+							border-radius:28px;
+							color:rgb(255, 255, 255);
+						}">
+			<position-animation type="position-animation" duration="600" target-position="@point(0, 0)" animation-curve="ease-in-out-quart-curve"/>
+			<transparent-animation type="opacity-animation" duration="600" target-opacity="1" animation-curve="ease-in-out-sine-curve"/>
+		</next-stage>
+	</login-card>
+</mainwindow>
