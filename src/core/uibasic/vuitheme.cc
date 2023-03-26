@@ -42,7 +42,7 @@ VPushButtonTheme::VPushButtonTheme(const VPushButtonTheme &Theme)
 	OnHoverTheme = Theme.OnHoverTheme;
 	ActiveTheme	 = Theme.ActiveTheme;
 	LabelFont	 = new VFont(*Theme.LabelFont);
-	PlaneText	 = Theme.PlaneText;
+	PlainText	 = Theme.PlainText;
 	LocalTheme	 = Theme.StaticTheme;
 }
 VPushButtonTheme::VPushButtonTheme() : VLabelCommonTheme()
@@ -105,7 +105,7 @@ VTextLabelTheme::VTextLabelTheme(const VTextLabelTheme &Theme)
 	OnHoverTheme = Theme.OnHoverTheme;
 	ActiveTheme	 = Theme.ActiveTheme;
 	LabelFont	 = new VFont(*Theme.LabelFont);
-	PlaneText	 = Theme.PlaneText;
+	PlainText	 = Theme.PlainText;
 	LocalTheme	 = Theme.StaticTheme;
 }
 
@@ -269,7 +269,7 @@ VTextEditorTheme::VTextEditorTheme(const VTextEditorTheme &Theme)
 	OnHoverTheme = Theme.OnHoverTheme;
 	ActiveTheme	 = Theme.ActiveTheme;
 	LabelFont	 = new VFont(*Theme.LabelFont);
-	PlaneText	 = Theme.PlaneText;
+	PlainText	 = Theme.PlainText;
 	LocalTheme	 = Theme.StaticTheme;
 	CursorColor	 = Theme.CursorColor;
 

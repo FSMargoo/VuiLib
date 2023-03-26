@@ -453,8 +453,8 @@ void VMainWindow::SetFileDragStatus(const bool &Status)
 
 void VMainWindow::SetTitle(const VString &WindowText)
 {
-	Theme->WindowPlaneText = WindowText;
-	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.CStyleString());
+	Theme->WindowPlainText = WindowText;
+	SetWindowTextW(WindowHandle, Theme->WindowPlainText.CStyleString());
 }
 void VMainWindow::SetBackgroundColor(const VColor &Color)
 {
@@ -1006,8 +1006,8 @@ void VWidget::CheckFrame()
 
 void VWidget::SetTitle(const VString &WindowText)
 {
-	Theme->WindowPlaneText = WindowText;
-	SetWindowTextW(WindowHandle, Theme->WindowPlaneText.CStyleString());
+	Theme->WindowPlainText = WindowText;
+	SetWindowTextW(WindowHandle, Theme->WindowPlainText.CStyleString());
 }
 void VWidget::SetBackgroundColor(const VColor &Color)
 {

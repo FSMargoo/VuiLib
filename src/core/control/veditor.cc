@@ -1417,25 +1417,25 @@ void VEditor::ScrollToEnd()
 {
 	OffsetY = GetMaxOffsetY();
 }
-void VEditor::SetPlaneText(const VString &PlaneText)
+void VEditor::SetPlainText(const VString &PlainText)
 {
-	InEditingText	 = PlaneText;
+	InEditingText	 = PlainText;
 	Caret.CaretStart = 0;
 	Caret.CaretEnd	 = 0;
 
 	ResetTextLayout();
 
-	TextOnChange.Emit(GetPlaneText());
+	TextOnChange.Emit(GetPlainText());
 }
-void VEditor::SetLeadingText(const VString &PlaneText)
+void VEditor::SetLeadingText(const VString &PlainText)
 {
-	LeadText		 = PlaneText;
+	LeadText		 = PlainText;
 	Caret.CaretStart = 0;
 	Caret.CaretEnd	 = 0;
 
 	ResetTextLayout();
 
-	TextOnChange.Emit(GetPlaneText());
+	TextOnChange.Emit(GetPlainText());
 }
 void VEditor::DrawSelectedRange(Core::VCanvasPainter *Painter)
 {
@@ -1860,7 +1860,7 @@ IDWriteTextLayout *VEditor::GetTextLayout()
 	return LocalTextLayout.Get();
 }
 
-VString VEditor::GetPlaneText() const
+VString VEditor::GetPlainText() const
 {
 	return InEditingText;
 }
@@ -2048,7 +2048,7 @@ void VEditor::OnMessage(VMessage *Message)
 			{
 				UsedComboKey = true;
 
-				SetPlaneText(OldStringSet[OldStringSet.size() - 1]);
+				SetPlainText(OldStringSet[OldStringSet.size() - 1]);
 
 				Caret = CaretSet[CaretSet.size() - 1];
 
@@ -2314,7 +2314,7 @@ void VEditor::OnMessage(VMessage *Message)
 
 		if (IMECharMessage->IMEChar != L'\x13')
 		{
-			TextOnChange.Emit(GetPlaneText());
+			TextOnChange.Emit(GetPlainText());
 			PushNewCharacter.Emit(IMECharMessage->IMEChar);
 		}
 

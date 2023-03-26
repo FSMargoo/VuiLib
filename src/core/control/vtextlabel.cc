@@ -28,14 +28,14 @@ VTextLabel::VTextLabel(int Width, int Height, VUIObject *Parent) : VAbstractButt
 
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 }
-VTextLabel::VTextLabel(int Width, int Height, const VString &PlaneText, Core::VUIObject *Parent)
+VTextLabel::VTextLabel(int Width, int Height, const VString &PlainText, Core::VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VTextLabelTheme(*(static_cast<VTextLabelTheme *>(GetTargetTheme(VUIThemeType::VTextLabel))));
 
 	Resize(Width, Height);
 
-	Theme->PlaneText = PlaneText;
+	Theme->PlainText = PlainText;
 
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 }
@@ -142,7 +142,7 @@ void VTextLabel::OnPaint(VCanvasPainter *Painter)
 	IDWriteTextLayout *TextLayout;
 
 	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-						  Theme->PlaneText.CStyleString(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(),
+						  Theme->PlainText.CStyleString(), Theme->PlainText.size(), Theme->LabelFont->GetDXObject(),
 						  GetWidth(), GetHeight(), &TextLayout),
 					  L"Failed to create TextLayout object!");
 
@@ -152,9 +152,9 @@ void VTextLabel::OnPaint(VCanvasPainter *Painter)
 
 	Painter->EndDraw();
 }
-void VTextLabel::SetPlaneText(const VString &PlaneText)
+void VTextLabel::SetPlainText(const VString &PlainText)
 {
-	Theme->PlaneText = PlaneText;
+	Theme->PlainText = PlainText;
 
 	if (AutoSize)
 	{
@@ -244,9 +244,9 @@ void VTextLabel::SetAutoSize(const bool &Status)
 	Update();
 }
 
-VString VTextLabel::GetPlaneText() const
+VString VTextLabel::GetPlainText() const
 {
-	return Theme->PlaneText;
+	return Theme->PlainText;
 }
 bool VTextLabel::GetAutoSizeStatus() const
 {
@@ -274,7 +274,7 @@ void VTextLabel::ResizeByText()
 	IDWriteTextLayout *TextLayout;
 
 	VLIB_CHECK_REPORT(VDirectXWriteFactory.GetInstance()->CreateTextLayout(
-						  Theme->PlaneText.CStyleString(), Theme->PlaneText.size(), Theme->LabelFont->GetDXObject(),
+						  Theme->PlainText.CStyleString(), Theme->PlainText.size(), Theme->LabelFont->GetDXObject(),
 						  FLT_MAX, FLT_MAX, &TextLayout),
 					  L"Failed to create TextLayout object!");
 

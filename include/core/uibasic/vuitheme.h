@@ -48,7 +48,7 @@ class VMainWindowTheme : public VBasicUITheme
 public:
 	VColor	BackgroundColor;
 	bool	WindowSizble;
-	VString WindowPlaneText;
+	VString WindowPlainText;
 
 	VMainWindowTheme()
 	{
@@ -97,7 +97,7 @@ public:
 struct VPushButtonTheme : public VLabelCommonTheme
 {
 public:
-	VString PlaneText;
+	VString PlainText;
 
 public:
 	VPushButtonTheme();
@@ -114,7 +114,7 @@ struct VRadioButtonTheme : public VLabelCommonTheme
 {
 public:
 	bool	SwitchStatus = false;
-	VString PlaneText;
+	VString PlainText;
 
 public:
 	VRadioButtonTheme();
@@ -130,7 +130,7 @@ public:
 struct VTextLabelTheme : public VLabelCommonTheme
 {
 public:
-	VString PlaneText;
+	VString PlainText;
 
 public:
 	VTextLabelTheme();
@@ -260,7 +260,7 @@ public:
 struct VTextEditorTheme : public VLabelCommonTheme
 {
 public:
-	VString PlaneText;
+	VString PlainText;
 
 	VColor CursorColor;
 	VColor OnSelectedColor;

@@ -61,10 +61,10 @@ public:
 	virtual void NewCharacter(const wchar_t &NewChar)
 	{
 	}
-	virtual void BeforeChange(const VString &PlaneText)
+	virtual void BeforeChange(const VString &PlainText)
 	{
 	}
-	virtual void RenderColor(const VString &PlaneText)
+	virtual void RenderColor(const VString &PlainText)
 	{
 	}
 	virtual void MouseClicked(const int &TextPosition)
@@ -87,7 +87,7 @@ public:
 
 	void CheckInputChar(const wchar_t &NewChar, bool *AllowEditFlag) override;
 	void NewCharacter(const wchar_t &NewChar) override;
-	void RenderColor(const VString &PlaneText) override;
+	void RenderColor(const VString &PlainText) override;
 	void MouseClicked(const int &TextPosition) override;
 
 	void BindEditor(VEditor *TargetEditor) override;
@@ -111,7 +111,7 @@ public:
 
 	void CheckInputChar(const wchar_t &NewChar, bool *AllowEditFlag) override;
 	void NewCharacter(const wchar_t &NewChar) override;
-	void RenderColor(const VString &PlaneText) override;
+	void RenderColor(const VString &PlainText) override;
 	void MouseClicked(const int &TextPosition) override;
 
 	void BindEditor(VEditor *TargetEditor) override;

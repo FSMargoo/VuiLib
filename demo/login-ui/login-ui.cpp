@@ -23,7 +23,7 @@ void LoginUI::ValidCheck(const wchar_t &Characeter, bool *AllowFlag)
 	*AllowFlag = true;
 
 	if (Characeter == L'\r' || Characeter == L'\n' ||
-		Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlaneText().size() >= 16)
+		Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlainText().size() >= 16)
 	{
 		*AllowFlag = false;
 	}
@@ -31,8 +31,8 @@ void LoginUI::ValidCheck(const wchar_t &Characeter, bool *AllowFlag)
 
 void LoginUI::LoginInterface()
 {
-	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlaneText("登录");
-	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlaneText("请输入你的账号");
+	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlainText("登录");
+	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlainText("请输入你的账号");
 
 	Get("mainwindow")["login-card"]["next-stage"].Get<Core::VPushButton>()->ButtonPushed.Connect(
 		this, &LoginUI::VertifyInterface);
@@ -52,11 +52,11 @@ void LoginUI::VertifyInterface()
 }
 void LoginUI::SetupVertifyInterface()
 {
-	UserName = Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlaneText();
+	UserName = Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlainText();
 
-	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlaneText("验证码");
-	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlaneText("请输入你的身份验证码");
-	Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->SetPlaneText("");
+	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlainText("验证码");
+	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlainText("请输入你的身份验证码");
+	Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->SetPlainText("");
 	Get("mainwindow")["login-card"]["next-stage"].Get<Core::VPushButton>()->ButtonPushed.Connect(
 		this, &LoginUI::SetupWelcomeInterface);
 
@@ -64,11 +64,11 @@ void LoginUI::SetupVertifyInterface()
 }
 void LoginUI::WelcomeInterface()
 {
-	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlaneText(VStr("欢迎，") + UserName +
+	Get("mainwindow")["login-card"]["title-text"].Get<Core::VTextLabel>()->SetPlainText(VStr("欢迎，") + UserName +
 																						VStr('#') + VertifyCode);
-	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlaneText(
+	Get("mainwindow")["login-card"]["description-text"].Get<Core::VTextLabel>()->SetPlainText(
 		"欢迎来到 VuiLib，开始你的旅途吧");
-	Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->SetPlaneText("");
+	Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->SetPlainText("");
 
 	Get("mainwindow")["login-card"]["title-text"]->Move(Get("mainwindow")["login-card"]["title-text"]->GetX(),
 														Get("mainwindow")["login-card"]["title-text"]->GetY() - 80);
@@ -101,7 +101,7 @@ void LoginUI::WelcomeInterface()
 }
 void LoginUI::SetupWelcomeInterface()
 {
-	VertifyCode = Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlaneText();
+	VertifyCode = Get("mainwindow")["login-card"]["inputbox"].Get<Core::VEditor>()->GetPlainText();
 
 	UIFadeOut();
 

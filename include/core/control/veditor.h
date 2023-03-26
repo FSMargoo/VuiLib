@@ -69,8 +69,8 @@ public:
 	void OnPaint(VCanvasPainter *Painter) override;
 
 public:
-	void	SetPlaneText(const VString &PlaneText);
-	VString GetPlaneText() const;
+	void	SetPlainText(const VString &PlainText);
+	VString GetPlainText() const;
 	void	SetLeadingText(const VString &Text);
 	VString GetLedingText() const;
 

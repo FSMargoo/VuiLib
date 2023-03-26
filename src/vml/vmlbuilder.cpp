@@ -530,9 +530,9 @@ void VMLCommonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VUIObj
 							  RelativeY, XMiddleOffset, YMiddleOffset, WidthRatio, HeightRatio, ViewOnly, RootFinder);
 }
 
-void VMLPushButtonBuilder::Builder(Core::VPushButton *PushButton, const VString &PlaneText, const int &TextSize)
+void VMLPushButtonBuilder::Builder(Core::VPushButton *PushButton, const VString &PlainText, const int &TextSize)
 {
-	PushButton->SetPlaneText(PlaneText);
+	PushButton->SetPlainText(PlainText);
 
 	if (TextSize != 0)
 	{
@@ -677,11 +677,11 @@ Core::VFontParagraphAlignment VMLTextLabelBuilder::ConvertParagraphAlignment(VSt
 	return Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR;
 }
 
-void VMLTextLabelBuilder::Builder(Core::VTextLabel *TextLabel, const VString &PlaneText, const int &TextSize,
+void VMLTextLabelBuilder::Builder(Core::VTextLabel *TextLabel, const VString &PlainText, const int &TextSize,
 								  const Core::VFontAlignment		  &Alignment,
 								  const Core::VFontParagraphAlignment &LineAlignment, const bool &AutoSize)
 {
-	TextLabel->SetPlaneText(PlaneText);
+	TextLabel->SetPlainText(PlainText);
 
 	if (TextSize != 0)
 	{
@@ -1125,11 +1125,11 @@ VMLLayoutBuilder::VMLLayoutBuilder(const VMLFinder &RootFinder, Core::VLayout *O
 	AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 }
 
-void VMLRadioButtonBuilder::Builder(Core::VRadioButton *RadioButton, const bool &Status, const VString &PlaneText,
+void VMLRadioButtonBuilder::Builder(Core::VRadioButton *RadioButton, const bool &Status, const VString &PlainText,
 									const bool &LockBack)
 {
 	RadioButton->SetSwitchStatus(Status);
-	RadioButton->SetPlaneText(PlaneText);
+	RadioButton->SetPlainText(PlainText);
 	RadioButton->SetLockBackStatus(LockBack);
 }
 void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VRadioButton *RadioButton,
@@ -1140,7 +1140,7 @@ void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::V
 
 	bool	SwitchStatus   = false;
 	bool	LockBackStatus = false;
-	VString PlaneText;
+	VString PlainText;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
@@ -1178,11 +1178,11 @@ void VMLRadioButtonBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::V
 				return;
 			}
 
-			PlaneText = ElementProperty.second.PropertyAsString;
+			PlainText = ElementProperty.second.PropertyAsString;
 		}
 	}
 
-	Builder(RadioButton, SwitchStatus, PlaneText, LockBackStatus);
+	Builder(RadioButton, SwitchStatus, PlainText, LockBackStatus);
 }
 VMLRadioButtonBuilder::VMLRadioButtonBuilder(const VMLFinder &RootFinder, Core::VRadioButton *Object,
 											 std::map<VString, VMLPropertyValue> &PropertyValueList,
@@ -1421,16 +1421,16 @@ VMLIconButtonBuilder::VMLIconButtonBuilder(const VMLFinder &RootFinder, Core::VI
 	AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 }
 
-void VMLLineEditorBuilder::Builder(Core::VLineEditor *LineEditor, const VString &PlaneText, const VString &LeadText)
+void VMLLineEditorBuilder::Builder(Core::VLineEditor *LineEditor, const VString &PlainText, const VString &LeadText)
 {
-	LineEditor->SetPlaneText(PlaneText);
+	LineEditor->SetPlainText(PlainText);
 	LineEditor->SetLeadText(LeadText);
 }
 void VMLLineEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VLineEditor *Object,
 										   std::map<VString, VMLPropertyValue> &PropertyValueList,
 										   VMLControlBuildStatus			   *BuildStatus)
 {
-	VString PlaneText;
+	VString PlainText;
 	VString LeadText;
 
 	for (auto &ElementProperty : PropertyValueList)
@@ -1445,7 +1445,7 @@ void VMLLineEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VL
 				return;
 			}
 
-			PlaneText = ElementProperty.second.PropertyAsString;
+			PlainText = ElementProperty.second.PropertyAsString;
 		}
 		if (ElementProperty.first == L"placeholder")
 		{
@@ -1461,7 +1461,7 @@ void VMLLineEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VL
 		}
 	}
 
-	Builder(Object, PlaneText, LeadText);
+	Builder(Object, PlainText, LeadText);
 }
 VMLLineEditorBuilder::VMLLineEditorBuilder(const VMLFinder &RootFinder, Core::VLineEditor *Object,
 										   std::map<VString, VMLPropertyValue> &PropertyValueList,
@@ -1471,11 +1471,11 @@ VMLLineEditorBuilder::VMLLineEditorBuilder(const VMLFinder &RootFinder, Core::VL
 	AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 }
 
-void VMLEditorBuilder::Builder(Core::VEditor *Editor, const VString &PlaneText, const VString &LeadingText,
+void VMLEditorBuilder::Builder(Core::VEditor *Editor, const VString &PlainText, const VString &LeadingText,
 							   const int &DeltaY, const bool &AllowEdit, const bool &AllowDragFontSizeChange,
 							   const bool &AllowOperationBack, const int &MaxOperationCache, const int &LeftMargin)
 {
-	Editor->SetPlaneText(PlaneText);
+	Editor->SetPlainText(PlainText);
 	Editor->SetLeadingText(LeadingText);
 	Editor->SetDeltaY(DeltaY);
 	Editor->SetAllowEditStatus(AllowEdit);
@@ -1488,7 +1488,7 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 									   std::map<VString, VMLPropertyValue> &PropertyValueList,
 									   VMLControlBuildStatus			   *BuildStatus)
 {
-	VString PlaneText;
+	VString PlainText;
 	VString LeadingText;
 	int		DeltaY			  = 25;
 	int		MaxOperationCache = 20;
@@ -1521,7 +1521,7 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 				return;
 			}
 
-			PlaneText = ElementProperty.second.PropertyAsString;
+			PlainText = ElementProperty.second.PropertyAsString;
 		}
 		if (ElementProperty.first == L"placeholder")
 		{
@@ -1599,7 +1599,7 @@ void VMLEditorBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VEdito
 		}
 	}
 
-	Builder(Object, PlaneText, LeadingText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache,
+	Builder(Object, PlainText, LeadingText, DeltaY, EditStatus, FontDragChange, AllowBack, MaxOperationCache,
 			LeftMargin);
 }
 VMLEditorBuilder::VMLEditorBuilder(const VMLFinder &RootFinder, Core::VEditor *Object,

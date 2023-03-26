@@ -37,11 +37,11 @@ public:
 public:
 	explicit VPushButton(VUIObject *Parent);
 	VPushButton(const int &Width, const int &Height, VUIObject *Parent);
-	VPushButton(const int &Width, const int &Height, const VString &PlaneText, VUIObject *Parent);
+	VPushButton(const int &Width, const int &Height, const VString &PlainText, VUIObject *Parent);
 	~VPushButton() noexcept;
 
 public:
-	void		   SetPlaneText(const VString &PlaneText);
+	void		   SetPlainText(const VString &PlainText);
 	void		   SetTextSize(const int &TextSize);
 	const VString &GetPlaneString();
 

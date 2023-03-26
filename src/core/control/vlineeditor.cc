@@ -21,14 +21,14 @@ VLineEditor::VLineEditor(const int &Width, const int &Height, VUIObject *Parent)
 
 	Resize(Width, Height);
 }
-VLineEditor::VLineEditor(const int &Width, const int &Height, VString PlaneText, VUIObject *Parent)
+VLineEditor::VLineEditor(const int &Width, const int &Height, VString PlainText, VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VTextEditorTheme(*(static_cast<VTextEditorTheme *>(GetTargetTheme(VUIThemeType::VTextEditor))));
 
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
-	InputStringCache = PlaneText;
+	InputStringCache = PlainText;
 
 	Resize(Width, Height);
 }
@@ -1239,9 +1239,9 @@ void VLineEditor::LostMouseFocus()
 	}
 }
 
-void VLineEditor::SetPlaneText(const VString &PlaneText)
+void VLineEditor::SetPlainText(const VString &PlainText)
 {
-	InputStringCache = PlaneText;
+	InputStringCache = PlainText;
 
 	CursorPosition	= 0;
 	CursorGraphicsX = 0;
@@ -1250,7 +1250,7 @@ void VLineEditor::SetPlaneText(const VString &PlaneText)
 	Update();
 }
 
-const VString VLineEditor::GetPlaneText()
+const VString VLineEditor::GetPlainText()
 {
 	return InputStringCache;
 }

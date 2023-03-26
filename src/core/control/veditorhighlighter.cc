@@ -229,7 +229,7 @@ void VVMLHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 
 	if (NewChar == L'\"')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'\"')
 		{
@@ -242,7 +242,7 @@ void VVMLHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 	}
 	if (NewChar == L'>')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'<')
 		{
@@ -253,9 +253,9 @@ void VVMLHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 			*Flag = false;
 		}
 	}
-	if (NewChar == L'\b' && Editor->GetPlaneText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
+	if (NewChar == L'\b' && Editor->GetPlainText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text[Caret.CaretStart - 1] == L'\"' && Text[Caret.CaretStart] == L'\"')
 		{
@@ -266,7 +266,7 @@ void VVMLHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 			Text.Erase(Text.begin() + Caret.CaretStart);
 		}
 
-		Editor->SetPlaneText(Text);
+		Editor->SetPlainText(Text);
 		Editor->SetCaret(Caret);
 	}
 }
@@ -277,7 +277,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 	if (NewChar == L'\"')
 	{
 		auto OldCaret = Caret;
-		auto Text	  = Editor->GetPlaneText();
+		auto Text	  = Editor->GetPlainText();
 
 		if (Text.size() > Caret.CaretStart)
 		{
@@ -285,7 +285,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 			{
 				Text.Insert(Text.begin() + Caret.CaretStart, L'\"');
 
-				Editor->SetPlaneText(Text);
+				Editor->SetPlainText(Text);
 				Editor->SetCaret(Caret);
 			}
 		}
@@ -293,17 +293,17 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 		{
 			Text.Insert(Text.begin() + Caret.CaretStart, L'\"');
 
-			Editor->SetPlaneText(Text);
+			Editor->SetPlainText(Text);
 			Editor->SetCaret(Caret);
 		}
 	}
 	if (NewChar == L'<')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		Text.Insert(Text.begin() + Caret.CaretStart, L'>');
 
-		Editor->SetPlaneText(Text);
+		Editor->SetPlainText(Text);
 		Editor->SetCaret(Caret);
 	}
 	if (NewChar == L'\n')
@@ -336,7 +336,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 			CodePosition += LinePosition;
 		}
 
-		VString PlaneText = Editor->GetPlaneText();
+		VString PlainText = Editor->GetPlainText();
 
 		UINT32 LeadingPosition = CodePosition - 1;
 		UINT32 StringIndex	   = LeadingPosition;
@@ -344,7 +344,7 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 
 		while (true)
 		{
-			if (PlaneText[StringIndex] != L'\t')
+			if (PlainText[StringIndex] != L'\t')
 			{
 				break;
 			}
@@ -353,9 +353,9 @@ void VVMLHighlighter::NewCharacter(const wchar_t &NewChar)
 		}
 	}
 }
-void VVMLHighlighter::RenderColor(const VString &PlaneText)
+void VVMLHighlighter::RenderColor(const VString &PlainText)
 {
-	VKits::seal_lexical Lexical(PlaneText);
+	VKits::seal_lexical Lexical(PlainText);
 	auto				Token	  = Lexical.get_token();
 	auto				LastToken = Token;
 	auto				InType	  = false;
@@ -462,7 +462,7 @@ void VVMLHighlighter::MouseClicked(const int &TextPosition)
 {
 	if (!DoubleClickTimer.End())
 	{
-		VKits::seal_lexical Lexical(Editor->GetPlaneText());
+		VKits::seal_lexical Lexical(Editor->GetPlainText());
 		auto				Token  = Lexical.get_token();
 		auto				InType = false;
 
@@ -575,7 +575,7 @@ void VVSSHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 
 	if (NewChar == L'}')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'{')
 		{
@@ -586,16 +586,16 @@ void VVSSHighlighter::CheckInputChar(const wchar_t &NewChar, bool *Flag)
 			*Flag = false;
 		}
 	}
-	if (NewChar == L'\b' && Editor->GetPlaneText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
+	if (NewChar == L'\b' && Editor->GetPlainText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text[Caret.CaretStart - 1] == L'{' && Text[Caret.CaretStart] == L'}')
 		{
 			Text.Erase(Text.begin() + Caret.CaretStart);
 		}
 
-		Editor->SetPlaneText(Text);
+		Editor->SetPlainText(Text);
 		Editor->SetCaret(Caret);
 	}
 }
@@ -605,29 +605,29 @@ void VVSSHighlighter::NewCharacter(const wchar_t &NewChar)
 
 	if (NewChar == L'{')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		Text.Insert(Text.begin() + Caret.CaretStart, L'}');
 
-		Editor->SetPlaneText(Text);
+		Editor->SetPlainText(Text);
 		Editor->SetCaret(Caret);
 	}
 	if (NewChar == L'*')
 	{
-		auto Text = Editor->GetPlaneText();
+		auto Text = Editor->GetPlainText();
 
 		if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'/')
 		{
 			Text.Insert(Caret.CaretStart, L"*/");
 
-			Editor->SetPlaneText(Text);
+			Editor->SetPlainText(Text);
 			Editor->SetCaret(Caret);
 		}
 	}
 }
-void VVSSHighlighter::RenderColor(const VString &PlaneText)
+void VVSSHighlighter::RenderColor(const VString &PlainText)
 {
-	VKits::seal_lexical Lexical(PlaneText, false);
+	VKits::seal_lexical Lexical(PlainText, false);
 	auto				Token	  = Lexical.get_token();
 	auto				LastToken = Token;
 	auto				InBlock	  = false;
@@ -721,7 +721,7 @@ void VVSSHighlighter::MouseClicked(const int &TextPosition)
 {
 	if (!DoubleClickTimer.End())
 	{
-		VKits::seal_lexical Lexical(Editor->GetPlaneText());
+		VKits::seal_lexical Lexical(Editor->GetPlainText());
 		auto				Token  = Lexical.get_token();
 		auto				InType = false;
 
@@ -764,7 +764,7 @@ void VBasicHightlighter::BindEditor(VEditor *TargetEditor)
 {
 	Editor = TargetEditor;
 
-	RenderColor(Editor->GetPlaneText());
+	RenderColor(Editor->GetPlainText());
 }
 } // namespace Core
 

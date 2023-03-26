@@ -61,7 +61,7 @@ private:
 public:
 	VLineEditor(VUIObject *Parent);
 	VLineEditor(const int &Width, const int &Height, VUIObject *Parent);
-	VLineEditor(const int &Width, const int &Height, VString PlaneText, VUIObject *Parent);
+	VLineEditor(const int &Width, const int &Height, VString PlainText, VUIObject *Parent);
 
 public:
 	void Move(const int &X, const int &Y) override;
@@ -80,8 +80,8 @@ public:
 	VTextEditorTheme *GetTheme();
 
 public:
-	void		  SetPlaneText(const VString &PlaneText);
-	const VString GetPlaneText();
+	void		  SetPlainText(const VString &PlainText);
+	const VString GetPlainText();
 	const int	  GetCurrentCursorPosition();
 
 	void SetLeadText(const VString &Text);

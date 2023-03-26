@@ -5,13 +5,13 @@ VLIB_BEGIN_NAMESPACE
 namespace Core
 {
 
-VPushButton::VPushButton(const int &Width, const int &Height, const VString &PlaneText, VUIObject *Parent)
+VPushButton::VPushButton(const int &Width, const int &Height, const VString &PlainText, VUIObject *Parent)
 	: VAbstractButton(Parent)
 {
 	Theme = new VPushButtonTheme(*(static_cast<VPushButtonTheme *>(GetTargetTheme(VUIThemeType::VPushButton))));
 	Resize(Width, Height);
 
-	Theme->PlaneText = PlaneText;
+	Theme->PlainText = PlainText;
 
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
@@ -60,7 +60,7 @@ void VPushButton::OnPaint(VCanvasPainter *Painter)
 								   static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
 								  Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
 
-	Painter->DrawString(Theme->PlaneText,
+	Painter->DrawString(Theme->PlainText,
 						{static_cast<int>(Theme->LocalTheme.BorderThickness),
 						 static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
 						Theme->LabelFont, &TextBrush);
@@ -68,15 +68,15 @@ void VPushButton::OnPaint(VCanvasPainter *Painter)
 	Painter->EndDraw();
 }
 
-void VPushButton::SetPlaneText(const VString &PlaneText)
+void VPushButton::SetPlainText(const VString &PlainText)
 {
-	Theme->PlaneText = PlaneText;
+	Theme->PlainText = PlainText;
 
 	Update();
 }
 const VString &VPushButton::GetPlaneString()
 {
-	return Theme->PlaneText;
+	return Theme->PlainText;
 }
 void VPushButton::SetTheme(Core::VPushButtonTheme *NewTheme)
 {

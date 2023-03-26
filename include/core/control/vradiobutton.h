@@ -45,7 +45,7 @@ public:
 
 public:
 	void SetSwitchStatus(const bool &Status);
-	void SetPlaneText(const VString &Text);
+	void SetPlainText(const VString &Text);
 	void SetLockBackStatus(const bool &LockBack);
 	bool GetSwitchStatus() const;
 	bool GetLockBackStatus() const;

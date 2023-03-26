@@ -51,9 +51,9 @@ void VRadioButton::SetSwitchStatus(const bool &Status)
 
 	Update();
 }
-void VRadioButton::SetPlaneText(const VString &PlaneText)
+void VRadioButton::SetPlainText(const VString &PlainText)
 {
-	Theme->PlaneText = PlaneText;
+	Theme->PlainText = PlainText;
 
 	Update();
 }
@@ -110,7 +110,7 @@ void VRadioButton::OnPaint(VCanvasPainter *Painter)
 	Painter->FillRoundedRectangle({static_cast<int>(Theme->LocalTheme.BorderThickness),
 								   static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
 								  Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
-	Painter->DrawString(Theme->PlaneText,
+	Painter->DrawString(Theme->PlainText,
 						{static_cast<int>(Theme->LocalTheme.BorderThickness),
 						 static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
 						Theme->LabelFont, &TextBrush);

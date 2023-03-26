@@ -79,7 +79,7 @@ public:
 class VMLPushButtonBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VPushButton *PushButton, const VString &PlaneText, const int &TextSize = 0);
+	void Builder(Core::VPushButton *PushButton, const VString &PlainText, const int &TextSize = 0);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VPushButton *Object,
 						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
@@ -107,7 +107,7 @@ private:
 	Core::VFontParagraphAlignment ConvertParagraphAlignment(VString ParagraphString);
 
 protected:
-	void Builder(Core::VTextLabel *TextLabel, const VString &PlaneText, const int &TextSize,
+	void Builder(Core::VTextLabel *TextLabel, const VString &PlainText, const int &TextSize,
 				 const Core::VFontAlignment &Alignment, const Core::VFontParagraphAlignment &LineAlignment,
 				 const bool &AutoSize);
 
@@ -160,7 +160,7 @@ public:
 class VMLRadioButtonBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VRadioButton *RadioButton, const bool &Status, const VString &PlaneText, const bool &LockBack);
+	void Builder(Core::VRadioButton *RadioButton, const bool &Status, const VString &PlainText, const bool &LockBack);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VRadioButton *RadioButton,
 						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
@@ -210,7 +210,7 @@ public:
 class VMLLineEditorBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VLineEditor *LineEditor, const VString &PlaneText, const VString &LeadText);
+	void Builder(Core::VLineEditor *LineEditor, const VString &PlainText, const VString &LeadText);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VLineEditor *Object,
 						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
@@ -222,7 +222,7 @@ public:
 class VMLEditorBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VEditor *Editor, const VString &PlaneText, const VString &LeadingText, const int &DeltaY,
+	void Builder(Core::VEditor *Editor, const VString &PlainText, const VString &LeadingText, const int &DeltaY,
 				 const bool &AllowEdit, const bool &AllowDragFontSizeChange, const bool &AllowOperationBack,
 				 const int &MaxOperationCache, const int &LeftMargin);
 
