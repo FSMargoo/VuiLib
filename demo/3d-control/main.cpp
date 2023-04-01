@@ -44,7 +44,7 @@ void InitPoint()
 void PointSetted(const double &Value)
 {
 	PointAmount = MAX_POINT_AMOUNT * Value;
-	PointInfoLabel->SetPlaneText(L"Point amount : " + std::to_wstring(PointAmount));
+	PointInfoLabel->SetPlainText(L"Point amount : " + std::to_wstring(PointAmount));
 	InitPoint();
 }
 
@@ -118,11 +118,11 @@ void AnimationStatusSwitch()
 
 	if (InAnimation)
 	{
-		AnimationButton->SetPlaneText(L"Stop Animation");
+		AnimationButton->SetPlainText(L"Stop Animation");
 	}
 	else
 	{
-		AnimationButton->SetPlaneText(L"Play Animation");
+		AnimationButton->SetPlainText(L"Play Animation");
 	}
 }
 
@@ -130,7 +130,7 @@ Core::VSmartTimer *FpsTimer;
 
 void FpsOnFlush()
 {
-	CanvasInfoLabel->SetPlaneText(L"Canvas : 721x706 \nFps: " + std::to_wstring(Fps));
+	CanvasInfoLabel->SetPlainText(L"Canvas : 721x706 \nFps: " + std::to_wstring(Fps));
 	FpsTimer->Start(1000);
 
 	Fps = 0;

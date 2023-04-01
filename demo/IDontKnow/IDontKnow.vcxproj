@@ -59,15 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\config.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -109,6 +113,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>vuilib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,126 +136,6 @@
     <Xml Include="main.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\core\animation\vanimation.h" />
-    <ClInclude Include="..\..\include\core\animation\vanimationcurve.h" />
-    <ClInclude Include="..\..\include\core\control\vabstractbutton.h" />
-    <ClInclude Include="..\..\include\core\control\vblurlabel.h" />
-    <ClInclude Include="..\..\include\core\control\vcanvas.h" />
-    <ClInclude Include="..\..\include\core\control\vdragcontrolbase.h" />
-    <ClInclude Include="..\..\include\core\control\veditor.h" />
-    <ClInclude Include="..\..\include\core\control\veditorhighlighter.h" />
-    <ClInclude Include="..\..\include\core\control\vfakecaption.h" />
-    <ClInclude Include="..\..\include\core\control\viconbutton.h" />
-    <ClInclude Include="..\..\include\core\control\vimagelabel.h" />
-    <ClInclude Include="..\..\include\core\control\vlayout.h" />
-    <ClInclude Include="..\..\include\core\control\vlineeditor.h" />
-    <ClInclude Include="..\..\include\core\control\vpushbutton.h" />
-    <ClInclude Include="..\..\include\core\control\vradiobutton.h" />
-    <ClInclude Include="..\..\include\core\control\vscrollbar.h" />
-    <ClInclude Include="..\..\include\core\control\vscroller.h" />
-    <ClInclude Include="..\..\include\core\control\vswitchgroup.h" />
-    <ClInclude Include="..\..\include\core\control\vtextlabel.h" />
-    <ClInclude Include="..\..\include\core\control\vtitlebar.h" />
-    <ClInclude Include="..\..\include\core\control\vviewlabel.h" />
-    <ClInclude Include="..\..\include\core\object\vapplication.h" />
-    <ClInclude Include="..\..\include\core\object\vuiobject.h" />
-    <ClInclude Include="..\..\include\core\render\vbrush.h" />
-    <ClInclude Include="..\..\include\core\render\vcolor.h" />
-    <ClInclude Include="..\..\include\core\render\vdirectxfactory.h" />
-    <ClInclude Include="..\..\include\core\render\vimage.h" />
-    <ClInclude Include="..\..\include\core\render\vpainter.h" />
-    <ClInclude Include="..\..\include\core\render\vpainterdevice.h" />
-    <ClInclude Include="..\..\include\core\render\vrenderbasic.h" />
-    <ClInclude Include="..\..\include\core\render\vwrite.h" />
-    <ClInclude Include="..\..\include\core\signal\vsignal.h" />
-    <ClInclude Include="..\..\include\core\stl-ex\vstring.h" />
-    <ClInclude Include="..\..\include\core\uibasic\vsmarttimer.h" />
-    <ClInclude Include="..\..\include\core\uibasic\vtimer.h" />
-    <ClInclude Include="..\..\include\core\uibasic\vuiinterpolator.h" />
-    <ClInclude Include="..\..\include\core\uibasic\vuitheme.h" />
-    <ClInclude Include="..\..\include\core\vbasiccore.h" />
-    <ClInclude Include="..\..\include\core\vcontrol.h" />
-    <ClInclude Include="..\..\include\core\visual\veffect.h" />
-    <ClInclude Include="..\..\include\core\visual\vvisual.h" />
-    <ClInclude Include="..\..\include\core\widget\vmessage.h" />
-    <ClInclude Include="..\..\include\core\widget\vprivatewidget.h" />
-    <ClInclude Include="..\..\include\core\widget\vwidget.h" />
-    <ClInclude Include="..\..\include\debug\vdebug.h" />
-    <ClInclude Include="..\..\include\kits\seal.info.h" />
-    <ClInclude Include="..\..\include\kits\seal.lexical.h" />
-    <ClInclude Include="..\..\include\kits\seal.lexical.token.h" />
-    <ClInclude Include="..\..\include\kits\vallocator.h" />
-    <ClInclude Include="..\..\include\kits\vcolorhelper.h" />
-    <ClInclude Include="..\..\include\kits\vparserhelper.h" />
-    <ClInclude Include="..\..\include\vml\vml.h" />
-    <ClInclude Include="..\..\include\vml\vmlbuilder.h" />
-    <ClInclude Include="..\..\include\vml\vmlparser.h" />
-    <ClInclude Include="..\..\include\vml\vmlvariable.h" />
-    <ClInclude Include="..\..\include\vml\vmlwidget.h" />
-    <ClInclude Include="..\..\include\vss\vssbuilder.h" />
-    <ClInclude Include="..\..\include\vss\vssparser.h" />
-    <ClInclude Include="..\..\include\win32base\vwin32base.h" />
-    <ClInclude Include="..\..\src\core\signal\vbasiccore.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\core\animation\vanimation.cc" />
-    <ClCompile Include="..\..\src\core\animation\vanimationcurve.cc" />
-    <ClCompile Include="..\..\src\core\control\vabstractbutton.cc" />
-    <ClCompile Include="..\..\src\core\control\vblurlabel.cc" />
-    <ClCompile Include="..\..\src\core\control\vcanvas.cc" />
-    <ClCompile Include="..\..\src\core\control\vdragcontrolbase.cc" />
-    <ClCompile Include="..\..\src\core\control\veditor.cc" />
-    <ClCompile Include="..\..\src\core\control\veditorhighlighter.cc" />
-    <ClCompile Include="..\..\src\core\control\vfakecaption.cc" />
-    <ClCompile Include="..\..\src\core\control\viconbutton.cc" />
-    <ClCompile Include="..\..\src\core\control\vimagelabel.cc" />
-    <ClCompile Include="..\..\src\core\control\vlayout.cc" />
-    <ClCompile Include="..\..\src\core\control\vlineeditor.cc" />
-    <ClCompile Include="..\..\src\core\control\vpushbutton.cc" />
-    <ClCompile Include="..\..\src\core\control\vradiobutton.cc" />
-    <ClCompile Include="..\..\src\core\control\vscrollbar.cc" />
-    <ClCompile Include="..\..\src\core\control\vscroller.cc" />
-    <ClCompile Include="..\..\src\core\control\vswitchgroup.cc" />
-    <ClCompile Include="..\..\src\core\control\vtextlabel.cc" />
-    <ClCompile Include="..\..\src\core\control\vtitlebar.cc" />
-    <ClCompile Include="..\..\src\core\control\vviewlabel.cc" />
-    <ClCompile Include="..\..\src\core\object\vapplication.cc" />
-    <ClCompile Include="..\..\src\core\object\vuiobject.cc" />
-    <ClCompile Include="..\..\src\core\render\vbrush.cc" />
-    <ClCompile Include="..\..\src\core\render\vcolor.cc" />
-    <ClCompile Include="..\..\src\core\render\vdirectxfactory.cc" />
-    <ClCompile Include="..\..\src\core\render\vimage.cc" />
-    <ClCompile Include="..\..\src\core\render\vpainter.cc" />
-    <ClCompile Include="..\..\src\core\render\vpainterdevice.cc" />
-    <ClCompile Include="..\..\src\core\render\vrenderbasic.cc" />
-    <ClCompile Include="..\..\src\core\render\vwrite.cc" />
-    <ClCompile Include="..\..\src\core\signal\vsignal.cc" />
-    <ClCompile Include="..\..\src\core\stl-ex\vstring.cpp" />
-    <ClCompile Include="..\..\src\core\uibasic\vsmarttimer.cc" />
-    <ClCompile Include="..\..\src\core\uibasic\vtimer.cc" />
-    <ClCompile Include="..\..\src\core\uibasic\vuiinterpolator.cc" />
-    <ClCompile Include="..\..\src\core\uibasic\vuitheme.cc" />
-    <ClCompile Include="..\..\src\core\vbasiccore.cc" />
-    <ClCompile Include="..\..\src\core\visual\veffect.cc" />
-    <ClCompile Include="..\..\src\core\visual\vvisual.cc" />
-    <ClCompile Include="..\..\src\core\widget\vmessage.cc" />
-    <ClCompile Include="..\..\src\core\widget\vprivatewidget.cc" />
-    <ClCompile Include="..\..\src\core\widget\vwidget.cc" />
-    <ClCompile Include="..\..\src\debug\vdebug.cc" />
-    <ClCompile Include="..\..\src\kits\seal.info.cc" />
-    <ClCompile Include="..\..\src\kits\seal.lexical.cc" />
-    <ClCompile Include="..\..\src\kits\seal.lexical.token.cc" />
-    <ClCompile Include="..\..\src\kits\vallocator.cc" />
-    <ClCompile Include="..\..\src\kits\vcolorhelper.cc" />
-    <ClCompile Include="..\..\src\kits\vparserhelper.cc" />
-    <ClCompile Include="..\..\src\vml\vml.cpp" />
-    <ClCompile Include="..\..\src\vml\vmlbuilder.cpp" />
-    <ClCompile Include="..\..\src\vml\vmlparser.cpp" />
-    <ClCompile Include="..\..\src\vml\vmlvariable.cpp" />
-    <ClCompile Include="..\..\src\vml\vmlwidget.cpp" />
-    <ClCompile Include="..\..\src\vss\vssbuilder.cc" />
-    <ClCompile Include="..\..\src\vss\vssparser.cc" />
-    <ClCompile Include="..\..\src\win32base\vwin32base.cc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
