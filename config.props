@@ -11,6 +11,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(vinclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalModuleDependencies>vuilib.lib</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(vlib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

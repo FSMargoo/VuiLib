@@ -105,6 +105,7 @@ public:
 public:
 	void SetDeltaY(const int &Delta);
 	void SetLeftMargin(const int &LeftMargin);
+	void SetTopMargin(const int &TargetMargin);
 
 public:
 	VTextEditorTheme *GetTheme();
@@ -163,6 +164,7 @@ protected:
 
 	long int OffsetY;
 	long int OffsetX;
+	long int TopMargin;
 
 	VString			  InEditingText;
 	VTextEditorTheme *Theme;

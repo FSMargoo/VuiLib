@@ -1298,8 +1298,9 @@ void VEditor::InitEditor()
 
 	UsedComboKey = false;
 
-	OffsetX = 5;
-	YDelta	= 25;
+	OffsetX	  = 5;
+	YDelta	  = 25;
+	TopMargin = 0;
 
 	UserInOperating = false;
 
@@ -1457,7 +1458,7 @@ void VEditor::DrawSelectedRange(Core::VCanvasPainter *Painter)
 			auto HitTestMetric = HitTestMetrics[Count];
 
 			HitTestMetric.left += OffsetX;
-			HitTestMetric.top += OffsetY + Theme->LabelFont->GetTextSize();
+			HitTestMetric.top += OffsetY + Theme->LabelFont->GetTextSize() + (TopMargin / 3 * 4);
 
 			if (HitTestMetric.width == 0)
 			{
@@ -1501,8 +1502,9 @@ void VEditor::OnPaint(VCanvasPainter *Painter)
 	{
 		DrawSelectedRange(Painter);
 
-		Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
-											   LocalTextLayout.Get(), TextBrush.GetDxBrush());
+		Painter->GetDXObject()->DrawTextLayout(
+			D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize() + TopMargin), LocalTextLayout.Get(),
+			TextBrush.GetDxBrush());
 	}
 	else
 	{
@@ -1513,15 +1515,17 @@ void VEditor::OnPaint(VCanvasPainter *Painter)
 			LeadText.CStyleString(), LeadText.size(), Theme->LabelFont->GetDXObject(),
 			GetWidth() - Theme->LocalTheme.BorderThickness * 2, GetHeight() - Theme->LocalTheme.BorderThickness * 2,
 			LeadingTextLayout.GetAddressOf());
-		Painter->GetDXObject()->DrawTextLayout(D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize()),
-											   LeadingTextLayout.Get(), LeadingTextBrush.GetDxBrush());
+		Painter->GetDXObject()->DrawTextLayout(
+			D2D1::Point2F(OffsetX, OffsetY + Theme->LabelFont->GetTextSize() + TopMargin), LeadingTextLayout.Get(),
+			LeadingTextBrush.GetDxBrush());
 	}
 
 	if (ShowCaret)
 	{
 		auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
 
-		CaretPosition.Offset(OffsetX, OffsetY + Theme->LabelFont->GetTextSize() + 4);
+		CaretPosition.Offset(OffsetX,
+							 OffsetY + Theme->LabelFont->GetTextSize() + 4 + TopMargin + (TopMargin == 0 ? 0 : -2));
 
 		auto CaretEndPosition = CaretPosition;
 		CaretEndPosition.Offset(0, Theme->LabelFont->GetTextSize() - 2);
@@ -1573,6 +1577,12 @@ void VEditor::SetLeftMargin(const int &LeftMargin)
 {
 	OffsetX = LeftMargin;
 }
+void VEditor::SetTopMargin(const int &TargetMargin)
+{
+	TopMargin = TargetMargin;
+
+	Update();
+}
 
 void VEditor::CheckFrame()
 {
@@ -1584,7 +1594,7 @@ void VEditor::CheckFrame()
 	{
 		auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
 		CallWidgetSetIME(GetOriginX() + CaretPosition.X + 5,
-						 GetOriginY() + CaretPosition.Y + Theme->LabelFont->GetTextSize());
+						 GetOriginY() + CaretPosition.Y + Theme->LabelFont->GetTextSize() + TopMargin);
 	}
 	if (!Interpolator->IsEnd() && InAnimation)
 	{
@@ -1718,6 +1728,8 @@ void VEditor::SetScroller()
 	if (LocalTextLayout)
 	{
 		auto CaretPosition = Caret.GetCaretPosition(LocalTextLayout.Get());
+
+		// CaretPosition.Y += TopMargin;
 
 		if (CaretPosition.Y <= -OffsetY)
 		{

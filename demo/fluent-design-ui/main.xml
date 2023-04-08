@@ -1,0 +1,42 @@
+<main-widget type="mainwindow" width="1717" height="980" borderless="true" class="main-widget"
+			 style-sheet=".main-widget {
+				background-color: #202022;
+			 }">
+	<fake-caption type="fake-caption" width="@fill" height="@fill"/>
+	<icon type="imagelabel" x="28" y="25" width="18" height="14" src="./resource/min-logo.png"/>
+	<title type="textlabel" x="69" y="21" text="VuiLib" auto-size="true" class="title"
+		   style-sheet=".title {
+			color : #FFFFFF;
+			font-size: 16px;
+		   }"/>
+	<search-input type="editor" placeholder="Search something..." x="@center" y="16"
+				  width="@scale(0.4979615608619685)" height="@scale(0.0346938775510204)" left-margin="19" top-margin="-2"
+				  class="search-input"
+				  style-sheet=".search-input {
+					background-color: #2D2D2D;
+					border-color: #3B3B3B;
+					color: rgba(255, 255, 255, 0.7);
+				  }
+				  .search-input:hover {
+					background-color: #2D2D2D;
+					border-color: #3B3B3B;
+					color: #FFFFFF;
+				  }
+				  .search-input:active {
+					background-color: #2D2D2D;
+					border-color: #3B3B3B;
+					color: #FFFFFF;
+				  }">
+		<search-icon type="imagelabel" src="./resource/search.png" auto-size="true" x="@ratio(0.96)" y="@center" view-only="true"/>
+	</search-input>
+	<main-page type="textlabel" x="111" y="64" width="@scale(0.98)" height="@scale(1.0)" class="main-page"
+			   style-sheet=".main-page {
+				border-radius:18px;
+			   }
+			   ">
+		<background-image type="imagelabel" src="./resource/cage.jpg" width="@fill" height="@fill" class="background-image"
+						  style-sheet=".background-image {
+							border-radius:18px;
+						  }"/>
+	</main-page>
+</main-widget>
