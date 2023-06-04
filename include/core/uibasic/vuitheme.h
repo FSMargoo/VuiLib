@@ -146,10 +146,12 @@ public:
 struct VImageLabelTheme : public VBasicUITheme
 {
 	VImage *Image;
+	VPoint	BorderRadius;
 
 	VImageLabelTheme()
 	{
-		Image = nullptr;
+		Image		 = nullptr;
+		BorderRadius = {0, 0};
 	}
 	~VImageLabelTheme()
 	{

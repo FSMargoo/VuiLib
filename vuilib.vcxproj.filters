@@ -97,6 +97,12 @@
     <Filter Include="src\core\stl-ex">
       <UniqueIdentifier>{0e13e765-7d25-4af5-b491-aa68e047931a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\fmt">
+      <UniqueIdentifier>{2141fff1-ce0d-42fb-a288-b5639a67b48d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\fmt">
+      <UniqueIdentifier>{2d4112f0-7ad2-485f-8f44-5e55785def5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\animation\vanimationcurve.h">
@@ -276,6 +282,9 @@
     <ClInclude Include="include\core\stl-ex\vstring.h">
       <Filter>include\core\stl-ex</Filter>
     </ClInclude>
+    <ClInclude Include="include\fmt\vfmt.h">
+      <Filter>include\core\fmt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -452,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="src\core\stl-ex\vstring.cpp">
       <Filter>src\core\stl-ex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\fmt\vfmt.cpp">
+      <Filter>src\core\fmt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

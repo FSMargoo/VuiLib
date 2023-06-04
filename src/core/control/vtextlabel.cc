@@ -285,6 +285,10 @@ void VTextLabel::ResizeByText()
 
 	VDXObjectSafeFree(&TextLayout);
 }
+void VTextLabel::Output(const VString &String)
+{
+	SetPlainText(GetPlainText() + String);
+}
 } // namespace Core
 
 VLIB_END_NAMESPACE

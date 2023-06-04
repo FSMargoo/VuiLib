@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../fmt/vfmt.h"
 #include "../uibasic/vtimer.h"
 #include "vabstractbutton.h"
 
@@ -8,7 +9,7 @@ VLIB_BEGIN_NAMESPACE
 namespace Core
 {
 
-class VTextLabel : public VAbstractButton
+class VTextLabel : public VAbstractButton, public VFMTDevice
 {
 private:
 	VTextLabelTheme *Theme;
@@ -66,6 +67,9 @@ public:
 
 public:
 	void CheckFrame() override;
+
+public:
+	void Output(const VString &String) override;
 };
 
 } // namespace Core

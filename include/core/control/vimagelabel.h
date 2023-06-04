@@ -23,6 +23,7 @@ public:
 
 public:
 	void ResizeByImage();
+	void SetBorderRadius(const VPoint &Radius);
 
 public:
 	VImageLabelTheme *GetTheme();

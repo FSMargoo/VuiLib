@@ -180,6 +180,7 @@
     <ClInclude Include="include\core\widget\vprivatewidget.h" />
     <ClInclude Include="include\core\widget\vwidget.h" />
     <ClInclude Include="include\debug\vdebug.h" />
+    <ClInclude Include="include\fmt\vfmt.h" />
     <ClInclude Include="include\kits\seal.info.h" />
     <ClInclude Include="include\kits\seal.lexical.h" />
     <ClInclude Include="include\kits\seal.lexical.token.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="src\core\control\vtextlabel.cc" />
     <ClCompile Include="src\core\control\vtitlebar.cc" />
     <ClCompile Include="src\core\control\vviewlabel.cc" />
+    <ClCompile Include="src\core\fmt\vfmt.cpp" />
     <ClCompile Include="src\core\object\vapplication.cc" />
     <ClCompile Include="src\core\object\vuiobject.cc" />
     <ClCompile Include="src\core\render\vbrush.cc" />

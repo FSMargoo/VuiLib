@@ -44,9 +44,6 @@ bool VCircleView::OnMessageTrigger(VRepaintMessage *RepaintMessage)
 
 			if (ObjectVisual.Shadow.EnableStatus)
 			{
-				D2D1_POINT_2U OriginPoint = {0, 0};
-				D2D1_RECT_U CopyRect = {static_cast<unsigned int>(GetWidth()), static_cast<unsigned int>(GetHeight())};
-
 				ID2D1Bitmap *CanvasSurface;
 
 				Canvas->GetDXObject()->GetBitmap(&CanvasSurface);

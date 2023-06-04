@@ -1351,6 +1351,16 @@ void VSSVImageLabelBuilder::BuildVSSObject(Core::VImageLabel			  *TargetControl,
 						}
 					}
 				}
+				if (Property.first == L"border-radius")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->BorderRadius = {PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+						}
+					}
+				}
 			}
 		}
 	}

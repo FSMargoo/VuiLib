@@ -17,7 +17,7 @@ int main()
 	MainWindow.Show();
 
 	// Load a VML file into the main window.
-	MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
+	// MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
 
 	// Execute the application.
 	return Application.Exec();

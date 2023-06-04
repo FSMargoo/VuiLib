@@ -219,84 +219,118 @@ VString VString::FromWideString(const std::wstring &String)
 {
 	return vstring_convert(String.c_str());
 }
-VString VString::Args(VString FormatInstance)
+VString VString::Args(VString FormatInstance) const
 {
-	auto Index = IndexOf(VStr("%s"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 2);
-		Insert(Index, FormatInstance);
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FormatInstance);
 
-		return VString(*this);
+		return NewString;
 	}
 
-	return VString(FormatInstance);
+	return NewString;
 }
-VString VString::Args(int IntFormat)
+VString VString::Args(int IntFormat) const
 {
-	auto Index = IndexOf(VStr("%d"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 2);
-		Insert(Index, FromNumber(IntFormat));
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
 }
-VString VString::Args(const long IntFormat)
+VString VString::Args(const long IntFormat) const
 {
-	auto Index = IndexOf(VStr("%ld"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 2);
-		Insert(Index, FromNumber(IntFormat));
+		// test
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
 }
-VString VString::Args(const long long IntFormat)
+VString VString::Args(const long long IntFormat) const
 {
-	auto Index = IndexOf(VStr("%lld"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 4);
-		Insert(Index, FromNumber(IntFormat));
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
 }
-VString VString::Args(const unsigned int IntFormat)
+VString VString::Args(const unsigned int IntFormat) const
 {
-	auto Index = IndexOf(VStr("%ud"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 2);
-		Insert(Index, FromNumber(IntFormat));
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
 }
-VString VString::Args(const unsigned long IntFormat)
+VString VString::Args(const unsigned long IntFormat) const
 {
-	auto Index = IndexOf(VStr("%uld"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 4);
-		Insert(Index, FromNumber(IntFormat));
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
 }
-VString VString::Args(const unsigned long long IntFormat)
+VString VString::Args(const unsigned long long IntFormat) const
 {
-	auto Index = IndexOf(VStr("%ulld"));
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
 	if (Index != VString::NoPosition)
 	{
-		EraseRange(Index, Index + 5);
-		Insert(Index, FromNumber(IntFormat));
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, FromNumber(IntFormat));
 	}
 
-	return VString(*this);
+	return NewString;
+}
+VString VString::Args(const Core::VPoint Format) const
+{
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
+	if (Index != VString::NoPosition)
+	{
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(Index, VString("({}, {})").Args(Format.X).Args(Format.Y));
+	}
+
+	return NewString;
+}
+VString VString::Args(const Core::VRect Format) const
+{
+	VString NewString(*this);
+	auto	Index = IndexOf(VStr("{}"));
+	if (Index != VString::NoPosition)
+	{
+		NewString.EraseRange(Index, Index + 2);
+		NewString.Insert(
+			Index,
+			VString("[({}, {}), ({}, {})]").Args(Format.Left).Args(Format.Top).Args(Format.Right).Args(Format.Bottom));
+	}
+
+	return NewString;
 }
 size_t VString::Length() const
 {
