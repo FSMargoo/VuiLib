@@ -389,6 +389,259 @@ VViewLabelTheme::VViewLabelTheme(const VViewLabelTheme &Theme)
 	BorderColor		= Theme.BorderColor;
 	Radius			= Theme.Radius;
 }
+VMainWindowTheme *VElementUITheme::GetMainWindowTheme()
+{
+	VMainWindowTheme *Theme = new VMainWindowTheme;
+	Theme->BackgroundColor	= VColor::FromBYTERGBA(255, 255, 255);
+	Theme->WindowSizble		= true;
+
+	return Theme;
+}
+VTextLabelTheme *VElementUITheme::GetTextLabelTheme()
+{
+	VTextLabelTheme *Theme = new VTextLabelTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(96, 98, 102, 0);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(53, 53, 53, 0);
+	Theme->StaticTheme.BorderThickness			 = 1.3f;
+	Theme->StaticTheme.Radius					 = {5, 5};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(56, 56, 56, 0);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(56, 56, 56, 0);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->OnHoverTheme.Radius					  = {5, 5};
+	Theme->OnHoverTheme.BorderThickness			  = 1.3f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(98, 100, 167, 0);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(98, 100, 167, 0);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->ActiveTheme.Radius					 = {5, 5};
+	Theme->ActiveTheme.BorderThickness			 = 1.3f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LabelFont->SetTextSize(16);
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	return Theme;
+}
+VPushButtonTheme *VElementUITheme::GetPushButtonTheme()
+{
+	VPushButtonTheme *Theme = new VPushButtonTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(64, 158, 255, 0);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(220, 223, 230, 255);
+	Theme->StaticTheme.BorderThickness			 = 2.f;
+	Theme->StaticTheme.Radius					 = {4, 4};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(20, 20, 20, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(64, 158, 255, 28);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.Radius					  = {4, 4};
+	Theme->OnHoverTheme.BorderThickness			  = 2.f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.Radius					 = {4, 4};
+	Theme->ActiveTheme.BorderThickness			 = 2.f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	Theme->LabelFont->SetTextSize(16);
+	Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	Theme->LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_CENTER);
+
+	return Theme;
+}
+VTextEditorTheme *VElementUITheme::GetTextEditorTheme()
+{
+	VTextEditorTheme *Theme = new VTextEditorTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(220, 223, 230, 255);
+	Theme->StaticTheme.BorderThickness			 = 1.3f;
+	Theme->StaticTheme.Radius					 = {5, 5};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(220, 223, 230, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->OnHoverTheme.Radius					  = {5, 5};
+	Theme->OnHoverTheme.BorderThickness			  = 1.3f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->ActiveTheme.Radius					 = {5, 5};
+	Theme->ActiveTheme.BorderThickness			 = 1.3f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->CursorColor = VColor::FromBYTERGBA(96, 98, 102);
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	Theme->LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	Theme->LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_LEADING);
+
+	Theme->OnSelectedColor			 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->OnSelectedBackgroundColor = VColor::FromBYTERGBA(40, 40, 40, 40);
+
+	Theme->LabelFont->SetTextSize(16);
+
+	Theme->PlaceHolderColor = VColor::FromBYTERGBA(96, 98, 102, 255);
+
+	return Theme;
+}
+VIconButtonTheme *VElementUITheme::GetIconButtonTheme()
+{
+	VIconButtonTheme *Theme = new VIconButtonTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(64, 158, 255, 0);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(220, 223, 230, 255);
+	Theme->StaticTheme.BorderThickness			 = 2.f;
+	Theme->StaticTheme.Radius					 = {4, 4};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(20, 20, 20, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(64, 158, 255, 28);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.Radius					  = {4, 4};
+	Theme->OnHoverTheme.BorderThickness			  = 2.f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.Radius					 = {4, 4};
+	Theme->ActiveTheme.BorderThickness			 = 2.f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	Theme->Image = nullptr;
+
+	return Theme;
+}
+VSliderTheme *VElementUITheme::GetSilderTheme()
+{
+	VSliderTheme *Theme = new VSliderTheme;
+
+	Theme->UnselectedArea.LocalTheme.BorderColor	 = VColor::FromBYTERGBA(220, 223, 255, 255);
+	Theme->UnselectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(220, 223, 255, 255);
+	Theme->UnselectedArea.LocalTheme.BorderThickness = 0.f;
+
+	Theme->SelectedArea.LocalTheme.BorderColor	   = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->SelectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->SelectedArea.LocalTheme.BorderThickness = 0.f;
+
+	return Theme;
+}
+VCircleScrollBarTheme *VElementUITheme::GetScrollBarTheme()
+{
+	VCircleScrollBarTheme *Theme = new VCircleScrollBarTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->StaticTheme.BorderThickness			 = 2.f;
+	Theme->StaticTheme.Radius					 = {5, 5};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(126, 126, 126, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
+	Theme->OnHoverTheme.Radius					  = {5, 5};
+	Theme->OnHoverTheme.BorderThickness			  = 2.f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.Radius					 = {5, 5};
+	Theme->ActiveTheme.BorderThickness			 = 2.f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	return Theme;
+}
+VRadioButtonTheme *VElementUITheme::GetRadioTheme()
+{
+	VRadioButtonTheme *Theme = new VRadioButtonTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(200, 223, 230, 255);
+	Theme->StaticTheme.BorderThickness			 = 1.3f;
+	Theme->StaticTheme.Radius					 = {5, 5};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(126, 126, 126, 119);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(255, 255, 255, 25);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(200, 223, 230, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 119);
+	Theme->OnHoverTheme.Radius					  = {5, 5};
+	Theme->OnHoverTheme.BorderThickness			  = 1.3f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 119);
+	Theme->ActiveTheme.Radius					 = {5, 5};
+	Theme->ActiveTheme.BorderThickness			 = 1.3f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	return Theme;
+}
+VViewScrollerButtonTheme *VElementUITheme::GetViewScrollerButtonTheme()
+{
+	VViewScrollerButtonTheme *Theme = new VViewScrollerButtonTheme;
+
+	Theme->StaticTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->StaticTheme.BorderThickness			 = 2.f;
+	Theme->StaticTheme.Radius					 = {5, 5};
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(126, 126, 126, 255);
+	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
+	Theme->OnHoverTheme.Radius					  = {5, 5};
+	Theme->OnHoverTheme.BorderThickness			  = 2.f;
+	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(64, 158, 255, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
+	Theme->ActiveTheme.Radius					 = {5, 5};
+	Theme->ActiveTheme.BorderThickness			 = 2.f;
+	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	return Theme;
+}
+VViewLabelTheme *VElementUITheme::GetViewLabelTheme()
+{
+	VViewLabelTheme *Theme = new VViewLabelTheme;
+	Theme->BorderColor	   = VColor::FromBYTERGBA(220, 223, 230, 255);
+	Theme->BackgroundColor = VColor::FromBYTERGBA(255, 255, 255, 255);
+
+	return Theme;
+}
 
 } // namespace Core
 
