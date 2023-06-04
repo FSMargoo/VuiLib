@@ -1,7 +1,6 @@
 // This code is a simple example of how to use VuiLib to create a window and load a VML file.
 // VuiLib is a C++ library for creating graphical user interfaces.
 // It includes classes for creating windows, buttons, text boxes, and other GUI elements.
-
 #include "./include/vml/vmlwidget.h"
 #include <iostream>
 

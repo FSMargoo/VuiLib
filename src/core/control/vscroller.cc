@@ -278,10 +278,10 @@ VScrollerVertical::VScrollerVertical(const int &Width, const int &Height, VUIObj
 	Theme = new VViewScrollerTheme(*(static_cast<VViewScrollerTheme *>(GetTargetTheme(VUIThemeType::VViewScroller))));
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
-	Resize(Width, Height);
-
 	InitViewButton();
 	ResetViewButton();
+
+	Resize(Width, Height);
 }
 VScrollerVertical::VScrollerVertical(const int &Width, const int &Height, const int &ViewHeight, VUIObject *Parent)
 	: VAbstractButton(Parent)
@@ -289,12 +289,12 @@ VScrollerVertical::VScrollerVertical(const int &Width, const int &Height, const 
 	Theme = new VViewScrollerTheme(*(static_cast<VViewScrollerTheme *>(GetTargetTheme(VUIThemeType::VViewScroller))));
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
-	Resize(Width, Height);
-
 	ScrollerViewHeight = ViewHeight;
 
 	InitViewButton();
 	ResetViewButton();
+
+	Resize(Width, Height);
 }
 
 void VScrollerVertical::SwitchDraggingStatusAnimation()
@@ -535,10 +535,10 @@ VScrollerHorizontal::VScrollerHorizontal(const int &Width, const int &Height, VU
 	Theme = new VViewScrollerTheme(*(static_cast<VViewScrollerTheme *>(GetTargetTheme(VUIThemeType::VViewScroller))));
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
-	Resize(Width, Height);
-
 	InitViewButton();
 	ResetViewButton();
+
+	Resize(Width, Height);
 }
 VScrollerHorizontal::VScrollerHorizontal(const int &Width, const int &Height, const int &ViewHeight, VUIObject *Parent)
 	: VAbstractButton(Parent)
@@ -546,12 +546,12 @@ VScrollerHorizontal::VScrollerHorizontal(const int &Width, const int &Height, co
 	Theme = new VViewScrollerTheme(*(static_cast<VViewScrollerTheme *>(GetTargetTheme(VUIThemeType::VViewScroller))));
 	Interpolator = new VAnimationInterpolator(0.1, Theme->LocalTheme.AnimationInterpolatorType);
 
-	Resize(Width, Height);
-
 	ScrollerViewWidth = ViewHeight;
 
 	InitViewButton();
 	ResetViewButton();
+
+	Resize(Width, Height);
 }
 
 void VScrollerHorizontal::SwitchDraggingStatusAnimation()

@@ -212,5 +212,17 @@ void VApplication::SetTheme(VBasicUITheme *Theme)
 		}
 	}
 }
+void VApplication::SetTheme(VThemeAbstract *Theme)
+{
+	SetTheme(Theme->GetMainWindowTheme());
+	SetTheme(Theme->GetTextLabelTheme());
+	SetTheme(Theme->GetPushButtonTheme());
+	SetTheme(Theme->GetTextEditorTheme());
+	SetTheme(Theme->GetSilderTheme());
+	SetTheme(Theme->GetScrollBarTheme());
+	SetTheme(Theme->GetRadioTheme());
+	SetTheme(Theme->GetViewScrollerButtonTheme());
+	SetTheme(Theme->GetViewLabelTheme());
+}
 } // namespace Core
 VLIB_END_NAMESPACE

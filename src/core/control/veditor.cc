@@ -1066,10 +1066,20 @@ void VEditorCaret::CaretSelectionTurnLineEnd(IDWriteTextLayout *TextLayout)
 	if (SelectMode == VEditorCaretSelectMode::Right)
 	{
 		CaretEnd = LinePosition - 1;
+
+		if (LinePosition == CacheTargetPtr->Size())
+		{
+			CaretEnd = LinePosition;
+		}
 	}
 	else
 	{
 		CaretStart = LinePosition - 1;
+
+		if (LinePosition == CacheTargetPtr->Size())
+		{
+			CaretStart = LinePosition;
+		}
 	}
 
 	InSelecting = true;

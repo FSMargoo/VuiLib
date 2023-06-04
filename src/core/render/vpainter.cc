@@ -149,6 +149,7 @@ void VCanvasPainter::FillEllipse(const VRect &EllipseRectangle, VPenBrush *Borde
 {
 #ifndef _VLIB_CANVAS_DEBUING_S
 	SolidEllipse(EllipseRectangle, FillBrush);
+	DrawEllipse(EllipseRectangle, BorderPen);
 #endif
 }
 void VCanvasPainter::FillRoundedRectangle(const VRect &Rectangle, const VPoint &Radius, VPenBrush *BorderPen,

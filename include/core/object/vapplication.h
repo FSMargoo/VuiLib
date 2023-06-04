@@ -59,6 +59,7 @@ public:
    *     Description : Set the theme as the specified theme
    */
 	void SetTheme(VBasicUITheme *Theme);
+	void SetTheme(VThemeAbstract *Theme);
 
 private:
 	/*

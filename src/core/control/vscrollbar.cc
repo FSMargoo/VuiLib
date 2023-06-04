@@ -10,8 +10,7 @@ VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode &DragTowar
 	DragTowardsMode = DragTowards;
 	MouseDragged.Connect(this, &VCircleScrollBarButton::UserOnDrag);
 
-	delete Theme;
-	Theme = new VCircleScrollBarTheme();
+	Theme = new VCircleScrollBarTheme(*(VCircleScrollBarTheme *)GetTargetTheme(Core::VUIThemeType::VCircleBarButton));
 }
 VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode &DragTowards, const int &Width, const int &Height,
 											   VUIObject *Parent)
@@ -20,8 +19,7 @@ VCircleScrollBarButton::VCircleScrollBarButton(const VDragTowardsMode &DragTowar
 	DragTowardsMode = DragTowards;
 	MouseDragged.Connect(this, &VCircleScrollBarButton::UserOnDrag);
 
-	delete Theme;
-	Theme = new VCircleScrollBarTheme();
+	Theme = new VCircleScrollBarTheme(*(VCircleScrollBarTheme *)GetTargetTheme(Core::VUIThemeType::VCircleBarButton));
 }
 void VCircleScrollBarButton::OnPaint(Core::VCanvasPainter *Painter)
 {

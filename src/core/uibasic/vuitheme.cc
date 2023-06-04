@@ -68,8 +68,6 @@ VPushButtonTheme::VPushButtonTheme() : VLabelCommonTheme()
 	ActiveTheme.BorderThickness			  = 1.3f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	LocalTheme = StaticTheme;
-
 	LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_CENTER);
 }
