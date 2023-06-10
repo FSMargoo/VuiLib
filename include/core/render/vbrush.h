@@ -59,6 +59,8 @@ public:
    */
 	float GetThickness() const;
 
+	void SetStrokeStyle(ID2D1StrokeStyle *Style) VRENDER_HELPER;
+
 public:
 	/*
    * SetThickness function:

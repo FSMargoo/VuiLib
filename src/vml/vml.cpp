@@ -108,6 +108,10 @@ VMLObjectType VMLObject::StringToObjectType(const VString &String)
 	{
 		return VMLObjectType::Editor;
 	}
+	if (String == L"drop-down")
+	{
+		return VMLObjectType::DropDown;
+	}
 
 	return Type;
 }
@@ -186,6 +190,9 @@ const VString VMLObject::ObjectTypeToString(VMLObjectType ObjectType)
 	}
 	case VMLObjectType::Editor: {
 		return L"editor";
+	}
+	case VMLObjectType::DropDown: {
+		return L"drop-down";
 	}
 	}
 
@@ -294,6 +301,12 @@ void VMLObject::SetNativeStyleSheet(VSS::VSSBasicSelector *Selector)
 	case VMLObjectType::Editor: {
 		VSS::VSSVEditorBuilder Builder(static_cast<Core::VEditor *>(UIObject),
 									   std::vector<VSS::VSSBasicSelector *>{Selector}, nullptr);
+
+		break;
+	}
+	case VMLObjectType::DropDown: {
+		VSS::VSSDropDownViewBuilder Builder(static_cast<Core::VDropDown *>(UIObject),
+											std::vector<VSS::VSSBasicSelector *>{Selector}, nullptr);
 
 		break;
 	}

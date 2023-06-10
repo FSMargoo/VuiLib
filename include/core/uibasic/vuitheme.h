@@ -28,7 +28,9 @@ enum class VUIThemeType
 	VTextEditor,
 	VViewScroller,
 	VViewScrollerPushButton,
-	VViewLabel
+	VViewLabel,
+	VDropDownContext,
+	VDropDown
 };
 
 struct VBasicUITheme
@@ -52,7 +54,7 @@ public:
 
 	VMainWindowTheme()
 	{
-		BackgroundColor = VColor::FromBYTERGBA(41, 42, 43, 255);
+		BackgroundColor = VColor::FromBYTERGBA(41, 41, 41, 255);
 		WindowSizble	= true;
 	}
 
@@ -115,6 +117,7 @@ struct VRadioButtonTheme : public VLabelCommonTheme
 public:
 	bool	SwitchStatus = false;
 	VString PlainText;
+	float	IconThickness;
 
 public:
 	VRadioButtonTheme();
@@ -324,6 +327,48 @@ public:
 	{
 		return VUIThemeType::VViewLabel;
 	}
+};
+
+class VDropDownContextTheme : public VBasicUITheme
+{
+public:
+	VPoint Radius;
+	VColor TitleColor;
+	VFont *GroupFont;
+	VFont *ItemFont;
+	VColor ItemColor;
+	VColor BackgroundColor;
+	VColor BorderColor;
+	VColor ShadowColor;
+	int	   ShadowPixel;
+	int	   BorderThickness;
+
+public:
+	VDropDownContextTheme();
+	VDropDownContextTheme(const VDropDownContextTheme &Theme);
+
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VDropDownContext;
+	}
+};
+class VDropDownTheme : public VLabelCommonTheme
+{
+public:
+	VDropDownTheme(const VDropDownTheme &Theme);
+	VDropDownTheme();
+
+public:
+	VUIThemeType GetThemeType() override
+	{
+		return VUIThemeType::VDropDown;
+	}
+
+public:
+	VString PlainText;
+	VColor	IconColor;
+	int		IconThickness;
 };
 
 class VThemeAbstract

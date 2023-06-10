@@ -1,23 +1,41 @@
-// This code is a simple example of how to use VuiLib to create a window and load a VML file.
-// VuiLib is a C++ library for creating graphical user interfaces.
-// It includes classes for creating windows, buttons, text boxes, and other GUI elements.
-#include "./include/vml/vmlwidget.h"
-#include <iostream>
+#include "core/control/vdropdown.h"
+#include "vml/vmlwidget.h"
+
+void Test(Core::VDropContextBase *Context)
+{
+	MessageBox(NULL, Context->Text.CStyleString(), Context->Text.CStyleString(), MB_OK);
+}
 
 int main()
 {
-	// Create a new VApplication object.
+	//	Core::VElementUITheme ElementStyle;
+
 	auto Application = Core::VApplication();
 
-	// Create a new VMLMainWindow object with a width of 640 and a height of 800.
-	auto MainWindow = VML::VMLMainWindow(640, 800, &Application);
+	auto MainWindow = VML::VMLMainWindow(1000, 800, &Application);
+	/* auto DropDownTest = new Core::VDropDown(400, 40, &MainWindow);
 
-	// Show the main window.
+	Core::VDropGroup GroupTest;
+	GroupTest.Text = VStr("Test");
+
+	Core::VDropContext Context;
+	Context.Text = VStr("Test1");
+	Core::VDropContext Context2;
+	Context2.Text = VStr("Test2");
+	Core::VDropContext Context3;
+	Context3.Text = VStr("Test3");
+
+	DropDownTest->AddContext(&GroupTest);
+	DropDownTest->AddContext(&Context);
+	DropDownTest->AddContext(&Context2);
+	DropDownTest->AddContext(&Context3);
+	DropDownTest->Move(100, 100);
+
+	MainWindow.Show(); */
+
+	MainWindow.RegisterMetaFunction(VML_META_FUNCTION(Test));
+	MainWindow.LoadVML("./testvml.xml", VML::VMLParserParseMode::FromFile);
 	MainWindow.Show();
 
-	// Load a VML file into the main window.
-	// MainWindow.LoadVML(L"./testvml.xml", VML::VMLParserParseMode::FromFile);
-
-	// Execute the application.
 	return Application.Exec();
 }

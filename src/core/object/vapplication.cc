@@ -156,6 +156,8 @@ void VApplication::InitTheme()
 	ThemeList.push_back(new VViewScrollerButtonTheme);
 	ThemeList.push_back(new VViewScrollerTheme);
 	ThemeList.push_back(new VViewLabelTheme);
+	ThemeList.push_back(new VDropDownContextTheme);
+	ThemeList.push_back(new VDropDownTheme);
 }
 void VApplication::ProcessEvent(Core::VMessage *PatchedMessage)
 {

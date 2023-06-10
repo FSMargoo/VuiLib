@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../core/control/vblurlabel.h"
+#include "../core/control/vdropdown.h"
 #include "../core/control/veditor.h"
 #include "../core/control/viconbutton.h"
 #include "../core/control/vimagelabel.h"
@@ -216,6 +217,28 @@ private:
 
 public:
 	VSSPolygonViewBuilder(Core::VPolygonView *TargetControl, std::vector<VSSBasicSelector *> SelectorSet);
+};
+
+class VSSDropDownViewBuilder
+{
+private:
+	void BuildVSSObject(Core::VDropDown *TargetControl, std::vector<VSSBasicSelector *> SelectorSet,
+						Core::VDropDownTheme *PushButtonTheme);
+
+public:
+	VSSDropDownViewBuilder(Core::VDropDown *TargetControl, std::vector<VSSBasicSelector *> SelectorSet,
+						   Core::VDropDownTheme *PushButtonTheme);
+};
+
+class VSSDropDownContextBuilder
+{
+private:
+	void BuildVSSObject(Core::VDropDownContenxt *TargetControl, std::vector<VSSBasicSelector *> SelectorSet,
+						Core::VDropDownContextTheme *PushButtonTheme);
+
+public:
+	VSSDropDownContextBuilder(Core::VDropDownContenxt *TargetControl, std::vector<VSSBasicSelector *> SelectorSet,
+							  Core::VDropDownContextTheme *PushButtonTheme);
 };
 
 class VSSVWidgetBuilder

@@ -47,22 +47,22 @@ VPushButtonTheme::VPushButtonTheme(const VPushButtonTheme &Theme)
 }
 VPushButtonTheme::VPushButtonTheme() : VLabelCommonTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(56, 56, 56, 0);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(53, 53, 53, 255);
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(102, 102, 102, 255);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
-	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
+	StaticTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(56, 56, 56, 255);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(56, 56, 56, 255);
-	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(126, 126, 126, 255);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(61, 61, 61, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(102, 102, 102, 255);
+	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(255, 255, 255, 255);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(98, 100, 167, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(98, 100, 167, 255);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(31, 31, 31, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(102, 102, 102, 255);
 	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
@@ -70,6 +70,7 @@ VPushButtonTheme::VPushButtonTheme() : VLabelCommonTheme()
 
 	LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	LabelFont->SetLineAlignment(VFontAlignment::DWRITE_TEXT_ALIGNMENT_CENTER);
+	LabelFont->SetTextSize(16);
 }
 
 VTextLabelTheme::VTextLabelTheme() : VLabelCommonTheme()
@@ -78,19 +79,19 @@ VTextLabelTheme::VTextLabelTheme() : VLabelCommonTheme()
 	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(53, 53, 53, 0);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
-	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 119);
+	StaticTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
 	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(56, 56, 56, 0);
 	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(56, 56, 56, 0);
-	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(126, 126, 126, 119);
+	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(255, 255, 255, 255);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
 	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(98, 100, 167, 0);
 	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(98, 100, 167, 0);
-	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 119);
+	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
@@ -109,58 +110,61 @@ VTextLabelTheme::VTextLabelTheme(const VTextLabelTheme &Theme)
 
 VRadioButtonTheme::VRadioButtonTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(75, 75, 75, 0);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(75, 75, 75, 255);
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(173, 173, 173, 255);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
-	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 119);
+	StaticTheme.TextColor				  = VColor::FromBYTERGBA(36, 36, 36, 0);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(75, 75, 75, 255);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(75, 75, 75, 255);
-	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(126, 126, 126, 119);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(41, 41, 41, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(189, 189, 189, 255);
+	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(36, 36, 36, 0);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(98, 100, 167, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(98, 100, 167, 255);
-	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 119);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(71, 158, 245, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(71, 158, 245, 255);
+	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(36, 36, 36, 255);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	IconThickness = 2.5f;
 
 	LocalTheme = StaticTheme;
 }
 VRadioButtonTheme::VRadioButtonTheme(const VRadioButtonTheme &Theme)
 {
-	StaticTheme	 = Theme.StaticTheme;
-	OnHoverTheme = Theme.OnHoverTheme;
-	ActiveTheme	 = Theme.ActiveTheme;
-	LocalTheme	 = Theme.StaticTheme;
-	SwitchStatus = Theme.SwitchStatus;
+	StaticTheme	  = Theme.StaticTheme;
+	OnHoverTheme  = Theme.OnHoverTheme;
+	ActiveTheme	  = Theme.ActiveTheme;
+	LocalTheme	  = Theme.StaticTheme;
+	SwitchStatus  = Theme.SwitchStatus;
+	IconThickness = Theme.IconThickness;
 }
 VCircleScrollBarTheme::VCircleScrollBarTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(87, 87, 87, 255);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(87, 87, 87, 255);
-	StaticTheme.BorderThickness			  = 1.3f;
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(71, 158, 245, 255);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	StaticTheme.BorderThickness			  = 2.3f;
 	StaticTheme.Radius					  = {5, 5};
 	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(87, 87, 87, 255);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(87, 87, 87, 255);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(98, 171, 245, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(41, 41, 41, 255);
 	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(126, 126, 126, 255);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(98, 100, 167, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(98, 100, 167, 255);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(40, 134, 222, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(41, 41, 41, 255);
 	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	ActiveTheme.Radius					  = {5, 5};
-	ActiveTheme.BorderThickness			  = 1.3f;
+	ActiveTheme.BorderThickness			  = 0.f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
 	LocalTheme = StaticTheme;
@@ -191,12 +195,12 @@ VSliderTheme::VSliderTheme(const VSliderTheme &ThemeObject)
 }
 VSliderTheme::VSliderTheme()
 {
-	UnselectedArea.LocalTheme.BorderColor	  = VColor::FromBYTERGBA(58, 58, 58, 255);
-	UnselectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(58, 58, 58, 255);
+	UnselectedArea.LocalTheme.BorderColor	  = VColor::FromBYTERGBA(173, 173, 173, 255);
+	UnselectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(173, 173, 173, 255);
 	UnselectedArea.LocalTheme.BorderThickness = 0.f;
 
-	SelectedArea.LocalTheme.BorderColor		= VColor::FromBYTERGBA(98, 100, 167, 255);
-	SelectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(98, 100, 167, 255);
+	SelectedArea.LocalTheme.BorderColor		= VColor::FromBYTERGBA(71, 158, 245, 255);
+	SelectedArea.LocalTheme.BackgroundColor = VColor::FromBYTERGBA(71, 158, 245, 255);
 	SelectedArea.LocalTheme.BorderThickness = 0.f;
 }
 
@@ -277,22 +281,22 @@ VTextEditorTheme::VTextEditorTheme(const VTextEditorTheme &Theme)
 }
 VTextEditorTheme::VTextEditorTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(67, 67, 67, 255);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(67, 67, 67, 255);
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(102, 102, 102, 255);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
-	StaticTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 150);
+	StaticTheme.TextColor				  = VColor::FromBYTERGBA(153, 153, 153, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(67, 67, 67, 255);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(67, 67, 67, 255);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(41, 41, 41, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(102, 102, 102, 255);
 	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(255, 255, 255, 150);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(67, 67, 67, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(99, 101, 181, 255);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(71, 158, 245, 255);
 	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
@@ -383,6 +387,84 @@ VViewLabelTheme::VViewLabelTheme()
 	Radius = {8, 8};
 }
 
+VDropDownContextTheme::VDropDownContextTheme()
+{
+	LCID	LocaleID = GetThreadLocale();
+	wchar_t LocaleName[LOCALE_NAME_MAX_LENGTH];
+	if (!LCIDToLocaleName(LocaleID, LocaleName, LOCALE_NAME_MAX_LENGTH, 0))
+	{
+		VLIB_REPORT_ERROR(L"Failed to get the system locale");
+	}
+
+	Radius	   = {10, 10};
+	TitleColor = VColor::FromBYTERGBA(173, 173, 173);
+	ItemColor  = VColor::FromBYTERGBA(214, 214, 214);
+	GroupFont = new VFont(L"Microsoft YaHei UI", VFont::WEIGHT_MEDIUM, VFont::STYLE_NORMAL, VFont::STRETCH_NORMAL, 12.f,
+						  LocaleName);
+	ItemFont  = new VFont(L"Microsoft YaHei UI", VFont::WEIGHT_NORMAL, VFont::STYLE_NORMAL, VFont::STRETCH_NORMAL, 16.f,
+						  LocaleName);
+	BackgroundColor = VColor::FromBYTERGBA(41, 41, 41);
+	BorderColor		= VColor::FromBYTERGBA(41, 41, 41);
+	ShadowColor		= VColor::FromBYTERGBA(0, 0, 0, 70);
+	ShadowPixel		= 10;
+	BorderThickness = 0;
+
+	GroupFont->SetTextSize(16);
+	ItemFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+}
+VDropDownContextTheme::VDropDownContextTheme(const VDropDownContextTheme &Theme)
+{
+	Radius			= Theme.Radius;
+	TitleColor		= Theme.TitleColor;
+	ItemColor		= Theme.ItemColor;
+	BackgroundColor = Theme.BackgroundColor;
+	BorderColor		= Theme.BorderColor;
+	ShadowColor		= Theme.ShadowColor;
+	ShadowPixel		= Theme.ShadowPixel;
+	GroupFont		= new VFont(*(Theme.GroupFont));
+	ItemFont		= new VFont(*(Theme.ItemFont));
+	BorderThickness = Theme.BorderThickness;
+}
+VDropDownTheme::VDropDownTheme(const VDropDownTheme &Theme)
+{
+	StaticTheme	  = Theme.StaticTheme;
+	OnHoverTheme  = Theme.OnHoverTheme;
+	ActiveTheme	  = Theme.ActiveTheme;
+	LabelFont	  = new VFont(*Theme.LabelFont);
+	PlainText	  = Theme.PlainText;
+	LocalTheme	  = Theme.StaticTheme;
+	IconColor	  = Theme.IconColor;
+	IconThickness = Theme.IconThickness;
+}
+VDropDownTheme::VDropDownTheme() : VLabelCommonTheme()
+{
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(102, 102, 102, 255);
+	StaticTheme.BorderThickness			  = 1.3f;
+	StaticTheme.Radius					  = {5, 5};
+	StaticTheme.TextColor				  = VColor::FromBYTERGBA(153, 153, 153, 255);
+	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(41, 41, 41, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(102, 102, 102, 255);
+	OnHoverTheme.TextColor				   = VColor::FromBYTERGBA(153, 153, 153, 255);
+	OnHoverTheme.Radius					   = {5, 5};
+	OnHoverTheme.BorderThickness		   = 1.3f;
+	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(41, 41, 41, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(67, 150, 232, 255);
+	ActiveTheme.TextColor				  = VColor::FromBYTERGBA(153, 153, 153, 255);
+	ActiveTheme.Radius					  = {5, 5};
+	ActiveTheme.BorderThickness			  = 1.3f;
+	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
+
+	IconColor	  = VColor::FromBYTERGBA(173, 173, 173, 255);
+	IconThickness = 1;
+
+	LabelFont->SetParagraphAlignment(VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	LabelFont->SetTextSize(16);
+}
 VViewLabelTheme::VViewLabelTheme(const VViewLabelTheme &Theme)
 {
 	BackgroundColor = Theme.BackgroundColor;
@@ -405,24 +487,24 @@ VTextLabelTheme *VElementUITheme::GetTextLabelTheme()
 	Theme->StaticTheme.BorderColor				 = VColor::FromBYTERGBA(53, 53, 53, 0);
 	Theme->StaticTheme.BorderThickness			 = 1.3f;
 	Theme->StaticTheme.Radius					 = {5, 5};
-	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->StaticTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
 	Theme->StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
 	Theme->OnHoverTheme.BackgroundColor			  = VColor::FromBYTERGBA(56, 56, 56, 0);
 	Theme->OnHoverTheme.BorderColor				  = VColor::FromBYTERGBA(56, 56, 56, 0);
-	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->OnHoverTheme.TextColor				  = VColor::FromBYTERGBA(255, 255, 255, 255);
 	Theme->OnHoverTheme.Radius					  = {5, 5};
 	Theme->OnHoverTheme.BorderThickness			  = 1.3f;
 	Theme->OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
 	Theme->ActiveTheme.BackgroundColor			 = VColor::FromBYTERGBA(98, 100, 167, 0);
 	Theme->ActiveTheme.BorderColor				 = VColor::FromBYTERGBA(98, 100, 167, 0);
-	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(96, 98, 102, 255);
+	Theme->ActiveTheme.TextColor				 = VColor::FromBYTERGBA(255, 255, 255, 255);
 	Theme->ActiveTheme.Radius					 = {5, 5};
 	Theme->ActiveTheme.BorderThickness			 = 1.3f;
 	Theme->ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	Theme->LabelFont->SetTextSize(16);
+	Theme->LabelFont->SetTextSize(18);
 
 	Theme->LocalTheme = Theme->StaticTheme;
 

@@ -40,6 +40,7 @@ enum class VMLObjectType
 	Widget,
 	Canvas,
 	Editor,
+	DropDown,
 	UserDefine
 };
 

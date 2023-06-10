@@ -1,3 +1,4 @@
+#include "core/control/vdropdown.h"
 #include "vml/vmlwidget.h"
 
 #pragma comment(lib, "vuilib.lib")
@@ -9,7 +10,7 @@ int main()
 	auto Application = Core::VApplication();
 
 	// Set the element UI style
-	Application.SetTheme(&ElementStyle);
+	//	Application.SetTheme(&ElementStyle);
 
 	auto MainWindow			= Core::VMainWindow(1000, 800, &Application);
 	auto TextLabel			= Core::VTextLabel(640, 480, &MainWindow);

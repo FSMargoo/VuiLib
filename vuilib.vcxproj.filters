@@ -285,6 +285,12 @@
     <ClInclude Include="include\fmt\vfmt.h">
       <Filter>include\core\fmt</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\uibasic\vnativeicon.h">
+      <Filter>include\core\uibasic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\control\vdropdown.h">
+      <Filter>include\core\control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -464,6 +470,12 @@
     </ClCompile>
     <ClCompile Include="src\core\fmt\vfmt.cpp">
       <Filter>src\core\fmt</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\uibasic\vnativeicon.cc">
+      <Filter>src\core\uibasic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\control\vdropdown.cc">
+      <Filter>src\core\control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 
 #include "../render/vpainter.h"
 #include "../signal/vsignal.h"
+#include "../uibasic/vnativeicon.h"
 #include "../uibasic/vuitheme.h"
 #include "../vbasiccore.h"
 #include "../visual/veffect.h"

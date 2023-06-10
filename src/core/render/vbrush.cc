@@ -28,6 +28,11 @@ ID2D1StrokeStyle *VPenBrush::GetStrokeStyle() const
 {
 	return StrokeStyle.Get();
 }
+void VPenBrush::SetStrokeStyle(ID2D1StrokeStyle *Style)
+{
+	StrokeStyle.~VCOMPointer();
+	StrokeStyle = Style;
+}
 float VPenBrush::GetThickness() const
 {
 	return Thickness;

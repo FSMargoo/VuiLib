@@ -59,7 +59,8 @@ public:
 	void  Update(VRect UpdateRect) override;
 
 public:
-	void SetViewRegion(const VPoint &ViewRegion);
+	void		SetViewRegion(const VPoint &ViewRegion);
+	const VRect GetViewRegion() const;
 
 public:
 	void SetVerticalAlign(const VViewLabelVerticalAlign &Align);

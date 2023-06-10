@@ -3,6 +3,7 @@
 #include "../core/animation/vanimation.h"
 #include "../core/control/vblurlabel.h"
 #include "../core/control/vcanvas.h"
+#include "../core/control/vdropdown.h"
 #include "../core/control/veditor.h"
 #include "../core/control/viconbutton.h"
 #include "../core/control/vimagelabel.h"
@@ -330,6 +331,13 @@ protected:
 public:
 	VMLPolygonViewBuilder(const VMLFinder &RootFinder, Core::VPolygonView *PolygonView,
 						  std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
+};
+
+class VMLDropDownBuilder : public VMLCommonBuilder
+{
+public:
+	VMLDropDownBuilder(const VMLFinder &RootFinder, Core::VDropDown *DropDown,
+					   std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);
 };
 
 class VMLMainWindowBuilder

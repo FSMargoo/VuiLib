@@ -2369,6 +2369,13 @@ VMLPolygonViewBuilder::VMLPolygonViewBuilder(const VMLFinder &RootFinder, Core::
 {
 	AnalyzeProperty(RootFinder, PolygonView, PropertyValueList, BuildStatus);
 }
+VMLDropDownBuilder::VMLDropDownBuilder(const VMLFinder &RootFinder, Core::VDropDown *DropDown,
+									   std::map<VString, VMLPropertyValue> &PropertyValueList,
+									   VMLControlBuildStatus			   *BuildStatus)
+	: VMLCommonBuilder(RootFinder, DropDown, PropertyValueList, BuildStatus)
+{
+	AnalyzeProperty(RootFinder, DropDown, PropertyValueList, BuildStatus);
+}
 
 void VMLWidgetBuilder::Builder(Core::VWidget *Widget, const int &Width, const int &Height, const VString &Title,
 							   const bool &Sizable, const bool &FramelessStatus, const bool &Visible)

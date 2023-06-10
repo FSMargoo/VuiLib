@@ -340,14 +340,15 @@ Core::VCanvasPainter *VUIObject::CallWidgetGetCanvas()
 }
 void VUIObject::Update(VRect UpdateRect)
 {
-	if (ObjectVisual.Shadow.EnableStatus)
-	{
-		auto ShadowOffset = ObjectVisual.Shadow.Radius * 3;
-		UpdateRect.Extended(ShadowOffset, ShadowOffset, ShadowOffset, ShadowOffset);
-	}
-
 	if (GetParent() != nullptr)
 	{
+		int Width  = UpdateRect.GetWidth();
+		int Height = UpdateRect.GetHeight();
+		UpdateRect.Left += GetParent()->GetX();
+		UpdateRect.Top += GetParent()->GetY();
+		UpdateRect.Bottom = UpdateRect.Top + Height;
+		UpdateRect.Right  = UpdateRect.Left + Width;
+
 		return GetParent()->Update(UpdateRect);
 	}
 }
@@ -717,9 +718,24 @@ bool VUIObject::SysProcessMessage(Core::VMessage *Message)
 	}
 	case VMessageType::GetRepaintAeraMessage: {
 		VGetRepaintAeraMessage *RepaintMessage = static_cast<VGetRepaintAeraMessage *>(Message);
+		if (*(RepaintMessage->RepaintAera) == GetRegion())
+		{
+			if (ObjectVisual.Shadow.EnableStatus)
+			{
+				int ShadowOffset = ObjectVisual.Shadow.Radius * 8;
+				(*(RepaintMessage->RepaintAera)).Extended(ShadowOffset, ShadowOffset, ShadowOffset, ShadowOffset);
+			}
+		}
 		if (*(RepaintMessage->RepaintAera) != GetRegion() && RepaintMessage->RepaintAera->Overlap(GetRegion()))
 		{
-			(*(RepaintMessage->RepaintAera)).FusionRect(GetRegion());
+			VRect Rect = GetRegion();
+			if (ObjectVisual.Shadow.EnableStatus)
+			{
+				int ShadowOffset = ObjectVisual.Shadow.Radius * 8;
+				Rect.Extended(ShadowOffset, ShadowOffset, ShadowOffset, ShadowOffset);
+			}
+
+			(*(RepaintMessage->RepaintAera)).FusionRect(Rect);
 
 			return true;
 		}
@@ -968,7 +984,17 @@ void VUIObject::Hide()
 {
 	ObjectVisual.Stats = VUIObjectUIStats::Hidden;
 
-	Update();
+	if (!ObjectVisual.Shadow.EnableStatus)
+	{
+		Update();
+	}
+	else
+	{
+		VRect Regoin = GetRegion();
+		Regoin.Extended(ObjectVisual.Shadow.Radius * 8, ObjectVisual.Shadow.Radius * 8, ObjectVisual.Shadow.Radius * 8,
+						ObjectVisual.Shadow.Radius * 8);
+		Update(Regoin);
+	}
 }
 void VUIObject::Show()
 {

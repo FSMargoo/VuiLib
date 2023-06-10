@@ -375,6 +375,581 @@ VSSVPushButtonBuilder::VSSVPushButtonBuilder(Core::VPushButton				*TargetControl
 	BuildVSSObject(TargetControl, SelectorSet, PushButtonTheme);
 }
 
+void VSSDropDownContextBuilder::BuildVSSObject(Core::VDropDownContenxt		  *TargetControl,
+											   std::vector<VSSBasicSelector *> SelectorSet,
+											   Core::VDropDownContextTheme	  *PushButtonTheme)
+{
+	Core::VDropDownContextTheme *Theme = PushButtonTheme;
+
+	if (TargetControl != nullptr)
+	{
+		Theme = TargetControl->GetTheme();
+	}
+
+	for (auto &Selector : SelectorSet)
+	{
+		if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+			static_cast<VSSElementSelector *>(Selector)->ElementTag == L"drop-down-context")
+		{
+			for (auto &Property : Selector->SelectorProperty)
+			{
+				// Common Property ( Not fade switch supported )
+				if (Property.first == L"box-shadow")
+				{
+					TargetControl->SetShadowStats(true);
+
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ShadowPixel = (double)PropertyValue.PropertyAsInt / 10 * 8;
+							TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+						}
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ShadowColor = PropertyValue.PropertyAsColorValue;
+							TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+						}
+					}
+				}
+
+				if (Property.first == L"opacity")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::DoubleValue)
+						{
+							TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+						}
+					}
+				}
+
+				if (Property.first == L"item-font-weight")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ItemFont->SetTextWidget(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"item-font-family")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->ItemFont->SetFamilyName(PropertyValue.PropertyAsString);
+						}
+					}
+				}
+				if (Property.first == L"item-font-size")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ItemFont->SetTextSize(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"item-text-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->ItemFont->SetLineAlignment(
+								VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+				if (Property.first == L"item-vertical-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->ItemFont->SetParagraphAlignment(
+								VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+
+				if (Property.first == L"group-font-weight")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->GroupFont->SetTextWidget(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"group-font-family")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->GroupFont->SetFamilyName(PropertyValue.PropertyAsString);
+						}
+					}
+				}
+				if (Property.first == L"group-font-size")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->GroupFont->SetTextSize(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"group-text-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->GroupFont->SetLineAlignment(
+								VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+				if (Property.first == L"group-vertical-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->GroupFont->SetParagraphAlignment(
+								VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+
+				if (Property.first == L"background-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->BackgroundColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ItemColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"border-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+
+				if (Property.first == L"border-width")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+				if (Property.first == L"border-radius")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->Radius = {PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+						}
+					}
+				}
+
+				if (Property.first == L"border")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+VSSDropDownContextBuilder::VSSDropDownContextBuilder(Core::VDropDownContenxt		*TargetControl,
+													 std::vector<VSSBasicSelector *> SelectorSet,
+													 Core::VDropDownContextTheme	*PushButtonTheme)
+{
+	BuildVSSObject(TargetControl, SelectorSet, PushButtonTheme);
+}
+
+void VSSDropDownViewBuilder::BuildVSSObject(Core::VDropDown *TargetControl, std::vector<VSSBasicSelector *> SelectorSet,
+											Core::VDropDownTheme *PushButtonTheme)
+{
+	Core::VDropDownTheme *Theme = PushButtonTheme;
+
+	if (TargetControl != nullptr)
+	{
+		Theme = TargetControl->GetTheme();
+	}
+
+	for (auto &Selector : SelectorSet)
+	{
+		if (Selector->GetType() == VSSSelectorType::ElementSelector &&
+			static_cast<VSSElementSelector *>(Selector)->ElementTag == L"drop-down")
+		{
+			for (auto &Property : Selector->SelectorProperty)
+			{
+				// Common Property ( Not fade switch supported )
+				if (Property.first == L"box-shadow")
+				{
+					TargetControl->SetShadowStats(true);
+
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							TargetControl->SetShadowRadius((double)PropertyValue.PropertyAsInt / 10 * 8);
+						}
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							TargetControl->SetShadowColor(PropertyValue.PropertyAsColorValue);
+						}
+					}
+				}
+
+				if (Property.first == L"opacity")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::DoubleValue)
+						{
+							TargetControl->SetTransparency(PropertyValue.PropertyAsDouble);
+						}
+					}
+				}
+
+				if (Property.first == L"font-weight")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->LabelFont->SetTextWidget(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"font-family")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->LabelFont->SetFamilyName(PropertyValue.PropertyAsString);
+						}
+					}
+				}
+				if (Property.first == L"font-size")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->LabelFont->SetTextSize(PropertyValue.PropertyAsInt);
+						}
+					}
+				}
+				if (Property.first == L"text-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->LabelFont->SetLineAlignment(
+								VSSParserHelper::StringToAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+				if (Property.first == L"vertical-align")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::StringValue)
+						{
+							Theme->LabelFont->SetParagraphAlignment(
+								VSSParserHelper::StringToParagraphAlignment(PropertyValue.PropertyAsString));
+						}
+					}
+				}
+
+				if (Property.first == L"background-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->StaticTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->StaticTheme.TextColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"border-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+
+				if (Property.first == L"border-width")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+				if (Property.first == L"border-radius")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->StaticTheme.Radius = {PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+						}
+					}
+				}
+
+				if (Property.first == L"border")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->StaticTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->StaticTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+			}
+		}
+		if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+			static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"drop-down" &&
+			static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"hover")
+		{
+			for (auto &Property : Selector->SelectorProperty)
+			{
+				if (Property.first == L"background-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->OnHoverTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->OnHoverTheme.TextColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"border-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+
+				if (Property.first == L"border-width")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+				if (Property.first == L"border-radius")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->OnHoverTheme.Radius = {PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+						}
+					}
+				}
+
+				if (Property.first == L"border")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->OnHoverTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->OnHoverTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+			}
+		}
+		if (Selector->GetType() == VSSSelectorType::FakeClassSelector &&
+			static_cast<VSSFakeClassSelector *>(Selector)->ElementTag == L"drop-down" &&
+			static_cast<VSSFakeClassSelector *>(Selector)->ClassTag == L"active")
+		{
+			for (auto &Property : Selector->SelectorProperty)
+			{
+				if (Property.first == L"background-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ActiveTheme.BackgroundColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ActiveTheme.TextColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+				if (Property.first == L"border-color")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+					}
+				}
+
+				if (Property.first == L"border-width")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+				if (Property.first == L"border-radius")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ActiveTheme.Radius = {PropertyValue.PropertyAsInt, PropertyValue.PropertyAsInt};
+						}
+					}
+				}
+
+				if (Property.first == L"border")
+				{
+					for (auto &PropertyValue : Property.second.ValueList)
+					{
+						if (PropertyValue.Type == VSSPropertyType::ColorValue)
+						{
+							Theme->ActiveTheme.BorderColor = PropertyValue.PropertyAsColorValue;
+						}
+						if (PropertyValue.Type == VSSPropertyType::IntValue)
+						{
+							Theme->ActiveTheme.BorderThickness = PropertyValue.PropertyAsInt;
+						}
+					}
+				}
+			}
+		}
+		if (Selector->GetType() == VSSSelectorType::FakeElementSelector &&
+			static_cast<VSSFakeElementSelector *>(Selector)->ElementTag == L"drop-down" &&
+			static_cast<VSSFakeElementSelector *>(Selector)->FakeElementTag == L"context")
+		{
+			VSSElementSelector *GrooverSelector = new VSSElementSelector;
+			GrooverSelector->ElementTag			= L"drop-down-context";
+			GrooverSelector->SelectorProperty	= Selector->SelectorProperty;
+
+			VSSDropDownContextBuilder GrooveBuilder(TargetControl->GetComplex(), {GrooverSelector}, nullptr);
+
+			delete GrooverSelector;
+		}
+	}
+
+	Theme->LocalTheme = Theme->StaticTheme;
+
+	if (TargetControl != nullptr)
+	{
+		TargetControl->Update();
+	}
+}
+VSSDropDownViewBuilder::VSSDropDownViewBuilder(Core::VDropDown				  *TargetControl,
+											   std::vector<VSSBasicSelector *> SelectorSet,
+											   Core::VDropDownTheme			  *PushButtonTheme)
+{
+	BuildVSSObject(TargetControl, SelectorSet, PushButtonTheme);
+}
+
 void VSSVRadioButtonBuilder::BuildVSSObject(Core::VRadioButton			   *TargetControl,
 											std::vector<VSSBasicSelector *> SelectorSet,
 											Core::VRadioButtonTheme		   *RadioButtonTheme)

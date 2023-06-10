@@ -95,6 +95,50 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<VString, VMLNode> VMLAstTree
 		VMLObject *VMLObject = new struct VMLObject;
 		VMLObject->VMLID	 = Element.NodeTag;
 
+		if (Element.NodeTag == VStr("item") && UIParent->VMLType == VMLObjectType::DropDown)
+		{
+			Core::VDropContext *Context = new Core::VDropContext;
+			if (Element.PropertyExsit(L"text") &&
+				Element.GetProperty(L"text").PropertyType == VMLPropertyType::StringValue)
+			{
+				Context->Text = Element.GetProperty(L"text").PropertyAsString;
+			}
+			if (Element.PropertyExsit(L"on-selected"))
+			{
+				if (Element.NodeValue[L"on-selected"].PropertyType == VMLPropertyType::NativeCall)
+				{
+					auto NativeCallName = Element.NodeValue[L"on-selected"].NativeCallMethodName;
+
+					if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+					{
+						Context->OnTrigger.Connect(
+							(Core::VSignal<Core::VDropContextBase *> *)MetaFunctionList[NativeCallName],
+							&Core::VSignal<Core::VDropContextBase *>::Emit);
+					}
+				}
+			}
+
+			static_cast<Core::VDropDown *>(UIParent->UIObject)->AddContext(Context);
+
+			delete VMLObject;
+
+			continue;
+		}
+		if (Element.NodeTag == VStr("group") && UIParent->VMLType == VMLObjectType::DropDown)
+		{
+			Core::VDropGroup *Context = new Core::VDropGroup;
+			if (Element.PropertyExsit(L"text") &&
+				Element.GetProperty(L"text").PropertyType == VMLPropertyType::StringValue)
+			{
+				Context->Text = Element.GetProperty(L"text").PropertyAsString;
+			}
+
+			static_cast<Core::VDropDown *>(UIParent->UIObject)->AddContext(Context);
+
+			delete VMLObject;
+
+			continue;
+		}
 		if (Element.PropertyExsit(L"type"))
 		{
 			VMLPropertyValue ElementProperty = Element.GetProperty(L"type");
@@ -174,6 +218,106 @@ VMLWidgetLoadResult VMLMainWindow::LoadVML(std::map<VString, VMLNode> VMLAstTree
 							{
 								PushButton->LostFocus.Connect((Core::VSignal<> *)MetaFunctionList[NativeCallName],
 															  &Core::VSignal<>::Emit);
+							}
+						}
+					}
+
+					if (BuildStatus.BuildStatusCode != VMLControlBuildResultStatus::Ok)
+					{
+						Result.Status		 = VMLWidgetVMLLoadStats::Failed;
+						Result.FailedMessage = L"In Control VMLID[" + VMLObject->VMLID +
+											   L"] Build Failed, Reason : \"" + BuildStatus.FailedReason + L"\"";
+
+						return Result;
+					}
+				}
+				else if (ElementProperty.PropertyAsString == L"drop-down")
+				{
+					Core::VDropDown *DropDown = new Core::VDropDown(UIParent->UIObject);
+					VMLObject->UIObject		  = DropDown;
+					VMLObject->VMLType		  = VMLObjectType::DropDown;
+
+					VMLControlBuildStatus BuildStatus;
+					VMLDropDownBuilder	  Builder(GetRootFinder(), DropDown, Element.NodeValue, &BuildStatus);
+
+					if (Element.PropertyExsit(L"on-clicked"))
+					{
+						if (Element.NodeValue[L"on-clicked"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"on-clicked"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->ButtonPushed.Connect((Core::VSignal<> *)MetaFunctionList[NativeCallName],
+															   &Core::VSignal<>::Emit);
+							}
+						}
+					}
+					if (Element.PropertyExsit(L"rectangle-changed"))
+					{
+						if (Element.NodeValue[L"rectangle-changed"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"rectangle-changed"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->Resized.Connect(
+									(Core::VSignal<const int &, const int &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const int &, const int &>::Emit);
+							}
+						}
+					}
+					if (Element.PropertyExsit(L"position-changed"))
+					{
+						if (Element.NodeValue[L"position-changed"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"position-changed"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->Moved.Connect(
+									(Core::VSignal<const int &, const int &> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<const int &, const int &>::Emit);
+							}
+						}
+					}
+					if (Element.PropertyExsit(L"selected"))
+					{
+						if (Element.NodeValue[L"selected"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"selected"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->ContextChanged.Connect(
+									(Core::VSignal<Core::VDropContextBase *> *)MetaFunctionList[NativeCallName],
+									&Core::VSignal<Core::VDropContextBase *>::Emit);
+							}
+						}
+					}
+					if (Element.PropertyExsit(L"got-focus"))
+					{
+						if (Element.NodeValue[L"got-focus"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"got-focus"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->InFocus.Connect((Core::VSignal<> *)MetaFunctionList[NativeCallName],
+														  &Core::VSignal<>::Emit);
+							}
+						}
+					}
+					if (Element.PropertyExsit(L"lost-focus"))
+					{
+						if (Element.NodeValue[L"lost-focus"].PropertyType == VMLPropertyType::NativeCall)
+						{
+							auto NativeCallName = Element.NodeValue[L"lost-focus"].NativeCallMethodName;
+
+							if (MetaFunctionList.find(NativeCallName) != MetaFunctionList.end())
+							{
+								DropDown->LostFocus.Connect((Core::VSignal<> *)MetaFunctionList[NativeCallName],
+															&Core::VSignal<>::Emit);
 							}
 						}
 					}
@@ -2400,6 +2544,16 @@ void VMLMainWindow::SetStyleSheet(VSS::VSSParserResult VSSParserResult, std::vec
 
 				VSS::VSSVPushButtonBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector *>{Selector},
 												   PushButtonTheme);
+
+				static_cast<Core::VApplication *>(GetParent())->SetTheme(PushButtonTheme);
+			}
+			if (ElementTag == L"drop-down")
+			{
+				Core::VDropDownTheme *PushButtonTheme = new Core::VDropDownTheme(
+					*(static_cast<Core::VDropDownTheme *>(GetTargetTheme(Core::VUIThemeType::VDropDown))));
+
+				VSS::VSSDropDownViewBuilder Builder(nullptr, std::vector<VSS::VSSBasicSelector *>{Selector},
+													PushButtonTheme);
 
 				static_cast<Core::VApplication *>(GetParent())->SetTheme(PushButtonTheme);
 			}

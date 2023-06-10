@@ -1,4 +1,5 @@
 #include "../../../include/core/control/vradiobutton.h"
+#include "../../../include/core/uibasic/vnativeicon.h"
 
 VLIB_BEGIN_NAMESPACE
 
@@ -101,6 +102,9 @@ void VRadioButton::CheckFrame()
 }
 void VRadioButton::OnPaint(VCanvasPainter *Painter)
 {
+	VCanvasPainter *CheckIcon = VNativeIcon::CheckImage(Theme->LocalTheme.TextColor, GetWidth(), GetHeight(),
+														CallWidgetGetRenderHandle(), Theme->IconThickness);
+
 	Painter->BeginDraw();
 
 	VSolidBrush BackgroundBrush(Theme->LocalTheme.BackgroundColor, CallWidgetGetRenderHandle());
@@ -110,12 +114,11 @@ void VRadioButton::OnPaint(VCanvasPainter *Painter)
 	Painter->FillRoundedRectangle({static_cast<int>(Theme->LocalTheme.BorderThickness),
 								   static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
 								  Theme->LocalTheme.Radius, &PenBrush, &BackgroundBrush);
-	Painter->DrawString(Theme->PlainText,
-						{static_cast<int>(Theme->LocalTheme.BorderThickness),
-						 static_cast<int>(Theme->LocalTheme.BorderThickness), GetWidth(), GetHeight()},
-						Theme->LabelFont, &TextBrush);
+	Painter->DrawCanvas({0, 0, GetWidth(), GetHeight()}, CheckIcon, {0, 0, GetWidth(), GetHeight()}, 1.f);
 
 	Painter->EndDraw();
+
+	delete CheckIcon;
 };
 void VRadioButton::SetLockBackStatus(const bool &Status)
 {

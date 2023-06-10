@@ -156,6 +156,10 @@ void VViewLabel::SetViewRegion(const VPoint &ViewRegion)
 
 	ResetScroller();
 }
+const VRect VViewLabel::GetViewRegion() const
+{
+	return ViewArea;
+}
 
 void VViewLabel::ViewValueOnChange(const double &)
 {
