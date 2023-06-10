@@ -317,21 +317,21 @@ VTextEditorTheme::VTextEditorTheme()
 
 VViewScrollerButtonTheme::VViewScrollerButtonTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(80, 80, 80, 99);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(80, 80, 80, 99);
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(71, 158, 245);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(71, 158, 245);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
 	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(80, 80, 80, 255);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(80, 80, 80, 255);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(98, 171, 245, 255);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(98, 171, 245, 255);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(98, 100, 167, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(98, 100, 167, 255);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(40, 134, 222, 255);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(40, 134, 222, 255);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
@@ -349,21 +349,21 @@ VViewScrollerButtonTheme::VViewScrollerButtonTheme(const VViewScrollerButtonThem
 
 VViewScrollerTheme::VViewScrollerTheme()
 {
-	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(54, 54, 54, 81);
-	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(54, 54, 54, 81);
+	StaticTheme.BackgroundColor			  = VColor::FromBYTERGBA(173, 173, 173, 0);
+	StaticTheme.BorderColor				  = VColor::FromBYTERGBA(173, 173, 173, 0);
 	StaticTheme.BorderThickness			  = 1.3f;
 	StaticTheme.Radius					  = {5, 5};
 	StaticTheme.TextColor				  = VColor::FromBYTERGBA(126, 126, 126, 255);
 	StaticTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(54, 54, 54, 81);
-	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(54, 54, 54, 81);
+	OnHoverTheme.BackgroundColor		   = VColor::FromBYTERGBA(173, 173, 173, 0);
+	OnHoverTheme.BorderColor			   = VColor::FromBYTERGBA(173, 173, 173, 0);
 	OnHoverTheme.Radius					   = {5, 5};
 	OnHoverTheme.BorderThickness		   = 1.3f;
 	OnHoverTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;
 
-	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(54, 54, 54, 255);
-	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(54, 54, 54, 255);
+	ActiveTheme.BackgroundColor			  = VColor::FromBYTERGBA(173, 173, 173, 0);
+	ActiveTheme.BorderColor				  = VColor::FromBYTERGBA(173, 173, 173, 0);
 	ActiveTheme.Radius					  = {5, 5};
 	ActiveTheme.BorderThickness			  = 1.3f;
 	ActiveTheme.AnimationInterpolatorType = VInterpolatorType::AccelerateInterpolator;

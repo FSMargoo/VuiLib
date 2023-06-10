@@ -1,15 +1,15 @@
-#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
-
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define WIN32_LEAN_AND_MEAN
 
 #include "../../../include/vml/vmlwidget.h"
+
+#include <WS2tcpip.h>
 #include <comutil.h>
 #include <regex>
 #include <winsock2.h>
-#include <ws2tcpip.h>
 
-#pragma comment(lib, "comsuppw")
-#pragma comment(lib, "ws2_32")
+#pragma comment(lib, "comsuppw.lib")
+#pragma comment(lib, "ws2_32.lib")
 
 #define _CHECK_RETURN_VALUE_(Exp)                                                                                      \
 	if (Exp)                                                                                                           \
@@ -127,15 +127,15 @@ private:
 	bool JudgetEmpty()
 	{
 		auto EdtiorInstance = this->operator[](L"main-widget")[L"main-ui"][L"editor"].Get<Core::VEditor>();
-		auto						PlaneText = EdtiorInstance->GetPlaneText();
+		auto						PlainText = EdtiorInstance->GetPlainText();
 
-		if (PlaneText.empty())
+		if (PlainText.empty())
 		{
 			return true;
 		}
 
 		bool Flag = true;
-		for (auto Character : PlaneText)
+		for (auto Character : PlainText)
 		{
 			if (Character != L'\n' && Character != L'\r' && Character != L'\t' && Character != L' ')
 			{
@@ -227,7 +227,7 @@ private:
 						auto	  EdtiorInstance =
 							this->operator[](L"main-widget")[L"main-ui"][L"editor"].Get<Core::VEditor>();
 
-						_bstr_t		MessageConvertor = EdtiorInstance->GetPlaneText().c_str();
+						_bstr_t		MessageConvertor = EdtiorInstance->GetPlainText().c_str();
 						std::string MessageCppObject = (const char *)MessageConvertor;
 
 						ClientOperationPack OperationPack{CLIENT_NEWMESSAGE, MessageCppObject.size() + 1};
@@ -244,7 +244,7 @@ private:
 						SendData<ClientOperationPack>(ClientSocket, &OperationPack, 0);
 						SendData<char>(ClientSocket, MessageString, MessageCppObject.size() + 1, 0);
 
-						EdtiorInstance->SetPlaneText(L"");
+						EdtiorInstance->SetPlainText(L"");
 					}
 				}
 			});
@@ -255,7 +255,7 @@ private:
 		{
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
-				->SetPlaneText(L"The version of client is not compatible with the server's");
+				->SetPlainText(L"The version of client is not compatible with the server's");
 
 			shutdown(ClientSocket, 2);
 			closesocket(ClientSocket);
@@ -264,7 +264,7 @@ private:
 		{
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
-				->SetPlaneText(L"The user name already exists!");
+				->SetPlainText(L"The user name already exists!");
 
 			shutdown(ClientSocket, 2);
 			closesocket(ClientSocket);
@@ -273,7 +273,7 @@ private:
 		{
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
-				->SetPlaneText(L"You have been be banned from this server!");
+				->SetPlainText(L"You have been be banned from this server!");
 
 			shutdown(ClientSocket, 2);
 			closesocket(ClientSocket);
@@ -283,18 +283,18 @@ private:
 	{
 		_bstr_t IPAddress = this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"server-ip-editor"]
 								.Get<Core::VLineEditor>()
-								->GetPlaneText()
+								->GetPlainText()
 								.c_str();
 		_bstr_t UserString = this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"user-name-editor"]
 								 .Get<Core::VLineEditor>()
-								 ->GetPlaneText()
+								 ->GetPlainText()
 								 .c_str();
 
 		UserName = (const char *)UserString;
 
 		this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 			.Get<Core::VTextLabel>()
-			->SetPlaneText(L"");
+			->SetPlainText(L"");
 
 		std::string IPString = (const char *)IPAddress;
 
@@ -324,7 +324,7 @@ private:
 		{
 			this->operator[](L"main-widget")[L"login-interface"][L"login-block"][L"error-text"]
 				.Get<Core::VTextLabel>()
-				->SetPlaneText(L"Failed to connect to server!");
+				->SetPlainText(L"Failed to connect to server!");
 
 			return;
 		}
@@ -346,7 +346,7 @@ private:
 			for (auto &Message : Messages)
 			{
 				auto EdtiorInstance = this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>();
-				auto						PlaneText = EdtiorInstance->GetPlaneText();
+				auto						PlainText = EdtiorInstance->GetPlainText();
 
 				auto LocalTime = std::chrono::system_clock::now();
 
@@ -359,24 +359,24 @@ private:
 
 				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->TextEffect.push_back(
 					{(ID2D1Effect *)UserBrush.GetDxBrush(),
-					 DWRITE_TEXT_RANGE{(UINT32)PlaneText.size(), (UINT32)Message.UserNameString.size() + 1}});
+					 DWRITE_TEXT_RANGE{(UINT32)PlainText.size(), (UINT32)Message.UserNameString.size() + 1}});
 
-				PlaneText = PlaneText + L"\n" + Message.UserNameString;
+				PlainText = PlainText + L"\n" + Message.UserNameString;
 
 				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->TextEffect.push_back(
 					{(ID2D1Effect *)TimeBrush.GetDxBrush(),
-					 DWRITE_TEXT_RANGE{(UINT32)PlaneText.size(), (UINT32)lstrlen(TimeFormat) + 1}});
+					 DWRITE_TEXT_RANGE{(UINT32)PlainText.size(), (UINT32)lstrlen(TimeFormat) + 1}});
 
-				PlaneText = PlaneText + L"\t" + TimeFormat;
+				PlainText = PlainText + L"\t" + TimeFormat;
 
 				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->TextEffect.push_back(
 					{(ID2D1Effect *)MessageBrush.GetDxBrush(),
-					 DWRITE_TEXT_RANGE{(UINT32)PlaneText.size(), (UINT32)Message.MessageString.size() + 1}});
+					 DWRITE_TEXT_RANGE{(UINT32)PlainText.size(), (UINT32)Message.MessageString.size() + 1}});
 
-				PlaneText = PlaneText + L"\n" + Message.MessageString;
+				PlainText = PlainText + L"\n" + Message.MessageString;
 
-				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->SetPlaneText(
-					PlaneText);
+				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->SetPlainText(
+					PlainText);
 				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->ScrollToEnd();
 				this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>()->ResetTextLayout();
 			}

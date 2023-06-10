@@ -431,8 +431,6 @@ LRESULT _VWidgetWNDPROC(HWND Handle, UINT Message, WPARAM wParameter, LPARAM lPa
 
 			if (WindowConfig->WindowQuitOnClicked())
 			{
-				MainThreadEnd = true;
-
 				return 0;
 			}
 
