@@ -10,8 +10,16 @@ int main()
 
 	system("auto-format\n");
 
-	std::map<int, VString> CommentMapping = {{0, "feat"}, {1, "fix/to"}, {2, "docs"},  {3, "style"}, {4, "refactor"},
-											 {5, "pref"}, {6, "test"},	 {7, "chore"}, {8, "revert"}};
+	std::map<int, VString> CommentMapping = {{0, ":new: feat"},
+											 {1, ":bug: fix/to"},
+											 {2, ":book: docs"},
+											 {3, ":art: style"},
+											 {4, ":hammer: refactor"},
+											 {5, ":rocket: pref"},
+											 {6, ":bookmark: test"},
+											 {7, ":wrench: chore"},
+											 {8, ":twisted_rightwards_arrows: revert"},
+											 {9, ":construction: working"}};
 
 	VFmt::Print("{}\n", VString().Fill('-', 40));
 	for (auto &Mapping : CommentMapping)
