@@ -44,6 +44,11 @@ int main()
 
 	GitCommand = VFmt::Format("git commit -m \"{}({}) : {}\"", CommentMapping[Selection], Scope, Subject);
 	VFmt::Print("cmd.exe \"{}\"\n", GitCommand);
+	Proxy = GitCommand.CStyleString();
+	system((char *)Proxy);
+
+	GitCommand = VFmt::Format("git push vlib main");
+	Proxy	   = GitCommand.CStyleString();
 	system((char *)Proxy);
 
 	return 0;
