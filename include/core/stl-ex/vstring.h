@@ -179,7 +179,7 @@ public:
 	 * @param Character : The specified characeter
 	 * @param FillSize	: The count of the characters
 	 */
-	void Fill(const VChar &Character, size_t FillSize = 0);
+	VString Fill(const VChar &Character, size_t FillSize = 0);
 	/**
 	 * @brief			: Set the string with specified string
 	 * @param String	: The string

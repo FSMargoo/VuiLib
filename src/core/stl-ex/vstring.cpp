@@ -122,8 +122,9 @@ bool VString::IsEmpty()
 	return empty();
 }
 
-void VString::Fill(const VChar &Character, size_t FillSize)
+VString VString::Fill(const VChar &Character, size_t FillSize)
 {
+	VString String;
 	if (FillSize == 0)
 	{
 		FillSize = size();
@@ -131,8 +132,10 @@ void VString::Fill(const VChar &Character, size_t FillSize)
 
 	for (auto Count = 0; Count < FillSize; ++Count)
 	{
-		At(Count) = Character;
+		String.push_back(Character);
 	}
+
+	return String;
 }
 
 size_t VString::IndexOf(const VString &String, const size_t &StartAt) const
