@@ -81,8 +81,8 @@ public:
 class VOpacityAnimation : public VUIObject
 {
 private:
-	int TargetValue;
-	int SourceValue;
+	double TargetValue;
+	double SourceValue;
 
 	VBasicAnimation Animation;
 
@@ -92,9 +92,9 @@ private:
 
 public:
 	VOpacityAnimation(VUIObject *Parent, VAnimationCurve *Curve, const double &Duration);
-	VOpacityAnimation(VUIObject *Parent, VAnimationCurve *Curve, const double &Duration, const int &Target);
+	VOpacityAnimation(VUIObject *Parent, VAnimationCurve *Curve, const double &Duration, const double &Target);
 
-	void SetTargetValue(const int &Target);
+	void SetTargetValue(const double &Target);
 	void SetCurve(VAnimationCurve *Curve);
 	void SetDuration(const int &Duration);
 

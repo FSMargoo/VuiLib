@@ -1,4 +1,4 @@
-#include "../include/core/uibasic/vnativeicon.h"
+#include "../../../include/core/uibasic/vnativeicon.h"
 
 VLIB_BEGIN_NAMESPACE
 

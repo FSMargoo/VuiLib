@@ -369,9 +369,20 @@ void VUIObject::CheckAllFrame(bool RecursionChildren)
 	}
 	else
 	{
-		for (auto &Object : ObjectKernel.ChildObjectContainer)
+		auto OriginSize = ObjectKernel.ChildObjectContainer.size();
+		auto Distance	= 0;
+		for (auto Object = ObjectKernel.ChildObjectContainer.begin(); Object != ObjectKernel.ChildObjectContainer.end();
+			 ++Object)
 		{
-			Object->CheckAllFrame(RecursionChildren);
+			(*Object)->CheckAllFrame(RecursionChildren);
+
+			if (OriginSize != ObjectKernel.ChildObjectContainer.size())
+			{
+				OriginSize = ObjectKernel.ChildObjectContainer.size();
+				Object	   = ObjectKernel.ChildObjectContainer.begin() + Distance;
+			}
+
+			++Distance;
 		}
 	}
 }

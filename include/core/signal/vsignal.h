@@ -168,11 +168,6 @@ private:
 	{
 		for (auto iterator = slots->begin(); iterator != slots->end();)
 		{
-			if (iterator->get()->is_block() == true)
-			{
-				continue;
-			}
-
 			connection<ObjectType, Type...> *connect =
 				static_cast<connection<ObjectType, Type...> *>((*iterator).get());
 

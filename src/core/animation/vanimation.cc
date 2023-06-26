@@ -154,13 +154,13 @@ VOpacityAnimation::VOpacityAnimation(Core::VUIObject *Parent, Core::VAnimationCu
 }
 
 VOpacityAnimation::VOpacityAnimation(VUIObject *Parent, VAnimationCurve *Curve, const double &Duration,
-									 const int &Target)
+									 const double &Target)
 	: Animation(Curve, Duration), VUIObject(Parent)
 {
 	TargetValue = Target;
 }
 
-void VOpacityAnimation::SetTargetValue(const int &Target)
+void VOpacityAnimation::SetTargetValue(const double &Target)
 {
 	TargetValue = Target;
 }

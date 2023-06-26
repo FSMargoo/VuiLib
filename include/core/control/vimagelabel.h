@@ -12,6 +12,7 @@ private:
 	VImageLabelTheme *Theme;
 
 public:
+	VImageLabel(VUIObject *Parent);
 	VImageLabel(const int &Width, const int &Height, VUIObject *Parent);
 	VImageLabel(const int &Width, const int &Height, VImage *Image, VUIObject *Parent);
 	VImageLabel(const int &Width, const int &Height, const VString &ImagePath, VUIObject *Parent);

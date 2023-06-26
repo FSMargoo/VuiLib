@@ -26,16 +26,16 @@ std::wstring NoYetText = L"😮 Wow, dude, I am happy that you can still fight a
 
 void OnTime()
 {
-	Text->SetPlaneText(Text->GetPlaneText().substr(0, Text->GetPlaneText().size() - 1));
-	Text->SetPlaneText(Text->GetPlaneText() + PlaneText[Text->GetPlaneText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
+	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
 
-	if (Text->GetPlaneText().size() < PlaneText.size() + 1)
+	if (Text->GetPlainText().size() < PlaneText.size() + 1)
 	{
 		Timer->Start(rand() % 40 + 210);
 	}
 	else
 	{
-		Text->SetPlaneText(PlaneText);
+		Text->SetPlainText(PlaneText);
 
 		MoveInAnmiaton->Start();
 		OpacityAnimation->Start();
@@ -44,30 +44,30 @@ void OnTime()
 
 void NotYetText()
 {
-	Text->SetPlaneText(Text->GetPlaneText().substr(0, Text->GetPlaneText().size() - 1));
-	Text->SetPlaneText(Text->GetPlaneText() + NoYetText[Text->GetPlaneText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
+	Text->SetPlainText(Text->GetPlainText() + NoYetText[Text->GetPlainText().size()] + L"_");
 
-	if (Text->GetPlaneText().size() < NoYetText.size() + 1)
+	if (Text->GetPlainText().size() < NoYetText.size() + 1)
 	{
 		Timer->Start(rand() % 40 + 210);
 	}
 	else
 	{
-		Text->SetPlaneText(NoYetText);
+		Text->SetPlainText(NoYetText);
 	}
 }
 void LetGoText()
 {
-	Text->SetPlaneText(Text->GetPlaneText().substr(0, Text->GetPlaneText().size() - 1));
-	Text->SetPlaneText(Text->GetPlaneText() + LetsGoText[Text->GetPlaneText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
+	Text->SetPlainText(Text->GetPlainText() + LetsGoText[Text->GetPlainText().size()] + L"_");
 
-	if (Text->GetPlaneText().size() < LetsGoText.size() + 1)
+	if (Text->GetPlainText().size() < LetsGoText.size() + 1)
 	{
 		Timer->Start(rand() % 40 + 210);
 	}
 	else
 	{
-		Text->SetPlaneText(LetsGoText);
+		Text->SetPlainText(LetsGoText);
 	}
 }
 
@@ -77,10 +77,10 @@ void NoYet()
 	FadeOutAnimation->Start();
 	TextMoveInAnmiaton->Start();
 
-	Text->SetPlaneText(Text->GetPlaneText().substr(0, Text->GetPlaneText().size() - 1));
-	Text->SetPlaneText(Text->GetPlaneText() + PlaneText[Text->GetPlaneText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
+	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
 
-	Text->SetPlaneText(L"");
+	Text->SetPlainText(L"");
 	Text->SetParagraphAlignment(Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
 	Timer->OnTime.Disconnect(OnTime);
@@ -95,10 +95,10 @@ void LetsGo()
 	FadeOutAnimation->Start();
 	TextMoveInAnmiaton->Start();
 
-	Text->SetPlaneText(Text->GetPlaneText().substr(0, Text->GetPlaneText().size() - 1));
-	Text->SetPlaneText(Text->GetPlaneText() + PlaneText[Text->GetPlaneText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
+	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
 
-	Text->SetPlaneText(L"");
+	Text->SetPlainText(L"");
 	Text->SetParagraphAlignment(Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
 	Timer->OnTime.Disconnect(OnTime);
