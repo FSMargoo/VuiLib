@@ -7,6 +7,8 @@ namespace Core
 
 VImageLabel::VImageLabel(VUIObject *Parent) : VUIObject(Parent)
 {
+	Theme		 = new VImageLabelTheme;
+	Theme->Image = nullptr;
 }
 VImageLabel::VImageLabel(const int &Width, const int &Height, Core::VUIObject *Parent) : VUIObject(Parent)
 {
