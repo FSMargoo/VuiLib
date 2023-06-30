@@ -1898,9 +1898,38 @@ void VEditor::Resize(const int &Width, const int &Height)
 	ResetTextLayout();
 	SetScroller();
 }
+void VEditor::Hide()
+{
+	Core::VUIObject::Hide();
+
+	UserInOperating		 = false;
+	ShowCaret			 = false;
+	InMouseDragSelecting = false;
+	InAnimation			 = true;
+
+	Caret.CaretStart = 0;
+	Caret.CaretEnd	 = Caret.CaretStart;
+
+	OldTheme	= Theme->LocalTheme;
+	TargetTheme = Theme->StaticTheme;
+
+	Caret.ResetSelect();
+
+	Interpolator->Reset();
+	AnimationFrameTimer.Start(0);
+
+	HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+	SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
+
+	Update();
+}
 
 void VEditor::OnMessage(VMessage *Message)
 {
+	if (ObjectVisual.Stats == Hidden)
+	{
+		return;
+	}
 	if (Message->GetType() == VMessageType::KillFocusMessage && !UserInOperating)
 	{
 		UserInOperating		 = false;
@@ -1918,6 +1947,9 @@ void VEditor::OnMessage(VMessage *Message)
 
 		Interpolator->Reset();
 		AnimationFrameTimer.Start(0);
+
+		HCURSOR ArrowCursor = LoadCursor(NULL, IDC_ARROW);
+		SetClassLongPtr(CallWidgetGetHWND(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(ArrowCursor));
 
 		Update();
 	}

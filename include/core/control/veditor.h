@@ -108,6 +108,9 @@ public:
 	void SetTopMargin(const int &TargetMargin);
 
 public:
+	void Hide() override;
+
+public:
 	VTextEditorTheme *GetTheme();
 
 public:

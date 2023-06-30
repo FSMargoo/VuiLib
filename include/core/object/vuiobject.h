@@ -365,7 +365,7 @@ protected:
 	 */
 	virtual void RestoreMousePosition(VPoint *MousePosition);
 
-protected:
+public:
 	/*
 	 * CallWidgetSetIME function:
 	 *     Description : The function will call the widget to set the IME
