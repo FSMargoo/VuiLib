@@ -1,0 +1,20 @@
+<main-widget type="mainwindow" width="1344" height="756" class="widget"
+			 title="Smart Control Console"
+			 style-sheet=".widget {
+					background-color: rgb(22, 22, 22);
+				}" style-sheet-src="./style-css.css">
+	<bar type="textlabel" x="@center" y="@ratio(0.8)" width="@scale(0.88)" height="@scale(0.126)" class="bar" style-sheet=".bar {
+			background-color : rgb(30, 30, 30);
+			border-radius: 55px;
+		 }">
+		<avatar type="imagelabel" width="@scale(0.0414)" height="@scale(0.51)" src="./avatar.jpg" x="@ratio(0.063)" y="@center" class="avatar"
+				style-sheet=".avatar {
+				 border-radius:70px;
+				}" lock-height="true"/>
+		<user-name type="textlabel" text="原质 ρV0" x="@ratio(0.121)" y="@center" class="user-name" style-sheet=".user-name {
+				   font-size:23px;
+				   }" auto-size="true"/>
+	
+		
+	</bar>
+</main-widget>

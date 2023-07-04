@@ -92,7 +92,7 @@ public:
 class VMLImageLabelBuilder : public VMLCommonBuilder
 {
 protected:
-	void Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize);
+	void Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize, bool LockHeight);
 
 	void AnalyzeProperty(const VMLFinder &RootFinder, Core::VImageLabel *Object,
 						 std::map<VString, VMLPropertyValue> &PropertyValueList, VMLControlBuildStatus *BuildStatus);

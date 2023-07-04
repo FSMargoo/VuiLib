@@ -221,15 +221,15 @@ PVMainWindow::PVMainWindow(Core::VApplication *Parent) : VMLMainWindow(Parent)
 {
 	LoadVML(L"./mainui.xml", VML::VMLParserParseMode::FromFile);
 
-	MiniSizeButton	=  operator[](L"photo-viewer-widget")[L"minisize-button"].Get<Core::VPushButton>();
-	MaxSizeButton	=	operator[](L"photo-viewer-widget")[L"maxsize-button"].Get<Core::VPushButton>();
-	CloseButton		=	  operator[](L"photo-viewer-widget")[L"close-button"].Get<Core::VPushButton>();
+	MiniSizeButton	= operator[](L"photo-viewer-widget")[L"minisize-button"].Get<Core::VPushButton>();
+	MaxSizeButton	= operator[](L"photo-viewer-widget")[L"maxsize-button"].Get<Core::VPushButton>();
+	CloseButton		= operator[](L"photo-viewer-widget")[L"close-button"].Get<Core::VPushButton>();
 	MainuiContainer = operator[](L"photo-viewer-widget")[L"main-ui"].Get();
 
 	FileOpenButton = operator[](L"photo-viewer-widget")[L"startup-ui"][L"open-file-button"].Get<Core::VPushButton>();
 
 	BlurBackgroundImage = operator[](L"photo-viewer-widget")[L"main-ui"][L"view-background"].Get<Core::VImageLabel>();
-	ViewingLabel		=		 operator[](L"photo-viewer-widget")[L"main-ui"][L"view-image"].Get<Core::VImageLabel>();
+	ViewingLabel		= operator[](L"photo-viewer-widget")[L"main-ui"][L"view-image"].Get<Core::VImageLabel>();
 
 	StartupuiContainer = operator[](L"photo-viewer-widget")[L"startup-ui"].Get();
 
@@ -237,7 +237,7 @@ PVMainWindow::PVMainWindow(Core::VApplication *Parent) : VMLMainWindow(Parent)
 
 	PercentTagText = operator[](L"photo-viewer-widget")[L"main-ui"][L"zoom-tag"].Get<Core::VTextLabel>();
 
-	ZoomUpButton   =   operator[](L"photo-viewer-widget")[L"zoom-down-button"].Get<Core::VPushButton>();
+	ZoomUpButton   = operator[](L"photo-viewer-widget")[L"zoom-down-button"].Get<Core::VPushButton>();
 	ZoomDownButton = operator[](L"photo-viewer-widget")[L"zoom-up-button"].Get<Core::VPushButton>();
 	OneToOneButton = operator[](L"photo-viewer-widget")[L"one-to-one-button"].Get<Core::VPushButton>();
 
@@ -282,15 +282,15 @@ PVMainWindow::PVMainWindow(Core::VApplication *Parent, const std::wstring &FileP
 
 	LoadVML(L"./mainui.xml", VML::VMLParserParseMode::FromFile);
 
-	MiniSizeButton	=  operator[](L"photo-viewer-widget")[L"minisize-button"].Get<Core::VPushButton>();
-	MaxSizeButton	=	operator[](L"photo-viewer-widget")[L"maxsize-button"].Get<Core::VPushButton>();
-	CloseButton		=	  operator[](L"photo-viewer-widget")[L"close-button"].Get<Core::VPushButton>();
+	MiniSizeButton	= operator[](L"photo-viewer-widget")[L"minisize-button"].Get<Core::VPushButton>();
+	MaxSizeButton	= operator[](L"photo-viewer-widget")[L"maxsize-button"].Get<Core::VPushButton>();
+	CloseButton		= operator[](L"photo-viewer-widget")[L"close-button"].Get<Core::VPushButton>();
 	MainuiContainer = operator[](L"photo-viewer-widget")[L"main-ui"].Get();
 
 	FileOpenButton = operator[](L"photo-viewer-widget")[L"startup-ui"][L"open-file-button"].Get<Core::VPushButton>();
 
 	BlurBackgroundImage = operator[](L"photo-viewer-widget")[L"main-ui"][L"view-background"].Get<Core::VImageLabel>();
-	ViewingLabel		=		 operator[](L"photo-viewer-widget")[L"main-ui"][L"view-image"].Get<Core::VImageLabel>();
+	ViewingLabel		= operator[](L"photo-viewer-widget")[L"main-ui"][L"view-image"].Get<Core::VImageLabel>();
 
 	StartupuiContainer = operator[](L"photo-viewer-widget")[L"startup-ui"].Get();
 
@@ -298,7 +298,7 @@ PVMainWindow::PVMainWindow(Core::VApplication *Parent, const std::wstring &FileP
 
 	PercentTagText = operator[](L"photo-viewer-widget")[L"main-ui"][L"zoom-tag"].Get<Core::VTextLabel>();
 
-	ZoomUpButton   =   operator[](L"photo-viewer-widget")[L"zoom-down-button"].Get<Core::VPushButton>();
+	ZoomUpButton   = operator[](L"photo-viewer-widget")[L"zoom-down-button"].Get<Core::VPushButton>();
 	ZoomDownButton = operator[](L"photo-viewer-widget")[L"zoom-up-button"].Get<Core::VPushButton>();
 	OneToOneButton = operator[](L"photo-viewer-widget")[L"one-to-one-button"].Get<Core::VPushButton>();
 

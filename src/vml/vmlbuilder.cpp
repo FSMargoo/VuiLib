@@ -586,9 +586,10 @@ VMLPushButtonBuilder::VMLPushButtonBuilder(const VMLFinder &RootFinder, Core::VP
 	AnalyzeProperty(RootFinder, Object, PropertyValueList, BuildStatus);
 }
 
-void VMLImageLabelBuilder::Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize)
+void VMLImageLabelBuilder::Builder(Core::VImageLabel *ImageLabel, Core::VImage *Image, bool AutoSize, bool LockHeight)
 {
 	ImageLabel->SetImage(Image);
+	ImageLabel->SetLockStatus(LockHeight);
 
 	if (AutoSize)
 	{
@@ -600,8 +601,9 @@ void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VI
 										   std::map<VString, VMLPropertyValue> &PropertyValueList,
 										   VMLControlBuildStatus			   *BuildStatus)
 {
-	Core::VImage *Image	   = nullptr;
-	bool		  AutoSize = false;
+	Core::VImage *Image		 = nullptr;
+	bool		  AutoSize	 = false;
+	bool		  LockHeight = false;
 
 	for (auto &ElementProperty : PropertyValueList)
 	{
@@ -629,9 +631,21 @@ void VMLImageLabelBuilder::AnalyzeProperty(const VMLFinder &RootFinder, Core::VI
 
 			AutoSize = ElementProperty.second.PropertyAsBool;
 		}
+		if (ElementProperty.first == L"lock-height")
+		{
+			if (ElementProperty.second.PropertyType != VMLPropertyType::BooleanValue)
+			{
+				BuildStatus->BuildStatusCode = VMLControlBuildResultStatus::Failed;
+				BuildStatus->FailedReason	 = L"\"lock-height\" Property Must Match the Type \"boolean\"";
+
+				return;
+			}
+
+			LockHeight = ElementProperty.second.PropertyAsBool;
+		}
 	}
 
-	Builder(Object, Image, AutoSize);
+	Builder(Object, Image, AutoSize, LockHeight);
 }
 
 VMLImageLabelBuilder::VMLImageLabelBuilder(const VMLFinder &RootFinder, Core::VImageLabel *Object,

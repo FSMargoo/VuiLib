@@ -147,6 +147,21 @@ VImage *VImageLabel::GetImage()
 {
 	return Theme->Image;
 }
+void VImageLabel::SetLockStatus(const bool &Status)
+{
+	LockHeight = Status;
+}
+void VImageLabel::Resize(const int &Width, const int &Height)
+{
+	if (LockHeight)
+	{
+		VUIObject::Resize(Height, Height);
+	}
+	else
+	{
+		VUIObject::Resize(Width, Height);
+	}
+}
 void VImageLabel::SetImage(VImage *Image)
 {
 	if (Image != nullptr)

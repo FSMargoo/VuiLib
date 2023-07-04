@@ -8,9 +8,6 @@ namespace Core
 {
 class VImageLabel : public VUIObject
 {
-private:
-	VImageLabelTheme *Theme;
-
 public:
 	VImageLabel(VUIObject *Parent);
 	VImageLabel(const int &Width, const int &Height, VUIObject *Parent);
@@ -21,6 +18,8 @@ public:
 public:
 	void	SetImage(VImage *Image);
 	VImage *GetImage();
+	void	Resize(const int &Width, const int &Height) override;
+	void	SetLockStatus(const bool &Status);
 
 public:
 	void ResizeByImage();
@@ -31,6 +30,10 @@ public:
 
 public:
 	void OnPaint(VCanvasPainter *Painter) override;
+
+private:
+	VImageLabelTheme *Theme;
+	bool			  LockHeight = false;
 };
 } // namespace Core
 

@@ -35,7 +35,7 @@ public:
 	bool			operator<=(const VMLIntVariable &JudgetValue);
 	bool			operator<(const VMLIntVariable &JudgetValue);
 	bool			operator>(const VMLIntVariable &JudgetValue);
-					operator int();
+	operator int();
 };
 class VMLDoubleVariable : public VMLBasicVariable
 {
@@ -54,7 +54,7 @@ public:
 	bool			   operator<=(const VMLDoubleVariable &JudgetValue);
 	bool			   operator<(const VMLDoubleVariable &JudgetValue);
 	bool			   operator>(const VMLDoubleVariable &JudgetValue);
-					   operator double();
+	operator double();
 };
 class VMLStringVariable : public VMLBasicVariable
 {
@@ -69,7 +69,7 @@ public:
 	bool			   operator!=(const VMLStringVariable &JudgetValue);
 	bool			   operator==(const VString &JudgetValue);
 	bool			   operator!=(const VString &JudgetValue);
-					   operator VString();
+	operator VString();
 };
 class VMLBooleanVariable : public VMLBasicVariable
 {
@@ -84,7 +84,7 @@ public:
 	bool				operator!=(const bool &JudgetValue);
 	bool				operator==(const VMLBooleanVariable &JudgetValue);
 	bool				operator!=(const VMLBooleanVariable &JudgetValue);
-						operator bool();
+	operator bool();
 };
 } // namespace VML
 

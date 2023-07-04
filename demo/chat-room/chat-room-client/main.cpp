@@ -127,7 +127,7 @@ private:
 	bool JudgetEmpty()
 	{
 		auto EdtiorInstance = this->operator[](L"main-widget")[L"main-ui"][L"editor"].Get<Core::VEditor>();
-		auto						PlainText = EdtiorInstance->GetPlainText();
+		auto PlainText		= EdtiorInstance->GetPlainText();
 
 		if (PlainText.empty())
 		{
@@ -224,7 +224,7 @@ private:
 							continue;
 						}
 
-						auto	  EdtiorInstance =
+						auto EdtiorInstance =
 							this->operator[](L"main-widget")[L"main-ui"][L"editor"].Get<Core::VEditor>();
 
 						_bstr_t		MessageConvertor = EdtiorInstance->GetPlainText().c_str();
@@ -346,7 +346,7 @@ private:
 			for (auto &Message : Messages)
 			{
 				auto EdtiorInstance = this->operator[](L"main-widget")[L"main-ui"][L"chat-editor"].Get<Core::VEditor>();
-				auto						PlainText = EdtiorInstance->GetPlainText();
+				auto PlainText		= EdtiorInstance->GetPlainText();
 
 				auto LocalTime = std::chrono::system_clock::now();
 
