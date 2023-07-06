@@ -1,6 +1,0 @@
-<widget type="mainwindow" width="876" height="461" title="Welcome VuiLib 2.x.x" class="main-window">
-    <drop-down-test type="drop-down" width="400" height="100" class="test">
-        <group text="test group"/>
-        <item text="hello world" on-selected="@Test"/>
-    </drop-down-test>
-</widget>
