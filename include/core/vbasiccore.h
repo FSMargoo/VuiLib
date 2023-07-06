@@ -34,8 +34,8 @@
 #define WINVER 0x0600
 
 #include "../debug/vdebug.h"
+#include "../kits/vchainif.h"
 #include "../win32base/vwin32base.h"
-#include "kits/vchainif.h"
 #include <crtdbg.h>
 #include <d2d1helper.h>
 #include <new>
@@ -103,41 +103,41 @@ template <class DataType> class VCoreRect
 {
 public:
 	/*
-   * GetWidth function:
-   *		Description : Get the width of this rectangle
-   */
+	 * GetWidth function:
+	 *		Description : Get the width of this rectangle
+	 */
 	DataType GetWidth() const;
 	/*
-   * GetHeight function:
-   *		Description : Get the height of this rectangle
-   */
+	 * GetHeight function:
+	 *		Description : Get the height of this rectangle
+	 */
 	DataType GetHeight() const;
 
 public:
 	/*
-   * Move function:
-   *		Description : Move the rectangle to the target point
-   */
+	 * Move function:
+	 *		Description : Move the rectangle to the target point
+	 */
 	void Move(const DataType &X, const DataType &Y);
 	/*
-   * MoveRV function:
-   *		Description : Move the rectangle to the target point
-   *
+	 * MoveRV function:
+	 *		Description : Move the rectangle to the target point
+	 *
 	 * Tips		: Don't same with Move function, this function
-   *will return a pointer which refer to the
+	 *will return a pointer which refer to the
 	 * object
-   */
+	 */
 	VCoreRect *MoveRV(const DataType &X, const DataType &Y);
 	/*
-   * Extended function:
-   *		Description : Extended this rectangle's border with target value
-   */
+	 * Extended function:
+	 *		Description : Extended this rectangle's border with target value
+	 */
 	void Extended(const DataType &LeftOffset, const DataType &TopOffset, const DataType &RightOffset,
 				  const DataType &BottomOffset);
 	/*
-   * Resize function:
-   *		Description : Set this rectangle's size
-   */
+	 * Resize function:
+	 *		Description : Set this rectangle's size
+	 */
 	void Resize(const DataType &Width, const DataType &Height);
 
 	/*
@@ -167,31 +167,31 @@ public:
    */
 	bool Overlap(const VCoreRect &JudgedObject) const;
 	/*
-   * Include function:
-   *		Description : Judge a target rectangle's area was included by
-   *this
+	 * Include function:
+	 *		Description : Judge a target rectangle's area was included by
+	 *this
 	 * rectangle's area Tips		: Not same as Overlap, Include won't
-   *return true when there is only an
+	 *return true when there is only an
 	 * intersection area exists, it require that
-   *the following expressions is valid: R1'left >= R2'left &&
+	 *the following expressions is valid: R1'left >= R2'left &&
 	 * R1'top >= R2'top
-   *&& R1'bottom >= R2'bottom && R1'right >= R2'right
-   */
+	 *&& R1'bottom >= R2'bottom && R1'right >= R2'right
+	 */
 	bool Include(const VCoreRect &JudgedObject) const;
 
 	/*
-   * Clone function:
-   *		Description : This function will copy this rectangle's area and
-   *save
+	 * Clone function:
+	 *		Description : This function will copy this rectangle's area and
+	 *save
 	 * it as a new VCoreRect then return as a unwritable variable
-   */
+	 */
 	VCoreRect Clone() const;
 
 public:
 	/*
-   * ToRECT function:
-   *		Description : Convert VCoreRect into win32's RECT structure
-   */
+	 * ToRECT function:
+	 *		Description : Convert VCoreRect into win32's RECT structure
+	 */
 	inline RECT ToRECT() const;
 	/*
    * ToDxSize2U function:
@@ -205,18 +205,18 @@ public:
 
 public:
 	/*
-   * operator== function:
-   *		Description : Operator overload
-   */
+	 * operator== function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator==(const VCoreRect &LeftObject, const VCoreRect &RightObject)
 	{
 		return LeftObject.Left == RightObject.Left && LeftObject.Right == RightObject.Right &&
 			   LeftObject.Bottom == RightObject.Bottom && LeftObject.Top == RightObject.Top;
 	}
 	/*
-   * operator!= function:
-   *		Description : Operator overload
-   */
+	 * operator!= function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator!=(const VCoreRect &LeftObject, const VCoreRect &RightObject)
 	{
 		return !(LeftObject.Left == RightObject.Left && LeftObject.Right == RightObject.Right &&
@@ -251,24 +251,24 @@ public:
 	bool InsideRectangle(const VCoreRect<DataType> &RectangleObject) const;
 
 	/*
-   * Move function:
-   *		Description : Move the point into target point
-   */
+	 * Move function:
+	 *		Description : Move the point into target point
+	 */
 	void Move(const DataType &TargetX, const DataType &TargetY);
 	/*
-   * Offset function:
-   *		Description : Add the increment into x and y
-   *		Tips
+	 * Offset function:
+	 *		Description : Add the increment into x and y
+	 *		Tips
 	 * : The new position p2's position calculate
-   *expression will be like: p2x = p1x + dx p2y = p2y + dy
-   */
+	 *expression will be like: p2x = p1x + dx p2y = p2y + dy
+	 */
 	void Offset(const DataType &OffsetX, const DataType &OffsetY);
 
 public:
 	/*
-   * ToPOINT:
-   *		Description : Convert the VPoint into Win32's POINT structure
-   */
+	 * ToPOINT:
+	 *		Description : Convert the VPoint into Win32's POINT structure
+	 */
 	inline POINT ToPOINT() const
 	{
 		return POINT{X, Y};
@@ -296,17 +296,17 @@ public:
 
 public:
 	/*
-   * operator== function:
-   *		Description : Operator overload
-   */
+	 * operator== function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator==(const VCorePoint &LeftObject, const VCorePoint &RightObject)
 	{
 		return LeftObject.X == RightObject.X && LeftObject.Y == RightObject.Y;
 	}
 	/*
-   * operator!= function:
-   *		Description : Operator overload
-   */
+	 * operator!= function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator!=(const VCorePoint &LeftObject, const VCorePoint &RightObject)
 	{
 		return !(LeftObject.X == RightObject.X && LeftObject.Y == RightObject.Y);
@@ -343,24 +343,24 @@ public:
 
 public:
 	/*
-   * Resize function:
-   *		Description : Set the size of rectangle
-   */
+	 * Resize function:
+	 *		Description : Set the size of rectangle
+	 */
 	void Resize(const DataType &TargetWidth, const DataType &TargetHeight);
 
 public:
 	/*
-   * operator== function:
-   *		Description : Operator overload
-   */
+	 * operator== function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator==(const VCoreGeometry &LeftObject, const VCoreGeometry &RightObject)
 	{
 		return LeftObject.Width == RightObject.Width && LeftObject.Height == RightObject.Height;
 	}
 	/*
-   * operator!= function:
-   *		Description : Operator overload
-   */
+	 * operator!= function:
+	 *		Description : Operator overload
+	 */
 	friend bool operator!=(const VCoreGeometry &LeftObject, const VCoreGeometry &RightObject)
 	{
 		return !(LeftObject.Width == RightObject.Width && LeftObject.Height == RightObject.Height);
