@@ -1,4 +1,5 @@
 echo off
+cls
 setlocal enabledelayedexpansion
 
 set DIR="%cd%"
@@ -12,6 +13,3 @@ for /R %DIR% %%f in (*.h, *.c, *.hpp, *.cpp, *.cc) do (
     echo [!NUM!]Format file: %%f
 )
 echo.
-echo Total format !index! files.
-echo.
-pause
