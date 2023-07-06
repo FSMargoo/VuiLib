@@ -1,4 +1,5 @@
 #include "fmt/vfmt.h"
+#include "vml/vmlparser.h"
 #include <iostream>
 #include <map>
 
@@ -8,7 +9,48 @@ int main()
 {
 	using namespace Core;
 
-	system("auto-format\n");
+	VML::VMLParser		 Parser(VStr("./workflow.xml"), VML::VMLParserParseMode::FromFile);
+	VML::VMLParserResult Result = Parser.ParseVML();
+	if (Result.ParserStatus != VML::VMLParserStatus::Ok)
+	{
+		VFmt::Print(VStr("Failed to parse \"workflow.xml\"!\n"));
+
+		return -1;
+	}
+	auto StartupNode = Result.Nodes["workflow"].ChildrenNodes["startup"];
+	if (VKits::VIf(StartupNode.PropertyExsit(VStr("text")))
+			.Judge(StartupNode.GetProperty(VStr("text")).PropertyType == VML::VMLPropertyType::StringValue))
+	{
+		VFmt::Print("From Project Configure : {}\n", StartupNode.GetProperty(VStr("text")).PropertyAsString);
+	}
+	auto SysNode = Result.Nodes["workflow"].ChildrenNodes["sys"];
+	if (VKits::VIf(SysNode.PropertyExsit(VStr("command")))
+			.Judge(SysNode.GetProperty(VStr("command")).PropertyType == VML::VMLPropertyType::StringValue))
+	{
+		bstr_t Convertor(SysNode.GetProperty(VStr("command")).PropertyAsString.CStyleString());
+		system((char *)Convertor);
+
+		VFmt::Print("Excuse Project Command <{}>\n", SysNode.GetProperty(VStr("command")).PropertyAsString);
+	}
+	auto	GitRepo = Result.Nodes["workflow"].ChildrenNodes["git-repository"];
+	VString RepoName;
+	VString RepoBranch;
+	if (VKits::VIf(GitRepo.PropertyExsit(VStr("repos-name")) && GitRepo.PropertyExsit(VStr("branch")))
+			.Judge(GitRepo.GetProperty(VStr("repos-name")).PropertyType == VML::VMLPropertyType::StringValue &&
+				   GitRepo.GetProperty(VStr("branch")).PropertyType == VML::VMLPropertyType::StringValue))
+	{
+		RepoName   = GitRepo.GetProperty(VStr("repos-name")).PropertyAsString;
+		RepoBranch = GitRepo.GetProperty(VStr("branch")).PropertyAsString;
+
+		VFmt::Print("Git Repository at <{}>[{}]\n", GitRepo.GetProperty(VStr("repos-name")).PropertyAsString,
+					GitRepo.GetProperty(VStr("branch")).PropertyAsString);
+	}
+	else
+	{
+		VFmt::Print("Git-Autor failed : Unable to find the correct \"git-repository\" node in \"workflow.xml\".");
+
+		return -1;
+	}
 
 	std::map<int, VString> CommentMapping = {{0, ":new: feat"},
 											 {1, ":bug: fix/to"},
@@ -55,7 +97,7 @@ int main()
 	Proxy = GitCommand.CStyleString();
 	system((char *)Proxy);
 
-	GitCommand = VFmt::Format("git push vlib main");
+	GitCommand = VFmt::Format("git push {} {}", RepoName, RepoBranch);
 	Proxy	   = GitCommand.CStyleString();
 	system((char *)Proxy);
 

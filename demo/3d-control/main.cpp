@@ -1,5 +1,4 @@
 #include "../../include/vml/vmlwidget.h"
-#include <graphics.h>
 
 #define MAX_POINT_AMOUNT 5000
 #define PI				 3.1415926565

@@ -35,6 +35,7 @@
 
 #include "../debug/vdebug.h"
 #include "../win32base/vwin32base.h"
+#include "kits/vchainif.h"
 #include <crtdbg.h>
 #include <d2d1helper.h>
 #include <new>

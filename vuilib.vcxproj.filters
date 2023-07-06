@@ -291,6 +291,9 @@
     <ClInclude Include="include\core\control\vdropdown.h">
       <Filter>include\core\control</Filter>
     </ClInclude>
+    <ClInclude Include="include\kits\vchainif.h">
+      <Filter>include\kits</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\animation\vanimation.cc">
@@ -476,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="src\core\control\vdropdown.cc">
       <Filter>src\core\control</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kits\vchainif.cc">
+      <Filter>src\kits</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

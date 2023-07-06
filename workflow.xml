@@ -1,0 +1,5 @@
+<workflow>
+  <startup text="[You are now working with vuilib workflow]"/>
+  <sys command="auto-format.bat"/>
+  <git-repository repos-name="vlib" branch="main"/>
+</workflow>

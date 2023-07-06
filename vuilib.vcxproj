@@ -109,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>Default</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(vinclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -188,6 +188,7 @@
     <ClInclude Include="include\kits\seal.lexical.h" />
     <ClInclude Include="include\kits\seal.lexical.token.h" />
     <ClInclude Include="include\kits\vallocator.h" />
+    <ClInclude Include="include\kits\vchainif.h" />
     <ClInclude Include="include\kits\vcolorhelper.h" />
     <ClInclude Include="include\kits\vparserhelper.h" />
     <ClInclude Include="include\vml\vml.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="src\kits\seal.lexical.cc" />
     <ClCompile Include="src\kits\seal.lexical.token.cc" />
     <ClCompile Include="src\kits\vallocator.cc" />
+    <ClCompile Include="src\kits\vchainif.cc" />
     <ClCompile Include="src\kits\vcolorhelper.cc" />
     <ClCompile Include="src\kits\vparserhelper.cc" />
     <ClCompile Include="src\vml\vml.cpp" />
