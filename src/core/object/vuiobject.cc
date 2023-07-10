@@ -445,6 +445,10 @@ void VUIObject::Move(const VPoint &Point)
 }
 void VUIObject::SetParent(VUIObject *Parent)
 {
+	if (Parent == this)
+	{
+		return;
+	}
 	if (ObjectKernel.Parent != nullptr)
 	{
 		for (auto Object = GetParent()->ObjectKernel.ChildObjectContainer.begin() + (ObjectKernel.ParentID + 1);
