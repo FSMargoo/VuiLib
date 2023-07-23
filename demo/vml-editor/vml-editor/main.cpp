@@ -106,7 +106,7 @@ public:
 	{
 		if (NewChar == L'\"')
 		{
-			auto Text = GetPlaneText();
+			auto Text = GetPlainText();
 
 			if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'\"')
 			{
@@ -119,7 +119,7 @@ public:
 		}
 		if (NewChar == L'>')
 		{
-			auto Text = GetPlaneText();
+			auto Text = GetPlainText();
 
 			if (Text.size() > Caret.CaretStart - 1 && Text[Caret.CaretStart - 1] != L'<')
 			{
@@ -130,9 +130,9 @@ public:
 				*Flag = false;
 			}
 		}
-		if (NewChar == L'\b' && GetPlaneText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
+		if (NewChar == L'\b' && GetPlainText().size() > Caret.CaretStart && Caret.CaretStart - 1 >= 0)
 		{
-			auto Text = GetPlaneText();
+			auto Text = GetPlainText();
 
 			if (Text[Caret.CaretStart - 1] == L'\"' && Text[Caret.CaretStart] == L'\"')
 			{
@@ -144,7 +144,7 @@ public:
 			}
 
 			auto OldCaret = Caret;
-			SetPlaneText(Text);
+			SetPlainText(Text);
 			Caret = OldCaret;
 		}
 	}
@@ -154,7 +154,7 @@ public:
 		{
 			auto OldCaret = Caret;
 
-			auto Text = GetPlaneText();
+			auto Text = GetPlainText();
 
 			if (Text.size() > Caret.CaretStart)
 			{
@@ -162,7 +162,7 @@ public:
 				{
 					Text.insert(Text.begin() + Caret.CaretStart, L'\"');
 
-					SetPlaneText(Text);
+					SetPlainText(Text);
 
 					Caret = OldCaret;
 				}
@@ -171,7 +171,7 @@ public:
 			{
 				Text.insert(Text.begin() + Caret.CaretStart, L'\"');
 
-				SetPlaneText(Text);
+				SetPlainText(Text);
 
 				Caret = OldCaret;
 			}
@@ -180,23 +180,23 @@ public:
 		{
 			auto OldCaret = Caret;
 
-			auto Text = GetPlaneText();
+			auto Text = GetPlainText();
 
 			Text.insert(Text.begin() + Caret.CaretStart, L'>');
 
-			SetPlaneText(Text);
+			SetPlainText(Text);
 
 			Caret = OldCaret;
 		}
 	}
-	void BeforeChange(const std::wstring &PlaneText)
+	void BeforeChange(const std::wstring &PlainText)
 	{
-		LastString.push_back(PlaneText);
+		LastString.push_back(PlainText);
 		LastCaret.push_back(Caret);
 	}
-	void ApplyColor(const std::wstring &PlaneText)
+	void ApplyColor(const std::wstring &PlainText)
 	{
-		VKits::seal_lexical Lexical(PlaneText);
+		VKits::seal_lexical Lexical(PlainText);
 		auto				Token	  = Lexical.get_token();
 		auto				LastToken = Token;
 		auto				InType	  = false;

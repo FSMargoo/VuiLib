@@ -153,10 +153,10 @@ void End()
 		.Get<Core::VTextLabel>()
 		->GetTheme()
 		->LabelFont->SetFamilyName(L"手书体");
-	MainWindowInstance->Get("main-window")["background-text"].Get<Core::VTextLabel>()->SetPlaneText(
+	MainWindowInstance->Get("main-window")["background-text"].Get<Core::VTextLabel>()->SetPlainText(
 		"一个 LOSER 的自述");
 	ConversationText->SetTextColor(Core::VColor::White);
-	ConversationText->SetPlaneText(L"By Margoo, 感谢观看");
+	ConversationText->SetPlainText(L"By Margoo, 感谢观看");
 
 	MainWindowInstance->Get("main-window")["background-text"][L"fade-in-animation"]
 		.Get<Core::VOpacityAnimation>()
@@ -166,7 +166,7 @@ void End()
 		->Start();
 	FadeInAnimation->Start();
 }
-void SwitchPlaneText()
+void SwitchPlainText()
 {
 	if (TextNum + 1 > Text.size())
 	{
@@ -176,7 +176,7 @@ void SwitchPlaneText()
 		MainWindowInstance->Get("main-window")["background-text"][L"fade-out-animation"]
 			.Get<Core::VOpacityAnimation>()
 			->Start();
-		FadeOutAnimation->AnimationEnd.Block(SwitchPlaneText, true);
+		FadeOutAnimation->AnimationEnd.Block(SwitchPlainText, true);
 		FadeOutAnimation->Start();
 
 		EndTimer->OnTime.Connect(End);
@@ -187,7 +187,7 @@ void SwitchPlaneText()
 
 	FadeInAnimation->Start();
 
-	ConversationText->SetPlaneText(Text[TextNum]);
+	ConversationText->SetPlainText(Text[TextNum]);
 
 	if (Text[TextNum] == L"他那空洞的双眼，装不下对未来的希望...")
 	{
@@ -217,7 +217,7 @@ void SwitchPlaneText()
 		}
 		else if (TextNum == 17)
 		{
-			MainWindowInstance->Get("main-window")["background-text"].Get<Core::VTextLabel>()->SetPlaneText("WHY!");
+			MainWindowInstance->Get("main-window")["background-text"].Get<Core::VTextLabel>()->SetPlainText("WHY!");
 			MainWindowInstance->Get("main-window")["background-text"][L"fade-in-animation"]
 				.Get<Core::VOpacityAnimation>()
 				->SetDuration(280);
@@ -320,7 +320,7 @@ int main()
 	CringFace1		   = new Core::VImage("./resource/eye-cring.png", MainWindow.CallWidgetGetStaticRenderHandle());
 	CringFace2 = new Core::VImage("./resource/eye-cring-second.png", MainWindow.CallWidgetGetStaticRenderHandle());
 
-	MainWindow["main-window"]["conversation-label"].Get<Core::VTextLabel>()->SetPlaneText(L"嗨... 你怎么来了");
+	MainWindow["main-window"]["conversation-label"].Get<Core::VTextLabel>()->SetPlainText(L"嗨... 你怎么来了");
 	FadeInAnimation =
 		MainWindow["main-window"]["conversation-label"]["fade-in-animation"].Get<Core::VOpacityAnimation>();
 	ConversationText = MainWindow["main-window"]["conversation-label"].Get<Core::VTextLabel>();
@@ -330,7 +330,7 @@ int main()
 	TextSwitchTimer->OnTime.Connect(SwitchText);
 	TextSwitchTimer->Start(0);
 
-	FadeOutAnimation->AnimationEnd.Connect(SwitchPlaneText);
+	FadeOutAnimation->AnimationEnd.Connect(SwitchPlainText);
 
 	MainWindow.Show();
 

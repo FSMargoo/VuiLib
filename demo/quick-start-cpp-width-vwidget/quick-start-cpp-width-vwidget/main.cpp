@@ -87,7 +87,7 @@ public:
 			FileOpenButton->Hide();
 
 			ImageLabel->SetImage(ViewImage);
-			FileName->SetPlaneText(FilePath);
+			FileName->SetPlainText(FilePath);
 		}
 	}
 

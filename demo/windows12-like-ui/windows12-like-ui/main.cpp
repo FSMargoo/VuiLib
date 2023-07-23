@@ -22,7 +22,7 @@ void UpdateTime()
 
 	if (Format)
 	{
-		DateText->SetPlaneText(Format);
+		DateText->SetPlainText(Format);
 	}
 
 	DateTimer->Start(500);

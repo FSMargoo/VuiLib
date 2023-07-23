@@ -7,7 +7,7 @@ Core::VOpacityAnimation	 *OpacityAnimation;
 Core::VPositionAnimation *MoveOutAnmiaton;
 Core::VOpacityAnimation	 *FadeOutAnimation;
 Core::VPositionAnimation *TextMoveInAnmiaton;
-std::wstring			  PlaneText  = L"Tired of life? You can end it. :)";
+std::wstring			  PlainText  = L"Tired of life? You can end it. :)";
 std::wstring			  LetsGoText =
 	L"I am sorry to hear that you are feeling like this way.\n"
 	L"However, it's important for you to know that sucide is not the answer to your problems.\n"
@@ -27,15 +27,15 @@ std::wstring NoYetText = L"😮 Wow, dude, I am happy that you can still fight a
 void OnTime()
 {
 	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
-	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText() + PlainText[Text->GetPlainText().size()] + L"_");
 
-	if (Text->GetPlainText().size() < PlaneText.size() + 1)
+	if (Text->GetPlainText().size() < PlainText.size() + 1)
 	{
 		Timer->Start(rand() % 40 + 210);
 	}
 	else
 	{
-		Text->SetPlainText(PlaneText);
+		Text->SetPlainText(PlainText);
 
 		MoveInAnmiaton->Start();
 		OpacityAnimation->Start();
@@ -78,7 +78,7 @@ void NoYet()
 	TextMoveInAnmiaton->Start();
 
 	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
-	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText() + PlainText[Text->GetPlainText().size()] + L"_");
 
 	Text->SetPlainText(L"");
 	Text->SetParagraphAlignment(Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
@@ -96,7 +96,7 @@ void LetsGo()
 	TextMoveInAnmiaton->Start();
 
 	Text->SetPlainText(Text->GetPlainText().substr(0, Text->GetPlainText().size() - 1));
-	Text->SetPlainText(Text->GetPlainText() + PlaneText[Text->GetPlainText().size()] + L"_");
+	Text->SetPlainText(Text->GetPlainText() + PlainText[Text->GetPlainText().size()] + L"_");
 
 	Text->SetPlainText(L"");
 	Text->SetParagraphAlignment(Core::VFontParagraphAlignment::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);

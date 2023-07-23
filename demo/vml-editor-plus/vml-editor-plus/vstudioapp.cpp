@@ -32,7 +32,7 @@ void VStudioApp::ExitApp()
 {
 	if (InViewing)
 	{
-		operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\ueea3");
+		operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\ueea3");
 		operator[](L"main-widget")[L"start-vml-view-button"]
 			.Get<Core::VPushButton>()
 			->GetTheme()
@@ -55,13 +55,13 @@ void VStudioApp::SaveFile()
 	if (FileSaved)
 	{
 		std::ofstream FileStream(CodeFilePath);
-		auto		  PlaneText = CodeEditor->GetPlaneText();
+		auto		  PlainText = CodeEditor->GetPlainText();
 
 		FileStream.imbue(std::locale("chs"));
 
 		std::wstring_convert<std::codecvt_utf8<wchar_t>> CodeConvert;
 
-		auto   Result	= CodeConvert.to_bytes(PlaneText);
+		auto   Result	= CodeConvert.to_bytes(PlainText);
 		size_t Position = 0;
 
 		while (true)
@@ -164,13 +164,13 @@ void VStudioApp::CreateVMLFile()
 
 		CloseHandle(FileHandle);
 
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L")");
 
 		operator[](L"main-widget")[L"main-ui"]->Show();
 		operator[](L"main-widget")[L"startup-ui"]->Hide();
 
-		CodeEditor->SetPlaneText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
+		CodeEditor->SetPlainText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
 
 		InEditMode = true;
 	}
@@ -183,17 +183,17 @@ void VStudioApp::SetTitle()
 {
 	if (FileSaved)
 	{
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L")*");
 	}
 	else if (InViewing)
 	{
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L") [Viewing]");
 	}
 	else
 	{
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L")");
 	}
 }
@@ -214,7 +214,7 @@ void VStudioApp::CheckFrame()
 	{
 		InViewing = false;
 
-		operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\ueea3");
+		operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\ueea3");
 		operator[](L"main-widget")[L"start-vml-view-button"]
 			.Get<Core::VPushButton>()
 			->GetTheme()
@@ -233,10 +233,10 @@ void VStudioApp::PopFailureDialog(const std::wstring Title, const std::wstring T
 
 	ErrorInfoWidget->Move(ErrorInfoWidget->GetX(), 55);
 
-	operator[](L"main-widget")[L"run-failed-note"][L"failure-title"].Get<Core::VTextLabel>()->SetPlaneText(Title);
+	operator[](L"main-widget")[L"run-failed-note"][L"failure-title"].Get<Core::VTextLabel>()->SetPlainText(Title);
 	operator[](L"main-widget")[L"run-failed-note"][L"failure-sub-content-table"][L"failure-info"]
 		.Get<Core::VTextLabel>()
-		->SetPlaneText(Text);
+		->SetPlainText(Text);
 	operator[](L"main-widget")[L"run-failed-note"][L"run-in-animation"]
 		.Get<Core::VPositionAnimation>()
 		->SetTargetPosition({ErrorInfoWidget->GetX(), ErrorInfoWidget->GetY() + 10});
@@ -251,8 +251,8 @@ void VStudioApp::PopSyntaxErrorDialog(const std::wstring Title, const std::wstri
 
 	ErrorInfoWidget->Move(ErrorInfoWidget->GetX(), GetHeight() - 20 - 123 - 40);
 
-	operator[](L"main-widget")[L"view-failed-note"][L"failure-title"].Get<Core::VTextLabel>()->SetPlaneText(Title);
-	operator[](L"main-widget")[L"view-failed-note"][L"failure-info"].Get<Core::VTextLabel>()->SetPlaneText(Text);
+	operator[](L"main-widget")[L"view-failed-note"][L"failure-title"].Get<Core::VTextLabel>()->SetPlainText(Title);
+	operator[](L"main-widget")[L"view-failed-note"][L"failure-info"].Get<Core::VTextLabel>()->SetPlainText(Text);
 	operator[](L"main-widget")[L"view-failed-note"][L"run-in-animation"]
 		.Get<Core::VPositionAnimation>()
 		->SetTargetPosition({ErrorInfoWidget->GetX(), ErrorInfoWidget->GetY() + 10});
@@ -274,7 +274,7 @@ void VStudioApp::StartVMLView()
 
 		if (!InViewing)
 		{
-			VML::VMLParser GrammarChecker(CodeEditor->GetPlaneText());
+			VML::VMLParser GrammarChecker(CodeEditor->GetPlainText());
 			auto		   ParseResult = GrammarChecker.ParseVML();
 
 			if (ParseResult.ParserStatus != VML::VMLParserStatus::Ok)
@@ -298,7 +298,7 @@ void VStudioApp::StartVMLView()
 				});
 				PatchThread.detach();
 
-				operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\uee4a");
+				operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\uee4a");
 				operator[](L"main-widget")[L"start-vml-view-button"]
 					.Get<Core::VPushButton>()
 					->GetTheme()
@@ -316,7 +316,7 @@ void VStudioApp::StartVMLView()
 		{
 			InViewing = false;
 
-			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\ueea3");
+			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\ueea3");
 			operator[](L"main-widget")[L"start-vml-view-button"]
 				.Get<Core::VPushButton>()
 				->GetTheme()
@@ -427,13 +427,13 @@ void VStudioApp::OpenFile()
 		CodeFilePath	  = FilePath;
 		CodeWorkspacePath = GetWorkspacePath(FilePath);
 
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L")");
 
 		operator[](L"main-widget")[L"main-ui"]->Show();
 		operator[](L"main-widget")[L"startup-ui"]->Hide();
 
-		CodeEditor->SetPlaneText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
+		CodeEditor->SetPlainText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
 
 		InEditMode = true;
 	}
@@ -457,7 +457,7 @@ VStudioApp::VStudioApp(Core::VApplication *App)
 	SetQuitEvent([&]() -> bool {
 		if (InViewing)
 		{
-			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\ueea3");
+			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\ueea3");
 			operator[](L"main-widget")[L"start-vml-view-button"]
 				.Get<Core::VPushButton>()
 				->GetTheme()
@@ -521,7 +521,7 @@ VStudioApp::VStudioApp(Core::VApplication *App, const std::wstring &FilePath)
 	SetQuitEvent([&]() -> bool {
 		if (InViewing)
 		{
-			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlaneText(L"\ueea3");
+			operator[](L"main-widget")[L"start-vml-view-button"].Get<Core::VPushButton>()->SetPlainText(L"\ueea3");
 			operator[](L"main-widget")[L"start-vml-view-button"]
 				.Get<Core::VPushButton>()
 				->GetTheme()
@@ -569,13 +569,13 @@ VStudioApp::VStudioApp(Core::VApplication *App, const std::wstring &FilePath)
 		CodeFilePath	  = FilePath;
 		CodeWorkspacePath = GetWorkspacePath(FilePath);
 
-		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlaneText(L"VStudio (" + FileName +
+		operator[](L"main-widget")[L"caption"][L"title"].Get<Core::VTextLabel>()->SetPlainText(L"VStudio (" + FileName +
 																							   L")");
 
 		operator[](L"main-widget")[L"main-ui"]->Show();
 		operator[](L"main-widget")[L"startup-ui"]->Hide();
 
-		CodeEditor->SetPlaneText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
+		CodeEditor->SetPlainText(VKits::VParserHelper::ReadFromFile(CodeFilePath, VKits::VDocumentEncoding::UTF8));
 
 		InEditMode = true;
 	}
@@ -609,12 +609,12 @@ bool VStudioApp::CatchMessage(Core::VMessage *Message)
 
 		if (Message->wParameter == SIZE_MAXIMIZED)
 		{
-			MaxsizeButton->SetPlaneText(L"\ue904");
+			MaxsizeButton->SetPlainText(L"\ue904");
 			MaxsizeButton->SetTextSize(12);
 		}
 		if (Message->wParameter == SIZE_RESTORED)
 		{
-			MaxsizeButton->SetPlaneText(L"\ue903");
+			MaxsizeButton->SetPlainText(L"\ue903");
 			MaxsizeButton->SetTextSize(100);
 		}
 

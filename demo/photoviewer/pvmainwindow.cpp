@@ -41,7 +41,7 @@ void PVMainWindow::ZoomUpButtonOnClicked()
 	{
 		ViewingProject->LocalScalePercent -= 0.1f;
 
-		PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+		PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 		ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 							 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 
@@ -54,7 +54,7 @@ void PVMainWindow::ZoomDownButtonOnClicked()
 	{
 		ViewingProject->LocalScalePercent += 0.1f;
 
-		PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+		PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 		ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 							 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 
@@ -65,7 +65,7 @@ void PVMainWindow::OneToOneButtonOnClicked()
 {
 	ViewingProject->LocalScalePercent = 1.f;
 
-	PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+	PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 	ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 						 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 
@@ -103,17 +103,17 @@ void PVMainWindow::OnMessage(Core::VMessage *Message)
 							ViewingProject->LocalScalePercent = double(GetHeight()) / ViewingImage->GetHeight();
 						}
 
-						PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+						PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 						ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 											 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 					}
 					else
 					{
-						PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+						PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 						ViewingLabel->Resize(ViewingImage->GetWidth(), ViewingImage->GetHeight());
 					}
 
-					TitleText->SetPlaneText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
+					TitleText->SetPlainText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
 				}
 			}
 			if (KeyMessage->KeyVKCode == VK_RIGHT)
@@ -139,17 +139,17 @@ void PVMainWindow::OnMessage(Core::VMessage *Message)
 							ViewingProject->LocalScalePercent = double(GetHeight()) / ViewingImage->GetHeight();
 						}
 
-						PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+						PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 						ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 											 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 					}
 					else
 					{
-						PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+						PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 						ViewingLabel->Resize(ViewingImage->GetWidth(), ViewingImage->GetHeight());
 					}
 
-					TitleText->SetPlaneText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
+					TitleText->SetPlainText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
 				}
 			}
 		}
@@ -164,7 +164,7 @@ void PVMainWindow::OnMessage(Core::VMessage *Message)
 			{
 				ViewingProject->LocalScalePercent += 0.1f;
 
-				PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+				PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 				ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 									 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 			}
@@ -175,7 +175,7 @@ void PVMainWindow::OnMessage(Core::VMessage *Message)
 			{
 				ViewingProject->LocalScalePercent -= 0.1f;
 
-				PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+				PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 				ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 									 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 			}
@@ -344,17 +344,17 @@ PVMainWindow::PVMainWindow(Core::VApplication *Parent, const std::wstring &FileP
 			ViewingProject->LocalScalePercent = double(GetHeight()) / ViewingImage->GetHeight();
 		}
 
-		PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+		PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 		ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 							 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 	}
 	else
 	{
-		PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+		PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 		ViewingLabel->Resize(ViewingImage->GetWidth(), ViewingImage->GetHeight());
 	}
 
-	TitleText->SetPlaneText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
+	TitleText->SetPlainText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
 
 	ZoomUpButton->Show();
 	ZoomDownButton->Show();
@@ -529,17 +529,17 @@ void PVMainWindow::OpenViewProject()
 				ViewingProject->LocalScalePercent = double(GetHeight()) / ViewingImage->GetHeight();
 			}
 
-			PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+			PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 			ViewingLabel->Resize(ViewingImage->GetWidth() * ViewingProject->LocalScalePercent,
 								 ViewingImage->GetHeight() * ViewingProject->LocalScalePercent);
 		}
 		else
 		{
-			PercentTagText->SetPlaneText(GetPercentString(ViewingProject->LocalScalePercent));
+			PercentTagText->SetPlainText(GetPercentString(ViewingProject->LocalScalePercent));
 			ViewingLabel->Resize(ViewingImage->GetWidth(), ViewingImage->GetHeight());
 		}
 
-		TitleText->SetPlaneText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
+		TitleText->SetPlainText(GetFileName(ViewingProject->FileList[ViewingProject->LocalViewingFile]));
 
 		ZoomUpButton->Show();
 		ZoomDownButton->Show();
