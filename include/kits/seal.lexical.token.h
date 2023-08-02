@@ -78,11 +78,11 @@ typedef enum _lexical_token
 	COMMENT_TOKEN,
 
 	LEFT_BRACKETS /*(*/,
-	RIGHT_BRACKETS,		   /*)*/
+	RIGHT_BRACKETS, /*)*/
 	MIDDLE_LEFT_BRACKETS /* [ */,
 	MIDDLE_RIGHT_BRACKETS, /* ] */
 	BIG_LEFT_BRACKETS /* { */,
-	BIG_RIGHT_BRACKETS,	   /* } */
+	BIG_RIGHT_BRACKETS, /* } */
 
 	UNKNOW_SMYBOL,
 

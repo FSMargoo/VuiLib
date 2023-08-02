@@ -3,7 +3,7 @@ cls
 setlocal enabledelayedexpansion
 
 set DIR="%cd%"
-SET CLANG_FORMAT="G:\Program Files\LLVM\bin\clang-format"
+SET CLANG_FORMAT="Z:\seal-tester\mingw64\bin\clang-format"
 
 SET /a index=0
 for /R %DIR% %%f in (*.h, *.c, *.hpp, *.cpp, *.cc) do (

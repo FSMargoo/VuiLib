@@ -21,9 +21,9 @@ class VColor
 {
 public:
 	/*
-   * ColorEnum enum:
-   *     Description : This enum collection include some basic color as UINT
-   */
+	 * ColorEnum enum:
+	 *     Description : This enum collection include some basic color as UINT
+	 */
 	enum ColorEnum
 	{
 		AliceBlue			 = 0xF0F8FF,
@@ -170,16 +170,16 @@ public:
 
 public:
 	/*
-   * VColor constructor:
-   *    Description : The constructor without parameters will build a black
-   *
+	 * VColor constructor:
+	 *    Description : The constructor without parameters will build a black
+	 *
 	 * color
-   */
+	 */
 	VColor();
 	/*
-   * VColor constructor:
-   *    Description : The constructor will build class from a VColor object
-   */
+	 * VColor constructor:
+	 *    Description : The constructor will build class from a VColor object
+	 */
 	VColor(const VColor &ColorObject);
 	/*
    * VColor constructor:
@@ -192,118 +192,118 @@ public:
    */
 	VColor(const UINT32 &RGB, const float &AlphaValue);
 	/*
-   * VColor constructor:
-   *    Description : The constructor will build class from ColorEnum value
-   *
+	 * VColor constructor:
+	 *    Description : The constructor will build class from ColorEnum value
+	 *
 	 * Tips        : Since this function won't do the judgment of the Color
-   * parameter's legitimacy, it's better
+	 * parameter's legitimacy, it's better
 	 * for you to avoid use this constructor
-   * as possible as you can, even though it won't make any problem on
+	 * as possible as you can, even though it won't make any problem on
 	 * the API
-   * Compatibility.
-   */
+	 * Compatibility.
+	 */
 	VColor(const ColorEnum &Color, const float &AlphaValue = 1.f);
 	/*
-   * VColor constructor:
-   *    Description : The constructor will build class from following R G B A
-   *
+	 * VColor constructor:
+	 *    Description : The constructor will build class from following R G B A
+	 *
 	 * value Tips        : The R, G, B, A, value shouldn't be a invalid value like
-   * negative
-   */
+	 * negative
+	 */
 	VColor(const float &R, const float &G, const float &B, const float &A);
 
 public:
 	/*
-   * GetDxObject function:
-   *		Description : Get the reference of DirectX2D object
-   *
+	 * GetDxObject function:
+	 *		Description : Get the reference of DirectX2D object
+	 *
 	 * Tips		: The reference which returned is unchangeable
-   */
+	 */
 	D2D1::ColorF GetDxObject() VRENDER_HELPER const;
 
 public:
 	/*
-   * GetR function:
-   *    Description : Get the red value in RGBA of this color
-   */
+	 * GetR function:
+	 *    Description : Get the red value in RGBA of this color
+	 */
 	float GetR() const;
 	/*
-   * GetG function:
-   *    Description : Get the green value in RGBA of this color
-   */
+	 * GetG function:
+	 *    Description : Get the green value in RGBA of this color
+	 */
 	float GetG() const;
 	/*
-   * GetB function:
-   *    Description : Get the blue value in RGBA of this color
-   */
+	 * GetB function:
+	 *    Description : Get the blue value in RGBA of this color
+	 */
 	float GetB() const;
 	/*
-   * GetA function:
-   *    Description : Get the alpha value in RGBA of this color
-   */
+	 * GetA function:
+	 *    Description : Get the alpha value in RGBA of this color
+	 */
 	float GetA() const;
 
 	/*
-   * SetR function:
-   *    Description : Set the red value in RGBA of this color
-   *    Tips        : The
+	 * SetR function:
+	 *    Description : Set the red value in RGBA of this color
+	 *    Tips        : The
 	 * specified value shouldn't be a invalid value like
-   * negative
-   */
+	 * negative
+	 */
 	void SetR(const float &R);
 	/*
-   * SetG function:
-   *    Description : Set the green value in RGBA of this color
-   *    Tips        : The
+	 * SetG function:
+	 *    Description : Set the green value in RGBA of this color
+	 *    Tips        : The
 	 * specified value shouldn't be a invalid value like
-   * negative
-   */
+	 * negative
+	 */
 	void SetG(const float &G);
 	/*
-   * SetB function:
-   *    Description : Set the blue value in RGBA of this color
-   *    Tips        : The
+	 * SetB function:
+	 *    Description : Set the blue value in RGBA of this color
+	 *    Tips        : The
 	 * specified value shouldn't be a invalid value like
-   * negative
-   */
+	 * negative
+	 */
 	void SetB(const float &B);
 	/*
-   * SetA function:
-   *    Description : Set the alpha value in RGBA of this color
-   *    Tips        : The
+	 * SetA function:
+	 *    Description : Set the alpha value in RGBA of this color
+	 *    Tips        : The
 	 * specified value shouldn't be a invalid value like
-   * negative
-   */
+	 * negative
+	 */
 	void SetA(const float &A);
 
 	/*
-   * FromBYTERGBA static function:
-   *    Description : Make a VColor object from R, G, B, A value
-   * Tips
+	 * FromBYTERGBA static function:
+	 *    Description : Make a VColor object from R, G, B, A value
+	 * Tips
 	 * : 1> Not same as build a VColor through constructor
-   * directly, use this function allow you to build a
+	 * directly, use this function allow you to build a
 	 * VColor from BYTE value
-   * instead of float 2> Since this function won't do the judgment of the Color
-   *
+	 * instead of float 2> Since this function won't do the judgment of the Color
+	 *
 	 * parameter's legitimacy, you should make sure the value is valid
-   */
+	 */
 	static VColor FromBYTERGBA(BYTE R, BYTE G, BYTE B, BYTE A)
 	{
 		return VColor(R / 255.f, G / 255.f, B / 255.f, A / 255.f);
 	}
 	/*
-   * FromBYTERGB static function:
-   *    Description : Make a VColor object from R, G, B value
-   *    Tips
+	 * FromBYTERGB static function:
+	 *    Description : Make a VColor object from R, G, B value
+	 *    Tips
 	 * : 1> Not same as build a VColor through constructor
-   * directly, use this function allow you to build a
+	 * directly, use this function allow you to build a
 	 * VColor from BYTE value
-   * instead of float 2> Since this function won't do the judgment of the Color
-   *
+	 * instead of float 2> Since this function won't do the judgment of the Color
+	 *
 	 * parameter's legitimacy, you should make sure the value is valid 3> The
-   * alpha value will be set as 255
+	 * alpha value will be set as 255
 	 * (that is 1.f)
-   */
+	 */
 	static VColor FromBYTERGBA(BYTE R, BYTE G, BYTE B)
 	{
 		return VColor(R / 255.f, G / 255.f, B / 255.f, 1.f);

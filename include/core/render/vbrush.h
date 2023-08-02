@@ -23,52 +23,52 @@ class VPenBrush
 {
 public:
 	/*
-   * VPenBrush constructor:
-   *		Description : The constructor of class VPenBrush
-   *
+	 * VPenBrush constructor:
+	 *		Description : The constructor of class VPenBrush
+	 *
 	 * Tips		: If a invalid render handle is specified, the
-   *function
-   *will throw a CRT debug exception
+	 *function
+	 *will throw a CRT debug exception
 	 * Values Tip	: { [const VColor&       ] Color
-   *: The border color [const VRenderHandle&] RenderHandle  :
+	 *: The border color [const VRenderHandle&] RenderHandle  :
 	 * The render handle
-   *of renderer [const float&		 ] LineThickness : The border thickness
-   *<-
+	 *of renderer [const float&		 ] LineThickness : The border thickness
+	 *<-
 	 * optional
-   *		}
-   */
+	 *		}
+	 */
 	VPenBrush(const VColor &Color, const VRenderHandle &RenderHandle, const float &LineThickness = 1.f);
 	~VPenBrush();
 
 public:
 	/*
-   * GetDxBrush function:
-   *		Description : Get the pointer of DirectX2D object
-   *
+	 * GetDxBrush function:
+	 *		Description : Get the pointer of DirectX2D object
+	 *
 	 * Tips		: The pointer which returned is unchangeable
-   */
+	 */
 	ID2D1SolidColorBrush *GetDxBrush() VRENDER_HELPER const;
 	/*
-   * GetStrokeStyle function:
-   *	Description : Get the stroke style as DirectX2D object
-   */
+	 * GetStrokeStyle function:
+	 *	Description : Get the stroke style as DirectX2D object
+	 */
 	ID2D1StrokeStyle *GetStrokeStyle() VRENDER_HELPER const;
 	/*
-   * GetThickness function:
-   *	Description : Get the thickness of this brush
-   */
+	 * GetThickness function:
+	 *	Description : Get the thickness of this brush
+	 */
 	float GetThickness() const;
 
 	void SetStrokeStyle(ID2D1StrokeStyle *Style) VRENDER_HELPER;
 
 public:
 	/*
-   * SetThickness function:
-   *	Description : Set the border thickness of this brush
-   *	Tips
+	 * SetThickness function:
+	 *	Description : Set the border thickness of this brush
+	 *	Tips
 	 * : If a negative value or zero value is specified, the
-   *function will throw a CRT debug exception
-   */
+	 *function will throw a CRT debug exception
+	 */
 	void SetThickness(const float &TargetThickness);
 
 private:
@@ -86,28 +86,28 @@ class VSolidBrush
 {
 public:
 	/*
-   * VSolidBrush constructor:
-   *		Description : The constructor of class VSolidBrush
-   *
+	 * VSolidBrush constructor:
+	 *		Description : The constructor of class VSolidBrush
+	 *
 	 * Tips		: If a invalid render handle is specified, the
-   *function
-   *will throw a CRT debug exception
+	 *function
+	 *will throw a CRT debug exception
 	 * Values Tip	: { [const VColor&       ] Color
-   *: The fill color [const VRenderHandle&] RenderHandle  : The
+	 *: The fill color [const VRenderHandle&] RenderHandle  : The
 	 * render handle of
-   *renderer
-   *		}
-   */
+	 *renderer
+	 *		}
+	 */
 	VSolidBrush(const VColor &Color, const VRenderHandle &RenderHandle);
 	~VSolidBrush();
 
 public:
 	/*
-   * GetDxBrush function:
-   *		Description : Get the pointer of DirectX2D object
-   *
+	 * GetDxBrush function:
+	 *		Description : Get the pointer of DirectX2D object
+	 *
 	 * Tips		: The pointer which returned is unchangeable
-   */
+	 */
 	ID2D1SolidColorBrush *GetDxBrush() VRENDER_HELPER const;
 
 private:
@@ -158,11 +158,11 @@ public:
 
 public:
 	/*
-   * GetDxBrush function:
-   *		Description : Get the pointer of DirectX2D object
-   *
+	 * GetDxBrush function:
+	 *		Description : Get the pointer of DirectX2D object
+	 *
 	 * Tips		: The pointer which returned is unchangeable
-   */
+	 */
 	ID2D1BitmapBrush *GetDxBrush() VRENDER_HELPER const;
 
 private:
