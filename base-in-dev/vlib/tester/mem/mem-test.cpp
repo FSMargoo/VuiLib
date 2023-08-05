@@ -24,12 +24,41 @@
 
 #include "kernel/mem/vmemory.h"
 
+struct testStructure {
+	int a;
+	int b;
+	int c;
+	int d;
+	int f;
+	int g;
+	int h;
+	int i;
+	int j;
+	int k;
+	int l;
+	int m;
+	int n;
+	int o;
+	int p;
+	int q;
+};
+
 int mem_test() {
-	VMemoryPool PoolCompilerTest;
+	VMemoryPool		   PoolCompilerTest;
+	VSTLAllocator<int> Allocator(&PoolCompilerTest);
+
+	std::vector<int, VSTLAllocator<int>> a(Allocator);
+	for (int i = 0; i < 114514; ++i) {
+		a.push_back(8);
+		a.push_back(16);
+		a.push_back(32);
+		a.push_back(114514);
+	}
+	printf("%d", a[181]);
 
 	return 0;
 }
 
 int main() {
-	mem_test();
+	return mem_test();
 }

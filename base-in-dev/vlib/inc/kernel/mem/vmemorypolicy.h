@@ -32,7 +32,7 @@ enum class VMemoryExpandMode {
 };
 
 struct VMemoryPolicy {
-	VMemoryExpandMode ExpandMode = VMemoryExpandMode::Add;
+	VMemoryExpandMode ExpandMode = VMemoryExpandMode::Double;
 	size_t			  ExpandSize = 1024;
 	size_t			  InitSize	 = 1024;
 

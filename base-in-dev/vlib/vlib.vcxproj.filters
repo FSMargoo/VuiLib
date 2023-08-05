@@ -13,6 +13,7 @@
     <ClCompile Include="src\kernel\debug\vdebug.cpp" />
     <ClCompile Include="tester\debug\debug-test.cpp" />
     <ClCompile Include="src\kernel\mem\vmemorypolicy.cpp" />
+    <ClCompile Include="tester\tester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\kernel\base\vbase.h" />

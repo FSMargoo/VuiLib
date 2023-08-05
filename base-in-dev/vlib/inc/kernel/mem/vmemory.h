@@ -25,6 +25,8 @@
 #include "kernel/base/vbase.h"
 #include "kernel/mem/vmemorypolicy.h"
 
+#include <map>
+
 class VMemoryInterface {
 public:
 	virtual void OOMPanic() = 0;
@@ -44,16 +46,21 @@ public:
 
 public:
 	[[nodiscard]] void *Allocate(const size_t &Size) {
-		size_t					   Offset = 0;
+		size_t					   Offset = AllocateSize;
 		VMemoryUnit<AllocateSize> *Ptr	  = Next;
 
-		while (Offset < Size) {
+		InUsed = true;
+
+		while (Offset <= Size) {
 			Ptr->InUsed = true;
 			Ptr			= Ptr->Next;
 
-			++Offset;
+			Offset += AllocateSize;
 		}
 
+		return Pointer;
+	}
+	void *FetchPointer() {
 		return Pointer;
 	}
 
@@ -68,10 +75,13 @@ private:
 	void *Pointer;
 };
 
-using VMem4BitUnit	= VMemoryUnit<4>;
-using VMem8BitUnit	= VMemoryUnit<8>;
-using VMem16BitUnit = VMemoryUnit<16>;
-using VMem32BitUnit = VMemoryUnit<32>;
+using VMem4ByteUnit	  = VMemoryUnit<4>;
+using VMem8ByteUnit	  = VMemoryUnit<8>;
+using VMem16ByteUnit  = VMemoryUnit<16>;
+using VMem32ByteUnit  = VMemoryUnit<32>;
+using VMem64ByteUnit  = VMemoryUnit<64>;
+using VMem128ByteUnit = VMemoryUnit<128>;
+using VMem256ByteUnit = VMemoryUnit<256>;
 
 class VMemoryPool : public VMemoryInterface {
 public:
@@ -80,37 +90,119 @@ public:
 public:
 	void OOMPanic() override;
 
+public:
+	template <class Type, class... Agrument>
+	Type *Allocate(Agrument... BuiltAgrument) {
+		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
+
+		return new (Ptr) Type(BuiltAgrument...);
+	}
+	template <class Type>
+	void Delete(Type *Ptr) {
+		_FreeMemory(Ptr, sizeof(Type));
+	}
+
+	template <class Type>
+	Type *AllocateArray(const size_t &ArraySize) {
+		return static_cast<Type *>(_AllocateMemory(ArraySize * sizeof(Type)));
+	}
+	template <class Type>
+	void DeletArray(Type *Ptr, const size_t &ArraySize) {
+		_FreeMemory(Ptr, ArraySize * sizeof(Type));
+	}
+
 private:
 	__forceinline void _InitMemoryPool();
-	template <size_t BitSize>
-	__forceinline void _InitMemoryBlock(void *Block, VMemoryUnit<BitSize> *ListHead, size_t TotalSize) {
-		size_t				  Offset = BitSize;
-		VMemoryUnit<BitSize> *Last	 = ListHead;
-		VMemoryUnit<BitSize> *Ptr	 = ListHead;
+	template <size_t ByteSize>
+	__forceinline void _InitMemoryBlock(void *Block, VMemoryUnit<ByteSize> *ListHead, size_t TotalSize) {
+		size_t				   Offset = ByteSize;
+		VMemoryUnit<ByteSize> *Last	  = ListHead;
+		VMemoryUnit<ByteSize> *Ptr	  = ListHead;
 		while (Offset < TotalSize) {
-			Ptr->Next = new VMemoryUnit<BitSize>(Last, ((char *&)(Block)) + Offset);
+			Ptr->Next = new VMemoryUnit<ByteSize>(Last, ((char *&)(Block)) + Offset);
 
 			Last = Ptr->Next;
 			Ptr	 = Ptr->Next;
 
-			Offset += BitSize;
+			Offset += ByteSize;
+		}
+	}
+	template <>
+	__forceinline void _InitMemoryBlock(void *Block, VMemoryUnit<4> *ListHead, size_t TotalSize) {
+		size_t			Offset = 4;
+		VMemoryUnit<4> *Last   = ListHead;
+		VMemoryUnit<4> *Ptr	   = ListHead;
+		while (Offset < TotalSize) {
+			Ptr->Next = new VMemoryUnit<4>(Last, ((char *&)(Block)) + Offset);
+
+			Last = Ptr->Next;
+			Ptr	 = Ptr->Next;
+
+			Offset += 4;
 		}
 	}
 	__forceinline bool _CheckPolicyLegit();
+	short			   _EvaluateParticle(const size_t &Size);
 
 private:
-	__forceinline [[nodiscard]] void *_AllocateMemory(const size_t &Size);
-	template <size_t BitSize>
-	void _DealyOOM(VMemoryUnit<BitSize> *Proxy) {
-		VMemoryUnit<BitSize> *Ptr  = Proxy->Next;
-		VMemoryUnit<BitSize> *Prev = Proxy;
-		while (Ptr != nullptr) {
+	[[nodiscard]] void *_AllocateMemory(const size_t &Size);
+	template <size_t ByteSize>
+	bool _FreeBlock(void *Ptr, VMemoryUnit<ByteSize> *Proxy, const size_t &Size) {
+		VMemoryUnit<ByteSize> *Pointer = Proxy;
+		bool				   Flag	   = false;
+
+		while (Pointer != nullptr) {
+			if (Pointer->FetchPointer() == Ptr) {
+				size_t SearchSize = Size / ByteSize;
+				if (Size % ByteSize == 0) {
+					--SearchSize;
+				}
+
+				Pointer->InUsed = false;
+				while (SearchSize >= 1) {
+					Pointer			= Pointer->Next;
+					Pointer->InUsed = false;
+
+					--SearchSize;
+				}
+
+				Flag = true;
+				break;
+			}
+
+			if (Pointer->NextStorage != nullptr) {
+				Pointer = Pointer->NextStorage;
+				continue;
+			}
+			Pointer = Pointer->Next;
+		}
+
+		return Flag;
+	}
+	void _FreeMemory(void *Ptr, const size_t &Size);
+	template <size_t ByteSize>
+	void _DealyOOM(VMemoryUnit<ByteSize> *Proxy, const size_t &Reference) {
+		if (Proxy == nullptr) {
+			_vdebug_handle InvalidProxy;
+			InvalidProxy.crash("Invalid proxy was specified!");
+			return;
+		}
+		VMemoryUnit<ByteSize> *Ptr	= Proxy->Next;
+		VMemoryUnit<ByteSize> *Prev = Proxy;
+		while (true) {
+			if (Ptr == nullptr && Prev->NextStorage != nullptr) {
+				Prev = Prev->NextStorage;
+				Ptr	 = Prev->Next;
+			}
+			if (Ptr == nullptr && Prev->NextStorage == nullptr) {
+				break;
+			}
+			if (Ptr == nullptr) {
+				break;
+			}
+
 			Prev = Ptr;
 			Ptr	 = Ptr->Next;
-			if (Ptr == nullptr && Ptr->NextStorage != nullptr) {
-				Prev = Ptr->NextStorage;
-				Ptr	 = Ptr->NextStorage->Next;
-			}
 		}
 
 		size_t ExpandSize = 0;
@@ -119,7 +211,7 @@ private:
 			ExpandSize = Policy.UserFunction();
 			if (ExpandSize == 0) {
 				_vdebug_handle ZeroSizeExpand;
-				ZeroSizeExpand.crash("Can not expand 0 size.")
+				ZeroSizeExpand.crash("Can not expand 0 size.");
 			}
 
 			break;
@@ -140,24 +232,53 @@ private:
 			break;
 		}
 		}
-	}
-	template <size_t BitSize>
-	[[nodiscard]] VMemoryUnit<BitSize> *_SearchValidAllocator(VMemoryUnit<BitSize> *Head, const size_t &TargetSize) {
-		VMemoryUnit<BitSize> *Ptr = Head;
+		if (Reference > ExpandSize) {
+			size_t Ex  = ExpandSize;
+			ExpandSize = Reference;
+			while (ExpandSize % ByteSize != 0) {
+				ExpandSize += 1;
+			}
+			ExpandSize += Ex;
+		}
 
-		while (Ptr != nullptr) {
-			while (Ptr->InUsed) {
-				Ptr = Ptr->Next;
+		void				  *Memory	  = malloc(ExpandSize);
+		VMemoryUnit<ByteSize> *NewStorage = new VMemoryUnit<ByteSize>(nullptr, Memory);
+		Prev->NextStorage				  = NewStorage;
+		_InitMemoryBlock<ByteSize>(Memory, NewStorage, ExpandSize);
+	}
+	template <size_t ByteSize>
+	[[nodiscard]] VMemoryUnit<ByteSize> *_SearchValidAllocator(VMemoryUnit<ByteSize> *Head, const size_t &TargetSize) {
+		VMemoryUnit<ByteSize> *Ptr	 = Head;
+		size_t				   Count = 0;
+
+		while (true) {
+			Count							 = ByteSize;
+			VMemoryUnit<ByteSize> *BlockHead = Ptr;
+			while (!Ptr->InUsed) {
+				if (Count >= TargetSize) {
+					return BlockHead;
+				}
+				if (Ptr->Next == nullptr && Ptr->NextStorage != nullptr) {
+					Count	  = ByteSize;
+					Ptr		  = Ptr->NextStorage;
+					BlockHead = Ptr;
+
+					continue;
+				} else {
+					Ptr = Ptr->Next;
+				}
+				if (Ptr == nullptr) {
+					return nullptr;
+				}
+				Count += ByteSize;
 			}
 
-			VMemoryUnit<BitSize> *Pointer	= Ptr;
-			size_t				  RestCount = 1;
-			while (Ptr != nullptr && !Ptr->InUsed) {
+			if (Ptr->Next == nullptr && Ptr->NextStorage != nullptr) {
+				Ptr = Ptr->NextStorage;
+			} else {
 				Ptr = Ptr->Next;
-
-				++RestCount;
-				if (RestCount * BitSize >= TargetSize) {
-					return Pointer;
+				if (Ptr == nullptr) {
+					return nullptr;
 				}
 			}
 		}
@@ -165,23 +286,103 @@ private:
 		// OOM Error
 		return nullptr;
 	}
-	template <size_t BitSize>
-	void _Reallocate() {
-	}
 
 private:
-	VMem4BitUnit  *_4BitProxy;
-	VMem8BitUnit  *_8BitProxy;
-	VMem16BitUnit *_16BitProxy;
-	VMem32BitUnit *_32BitProxy;
+	VMem4ByteUnit	*_4ByteProxy;
+	VMem8ByteUnit	*_8ByteProxy;
+	VMem16ByteUnit	*_16ByteProxy;
+	VMem32ByteUnit	*_32ByteProxy;
+	VMem64ByteUnit	*_64ByteProxy;
+	VMem128ByteUnit *_128ByteProxy;
+	VMem256ByteUnit *_256ByteProxy;
 
 private:
 	VMemoryPolicy Policy;
 
 private:
-	void *_4Bit;
-	void *_8Bit;
-	void *_16Bit;
-	void *_32Bit;
+	void *_4Byte;
+	void *_8Byte;
+	void *_16Byte;
+	void *_32Byte;
+	void *_64Byte;
+	void *_128Byte;
+	void *_256Byte;
 	bool  OOM;
+};
+
+template <class Type>
+class VSTLAllocator : public std::allocator<Type> {
+public:
+	typedef Type		value_type;
+	typedef Type	   *pointer;
+	typedef const Type *const_pointer;
+	typedef Type	   &reference;
+	typedef const Type &const_reference;
+	typedef size_t		size_type;
+	typedef ptrdiff_t	difference_type;
+
+	template <class U>
+	struct rebind {
+		typedef VSTLAllocator<U> other;
+	};
+
+public:
+	VSTLAllocator(VSTLAllocator &&Allocator) {
+		Pool		   = Allocator.Pool;
+		Allocator.Pool = nullptr;
+	}
+	VSTLAllocator(const VSTLAllocator &Allocator) {
+		Pool = Allocator.Pool;
+	}
+	VSTLAllocator(VMemoryPool *AllocatorPool) : Pool(AllocatorPool) {
+		if (AllocatorPool == nullptr) {
+			_vdebug_handle InvalidAllocator;
+			InvalidAllocator.crash("Invalid allocator was specified!");
+
+			Pool = new VMemoryPool();
+		}
+	}
+	template <class Other>
+	VSTLAllocator(const VSTLAllocator<Other> &Allocator) {
+		Pool = Allocator.Pool;
+	}
+
+	void construct(pointer Ptr, const Type &Value) {
+		Ptr = ::new (Ptr) Type(Value);
+	}
+	void destroy(pointer Ptr) {
+		Ptr->~Type();
+	}
+
+	pointer address(reference Ref) {
+		return (pointer)&Ref;
+	}
+
+	const_pointer address(const_reference CRef) {
+		return (const_pointer)&CRef;
+	}
+
+	size_type max_size() const {
+		return size_type(UINT_MAX / sizeof(Type));
+	}
+	void deallocate(Type *const Ptr, const size_t Count) {
+		if (Ptr == nullptr || Count == 0) {
+			_vdebug_handle InvalidProvidedInfo;
+			InvalidProvidedInfo.crash("Invalid pointer or count was specified!");
+
+			return;
+		}
+		Pool->DeletArray(Ptr, Count);
+	}
+	constexpr Type *allocate(const size_t Count) {
+		return Pool->AllocateArray<Type>(Count);
+	}
+
+public:
+	VMemoryPool *GetPool() {
+		return Pool;
+	}
+
+public:
+	VMemoryPool *Pool;
 };
