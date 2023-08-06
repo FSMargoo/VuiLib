@@ -19,32 +19,3 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-#pragma once
-
-#include "kernel/mem/vmemory.h"
-#include "kernel/mem/vmemrbtree.h"
-
-int mem_test() {
-	VMemoryPool							  TestMPool;
-	_VMem::VRBTree<int, int, VMemoryPool> Tree(TestMPool);
-	Tree.Insert(4, 114514);
-	Tree.Insert(9, 8848);
-	Tree.Insert(5, 84);
-	Tree.Insert(16, 884);
-	Tree.Insert(7, 81);
-	Tree.Insert(180, 81);
-	Tree.Insert(190, 81);
-	Tree.Insert(440, 81);
-	Tree.Insert(4410, 81);
-
-	Tree.Delete(180);
-
-	printf("%d", Tree.Find(16));
-
-	return 0;
-}
-
-int main() {
-	return mem_test();
-}

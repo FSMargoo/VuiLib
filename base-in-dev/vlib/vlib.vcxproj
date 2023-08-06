@@ -132,9 +132,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="inc\kernel\mem\vconstantpool.h" />
     <ClCompile Include="src\kernel\debug\vdebug.cpp" />
+    <ClCompile Include="src\kernel\mem\vconstantpool.cpp" />
     <ClCompile Include="src\kernel\mem\vmemory.cpp" />
     <ClCompile Include="src\kernel\mem\vmemorypolicy.cpp" />
+    <ClCompile Include="src\kernel\mem\vmemrbtree.cpp" />
     <ClCompile Include="tester\debug\debug-test.cpp" />
     <ClCompile Include="tester\mem\mem-test.cpp" />
     <ClCompile Include="tester\tester.cpp" />
@@ -144,6 +147,7 @@
     <ClInclude Include="inc\kernel\mem\vmemory.h" />
     <ClInclude Include="inc\kernel\base\vbase.h" />
     <ClInclude Include="inc\kernel\mem\vmemorypolicy.h" />
+    <ClInclude Include="inc\kernel\mem\vmemrbtree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

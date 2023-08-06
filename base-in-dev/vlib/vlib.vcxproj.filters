@@ -14,11 +14,15 @@
     <ClCompile Include="tester\debug\debug-test.cpp" />
     <ClCompile Include="src\kernel\mem\vmemorypolicy.cpp" />
     <ClCompile Include="tester\tester.cpp" />
+    <ClCompile Include="inc\kernel\mem\vconstantpool.h" />
+    <ClCompile Include="src\kernel\mem\vconstantpool.cpp" />
+    <ClCompile Include="src\kernel\mem\vmemrbtree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\kernel\base\vbase.h" />
     <ClInclude Include="inc\kernel\mem\vmemory.h" />
     <ClInclude Include="inc\kernel\debug\vdebug.h" />
     <ClInclude Include="inc\kernel\mem\vmemorypolicy.h" />
+    <ClInclude Include="inc\kernel\mem\vmemrbtree.h" />
   </ItemGroup>
 </Project>
