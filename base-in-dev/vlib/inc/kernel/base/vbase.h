@@ -26,3 +26,25 @@
 #include <typeinfo>
 
 #include "kernel/debug/vdebug.h"
+
+enum class VCompareOperation {
+	Lt,
+	Gt
+};
+
+template <class Left, class Right>
+constexpr bool VCompare(const Left &LeftValue, const Right &RightValue, const VCompareOperation &Op) noexcept {
+	if constexpr (std::is_signed_v<Left> == std::is_signed_v<> Right) {
+		if (Op == VCompareOperation::Lt) {
+			return LeftValue < RightValue;
+		} else {
+			return LeftValue > RightValue;
+		}
+	} else if constexpr (std::is_signed_v<Left>) {
+		return Left < 0 ? true : std::make_unsigned_t<Left>(LeftValue) < RightValue;
+	} else {
+		return Right < 0 ? true : LeftValue < std::make_unsigned_t<Left>(RightValue);
+	}
+
+	return false;
+}

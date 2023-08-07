@@ -23,7 +23,9 @@
 #pragma once
 
 #include "kernel/base/vbase.h"
+#include "kernel/mem/vconstantpool.h"
 #include "kernel/mem/vmemorypolicy.h"
+#include "kernel/mem/vmemrbtree.h"
 
 #include <map>
 
@@ -75,6 +77,8 @@ private:
 	void *Pointer;
 };
 
+class VMemoryPool;
+
 using VMem4ByteUnit	  = VMemoryUnit<4>;
 using VMem8ByteUnit	  = VMemoryUnit<8>;
 using VMem16ByteUnit  = VMemoryUnit<16>;
@@ -82,10 +86,12 @@ using VMem32ByteUnit  = VMemoryUnit<32>;
 using VMem64ByteUnit  = VMemoryUnit<64>;
 using VMem128ByteUnit = VMemoryUnit<128>;
 using VMem256ByteUnit = VMemoryUnit<256>;
+using VMemoryConstant = VConstantExtractor<VMemoryPool>;
 
 class VMemoryPool : public VMemoryInterface {
 public:
 	VMemoryPool(VMemoryPolicy ManagerPolicy = VMemoryPolicy::Default());
+	~VMemoryPool();
 
 public:
 	void OOMPanic() override;
@@ -96,6 +102,18 @@ public:
 		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
 
 		return new (Ptr) Type(BuiltAgrument...);
+	}
+	template <>
+	const int *Allocate<const int, int>(int Agrument) {
+		return static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+	}
+	template <>
+	const float *Allocate<const float, float>(float Agrument) {
+		return static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+	}
+	template <>
+	const double *Allocate<const double, double>(double Agrument) {
+		return static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
 	}
 	template <class Type>
 	void Delete(Type *Ptr) {
@@ -111,7 +129,7 @@ public:
 		_FreeMemory(Ptr, ArraySize * sizeof(Type));
 	}
 
-private:
+protected:
 	__forceinline void _InitMemoryPool();
 	template <size_t ByteSize>
 	__forceinline void _InitMemoryBlock(void *Block, VMemoryUnit<ByteSize> *ListHead, size_t TotalSize) {
@@ -144,7 +162,7 @@ private:
 	__forceinline bool _CheckPolicyLegit();
 	short			   _EvaluateParticle(const size_t &Size);
 
-private:
+protected:
 	[[nodiscard]] void *_AllocateMemory(const size_t &Size);
 	template <size_t ByteSize>
 	bool _FreeBlock(void *Ptr, VMemoryUnit<ByteSize> *Proxy, const size_t &Size) {
@@ -287,7 +305,7 @@ private:
 		return nullptr;
 	}
 
-private:
+protected:
 	VMem4ByteUnit	*_4ByteProxy;
 	VMem8ByteUnit	*_8ByteProxy;
 	VMem16ByteUnit	*_16ByteProxy;
@@ -296,10 +314,10 @@ private:
 	VMem128ByteUnit *_128ByteProxy;
 	VMem256ByteUnit *_256ByteProxy;
 
-private:
+protected:
 	VMemoryPolicy Policy;
 
-private:
+protected:
 	void *_4Byte;
 	void *_8Byte;
 	void *_16Byte;
@@ -308,6 +326,55 @@ private:
 	void *_128Byte;
 	void *_256Byte;
 	bool  OOM;
+
+protected:
+	VMemoryConstant::IntPool	*IntPool;
+	VMemoryConstant::FloatPool	*FloatPool;
+	VMemoryConstant::DoublePool *DoublePool;
+};
+
+class VThreadCache : public VMemoryPool {
+public:
+	VThreadCache(VMemoryPool &ParentPool, const size_t &InitSize);
+
+public:
+	template <class Type, class... Agrument>
+	Type *Allocate(Agrument... BuiltAgrument) {
+		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
+
+		return new (Ptr) Type(BuiltAgrument...);
+	}
+	template <>
+	const int *Allocate<const int, int>(int Agrument) {
+		return static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+	}
+	template <>
+	const float *Allocate<const float, float>(float Agrument) {
+		return static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+	}
+	template <>
+	const double *Allocate<const double, double>(double Agrument) {
+		return static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
+	}
+	template <class Type>
+	void Delete(Type *Ptr) {
+		_FreeMemory(Ptr, sizeof(Type));
+	}
+
+	template <class Type>
+	Type *AllocateArray(const size_t &ArraySize) {
+		return static_cast<Type *>(_AllocateMemory(ArraySize * sizeof(Type)));
+	}
+	template <class Type>
+	void DeletArray(Type *Ptr, const size_t &ArraySize) {
+		_FreeMemory(Ptr, ArraySize * sizeof(Type));
+	}
+
+protected:
+	[[nodiscard]] void *_AllocateMemory(const size_t &Size);
+
+private:
+	VMemoryPool &Pool;
 };
 
 template <class Type>

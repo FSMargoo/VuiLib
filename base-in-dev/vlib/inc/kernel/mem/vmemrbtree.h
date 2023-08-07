@@ -99,6 +99,7 @@ public:
 		return (Pointer)(&(SpecifiedNode.Context));
 	}
 };
+
 template <class Key, class Pair, class RBTAllocator, class TypeExtract = VRBTTypeExtract<Key, Pair>>
 class VRBTree {
 public:
@@ -108,15 +109,20 @@ public:
 	using RValue = VRBTTypeExtract<Key, Pair>::RValue<Type>::T;
 	template <class Type>
 	using LValue = VRBTTypeExtract<Key, Pair>::LValue<Type>::T;
+	template <class T>
+	using AllocatorPointer = T *(RBTAllocator::*)();
 
 public:
 	VRBTree(RBTAllocator &TreeAllocator) : Allocator(TreeAllocator) {
-		Nil	 = Allocator.Allocate<VRBTNilNode<Key, Pair>>();
-		Root = nullptr;
+		AllocatorPointer<VRBTNilNode<Key, Pair>> Pointer = &(RBTAllocator::template Allocate<VRBTNilNode<Key, Pair>>);
+		Nil												 = ((TreeAllocator).*Pointer)();
+		Root											 = nullptr;
 	}
 	~VRBTree() {
-		Root->FreeSelf();
-		delete Root;
+		if (Root != nullptr) {
+			Root->FreeSelf();
+			delete Root;
+		}
 
 		Allocator.Delete(Nil);
 	}
@@ -139,6 +145,9 @@ public:
 		}
 
 		_BSTDelete(DeleteNode);
+	}
+	bool Exists(const Key &KeyValue) {
+		return _FindNode(KeyValue) != nullptr;
 	}
 	VRBTTypeExtract<Key, Pair>::LValue<Pair>::T Find(const Key &KeyValue) {
 		return _MakeLValue(_FindNode(KeyValue)->Context);
@@ -338,6 +347,9 @@ private:
 	}
 	Node *_FindNode(const Key &KeyValue) {
 		Node *Ptr = Root;
+		if (Ptr == nullptr) {
+			return Ptr;
+		}
 
 		while (!Ptr->IsNil()) {
 			if (KeyValue > Ptr->Key) {

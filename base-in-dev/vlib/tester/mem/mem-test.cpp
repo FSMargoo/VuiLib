@@ -22,25 +22,17 @@
 
 #pragma once
 
+#include "kernel/mem/vconstantpool.h"
 #include "kernel/mem/vmemory.h"
 #include "kernel/mem/vmemrbtree.h"
 
 int mem_test() {
-	VMemoryPool							  TestMPool;
-	_VMem::VRBTree<int, int, VMemoryPool> Tree(TestMPool);
-	Tree.Insert(4, 114514);
-	Tree.Insert(9, 8848);
-	Tree.Insert(5, 84);
-	Tree.Insert(16, 884);
-	Tree.Insert(7, 81);
-	Tree.Insert(180, 81);
-	Tree.Insert(190, 81);
-	Tree.Insert(440, 81);
-	Tree.Insert(4410, 81);
+	VMemoryPool TestMPool;
+	const int  *A = TestMPool.Allocate<const int>((const int &)8);
+	const int  *B = TestMPool.Allocate<const int>(9);
+	const int  *C = TestMPool.Allocate<const int>(10);
 
-	Tree.Delete(180);
-
-	printf("%d", Tree.Find(16));
+	printf("%d\n%d\n%d", *A, *B, *C);
 
 	return 0;
 }

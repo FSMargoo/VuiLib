@@ -27,6 +27,15 @@ VMemoryPool::VMemoryPool(VMemoryPolicy ManagerPolicy) : Policy(ManagerPolicy) {
 	if (!_CheckPolicyLegit()) {
 		ManagerPolicy = VMemoryPolicy::Default();
 	}
+
+	IntPool	   = new VMemoryConstant::IntPool(*this);
+	FloatPool  = new VMemoryConstant::FloatPool(*this);
+	DoublePool = new VMemoryConstant::DoublePool(*this);
+}
+VMemoryPool::~VMemoryPool() {
+	delete IntPool;
+	delete FloatPool;
+	delete DoublePool;
 }
 void VMemoryPool::_InitMemoryPool() {
 	OOM = false;
@@ -284,4 +293,8 @@ void VMemoryPool::_FreeMemory(void *Ptr, const size_t &Size) {
 	}
 
 	return;
+}
+VThreadCache::VThreadCache(VMemoryPool &ParentPool, const size_t &InitSize) : Pool(ParentPool) {
+	Policy = VMemoryPolicy{
+		.ExpandMode = VMemoryExpandMode::Constant, .ExpandSize = 0, .InitSize = InitSize, .UserFunction = NULL};
 }

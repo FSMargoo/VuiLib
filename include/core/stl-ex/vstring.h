@@ -24,9 +24,8 @@ const wchar_t *vstring_convert(const char *OriginString);
 #define VStr(Str) ##Str
 #define VSTCStr	  std::to_string
 
-#pragma comment(lib, "comsupp.lib")
 using VChar		   = char;
-using VProxyString = std : string;
+using VProxyString = std::string;
 
 const char *operator"" vs(const wchar_t *OriginString, size_t StringLength);
 const char *operator"" vs(const char *OriginString, size_t StringLength);
