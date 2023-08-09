@@ -65,6 +65,13 @@
 
 本仓库所有源代码均使用 MIT License 开源协议
 
+## 鸣谢
+<div align="center">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg?_ga=2.131997191.943128415.1691401327-1601569045.1689673917&_gac=1.159309000.1691401337.Cj0KCQjwrMKmBhCJARIsAHuEAPR50zMvz61eq9bA3ZpA4DBGLt6-p1UXyvcLhA1YTppAdwkt5KsaiH0aAuFNEALw_wcB&_gl=1*1x95f8*_ga*MTYwMTU2OTA0NS4xNjg5NjczOTE3*_ga_9J976DJZ68*MTY5MTU2OTI4OS4xOC4xLjE2OTE1Njk3OTQuNTIuMC4w"/>
+
+感谢 JetBrains 提供的 [OpenSource 许可证](https://jb.gg/OpenSourceSupport)助力 VUILib 的开发。
+</div>
+
 ## NewFeatures - 新版本 2.0.x beta 新特性
 
 * 对于 vml 和 vss 语法进行调整，使得其能够更加优雅地构造界面

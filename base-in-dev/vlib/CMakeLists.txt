@@ -22,7 +22,11 @@ add_executable(vlib
         tester/tester.cpp
         src/kernel/debug/vdebug.cpp
         inc/kernel/thread/vthread.h
-        src/kernel/thread/vthread.cpp)
+        src/kernel/thread/vthread.cpp
+        inc/kernel/container/vdeque.h
+        src/kernel/container/vdeque.cpp
+        inc/kernel/mem/vpointer.h
+        src/kernel/mem/vpointer.cpp)
 
 target_include_directories(vlib PRIVATE inc)
 target_compile_options(vlib PRIVATE /W4 /WX)
