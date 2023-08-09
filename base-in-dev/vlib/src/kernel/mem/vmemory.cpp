@@ -257,6 +257,15 @@ LAllocate:
 
 	return Ptr;
 }
+void VMemoryPool::_InitThreadLock() {
+	using namespace std::chrono_literals;
+	while (!MutexLock.try_lock()) {
+		std::this_thread::sleep_for(10ms);
+	}
+}
+void VMemoryPool::_ReleaseThreadLock() {
+	MutexLock.unlock();
+}
 void VMemoryPool::_FreeMemory(void *Ptr, const size_t &Size) {
 	bool Flag = false;
 

@@ -5,14 +5,14 @@
 template <class Type, class Allocator>
 class VConstantPool {
 public:
-	VConstantPool(Allocator &BindPool) : Pool(BindPool), Mapping(BindPool) {
+	explicit VConstantPool(Allocator &BindPool) : Pool(BindPool), Mapping(BindPool) {
 	}
 	void *FindOrInsert(const Type &Value) {
 		if (Mapping.Exists(Value)) {
 			return Mapping.Find(Value);
 		}
 
-		Mapping.Insert(Value, Pool.Allocate<Type>(Value));
+		Mapping.Insert(Value, Pool.template Allocate<Type>(Value));
 		return Mapping.Find(Value);
 	}
 

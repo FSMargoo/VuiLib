@@ -22,29 +22,4 @@
 
 #pragma once
 
-#include <cstdlib>
-#include <typeinfo>
-
-#include <kernel/debug/vdebug.h>
-
-enum class VCompareOperation {
-	Lt,
-	Gt
-};
-
-template <class Left, class Right>
-constexpr bool VCompare(const Left &LeftValue, const Right &RightValue, const VCompareOperation &Op) noexcept {
-	if constexpr (std::is_signed_v<Left> == std::is_signed_v<Right>) {
-		if (Op == VCompareOperation::Lt) {
-			return LeftValue < RightValue;
-		} else {
-			return LeftValue > RightValue;
-		}
-	} else if constexpr (std::is_signed_v<Left>) {
-		return LeftValue < 0 || std::make_unsigned_t<Left>(LeftValue) < RightValue;
-	} else {
-		return RightValue < 0 || LeftValue < std::make_unsigned_t<Left>(RightValue);
-	}
-
-	return false;
-}
+#include <kernel/thread/vthread.h>

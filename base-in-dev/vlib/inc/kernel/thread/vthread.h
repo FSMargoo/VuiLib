@@ -22,29 +22,48 @@
 
 #pragma once
 
-#include <cstdlib>
-#include <typeinfo>
+#include "vmemory.h"
 
-#include <kernel/debug/vdebug.h>
+#include <thread>
 
-enum class VCompareOperation {
-	Lt,
-	Gt
-};
-
-template <class Left, class Right>
-constexpr bool VCompare(const Left &LeftValue, const Right &RightValue, const VCompareOperation &Op) noexcept {
-	if constexpr (std::is_signed_v<Left> == std::is_signed_v<Right>) {
-		if (Op == VCompareOperation::Lt) {
-			return LeftValue < RightValue;
-		} else {
-			return LeftValue > RightValue;
-		}
-	} else if constexpr (std::is_signed_v<Left>) {
-		return LeftValue < 0 || std::make_unsigned_t<Left>(LeftValue) < RightValue;
-	} else {
-		return RightValue < 0 || LeftValue < std::make_unsigned_t<Left>(RightValue);
+template <class ReturnType, class... Agrument>
+class VThread {
+public:
+	explicit VThread(VMemoryPool &ParentMemPool, const std::function<ReturnType(Agrument...)> &Function,
+					 Agrument... FunctionAgrument)
+		: Thread(Function, FunctionAgrument...), Cache(ParentMemPool, 1024) {
+	}
+	void Detch() noexcept {
+		Thread.detach();
+	}
+	void Join() noexcept {
+		Thread.join();
+	}
+	constexpr bool Joinble() noexcept {
+		return Thread.joinable();
+	}
+	std::thread::id GetId() noexcept {
+		return Thread.get_id();
+	}
+	std::stop_source GetStopResource() noexcept {
+		return Thread.get_stop_source();
+	}
+	std::stop_token GetStopToken() noexcept {
+		return Thread.get_stop_token();
+	}
+	std::thread::native_handle_type GetNativeHandle() noexcept {
+		return Thread.native_handle();
 	}
 
-	return false;
-}
+private:
+	std::jthread Thread;
+	VThreadCache Cache;
+};
+
+class _VThreadMemoryPoolManager {
+public:
+	_VThreadMemoryPoolManager();
+
+private:
+	_VMem::VRBTree<std::thread::id, VThreadCache *, VMemoryPolicy> PoolMap;
+};

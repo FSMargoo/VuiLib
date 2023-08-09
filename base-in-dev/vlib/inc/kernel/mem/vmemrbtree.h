@@ -114,9 +114,8 @@ public:
 
 public:
 	VRBTree(RBTAllocator &TreeAllocator) : Allocator(TreeAllocator) {
-		AllocatorPointer<VRBTNilNode<Key, Pair>> Pointer = &(RBTAllocator::template Allocate<VRBTNilNode<Key, Pair>>);
-		Nil												 = ((TreeAllocator).*Pointer)();
-		Root											 = nullptr;
+		Nil	 = TreeAllocator.template Allocate<VRBTNilNode<Key, Pair>>();
+		Root = nullptr;
 	}
 	~VRBTree() {
 		if (Root != nullptr) {
@@ -149,8 +148,8 @@ public:
 	bool Exists(const Key &KeyValue) {
 		return _FindNode(KeyValue) != nullptr;
 	}
-	VRBTTypeExtract<Key, Pair>::LValue<Pair>::T Find(const Key &KeyValue) {
-		return _MakeLValue(_FindNode(KeyValue)->Context);
+	VRBTTypeExtract<Key, Pair>::template LValue<Pair>::T Find(const Key &KeyValue) {
+		return _FindNode(KeyValue)->Context;
 	}
 
 public:
@@ -379,12 +378,12 @@ private:
 		return TypeExtract::_MakePointer(SpecifiedNode);
 	}
 	template <class Type>
-	VRBTTypeExtract<Key, Pair>::RValue<Type>::T _MakeRValue(Type &Value) {
+	VRBTTypeExtract<Key, Pair>::RValue<Type>::T _MakeRValue(Type &&Value) {
 		return static_cast<RValue<Type>>(Value);
 	}
 	template <class Type>
-	VRBTTypeExtract<Key, Pair>::LValue<Type>::T _MakeLValue(Type &Value) {
-		return static_cast<LValue<Type>>(Value);
+	VRBTTypeExtract<Key, Pair>::template LValue<Type>::T _MakeLValue(Type Value) {
+		return static_cast<VRBTTypeExtract<Key, Pair>::template LValue<Type>::T>(Value);
 	}
 
 private:

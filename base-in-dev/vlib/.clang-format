@@ -5,12 +5,6 @@ Language:        Cpp
 # BasedOnStyle:  Microsoft
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
-BraceWrapping:
-  AfterEnum: true
-  AfterStruct: true
-  SplitEmptyFunction: true
-  AfterCaseLabel: true
-  AfterClass: true
 AlignArrayOfStructures: None
 AlignConsecutiveAssignments:
   Enabled:         true

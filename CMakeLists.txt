@@ -1,0 +1,168 @@
+cmake_minimum_required(VERSION 3.26)
+project(VuiLib)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(base-in-dev/vlib/inc)
+include_directories(base-in-dev/vlib/inc/kernel)
+include_directories(base-in-dev/vlib/inc/kernel/base)
+include_directories(base-in-dev/vlib/inc/kernel/mem)
+include_directories(include)
+include_directories(include/core)
+include_directories(include/core/animation)
+include_directories(include/core/control)
+include_directories(include/core/object)
+include_directories(include/core/render)
+include_directories(include/core/signal)
+include_directories(include/core/stl-ex)
+include_directories(include/core/uibasic)
+include_directories(include/core/visual)
+include_directories(include/core/widget)
+include_directories(include/debug)
+include_directories(include/fmt)
+include_directories(include/kits)
+include_directories(include/vml)
+include_directories(include/vss)
+include_directories(include/win32base)
+include_directories(src/core/signal)
+
+add_executable(VuiLib
+        base-in-dev/vlib/inc/kernel/base/vbase.h
+        base-in-dev/vlib/inc/kernel/mem/vconstantpool.h
+        base-in-dev/vlib/inc/kernel/mem/vmemory.h
+        base-in-dev/vlib/inc/kernel/mem/vmemorypolicy.h
+        base-in-dev/vlib/inc/kernel/mem/vmemrbtree.h
+        base-in-dev/vlib/src/kernel/mem/vconstantpool.cpp
+        base-in-dev/vlib/src/kernel/mem/vmemory.cpp
+        base-in-dev/vlib/src/kernel/mem/vmemorypolicy.cpp
+        base-in-dev/vlib/src/kernel/mem/vmemrbtree.cpp
+        base-in-dev/vlib/tester/mem/mem-test.cpp
+        base-in-dev/vlib/tester/tester.cpp
+        include/core/animation/vanimation.h
+        include/core/animation/vanimationcurve.h
+        include/core/control/vabstractbutton.h
+        include/core/control/vblurlabel.h
+        include/core/control/vcanvas.h
+        include/core/control/vdragcontrolbase.h
+        include/core/control/vdropdown.h
+        include/core/control/veditor.h
+        include/core/control/veditorhighlighter.h
+        include/core/control/vfakecaption.h
+        include/core/control/viconbutton.h
+        include/core/control/vimagelabel.h
+        include/core/control/vlayout.h
+        include/core/control/vlineeditor.h
+        include/core/control/vpushbutton.h
+        include/core/control/vradiobutton.h
+        include/core/control/vscrollbar.h
+        include/core/control/vscroller.h
+        include/core/control/vswitchgroup.h
+        include/core/control/vtextlabel.h
+        include/core/control/vtitlebar.h
+        include/core/control/vviewlabel.h
+        include/core/object/vapplication.h
+        include/core/object/vuiobject.h
+        include/core/render/vbrush.h
+        include/core/render/vcolor.h
+        include/core/render/vdirectxfactory.h
+        include/core/render/vimage.h
+        include/core/render/vpainter.h
+        include/core/render/vpainterdevice.h
+        include/core/render/vrenderbasic.h
+        include/core/render/vwrite.h
+        include/core/signal/vsignal.h
+        include/core/stl-ex/vstring.h
+        include/core/uibasic/vnativeicon.h
+        include/core/uibasic/vsmarttimer.h
+        include/core/uibasic/vtimer.h
+        include/core/uibasic/vuiinterpolator.h
+        include/core/uibasic/vuitheme.h
+        include/core/visual/veffect.h
+        include/core/visual/vvisual.h
+        include/core/widget/vmessage.h
+        include/core/widget/vprivatewidget.h
+        include/core/widget/vwidget.h
+        include/core/vbasiccore.h
+        include/core/vcontrol.h
+        include/debug/vdebug.h
+        include/fmt/vfmt.h
+        include/kits/seal.info.h
+        include/kits/seal.lexical.h
+        include/kits/seal.lexical.token.h
+        include/kits/vallocator.h
+        include/kits/vchainif.h
+        include/kits/vcolorhelper.h
+        include/kits/vparserhelper.h
+        include/vml/vml.h
+        include/vml/vmlbuilder.h
+        include/vml/vmlparser.h
+        include/vml/vmlvariable.h
+        include/vml/vmlwidget.h
+        include/vss/vssbuilder.h
+        include/vss/vssparser.h
+        include/win32base/vwin32base.h
+        src/core/animation/vanimation.cc
+        src/core/animation/vanimationcurve.cc
+        src/core/control/vabstractbutton.cc
+        src/core/control/vblurlabel.cc
+        src/core/control/vcanvas.cc
+        src/core/control/vdragcontrolbase.cc
+        src/core/control/vdropdown.cc
+        src/core/control/veditor.cc
+        src/core/control/veditorhighlighter.cc
+        src/core/control/veditorX.cc
+        src/core/control/vfakecaption.cc
+        src/core/control/viconbutton.cc
+        src/core/control/vimagelabel.cc
+        src/core/control/vlayout.cc
+        src/core/control/vlineeditor.cc
+        src/core/control/vpushbutton.cc
+        src/core/control/vradiobutton.cc
+        src/core/control/vscrollbar.cc
+        src/core/control/vscroller.cc
+        src/core/control/vswitchgroup.cc
+        src/core/control/vtextlabel.cc
+        src/core/control/vtitlebar.cc
+        src/core/control/vviewlabel.cc
+        src/core/fmt/vfmt.cpp
+        src/core/object/vapplication.cc
+        src/core/object/vuiobject.cc
+        src/core/render/vbrush.cc
+        src/core/render/vcolor.cc
+        src/core/render/vdirectxfactory.cc
+        src/core/render/vimage.cc
+        src/core/render/vpainter.cc
+        src/core/render/vpainterdevice.cc
+        src/core/render/vrenderbasic.cc
+        src/core/render/vwrite.cc
+        src/core/signal/vbasiccore.h
+        src/core/signal/vsignal.cc
+        src/core/stl-ex/vstring.cpp
+        src/core/uibasic/vnativeicon.cc
+        src/core/uibasic/vsmarttimer.cc
+        src/core/uibasic/vtimer.cc
+        src/core/uibasic/vuiinterpolator.cc
+        src/core/uibasic/vuitheme.cc
+        src/core/visual/veffect.cc
+        src/core/visual/vvisual.cc
+        src/core/widget/vmessage.cc
+        src/core/widget/vprivatewidget.cc
+        src/core/widget/vwidget.cc
+        src/core/vbasiccore.cc
+        src/debug/vdebug.cc
+        src/kits/seal.info.cc
+        src/kits/seal.lexical.cc
+        src/kits/seal.lexical.token.cc
+        src/kits/vallocator.cc
+        src/kits/vchainif.cc
+        src/kits/vcolorhelper.cc
+        src/kits/vparserhelper.cc
+        src/vml/vml.cpp
+        src/vml/vmlbuilder.cpp
+        src/vml/vmlparser.cpp
+        src/vml/vmlvariable.cpp
+        src/vml/vmlwidget.cpp
+        src/vss/vssbuilder.cc
+        src/vss/vssparser.cc
+        src/win32base/vwin32base.cc
+        main.cpp)

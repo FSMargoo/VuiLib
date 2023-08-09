@@ -27,7 +27,7 @@
 #include "kernel/mem/vmemorypolicy.h"
 #include "kernel/mem/vmemrbtree.h"
 
-#include <map>
+#include <mutex>
 
 class VMemoryInterface {
 public:
@@ -90,7 +90,7 @@ using VMemoryConstant = VConstantExtractor<VMemoryPool>;
 
 class VMemoryPool : public VMemoryInterface {
 public:
-	VMemoryPool(VMemoryPolicy ManagerPolicy = VMemoryPolicy::Default());
+	explicit VMemoryPool(VMemoryPolicy ManagerPolicy = VMemoryPolicy::Default());
 	~VMemoryPool();
 
 public:
@@ -99,34 +99,70 @@ public:
 public:
 	template <class Type, class... Agrument>
 	Type *Allocate(Agrument... BuiltAgrument) {
+		_InitThreadLock();
+
 		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
+
+		_ReleaseThreadLock();
 
 		return new (Ptr) Type(BuiltAgrument...);
 	}
 	template <>
 	const int *Allocate<const int, int>(int Agrument) {
-		return static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+		_InitThreadLock();
+
+		const int *Ptr = static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+
+		_ReleaseThreadLock();
+
+		return Ptr;
 	}
 	template <>
 	const float *Allocate<const float, float>(float Agrument) {
-		return static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+		_InitThreadLock();
+
+		const float *Ptr = static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+
+		_ReleaseThreadLock();
+
+		return Ptr;
 	}
 	template <>
 	const double *Allocate<const double, double>(double Agrument) {
-		return static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
+		_InitThreadLock();
+
+		const double *Ptr = static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
+
+		_ReleaseThreadLock();
+
+		return Ptr;
 	}
 	template <class Type>
 	void Delete(Type *Ptr) {
+		_InitThreadLock();
+
 		_FreeMemory(Ptr, sizeof(Type));
+
+		_ReleaseThreadLock();
 	}
 
 	template <class Type>
 	Type *AllocateArray(const size_t &ArraySize) {
-		return static_cast<Type *>(_AllocateMemory(ArraySize * sizeof(Type)));
+		_InitThreadLock();
+
+		Type *Ptr = static_cast<Type *>(_AllocateMemory(ArraySize * sizeof(Type)));
+
+		_ReleaseThreadLock();
+
+		return Ptr;
 	}
 	template <class Type>
 	void DeletArray(Type *Ptr, const size_t &ArraySize) {
+		_InitThreadLock();
+
 		_FreeMemory(Ptr, ArraySize * sizeof(Type));
+
+		_ReleaseThreadLock();
 	}
 
 protected:
@@ -143,20 +179,6 @@ protected:
 			Ptr	 = Ptr->Next;
 
 			Offset += ByteSize;
-		}
-	}
-	template <>
-	__forceinline void _InitMemoryBlock(void *Block, VMemoryUnit<4> *ListHead, size_t TotalSize) {
-		size_t			Offset = 4;
-		VMemoryUnit<4> *Last   = ListHead;
-		VMemoryUnit<4> *Ptr	   = ListHead;
-		while (Offset < TotalSize) {
-			Ptr->Next = new VMemoryUnit<4>(Last, ((char *&)(Block)) + Offset);
-
-			Last = Ptr->Next;
-			Ptr	 = Ptr->Next;
-
-			Offset += 4;
 		}
 	}
 	__forceinline bool _CheckPolicyLegit();
@@ -266,8 +288,8 @@ protected:
 	}
 	template <size_t ByteSize>
 	[[nodiscard]] VMemoryUnit<ByteSize> *_SearchValidAllocator(VMemoryUnit<ByteSize> *Head, const size_t &TargetSize) {
-		VMemoryUnit<ByteSize> *Ptr	 = Head;
-		size_t				   Count = 0;
+		VMemoryUnit<ByteSize> *Ptr = Head;
+		size_t				   Count;
 
 		while (true) {
 			Count							 = ByteSize;
@@ -306,6 +328,10 @@ protected:
 	}
 
 protected:
+	void _InitThreadLock();
+	void _ReleaseThreadLock();
+
+protected:
 	VMem4ByteUnit	*_4ByteProxy;
 	VMem8ByteUnit	*_8ByteProxy;
 	VMem16ByteUnit	*_16ByteProxy;
@@ -331,6 +357,9 @@ protected:
 	VMemoryConstant::IntPool	*IntPool;
 	VMemoryConstant::FloatPool	*FloatPool;
 	VMemoryConstant::DoublePool *DoublePool;
+
+private:
+	std::mutex MutexLock;
 };
 
 class VThreadCache : public VMemoryPool {
