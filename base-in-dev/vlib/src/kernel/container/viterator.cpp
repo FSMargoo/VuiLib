@@ -19,15 +19,3 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-#pragma once
-
-#include <kernel/container/viterator.h>
-#include <kernel/mem/vmemory.h>
-
-template <class Type, class TypeExtractor = VTypeExtractor<Type>>
-class VDeque : public TypeExtractor {
-public:
-	VDeque() {
-	}
-};

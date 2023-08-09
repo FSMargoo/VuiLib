@@ -20,6 +20,8 @@
  * SOFTWARE.
  */
 
+#pragma once
+
 template <class PointerType, class MemoryPool>
 class VPointerDeleter {
 public:
@@ -29,7 +31,15 @@ public:
 public:
 	constexpr VPointerDeleter() = default;
 	virtual void Delete(PointerType *Pointer, MemoryPool &Pool) {
+		Pointer->~PointerType();
 		Pool.Delete(Pointer);
+	}
+	virtual void DeleteArray(PointerType *Pointer, MemoryPool &Pool, const size_t &Size) {
+		for (size_t Count = 0; Count < Size; ++Count) {
+			(Pointer[Count]).~PointerType();
+		}
+
+		Pool.DeleteArray(Pointer, Size);
 	}
 };
 
@@ -45,7 +55,7 @@ public:
 	explicit VUniquePointer(NullType) noexcept : Ptr(nullptr) {
 	}
 
-	VUniquePointer(Object &&Object) noexcept : Pool(Object.Pool), Ptr(Object._ReleaseOnwer()) {
+	VUniquePointer(Object &&Object) noexcept : Pool(Object.Pool), Ptr(Object._ReleaseOwner()) {
 	}
 
 	VUniquePointer(const Type *Pointer)	 = delete;
@@ -59,7 +69,7 @@ public:
 
 	~VUniquePointer() noexcept {
 		if (Ptr != nullptr) {
-			Delete(Ptr, Pool);
+			DeleterType::Delete(Ptr, Pool);
 		}
 	}
 
@@ -69,16 +79,17 @@ public:
 	}
 	Type *Release() {
 		if (!_EmptyPtr()) {
-			return _ReleaseOnwer();
+			return _ReleaseOwner();
 		} else {
 			return nullptr;
 		}
 	}
-	void Reset() {
-		Type *Pointer = _ReleaseOnwer();
+	void Reset(Type *NewValue = nullptr) {
+		Type *Pointer = _ReleaseOwner();
 		if (Pointer != nullptr) {
-			Delete(Pointer, Pool);
+			DeleterType::Delete(Pointer, Pool);
 		}
+		Ptr = NewValue;
 	}
 	Type *operator->() {
 		return Ptr;
@@ -90,8 +101,14 @@ public:
 		_Swap(Instance.Ptr, Ptr);
 	}
 
+public:
+	template <class... Argument>
+	static Object MakeUnique(MemoryPool &Pool, Argument... Arg) {
+		return Object(Pool.template Allocate<Type>(Arg...), Pool);
+	}
+
 private:
-	Type *_ReleaseOnwer() {
+	Type *_ReleaseOwner() {
 		return _ValueSwap(Ptr, nullptr);
 	}
 	bool _EmptyPtr() {
@@ -104,7 +121,7 @@ private:
 		Right	   = Left;
 		Left	   = Temp;
 	}
-	Type *_ValueSwap(Type *&Old, Type *New) {
+	Type *_ValueSwap(Type *&Old, Type *&&New) {
 		Type *Temp = Old;
 		Old		   = New;
 

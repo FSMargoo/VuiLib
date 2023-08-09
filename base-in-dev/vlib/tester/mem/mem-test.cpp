@@ -25,14 +25,30 @@
 #include "kernel/mem/vconstantpool.h"
 #include "kernel/mem/vmemory.h"
 #include "kernel/mem/vmemrbtree.h"
+#include "kernel/mem/vpointer.h"
+
+class LifeTestClass {
+public:
+	LifeTestClass() {
+		printf("Class Here!\n");
+
+		value = 114;
+	}
+	~LifeTestClass() {
+		printf("Class bye~\n");
+	}
+
+public:
+	int value;
+};
 
 int mem_test() {
-	VMemoryPool TestMPool;
-	const int  *A = TestMPool.Allocate<const int>((const int &)8);
-	const int  *B = TestMPool.Allocate<const int>(9);
-	const int  *C = TestMPool.Allocate<const int>(10);
-
-	printf("%d\n%d\n%d", *A, *B, *C);
+	VMemoryPool Pool;
+	{
+		VUniquePointer<LifeTestClass, VMemoryPool> Pointer =
+			VUniquePointer<LifeTestClass, VMemoryPool>::MakeUnique(Pool);
+		printf("%d\n", Pointer->value);
+	}
 
 	return 0;
 }

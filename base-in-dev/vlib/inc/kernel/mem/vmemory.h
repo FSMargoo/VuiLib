@@ -157,7 +157,7 @@ public:
 		return Ptr;
 	}
 	template <class Type>
-	void DeletArray(Type *Ptr, const size_t &ArraySize) {
+	void DeleteArray(Type *Ptr, const size_t &ArraySize) {
 		_InitThreadLock();
 
 		_FreeMemory(Ptr, ArraySize * sizeof(Type));
@@ -395,7 +395,7 @@ public:
 		return static_cast<Type *>(_AllocateMemory(ArraySize * sizeof(Type)));
 	}
 	template <class Type>
-	void DeletArray(Type *Ptr, const size_t &ArraySize) {
+	void DeleteArray(Type *Ptr, const size_t &ArraySize) {
 		_FreeMemory(Ptr, ArraySize * sizeof(Type));
 	}
 
@@ -468,7 +468,7 @@ public:
 
 			return;
 		}
-		Pool->DeletArray(Ptr, Count);
+		Pool->DeleteArray(Ptr, Count);
 	}
 	constexpr Type *allocate(const size_t Count) {
 		return Pool->AllocateArray<Type>(Count);

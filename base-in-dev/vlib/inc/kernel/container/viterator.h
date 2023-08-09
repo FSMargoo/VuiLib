@@ -20,14 +20,32 @@
  * SOFTWARE.
  */
 
-#pragma once
+#include <kernel/container/vtypeextractor.h>
 
-#include <kernel/container/viterator.h>
-#include <kernel/mem/vmemory.h>
+enum class VIteratorType {
+	Direction,
+	Forward,
+	Input,
+	Output,
+	Random
+};
 
-template <class Type, class TypeExtractor = VTypeExtractor<Type>>
-class VDeque : public TypeExtractor {
+class VBaseIterator {
 public:
-	VDeque() {
+	VBaseIterator() noexcept : Index(0) {
 	}
+
+public:
+	[[nodiscard]] constexpr size_t GetIndex() const {
+		return Index;
+	}
+
+	virtual VIteratorType GetType() = 0;
+
+private:
+	virtual VBaseIterator *Next() = 0;
+	virtual VBaseIterator *Prev() = 0;
+
+private:
+	size_t Index;
 };

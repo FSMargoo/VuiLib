@@ -22,12 +22,11 @@
 
 #pragma once
 
-#include <kernel/container/viterator.h>
-#include <kernel/mem/vmemory.h>
-
-template <class Type, class TypeExtractor = VTypeExtractor<Type>>
-class VDeque : public TypeExtractor {
-public:
-	VDeque() {
-	}
+template <class Type>
+struct VTypeExtractor {
+	using Pointer	   = typename Type *;
+	using Refer		   = typename Type &;
+	using ConstType	   = const Type;
+	using ConstPointer = const Type *;
+	using ConstRefer   = const Type &;
 };
