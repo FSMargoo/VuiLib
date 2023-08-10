@@ -32,6 +32,43 @@ VMemoryPool::VMemoryPool(VMemoryPolicy ManagerPolicy) : Policy(ManagerPolicy) {
 	FloatPool  = new VMemoryConstant::FloatPool(*this);
 	DoublePool = new VMemoryConstant::DoublePool(*this);
 }
+VMemoryPool::VMemoryPool(VMemoryPool &&Object) {
+	IntPool		  = Object.IntPool;
+	FloatPool	  = Object.FloatPool;
+	DoublePool	  = Object.DoublePool;
+	_4ByteProxy	  = Object._4ByteProxy;
+	_16ByteProxy  = Object._16ByteProxy;
+	_32ByteProxy  = Object._32ByteProxy;
+	_64ByteProxy  = Object._64ByteProxy;
+	_128ByteProxy = Object._128ByteProxy;
+	_256ByteProxy = Object._256ByteProxy;
+	_4Byte		  = Object._4Byte;
+	_8Byte		  = Object._8Byte;
+	_16Byte		  = Object._16Byte;
+	_32Byte		  = Object._32Byte;
+	_64Byte		  = Object._64Byte;
+	_128Byte	  = Object._128Byte;
+	_256Byte	  = Object._256Byte;
+	OOM			  = Object.OOM;
+
+	Object.IntPool		 = nullptr;
+	Object.FloatPool	 = nullptr;
+	Object.DoublePool	 = nullptr;
+	Object._4ByteProxy	 = nullptr;
+	Object._16ByteProxy	 = nullptr;
+	Object._32ByteProxy	 = nullptr;
+	Object._64ByteProxy	 = nullptr;
+	Object._128ByteProxy = nullptr;
+	Object._256ByteProxy = nullptr;
+	Object._4Byte		 = nullptr;
+	Object._8Byte		 = nullptr;
+	Object._16Byte		 = nullptr;
+	Object._32Byte		 = nullptr;
+	Object._64Byte		 = nullptr;
+	Object._128Byte		 = nullptr;
+	Object._256Byte		 = nullptr;
+	Object.OOM			 = false;
+}
 VMemoryPool::~VMemoryPool() {
 	delete IntPool;
 	delete FloatPool;

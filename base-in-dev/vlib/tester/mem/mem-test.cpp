@@ -26,29 +26,21 @@
 #include "kernel/mem/vmemory.h"
 #include "kernel/mem/vmemrbtree.h"
 #include "kernel/mem/vpointer.h"
-
-class LifeTestClass {
-public:
-	LifeTestClass() {
-		printf("Class Here!\n");
-
-		value = 114;
-	}
-	~LifeTestClass() {
-		printf("Class bye~\n");
-	}
-
-public:
-	int value;
-};
+#include <kernel/container/vdeque.h>
 
 int mem_test() {
-	VMemoryPool Pool;
-	{
-		VUniquePointer<LifeTestClass, VMemoryPool> Pointer =
-			VUniquePointer<LifeTestClass, VMemoryPool>::MakeUnique(Pool);
-		printf("%d\n", Pointer->value);
+	VMemoryPool B;
+	VDeque<int> TestDeque(B);
+	if (TestDeque.IsEmpty()) {
+		printf("Empty");
 	}
+	for (int i = 1; i <= 100; ++i) {
+		TestDeque.PushBack(i);
+	}
+	if (TestDeque.IsEmpty()) {
+		printf("Empty");
+	}
+	printf("%zu", TestDeque.GetSize());
 
 	return 0;
 }

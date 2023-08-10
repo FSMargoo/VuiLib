@@ -26,6 +26,7 @@ template <class Type>
 struct VTypeExtractor {
 	using Pointer	   = typename Type *;
 	using Refer		   = typename Type &;
+	using CopyRef	   = typename Type &&;
 	using ConstType	   = const Type;
 	using ConstPointer = const Type *;
 	using ConstRefer   = const Type &;

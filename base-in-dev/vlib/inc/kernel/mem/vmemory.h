@@ -91,47 +91,50 @@ using VMemoryConstant = VConstantExtractor<VMemoryPool>;
 class VMemoryPool : public VMemoryInterface {
 public:
 	explicit VMemoryPool(VMemoryPolicy ManagerPolicy = VMemoryPolicy::Default());
+	explicit VMemoryPool(VMemoryPool &Object)		= delete;
+	explicit VMemoryPool(const VMemoryPool &Object) = delete;
+	VMemoryPool(VMemoryPool &&Object);
 	~VMemoryPool();
 
 public:
 	void OOMPanic() override;
 
 public:
-	template <class Type, class... Agrument>
-	Type *Allocate(Agrument... BuiltAgrument) {
+	template <class Type, class... Argument>
+	Type *Allocate(Argument... BuiltArgument) {
 		_InitThreadLock();
 
 		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
 
 		_ReleaseThreadLock();
 
-		return new (Ptr) Type(BuiltAgrument...);
+		return new (Ptr) Type(std::forward<Argument>(BuiltArgument)...);
 	}
 	template <>
-	const int *Allocate<const int, int>(int Agrument) {
+	const int *Allocate<const int, int>(int Argument) {
 		_InitThreadLock();
 
-		const int *Ptr = static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+		const int *Ptr = static_cast<const int *>(IntPool->FindOrInsert(Argument));
 
 		_ReleaseThreadLock();
 
 		return Ptr;
 	}
 	template <>
-	const float *Allocate<const float, float>(float Agrument) {
+	const float *Allocate<const float, float>(float Argument) {
 		_InitThreadLock();
 
-		const float *Ptr = static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+		const float *Ptr = static_cast<const float *>(FloatPool->FindOrInsert(Argument));
 
 		_ReleaseThreadLock();
 
 		return Ptr;
 	}
 	template <>
-	const double *Allocate<const double, double>(double Agrument) {
+	const double *Allocate<const double, double>(double Argument) {
 		_InitThreadLock();
 
-		const double *Ptr = static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
+		const double *Ptr = static_cast<const double *>(DoublePool->FindOrInsert(Argument));
 
 		_ReleaseThreadLock();
 
@@ -367,23 +370,23 @@ public:
 	VThreadCache(VMemoryPool &ParentPool, const size_t &InitSize);
 
 public:
-	template <class Type, class... Agrument>
-	Type *Allocate(Agrument... BuiltAgrument) {
+	template <class Type, class... Argument>
+	Type *Allocate(Argument... BuiltArgument) {
 		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
 
-		return new (Ptr) Type(BuiltAgrument...);
+		return new (Ptr) Type(BuiltArgument...);
 	}
 	template <>
-	const int *Allocate<const int, int>(int Agrument) {
-		return static_cast<const int *>(IntPool->FindOrInsert(Agrument));
+	const int *Allocate<const int, int>(int Argument) {
+		return static_cast<const int *>(IntPool->FindOrInsert(Argument));
 	}
 	template <>
-	const float *Allocate<const float, float>(float Agrument) {
-		return static_cast<const float *>(FloatPool->FindOrInsert(Agrument));
+	const float *Allocate<const float, float>(float Argument) {
+		return static_cast<const float *>(FloatPool->FindOrInsert(Argument));
 	}
 	template <>
-	const double *Allocate<const double, double>(double Agrument) {
-		return static_cast<const double *>(DoublePool->FindOrInsert(Agrument));
+	const double *Allocate<const double, double>(double Argument) {
+		return static_cast<const double *>(DoublePool->FindOrInsert(Argument));
 	}
 	template <class Type>
 	void Delete(Type *Ptr) {
