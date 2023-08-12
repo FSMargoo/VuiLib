@@ -120,15 +120,12 @@ public:
 	VRandomIterator() noexcept = default;
 
 public:
-	virtual Type				  &operator++()								 = 0;
-	virtual Type				  &operator++(int)							 = 0;
-	virtual Type				  &operator--()								 = 0;
-	virtual Type				  &operator*()								 = 0;
-	virtual VRandomIterator<Type> &operator+=(const size_t &)				 = 0;
-	virtual VRandomIterator<Type> &operator-=(const size_t &)				 = 0;
-	virtual bool				   operator==(const VRandomIterator<Type> &) = 0;
-	virtual bool				   operator!=(const VRandomIterator<Type> &) = 0;
-	virtual Type				  &operator[](const size_t &)				 = 0;
+	virtual Type &operator++()				 = 0;
+	virtual Type &operator++(int)			 = 0;
+	virtual Type &operator--()				 = 0;
+	virtual Type &operator+=(const size_t &) = 0;
+	virtual Type &operator-=(const size_t &) = 0;
+	virtual Type &operator[](const size_t &) = 0;
 
 	VIteratorType GetType() override {
 		return VIteratorType::Random;

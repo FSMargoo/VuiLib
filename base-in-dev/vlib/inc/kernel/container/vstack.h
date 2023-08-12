@@ -22,47 +22,37 @@
 
 #pragma once
 
-#include "kernel/mem/vconstantpool.h"
-#include "kernel/mem/vmemory.h"
-#include "kernel/mem/vmemrbtree.h"
-#include "kernel/mem/vpointer.h"
 #include <kernel/container/vdeque.h>
 
-template <typename T>
-class MyInitializerList {
+template <class Type, class AllocatorType, class TypeExtractor = VTypeExtractor<Type>>
+class VStack {
 public:
-	MyInitializerList(const T *begin, const T *end) : data(begin), size(end - begin) {
+	explicit VStack(AllocatorType &StackAllocator) : NativeDeque(StackAllocator) {
+	}
+	VStack(std::initializer_list<Type> InitList, AllocatorType &StackAllocator)
+		: NativeDeque(InitList, StackAllocator) {
 	}
 
-	const T *begin() const {
-		return data;
+public:
+	void Push(const Type &Value) {
+		NativeDeque.PushFront(Value);
 	}
-	const T *end() const {
-		return data + size;
+	void Push(Type &&Value) {
+		NativeDeque.PushFront(std::move(Value));
+	}
+	void Pop() {
+		NativeDeque.PopFront();
+	}
+	Type &GetFront() {
+		return NativeDeque.GetFront();
+	}
+	Type &GetBack() {
+		return NativeDeque.GetBack();
+	}
+	const size_t &GetSize() {
+		return NativeDeque.GetSize();
 	}
 
 private:
-	const T *data;
-	size_t	 size;
+	VDeque<Type, AllocatorType, TypeExtractor> NativeDeque;
 };
-
-template <typename T>
-void processInitializerList(const MyInitializerList<T> &list) {
-}
-
-int mem_test() {
-	VMemoryPool B;
-
-	VDeque<int> TestDeque(
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27}, B);
-
-	for (auto &a : TestDeque) {
-		printf("%d ", a);
-	}
-
-	return 0;
-}
-
-int main() {
-	return mem_test();
-}

@@ -40,6 +40,19 @@ public:
 	using DiffType = size_t;
 
 public:
+	VDequeArray(const VDequeArray &Object) = delete;
+	VDequeArray(VDequeArray &&Object) noexcept {
+		Head	   = Object.Head;
+		Tail	   = Object.Tail;
+		Array	   = Object.Array;
+		ExpandSize = Object.ExpandSize;
+		Allocator  = Object.Allocator;
+
+		Object.Head	 = nullptr;
+		Object.Tail	 = nullptr;
+		Object.Array = nullptr;
+		Object.Array = nullptr;
+	}
 	VDequeArray(const size_t &InitSize, AllocatorType &ArrayAllocator) noexcept
 		: Allocator(ArrayAllocator), ExpandSize(InitSize) {
 		Array = Allocator.template AllocateArray<VDequeNode<NodeType>>(InitSize);
@@ -90,6 +103,26 @@ public:
 		return Tail - Head;
 	}
 
+	void Swap(VDequeArray &Object) {
+		NodePtr		   CHead	   = Object.Head;
+		NodePtr		   CTail	   = Object.Tail;
+		NodePtr		   CArray	   = Object.Array;
+		AllocatorType &CAllocator  = Object.Allocator;
+		DiffType	   CExpandSize = Object.ExpandSize;
+
+		Object.Head		  = Head;
+		Object.Tail		  = Tail;
+		Object.Array	  = Array;
+		Object.Allocator  = Allocator;
+		Object.ExpandSize = ExpandSize;
+
+		Head	   = CHead;
+		Tail	   = CTail;
+		Array	   = CArray;
+		Allocator  = CAllocator;
+		ExpandSize = CExpandSize;
+	}
+
 private:
 	void _ExpandArray() {
 		NodePtr	 NewArea	  = Allocator.template AllocateArray<VDequeNode<NodeType>>(ExpandSize * 2);
@@ -133,11 +166,91 @@ public:
 	AllocatorType &Allocator;
 };
 
+template <class Type, class AllocatorType>
+class VDequeIterator : public VRandomIterator<Type> {
+public:
+	explicit VDequeIterator(VDequeArray<Type, AllocatorType> *ArrayPointer, VDequeNode<Type> *Pointer) noexcept
+		: Ptr(ArrayPointer), IteratorPtr(Pointer) {
+	}
+	Type &operator++() override {
+		++IteratorPtr;
+		++(this->Index);
+
+		return IteratorPtr->Value;
+	}
+	Type &operator++(int) override {
+		VDequeNode<Type> *Temp = IteratorPtr;
+		++IteratorPtr;
+		++(this->Index);
+
+		return Temp->Value;
+	}
+	Type &operator--() override {
+		++(this->Index);
+
+		--IteratorPtr;
+
+		return IteratorPtr->Value;
+	}
+	Type &operator[](const size_t &Position) override {
+		if (Position >= Ptr->ExpandSize) {
+			_vdebug_handle SubscriptOutOfRange;
+			SubscriptOutOfRange.crash("Subscript out of valid range.");
+		}
+		return (Ptr->Head + Position)->Value;
+	}
+	Type &operator+=(const size_t &Delta) override {
+		if (Delta + IteratorPtr > Ptr->Tail) {
+			_vdebug_handle SubscriptOutOfRange;
+			SubscriptOutOfRange.crash("Subscript out of valid range.");
+		}
+		IteratorPtr += Delta;
+
+		return IteratorPtr->Value;
+	}
+	Type &operator-=(const size_t &Delta) override {
+		if (IteratorPtr - Delta < Ptr->Head) {
+			_vdebug_handle SubscriptOutOfRange;
+			SubscriptOutOfRange.crash("Subscript out of valid range.");
+		}
+		IteratorPtr -= Delta;
+
+		return IteratorPtr->Value;
+	}
+	Type &operator*() override {
+		return IteratorPtr->Value;
+	}
+	bool operator==(const VDequeIterator<Type, AllocatorType> &Judge) {
+		return Judge.IteratorPtr == IteratorPtr;
+	}
+	bool operator!=(const VDequeIterator<Type, AllocatorType> &Judge) {
+		return Judge.IteratorPtr != IteratorPtr;
+	}
+
+private:
+	VDequeArray<Type, AllocatorType> *Ptr;
+	VDequeNode<Type>				 *IteratorPtr;
+
+	template <class, class>
+	friend class VDequeIterator;
+};
+
 template <class Type, class AllocatorType = VMemoryPool, class TypeExtractor = VTypeExtractor<Type>>
 class VDeque {
 public:
+	using Iterator = VDequeIterator<Type, AllocatorType>;
+
+public:
 	explicit VDeque(AllocatorType &DequeAllocator) noexcept : Array(8192, Allocator), Allocator(DequeAllocator) {
 	}
+	VDeque(std::initializer_list<Type> InitList, AllocatorType &DequeAllocator) noexcept
+		: Array(8192, Allocator), Allocator(DequeAllocator) {
+		for (auto &Value : InitList) {
+			PushBack(Value);
+		}
+	}
+
+public:
 	void PushFront(Type &&Value) {
 		Array.HeadInsert(std::forward<Type &&>(Value));
 	}
@@ -161,6 +274,30 @@ public:
 	}
 	Type &GetBack() {
 		return Array.Tail->Value;
+	}
+
+public:
+	void Swap(const VDeque<Type, AllocatorType, TypeExtractor> &Object) {
+		AllocatorType &CAllocator = Allocator;
+		Array.Swap(Object.Array);
+		Allocator		 = Object.Allocator;
+		Object.Allocator = CAllocator;
+	}
+
+public:
+	Iterator Begin() {
+		return VDequeIterator<Type, AllocatorType>(&Array, Array.Head);
+	}
+	Iterator End() {
+		return Iterator(&Array, Array.Tail + 1);
+	}
+
+public:
+	Iterator begin() {
+		return Iterator(&Array, Array.Head);
+	}
+	Iterator end() {
+		return Iterator(&Array, Array.Tail);
 	}
 
 public:

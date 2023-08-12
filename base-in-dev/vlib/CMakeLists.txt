@@ -29,7 +29,13 @@ add_executable(vlib
         src/kernel/mem/vpointer.cpp
         inc/kernel/container/viterator.h
         src/kernel/container/viterator.cpp
-        inc/kernel/container/vtypeextractor.h)
+        inc/kernel/container/vtypeextractor.h
+        inc/kernel/container/vinitlist.h
+        src/kernel/container/vinitlist.cpp
+        inc/kernel/container/vqueue.h
+        src/kernel/container/vqueue.cpp
+        inc/kernel/container/vstack.h
+        src/kernel/container/vstack.cpp)
 
 target_include_directories(vlib PRIVATE inc)
 target_compile_options(vlib PRIVATE /W4 /WX)

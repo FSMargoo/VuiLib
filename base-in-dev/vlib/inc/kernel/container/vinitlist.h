@@ -22,47 +22,34 @@
 
 #pragma once
 
-#include "kernel/mem/vconstantpool.h"
-#include "kernel/mem/vmemory.h"
-#include "kernel/mem/vmemrbtree.h"
-#include "kernel/mem/vpointer.h"
-#include <kernel/container/vdeque.h>
-
-template <typename T>
-class MyInitializerList {
+template <class Type>
+class VInitList {
 public:
-	MyInitializerList(const T *begin, const T *end) : data(begin), size(end - begin) {
+	VInitList() noexcept : First(nullptr), Tail(nullptr) {
+	}
+	VInitList(const Type *FirstPtr, const Type *EndPtr) : First(FirstPtr), Tail(EndPtr) {
 	}
 
-	const T *begin() const {
-		return data;
+public:
+	constexpr const Type *Begin() noexcept {
+		return First;
 	}
-	const T *end() const {
-		return data + size;
+	constexpr const Type *End() noexcept {
+		return Tail;
+	}
+	constexpr size_t Size() noexcept {
+		return Tail - First;
+	}
+
+public:
+	constexpr const Type *begin() noexcept {
+		return First;
+	}
+	constexpr const Type *end() noexcept {
+		return Tail;
 	}
 
 private:
-	const T *data;
-	size_t	 size;
+	const Type *First;
+	const Type *Tail;
 };
-
-template <typename T>
-void processInitializerList(const MyInitializerList<T> &list) {
-}
-
-int mem_test() {
-	VMemoryPool B;
-
-	VDeque<int> TestDeque(
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27}, B);
-
-	for (auto &a : TestDeque) {
-		printf("%d ", a);
-	}
-
-	return 0;
-}
-
-int main() {
-	return mem_test();
-}
