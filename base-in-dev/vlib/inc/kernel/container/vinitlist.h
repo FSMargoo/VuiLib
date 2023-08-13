@@ -20,36 +20,88 @@
  * SOFTWARE.
  */
 
+/**
+ * \file vinitlist.h
+ * \brief This file contains the definition of the VInitList class.
+ */
+
 #pragma once
 
+/**
+ * \class VInitList
+ * \brief The VInitList class is a simple wrapper around a pair of pointers, representing a range of elements.
+ * It is used to provide range-based for loop support for initializer lists.
+ */
 template <class Type>
 class VInitList {
 public:
+	/**
+	 * Default constructor.
+	 * Initializes the pointers to nullptr.
+	 */
 	VInitList() noexcept : First(nullptr), Tail(nullptr) {
 	}
+
+	/**
+	 * Constructor taking a pair of pointers.
+	 * Initializes the pointers to the provided values.
+	 *
+	 * @param FirstPtr Pointer to the first element in the range.
+	 * @param EndPtr Pointer to one past the last element in the range.
+	 */
 	VInitList(const Type *FirstPtr, const Type *EndPtr) : First(FirstPtr), Tail(EndPtr) {
 	}
 
 public:
+	/**
+	 * Returns a pointer to the first element in the range.
+	 *
+	 * @return Pointer to the first element.
+	 */
 	constexpr const Type *Begin() noexcept {
 		return First;
 	}
+
+	/**
+	 * Returns a pointer to one past the last element in the range.
+	 *
+	 * @return Pointer to one past the last element.
+	 */
 	constexpr const Type *End() noexcept {
 		return Tail;
 	}
+
+	/**
+	 * Returns the number of elements in the range.
+	 *
+	 * @return Number of elements in the range.
+	 */
 	constexpr size_t Size() noexcept {
 		return Tail - First;
 	}
 
 public:
+	/**
+	 * Returns a pointer to the first element in the range.
+	 * This method is provided for compatibility with the C++ Standard Library.
+	 *
+	 * @return Pointer to the first element.
+	 */
 	constexpr const Type *begin() noexcept {
 		return First;
 	}
+
+	/**
+	 * Returns a pointer to one past the last element in the range.
+	 * This method is provided for compatibility with the C++ Standard Library.
+	 *
+	 * @return Pointer to one past the last element.
+	 */
 	constexpr const Type *end() noexcept {
 		return Tail;
 	}
 
 private:
-	const Type *First;
-	const Type *Tail;
+	const Type *First; ///< Pointer to the first element in the range.
+	const Type *Tail;  ///< Pointer to one past the last element in the range.
 };

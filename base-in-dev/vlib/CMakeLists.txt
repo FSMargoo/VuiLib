@@ -35,7 +35,8 @@ add_executable(vlib
         inc/kernel/container/vqueue.h
         src/kernel/container/vqueue.cpp
         inc/kernel/container/vstack.h
-        src/kernel/container/vstack.cpp)
+        src/kernel/container/vstack.cpp
+)
 
 target_include_directories(vlib PRIVATE inc)
 target_compile_options(vlib PRIVATE /W4 /WX)

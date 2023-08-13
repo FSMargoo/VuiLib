@@ -20,52 +20,76 @@
  * SOFTWARE.
  */
 
+/**
+ * \file viterator.h
+ * \brief This file contains the definition of various iterator classes.
+ */
+
 #include <kernel/container/vtypeextractor.h>
 
+/**
+ * \enum VIteratorType
+ * \brief An enum class for different types of iterators.
+ */
 enum class VIteratorType {
-	Direction,
-	Forward,
-	Input,
-	Output,
-	Random
+	Direction, ///< Direction iterator
+	Forward,   ///< Forward iterator
+	Input,	   ///< Input iterator
+	Output,	   ///< Output iterator
+	Random	   ///< Random iterator
 };
 
+/**
+ * \class VBaseIterator
+ * \brief The base class for all iterator types.
+ */
 template <class Type>
 class VBaseIterator {
 public:
+	/**
+	 * Default constructor.
+	 * Initializes the index to 0.
+	 */
 	VBaseIterator() noexcept : Index(0) {
 	}
 
 public:
+	/**
+	 * Returns the current index of the iterator.
+	 *
+	 * @return The current index.
+	 */
 	[[nodiscard]] constexpr size_t GetIndex() const {
 		return Index;
 	}
 
+	/**
+	 * Dereference operator.
+	 * Must be overridden by derived classes.
+	 *
+	 * @return A reference to the element pointed to by the iterator.
+	 */
 	virtual Type &operator*() = 0;
 
+	/**
+	 * Returns the type of the iterator.
+	 * Must be overridden by derived classes.
+	 *
+	 * @return The type of the iterator.
+	 */
 	virtual VIteratorType GetType() = 0;
 
 protected:
-	size_t Index;
+	size_t Index; ///< The current index of the iterator.
 };
 
-template <class Type>
-class VInputIterator : public VBaseIterator<Type> {
-public:
-	VInputIterator() noexcept = default;
-
-public:
-	virtual Type &operator++()	  = 0;
-	virtual Type &operator++(int) = 0;
-
-	virtual bool operator==(const VInputIterator<Type> &) = 0;
-	virtual bool operator!=(const VInputIterator<Type> &) = 0;
-
-	VIteratorType GetType() override {
-		return VIteratorType::Input;
-	}
-};
-
+/**
+ * \class VOutputIterator
+ * \brief A class that represents an output iterator.
+ *
+ * An output iterator is a type of iterator that can be used to modify the
+ * elements it points to. It is typically used in output operations.
+ */
 template <class Type>
 class VOutputIterator : public VBaseIterator<Type> {
 public:
@@ -80,6 +104,14 @@ public:
 	}
 };
 
+/**
+ * \class VForwardIterator
+ * \brief A class that represents a forward iterator.
+ *
+ * A forward iterator is a type of iterator that can be used to access
+ * the container elements sequentially. It can only move one step in the
+ * forward direction.
+ */
 template <class Type>
 class VForwardIterator : public VBaseIterator<Type> {
 public:
@@ -96,6 +128,13 @@ public:
 	}
 };
 
+/**
+ * \class VDirectionIterator
+ * \brief A class that represents a direction iterator.
+ *
+ * A direction iterator is a type of iterator that can be used to access
+ * the container elements in both forward and backward direction.
+ */
 template <class Type>
 class VDirectionIterator : public VBaseIterator<Type> {
 public:
@@ -114,6 +153,14 @@ public:
 	}
 };
 
+/**
+ * \class VRandomIterator
+ * \brief A class that represents a random iterator.
+ *
+ * A random iterator is a type of iterator that can be used to access
+ * the container elements in any order. It supports a broad range of
+ * operations including arithmetic and comparison operations.
+ */
 template <class Type>
 class VRandomIterator : public VBaseIterator<Type> {
 public:

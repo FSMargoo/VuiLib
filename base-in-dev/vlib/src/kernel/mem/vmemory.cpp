@@ -24,6 +24,8 @@
 
 VMemoryPool::VMemoryPool(VMemoryPolicy ManagerPolicy) : Policy(ManagerPolicy) {
 	_InitMemoryPool();
+
+	/* A valid policy is necessary */
 	if (!_CheckPolicyLegit()) {
 		ManagerPolicy = VMemoryPolicy::Default();
 	}
@@ -93,6 +95,13 @@ void VMemoryPool::_InitMemoryPool() {
 	_128ByteProxy = new VMem128ByteUnit(nullptr, _32Byte);
 	_256ByteProxy = new VMem256ByteUnit(nullptr, _32Byte);
 
+	/* However, in my opinion, it shouldn't be nullptr, but just judge it. */
+	if (_4Byte == nullptr || _8Byte == nullptr || _16Byte == nullptr || _32Byte == nullptr || _64Byte == nullptr ||
+		_128Byte == nullptr || _256Byte == nullptr) {
+		_vdebug_handle NoRestOfMemory;
+		NoRestOfMemory.crash("Not enough memory on system!");
+	}
+
 	_InitMemoryBlock<4>(_4Byte, _4ByteProxy, Policy.InitSize);
 	_InitMemoryBlock<8>(_8Byte, _8ByteProxy, Policy.InitSize);
 	_InitMemoryBlock<16>(_16Byte, _16ByteProxy, Policy.InitSize);
@@ -116,6 +125,7 @@ void VMemoryPool::OOMPanic() {
 	OOM = true;
 }
 short VMemoryPool::_EvaluateParticle(const size_t &Size) {
+	/* Always choose the largest (Or closet) memory area */
 	if (Size == 4 || Size == 8 || Size == 16 || Size == 32 || Size == 64 || Size == 128 || Size == 256) {
 		return static_cast<short>(Size);
 	}
@@ -150,6 +160,10 @@ short VMemoryPool::_EvaluateParticle(const size_t &Size) {
 
 	return Byte;
 }
+/*
+ * To allocate a memory, there will not actually malloc a memory block on time, instead,
+ * just return a base pointer and mark the target unit into *InUsed*
+ */
 void *VMemoryPool::_AllocateMemory(const size_t &Size) {
 	OOM = false;
 
@@ -243,9 +257,14 @@ LAllocate:
 
 		break;
 	}
+	default: {
+		_vdebug_handle().crash("Invalid memory byte unit!");
+
+		break;
+	}
 	}
 
-	// If out of memory (Not enough memory)
+	/* If out of memory (Not enough memory), expand it */
 	if (OOM) {
 		if (Policy.ExpandMode == VMemoryExpandMode::Constant) {
 			_vdebug_handle().crash("Memory pool out of memory. (However, in constant mode allocator can't expand)");

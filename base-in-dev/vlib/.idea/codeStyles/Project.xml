@@ -1,5 +1,15 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <Objective-C>
+      <option name="ADD_BRIEF_TAG" value="true" />
+      <option name="TAG_PREFIX_OF_BLOCK_COMMENT" value="BACK_SLASH" />
+    </Objective-C>
+    <Objective-C-extensions>
+      <option name="TAG_PREFIX_OF_BLOCK_COMMENT" value="BACK_SLASH" />
+    </Objective-C-extensions>
+    <Objective-C-extensions>
+      <option name="TAG_PREFIX_OF_BLOCK_COMMENT" value="BACK_SLASH" />
+    </Objective-C-extensions>
     <clangFormatSettings>
       <option name="ENABLED" value="true" />
     </clangFormatSettings>

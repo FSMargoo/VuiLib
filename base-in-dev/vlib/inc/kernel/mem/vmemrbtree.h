@@ -20,6 +20,11 @@
  * SOFTWARE.
  */
 
+/**
+ * \file vmemrbtree.h
+ * \brief This file def a RBT data structure for the constant pool and the VMap
+ */
+
 #pragma once
 
 namespace _VMem {
@@ -29,6 +34,11 @@ enum class VRBTNodeColor {
 	Red
 };
 
+/**
+ * \brief The RBT tree's node.
+ * \tparam KeyType Key type of the
+ * \tparam Pair The type of the value
+ */
 template <class KeyType, class Pair>
 struct VRBTNode {
 	VRBTNodeColor Color;
@@ -66,6 +76,11 @@ struct VRBTNode {
 		return false;
 	}
 };
+/**
+ * \brief The nil node of RBT, it will be unique in one RBT
+ * \tparam Key The type of key
+ * \tparam Pair The type of value
+ */
 template <class Key, class Pair>
 struct VRBTNilNode : public VRBTNode<Key, Pair> {
 	VRBTNilNode() : VRBTNode<Key, Pair>(VRBTNodeColor::Black, nullptr) {
@@ -81,6 +96,11 @@ struct VRBTNilNode : public VRBTNode<Key, Pair> {
 	}
 };
 
+/**
+ * \brief The key extractor of RBT (The alias of some type)
+ * \tparam Key The key type
+ * \tparam Pair The value type
+ */
 template <class Key, class Pair>
 class VRBTTypeExtract {
 public:
@@ -100,6 +120,13 @@ public:
 	}
 };
 
+/**
+ * \brief The RBT tree
+ * \tparam Key The type of key
+ * \tparam Pair The type of value
+ * \tparam RBTAllocator The allocator type
+ * \tparam TypeExtract The type extractor
+ */
 template <class Key, class Pair, class RBTAllocator, class TypeExtract = VRBTTypeExtract<Key, Pair>>
 class VRBTree {
 public:
@@ -127,6 +154,11 @@ public:
 	}
 
 public:
+	/**
+	 * \brief Insert a element
+	 * \param KeyValue
+	 * \param PairValue
+	 */
 	void Insert(const Key &KeyValue, const Pair &PairValue) {
 		Node *InsertNode = _AssumedRedNode(KeyValue, PairValue);
 		if (Root == nullptr) {
@@ -137,6 +169,10 @@ public:
 
 		_InsertFixUp(InsertNode);
 	}
+	/**
+	 * \brief Delete a element
+	 * \param KeyValue
+	 */
 	void Delete(const Key &KeyValue) {
 		Node *DeleteNode = _FindNode(KeyValue);
 		if (DeleteNode == nullptr) {
@@ -145,6 +181,11 @@ public:
 
 		_BSTDelete(DeleteNode);
 	}
+	/**
+	 * \brief Find the key is existing or not
+	 * \param KeyValue The value of key
+	 * \return If exists, return true, nor return false
+	 */
 	bool Exists(const Key &KeyValue) {
 		return _FindNode(KeyValue) != nullptr;
 	}
@@ -153,6 +194,10 @@ public:
 	}
 
 public:
+	/**
+	 * \brief Is the RBT empty or not
+	 * \return Whether the RBT empty or not
+	 */
 	bool Empty() {
 		return Root == nullptr;
 	}
@@ -284,7 +329,7 @@ private:
 		}
 
 		if (Target != DeleteNode) {
-			_NodeMoveAssgin(DeleteNode, Target);
+			_NodeMoveAssign(DeleteNode, Target);
 		}
 
 		if (Target->Color == VRBTNodeColor::Black) {
@@ -322,7 +367,7 @@ private:
 
 		InsertNode->Parent = Parent;
 	}
-	void _NodeMoveAssgin(Node *Target, Node *Source) {
+	void _NodeMoveAssign(Node *Target, Node *Source) {
 		Target->Key		= _MakeRValue<Key>(Source->Key);
 		Target->Context = _MakeRValue<Pair>(Source->Context);
 	}

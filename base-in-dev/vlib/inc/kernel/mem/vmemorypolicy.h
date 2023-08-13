@@ -20,10 +20,18 @@
  * SOFTWARE.
  */
 
+/**
+ * \file vmemorypolicy.h
+ * \brief This file contains the policy def of the policy
+ */
+
 #pragma once
 
 #include <functional>
 
+/**
+ * \brief The expand mode of memory pool
+ */
 enum class VMemoryExpandMode {
 	UserDefine,
 	Double,
@@ -31,6 +39,9 @@ enum class VMemoryExpandMode {
 	Constant
 };
 
+/**
+ * \brief The policy tells the memory pool how to expand the memory area
+ */
 struct VMemoryPolicy {
 	VMemoryExpandMode ExpandMode = VMemoryExpandMode::Double;
 	size_t			  ExpandSize = 1024;
