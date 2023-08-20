@@ -301,7 +301,7 @@ public:
 		return Temp->Value;
 	}
 	Type &operator--() override {
-		++(this->Index);
+		--(this->Index);
 
 		--IteratorPtr;
 

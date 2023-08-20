@@ -21,25 +21,13 @@
  */
 
 /**
- * \file vtypeextractor.h
- * \brief This file contains the definition of the VTypeExtractor struct.
+ * \file vthreadpool.cpp
+ * \brief A simple  thread pool
  */
 
-#pragma once
+#include <kernel/thread/vthreadpool.h>
 
-/**
- * \struct VTypeExtractor
- * \brief The VTypeExtractor struct is a template struct that extracts various type definitions from a given type.
- *
- * It provides typedefs for pointer, reference, copy reference, const type, const pointer, and const reference of the
- * given type.
- */
-template <class Type>
-struct VTypeExtractor {
-	using Pointer	   = typename Type *;  ///< Pointer to Type
-	using Refer		   = typename Type &;  ///< Reference to Type
-	using CopyRefer	   = typename Type &&; ///< Copy reference (rvalue reference) to Type
-	using ConstType	   = const Type;	   ///< Const Type
-	using ConstPointer = const Type *;	   ///< Pointer to const Type
-	using ConstRefer   = const Type &;	   ///< Reference to const Type
-};
+VThreadPool::VThreadPool(const size_t &ThreadCount) {
+	for (size_t Count = 0; Count < ThreadCount; ++Count) {
+	}
+}

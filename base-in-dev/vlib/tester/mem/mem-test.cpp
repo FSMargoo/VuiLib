@@ -22,47 +22,15 @@
 
 #pragma once
 
-#include "kernel/mem/vconstantpool.h"
-#include "kernel/mem/vmemory.h"
-#include "kernel/mem/vmemrbtree.h"
-#include "kernel/mem/vpointer.h"
-#include <kernel/container/vdeque.h>
+#include <kernel/container/varray.h>
 
-template <typename T>
-class MyInitializerList {
-public:
-	MyInitializerList(const T *begin, const T *end) : data(begin), size(end - begin) {
-	}
-
-	const T *begin() const {
-		return data;
-	}
-	const T *end() const {
-		return data + size;
-	}
-
-private:
-	const T *data;
-	size_t	 size;
-};
-
-template <typename T>
-void processInitializerList(const MyInitializerList<T> &list) {
-}
-
-int mem_test() {
-	VMemoryPool B;
-
-	VDeque<int> TestDeque(
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27}, B);
-
-	for (auto &a : TestDeque) {
-		printf("%d ", a);
+int main() {
+	VMemoryPool Pool;
+	VArray<int> TestArray(Pool);
+	TestArray.Insert({1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0}, 0);
+	for (auto &Element : TestArray) {
+		printf("%d", Element);
 	}
 
 	return 0;
-}
-
-int main() {
-	return mem_test();
 }

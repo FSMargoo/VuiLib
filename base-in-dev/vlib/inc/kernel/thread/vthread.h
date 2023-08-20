@@ -26,12 +26,12 @@
 
 #include <thread>
 
-template <class ReturnType, class... Agrument>
+template <class ReturnType, class... Argument>
 class VThread {
 public:
-	explicit VThread(VMemoryPool &ParentMemPool, const std::function<ReturnType(Agrument...)> &Function,
-					 Agrument... FunctionAgrument)
-		: Thread(Function, FunctionAgrument...), Cache(ParentMemPool, 1024) {
+	explicit VThread(VMemoryPool &ParentMemPool, const std::function<ReturnType(Argument...)> &Function,
+					 Argument... FunctionArgument)
+		: Thread(Function, FunctionArgument...), Cache(ParentMemPool, 1024) {
 	}
 	void Detch() noexcept {
 		Thread.detach();

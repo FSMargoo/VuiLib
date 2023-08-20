@@ -36,6 +36,9 @@ add_executable(vlib
         src/kernel/container/vqueue.cpp
         inc/kernel/container/vstack.h
         src/kernel/container/vstack.cpp
+        inc/kernel/thread/vthreadpool.h
+        src/kernel/thread/vthreadpool.cpp
+        inc/kernel/container/varray.h
 )
 
 target_include_directories(vlib PRIVATE inc)

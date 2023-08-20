@@ -178,3 +178,21 @@ public:
 		return VIteratorType::Random;
 	}
 };
+
+template <class Type>
+struct VRangeType {
+	Type Start;
+	Type End;
+
+	[[nodiscard]] constexpr bool ValidRange() const {
+		return Start <= End;
+	}
+};
+
+template <class Key, class Map>
+struct VMapPair {
+	Key OriginKey;
+	Map MapValue;
+};
+
+using VRange = VRangeType<size_t>;
