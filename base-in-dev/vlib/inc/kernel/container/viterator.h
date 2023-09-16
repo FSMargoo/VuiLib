@@ -24,6 +24,7 @@
  * \file viterator.h
  * \brief This file contains the definition of various iterator classes.
  */
+#pragma once
 
 #include <kernel/container/vtypeextractor.h>
 

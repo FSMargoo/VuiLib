@@ -91,8 +91,9 @@ public:
 	VDequeArray(const size_t &InitSize, AllocatorType &ArrayAllocator) noexcept
 		: Allocator(ArrayAllocator), ExpandSize(InitSize) {
 		Array = Allocator.template AllocateArray<VDequeNode<NodeType>>(InitSize);
-		Head  = Array + InitSize / 2;
-		Tail  = Head;
+
+		Head = Array + InitSize / 2;
+		Tail = Head;
 	}
 
 	/**
@@ -121,7 +122,7 @@ public:
 	void HeadInsert(NodeType &&Value) {
 		_CheckFrontField();
 
-		Head->Value = Value;
+		Head->Value = *(new (&(Head->Value)) NodeType(std::move(Value)));
 		Head		= Head - 1;
 	}
 
@@ -161,7 +162,7 @@ public:
 	 * \brief Delete the value at the tail of the array
 	 */
 	void TailDelete() {
-		if (Tail != Array + ExpandSize) {
+		if (Tail != Array + ExpandSize && Head != Tail) {
 			Tail->Value.~NodeType();
 			Tail = Tail - 1;
 		}
@@ -212,7 +213,7 @@ private:
 		DiffType PtrDiff	  = Tail - Head;
 		DiffType HeadPosition = ExpandSize - (PtrDiff / 2);
 		for (size_t Count = 0; Count < PtrDiff; ++Count) {
-			*(NewArea + Count + HeadPosition) = *(Head + Count);
+			*(NewArea + Count + HeadPosition) = std::move(*(Head + Count));
 		}
 
 		Allocator.template DeleteArray<VDequeNode<NodeType>>(Array, ExpandSize);

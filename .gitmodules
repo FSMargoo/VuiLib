@@ -1,0 +1,3 @@
+[submodule "base-in-dev/vlib/lib/iconv"]
+	path = base-in-dev/vlib/lib/iconv
+	url = https://github.com/vovythevov/libiconv-cmake.git

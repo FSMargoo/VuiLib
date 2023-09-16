@@ -1,9 +1,9 @@
 <div align=center>
-    <img src="./readme-resource/logo.png"/>
+    <img src="./readme-resource/developing-image.png">
     <h1>VuiLib：一个开源，轻巧的 C++ 界面库</h1>
     <img src="https://img.shields.io/badge/build-passing-successimportant"/>
     <img src="https://img.shields.io/badge/license-MIT-green"/>
-    <img src="https://img.shields.io/badge/version-3.x.x%20beta-orange"/>
+    <img src="https://img.shields.io/badge/version-3.x.x%20developing-orange"/>
 </div>
 
 ## Installation - 安装

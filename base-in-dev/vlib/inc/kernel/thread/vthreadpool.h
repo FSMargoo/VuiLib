@@ -31,11 +31,39 @@
 #include <functional>
 #include <future>
 
+#include <kernel/container/varray.h>
 #include <kernel/container/vqueue.h>
 
+/**
+ * \brief VThread provide a thread pool which is used for VThread class
+ */
 class VThreadPool {
 public:
-	explicit VThreadPool(const size_t &ThreadCount = std::thread::hardware_concurrency());
+	explicit VThreadPool(VMemoryPool &Allocator, const size_t &ThreadCount = std::thread::hardware_concurrency());
+	template <class FunctionType, typename... Args>
+	auto Summit(FunctionType &&Function, Args &&...Argument) {
+		using ReturnType									   = std::invoke_result_t<FunctionType, Args...>;
+		std::shared_ptr<std::packaged_task<ReturnType()>> Task = std::make_shared<std::packaged_task<ReturnType()>>(
+			std::bind(std::forward<FunctionType>(Function), std::forward<Args>(Argument)...));
+		std::future<ReturnType> Result = Task->get_future();
+		{
+			std::unique_lock<std::mutex> ThreadLock(QueueMutex);
+			if (StopFlag) {
+				_vdebug_handle().crash("Summit task on a stopped thread pool!");
+			}
+
+			Tasks.Push([Task = std::move(Task)]() { (*Task)(); });
+		}
+
+		Condition.notify_one();
+		return Result;
+	}
+	~VThreadPool();
 
 private:
+	VArray<std::thread>			  Threads;
+	VQueue<std::function<void()>> Tasks;
+	std::mutex					  QueueMutex;
+	std::condition_variable		  Condition;
+	bool						  StopFlag;
 };

@@ -7,6 +7,7 @@ include_directories(inc)
 include_directories(inc/kernel)
 include_directories(inc/kernel/base)
 include_directories(inc/kernel/mem)
+include_directories(lib)
 
 add_executable(vlib
         inc/kernel/base/vbase.h
@@ -39,6 +40,7 @@ add_executable(vlib
         inc/kernel/thread/vthreadpool.h
         src/kernel/thread/vthreadpool.cpp
         inc/kernel/container/varray.h
+        inc/kernel/container/vstring.h
 )
 
 target_include_directories(vlib PRIVATE inc)

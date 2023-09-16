@@ -34,7 +34,7 @@
  * \brief The VQueue class is a simple queue data structure.
  * It is implemented using the VDeque class.
  */
-template <class Type, class AllocatorType, class TypeExtractor = VTypeExtractor<Type>>
+template <class Type, class AllocatorType = VMemoryPool, class TypeExtractor = VTypeExtractor<Type>>
 class VQueue {
 public:
 	/**
@@ -81,7 +81,7 @@ public:
 	 * Pops a value from the back of the queue.
 	 */
 	void Pop() {
-		NativeDeque.PopBack();
+		NativeDeque.PopFront();
 	}
 
 	/**
@@ -109,6 +109,13 @@ public:
 	 */
 	const size_t &GetSize() {
 		return NativeDeque.GetSize();
+	}
+
+	/**
+	 * \brief Check is whether the queue is empty
+	 */
+	[[nodiscard]] bool IsEmpty() {
+		return NativeDeque.IsEmpty();
 	}
 
 private:

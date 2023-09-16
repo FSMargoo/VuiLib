@@ -135,7 +135,7 @@ public:
 	using ArrayType	 = VArray<Type, AllocatorType, TypeExtractor>;
 	using Pointer	 = TypeExtractor::Pointer;
 	using ConstRefer = TypeExtractor::ConstRefer;
-	using CopyRefer	 = TypeExtractor::CopyRefer;
+	using MoveRefer	 = TypeExtractor::MoveRefer;
 	using Iterator	 = VArrayIterator<Type>;
 
 public:
@@ -167,6 +167,25 @@ public:
 		_MoveConstructor(std::forward<ArrayType &&>(Object));
 
 		return *this;
+	}
+	bool operator==(const ArrayType &Object) noexcept {
+		if (Object.GetSize() != GetSize()) {
+			return false;
+		}
+		size_t Count = 0;
+		bool   Flag	 = true;
+		Object.Visit([this, &Count, &Flag](const Type &Value) {
+			if (Value != At(Count)) {
+				Flag = false;
+			}
+
+			++Count;
+		});
+
+		return Flag;
+	}
+	bool operator!=(const ArrayType &Object) noexcept {
+		return !operator==(Object);
 	}
 
 public:
@@ -231,14 +250,14 @@ public:
 	 * \brief Push value from back
 	 * \param Value The value that need to be pushed
 	 */
-	void Push(const ConstRefer Value) {
+	void Push(ConstRefer Value) {
 		_InsertFromBack(Value);
 	}
 	/**
 	 * \brief Push value from back
 	 * \param Value The value that need to be pushed
 	 */
-	void Push(CopyRefer Value) {
+	void Push(MoveRefer Value) {
 		_InsertFromBack(std::move(Value));
 	}
 	/**
@@ -250,6 +269,18 @@ public:
 		}
 	}
 	/**
+	 * \brief Push a element from constructor parameter
+	 */
+	template <class... ArgType>
+	void BuildPush(ArgType... Argument) {
+		if (_GetSize() >= Memory.Size) {
+			_ReallocateMemory(Memory.Size * 2);
+		}
+		Memory.Cursor = new (Memory.Cursor) Type(std::forward<ArgType>(Argument)...);
+
+		++Memory.Cursor;
+	}
+	/**
 	 * \brief Insert an element at specified position
 	 */
 	void Insert(const ConstRefer Value, const size_t &Where) {
@@ -258,7 +289,7 @@ public:
 	/**
 	 * \brief Insert an element at specified position
 	 */
-	void Insert(CopyRefer Value, const size_t &Where) {
+	void Insert(MoveRefer Value, const size_t &Where) {
 		_InsertByPosition(Value, Where);
 	}
 	/**
@@ -279,6 +310,14 @@ public:
 	 */
 	std::initializer_list<Type> ToInitList() {
 		return std::initializer_list<Type>(Memory.Pointer, Memory.Cursor);
+	}
+
+public:
+	/**
+	 * \brief Return whether the array is empty
+	 */
+	bool IsEmpty() {
+		return Memory.Pointer == Memory.Cursor;
 	}
 
 public:
@@ -307,7 +346,15 @@ public:
 	/**
 	 * \brief Provide a function to do some operations of element (Do not operate the array object in the function)
 	 */
-	void Range(const std::function<void(ConstRefer)> &Function) {
+	void Range(const std::function<void(MoveRefer)> &Function) {
+		for (size_t Count = 0; Count < _GetSize(); ++Count) {
+			Function(*(Memory.Pointer + Count));
+		}
+	}
+	/**
+	 * \brief Provide a visitor for array
+	 */
+	void Visit(const std::function<void(ConstRefer)> &Function) const {
 		for (size_t Count = 0; Count < _GetSize(); ++Count) {
 			Function(*(Memory.Pointer + Count));
 		}

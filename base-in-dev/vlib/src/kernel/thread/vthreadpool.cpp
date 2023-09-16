@@ -27,7 +27,38 @@
 
 #include <kernel/thread/vthreadpool.h>
 
-VThreadPool::VThreadPool(const size_t &ThreadCount) {
+VThreadPool::VThreadPool(VMemoryPool &Allocator, const size_t &ThreadCount)
+	: Tasks(Allocator), Threads(Allocator), StopFlag(false) {
 	for (size_t Count = 0; Count < ThreadCount; ++Count) {
+		Threads.BuildPush([this]() {
+			while (true) {
+				std::function<void()> CurrentTask;
+				{
+					std::unique_lock<std::mutex> ThreadLock(this->QueueMutex);
+					this->Condition.wait(ThreadLock, [this]() { return this->StopFlag || !this->Tasks.IsEmpty(); });
+
+					if (this->StopFlag && this->Tasks.IsEmpty()) {
+						return;
+					}
+
+					CurrentTask = std::move(this->Tasks.GetFront());
+					this->Tasks.Pop();
+				}
+
+				if (CurrentTask != nullptr) {
+					CurrentTask();
+				}
+			}
+		});
+	}
+}
+VThreadPool::~VThreadPool() {
+	{
+		std::unique_lock<std::mutex> ThreadLock(QueueMutex);
+		StopFlag = true;
+	}
+	Condition.notify_all();
+	for (auto &Thread : Threads) {
+		Thread.join();
 	}
 }

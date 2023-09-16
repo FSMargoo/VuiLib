@@ -22,15 +22,29 @@
 
 #pragma once
 
+#include "../../lib/iconv/include/export.h"
 #include <kernel/container/varray.h>
+#include <kernel/thread/vthreadpool.h>
 
 int main() {
 	VMemoryPool Pool;
-	VArray<int> TestArray(Pool);
-	TestArray.Insert({1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0}, 0);
-	for (auto &Element : TestArray) {
-		printf("%d", Element);
-	}
+	VThreadPool ThreadPool(Pool);
+	ThreadPool.Summit([]() {
+		size_t Result = 1 + 1;
+		printf("%zu ", Result);
+	});
+	ThreadPool.Summit([]() {
+		size_t Result = 2 + 2;
+		printf("%zu ", Result);
+	});
+	ThreadPool.Summit([]() {
+		size_t Result = 3 + 3;
+		printf("%zu ", Result);
+	});
+	ThreadPool.Summit([]() {
+		size_t Result = 4 + 4;
+		printf("%zu ", Result);
+	});
 
 	return 0;
 }
