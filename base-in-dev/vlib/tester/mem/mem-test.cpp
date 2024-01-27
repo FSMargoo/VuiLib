@@ -27,12 +27,17 @@
 #include "kernel/mem/vmemrbtree.h"
 
 int mem_test() {
-	VMemoryPool TestMPool;
-	const int  *A = TestMPool.Allocate<const int>((const int &)8);
-	const int  *B = TestMPool.Allocate<const int>(9);
-	const int  *C = TestMPool.Allocate<const int>(10);
+	VMemoryPool	 TestMPool;
+	VThreadCache Cache(TestMPool, 1024);
+	const int	*A = Cache.Allocate<const int>((const int &)8);
+	const int	*B = Cache.Allocate<const int>(9);
+	const int	*C = Cache.Allocate<const int>(10);
+	int			*D;
+	for (int i = 0; i < 1145; ++i) {
+		D = Cache.Allocate<int>(80);
+	}
 
-	printf("%d\n%d\n%d", *A, *B, *C);
+	printf("%d\n%d\n%d\n%d", *A, *B, *C, *D);
 
 	return 0;
 }

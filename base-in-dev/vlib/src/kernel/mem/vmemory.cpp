@@ -298,3 +298,140 @@ VThreadCache::VThreadCache(VMemoryPool &ParentPool, const size_t &InitSize) : Po
 	Policy = VMemoryPolicy{
 		.ExpandMode = VMemoryExpandMode::Constant, .ExpandSize = 0, .InitSize = InitSize, .UserFunction = NULL};
 }
+[[nodiscard]] void *VThreadCache::_AllocateMemory(const size_t &Size) {
+	OOM = false;
+
+	short ByteCount = _EvaluateParticle(Size);
+
+	void *Ptr = nullptr;
+
+	switch (ByteCount) {
+	case 4: {
+		VMem4ByteUnit *Unit = _SearchValidAllocator<4>(_4ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 8: {
+		VMem8ByteUnit *Unit = _SearchValidAllocator<8>(_8ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 16: {
+		VMem16ByteUnit *Unit = _SearchValidAllocator<16>(_16ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 32: {
+		VMem32ByteUnit *Unit = _SearchValidAllocator<32>(_32ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 64: {
+		VMem64ByteUnit *Unit = _SearchValidAllocator<64>(_64ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 128: {
+		VMem128ByteUnit *Unit = _SearchValidAllocator<128>(_128ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	case 256: {
+		VMem256ByteUnit *Unit = _SearchValidAllocator<256>(_256ByteProxy, Size);
+		if (Unit != nullptr) {
+			Ptr = Unit->Allocate(Size);
+			OOM = false;
+		} else {
+			OOM = true;
+			break;
+		}
+
+		break;
+	}
+	}
+
+	// If out of memory (Not enough memory)
+	if (OOM) {
+		return nullptr;
+	}
+
+	return Ptr;
+}
+void VThreadCache::_FreeMemory(void *Ptr, const size_t &Size) {
+	bool Flag = false;
+
+	Flag = _FreeBlock<4>(Ptr, _4ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+	Flag = _FreeBlock<8>(Ptr, _8ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+	Flag = _FreeBlock<16>(Ptr, _16ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+	Flag = _FreeBlock<32>(Ptr, _32ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+	Flag = _FreeBlock<64>(Ptr, _64ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+	Flag = _FreeBlock<128>(Ptr, _128ByteProxy, Size);
+	if (Flag) {
+		return;
+	}
+
+	Flag = _FreeBlock<256>(Ptr, _256ByteProxy, Size);
+
+	if (!Flag) {
+		Pool._FreeMemory(Ptr, Size);
+	}
+
+	return;
+}

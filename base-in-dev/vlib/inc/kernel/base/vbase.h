@@ -31,10 +31,10 @@ enum class VCompareOperation {
 	Lt,
 	Gt
 };
-
+	
 template <class Left, class Right>
 constexpr bool VCompare(const Left &LeftValue, const Right &RightValue, const VCompareOperation &Op) noexcept {
-	if constexpr (std::is_signed_v<Left> == std::is_signed_v<> Right) {
+	if constexpr (std::is_signed_v<Left>() == std::is_signed_v<Right>()) {
 		if (Op == VCompareOperation::Lt) {
 			return LeftValue < RightValue;
 		} else {

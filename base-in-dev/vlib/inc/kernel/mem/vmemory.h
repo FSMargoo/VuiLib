@@ -306,6 +306,9 @@ protected:
 	}
 
 protected:
+	friend class VThreadCache;
+
+protected:
 	VMem4ByteUnit	*_4ByteProxy;
 	VMem8ByteUnit	*_8ByteProxy;
 	VMem16ByteUnit	*_16ByteProxy;
@@ -341,6 +344,9 @@ public:
 	template <class Type, class... Agrument>
 	Type *Allocate(Agrument... BuiltAgrument) {
 		Type *Ptr = static_cast<Type *>(_AllocateMemory(sizeof(Type)));
+		if (Ptr == nullptr) {
+			return Pool.Allocate<Type, Agrument...>(BuiltAgrument...);
+		}
 
 		return new (Ptr) Type(BuiltAgrument...);
 	}
@@ -369,6 +375,9 @@ public:
 	void DeletArray(Type *Ptr, const size_t &ArraySize) {
 		_FreeMemory(Ptr, ArraySize * sizeof(Type));
 	}
+
+private:
+	void _FreeMemory(void *Ptr, const size_t &Size);
 
 protected:
 	[[nodiscard]] void *_AllocateMemory(const size_t &Size);
