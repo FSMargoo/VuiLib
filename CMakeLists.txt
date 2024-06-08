@@ -3,4 +3,8 @@ project(VUILib)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(VUILib main.cpp)
+add_executable(VUILib main.cpp
+        include/base/test/vException.h
+        include/base/event/vEvent.h)
+
+target_include_directories(VUILib PRIVATE ./include)
