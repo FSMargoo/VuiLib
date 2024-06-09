@@ -40,7 +40,7 @@ using VDelegate = std::function<void(Parameters...)>;
 
 /***
  * The connection unit of VSignal
- * @tparam Parameters : The function parameters
+ * @tparam Parameters The function parameters
  */
 template <class... Parameters>
 class VConnectUnit {
@@ -50,8 +50,8 @@ public:
 	}
 
 public:
-	inline VDelegate<Parameters...> *GetFunction() {
-		return *_function;
+	inline VDelegate<Parameters...>* GetFunction() {
+		return &_function;
 	}
 	bool Blocked() {
 		return _blocked;
@@ -66,7 +66,7 @@ private:
 };
 /***
  * The function connection unit
- * @tparam Parameters : The function parameters
+ * @tparam Parameters The function parameters
  */
 template <class... Parameters>
 class VFunctionConnection : public VConnectUnit<Parameters...> {
@@ -88,7 +88,7 @@ private:
 };
 /***
  * The class based function connection unit
- * @tparam Parameters : The function parameters
+ * @tparam Parameters The function parameters
  */
 template <class ObjectClass, class... Parameter>
 class VClassConnection : public VConnectUnit<Parameter...> {
@@ -97,7 +97,7 @@ public:
 
 public:
 	VClassConnection(ObjectClass *Object, FunctionPointer Function)
-		: VConnectUnit<Parameter...>([Object, Function](Parameter... Args) { (*Object.*Function(Args...)); }) {
+		: VConnectUnit<Parameter...>([Object, Function](Parameter... Args) { (*Object.*Function)(Args...); }) {
 		_objectPointer = Object;
 		_function	   = Function;
 	}
@@ -106,7 +106,7 @@ public:
 		return _objectPointer;
 	}
 	inline FunctionPointer GetPointer() {
-		return _objectPointer;
+		return _function;
 	}
 
 private:
@@ -114,6 +114,9 @@ private:
 	FunctionPointer _function;
 };
 
+/***
+ * Event operation type enum class
+ */
 enum class VEventOperation {
 	Lookup,
 	Delete,
@@ -123,7 +126,7 @@ enum class VEventOperation {
 
 /***
  * The event class (Observer)
- * @tparam Parameters : The function parameters
+ * @tparam Parameters The function parameters
  */
 template <class... Parameters>
 class VEvent {
@@ -143,12 +146,13 @@ public:
 public:
 	/***
 	 * Register handle function
-	 * @param Function : The function pointer
+	 * @param Function The function pointer
 	 */
 	inline void Connect(FunctionPointer Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Function, VEventOperation::Lookup)) {
-			_slots->insert(new VFunctionConnection(Function));
+			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VFunctionConnection(Function));
+			_slots->push_back(pointer);
 		}
 	}
 	/***
@@ -161,12 +165,13 @@ public:
 	inline void Connect(ObjectType* Object, ClassFunctionPointer<ObjectType> Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Object, Function, VEventOperation::Lookup)) {
-			_slots->insert(new VClassConnection<ObjectType>(Object, Function));
+			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VClassConnection<ObjectType, Parameters...>(Object, Function));
+			_slots->push_back(pointer);
 		}
 	}
 	/***
 	 * Unregister handle function
-	 * @param Function : The function pointer
+	 * @param Function The function pointer
 	 */
 	inline void Disconnect(FunctionPointer Function) {
 		std::lock_guard<std::mutex> guard(_lock);
@@ -185,7 +190,7 @@ public:
 	}
 	/***
 	 * Block handle function
-	 * @param Function : The function pointer
+	 * @param Function The function pointer
 	 */
 	inline void Block(FunctionPointer Function) {
 		std::lock_guard<std::mutex> guard(_lock);
@@ -204,7 +209,7 @@ public:
 	}
 	/***
 	 * Unblock handle function
-	 * @param Function : The function pointer
+	 * @param Function The function pointer
 	 */
 	inline void Unblock(FunctionPointer Function) {
 		std::lock_guard<std::mutex> guard(_lock);
@@ -222,6 +227,19 @@ public:
 		Operation(Object, Function, VEventOperation::Unblock);
 	}
 
+public:
+	void Emit(Parameters... Args) {
+		for (auto function = _slots->begin(); function != _slots->end(); ++function) {
+			if (function->get()->Blocked()) {
+				continue;
+			}
+
+			auto pointer = function->get()->GetFunction();
+
+			(*pointer)(Args...);
+		}
+	}
+
 private:
 	/***
 	 * Conduct Operation of slots for function connection
@@ -234,6 +252,8 @@ private:
 				switch (Operation) {
 				case VEventOperation::Delete: {
 					_slots->erase(iterator++);
+
+					break;
 				}
 				case VEventOperation::Block: {
 					connectFunction->SetBlock(true);
@@ -258,6 +278,7 @@ private:
 				++iterator;
 			}
 		}
+		return false;
 	}
 	/***
 	 * Conduct Operation of slots for class connection
@@ -266,11 +287,13 @@ private:
  	template<class ObjectType>
 	bool Operation(ObjectType* Object, ClassFunctionPointer<ObjectType> Function, const VEventOperation &Operation) {
 		for (auto iterator = _slots->begin(); iterator != _slots->end();) {
-			auto connectFunction = static_cast<VClassConnection<Parameters...> *>((*iterator).get());
+			auto connectFunction = static_cast<VClassConnection<ObjectType, Parameters...> *>((*iterator).get());
 			if (connectFunction->GetPointer() == Function && connectFunction->GetObject() == Object) {
 				switch (Operation) {
 				case VEventOperation::Delete: {
 					_slots->erase(iterator++);
+
+					break;
 				}
 				case VEventOperation::Block: {
 					connectFunction->SetBlock(true);
@@ -295,6 +318,7 @@ private:
 				++iterator;
 			}
 		}
+		return false;
 	}
 
 private:
