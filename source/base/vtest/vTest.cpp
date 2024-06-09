@@ -25,7 +25,7 @@
  * \brief The test library
  */
 
-#include <base/test/vTest.h>
+#include "base/test/vTest.h"
 #include <chrono>
 #include <ctime>
 #include <format>
@@ -41,9 +41,11 @@ void VTestConductor::AddTask(const VTestTask &Task) {
 void VTestConductor::StartTasks() {
 	auto const time = std::chrono::current_zone()
 						  ->to_local(std::chrono::system_clock::now());
-	printf("%s", std::format("Test start at time {:%Y-%m-%d %X}\n", time).c_str());
+	printf("%s", std::format("Test started at time {:%Y-%m-%d %X}\n", time).c_str());
 
 	bool globalFlag = false;
+	long successCount = 0;
+	long failedCount = 0;
 	for (VTestTask task : _taskList) {
 		printf("%s", std::format("Task [{}] ", task.TaskID).c_str());
 
@@ -54,16 +56,20 @@ void VTestConductor::StartTasks() {
 
 		if (flag) {
 			printf("passed! \t[√]\n");
+			++successCount;
 		} else {
 			globalFlag = true;
 			printf("failed! \t[×]\n");
+			++failedCount;
 		}
 	}
+
+	printf("%s", std::format("All {} test(s) has been conducted. {} test(s) failed, {} test(s) passed\n", _taskList.size(), failedCount, successCount).c_str());
 
 	if (globalFlag) {
 		printf("[WARNING] : You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
 			   "If it happened on a release version of VUILib please contact us with GitHub issue or the email <margoo@margoo.icu>.\n"
-			   "Please provide us with above information.B");
+			   "Please provide us with above information.");
 	}
 	else {
 		printf("[INFO] : You are using a stable version of VUILib which passed all unit tests");
