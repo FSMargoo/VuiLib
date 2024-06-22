@@ -120,9 +120,18 @@ void VTestConductor::StartTasks() {
 	}
 
 	WinToastTemplate startupToast(WinToastTemplate::Text02);
-	startupToast.setTextField(std::format(L"VTest tasks finished!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
 	startupToast.setAudioOption(audioOption);
-	startupToast.setAttributionText(L"Finished!");
+	if (globalFlag) {
+		startupToast.setTextField(std::format(L"VTest tasks FAILED!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!\n"
+											  "You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
+											  "If it happened on a release version of VUILib please contact us with GitHub issue or the email <margoo@margoo.icu>.\n"
+											  "Please provide us with the console information.", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
+		startupToast.setAttributionText(L"[FAILED!] Failed!");
+	}
+	else {
+		startupToast.setTextField(std::format(L"VTest tasks finished!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
+		startupToast.setAttributionText(L"[SUCCESS!] Finished!");
+	}
 	startupToast.setImagePath(L"");
 
 	WinToast::instance()->showToast(startupToast, new CustomHandler());

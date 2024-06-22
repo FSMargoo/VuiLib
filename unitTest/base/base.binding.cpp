@@ -40,3 +40,19 @@ bool VUnitTest(BaseBinding, BindingValueTest) {
 
 	return (*testBinding) == 2;
 }
+bool VUnitTest(BaseBinding, UnbindingValueTest) {
+	int scopeValue = 1;
+	VBindingType<int, const int&> testBinding(1);
+	testBinding.Bind(&scopeValue);
+
+	scopeValue = 2;
+
+	testBinding.Unbind();
+
+	return (*testBinding) == 1;
+}
+bool VUnitTest(BaseBinding, ValueCompareTest) {
+	VBindingType<int, const int&> testBinding(1);
+
+	return testBinding > 0 && testBinding < 2 && testBinding == 1 && testBinding >= 1 && testBinding <= 2;
+}

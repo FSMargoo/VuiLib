@@ -32,3 +32,5 @@
 
 bool VUnitTest(BaseBinding, ValueTest);
 bool VUnitTest(BaseBinding, BindingValueTest);
+bool VUnitTest(BaseBinding, UnbindingValueTest);
+bool VUnitTest(BaseBinding, ValueCompareTest);

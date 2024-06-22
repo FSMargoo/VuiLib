@@ -27,6 +27,8 @@
 
 #pragma once
 
+#include <compare>
+
 /**
  * This is a class for two-way binding, the control define property with
  * this data class. This class will maintain an instance of the type and
@@ -54,10 +56,42 @@ public:
 		_pointer = Pointer;
 	}
 	/**
-	 * Unbind, discard the pointer.
+	 * Unbind, discard the pointer. Binding object will not copy the value into the
+	 * cache of binding object.
 	 */
 	void Unbind() {
 		_pointer = nullptr;
+	}
+
+public:
+	/**
+	 * Spaceship operator
+	 * @param Value The value for judgement
+	 */
+	std::strong_ordering  friend operator<=>(const VBindingType& Object, const Type& Value) {
+		if (Object._pointer != nullptr) {
+			return *(Object._pointer) <=> Value;
+		}
+
+		return Object._instance <=> Value;
+	}
+	/**
+	 * Spaceship operator
+	 * @param Value The value for judgement
+	 */
+	std::strong_ordering  friend operator<=>(const Type& Value, const VBindingType& Object) {
+		if (Object._pointer != nullptr) {
+			return Value <=> *(Object._pointer);
+		}
+
+		return Value <=> Object._instance;
+	}
+	bool operator==(const Type& Value) {
+		if (_pointer != nullptr) {
+			return Value == *_pointer;
+		}
+
+		return Value == _instance;
 	}
 
 public:

@@ -24,3 +24,6 @@
  * \file vBindingType.cpp
  * \brief A wrapper type for two-way binding
  */
+
+#include <base/binding/vBindingType.h>
+
