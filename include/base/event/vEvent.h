@@ -228,6 +228,10 @@ public:
 	}
 
 public:
+	/**
+	 * Publish the event to event listener
+	 * @param Args The args to publish the event
+	 */
 	void Emit(Parameters... Args) {
 		for (auto function = _slots->begin(); function != _slots->end(); ++function) {
 			if (function->get()->Blocked()) {
@@ -238,6 +242,13 @@ public:
 
 			(*pointer)(Args...);
 		}
+	}
+	/**
+	 * Publish the event to event listener
+	 * @param Args The args to publish the event
+	 */
+	void operator()(Parameters... Args) {
+		Emit(Args...);
 	}
 
 private:

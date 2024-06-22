@@ -21,58 +21,6 @@
  */
 
 /**
- * \file vTest.h
- * \brief The test library
+ * \file vBindingType.cpp
+ * \brief A wrapper type for two-way binding
  */
-
-#pragma once
-
-#include <base/event/vEvent.h>
-
-#define VUnitTest(MODULE, X)  __VTest_MARCO_##MODULE##X()
-#define VUnitTestM(MODULE, X) __VTest_MARCO_##MODULE##X
-
-/***
- * The test task class
- */
-class VTestTask {
-public:
-	VTestTask(std::function<bool()> Function, const std::string &TaskName);
-
-public:
-	/***
-	 * Start test
-	 * @return Whether the test task failed
-	 */
-	[[nodiscard]] bool Conduct() const {
-		return _task();
-	}
-
-private:
-	std::function<bool()> _task;
-
-public:
-	std::string TaskID;
-};
-
-/***
- * The test conductor class
- */
-class VTestConductor {
-public:
-	VTestConductor() = default;
-
-public:
-	/***
-	 * Add testing task
-	 * @param Task The test task
-	 */
-	void AddTask(const VTestTask &Task);
-	/***
-	 * Start the test task
-	 */
-	void StartTasks();
-
-private:
-	std::vector<VTestTask> _taskList;
-};

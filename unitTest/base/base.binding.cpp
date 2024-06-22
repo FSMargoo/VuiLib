@@ -21,58 +21,22 @@
  */
 
 /**
- * \file vTest.h
- * \brief The test library
+ * \file base.binding.cpp
+ * \brief The base binding test
  */
 
-#pragma once
+#include <unitTest/base/base.binding.h>
 
-#include <base/event/vEvent.h>
+bool VUnitTest(BaseBinding, ValueTest) {
+	VBindingType<int, const int&> testBinding(1);
+	return (*testBinding) == 1;
+}
+bool VUnitTest(BaseBinding, BindingValueTest) {
+	int scopeValue = 1;
+	VBindingType<int, const int&> testBinding(1);
+	testBinding.Bind(&scopeValue);
 
-#define VUnitTest(MODULE, X)  __VTest_MARCO_##MODULE##X()
-#define VUnitTestM(MODULE, X) __VTest_MARCO_##MODULE##X
+	scopeValue = 2;
 
-/***
- * The test task class
- */
-class VTestTask {
-public:
-	VTestTask(std::function<bool()> Function, const std::string &TaskName);
-
-public:
-	/***
-	 * Start test
-	 * @return Whether the test task failed
-	 */
-	[[nodiscard]] bool Conduct() const {
-		return _task();
-	}
-
-private:
-	std::function<bool()> _task;
-
-public:
-	std::string TaskID;
-};
-
-/***
- * The test conductor class
- */
-class VTestConductor {
-public:
-	VTestConductor() = default;
-
-public:
-	/***
-	 * Add testing task
-	 * @param Task The test task
-	 */
-	void AddTask(const VTestTask &Task);
-	/***
-	 * Start the test task
-	 */
-	void StartTasks();
-
-private:
-	std::vector<VTestTask> _taskList;
-};
+	return (*testBinding) == 2;
+}

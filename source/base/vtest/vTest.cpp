@@ -25,20 +25,55 @@
  * \brief The test library
  */
 
-#include "base/test/vTest.h"
+#include <base/test/vTest.h>
+#include <third/winToast/include/wintoastlib.h>
+
 #include <chrono>
 #include <ctime>
 #include <format>
 #include <thread>
 #include <utility>
 
-VTestTask::VTestTask(std::function<bool()> Function, std::string TaskName)
+class CustomHandler : public WinToastLib::IWinToastHandler {
+public:
+	void toastActivated() const {
+	}
+
+	void toastActivated(int actionIndex) const {
+	}
+
+	void toastDismissed(WinToastDismissalReason state) const {
+		switch (state) {
+		case UserCanceled:
+			exit(0);
+
+			break;
+		case TimedOut:
+			exit(0);
+
+			break;
+		case ApplicationHidden:
+			exit(0);
+
+			break;
+		default:
+			break;
+		}
+	}
+
+	void toastFailed() const {
+	}
+};
+
+VTestTask::VTestTask(std::function<bool()> Function, const std::string &TaskName)
 	: _task(std::move(Function)), TaskID(TaskName) {
 }
 void VTestConductor::AddTask(const VTestTask &Task) {
 	_taskList.push_back(Task);
 }
 void VTestConductor::StartTasks() {
+	using namespace WinToastLib;
+
 	auto const time = std::chrono::current_zone()
 						  ->to_local(std::chrono::system_clock::now());
 	printf("%s", std::format("Test started at time {:%Y-%m-%d %X}\n", time).c_str());
@@ -69,9 +104,28 @@ void VTestConductor::StartTasks() {
 	if (globalFlag) {
 		printf("[WARNING] : You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
 			   "If it happened on a release version of VUILib please contact us with GitHub issue or the email <margoo@margoo.icu>.\n"
-			   "Please provide us with above information.");
+			   "Please provide us with above information.\n");
 	}
 	else {
-		printf("[INFO] : You are using a stable version of VUILib which passed all unit tests");
+		printf("[INFO] : You are using a stable version of VUILib which passed all unit tests\n");
 	}
+
+	WinToastTemplate::AudioOption audioOption = WinToastTemplate::AudioOption::Default;
+	std::wstring appName = L"VTest Conduct Result";
+	std::wstring appUserModelID = L"VTest Notification";
+	WinToast::instance()->setAppName(appName);
+	WinToast::instance()->setAppUserModelId(appUserModelID);
+	if (!WinToast::instance()->initialize()) {
+		printf("Failed to create windows toast, the notification function will be unavailable!\n");
+	}
+
+	WinToastTemplate startupToast(WinToastTemplate::Text02);
+	startupToast.setTextField(std::format(L"VTest tasks finished!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
+	startupToast.setAudioOption(audioOption);
+	startupToast.setAttributionText(L"Finished!");
+	startupToast.setImagePath(L"");
+
+	WinToast::instance()->showToast(startupToast, new CustomHandler());
+
+	Sleep(20000);
 }
