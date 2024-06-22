@@ -3,15 +3,13 @@ project(VUILib)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(VUILib main.cpp
-        include/base/test/vTest.h
+add_executable(UnitTest main.cpp)
+
+add_library(VStaticLib STATIC include/base/test/vTest.h
         include/base/event/vEvent.h
         source/base/vtest/vTest.cpp
-        source/base/vtest/vTest.cpp
-        unitTest/base/base.event.h
         unitTest/base/base.event.h
         unitTest/base/base.event.cpp
-        include/base/binding/vBindingType.h
         include/base/binding/vBindingType.h
         source/base/binding/vBindingType.cpp
         unitTest/base/base.binding.h
@@ -19,5 +17,10 @@ add_executable(VUILib main.cpp
         third/winToast/include/wintoastlib.h
         third/winToast/src/wintoastlib.cpp)
 
-target_include_directories(VUILib PRIVATE ./include)
-target_include_directories(VUILib PRIVATE ./)
+target_include_directories(UnitTest PUBLIC ./include)
+target_include_directories(UnitTest PUBLIC ./)
+
+target_include_directories(VStaticLib PUBLIC ./include)
+target_include_directories(VStaticLib PUBLIC ./)
+
+target_link_libraries(UnitTest VStaticLib)
