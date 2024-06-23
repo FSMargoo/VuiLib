@@ -405,4 +405,8 @@ FodyWeavers.xsd
 *.sln.iml
 
 # VCommit program
-VCommit.exe
+./VCommit.exe
+
+*.exe
+
+./vtest.json
