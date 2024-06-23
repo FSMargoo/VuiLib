@@ -45,7 +45,7 @@
 
 <h3>Auto Commit Status</h3>
 
-![Static Badge](https://img.shields.io/badge/Unit%20Test-{}-green)
+![Static Badge](https://img.shields.io/badge/Unit%20Test-{}-{})
 ![Static Badge](https://img.shields.io/badge/Last%20Commit-{}-blue)
 ![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-{}-purple)
 
@@ -266,7 +266,7 @@ int main(int argc, const char **argv) {
 	auto const time = std::chrono::current_zone()->to_local(std::chrono::system_clock::now());
 
 	auto readmeContext =
-		std::format(README, flag == true ? "Passed" : "Failed", commitId, std::format("{:%Y/%m/%d/%X}", time));
+		std::format(README, flag == true ? "Failed" : "Pass", flag == true ? "red" : "green", commitId, std::format("{:%Y/%m/%d/%X}", time));
 	std::ofstream readme("./README.md");
 	readme << readmeContext;
 	readme.close();
@@ -277,7 +277,7 @@ int main(int argc, const char **argv) {
 	printf(">>> git add *\n");
 	system("git add *");
 	printf(">>> %s\n", std::format("git commit -m \"{}{}:{}\"", AbbreviationToEmoji[type], commitId, message).c_str());
-	system(std::format("git commit -m {}{}:{}", AbbreviationToEmoji[type], commitId, message).c_str());
+	system(std::format("git commit -m \"{}{}:{}\"", AbbreviationToEmoji[type], commitId, message).c_str());
 	printf(">>> %s\n", std::format("git push {} main", repository).c_str());
 	system(std::format("git push {} main", repository).c_str());
 
