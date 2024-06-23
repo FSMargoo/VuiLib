@@ -26,8 +26,10 @@
  */
 
 #include <base/test/vTest.h>
+#include <third/SimpleJson/sJSON.h>
 #include <third/winToast/include/wintoastlib.h>
 
+#include <fstream>
 #include <chrono>
 #include <ctime>
 #include <format>
@@ -74,13 +76,16 @@ void VTestConductor::AddTask(const VTestTask &Task) {
 void VTestConductor::StartTasks() {
 	using namespace WinToastLib;
 
-	auto const time = std::chrono::current_zone()
-						  ->to_local(std::chrono::system_clock::now());
+	auto const time = std::chrono::current_zone()->to_local(std::chrono::system_clock::now());
 	printf("%s", std::format("Test started at time {:%Y-%m-%d %X}\n", time).c_str());
 
-	bool globalFlag = false;
+	bool globalFlag	  = false;
 	long successCount = 0;
-	long failedCount = 0;
+	long failedCount  = 0;
+
+	sJSONElementNode *elementNode = new sJSONElementNode;
+	sJSONArray		 *arrayNode	  = new sJSONArray;
+
 	for (VTestTask task : _taskList) {
 		printf("%s", std::format("Task [{}] ", task.TaskID).c_str());
 
@@ -88,6 +93,11 @@ void VTestConductor::StartTasks() {
 		std::thread taskThread([task, &flag]() mutable -> void { flag = task.Conduct(); });
 
 		taskThread.join();
+
+		sJSONElementNode *subElement = new sJSONElementNode;
+		subElement->InsertChildrenNode(new sJSONElementNode("taskID", new sJSONRealValue<std::string>(task.TaskID)));
+		subElement->InsertChildrenNode(new sJSONElementNode("status", new sJSONRealValue<int>(flag ? 1 : 0)));
+		arrayNode->ValueSet.push_back(subElement);
 
 		if (flag) {
 			printf("passed! \t[√]\n");
@@ -99,20 +109,35 @@ void VTestConductor::StartTasks() {
 		}
 	}
 
-	printf("%s", std::format("All {} test(s) has been conducted. {} test(s) failed, {} test(s) passed\n", _taskList.size(), failedCount, successCount).c_str());
+	elementNode->InsertChildrenNode(new sJSONElementNode("tests", arrayNode));
+	sJSONRootNode root		  = sJSONRootNode(elementNode);
+	std::string	  jsonContext = sJSONWriter::WriteJSON(root);
+
+	printf("%s", std::format("All {} test(s) has been conducted. {} test(s) failed, {} test(s) passed\n",
+							 _taskList.size(), failedCount, successCount)
+					 .c_str());
 
 	if (globalFlag) {
-		printf("[WARNING] : You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
-			   "If it happened on a release version of VUILib please contact us with GitHub issue or the email <margoo@margoo.icu>.\n"
+		printf("[WARNING] : You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on "
+			   "your PC.\n"
+			   "If it happened on a release version of VUILib please contact us with GitHub issue or the email "
+			   "<margoo@margoo.icu>.\n"
 			   "Please provide us with above information.\n");
-	}
-	else {
+	} else {
 		printf("[INFO] : You are using a stable version of VUILib which passed all unit tests\n");
 	}
 
-	WinToastTemplate::AudioOption audioOption = WinToastTemplate::AudioOption::Default;
-	std::wstring appName = L"VTest Conduct Result";
-	std::wstring appUserModelID = L"VTest Notification";
+	printf("Creating testing result file (vtest.json)\n");
+
+	std::ofstream stream("./vtest.json");
+	stream << jsonContext;
+	stream.close();
+
+	printf("Successfully wrote testing result in vtest.json!\n");
+
+	WinToastTemplate::AudioOption audioOption	 = WinToastTemplate::AudioOption::Default;
+	std::wstring				  appName		 = L"VTest Conduct Result";
+	std::wstring				  appUserModelID = L"VTest Notification";
 	WinToast::instance()->setAppName(appName);
 	WinToast::instance()->setAppUserModelId(appUserModelID);
 	if (!WinToast::instance()->initialize()) {
@@ -122,19 +147,27 @@ void VTestConductor::StartTasks() {
 	WinToastTemplate startupToast(WinToastTemplate::Text02);
 	startupToast.setAudioOption(audioOption);
 	if (globalFlag) {
-		startupToast.setTextField(std::format(L"VTest tasks FAILED!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!\n"
-											  "You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
-											  "If it happened on a release version of VUILib please contact us with GitHub issue or the email <margoo@margoo.icu>.\n"
-											  "Please provide us with the console information.", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
+		startupToast.setTextField(
+			std::format(
+				L"VTest tasks FAILED!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!\n"
+				"You may using a VUILib which IS NOT STABLE, this VUILib version CAN NOT PASS UNIT TEST on your PC.\n"
+				"If it happened on a release version of VUILib please contact us with GitHub issue or the email "
+				"<margoo@margoo.icu>.\n"
+				"Please provide us with the console information.",
+				_taskList.size(), failedCount, successCount),
+			WinToastTemplate::FirstLine);
 		startupToast.setAttributionText(L"[FAILED!] Failed!");
-	}
-	else {
-		startupToast.setTextField(std::format(L"VTest tasks finished!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!", _taskList.size(), failedCount, successCount), WinToastTemplate::FirstLine);
+	} else {
+		startupToast.setTextField(
+			std::format(
+				L"VTest tasks finished!\nWith {} test(s) has been conducted. {} test(s) failed, {} test(s) passed!",
+				_taskList.size(), failedCount, successCount),
+			WinToastTemplate::FirstLine);
 		startupToast.setAttributionText(L"[SUCCESS!] Finished!");
 	}
 	startupToast.setImagePath(L"");
 
 	WinToast::instance()->showToast(startupToast, new CustomHandler());
 
-	Sleep(20000);
+	Sleep(5000);
 }

@@ -4,6 +4,11 @@
 
 ![GitHub License](https://img.shields.io/github/license/FSMargoo/VUILib) ![GitHub Created At](https://img.shields.io/github/created-at/FSMargoo/VuiLib)
 
+<h3>Auto Commit Status</h3>
+
+![Static Badge](https://img.shields.io/badge/Unit%20Test-Failed-green)
+![Static Badge](https://img.shields.io/badge/Last%20Commit-bc:6677cf81-blue)
+![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/06/23/15:32:23-purple)
 
 <h3 align="center">VUILib3.x</h3>
 A cross-platform UI Library born for Welcome to flexible and efficient. Build with:
@@ -28,4 +33,18 @@ Thanks for $JetBrains$'s Licenses for Open Source Development
 
 </div>
 
-Thanks for the $mohabouje$'s project $WinToast$.
+Thanks for $mohabouje$'s project $WinToast$.
+
+Thanks for $FlorianRappl$'s project $CmdParser$.
+
+## Third-party Libraries List
+
+<div align="center">
+
+[mohabouje-WinToast](https://github.com/mohabouje/WinToast)
+
+[FlorianRappl-CmdParser](https://github.com/FlorianRappl/CmdParser)
+
+[Margoo-SimpleJson](https://github.com/FSMargoo/SimpleJson)
+
+</div>
