@@ -1,4 +1,0 @@
-### Compilation failed:
-
-error: 2: type mismatch: '==' cannot operate on 'void', 'void'
-1 error
