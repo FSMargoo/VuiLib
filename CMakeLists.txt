@@ -41,7 +41,10 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/renderer/vRenderInterface.h
         source/renderer/vRenderInterface.cpp
         include/widget/vWidget.h
-        source/widget/vWidget.cpp)
+        source/widget/vWidget.cpp
+        include/widget/vMonitor.h
+        source/widget/vMonitor.cpp
+        include/widget/vGLFWException.h)
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h

@@ -21,31 +21,23 @@
  */
 
 /**
- * \file vWidget.h
- * \brief A OOP wrapper of GLFW API for VUILib native window
+ * \file vGLFWException.h
+ * \brief The type exception for GLFW
  */
 
 #pragma once
 
-#include <include/base/event/vEvent.h>
-#include <include/widget/vGLFWException.h>
+#include <format>
+#include <stdexcept>
 
-#include <glfw/glfw3.h>
-
-/**
- * This class is a wrapper of GLFW monitor API, which will
- * maintain a GLFWwindow pointer, and converting the GLFW
- * event into VUILib VEvent
- */
-class VWidget {
+class VGLFWFailure : public std::exception {
 public:
-	/**
-	 * Construct the widget with only geometry information
-	 * @param Width The width of the widget
-	 * @param Height The height of the widget
-	 */
-	VWidget(const int &Width, const int &Height);
-
-private:
-	GLFWwindow *_glfwWindow;
+	VGLFWFailure(const char *Message) : std::exception(Message) {
+	}
+};
+class VGLFWInstanceCreationFailed : public std::exception {
+public:
+	VGLFWInstanceCreationFailed(const char *InstanceType)
+		: std::exception(std::format("Failed to create GLFW instance(type:{})", InstanceType).c_str()) {
+	}
 };

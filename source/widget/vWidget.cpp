@@ -24,3 +24,9 @@
  * \file vWidget.cpp
  * \brief A OOP wrapper of GLFW API for VUILib native window
  */
+
+#include <include/widget/vWidget.h>
+
+VWidget::VWidget(const int &Width, const int &Height) {
+	_glfwWindow = glfwCreateWindow(Width, Height, "");
+}
