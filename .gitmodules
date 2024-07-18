@@ -1,0 +1,6 @@
+[submodule "third/glfw"]
+	path = third/glfw
+	url = https://github.com/glfw/glfw
+[submodule "third/SkiaM101Binary"]
+	path = third/SkiaM101Binary
+	url = https://github.com/FSMargoo/SkiaM101Binary

@@ -28,7 +28,7 @@
 #pragma once
 
 #include <include/base/event/vEvent.h>
-#include <include/widget/vGLFWException.h>
+#include <include/widget/vGLFWException.h>hird
 
 #include <glfw/glfw3.h>
 
