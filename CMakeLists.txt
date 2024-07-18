@@ -1,0 +1,172 @@
+cmake_minimum_required(VERSION 3.10)
+project(VUILib)
+
+set(CMAKE_CXX_STANDARD 20)
+
+# Include GLFW library
+add_subdirectory(third/glfw)
+
+SET(CMAKE_C_FLAGS_DEBUG "-D_DEBUG")
+
+# Only used for Skia library linking
+set(MSVC_USE_MT_RUNTIME_LIBRARY OFF)
+set(MSVC_USE_MD_RUNTIME_LIBRARY OFF)
+set(MSVC_USE_MTd_RUNTIME_LIBRARY OFF)
+set(MSVC_USE_MDd_RUNTIME_LIBRARY ON)
+
+add_library(VStaticLib STATIC include/base/test/vTest.h
+        include/base/event/vEvent.h
+        source/base/vtest/vTest.cpp
+        include/base/binding/vBindingType.h
+        source/base/binding/vBindingType.cpp
+        include/base/command/vCommand.h
+        source/base/command/vCommand.cpp
+        source/base/command/vCommand.cpp
+        include/base/vBase.h
+        include/mvvm/vModelBase.h
+        include/mvvm/vViewModelBase.h
+        source/mvvm/vViewModelBase.cpp
+        source/mvvm/vModelBase.cpp
+        include/mvvm/vViewBase.h
+        source/mvvm/vViewBase.cpp
+        include/renderer/vRendererBase.h
+        include/renderer/vSurface.h
+        source/renderer/vSurface.cpp
+        source/renderer/vSurface.cpp
+        include/renderer/vRenderTarget.h
+        source/renderer/vRenderTarget.cpp
+        third/glad/src/glad.c
+        source/renderer/vRenderContext.cpp
+        include/renderer/vRenderContext.h
+        include/renderer/vRenderInterface.h
+        source/renderer/vRenderInterface.cpp
+        include/widget/vWidget.h
+        source/widget/vWidget.cpp)
+
+set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
+        third/SimpleJson/sJSON.h
+        third/SimpleJson/sJSON.cpp
+        third/winToast/include/wintoastlib.h
+        third/winToast/src/wintoastlib.cpp
+        unitTest/base/base.command.h
+        unitTest/base/base.command.h
+        unitTest/base/base.command.cpp
+        unitTest/base/base.binding.h
+        unitTest/base/base.binding.cpp
+        unitTest/base/base.event.h
+        unitTest/base/base.event.cpp)
+
+add_executable(UnitTest main.cpp ${UnitTestSrc})
+add_executable(VCommit tool/vcommit/main.cpp
+        tool/vcommit/third/include/cmdparser.hpp
+        third/SimpleJson/sJSON.h
+        third/SimpleJson/sJSON.cpp)
+
+target_include_directories(UnitTest PUBLIC ./include)
+target_include_directories(UnitTest PUBLIC ./)
+
+target_include_directories(VCommit PUBLIC tool/vcommit/third)
+target_include_directories(VCommit PUBLIC ./)
+
+target_include_directories(VStaticLib PUBLIC ./include)
+target_include_directories(VStaticLib PUBLIC ./)
+target_include_directories(VStaticLib PUBLIC ./third)
+target_include_directories(VStaticLib PUBLIC ./third/SkiaM101Binary)
+target_include_directories(VStaticLib PUBLIC ./third/glad/include)
+
+# Judge MSVC compile runtime
+if(MSVC)
+    message("VUILib : Using MSVC Compiler")
+
+    # MSVC use different runtime in Debug(D/S) and Release(D/S), make them happy :)
+    if (MSVC_USE_MT_RUNTIME_LIBRARY)
+        target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MT)
+        message("Skia Library: Using MSVC MT Runtime")
+        add_compile_options(
+                $<$<CONFIG:>:/MT>
+                $<$<CONFIG:Debug>:/MT>
+                $<$<CONFIG:Release>:/MT>
+        )
+    endif()
+    if (MSVC_USE_MD_RUNTIME_LIBRARY)
+        target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MD)
+        message("Skia Library: Using MSVC MD Runtime")
+        add_compile_options(
+                $<$<CONFIG:>:/MD>
+                $<$<CONFIG:Debug>:/MD>
+                $<$<CONFIG:Release>:/MD>
+        )
+    endif()
+    if (MSVC_USE_MTd_RUNTIME_LIBRARY)
+        target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MTd)
+        message("Skia Library: Using MSVC MTd Runtime")
+        add_compile_options(
+                $<$<CONFIG:>:/MTd>
+                $<$<CONFIG:Debug>:/MTd>
+                $<$<CONFIG:Release>:/MTd>
+        )
+    endif()
+    if (MSVC_USE_MDd_RUNTIME_LIBRARY)
+        target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MDd)
+        message("Skia Library: Using MSVC MDd Runtime")
+        add_compile_options(
+                $<$<CONFIG:>:/MDd>
+                $<$<CONFIG:Debug>:/MDd>
+                $<$<CONFIG:Release>:/MDd>
+        )
+    endif()
+endif()
+
+# The behaviour of other OS will be written after VUILib3 was done on Windows
+if(WIN32)
+    message("Link Skia Under Windows OS")
+    target_link_libraries(VStaticLib PUBLIC
+            expat
+            harfbuzz
+            icu
+            imgui
+            libjpeg
+            libmicrohttpd
+            libpng
+            libwebp
+            libwebp_sse41
+            nanobench
+            particles
+            pathkit
+            skia
+            skiaserve
+            skottie
+            skparagraph
+            skresources
+            sksg
+            skshaper
+            sktext
+            skunicode
+            svg
+            zlib
+            opengl32
+            glfw
+    )
+endif()
+
+target_link_libraries(UnitTest VStaticLib)
+
+add_executable(Demo_TestSkia demo/TestSkia/main.cpp)
+
+target_include_directories(Demo_TestSkia PUBLIC ./include)
+target_include_directories(Demo_TestSkia PUBLIC ./)
+target_include_directories(Demo_TestSkia PUBLIC ./third)
+target_include_directories(Demo_TestSkia PUBLIC ./third/SkiaM101Binary)
+target_include_directories(Demo_TestSkia PUBLIC ./third/glad/include)
+
+target_link_libraries(Demo_TestSkia VStaticLib)
+
+add_executable(Demo_TestSkiaShader demo/TestSkiaShader/main.cpp)
+
+target_include_directories(Demo_TestSkiaShader PUBLIC ./include)
+target_include_directories(Demo_TestSkiaShader PUBLIC ./)
+target_include_directories(Demo_TestSkiaShader PUBLIC ./third)
+target_include_directories(Demo_TestSkiaShader PUBLIC ./third/SkiaM101Binary)
+target_include_directories(Demo_TestSkiaShader PUBLIC ./third/glad/include)
+
+target_link_libraries(Demo_TestSkiaShader VStaticLib)
