@@ -19,6 +19,8 @@ int main() {
 	VTestTask baseGeometryPointConstruction(VUnitTestM(BaseGeometryPoint, Init), "base.geometry.point.init");
 	VTestTask baseGeometryPointCalculate(VUnitTestM(BaseGeometryPoint, Calculate), "base.geometry.point.calculate");
 	VTestTask baseGeometryPointCompare(VUnitTestM(BaseGeometryPoint, Compare), "base.geometry.point.compare");
+	VTestTask baseGeometryRectConstruction(VUnitTestM(BaseGeometryRect, Init), "base.geometry.rect.init");
+	VTestTask baseGeometryRectCompare(VUnitTestM(BaseGeometryRect, Compare), "base.geometry.rect.compare");
 
 	VTestConductor conductor;
 
@@ -37,6 +39,8 @@ int main() {
 	conductor.AddTask(baseGeometryPointConstruction);
 	conductor.AddTask(baseGeometryPointCalculate);
 	conductor.AddTask(baseGeometryPointCompare);
+	conductor.AddTask(baseGeometryRectConstruction);
+	conductor.AddTask(baseGeometryRectCompare);
 
 	conductor.StartTasks();
 

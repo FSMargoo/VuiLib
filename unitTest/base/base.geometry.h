@@ -28,8 +28,12 @@
 #pragma once
 
 #include <include/base/geometry/vPoint.h>
+#include <include/base/geometry/vRect.h>
 #include <include/base/test/vTest.h>
 
 bool VUnitTest(BaseGeometryPoint, Init);
 bool VUnitTest(BaseGeometryPoint, Calculate);
 bool VUnitTest(BaseGeometryPoint, Compare);
+
+bool VUnitTest(BaseGeometryRect, Init);
+bool VUnitTest(BaseGeometryRect, Compare);

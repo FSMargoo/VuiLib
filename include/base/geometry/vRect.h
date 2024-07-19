@@ -363,3 +363,12 @@ private:
 	DataType _right;
 	DataType _bottom;
 };
+
+/**
+ * The alias of VRectBase with the long long data type
+ */
+using VRect = VRectBase<long long>;
+/**
+ * The alias of VRectBase with the float data type
+ */
+using VFloatRect = VRectBase<float>;

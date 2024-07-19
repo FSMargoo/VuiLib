@@ -7,8 +7,8 @@
 <h3>Auto Commit Status</h3>
 
 ![Static Badge](https://img.shields.io/badge/Unit%20Test-Pass-green)
-![Static Badge](https://img.shields.io/badge/Last%20Commit-cf:669a434d-blue)
-![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/07/19/18:43:30-purple)
+![Static Badge](https://img.shields.io/badge/Last%20Commit-at:669a44bd-blue)
+![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/07/19/18:49:38-purple)
 
 <h3 align="center">VUILib3.x</h3>
 A cross-platform UI Library born for flexible and efficient. Build with:

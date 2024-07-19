@@ -50,3 +50,17 @@ bool VUnitTest(BaseGeometryPoint, Calculate) {
 bool VUnitTest(BaseGeometryPoint, Compare) {
 	return !(VPoint(2012, 2013) == VPoint(2014, 2015)) && (VPoint(2016, 2017) == VPoint(2016, 2017));
 }
+
+bool VUnitTest(BaseGeometryRect, Init) {
+	VRect defaultConstruction;
+	VRect tupleConstruction(VRect::GeometryTuple{0, 0, 10, 10});
+	VRect parameterConstruction(0, 0, 12, 12);
+	VRect copyConstruction(parameterConstruction);
+	return defaultConstruction.GetGeometryTuple() == VRect::GeometryTuple {0, 0, 0, 0} &&
+	       tupleConstruction.GetGeometryTuple() == VRect::GeometryTuple{0, 0, 10, 10} &&
+	       parameterConstruction.GetGeometryTuple() == VRect::GeometryTuple{0, 0, 12, 12} &&
+	       parameterConstruction.GetGeometryTuple() == VRect::GeometryTuple{0, 0, 12, 12};
+}
+bool VUnitTest(BaseGeometryRect, Compare) {
+	return !(VRect (0, 0, 2012, 2013) == VRect(0, 0, 2014, 2015)) && (VRect(0, 0, 2016, 2017) == VRect(0, 0, 2016, 2017));
+}

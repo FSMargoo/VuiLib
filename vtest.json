@@ -59,6 +59,14 @@
 		{
 			"status":1,
 			"taskID":"base.geometry.point.compare"
+		},
+		{
+			"status":1,
+			"taskID":"base.geometry.rect.init"
+		},
+		{
+			"status":1,
+			"taskID":"base.geometry.rect.compare"
 		}
 	]
 }
