@@ -27,6 +27,16 @@
 
 #include <include/widget/vWidget.h>
 
-VWidget::VWidget(const int &Width, const int &Height) {
-	_glfwWindow = glfwCreateWindow(Width, Height, "");
+VWidget::VWidget(const int &Width, const int &Height, const std::string& Title) {
+	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
+}
+VWidget::VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor& Monitor) {
+	/**
+	 * If the monitor is disconnected, it will be marked as invalid
+	 */
+	if (Monitor._status == VMonitorStatus::Invalid) {
+		throw VGLFWInvalidInstance("VMonitor");
+	}
+
+	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), Monitor._glfwMonitor, nullptr);
 }

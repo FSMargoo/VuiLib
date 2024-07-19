@@ -72,7 +72,19 @@ public:
 	 * @return If the monitor is connected or created properly, it will return
 	 * VMonitorStatus::Valid otherwise VMonitorStatus::Invalid
 	 */
-	[[nodiscard]] const VMonitorStatus GetStatus() const;
+	[[nodiscard]] VMonitorStatus GetStatus() const;
+
+public:
+	/**
+	 * Get the width pixel of the monitor
+	 * @return The width pixel
+	 */
+	[[nodiscard]] int GetWidth() const;
+	/**
+	 * Get the height pixel of the monitor
+	 * @return The width pixel
+	 */
+	[[nodiscard]] int GetHeight() const;
 
 private:
 	/**
@@ -93,12 +105,16 @@ private:
 	void OnMonitor(GLFWmonitor *Monitor, MonitorEventType Event);
 
 private:
+	friend class VWidget;
+
+private:
 	/**
 	 * The event to convert GLFW message into VUILib's message bus
 	 */
 	static VEvent<GLFWmonitor *, MonitorEventType> _monitorOnEvent;
 
 private:
-	VMonitorStatus _status;
-	GLFWmonitor	  *_glfwMonitor;
+	VMonitorStatus	   _status;
+	GLFWmonitor		  *_glfwMonitor;
+	const GLFWvidmode *_glfwVideoMode;
 };

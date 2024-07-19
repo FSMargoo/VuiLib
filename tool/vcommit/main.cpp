@@ -80,6 +80,8 @@ Thanks for $Google$'s project $Skia$
 
 Thanks for $GLFW$ project
 
+Thanks for $boost.algorithm$ proejct
+
 ## Third-party Libraries List
 
 <div align="center">
@@ -90,9 +92,11 @@ Thanks for $GLFW$ project
 
 [Margoo-SimpleJson](https://github.com/FSMargoo/SimpleJson)
 
-[Skia](skia.org)
+[Skia](https://www.skia.org)
 
 [GLFW](https://github.com/GLFW/glfw)
+
+[boost.algorithm](https://github.com/boostorg/algorithm)
 
 </div>)"
 

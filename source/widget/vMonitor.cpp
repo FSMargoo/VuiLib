@@ -37,31 +37,41 @@ VMonitor::VMonitor(const int &Index) {
 	auto monitorList = glfwGetMonitors(&monitorCount);
 
 	if (Index >= monitorCount) {
-		_glfwMonitor = nullptr;
-		_status		 = VMonitorStatus::Invalid;
+		_glfwMonitor   = nullptr;
+		_glfwVideoMode = nullptr;
+		_status		   = VMonitorStatus::Invalid;
 
 		throw std::out_of_range("Monitor count out of range.");
 	} else {
-		_glfwMonitor = monitorList[Index];
-		_status		 = VMonitorStatus::Valid;
+		_glfwMonitor   = monitorList[Index];
+		_glfwVideoMode = glfwGetVideoMode(_glfwMonitor);
+		_status		   = VMonitorStatus::Valid;
 	}
 }
 VMonitor::VMonitor() {
 	glfwSetMonitorCallback(&VMonitor::GLFWMonitorCallback);
 	_monitorOnEvent.Connect(this, &VMonitor::OnMonitor);
 
-	_glfwMonitor = glfwGetPrimaryMonitor();
+	_glfwMonitor   = glfwGetPrimaryMonitor();
+	_glfwVideoMode = glfwGetVideoMode(_glfwMonitor);
 
 	if (!_glfwMonitor) {
+		_status = VMonitorStatus::Invalid;
+
 		throw VGLFWInstanceCreationFailed("GLFWmonitor");
-		_status = VMonitorStatus::Valid;
 	}
 }
-void VMonitor::OnMonitor(GLFWmonitor* Monitor, MonitorEventType Event) {
+void VMonitor::OnMonitor(GLFWmonitor *Monitor, MonitorEventType Event) {
 	if (Monitor == _glfwMonitor) {
 		_status = Event == GLFW_CONNECTED ? VMonitorStatus::Valid : VMonitorStatus::Invalid;
 	}
 }
-[[nodiscard]] const VMonitorStatus VMonitor::GetStatus() const {
+int VMonitor::GetWidth() const {
+	return _glfwVideoMode->width;
+}
+int VMonitor::GetHeight() const {
+	return  _glfwVideoMode->height;
+}
+[[nodiscard]] VMonitorStatus VMonitor::GetStatus() const {
 	return _status;
 }

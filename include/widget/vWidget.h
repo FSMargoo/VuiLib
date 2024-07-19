@@ -28,7 +28,7 @@
 #pragma once
 
 #include <include/base/event/vEvent.h>
-#include <include/widget/vGLFWException.h>hird
+#include <include/widget/vMonitor.h>
 
 #include <glfw/glfw3.h>
 
@@ -43,8 +43,18 @@ public:
 	 * Construct the widget with only geometry information
 	 * @param Width The width of the widget
 	 * @param Height The height of the widget
+	 * @param Title The title of the widget
 	 */
-	VWidget(const int &Width, const int &Height);
+	VWidget(const int &Width, const int &Height, const std::string &Title);
+	/**
+	 * Create a widget with geometry information on a specified monitor,
+	 * it will create a full screen window by the specified geometry information.
+	 * @param Width The width of the widget
+	 * @param Height The height of the widget
+	 * @param Title The title of the widget
+	 * @param Monitor The specified monitor where window to be shown
+	 */
+	VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
 
 private:
 	GLFWwindow *_glfwWindow;
