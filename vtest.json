@@ -47,6 +47,18 @@
 		{
 			"status":1,
 			"taskID":"base.command.class.recall"
+		},
+		{
+			"status":1,
+			"taskID":"base.geometry.point.init"
+		},
+		{
+			"status":1,
+			"taskID":"base.geometry.point.calculate"
+		},
+		{
+			"status":1,
+			"taskID":"base.geometry.point.compare"
 		}
 	]
 }

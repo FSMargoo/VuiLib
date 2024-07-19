@@ -1,6 +1,7 @@
 #include <unitTest/base/base.binding.h>
 #include <unitTest/base/base.command.h>
 #include <unitTest/base/base.event.h>
+#include <unitTest/base/base.geometry.h>
 
 int main() {
 	VTestTask baseEventTest(VUnitTestM(BaseEvent, Recall), "base.event.free_function.recall");
@@ -15,6 +16,9 @@ int main() {
 	VTestTask baseBindingValueCompareTest(VUnitTestM(BaseBinding, ValueCompareTest), "base.binding.compare.value");
 	VTestTask baseCommandRecall(VUnitTestM(BaseCommand, Recall), "base.command.recall");
 	VTestTask baseCommandClassRecall(VUnitTestM(BaseCommand, ClassRecall), "base.command.class.recall");
+	VTestTask baseGeometryPointConstruction(VUnitTestM(BaseGeometryPoint, Init), "base.geometry.point.init");
+	VTestTask baseGeometryPointCalculate(VUnitTestM(BaseGeometryPoint, Calculate), "base.geometry.point.calculate");
+	VTestTask baseGeometryPointCompare(VUnitTestM(BaseGeometryPoint, Compare), "base.geometry.point.compare");
 
 	VTestConductor conductor;
 
@@ -30,6 +34,9 @@ int main() {
 	conductor.AddTask(baseBindingValueCompareTest);
 	conductor.AddTask(baseCommandRecall);
 	conductor.AddTask(baseCommandClassRecall);
+	conductor.AddTask(baseGeometryPointConstruction);
+	conductor.AddTask(baseGeometryPointCalculate);
+	conductor.AddTask(baseGeometryPointCompare);
 
 	conductor.StartTasks();
 

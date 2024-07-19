@@ -45,17 +45,35 @@ using VDelegate = std::function<void(Parameters...)>;
 template <class... Parameters>
 class VConnectUnit {
 public:
+	/**
+	 * Construct the connect unit with the function delegate
+	 * @param Function The delegate instance to the function
+	 */
 	explicit VConnectUnit(VDelegate<Parameters...> Function) : _blocked(false) {
 		_function = Function;
 	}
 
 public:
+	/**
+	 * Get the function delegate instance of the object
+	 * @return The delegate instance
+	 */
 	inline VDelegate<Parameters...>* GetFunction() {
 		return &_function;
 	}
+	/**
+	 * Check the unit block status
+	 * @return If return true, the unit is now on blocked status,
+	 * otherwise not
+	 */
 	bool Blocked() {
 		return _blocked;
 	}
+	/**
+	 * Set the unit block status
+	 * @param Status If the status is true, this unit will be blocked,
+	 * otherwise not
+	 */
 	void SetBlock(bool Status) {
 		_blocked = Status;
 	}
@@ -71,14 +89,25 @@ private:
 template <class... Parameters>
 class VFunctionConnection : public VConnectUnit<Parameters...> {
 public:
+	/**
+	 * Alias of raw function pointer
+	 */
 	using FunctionPointer = void (*)(Parameters...);
 
 public:
+	/**
+	 * Construct the function connection unit by a raw C function pointer
+	 * @param InitFunction The function pointer
+	 */
 	explicit VFunctionConnection(FunctionPointer InitFunction)
 		: VConnectUnit<Parameters...>(VDelegate<Parameters...>(InitFunction)) {
 		_pointer = InitFunction;
 	}
 
+	/**
+	 * Get the raw C pointer of this unit
+	 * @return The function pointer formatted in raw C style
+	 */
 	inline FunctionPointer GetPointer() {
 		return _pointer;
 	}
@@ -93,18 +122,35 @@ private:
 template <class ObjectClass, class... Parameter>
 class VClassConnection : public VConnectUnit<Parameter...> {
 public:
+	/**
+	 * The alisa for member function pointer
+	 */
 	using FunctionPointer = void (ObjectClass::*)(Parameter...);
 
 public:
+	/**
+	 * Construct a class connection unit by the object instance and
+	 * a member function pointer
+	 * @param Object The object pointer referred to the instance
+	 * @param Function The member function pointer
+	 */
 	VClassConnection(ObjectClass *Object, FunctionPointer Function)
 		: VConnectUnit<Parameter...>([Object, Function](Parameter... Args) { (*Object.*Function)(Args...); }) {
 		_objectPointer = Object;
 		_function	   = Function;
 	}
 
+	/**
+	 * Get the object instance pointer
+	 * @return The object instance pointer
+	 */
 	inline void *GetObject() {
 		return _objectPointer;
 	}
+	/**
+	 * Get the raw C pointer of this unit
+	 * @return The function pointer formatted in raw C style
+	 */
 	inline FunctionPointer GetPointer() {
 		return _function;
 	}
@@ -125,8 +171,8 @@ enum class VEventOperation {
 };
 
 /***
- * The event class (Observer)
- * @tparam Parameters The function parameters
+ * The event class (Observer mode)
+ * @tparam Parameters The event calling parameters type
  */
 template <class... Parameters>
 class VEvent {
@@ -136,6 +182,10 @@ public:
 	using ClassFunctionPointer = void (ObjectClass::*)(Parameters...);
 
 public:
+	/**
+	 * By default, the VEvent will maintain a list of VConnectionUnit in
+	 * std::shared_ptr
+	 */
 	VEvent() {
 		_slots = new std::list<std::shared_ptr<VConnectUnit<Parameters...>>>;
 	}

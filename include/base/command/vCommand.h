@@ -29,12 +29,12 @@
 
 #include <base/event/vEvent.h>
 
-/***
+/**
  * An empty structure for VCommand's placeholder
  */
 struct VPlaceHolderObject {};
 
-/***
+/**
  * The command class for VUILib. It just like a event which has not connection method
  * @tparam ObjectType The object type for class function, if not use the VPlaceHolderObject type
  * @tparam Parameter The parameter list of command
@@ -42,12 +42,24 @@ struct VPlaceHolderObject {};
 template <class ObjectType, class... Parameter>
 class VCommand {
 public:
+	/**
+	 * The alias to VEvent class
+	 */
 	using Delegate = VEvent<Parameter...>;
 
 public:
+	/**
+	 * Construct the command by a function pointer of delegate
+	 * @param Pointer The pointer referred to command callback function
+	 */
 	explicit VCommand(Delegate::FunctionPointer Pointer) {
 		_commandEvent.Connect(Pointer);
 	}
+	/**
+	 * Construct the command by a member function pointer
+	 * @param Object The object pointer referred to the target object
+	 * @param Pointer The pointer referred to the member function
+	 */
 	VCommand(ObjectType *Object, Delegate::template ClassFunctionPointer<ObjectType> Pointer) {
 		_commandEvent.template Connect<ObjectType>(Object, Pointer);
 	}

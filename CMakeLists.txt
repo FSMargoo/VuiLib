@@ -59,7 +59,9 @@ set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         unitTest/base/base.binding.h
         unitTest/base/base.binding.cpp
         unitTest/base/base.event.h
-        unitTest/base/base.event.cpp)
+        unitTest/base/base.event.cpp
+        unitTest/base/base.geometry.cpp
+        unitTest/base/base.geometry.h)
 
 add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp

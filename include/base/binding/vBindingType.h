@@ -40,10 +40,15 @@ template <class Type, class... Parameter>
 class VBindingType {
 public:
 	/**
-	 * To call this constructor, a default constructor of the data type is required
+	 * In default, VBindingType will create an empty pointer
 	 */
 	VBindingType() : _pointer(nullptr), _instance() {
 	}
+	/**
+	 * Construct a binding type with the parameter of the
+	 * Type construction
+	 * @param Construct The construction parameter to construct a object
+	 */
 	explicit VBindingType(Parameter... Construct) : _pointer(nullptr), _instance(Construct...) {
 	}
 

@@ -48,7 +48,7 @@ public:
 	 * @param Tuple The axis tuple, the first element of axis tuple
 	 * is X, the second element of the axis tuple is Y
 	 */
-	VPointBase(const AxisTuple &Tuple) : _x(std::get<0>(Tuple)), _y(std::get<1>(Tuple)) {
+	explicit VPointBase(const AxisTuple &Tuple) : _x(std::get<0>(Tuple)), _y(std::get<1>(Tuple)) {
 
 	}
 	/**
@@ -115,7 +115,7 @@ public:
 
 public:
 	/**
-	 * The operation of equal judgement for the point
+	 * The operation of equal judgement for the points
 	 * @param Left The point in the left of the expression
 	 * @param Right The point in the right of the expression
 	 * @return Whether two points are equaled
@@ -144,6 +144,38 @@ public:
 	friend bool operator==(const VPointBase<DataType> &Point, const AxisTuple& Tuple) {
 		auto [x, y] = Tuple;
 		return Point._x == x && Point._y == y;
+	}
+
+	/**
+	 * The operation of unequal judgement for the points
+	 * @param Left The point in the left of the expression
+	 * @param Right The point in the right of the expression
+	 * @return Whether two points are equaled
+	 */
+	friend bool operator!=(const VPointBase<DataType>& Left, const VPointBase<DataType> &Right) {
+		return Left._x != Right._x || Left._y != Right._y;
+	}
+	/**
+	 * The operation of unequal judgement for point between axis tuple
+	 * @param Tuple The axis tuple, the first element of the tuple is
+	 * the X axis with the second is X axis.
+	 * @param Point The point to be judged
+	 * @return Whether the tuple is equaled to the point
+	 */
+	friend bool operator!=(const AxisTuple& Tuple, const VPointBase<DataType> &Point) {
+		auto [x, y] = Tuple;
+		return Point._x != x || Point._y != y;
+	}
+	/**
+	 * The operation of unequal judgement for point between axis tuple
+	 * @param Tuple The axis tuple, the first element of the tuple is
+	 * the X axis with the second is X axis.
+	 * @param Point The point to be judged
+	 * @return Whether the tuple is equaled to the point
+	 */
+	friend bool operator!=(const VPointBase<DataType> &Point, const AxisTuple& Tuple) {
+		auto [x, y] = Tuple;
+		return Point._x != x || Point._y != y;
 	}
 
 	/**
@@ -215,7 +247,7 @@ public:
 	 * @param Offset The offset in the right of the expression
 	 * @return The add operation result
 	 */
-	friend VPointBase<DataType> operator*(const DataType &Offset, const VPointBase<DataType> &Point) {
+	friend VPointBase<DataType> operator/(const DataType &Offset, const VPointBase<DataType> &Point) {
 		return VPointBase<DataType>(Offset / Point._x, Offset / Point._y);
 	}
 
