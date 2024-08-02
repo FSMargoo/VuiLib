@@ -90,13 +90,14 @@ target_include_directories(VStaticLib PUBLIC ./third/SkiaM101Binary)
 target_include_directories(VStaticLib PUBLIC ./third/glad/include)
 
 # Judge MSVC compile runtime
-if(MSVC)
-    message("VUILib : Using MSVC Compiler")
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    message("VUILib : Build under Windows OS")
+    message("VUILib : Using MSVC/Clang-CL Compiler")
 
     # MSVC use different runtime in Debug(D/S) and Release(D/S), make them happy :)
     if (MSVC_USE_MT_RUNTIME_LIBRARY)
         target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MT)
-        message("Skia Library: Using MSVC MT Runtime")
+        message("VUILib(Skia Library) : Using MSVC MT Runtime")
         add_compile_options(
                 $<$<CONFIG:>:/MT>
                 $<$<CONFIG:Debug>:/MT>
@@ -105,7 +106,7 @@ if(MSVC)
     endif()
     if (MSVC_USE_MD_RUNTIME_LIBRARY)
         target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MD)
-        message("Skia Library: Using MSVC MD Runtime")
+        message("VUILib(Skia Library) : Using MSVC MD Runtime")
         add_compile_options(
                 $<$<CONFIG:>:/MD>
                 $<$<CONFIG:Debug>:/MD>
@@ -114,7 +115,7 @@ if(MSVC)
     endif()
     if (MSVC_USE_MTd_RUNTIME_LIBRARY)
         target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MTd)
-        message("Skia Library: Using MSVC MTd Runtime")
+        message("VUILib(Skia Library) : Using MSVC MTd Runtime")
         add_compile_options(
                 $<$<CONFIG:>:/MTd>
                 $<$<CONFIG:Debug>:/MTd>
@@ -123,7 +124,7 @@ if(MSVC)
     endif()
     if (MSVC_USE_MDd_RUNTIME_LIBRARY)
         target_link_directories(VStaticLib PUBLIC libs/skia/Windows/MDd)
-        message("Skia Library: Using MSVC MDd Runtime")
+        message("VUILib(Skia Library) : Using MSVC MDd Runtime")
         add_compile_options(
                 $<$<CONFIG:>:/MDd>
                 $<$<CONFIG:Debug>:/MDd>
