@@ -78,8 +78,8 @@ VPointProperty::VPointProperty(const VPoint &Value)
     : VPropertyValueBase(VPropertyType::Point), _value(Value) {
 
 }
-VObjectProperty::VObjectProperty(const std::string &Name, const std::unique_ptr<VPropertyValueBase> &Value)
-	: _name(Name), _value(Value.get()) {
+VObjectProperty::VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Value)
+	: _name(Name), _value(Value) {
 
 }
 std::string VObjectProperty::GetName() const {

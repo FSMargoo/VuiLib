@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2023~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,7 +44,7 @@ public:
 	 */
 	using Point = VPointBase<DataType>;
 	/**
-	 * The tuple of the geometry, the four parameters obey following sort:
+	 * The tuple of the geometry, the four parameters obey the following sort:
 	 * 		[1] Left, [2] Top, [3] Right, [4] Bottom
 	 * Basically is { (x1, y1), (x2, y2) }
 	 */

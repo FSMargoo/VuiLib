@@ -41,11 +41,22 @@ bool VUnitTest(ObjectProperty, Create) {
 	auto pointDefaultPtr = std::make_unique<VPointProperty>();
 	auto pointValuePtr = std::make_unique<VPointProperty>(VPoint (0, 0));
 	VPropertyList list;
+	std::unique_ptr<VPropertyValueBase> ptrList[] = {
+	        std::move(intDefaultPtr), std::move(intValuePtr), std::move(longDefaultPtr),
+	        std::move(longValuePtr), std::move(floatDefaultPtr), std::move(floatValuePtr),
+	        std::move(stringDefaultPtr), std::move(stringValuePtr), std::move(rectDefaultPtr),
+	        std::move(rectValuePtr), std::move(pointDefaultPtr), std::move(pointValuePtr)
+	};
 	for (auto count : VRange<int>(0, 12)) {
 		auto name = std::to_string(count);
-		list.insert({name, VObjectProperty(name, std::unique_ptr<VPropertyValueBase>(intDefaultPtr.get()))});
+		list.insert({name, VObjectProperty(name, ptrList[count])});
 	}
 
-
 	return true;
+}
+bool VUnitTest(ObjectProperty, Read) {
+	__VObjectTestObject object;
+	auto& defaultProperty = object.GetProperty("intDefault");
+	auto& valueProperty = object.GetProperty("intValue");
+	return defaultProperty.GetValue()->Cast<VIntProperty>()->GetValue() == 0 && valueProperty.GetValue()->Cast<VIntProperty>()->GetValue() == 1;
 }

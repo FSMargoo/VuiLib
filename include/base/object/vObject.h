@@ -43,15 +43,6 @@ public:
 
 public:
 	/**
-	 * When the control received the repaint message, the virtual function will
-	 * be called for drawing
-	 * @param Surface The surface will be created by the parent class and provide it
-	 * to this sub object.
-	 */
-	virtual void OnPaint(const sk_sp<VSurface> &Surface) = 0;
-
-public:
-	/**
 	 * Get the property by the specified name
 	 * @param Name The name of the property
 	 * @return The reference of the property instance
@@ -59,6 +50,13 @@ public:
 	VObjectProperty& GetProperty(const std::string &Name);
 
 public:
+	/**
+	 * When the control received the repaint message, the virtual function will
+	 * be called for drawing
+	 * @param Surface The surface will be created by the parent class and provide it
+	 * to this sub object.
+	 */
+	virtual void OnPaint(const sk_sp<VSurface> &Surface) = 0;
 	/**
 	 * The virtual function that to be called when the property was changed
 	 */
@@ -75,15 +73,15 @@ protected:
 	 */
 	template<class Type>
 		requires std::is_base_of_v<VPropertyValueBase, Type>
-	void RegisterProperty(const std::string &Name, const std::unique_ptr<Type> &Pointer) {
-		return RegisterProperty(Name, std::unique_ptr<VPropertyValueBase>(Pointer.get()));
+	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &Pointer) {
+		return RegisterProperty(Name, reinterpret_cast<std::unique_ptr<VPropertyValueBase>&>(Pointer));
 	}
 	/**
 	 * Add a property to the object
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	void RegisterProperty(const std::string &Name, const std::unique_ptr<VPropertyValueBase> &Pointer);
+	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Pointer);
 
 protected:
 	VPropertyList _propertyList;

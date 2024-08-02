@@ -30,7 +30,7 @@
 VObjectProperty& VObject::GetProperty(const std::string &Name) {
 	return _propertyList.find(Name)->second;
 }
-void VObject::RegisterProperty(const std::string &Name, const std::unique_ptr<VPropertyValueBase> &Pointer) {
+void VObject::RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Pointer) {
 	if (_propertyList.find(Name) != _propertyList.end()) {
 		throw std::logic_error("VProperty should not be redefined");
 	}

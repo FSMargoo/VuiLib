@@ -46,12 +46,29 @@ enum class VPropertyType {
  * The base class of the property value
  */
 class VPropertyValueBase {
+public:
+	/**
+	 * Convert this pointer to the specified type, which is not always safe to call
+	 * @tparam Type The type to be converted which is base of VPropertyValueBase
+	 * @return The converted pointer
+	 */
+	template<class Type>
+		requires std::is_base_of_v<VPropertyValueBase, Type>
+	const Type *Cast() const {
+		return static_cast<const Type*>(this);
+	}
+
 protected:
 	/**
 	 * Construct the property by the property type
 	 * @param Type
 	 */
 	explicit VPropertyValueBase(const VPropertyType &Type);
+
+protected:
+	virtual size_t GetID() {
+		return typeid(this).hash_code();
+	}
 
 private:
 	VPropertyType _type;
@@ -64,6 +81,15 @@ public:
 	VIntProperty();
 	explicit VIntProperty(const int &Value);
 
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
+
 private:
 	int _value;
 };
@@ -74,6 +100,15 @@ class VLongProperty : public VPropertyValueBase {
 public:
 	VLongProperty();
 	explicit VLongProperty(const long &Value);
+
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
 
 private:
 	long _value;
@@ -86,6 +121,15 @@ public:
 	VFloatProperty();
 	explicit VFloatProperty(const float &Value);
 
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
+
 private:
 	float _value;
 };
@@ -96,6 +140,15 @@ class VStringProperty : public VPropertyValueBase {
 public:
 	VStringProperty();
 	explicit VStringProperty(const std::string &Value);
+
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
 
 private:
 	std::string _value;
@@ -108,6 +161,15 @@ public:
 	VRectProperty();
 	explicit VRectProperty(const VRect &Value);
 
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
+
 private:
 	VRect _value;
 };
@@ -118,6 +180,15 @@ class VPointProperty : public VPropertyValueBase {
 public:
 	VPointProperty();
 	explicit VPointProperty(const VPoint &Value);
+
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
 
 private:
 	VPoint _value;
@@ -133,7 +204,7 @@ public:
 	 * @param Name The name of the property
 	 * @param Value The pointer to the property value format in std::unique_ptr
 	 */
-	VObjectProperty(const std::string &Name, const std::unique_ptr<VPropertyValueBase> &Value);
+	VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Value);
 
 public:
 	[[nodiscard]] std::string GetName() const;
@@ -141,7 +212,7 @@ public:
 
 private:
 	std::string                         _name;
-	std::unique_ptr<VPropertyValueBase> _value;
+	std::unique_ptr<VPropertyValueBase>& _value;
 };
 
 using VPropertyList = std::unordered_map<std::string, VObjectProperty>;

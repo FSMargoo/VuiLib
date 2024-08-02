@@ -31,24 +31,25 @@
 #include <include/base/object/vObject.h>
 #include <include/base/test/vTest.h>
 
-class _VObjectTestObject : VObject {
+class __VObjectTestObject : public VObject {
 public:
-	_VObjectTestObject() {
-		auto intDefaultPtr = std::make_unique<VIntProperty>();
-		auto intValuePtr = std::make_unique<VIntProperty>(1);
-		auto longDefaultPtr = std::make_unique<VLongProperty>();
-		auto longValuePtr = std::make_unique<VLongProperty>(1);
-		auto floatDefaultPtr = std::make_unique<VFloatProperty>();
-		auto floatValuePtr = std::make_unique<VFloatProperty>(1);
-		auto stringDefaultPtr = std::make_unique<VStringProperty>();
-		auto stringValuePtr = std::make_unique<VStringProperty>("Hello, VUILib");
-		auto rectDefaultPtr = std::make_unique<VRectProperty>();
-		auto rectValuePtr = std::make_unique<VRectProperty>(VRect(0, 0, 100, 100));
-		auto pointDefaultPtr = std::make_unique<VPointProperty>();
-		auto pointValuePtr = std::make_unique<VPointProperty>(VPoint (0, 0));
+	__VObjectTestObject() {
+		intDefaultPtr = std::make_unique<VIntProperty>();
+		intValuePtr = std::make_unique<VIntProperty>(1);
 
-		RegisterProperty<VIntProperty>("1", intDefaultPtr);
+		RegisterProperty<VIntProperty>("intDefault", intDefaultPtr);
+		RegisterProperty<VIntProperty>("intValue", intValuePtr);
 	}
+
+public:
+	void OnPaint(const sk_sp<VSurface> &Surface) override {
+
+	}
+
+private:
+	std::unique_ptr<VIntProperty> intDefaultPtr;
+	std::unique_ptr<VIntProperty> intValuePtr;
 };
 
 bool VUnitTest(ObjectProperty, Create);
+bool VUnitTest(ObjectProperty, Read);

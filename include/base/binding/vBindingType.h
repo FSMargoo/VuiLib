@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 20;3~Now Margoo
+ * Copyright (c) 2023~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
 #include <compare>
 
 /**
- * This is a class for two-way binding, the control define property with
+ * This is a class for two-way binding, the control defines property with
  * this data class. This class will maintain an instance of the type and
  * a pointer referred to the type.
  * @tparam Type The data type

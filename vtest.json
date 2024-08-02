@@ -67,6 +67,14 @@
 		{
 			"status":1,
 			"taskID":"base.geometry.rect.compare"
+		},
+		{
+			"status":1,
+			"taskID":"base.object.create"
+		},
+		{
+			"status":1,
+			"taskID":"base.object.read"
 		}
 	]
 }
