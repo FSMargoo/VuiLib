@@ -21,34 +21,19 @@
  */
 
 /**
- * \file vBase.h
- * \brief The base library in VUILib
+ * \file vObject.cpp
+ * \brief The base class object for the drawable class in VUILib
  */
 
-#pragma once
+#include <include/base/object/vObject.h>
 
-#include <base/binding/vBindingType.h>
-#include <base/command/vCommand.h>
-#include <base/test/vTest.h>
-
-namespace VConcept {
-template <template <typename...> class C, typename... Ts>
-std::true_type IsBaseOfImpl(const C<Ts...> *);
-
-template <template <typename...> class C>
-std::false_type IsBaseOfImpl(...);
-
-template <template <typename...> class C, typename T>
-using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
+VObjectProperty& VObject::GetProperty(const std::string &Name) {
+	return _propertyList.find(Name)->second;
 }
-
-template<class RangeType>
-	requires std::is_integral_v<RangeType> or std::is_floating_point_v<RangeType>
-std::vector<RangeType> VRange(const RangeType &Start, const RangeType &End, const RangeType &Step = RangeType(1)) {
-	std::vector<RangeType> result;
-	for (RangeType count = Start; count < End; count += Step) {
-		result.push_back(count);
+void VObject::RegisterProperty(const std::string &Name, const std::unique_ptr<VPropertyValueBase> &Pointer) {
+	if (_propertyList.find(Name) != _propertyList.end()) {
+		throw std::logic_error("VProperty should not be redefined");
 	}
 
-	return result;
+	_propertyList.insert({ Name, VObjectProperty(Name, Pointer) });
 }

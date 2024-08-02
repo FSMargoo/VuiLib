@@ -21,45 +21,34 @@
  */
 
 /**
- * \file vSurface.h
- * \brief The surface class of VRenderer
+ * \file base.object.property.h
+ * \brief The unit test module for object property module
  */
 
 #pragma once
 
-#include <include/renderer/vRendererBase.h>
-#include <include/renderer/vRenderTarget.h>
-#include <include/renderer/vRenderContext.h>
+#include <include/base/object/vObjectProperty.h>
+#include <include/base/object/vObject.h>
+#include <include/base/test/vTest.h>
 
-/**
- * The surface wrapper of Skia surface class
- */
-class VSurface : public SkRefCnt {
+class _VObjectTestObject : VObject {
 public:
-	/**
-	 * Allocates raster surface, in general, create a surface in memory.
-	 * Pixel memory will be deleted when VSurface is deleted.
-	 * @param Width The width of raster surface
-	 * @param Height The height of raster surface
-	 */
-	VSurface(const int &Width, const int &Height);
-	/**
-	 * Construct the surface by render target and render a context object.
-	 * @param RenderTarget The render target object
-	 * @param Context The render context object.
-	 */
-	explicit VSurface(const sk_sp<VRenderTarget>& RenderTarget, const sk_sp<VRenderContext>& Context);
-	~VSurface() = default;
+	_VObjectTestObject() {
+		auto intDefaultPtr = std::make_unique<VIntProperty>();
+		auto intValuePtr = std::make_unique<VIntProperty>(1);
+		auto longDefaultPtr = std::make_unique<VLongProperty>();
+		auto longValuePtr = std::make_unique<VLongProperty>(1);
+		auto floatDefaultPtr = std::make_unique<VFloatProperty>();
+		auto floatValuePtr = std::make_unique<VFloatProperty>(1);
+		auto stringDefaultPtr = std::make_unique<VStringProperty>();
+		auto stringValuePtr = std::make_unique<VStringProperty>("Hello, VUILib");
+		auto rectDefaultPtr = std::make_unique<VRectProperty>();
+		auto rectValuePtr = std::make_unique<VRectProperty>(VRect(0, 0, 100, 100));
+		auto pointDefaultPtr = std::make_unique<VPointProperty>();
+		auto pointValuePtr = std::make_unique<VPointProperty>(VPoint (0, 0));
 
-public:
-	/**
-	 * Get the native surface object
-	 * @return The SkSurface object in a smart pointer
-	 */
-	auto& GetNativeSurface() {
-		return _surface;
+		RegisterProperty<VIntProperty>("1", intDefaultPtr);
 	}
-
-private:
-	sk_sp<SkSurface> _surface;
 };
+
+bool VUnitTest(ObjectProperty, Create);

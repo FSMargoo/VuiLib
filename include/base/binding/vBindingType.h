@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023~Now Margoo
+ * Copyright (c) 20;3~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ public:
 
 public:
 	/**
-	 * Bind a pointer, VBindingType assumes that the pointer is always available.
+	 * Bind a pointer; VBindingType assumes that the pointer is always available.
 	 * @param Pointer The pointer to be bound.
 	 */
 	void Bind(Type *Pointer) {
@@ -73,7 +73,7 @@ public:
 	 * Spaceship operator
 	 * @param Value The value for judgement
 	 */
-	std::strong_ordering  friend operator<=>(const VBindingType& Object, const Type& Value) {
+	std::strong_ordering friend operator<=>(const VBindingType& Object, const Type& Value) {
 		if (Object._pointer != nullptr) {
 			return *(Object._pointer) <=> Value;
 		}
@@ -84,7 +84,7 @@ public:
 	 * Spaceship operator
 	 * @param Value The value for judgement
 	 */
-	std::strong_ordering  friend operator<=>(const Type& Value, const VBindingType& Object) {
+	std::strong_ordering friend operator<=>(const Type& Value, const VBindingType& Object) {
 		if (Object._pointer != nullptr) {
 			return Value <=> *(Object._pointer);
 		}

@@ -46,7 +46,13 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/widget/vMonitor.cpp
         include/widget/vGLFWException.h
         include/base/geometry/vPoint.h
-        include/base/geometry/vRect.h)
+        include/base/geometry/vRect.h
+        include/window/vWindowView.h
+        include/base/object/vObject.h
+        source/base/object/vObject.cpp
+        include/base/object/vObjectProperty.h
+        source/base/object/vObjectProperty.cpp
+)
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
@@ -61,7 +67,9 @@ set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         unitTest/base/base.event.h
         unitTest/base/base.event.cpp
         unitTest/base/base.geometry.cpp
-        unitTest/base/base.geometry.h)
+        unitTest/base/base.geometry.h
+        unitTest/base/base.object.property.h
+        unitTest/base/base.object.property.cpp)
 
 add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp

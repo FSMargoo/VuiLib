@@ -28,6 +28,7 @@
 #pragma once
 
 #include <include/base/event/vEvent.h>
+#include <include/mvvm/vViewBase.h>
 #include <include/widget/vMonitor.h>
 
 #include <glfw/glfw3.h>
@@ -48,13 +49,23 @@ public:
 	VWidget(const int &Width, const int &Height, const std::string &Title);
 	/**
 	 * Create a widget with geometry information on a specified monitor,
-	 * it will create a full screen window by the specified geometry information.
+	 * it will create a full-screen window by the specified geometry information.
 	 * @param Width The width of the widget
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
 	VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
+
+private:
+	/**
+	 * The friend class definition of the VWindowView, in VUILib,
+	 * we directly hide the GLFW API detailed to user. In this case,
+	 * we choose to use the friend class method
+	 */
+	template<class ViewModel, class... Parameter>
+	    requires VIsViewModel<ViewModel>
+	friend class VWindowView;
 
 private:
 	GLFWwindow *_glfwWindow;

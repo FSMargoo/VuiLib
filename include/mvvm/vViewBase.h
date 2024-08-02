@@ -46,15 +46,15 @@ public:
 		InitModel(std::forward<Parameter...>(ModelParameter...));
 	}
 	/**
-	 * Constructing the model by an exists model instance, the view model class
-	 * will take over the life cycle of model pointer
+	 * Constructing the model by an existed model instance, the view model class
+	 * will take over the life cycle of a model pointer
 	 * @param ModelPointer
 	 */
 	explicit VViewBase(ViewModel* ViewModelPointer) : _viewModelPointer(ViewModelPointer) {
 
 	}
 	~VViewBase() {
-		// Make sure every model pointer are directly deletable.
+		// Make sure every model pointer is directly deletable.
 		delete _viewModelPointer;
 	}
 
