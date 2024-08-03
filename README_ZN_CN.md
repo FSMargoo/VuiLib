@@ -4,14 +4,12 @@
 
 ![GitHub License](https://img.shields.io/github/license/FSMargoo/VUILib) ![GitHub Created At](https://img.shields.io/github/created-at/FSMargoo/VuiLib)
 
-<h3>Auto Commit Status</h3>
+<h3>自动提交信息</h3>
 
-![Static Badge](https://img.shields.io/badge/Unit%20Test-Pass-green)
-![Static Badge](https://img.shields.io/badge/Last%20Commit-cf:66ade499-blue)
-![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/03/16:04:46-purple)
+[前往英文版查看](./README.md)
 
 <h3 align="center">VUILib3.x</h3>
-A cross-platform UI Library born for flexible and efficient. Build with:
+专为灵活和高效而生的跨平台 UI 库。使用以下工具构造：
 
 <br>
 
@@ -19,13 +17,13 @@ A cross-platform UI Library born for flexible and efficient. Build with:
 
 <br>
 
-VUILib 3.x is still under developing, please wait with our first dev release!
+VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 
 </div>
 
-## Acknowledgements
+## 鸣谢
 
-Thanks for $JetBrains$'s Licenses for Open Source Development
+感谢 $JetBrains$' 的开源许可证
 
 <div align="center">
 
@@ -33,15 +31,15 @@ Thanks for $JetBrains$'s Licenses for Open Source Development
 
 </div>
 
-Thanks for $mohabouje$'s project $WinToast$.
+感谢 $mohabouje$ 的开源项目 $WinToast$.
 
-Thanks for $FlorianRappl$'s project $CmdParser$.
+感谢 $FlorianRappl$ 的开源项目 $CmdParser$.
 
-Thanks for $Google$'s project $Skia$
+感谢 $Google$ 的开源项目 $Skia$
 
-Thanks for $GLFW$ project
+感谢 $GLFW$ 项目
 
-## Third-party Libraries List
+## 第三方库列表
 
 <div align="center">
 
