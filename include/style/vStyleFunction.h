@@ -21,25 +21,23 @@
  */
 
 /**
- * \file vObject.h
- * \brief The base class object for the drawable class in VUILib
+ * \file vStyleFunction.h
+ * \brief The function method to store the style sheet
  */
 
 #pragma once
 
-#include <include/base/object/vObjectProperty.h>
-#include <include/renderer/vRenderTarget.h>
-#include <include/renderer/vSurface.h>
-#include <include/base/vBase.h>
+#include <include/renderer/vColorFactory.h>
+#include <include/base/object/vObject.h>
+
+using VStyleProperty = VObjectProperty;
 
 /**
- * The base class object for the drawable class in VUILib
- * Every object that is drawable in the user interface should inherit this class
- * to ensure that it can join the message loop correctly
+ * The style function store class for the style system in VUILib
  */
-class VObject {
+class VStyleFunction final {
 public:
-	VObject() = default;
+	VStyleFunction() = default;
 
 public:
 	/**
@@ -47,22 +45,7 @@ public:
 	 * @param Name The name of the property
 	 * @return The reference of the property instance
 	 */
-	VObjectProperty& GetProperty(const std::string &Name);
-
-public:
-	/**
-	 * When the control received the repaint message, the virtual function will
-	 * be called for drawing
-	 * @param Surface The surface will be created by the parent class and provide it
-	 * to this sub object.
-	 */
-	virtual void OnPaint(const sk_sp<VSurface> &Surface) = 0;
-	/**
-	 * The virtual function that to be called when the property was changed
-	 */
-	virtual void OnPropertyChange() {
-
-	}
+	VStyleProperty& GetProperty(const std::string &Name);
 
 protected:
 	/**
@@ -72,7 +55,7 @@ protected:
 	 * @param Pointer The pointer referred to the pointer
 	 */
 	template<class Type>
-		requires std::is_base_of_v<VPropertyValueBase, Type>
+	    requires std::is_base_of_v<VPropertyValueBase, Type>
 	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &Pointer) {
 		return RegisterProperty(Name, reinterpret_cast<std::unique_ptr<VPropertyValueBase>&>(Pointer));
 	}

@@ -63,7 +63,7 @@ protected:
 	 * Construct the property by the property type
 	 * @param Type
 	 */
-	explicit VPropertyValueBase(const VPropertyType &Type);
+	explicit VPropertyValueBase(VPropertyType Type);
 
 protected:
 	virtual size_t GetID() {
@@ -204,7 +204,7 @@ public:
 	 * @param Name The name of the property
 	 * @param Value The pointer to the property value format in std::unique_ptr
 	 */
-	VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Value);
+	VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Value);
 
 public:
 	[[nodiscard]] std::string GetName() const;
@@ -212,7 +212,7 @@ public:
 
 private:
 	std::string                         _name;
-	std::unique_ptr<VPropertyValueBase>& _value;
+	std::unique_ptr<VPropertyValueBase> _value;
 };
 
 using VPropertyList = std::unordered_map<std::string, VObjectProperty>;

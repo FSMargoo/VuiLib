@@ -35,5 +35,5 @@ void VObject::RegisterProperty(const std::string &Name, std::unique_ptr<VPropert
 		throw std::logic_error("VProperty should not be redefined");
 	}
 
-	_propertyList.insert({ Name, VObjectProperty(Name, Pointer) });
+	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
 }

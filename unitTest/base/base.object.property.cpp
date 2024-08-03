@@ -49,7 +49,7 @@ bool VUnitTest(ObjectProperty, Create) {
 	};
 	for (auto count : VRange<int>(0, 12)) {
 		auto name = std::to_string(count);
-		list.insert({name, VObjectProperty(name, ptrList[count])});
+		list.insert({name, VObjectProperty(name, std::move(ptrList[count]))});
 	}
 
 	return true;
@@ -59,4 +59,13 @@ bool VUnitTest(ObjectProperty, Read) {
 	auto& defaultProperty = object.GetProperty("intDefault");
 	auto& valueProperty = object.GetProperty("intValue");
 	return defaultProperty.GetValue()->Cast<VIntProperty>()->GetValue() == 0 && valueProperty.GetValue()->Cast<VIntProperty>()->GetValue() == 1;
+}
+bool VUnitTest(ObjectProperty, MemoryLeak) {
+	std::unique_ptr<VObjectProperty> property;
+	{
+		auto intValue = std::make_unique<VIntProperty>(203);
+		auto& value = reinterpret_cast<std::unique_ptr<VPropertyValueBase>&>(intValue);
+		property = std::make_unique<VObjectProperty>("leakTest", std::move(value));
+	}
+	return property->GetValue()->Cast<VIntProperty>()->GetValue() == 203;
 }

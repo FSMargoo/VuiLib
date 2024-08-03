@@ -27,7 +27,7 @@
 
 #include <include/base/object/vObjectProperty.h>
 
-VPropertyValueBase::VPropertyValueBase(const VPropertyType &Type) : _type(Type) {
+VPropertyValueBase::VPropertyValueBase(VPropertyType Type) : _type(Type) {
 
 }
 VIntProperty::VIntProperty()
@@ -78,8 +78,8 @@ VPointProperty::VPointProperty(const VPoint &Value)
     : VPropertyValueBase(VPropertyType::Point), _value(Value) {
 
 }
-VObjectProperty::VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Value)
-	: _name(Name), _value(Value) {
+VObjectProperty::VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Value)
+	: _name(Name), _value(std::move(Value)) {
 
 }
 std::string VObjectProperty::GetName() const {

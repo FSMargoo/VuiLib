@@ -21,36 +21,19 @@
  */
 
 /**
- * \file base.object.property.h
- * \brief The unit test module for object property module
+ * \file vStyleFunction.cpp
+ * \brief The function method to store the style sheet
  */
 
-#pragma once
+#include <include/style/vStyleFunction.h>
 
-#include <include/base/object/vObjectProperty.h>
-#include <include/base/object/vObject.h>
-#include <include/base/test/vTest.h>
-
-class __VObjectTestObject : public VObject {
-public:
-	__VObjectTestObject() {
-		intDefaultPtr = std::make_unique<VIntProperty>();
-		intValuePtr = std::make_unique<VIntProperty>(1);
-
-		RegisterProperty<VIntProperty>("intDefault", intDefaultPtr);
-		RegisterProperty<VIntProperty>("intValue", intValuePtr);
+VStyleProperty& VStyleFunction::GetProperty(const std::string &Name) {
+	return _propertyList.find(Name)->second;
+}
+void VStyleFunction::RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Pointer) {
+	if (_propertyList.find(Name) != _propertyList.end()) {
+		throw std::logic_error("VProperty should not be redefined");
 	}
 
-public:
-	void OnPaint(const sk_sp<VSurface> &Surface) override {
-
-	}
-
-private:
-	std::unique_ptr<VIntProperty> intDefaultPtr;
-	std::unique_ptr<VIntProperty> intValuePtr;
-};
-
-bool VUnitTest(ObjectProperty, Create);
-bool VUnitTest(ObjectProperty, Read);
-bool VUnitTest(ObjectProperty, MemoryLeak);
+	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
+}

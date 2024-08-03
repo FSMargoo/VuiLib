@@ -27,9 +27,10 @@
 
 #pragma once
 
+#include <include/base/object/vObject.h>
 #include <include/base/event/vEvent.h>
-#include <include/mvvm/vViewBase.h>
 #include <include/widget/vMonitor.h>
+#include <include/mvvm/vViewBase.h>
 
 #include <glfw/glfw3.h>
 
@@ -38,7 +39,7 @@
  * maintain a GLFWwindow pointer, and converting the GLFW
  * event into VUILib VEvent
  */
-class VWidget {
+class VWidget : public VObject {
 public:
 	/**
 	 * Construct the widget with only geometry information
@@ -69,4 +70,9 @@ private:
 
 private:
 	GLFWwindow *_glfwWindow;
+
+private:
+	std::unique_ptr<VIntProperty>       _width;
+	std::unique_ptr<VIntProperty>       _height;
+	std::unique_ptr<VStringProperty>    _title;
 };

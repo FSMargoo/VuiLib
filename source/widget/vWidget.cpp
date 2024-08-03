@@ -29,6 +29,14 @@
 
 VWidget::VWidget(const int &Width, const int &Height, const std::string& Title) {
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
+
+	_width  = std::make_unique<VIntProperty>(Width);
+	_height = std::make_unique<VIntProperty>(Height);
+	_title  = std::make_unique<VStringProperty>(Title);
+
+	RegisterProperty("width", _width);
+	RegisterProperty("height", _height);
+	RegisterProperty("title", _title);
 }
 VWidget::VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor& Monitor) {
 	/**

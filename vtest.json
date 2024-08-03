@@ -75,6 +75,10 @@
 		{
 			"status":1,
 			"taskID":"base.object.read"
+		},
+		{
+			"status":1,
+			"taskID":"base.object.memory.leak"
 		}
 	]
 }

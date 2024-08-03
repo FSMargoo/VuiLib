@@ -52,6 +52,12 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/base/object/vObject.cpp
         include/base/object/vObjectProperty.h
         source/base/object/vObjectProperty.cpp
+        include/app/vApplication.h
+        source/app/vApplication.cpp
+        include/renderer/vColorFactory.h
+        source/renderer/vColorFactory.cpp
+        include/style/vStyleFunction.h
+        source/style/vStyleFunction.cpp
 )
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp

@@ -21,36 +21,6 @@
  */
 
 /**
- * \file base.object.property.h
- * \brief The unit test module for object property module
+ * \file vColorFactory.cpp
+ * \brief The color factory class in VUILib renderer
  */
-
-#pragma once
-
-#include <include/base/object/vObjectProperty.h>
-#include <include/base/object/vObject.h>
-#include <include/base/test/vTest.h>
-
-class __VObjectTestObject : public VObject {
-public:
-	__VObjectTestObject() {
-		intDefaultPtr = std::make_unique<VIntProperty>();
-		intValuePtr = std::make_unique<VIntProperty>(1);
-
-		RegisterProperty<VIntProperty>("intDefault", intDefaultPtr);
-		RegisterProperty<VIntProperty>("intValue", intValuePtr);
-	}
-
-public:
-	void OnPaint(const sk_sp<VSurface> &Surface) override {
-
-	}
-
-private:
-	std::unique_ptr<VIntProperty> intDefaultPtr;
-	std::unique_ptr<VIntProperty> intValuePtr;
-};
-
-bool VUnitTest(ObjectProperty, Create);
-bool VUnitTest(ObjectProperty, Read);
-bool VUnitTest(ObjectProperty, MemoryLeak);

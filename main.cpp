@@ -24,6 +24,7 @@ int main() {
 	VTestTask baseGeometryRectCompare(VUnitTestM(BaseGeometryRect, Compare), "base.geometry.rect.compare");
 	VTestTask baseObjectCreate(VUnitTestM(ObjectProperty, Create), "base.object.create");
 	VTestTask baseObjectRead(VUnitTestM(ObjectProperty, Read), "base.object.read");
+	VTestTask baseObjectMemoryLeak(VUnitTestM(ObjectProperty, Read), "base.object.memory.leak");
 
 	VTestConductor conductor;
 
@@ -46,6 +47,7 @@ int main() {
 	conductor.AddTask(baseGeometryRectCompare);
 	conductor.AddTask(baseObjectCreate);
 	conductor.AddTask(baseObjectRead);
+	conductor.AddTask(baseObjectMemoryLeak);
 
 	conductor.StartTasks();
 
