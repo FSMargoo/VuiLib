@@ -7,8 +7,9 @@
 <h3>Auto Commit Status</h3>
 
 ![Static Badge](https://img.shields.io/badge/Unit%20Test-Pass-green)
-![Static Badge](https://img.shields.io/badge/Last%20Commit-at:66ae3206-blue)
-![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/03/21:35:07-purple)
+![Static Badge](https://img.shields.io/badge/Last%20Commit-dc:66af2f3a-blue)
+![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/04/15:35:27-purple)
+
 
 <h3 align="center">VUILib3.x</h3>
 A cross-platform UI Library born for flexible and efficient. Build with:
@@ -16,6 +17,12 @@ A cross-platform UI Library born for flexible and efficient. Build with:
 <br>
 
 <img src="https://skillicons.dev/icons?i=cpp,cmake,clion,figma" />
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="150">
+
+</div>
 
 <br>
 
@@ -41,6 +48,15 @@ Thanks for $Google$'s project $Skia$
 
 Thanks for $GLFW$ project
 
+Thanks for $Radix$ $Themes$ project
+
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="300">
+
+</div>
+
 ## Third-party Libraries List
 
 <div align="center">
@@ -51,8 +67,18 @@ Thanks for $GLFW$ project
 
 [Margoo-SimpleJson](https://github.com/FSMargoo/SimpleJson)
 
-[Skia](skia.org)
+[Skia](https://www.skia.org)
 
 [GLFW](https://github.com/GLFW/glfw)
+
+</div>
+
+## UI Theme Design
+
+VUILib's kits design is provided by $Radix$ $Theme$ at [here](https://www.radix-ui.com/).
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="100">
 
 </div>

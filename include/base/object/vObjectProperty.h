@@ -27,6 +27,7 @@
 
 #pragma once
 
+#include <include/renderer/vColorFactory.h>
 #include <include/base/geometry/vPoint.h>
 #include <include/base/geometry/vRect.h>
 #include <include/base/vBase.h>
@@ -39,7 +40,7 @@
  * The type of the property
  */
 enum class VPropertyType {
-	Int, Long, Float, String, Rect, Point
+	Int, Long, Float, String, Rect, Point, Color
 };
 
 /**
@@ -192,6 +193,26 @@ public:
 
 private:
 	VPoint _value;
+};
+/**
+ * The color property of the property value
+ */
+class VColorProperty : public VPropertyValueBase {
+public:
+	VColorProperty();
+	explicit VColorProperty(const SkColor &Value);
+
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
+
+private:
+	SkColor _value;
 };
 
 /**

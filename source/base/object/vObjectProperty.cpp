@@ -78,6 +78,14 @@ VPointProperty::VPointProperty(const VPoint &Value)
     : VPropertyValueBase(VPropertyType::Point), _value(Value) {
 
 }
+VColorProperty::VColorProperty()
+    : VPropertyValueBase(VPropertyType::Color), _value() {
+
+}
+VColorProperty::VColorProperty(const SkColor &Value)
+    : VPropertyValueBase(VPropertyType::Color), _value(Value) {
+
+}
 VObjectProperty::VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Value)
 	: _name(Name), _value(std::move(Value)) {
 

@@ -49,12 +49,19 @@
 ![Static Badge](https://img.shields.io/badge/Last%20Commit-{}-blue)
 ![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-{}-purple)
 
+
 <h3 align="center">VUILib3.x</h3>
 A cross-platform UI Library born for flexible and efficient. Build with:
 
 <br>
 
 <img src="https://skillicons.dev/icons?i=cpp,cmake,clion,figma" />
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="150">
+
+</div>
 
 <br>
 
@@ -80,7 +87,14 @@ Thanks for $Google$'s project $Skia$
 
 Thanks for $GLFW$ project
 
-Thanks for $boost.algorithm$ proejct
+Thanks for $Radix$ $Themes$ project
+
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="300">
+
+</div>
 
 ## Third-party Libraries List
 
@@ -96,7 +110,15 @@ Thanks for $boost.algorithm$ proejct
 
 [GLFW](https://github.com/GLFW/glfw)
 
-[boost.algorithm](https://github.com/boostorg/algorithm)
+</div>
+
+## UI Theme Design
+
+VUILib's kits design is provided by $Radix$ $Theme$ at [here](https://www.radix-ui.com/).
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="100">
 
 </div>)"
 
