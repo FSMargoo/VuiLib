@@ -21,19 +21,24 @@
  */
 
 /**
- * \file vStyleFunction.cpp
- * \brief The function method to store the style sheet
+ * \file vStyleCollection.h
+ * \brief The style set collection in VUILib, it collects a set of
+ * VStyleFunction to meet the requirement
  */
+
+#pragma once
 
 #include <include/style/vStyleFunction.h>
 
-VStyleProperty& VStyleFunction::GetProperty(const std::string &Name) {
-	return _propertyList.find(Name)->second;
-}
-void VStyleFunction::RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
-	if (_propertyList.find(Name) != _propertyList.end()) {
-		throw std::logic_error("VProperty should not be redefined");
-	}
+/**
+ * The style set collection in VUILib, it collects a set of
+ * VStyleFunction to meet the requirement. By default, it will
+ * create two sets; One is light, one is dark.
+ */
+class VStyleCollection {
+public:
+	VStyleCollection();
 
-	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
-}
+private:
+	std::unordered_map<std::string, VStyleFunction> _collection;
+};

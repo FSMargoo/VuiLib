@@ -21,19 +21,16 @@
  */
 
 /**
- * \file vStyleFunction.cpp
- * \brief The function method to store the style sheet
+ * \file renderer.color.factory.cpp
+ * \brief The unit test for style color factory
  */
 
-#include <include/style/vStyleFunction.h>
+#include <unitTest/renderer/renderer.color.factory.h>
 
-VStyleProperty& VStyleFunction::GetProperty(const std::string &Name) {
-	return _propertyList.find(Name)->second;
-}
-void VStyleFunction::RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
-	if (_propertyList.find(Name) != _propertyList.end()) {
-		throw std::logic_error("VProperty should not be redefined");
-	}
+bool VUnitTest(RendererColorFactory, HexCreate) {
+	auto result1 = VColorFactory::MakeFromHexString("#1e1f22");
+	auto result2 = VColorFactory::MakeFromHexString("1e1f22");
 
-	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
+	return result1 == result2 && VColorFactory::GetRValue(result1) == 30 &&
+	       VColorFactory::GetGValue(result1) == 31 && VColorFactory::GetBValue(result1) == 34;
 }

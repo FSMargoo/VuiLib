@@ -34,21 +34,20 @@
 class __VObjectTestObject : public VObject {
 public:
 	__VObjectTestObject() {
-		intDefaultPtr = std::make_unique<VIntProperty>();
-		intValuePtr = std::make_unique<VIntProperty>(1);
+		auto intDefaultPtr = std::make_unique<VIntProperty>();
+		auto intValuePtr = std::make_unique<VIntProperty>(1);
 
-		RegisterProperty<VIntProperty>("intDefault", intDefaultPtr);
-		RegisterProperty<VIntProperty>("intValue", intValuePtr);
+		RegisterProperty<VIntProperty>("intDefault", std::move(intDefaultPtr));
+		RegisterProperty<VIntProperty>("intValue", std::move(intValuePtr));
+	}
+	~__VObjectTestObject() override {
+
 	}
 
 public:
 	void OnPaint(const sk_sp<VSurface> &Surface) override {
 
 	}
-
-private:
-	std::unique_ptr<VIntProperty> intDefaultPtr;
-	std::unique_ptr<VIntProperty> intValuePtr;
 };
 
 bool VUnitTest(ObjectProperty, Create);

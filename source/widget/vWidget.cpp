@@ -34,9 +34,9 @@ VWidget::VWidget(const int &Width, const int &Height, const std::string& Title) 
 	_height = std::make_unique<VIntProperty>(Height);
 	_title  = std::make_unique<VStringProperty>(Title);
 
-	RegisterProperty("width", _width);
-	RegisterProperty("height", _height);
-	RegisterProperty("title", _title);
+	RegisterProperty("width", std::move(_width));
+	RegisterProperty("height", std::move(_height));
+	RegisterProperty("title", std::move(_title));
 }
 VWidget::VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor& Monitor) {
 	/**

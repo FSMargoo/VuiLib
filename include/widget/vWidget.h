@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2023~Now Margoo
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * Permission is hereby granted, free of charge, to any personbe be  obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -36,7 +36,7 @@
 
 /**
  * This class is a wrapper of GLFW monitor API, which will
- * maintain a GLFWwindow pointer, and converting the GLFW
+ * maintain a GLFWwindow pointer, and convert the GLFW
  * event into VUILib VEvent
  */
 class VWidget : public VObject {

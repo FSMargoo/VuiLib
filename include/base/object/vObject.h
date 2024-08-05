@@ -1,8 +1,7 @@
 /*
  * Copyright (c) 2023~Now Margoo
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
+ * Permission is hereby granted, free of charge,us files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
@@ -39,7 +38,17 @@
  */
 class VObject {
 public:
-	VObject() = default;
+	/**
+	 * Create the object with no parent object
+	 */
+	VObject();
+	/**
+	 * Create the object with a specified parent object pointer
+	 * @param Parent The parent pointer. The lifetime of the pointer
+	 * should be maintained by the user
+	 */
+	explicit VObject(VObject *Parent);
+	virtual ~VObject() = default;
 
 public:
 	/**
@@ -50,6 +59,45 @@ public:
 	VObjectProperty& GetProperty(const std::string &Name);
 
 public:
+	/**
+	 * Set the new parent object, the old pointer in the old parent object
+	 * will be removed.
+	 * @param Parent The new parent object
+	 */
+	void SetParent(VObject *Parent);
+	/**
+	 * Get the parent pointer in const form
+	 * @return A VObject pointer referred to the parent object
+	 */
+	[[nodiscard]] const VObject *GetParent() const;
+
+public:
+	/**
+	 * Raise this object in the top of the parent list;
+	 * To use this method, the parent of the object should not
+	 * be nullptr
+	 */
+	void RaiseTop();
+	/**
+	 * Raise this object in the lowest of the parent list;
+	 * To use this method, the parent of the object should not
+	 * be nullptr
+	 */
+	void RaiseLowest();
+	/**
+	 * Raise this object under the target object in the parent list;
+	 * To use this method, the parent of the object should not be nullptr,
+	 * and the target object should have the same parent with this object
+	 */
+	void RaiseUnder(const VObject *Target);
+	/**
+	 * Raise this object upper the target object in the parent list;
+	 * To use this method, the parent of the object should not be nullptr,
+	 * and the target object should have the same parent with this object
+	 */
+	void RaiseUpper(const VObject *Target);
+
+protected:
 	/**
 	 * When the control received the repaint message, the virtual function will
 	 * be called for drawing
@@ -73,15 +121,15 @@ protected:
 	 */
 	template<class Type>
 		requires std::is_base_of_v<VPropertyValueBase, Type>
-	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &Pointer) {
-		return RegisterProperty(Name, reinterpret_cast<std::unique_ptr<VPropertyValueBase>&>(Pointer));
+	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &&Pointer) {
+		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase>&&>(Pointer)));
 	}
 	/**
 	 * Add a property to the object
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Pointer);
+	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer);
 	/**
 	 * Get the property value in specified type format
 	 * @tparam Type The type of the target value
@@ -93,6 +141,22 @@ protected:
 		return static_cast<Type*>(GetProperty(Name).GetValue());
 	}
 
+private:
+	/**
+	 * Remove the old pointer in the object parent object
+	 * @param OldParent The old parent pointer
+	 */
+	void RemoveParent(VObject *OldParent);
+	/**
+	 * Add this object into the new parent object
+	 * @param Parent The parent pointer
+	 */
+	void AdaptParent(VObject *Parent);
+
 protected:
 	VPropertyList _propertyList;
+
+protected:
+	VObject                 *_parent;
+	std::vector<VObject *>   _childList;
 };

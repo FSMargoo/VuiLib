@@ -56,15 +56,15 @@ protected:
 	 */
 	template<class Type>
 	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &Pointer) {
-		return RegisterProperty(Name, reinterpret_cast<std::unique_ptr<VPropertyValueBase>&>(Pointer));
+	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &&Pointer) {
+		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase>&&>(Pointer)));
 	}
 	/**
 	 * Add a property to the object
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &Pointer);
+	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer);
 	/**
 	 * Get the property value in specified type format
 	 * @tparam Type The type of the target value
@@ -75,6 +75,10 @@ protected:
 	void GetPropertyValue(const std::string &Name) {
 		return static_cast<Type*>(GetProperty(Name).GetValue());
 	}
+
+private:
+	friend class VRadixStyleFactory;
+	friend class VApplication;
 
 protected:
 	VPropertyList _propertyList;

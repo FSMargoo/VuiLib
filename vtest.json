@@ -79,6 +79,10 @@
 		{
 			"status":1,
 			"taskID":"base.object.memory.leak"
+		},
+		{
+			"status":1,
+			"taskID":"renderer.color.hexCreate"
 		}
 	]
 }

@@ -28,8 +28,28 @@
 #pragma once
 
 #include <include/base/object/vObject.h>
+#include <include/style/vRadixStyle.h>
 
+/**
+ * The application class in VUILib
+ */
 class VApplication {
 public:
+	/**
+	 * Create the application in default mode; By default, it will
+	 * create a theme in light mode with the blue theme color
+	 */
+	VApplication();
 
+public:
+	/**
+	 * Get the theme property by the specified name
+	 * @param Name The id of the theme property
+	 * @return The reference of the property instance
+	 */
+	VStyleProperty& GetThemeProperty(const std::string &Name);
+
+protected:
+	VRadixStyleType _styleType;
+	VStyleFunction  _style;
 };

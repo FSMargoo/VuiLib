@@ -58,6 +58,10 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/renderer/vColorFactory.cpp
         include/style/vStyleFunction.h
         source/style/vStyleFunction.cpp
+        include/style/vStyleCollection.h
+        source/style/vStyleCollection.cpp
+        include/style/vRadixStyle.h
+        source/style/vRadixStyle.cpp
 )
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
@@ -75,7 +79,9 @@ set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         unitTest/base/base.geometry.cpp
         unitTest/base/base.geometry.h
         unitTest/base/base.object.property.h
-        unitTest/base/base.object.property.cpp)
+        unitTest/base/base.object.property.cpp
+        unitTest/renderer/renderer.color.factory.h
+        unitTest/renderer/renderer.color.factory.cpp)
 
 add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp

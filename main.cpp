@@ -3,6 +3,7 @@
 #include <unitTest/base/base.geometry.h>
 #include <unitTest/base/base.event.h>
 #include <unitTest/base/base.object.property.h>
+#include <unitTest/renderer/renderer.color.factory.h>
 
 int main() {
 	VTestTask baseEventTest(VUnitTestM(BaseEvent, Recall), "base.event.free_function.recall");
@@ -25,6 +26,7 @@ int main() {
 	VTestTask baseObjectCreate(VUnitTestM(ObjectProperty, Create), "base.object.create");
 	VTestTask baseObjectRead(VUnitTestM(ObjectProperty, Read), "base.object.read");
 	VTestTask baseObjectMemoryLeak(VUnitTestM(ObjectProperty, Read), "base.object.memory.leak");
+	VTestTask rendererColorFactoryHexCreate(VUnitTestM(RendererColorFactory, HexCreate), "renderer.color.hexCreate");
 
 	VTestConductor conductor;
 
@@ -48,6 +50,7 @@ int main() {
 	conductor.AddTask(baseObjectCreate);
 	conductor.AddTask(baseObjectRead);
 	conductor.AddTask(baseObjectMemoryLeak);
+	conductor.AddTask(rendererColorFactoryHexCreate);
 
 	conductor.StartTasks();
 

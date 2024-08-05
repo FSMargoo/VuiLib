@@ -24,3 +24,13 @@
  * \file vApplication.cpp
  * \brief The application class in the VUILib
  */
+
+#include <include/app/vApplication.h>
+
+VApplication::VApplication() {
+	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::light, VColorFactory::MakeRGB(28, 42, 89));
+}
+
+VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
+	return _style.GetProperty(Name);
+}
