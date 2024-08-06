@@ -25,6 +25,7 @@
  * \brief The base class object for the drawable class in VUILib
  */
 
+#include <xutility>
 #include <include/base/object/vObject.h>
 
 VObject::VObject() : _parent(nullptr) {
@@ -120,6 +121,48 @@ void VObject::RaiseUpper(const VObject *Target) {
 		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same parent with this object!");
 	}
 }
+void VObject::Resize(const int &Width, const int &Height) {
+	_bound->_value.Resize(Width, Height);
+}
+void VObject::Move(const int &X, const int &Y) {
+	auto width  = _bound->_value.GetWidth();
+	auto height = _bound->_value.GetHeight();
+
+	_bound->_value = { X, Y, X + width, Y + height };
+}
+void VObject::UploadMessage(VBaseMessage *Message) {
+	if (_parent != nullptr) {
+		_parent->UploadMessage(Message);
+	}
+	else {
+		OnFinalMessage(Message);
+	}
+}
+void VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
+	switch (Message->GetType()) {
+		case VMessageType::Repaint: {
+			auto repaintMessage = Message->Cast<VRepaintMessage>();
+			if (Surface == nullptr) {
+				throw std::logic_error("Surface should not be nullptr!");
+			}
+			if (_bound->_value.IsOverlap(repaintMessage->DirtyRectangle)) {
+				/**
+				 * Draw the context the relative surface
+				 */
+				auto result = SkSurface::MakeRaster(SkImageInfo::MakeN32Premul(2, 2), nullptr);
+				// auto result = SkSurface::MakeRasterN32Premul(2, 2);
+				// sk_sp<VSurface> objectSurface = sk_make_sp<VSurface, const int &, const int &>(_bound->_value.GetWidth(), _bound->_value.GetHeight());
+				// OnPaint(objectSurface);
+//
+				// auto point = _bound->_value.GetLeftTopPoint();
+//
+				// Surface->GetNativeSurface()->draw(objectSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
+			}
+
+			break;
+		}
+	}
+}
 VObjectProperty& VObject::GetProperty(const std::string &Name) {
 	return _propertyList.find(Name)->second;
 }
@@ -145,4 +188,13 @@ void VObject::AdaptParent(VObject *Parent) {
 	if (Parent != nullptr) {
 		Parent->_childList.push_back(this);
 	}
+}
+void VObject::InitGeneralProperty() {
+	auto visible = std::make_unique<VBooleanProperty>(true);
+	auto bound = std::make_unique<VRectProperty>();
+
+	RegisterProperty("visible", std::move(visible));
+	RegisterProperty("bound", std::move(bound));
+
+	_bound = GetPropertyValue<VRectProperty>("bound");
 }

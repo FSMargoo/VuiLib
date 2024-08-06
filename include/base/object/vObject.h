@@ -28,6 +28,7 @@
 
 #include <include/base/object/vObjectProperty.h>
 #include <include/renderer/vRenderTarget.h>
+#include <include/base/message/vMessage.h>
 #include <include/renderer/vSurface.h>
 #include <include/base/vBase.h>
 
@@ -97,6 +98,44 @@ public:
 	 */
 	void RaiseUpper(const VObject *Target);
 
+public:
+	virtual /**
+	 * Adjust the bound geometry information
+	 * @param Width The width of new geometry information
+	 * @param Height The height of new geometry information
+	 */
+	void Resize(const int &Width, const int &Height);
+	/**
+	 * Adjust the position of the object
+	 * @param X The new X axis position
+	 * @param Y The new Y axis position
+	 */
+	void Move(const int &X, const int &Y);
+
+protected:
+	/**
+	 * Upload the message into the parent object if the parent object
+	 * still has the parent object it will still send to the parent object
+	 * of the parent object
+	 * @param Message The message to be sent, it will be released in the final parent
+	 * object
+	 */
+	void UploadMessage(VBaseMessage *Message);
+	/**
+	 * When the object received message, this function will be called
+	 * @param Message The message to be processed
+	 * @param Surface The target surface to be painted on, if there is a repaint
+	 * message
+	 */
+	void OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface);
+	/**
+	 * When the final parent object received the message, this function will be emitted
+	 * @param Message The message to be processed
+	 */
+	virtual void OnFinalMessage(VBaseMessage *Message) {
+
+	}
+
 protected:
 	/**
 	 * When the control received the repaint message, the virtual function will
@@ -104,7 +143,7 @@ protected:
 	 * @param Surface The surface will be created by the parent class and provide it
 	 * to this sub object.
 	 */
-	virtual void OnPaint(const sk_sp<VSurface> &Surface) = 0;
+	virtual void OnPaint(sk_sp<VSurface> &Surface) = 0;
 	/**
 	 * The virtual function that to be called when the property was changed
 	 */
@@ -137,8 +176,8 @@ protected:
 	 */
 	template<class Type>
 	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	void GetPropertyValue(const std::string &Name) {
-		return static_cast<Type*>(GetProperty(Name).GetValue());
+	Type *GetPropertyValue(const std::string &Name) {
+		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
 
 private:
@@ -152,11 +191,19 @@ private:
 	 * @param Parent The parent pointer
 	 */
 	void AdaptParent(VObject *Parent);
+	/**
+	 * Init the general property of every objects
+	 */
+	void InitGeneralProperty();
 
 protected:
 	VPropertyList _propertyList;
 
 protected:
+	/**
+	 * The bound of the object in the UI
+	 */
+	VRectProperty*           _bound;
 	VObject                 *_parent;
 	std::vector<VObject *>   _childList;
 };

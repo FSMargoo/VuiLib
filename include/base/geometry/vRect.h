@@ -178,8 +178,8 @@ public:
 	 * otherwise false.
 	 */
 	bool IsOverlap(const VRectBase<DataType> &Targets) {
-		return std::max(_left, Targets.Left) < std::min(_right, Targets.Right) &&
-		       std::max(_top, Targets.Top) < std::min(_bottom, Targets.Bottom);
+		return std::max(_left, Targets._left) < std::min(_right, Targets._right) &&
+		       std::max(_top, Targets._top) < std::min(_bottom, Targets._bottom);
 	}
 
 public:

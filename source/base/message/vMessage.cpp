@@ -21,35 +21,23 @@
  */
 
 /**
- * \file base.object.property.h
- * \brief The unit test module for object property module
+ * \file vMessage.cpp
+ * \brief The message type in the VUILib
  */
 
-#pragma once
+#include <include/base/message/vMessage.h>
 
-#include <include/base/object/vObjectProperty.h>
-#include <include/base/object/vObject.h>
-#include <include/base/test/vTest.h>
+VBaseMessage::VBaseMessage(Window Trigger) : Target(Trigger) {
 
-class __VObjectTestObject : public VObject {
-public:
-	__VObjectTestObject() {
-		auto intDefaultPtr = std::make_unique<VIntProperty>();
-		auto intValuePtr = std::make_unique<VIntProperty>(1);
+}
+VMouseMoveMessage::VMouseMoveMessage(Window Trigger, const int &IX, const int &IY)
+    : VBaseMessage(Trigger), X(IX), Y(IY) {
 
-		RegisterProperty<VIntProperty>("intDefault", std::move(intDefaultPtr));
-		RegisterProperty<VIntProperty>("intValue", std::move(intValuePtr));
-	}
-	~__VObjectTestObject() override {
+}
+VMouseClickMessage::VMouseClickMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick)
+    : VBaseMessage(Trigger), X(IX), Y(IY), Button(IButton), Click(IClick) {
 
-	}
+}
+VRepaintMessage::VRepaintMessage(Window Trigger, const VRect &Rectangle) : VBaseMessage(Trigger), DirtyRectangle(Rectangle) {
 
-public:
-	void OnPaint(sk_sp<VSurface> &Surface) override {
-
-	}
-};
-
-bool VUnitTest(ObjectProperty, Create);
-bool VUnitTest(ObjectProperty, Read);
-bool VUnitTest(ObjectProperty, MemoryLeak);
+}

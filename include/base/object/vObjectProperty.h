@@ -40,7 +40,7 @@
  * The type of the property
  */
 enum class VPropertyType {
-	Int, Long, Float, String, Rect, Point, Color
+	Int, Long, Float, String, Boolean, Rect, Point, Color
 };
 
 /**
@@ -55,8 +55,8 @@ public:
 	 */
 	template<class Type>
 		requires std::is_base_of_v<VPropertyValueBase, Type>
-	const Type *Cast() const {
-		return static_cast<const Type*>(this);
+	Type *Cast() {
+		return static_cast<Type*>(this);
 	}
 
 protected:
@@ -71,7 +71,7 @@ protected:
 		return typeid(this).hash_code();
 	}
 
-private:
+public:
 	VPropertyType _type;
 };
 /**
@@ -91,7 +91,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	int _value;
 };
 /**
@@ -111,7 +111,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	long _value;
 };
 /**
@@ -131,8 +131,28 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	float _value;
+};
+/**
+ * The boolean property of the property value
+ */
+class VBooleanProperty : public VPropertyValueBase {
+public:
+	VBooleanProperty();
+	explicit VBooleanProperty(const bool &Value);
+
+public:
+	/**
+	 * Get the property value
+	 * @return The property value
+	 */
+	auto GetValue() const {
+		return _value;
+	}
+
+public:
+	bool _value;
 };
 /**
  * The string property of the property value
@@ -151,7 +171,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	std::string _value;
 };
 /**
@@ -171,7 +191,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	VRect _value;
 };
 /**
@@ -191,7 +211,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	VPoint _value;
 };
 /**
@@ -211,7 +231,7 @@ public:
 		return _value;
 	}
 
-private:
+public:
 	SkColor _value;
 };
 
@@ -231,7 +251,7 @@ public:
 	[[nodiscard]] std::string GetName() const;
 	std::unique_ptr<VPropertyValueBase>& GetValue();
 
-private:
+public:
 	std::string                         _name;
 	std::unique_ptr<VPropertyValueBase> _value;
 };

@@ -38,7 +38,7 @@
  */
 template<class ViewModel, class... Parameter>
     requires VIsViewModel<ViewModel>
-class VWindowView : public VViewBase<ViewModel>, VObject {
+class VWindowView : public VViewBase<ViewModel>, VWidget {
 public:
 	/**
 	 * Constructing the window view by the parameter of view model class and
@@ -49,8 +49,7 @@ public:
 	 * @param Title The title of the widget
 	 */
 	VWindowView(const int &Width, const int &Height, const std::string &Title, Parameter... ModelParameter)
-		: VViewBase<ViewModel>(ModelParameter...) {
-		_widget = std::make_unique<VWidget>(Width, Height, Title);
+		: VViewBase<ViewModel>(ModelParameter...), VWidget(Width, Height, Title) {
 	}
 	/**
 	 * Constructing the window view by the parameter of view model class and
@@ -64,32 +63,7 @@ public:
 	VWindowView(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor,
 	            Parameter... ModelParameter)
 	    : VViewBase<ViewModel>(ModelParameter...) {
-		_widget = std::make_unique<VWidget>(Width, Height, Title, Monitor);
-	}
-	~VWindowView() = default;
 
-public:
-	/**
-	 * Display the window on the monitor
-	 */
-	void Show() {
-		glfwSetWindowAttrib(_widget->_glfwWindow, GLFW_VISIBLE, GLFW_TRUE);
 	}
-	/**
-	 * Hide the window on the monitor
-	 */
-	void Hide() {
-		glfwSetWindowAttrib(_widget->_glfwWindow, GLFW_VISIBLE, GLFW_FALSE);
-	}
-	/**
-	 * Adjust the window size with the geometry information
-	 * @param Width The width of the window
-	 * @param Height The height of the window
-	 */
-	void Resize(const int &Width, const int &Height) {
-		glfwSetWindowSize(_widget->_glfwWindow, Width, Height);
-	}
-
-private:
-	std::unique_ptr<VWidget> _widget;
+	~VWindowView() override = default;
 };

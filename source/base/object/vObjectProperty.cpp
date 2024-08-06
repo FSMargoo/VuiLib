@@ -54,6 +54,14 @@ VFloatProperty::VFloatProperty(const float &Value)
     : VPropertyValueBase(VPropertyType::Long), _value(Value) {
 
 }
+VBooleanProperty::VBooleanProperty()
+    : VPropertyValueBase(VPropertyType::Boolean), _value() {
+
+}
+VBooleanProperty::VBooleanProperty(const bool &Value)
+    : VPropertyValueBase(VPropertyType::Boolean), _value(Value) {
+
+}
 VStringProperty::VStringProperty()
     : VPropertyValueBase(VPropertyType::String), _value() {
 

@@ -59,20 +59,24 @@ public:
 	VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
 
 private:
+	void OnFinalMessage(VBaseMessage *Message) override;
+
+public:
 	/**
-	 * The friend class definition of the VWindowView, in VUILib,
-	 * we directly hide the GLFW API detailed to user. In this case,
-	 * we choose to use the friend class method
+	 * Display the window on the monitor
 	 */
-	template<class ViewModel, class... Parameter>
-	    requires VIsViewModel<ViewModel>
-	friend class VWindowView;
+	void Show();
+	/**
+	 * Hide the window on the monitor
+	 */
+	void Hide();
+	/**
+	 * Adjust the window size with the geometry information
+	 * @param Width The width of the window
+	 * @param Height The height of the window
+	 */
+	void Resize(const int &Width, const int &Height) override;
 
 private:
 	GLFWwindow *_glfwWindow;
-
-private:
-	std::unique_ptr<VIntProperty>       _width;
-	std::unique_ptr<VIntProperty>       _height;
-	std::unique_ptr<VStringProperty>    _title;
 };

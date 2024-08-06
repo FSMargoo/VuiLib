@@ -62,6 +62,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/style/vStyleCollection.cpp
         include/style/vRadixStyle.h
         source/style/vRadixStyle.cpp
+        include/base/message/vMessage.h
+        source/base/message/vMessage.cpp
 )
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
