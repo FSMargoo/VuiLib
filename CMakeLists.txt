@@ -64,6 +64,11 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/style/vRadixStyle.cpp
         include/base/message/vMessage.h
         source/base/message/vMessage.cpp
+        include/widget/vGLFWCallback.h
+        source/widget/vGLFWCallback.cpp
+        include/renderer/vGLHeader.h
+        include/widget/vMainWindow.h
+        source/widget/vMainWindow.cpp
 )
 
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
@@ -200,3 +205,20 @@ target_include_directories(Demo_TestSkiaShader PUBLIC ./third/SkiaM101Binary)
 target_include_directories(Demo_TestSkiaShader PUBLIC ./third/glad/include)
 
 target_link_libraries(Demo_TestSkiaShader VStaticLib)
+
+add_executable(Demo_CreateWidget
+        demo/CreateWidget/main.cpp)
+
+target_include_directories(Demo_CreateWidget PUBLIC ./include)
+target_include_directories(Demo_CreateWidget PUBLIC ./)
+target_include_directories(Demo_CreateWidget PUBLIC ./third)
+target_include_directories(Demo_CreateWidget PUBLIC ./third/SkiaM101Binary)
+target_include_directories(Demo_CreateWidget PUBLIC ./third/glad/include)
+
+include_directories(./)
+include_directories(./include)
+include_directories(./third)
+include_directories(./third/SkiaM101Binary)
+include_directories(./third/glad/include)
+
+target_link_libraries(Demo_CreateWidget VStaticLib)

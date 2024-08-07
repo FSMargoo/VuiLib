@@ -21,29 +21,15 @@
  */
 
 /**
- * \file vApplication.cpp
- * \brief The application class in the VUILib
+ * \file main.cpp
+ * \brief The demo to create a simple widget in VUILib
  */
 
-#include <include/app/vApplication.h>
+#include <include/widget/vMainWindow.h>
 
-VApplication::VApplication() : _mainWindow(nullptr) {
-	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::dark, VColorFactory::MakeRGB(28, 42, 89));
+int main() {
+	VApplication application;
+	VMainWindow  window(&application, 640, 480, "Hello, VUILib");
 
-	glfwInit();
-}
-
-VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
-	return _style.GetProperty(Name);
-}
-int VApplication::Run() {
-	if (_mainWindow == nullptr) {
-		throw std::logic_error("Application should set the main window to enter the main loop!");
-	}
-
-	while (!glfwWindowShouldClose(_mainWindow)) {
-		glfwPollEvents();
-	}
-
-	return 0;
+	return application.Run();
 }

@@ -72,8 +72,8 @@ protected:
 	 */
 	template<class Type>
 	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	void GetPropertyValue(const std::string &Name) {
-		return static_cast<Type*>(GetProperty(Name).GetValue());
+	Type* GetPropertyValue(const std::string &Name) {
+		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
 
 private:

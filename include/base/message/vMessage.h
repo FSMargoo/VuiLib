@@ -30,7 +30,7 @@
 #include <include/base/geometry/vPoint.h>
 #include <include/base/geometry/vRect.h>
 
-#include <glfw/glfw3.h>
+#include <include/renderer/vGLHeader.h>
 
 /**
  * The type of the message
@@ -69,6 +69,7 @@ public:
 	 * broadcast
 	 */
 	explicit VBaseMessage(Window Trigger);
+	virtual ~VBaseMessage() = default;
 
 public:
 	/**

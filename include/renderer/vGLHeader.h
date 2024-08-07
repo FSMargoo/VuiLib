@@ -21,29 +21,11 @@
  */
 
 /**
- * \file vApplication.cpp
- * \brief The application class in the VUILib
+ * \file vGLHeader.h
+ * \brief The OpenGL header
  */
 
-#include <include/app/vApplication.h>
+#pragma once
 
-VApplication::VApplication() : _mainWindow(nullptr) {
-	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::dark, VColorFactory::MakeRGB(28, 42, 89));
-
-	glfwInit();
-}
-
-VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
-	return _style.GetProperty(Name);
-}
-int VApplication::Run() {
-	if (_mainWindow == nullptr) {
-		throw std::logic_error("Application should set the main window to enter the main loop!");
-	}
-
-	while (!glfwWindowShouldClose(_mainWindow)) {
-		glfwPollEvents();
-	}
-
-	return 0;
-}
+#include <glad/glad.h>
+#include <glfw/glfw3.h>

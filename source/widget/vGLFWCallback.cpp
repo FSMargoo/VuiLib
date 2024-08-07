@@ -21,29 +21,19 @@
  */
 
 /**
- * \file vApplication.cpp
- * \brief The application class in the VUILib
+ * \file vGLFWCallback.cpp
+ * \brief The callback function wrapper
  */
 
-#include <include/app/vApplication.h>
+#include <include/widget/vGLFWCallback.h>
 
-VApplication::VApplication() : _mainWindow(nullptr) {
-	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::dark, VColorFactory::MakeRGB(28, 42, 89));
+#include <unordered_map>
 
-	glfwInit();
+std::unordered_map<GLFWwindow*, VGLFWWidget*> ObjectMapping;
+
+void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window) {
+	ObjectMapping.insert({ Window, Widget });
 }
-
-VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
-	return _style.GetProperty(Name);
-}
-int VApplication::Run() {
-	if (_mainWindow == nullptr) {
-		throw std::logic_error("Application should set the main window to enter the main loop!");
-	}
-
-	while (!glfwWindowShouldClose(_mainWindow)) {
-		glfwPollEvents();
-	}
-
-	return 0;
+void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height) {
+	ObjectMapping[Window]->OnGLFWRepaint(Width, Height);
 }

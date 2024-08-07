@@ -27,49 +27,52 @@
 
 #pragma once
 
+#include <include/widget/vGLFWCallback.h>
 #include <include/base/object/vObject.h>
 #include <include/base/event/vEvent.h>
+#include <include/app/vApplication.h>
 #include <include/widget/vMonitor.h>
 #include <include/mvvm/vViewBase.h>
 
-#include <glfw/glfw3.h>
+#include <include/renderer/vGLHeader.h>
+
+#include <queue>
 
 /**
  * This class is a wrapper of GLFW monitor API, which will
  * maintain a GLFWwindow pointer, and convert the GLFW
  * event into VUILib VEvent
  */
-class VWidget : public VObject {
+class VWidget : public VObject, VGLFWWidget {
 public:
 	/**
 	 * Construct the widget with only geometry information
+	 * @param Application The application instance of the widget
 	 * @param Width The width of the widget
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 */
-	VWidget(const int &Width, const int &Height, const std::string &Title);
+	VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title);
 	/**
 	 * Create a widget with geometry information on a specified monitor,
 	 * it will create a full-screen window by the specified geometry information.
+	 * @param Application The application instance of the widget
 	 * @param Width The width of the widget
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
-	VWidget(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
-
-private:
-	void OnFinalMessage(VBaseMessage *Message) override;
+	VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
 
 public:
 	/**
 	 * Display the window on the monitor
 	 */
-	void Show();
+	void Show() override;
 	/**
 	 * Hide the window on the monitor
 	 */
-	void Hide();
+	void Hide() override;
 	/**
 	 * Adjust the window size with the geometry information
 	 * @param Width The width of the window
@@ -77,6 +80,61 @@ public:
 	 */
 	void Resize(const int &Width, const int &Height) override;
 
+public:
+	/**
+	 * Get the title of the widget
+	 * @return The title of the widget
+	 */
+	[[nodiscard]] std::string GetTitle() const;
+	/**
+	 * Set the title of the object
+	 * @param Title The new title of the object
+	 */
+	void SetTitle(const std::string &Title);
+
+public:
+	void OnGLFWRepaint(const int &Width, const int &Height) override;
+
 private:
-	GLFWwindow *_glfwWindow;
+	/**
+	 * When the widget needs to be repainted, this function will be called
+	 * @param Message The repaint message
+	 */
+	void OnWidgetRepaint(VRepaintMessage *Message);
+
+private:
+	void OnFinalMessage(VBaseMessage *Message) override;
+	void OnPaint(sk_sp<VSurface> &Surface) override;
+
+private:
+	/**
+	 * Initialize the widget object information
+	 * @param Width The width of the widget
+	 * @param Height The height of the widget
+	 * @param Title The title of the widget
+	 */
+	void InitWidgetObject(const int &Width, const int &Height, const std::string &Title);
+
+private:
+	/**
+	 * Flush the widget's context, equaling send a repaint message
+	 * in the full widget
+	 */
+	void FlushWidget();
+	/**
+	 * Process the message queue
+	 */
+	void ProcessMessageQueue();
+
+protected:
+	VApplication                *_application;
+	GLFWwindow                  *_glfwWindow;
+	std::queue<VBaseMessage*>    _messageQueue;
+	VStringProperty             *_title;
+
+private:
+	sk_sp<VRenderInterface> GLInterface;
+
+private:
+	VColorProperty *_windowBackgroundColor;
 };

@@ -99,18 +99,26 @@ public:
 	void RaiseUpper(const VObject *Target);
 
 public:
-	virtual /**
+	/**
 	 * Adjust the bound geometry information
 	 * @param Width The width of new geometry information
 	 * @param Height The height of new geometry information
 	 */
-	void Resize(const int &Width, const int &Height);
+	virtual void Resize(const int &Width, const int &Height);
 	/**
 	 * Adjust the position of the object
 	 * @param X The new X axis position
 	 * @param Y The new Y axis position
 	 */
 	void Move(const int &X, const int &Y);
+	/**
+	 * Set the object visible, it will process messages normally
+	 */
+	virtual void Show();
+	/**
+	 * Set the object invisible, it will ignore every meesage
+	 */
+	virtual void Hide();
 
 protected:
 	/**
@@ -121,6 +129,12 @@ protected:
 	 * object
 	 */
 	void UploadMessage(VBaseMessage *Message);
+	/**
+	 * Upload repaint message by the current object's geometery information
+	 */
+	void RepaintOnySelf();
+
+protected:
 	/**
 	 * When the object received message, this function will be called
 	 * @param Message The message to be processed
@@ -135,8 +149,6 @@ protected:
 	virtual void OnFinalMessage(VBaseMessage *Message) {
 
 	}
-
-protected:
 	/**
 	 * When the control received the repaint message, the virtual function will
 	 * be called for drawing
@@ -192,7 +204,7 @@ private:
 	 */
 	void AdaptParent(VObject *Parent);
 	/**
-	 * Init the general property of every objects
+	 * Init the general property of every object
 	 */
 	void InitGeneralProperty();
 
@@ -200,10 +212,8 @@ protected:
 	VPropertyList _propertyList;
 
 protected:
-	/**
-	 * The bound of the object in the UI
-	 */
-	VRectProperty*           _bound;
+	VRectProperty           *_bound;
+	VBooleanProperty        *_visible;
 	VObject                 *_parent;
 	std::vector<VObject *>   _childList;
 };

@@ -21,29 +21,18 @@
  */
 
 /**
- * \file vApplication.cpp
- * \brief The application class in the VUILib
+ * \file vMainWindow.cpp
+ * \brief The major window in the VUILib, the lifetime of the main window
+ * is also the lifetime of the program
  */
 
-#include <include/app/vApplication.h>
+#include <include/widget/vMainWindow.h>
 
-VApplication::VApplication() : _mainWindow(nullptr) {
-	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::dark, VColorFactory::MakeRGB(28, 42, 89));
-
-	glfwInit();
+VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title)
+	: VWidget(Application, Width, Height, Title) {
+	Application->_mainWindow = _glfwWindow;
 }
-
-VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
-	return _style.GetProperty(Name);
-}
-int VApplication::Run() {
-	if (_mainWindow == nullptr) {
-		throw std::logic_error("Application should set the main window to enter the main loop!");
-	}
-
-	while (!glfwWindowShouldClose(_mainWindow)) {
-		glfwPollEvents();
-	}
-
-	return 0;
+VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor)
+    : VWidget(Application, Width, Height, Title, Monitor) {
+	Application->_mainWindow = _glfwWindow;
 }

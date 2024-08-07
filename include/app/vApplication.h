@@ -48,8 +48,29 @@ public:
 	 * @return The reference of the property instance
 	 */
 	VStyleProperty& GetThemeProperty(const std::string &Name);
+	/**
+	 * Get the value of the specified name in specified type
+	 * @tparam Type The type of the property
+	 * @param Name The name of the property
+	 * @return The value of the property in the specified name
+	 */
+	template<class Type>
+	Type* GetThemePropertyValue(const std::string &Name) {
+		return _style.GetPropertyValue<Type>(Name);
+	}
+
+public:
+	/**
+	 * Call this function to run the application
+	 * @return
+	 */
+	int Run();
+
+private:
+	friend class VMainWindow;
 
 protected:
+	GLFWwindow     *_mainWindow;
 	VRadixStyleType _styleType;
 	VStyleFunction  _style;
 };

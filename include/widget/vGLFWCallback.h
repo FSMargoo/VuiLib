@@ -21,29 +21,21 @@
  */
 
 /**
- * \file vApplication.cpp
- * \brief The application class in the VUILib
+ * \file vGLFWCallback.h
+ * \brief The callback function wrapper
  */
 
-#include <include/app/vApplication.h>
+#pragma once
 
-VApplication::VApplication() : _mainWindow(nullptr) {
-	_style = VRadixStyleFactory::GetStyle(VRadixStyleType::dark, VColorFactory::MakeRGB(28, 42, 89));
+#include <include/renderer/vGLHeader.h>
 
-	glfwInit();
-}
+/**
+ * The base GLFW callback base class for GLFW callback function to be called
+ */
+class VGLFWWidget {
+public:
+	virtual void OnGLFWRepaint(const int &Width, const int &Height) = 0;
+};
 
-VStyleProperty& VApplication::GetThemeProperty(const std::string &Name) {
-	return _style.GetProperty(Name);
-}
-int VApplication::Run() {
-	if (_mainWindow == nullptr) {
-		throw std::logic_error("Application should set the main window to enter the main loop!");
-	}
-
-	while (!glfwWindowShouldClose(_mainWindow)) {
-		glfwPollEvents();
-	}
-
-	return 0;
-}
+void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window);
+void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height);

@@ -29,10 +29,12 @@
 #include <include/base/object/vObject.h>
 
 VObject::VObject() : _parent(nullptr) {
-
+	InitGeneralProperty();
 }
 VObject::VObject(VObject *Parent) : _parent(Parent) {
 	AdaptParent(Parent);
+
+	InitGeneralProperty();
 }
 void VObject::SetParent(VObject *Parent) {
 	if (Parent == _parent) {
@@ -55,6 +57,8 @@ void VObject::RaiseTop() {
 		                                    }),
 		                          _parent->_childList.end());
 		_parent->_childList.push_back(this);
+
+		RepaintOnySelf();
 	}
 	else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
@@ -70,6 +74,8 @@ void VObject::RaiseLowest() {
 		                                  }),
 		                          _parent->_childList.end());
 		_parent->_childList.insert(_parent->_childList.begin(), this);
+
+		RepaintOnySelf();
 	}
 	else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
@@ -92,7 +98,10 @@ void VObject::RaiseUnder(const VObject *Target) {
 
 			++where;
 		}
+
 		_parent->_childList.insert(where, this);
+
+		RepaintOnySelf();
 	}
 	else {
 		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same parent with this object!");
@@ -116,6 +125,8 @@ void VObject::RaiseUpper(const VObject *Target) {
 			}
 		}
 		_parent->_childList.insert(where, this);
+
+		RepaintOnySelf();
 	}
 	else {
 		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same parent with this object!");
@@ -123,12 +134,26 @@ void VObject::RaiseUpper(const VObject *Target) {
 }
 void VObject::Resize(const int &Width, const int &Height) {
 	_bound->_value.Resize(Width, Height);
+
+	RepaintOnySelf();
 }
 void VObject::Move(const int &X, const int &Y) {
 	auto width  = _bound->_value.GetWidth();
 	auto height = _bound->_value.GetHeight();
 
 	_bound->_value = { X, Y, X + width, Y + height };
+
+	RepaintOnySelf();
+}
+void VObject::Show() {
+	_visible->_value = true;
+
+	RepaintOnySelf();
+}
+void VObject::Hide() {
+	_visible->_value = false;
+
+	RepaintOnySelf();
 }
 void VObject::UploadMessage(VBaseMessage *Message) {
 	if (_parent != nullptr) {
@@ -137,6 +162,10 @@ void VObject::UploadMessage(VBaseMessage *Message) {
 	else {
 		OnFinalMessage(Message);
 	}
+}
+void VObject::RepaintOnySelf() {
+	auto message = new VRepaintMessage(nullptr, _bound->_value);
+	UploadMessage(message);
 }
 void VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 	switch (Message->GetType()) {
@@ -149,14 +178,13 @@ void VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 				/**
 				 * Draw the context the relative surface
 				 */
-				auto result = SkSurface::MakeRaster(SkImageInfo::MakeN32Premul(2, 2), nullptr);
-				// auto result = SkSurface::MakeRasterN32Premul(2, 2);
-				// sk_sp<VSurface> objectSurface = sk_make_sp<VSurface, const int &, const int &>(_bound->_value.GetWidth(), _bound->_value.GetHeight());
-				// OnPaint(objectSurface);
-//
-				// auto point = _bound->_value.GetLeftTopPoint();
-//
-				// Surface->GetNativeSurface()->draw(objectSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
+				sk_sp<VSurface> objectSurface = sk_make_sp<VSurface, const int &, const int &>(_bound->_value.GetWidth(), _bound->_value.GetHeight());
+
+				OnPaint(objectSurface);
+				auto point = _bound->_value.GetLeftTopPoint();
+
+				Surface->GetNativeSurface()->draw(objectSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
+
 			}
 
 			break;
@@ -182,11 +210,14 @@ void VObject::RemoveParent(VObject *OldParent) {
 			                                    return Object == this;
 		                                    }),
 		                            OldParent->_childList.end());
+		RepaintOnySelf();
 	}
 }
 void VObject::AdaptParent(VObject *Parent) {
 	if (Parent != nullptr) {
 		Parent->_childList.push_back(this);
+
+		RepaintOnySelf();
 	}
 }
 void VObject::InitGeneralProperty() {
@@ -196,5 +227,6 @@ void VObject::InitGeneralProperty() {
 	RegisterProperty("visible", std::move(visible));
 	RegisterProperty("bound", std::move(bound));
 
-	_bound = GetPropertyValue<VRectProperty>("bound");
+	_bound   = GetPropertyValue<VRectProperty>("bound");
+	_visible = GetPropertyValue<VBooleanProperty>("visible");
 }

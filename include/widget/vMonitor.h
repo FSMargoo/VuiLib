@@ -30,7 +30,7 @@
 #include <include/base/event/vEvent.h>
 #include <include/widget/vGLFWException.h>
 
-#include <glfw/glfw3.h>
+#include <include/renderer/vGLHeader.h>
 
 /**
  * The status for the monitor class

@@ -247,5 +247,4 @@
 #include <SkiaM101Binary/modules/svg/include/SkSVGUse.h>
 #include <SkiaM101Binary/modules/svg/include/SkSVGValue.h>
 
-// Load glad library
-#include <glad/glad.h>
+#include <include/renderer/vGLHeader.h>
