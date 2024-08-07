@@ -25,7 +25,6 @@
  * \brief The base class object for the drawable class in VUILib
  */
 
-#include <xutility>
 #include <include/base/object/vObject.h>
 
 VObject::VObject() : _parent(nullptr) {

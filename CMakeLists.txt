@@ -14,6 +14,12 @@ set(MSVC_USE_MD_RUNTIME_LIBRARY OFF)
 set(MSVC_USE_MTd_RUNTIME_LIBRARY OFF)
 set(MSVC_USE_MDd_RUNTIME_LIBRARY ON)
 
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    message("VUILib : Building under Windows")
+elseif()
+    message("VUILib : Building under Linux/Unix")
+endif()
+
 add_library(VStaticLib STATIC include/base/test/vTest.h
         include/base/event/vEvent.h
         source/base/vtest/vTest.cpp
@@ -71,11 +77,12 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/widget/vMainWindow.cpp
 )
 
+add_library(WinToast STATIC third/winToast/include/wintoastlib.h
+        third/winToast/src/wintoastlib.cpp)
+
 set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp
-        third/winToast/include/wintoastlib.h
-        third/winToast/src/wintoastlib.cpp
         unitTest/base/base.command.h
         unitTest/base/base.command.h
         unitTest/base/base.command.cpp
@@ -95,6 +102,13 @@ add_executable(VCommit tool/vcommit/main.cpp
         tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp)
+
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    message("VTest : Under Windows using win toast")
+    target_link_libraries(UnitTest WinToast)
+elseif()
+    message("VTest : Under Linux/Unix discard win toast")
+endif()
 
 target_include_directories(UnitTest PUBLIC ./include)
 target_include_directories(UnitTest PUBLIC ./)
@@ -180,6 +194,37 @@ if(WIN32)
             svg
             zlib
             opengl32
+            glfw
+    )
+else()
+    message("Link Skia Under Linux/UNix")
+    target_link_directories(VStaticLib PUBLIC ./libs/skia)
+    target_link_libraries(VStaticLib PUBLIC
+            expat
+            harfbuzz
+            icu
+            imgui
+            jpeg
+            microhttpd
+            png
+            webp
+            webp_sse41
+            particles
+            pathkit
+            skia
+            skottie
+            skparagraph
+            skresources
+            sksg
+            skshaper
+            sktext
+            fontconfig
+            skunicode
+            svg
+            freetype
+            zlib
+            GL
+            GLX
             glfw
     )
 endif()

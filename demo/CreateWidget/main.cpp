@@ -30,6 +30,7 @@
 int main() {
 	VApplication application;
 	VMainWindow  window(&application, 640, 480, "Hello, VUILib");
+	VWidget      widget(&application, 640, 480, "VUILib Widget");
 
 	return application.Run();
 }

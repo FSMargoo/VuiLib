@@ -28,13 +28,15 @@
 #include <include/cmdparser.hpp>
 #include <third/SimpleJson/sJSON.h>
 
+#ifdef _WIN32
+#include <shellapi.h>
 #include <Windows.h>
+#endif
 #include <chrono>
 #include <cstdlib>
 #include <fstream>
-#include <map>
-#include <shellapi.h>
 #include <string>
+#include <map>
 
 #define README                                                                                                         \
 	R"(<div align="center">
@@ -241,6 +243,7 @@ int main(int argc, const char **argv) {
 
 	printf("Running unit test...\n");
 
+#ifdef _WIN32
 	SHELLEXECUTEINFO unitTest = {0};
 	unitTest.cbSize			  = sizeof(SHELLEXECUTEINFO);
 	unitTest.fMask			  = SEE_MASK_NOCLOSEPROCESS;
@@ -254,6 +257,9 @@ int main(int argc, const char **argv) {
 	ShellExecuteEx(&unitTest);
 
 	WaitForSingleObject(unitTest.hProcess, INFINITE);
+#else
+	system("cmake-build-debug\\UnitTest");
+#endif
 
 	printf("Unit test has all done!\nReading vtest.json......\n");
 

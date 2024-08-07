@@ -29,6 +29,8 @@
 
 #include <include/base/geometry/vPoint.h>
 
+#include <algorithm>
+
 #undef max
 #undef min
 

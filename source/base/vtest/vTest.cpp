@@ -27,7 +27,10 @@
 
 #include <base/test/vTest.h>
 #include <third/SimpleJson/sJSON.h>
+
+#ifdef _WIN32
 #include <third/winToast/include/wintoastlib.h>
+#endif
 
 #include <fstream>
 #include <chrono>
@@ -36,6 +39,7 @@
 #include <thread>
 #include <utility>
 
+#ifdef _WIN32
 class CustomHandler : public WinToastLib::IWinToastHandler {
 public:
 	void toastActivated() const {
@@ -66,6 +70,7 @@ public:
 	void toastFailed() const {
 	}
 };
+#endif
 
 VTestTask::VTestTask(std::function<bool()> Function, const std::string &TaskName)
 	: _task(std::move(Function)), TaskID(TaskName) {
@@ -74,7 +79,11 @@ void VTestConductor::AddTask(const VTestTask &Task) {
 	_taskList.push_back(Task);
 }
 void VTestConductor::StartTasks() {
+#ifdef _WIN32
 	using namespace WinToastLib;
+#else
+	printf("Running VTest under Linux/Unix\n");
+#endif
 
 	auto const time = std::chrono::current_zone()->to_local(std::chrono::system_clock::now());
 	printf("%s", std::format("Test started at time {:%Y-%m-%d %X}\n", time).c_str());
@@ -135,6 +144,7 @@ void VTestConductor::StartTasks() {
 
 	printf("Successfully wrote testing result in vtest.json!\n");
 
+#ifdef _WIN32
 	WinToastTemplate::AudioOption audioOption	 = WinToastTemplate::AudioOption::Default;
 	std::wstring				  appName		 = L"VTest Conduct Result";
 	std::wstring				  appUserModelID = L"VTest Notification";
@@ -170,4 +180,5 @@ void VTestConductor::StartTasks() {
 	WinToast::instance()->showToast(startupToast, new CustomHandler());
 
 	Sleep(5000);
+#endif
 }
