@@ -139,7 +139,7 @@ public:
 	 * @return If the rectangle was included in the target rectangle, return true,
 	 * otherwise false.
 	 */
-	bool IsInclude(const VRectBase<DataType> &Target) {
+	bool IsInclude(const VRectBase<DataType> &Target) const {
 		return Target._left <= _left && Target._top <= _top && Target._right >= _right && Target._bottom >= _bottom;
 	}
 	/**
@@ -179,9 +179,17 @@ public:
 	 * @return If the rectangle was overlapped with the target rectangle, return true,
 	 * otherwise false.
 	 */
-	bool IsOverlap(const VRectBase<DataType> &Targets) {
+	bool IsOverlap(const VRectBase<DataType> &Targets) const {
 		return std::max(_left, Targets._left) < std::min(_right, Targets._right) &&
 		       std::max(_top, Targets._top) < std::min(_bottom, Targets._bottom);
+	}
+	/**
+	 * Judge whether a point inside this rectangle
+	 * @param Point The point to be judged
+	 * @return If the point inside the rectangle, returning true, nor returning false
+	 */
+	bool IsPointInside(const Point &Point) const {
+		return Point._x >= _left && Point._y >= _top && Point._x <= _right && Point._y <= _bottom;
 	}
 
 public:
@@ -266,7 +274,7 @@ public:
 	}
 	/**
 	 * Extend the rectangle size by the given offset parameter, for the
-	 * negative number parameter, it will scale the rectangle
+	 * negative number parameter; it will scale the rectangle
 	 * @param Left The offset of left
 	 * @param Top The offset of top
 	 * @param Right The offset of right

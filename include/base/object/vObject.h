@@ -140,8 +140,9 @@ protected:
 	 * @param Message The message to be processed
 	 * @param Surface The target surface to be painted on, if there is a repaint
 	 * message
+	 * @return Whether this message will be cut off, if true, the message will be cut off
 	 */
-	void OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface);
+	bool OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface);
 	/**
 	 * When the final parent object received the message, this function will be emitted
 	 * @param Message The message to be processed
@@ -161,6 +162,14 @@ protected:
 	 */
 	virtual void OnPropertyChange() {
 
+	}
+	/**
+	 * When the mouse moves over this object, this function will be called
+	 * @param Message The mouse message
+	 * @return
+	 */
+	virtual bool OnMouseMove(VMouseMoveMessage *Message) {
+		return false;
 	}
 
 protected:

@@ -30,6 +30,9 @@
 VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const std::string& Title)
     : VObject(nullptr), _application(Application) {
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
+	if (!_glfwWindow) {
+		throw VGLFWFailure("Failed to create GLFW window!");
+	}
 
 	InitWidgetObject(Width, Height, Title);
 }
@@ -43,8 +46,16 @@ VWidget::VWidget(VApplication *Application, const int &Width, const int &Height,
 	}
 
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), Monitor._glfwMonitor, nullptr);
+	if (!_glfwWindow) {
+		throw VGLFWFailure("Failed to create GLFW window!");
+	}
 
 	InitWidgetObject(Width, Height, Title);
+}
+VWidget::~VWidget() {
+	if (!_glfwWindow) {
+		glfwDestroyWindow(_glfwWindow);
+	}
 }
 void VWidget::FlushWidget() {
 	auto flushMessage = new VRepaintMessage(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
@@ -64,17 +75,18 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::s
 	VGLFWRegisterObject(this, _glfwWindow);
 
 	glfwSetFramebufferSizeCallback(_glfwWindow, VGLFWFramebufferSizeCallback);
+	glfwSetCursorPosCallback(_glfwWindow, VGLFWMouseMoveCallback);
 
 	FlushWidget();
 	ProcessMessageQueue();
 }
 void VWidget::Show() {
-	glfwSetWindowAttrib(_glfwWindow, GLFW_VISIBLE, GLFW_TRUE);
+	glfwShowWindow(_glfwWindow);
 
 	VObject::Show();
 }
 void VWidget::Hide() {
-	glfwSetWindowAttrib(_glfwWindow, GLFW_VISIBLE, GLFW_FALSE);
+	glfwHideWindow(_glfwWindow);
 
 	VObject::Hide();
 }
@@ -90,6 +102,12 @@ void VWidget::SetTitle(const std::string &Title) {
 	_title->_value = Title;
 
 	glfwSetWindowTitle(_glfwWindow, Title.c_str());
+}
+void VWidget::Execute() {
+	while (glfwWindowShouldClose(_glfwWindow)) {
+		glfwPollEvents();
+		ProcessMessageQueue();
+	}
 }
 void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
 	glfwMakeContextCurrent(_glfwWindow);
@@ -122,11 +140,17 @@ void VWidget::OnPaint(sk_sp<VSurface> &Surface) {
 }
 void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 	if (_bound->_value.GetWidth() != Width || _bound->_value.GetHeight() != Height) {
-		// VObject::Resize(Width, Height);
+		VObject::Resize(Width, Height);
 	}
 
 	auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
 	OnWidgetRepaint(repaintMessage.get());
+}
+void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
+	auto mouseMoveMessage = new VMouseMoveMessage(_glfwWindow, X, Y);
+	_messageQueue.push(mouseMoveMessage);
+
+	ProcessMessageQueue();
 }
 void VWidget::ProcessMessageQueue() {
 	sk_sp<VSurface> nullSurface = nullptr;

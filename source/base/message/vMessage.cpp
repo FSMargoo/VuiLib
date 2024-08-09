@@ -31,11 +31,11 @@ VBaseMessage::VBaseMessage(Window Trigger) : Target(Trigger) {
 
 }
 VMouseMoveMessage::VMouseMoveMessage(Window Trigger, const int &IX, const int &IY)
-    : VBaseMessage(Trigger), X(IX), Y(IY) {
+    : VBaseMessage(Trigger), Point(IX, IY) {
 
 }
 VMouseClickMessage::VMouseClickMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick)
-    : VBaseMessage(Trigger), X(IX), Y(IY), Button(IButton), Click(IClick) {
+    : VBaseMessage(Trigger), Point(IX, IY), Button(IButton), Click(IClick) {
 
 }
 VRepaintMessage::VRepaintMessage(Window Trigger, const VRect &Rectangle) : VBaseMessage(Trigger), DirtyRectangle(Rectangle) {

@@ -37,3 +37,6 @@ void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window) {
 void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height) {
 	ObjectMapping[Window]->OnGLFWRepaint(Width, Height);
 }
+void VGLFWMouseMoveCallback(GLFWwindow *Window, double X, double Y) {
+	ObjectMapping[Window]->OnGLFWMouseMove(static_cast<int>(X), static_cast<int>(Y));
+}

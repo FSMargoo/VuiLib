@@ -166,7 +166,7 @@ void VObject::RepaintOnySelf() {
 	auto message = new VRepaintMessage(nullptr, _bound->_value);
 	UploadMessage(message);
 }
-void VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
+bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 	switch (Message->GetType()) {
 		case VMessageType::Repaint: {
 			auto repaintMessage = Message->Cast<VRepaintMessage>();
@@ -186,7 +186,15 @@ void VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 
 			}
 
-			break;
+			return false;
+		}
+		case VMessageType::MouseMove: {
+			auto mouseMoveMessage = Message->Cast<VMouseMoveMessage>();
+			if (_bound->_value.IsPointInside(mouseMoveMessage->Point)) {
+
+			}
+
+			return
 		}
 	}
 }

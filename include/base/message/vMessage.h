@@ -118,8 +118,7 @@ public:
 	}
 
 public:
-	int X;
-	int Y;
+	VPoint Point;
 };
 
 /**
@@ -143,10 +142,9 @@ public:
 	}
 
 public:
-	int X;
-	int Y;
+	VPoint       Point;
 	VMouseButton Button;
-	VClickType Click;
+	VClickType   Click;
 };
 
 /**

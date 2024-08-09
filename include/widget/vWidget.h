@@ -63,6 +63,7 @@ public:
 	 * @param Monitor The specified monitor where window to be shown
 	 */
 	VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
+	~VWidget() override;
 
 public:
 	/**
@@ -93,7 +94,16 @@ public:
 	void SetTitle(const std::string &Title);
 
 public:
+	/**
+	 * Execute the loop message for the widget. With this function,
+	 * you can run the widget without the application. When the
+	 * widget is closed, this function will stop
+	 */
+	void Execute();
+
+public:
 	void OnGLFWRepaint(const int &Width, const int &Height) override;
+	void OnGLFWMouseMove(const int &X, const int &Y) override;
 
 private:
 	/**

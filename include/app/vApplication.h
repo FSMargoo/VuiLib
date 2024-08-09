@@ -62,7 +62,7 @@ public:
 public:
 	/**
 	 * Call this function to run the application
-	 * @return
+	 * @return The return for main function
 	 */
 	int Run();
 
