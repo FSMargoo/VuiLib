@@ -191,11 +191,52 @@ bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 		case VMessageType::MouseMove: {
 			auto mouseMoveMessage = Message->Cast<VMouseMoveMessage>();
 			if (_bound->_value.IsPointInside(mouseMoveMessage->Point)) {
-
+				return OnMouseMove(mouseMoveMessage);
 			}
-
-			return
 		}
+
+	}
+
+	return false;
+}
+void VObject::LockFocus() {
+	if (_parent != nullptr) {
+		return _parent->LockFocus();
+	}
+	else {
+		throw std::logic_error("Object should have a legal parent objects");
+	}
+}
+void VObject::UnlockFocus() {
+	if (_parent != nullptr) {
+		return _parent->UnlockFocus();
+	}
+	else {
+		throw std::logic_error("Object should have a legal parent objects");
+	}
+}
+bool VObject::GetFocus() {
+	if (_parent != nullptr) {
+		return _parent->GetFocus();
+	}
+	else {
+		throw std::logic_error("Object should have a legal parent objects");
+	}
+}
+void VObject::RaiseUpAsFocus(VObject *Object) {
+	if (_parent != nullptr) {
+		return _parent->RaiseUpAsFocus(Object);
+	}
+	else {
+		throw std::logic_error("Object should have a legal parent objects");
+	}
+}
+VObject *VObject::GetFocusingObject() {
+	if (_parent != nullptr) {
+		return _parent->GetFocusingObject();
+	}
+	else {
+		throw std::logic_error("Object parent dose not suitable");
 	}
 }
 VObjectProperty& VObject::GetProperty(const std::string &Name) {

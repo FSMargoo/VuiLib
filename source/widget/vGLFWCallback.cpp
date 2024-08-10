@@ -40,3 +40,9 @@ void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height) {
 void VGLFWMouseMoveCallback(GLFWwindow *Window, double X, double Y) {
 	ObjectMapping[Window]->OnGLFWMouseMove(static_cast<int>(X), static_cast<int>(Y));
 }
+void VGLFWMouseClickCallback(GLFWwindow *Window, int Button, int Action, int Mods) {
+	int X;
+	int Y;
+	glfwGetWindowPos(Window, &X, &Y);
+	ObjectMapping[Window]->OnGLFWMouseClick(X, Y, Button, Action, Mods);
+}

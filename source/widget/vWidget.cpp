@@ -28,7 +28,7 @@
 #include <include/widget/vWidget.h>
 
 VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const std::string& Title)
-    : VObject(nullptr), _application(Application) {
+    : VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
 	if (!_glfwWindow) {
 		throw VGLFWFailure("Failed to create GLFW window!");
@@ -37,7 +37,7 @@ VWidget::VWidget(VApplication *Application, const int &Width, const int &Height,
 	InitWidgetObject(Width, Height, Title);
 }
 VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor& Monitor)
-	: VObject(nullptr), _application(Application) {
+	: VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	/**
 	 * If the monitor is disconnected, it will be marked as invalid
 	 */
@@ -58,8 +58,8 @@ VWidget::~VWidget() {
 	}
 }
 void VWidget::FlushWidget() {
-	auto flushMessage = new VRepaintMessage(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
-	_messageQueue.push(flushMessage);
+	auto flushMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
+	ProcessMessage(flushMessage.get());
 }
 void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::string &Title) {
 	VObject::Resize(Width, Height);
@@ -78,7 +78,6 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::s
 	glfwSetCursorPosCallback(_glfwWindow, VGLFWMouseMoveCallback);
 
 	FlushWidget();
-	ProcessMessageQueue();
 }
 void VWidget::Show() {
 	glfwShowWindow(_glfwWindow);
@@ -106,7 +105,11 @@ void VWidget::SetTitle(const std::string &Title) {
 void VWidget::Execute() {
 	while (glfwWindowShouldClose(_glfwWindow)) {
 		glfwPollEvents();
-		ProcessMessageQueue();
+	}
+}
+void VWidget::RaiseUpAsFocus(VObject *Object) {
+	if (!_focusLocking) {
+		_focusingObject = Object;
 	}
 }
 void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
@@ -138,6 +141,15 @@ void VWidget::OnPaint(sk_sp<VSurface> &Surface) {
 	canvas->clear(_windowBackgroundColor->_value);
 	canvas->flush();
 }
+void VWidget::LockFocus() {
+	_focusLocking = true;
+}
+void VWidget::UnlockFocus() {
+	_focusLocking = false;
+}
+bool VWidget::GetFocus() {
+	return _focusLocking;
+}
 void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 	if (_bound->_value.GetWidth() != Width || _bound->_value.GetHeight() != Height) {
 		VObject::Resize(Width, Height);
@@ -147,29 +159,60 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 	OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
-	auto mouseMoveMessage = new VMouseMoveMessage(_glfwWindow, X, Y);
-	_messageQueue.push(mouseMoveMessage);
-
-	ProcessMessageQueue();
+	auto mouseMoveMessage = std::make_unique<VMouseMoveMessage>(_glfwWindow, X, Y);
+	ProcessMessage(mouseMoveMessage.get());
 }
-void VWidget::ProcessMessageQueue() {
+void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
+	VMouseButton button;
+	VClickType   clickType;
+	switch (Button) {
+		case GLFW_MOUSE_BUTTON_LEFT: {
+			button = VMouseButton::Left;
+
+			break;
+		}
+		case GLFW_MOUSE_BUTTON_RIGHT: {
+			button = VMouseButton::Right;
+
+			break;
+		}
+		case GLFW_MOUSE_BUTTON_MIDDLE: {
+			button = VMouseButton::Middle;
+
+			break;
+		}
+	}
+	switch (Action) {
+		case GLFW_RELEASE: {
+			clickType = VClickType::Release;
+
+			break;
+		}
+		case GLFW_REPEAT: {
+			clickType = VClickType::Repeat;
+
+			break;
+		}
+		case GLFW_PRESS: {
+			clickType = VClickType::Press;
+
+			break;
+		}
+	}
+
+	auto mouseClickMessage = std::make_unique<VMouseClickMessage>(_glfwWindow, X, Y, button, clickType);
+	ProcessMessage(mouseClickMessage.get());
+}
+void VWidget::ProcessMessage(VBaseMessage *Message) {
 	sk_sp<VSurface> nullSurface = nullptr;
-	while (!_messageQueue.empty()) {
-		if (_messageQueue.front()->GetType() != VMessageType::Repaint) {
-			OnMessage(_messageQueue.front(), nullSurface);
-		}
-		else {
-			OnWidgetRepaint(_messageQueue.front()->Cast<VRepaintMessage>());
-		}
-
-		delete _messageQueue.front();
-
-		_messageQueue.pop();
+	if (Message->GetType() != VMessageType::Repaint) {
+		OnMessage(Message, nullSurface);
+	}
+	else {
+		OnWidgetRepaint(Message->Cast<VRepaintMessage>());
 	}
 }
 void VWidget::OnFinalMessage(VBaseMessage *Message) {
-	_messageQueue.push(Message);
-
 	if (Message->GetType() == VMessageType::Repaint) {
 		auto repaintMessage = Message->Cast<VRepaintMessage>();
 		/**
@@ -184,4 +227,6 @@ void VWidget::OnFinalMessage(VBaseMessage *Message) {
 			}
 		}
 	}
+
+	ProcessMessage(Message);
 }

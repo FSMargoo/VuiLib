@@ -201,6 +201,32 @@ protected:
 		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
 
+protected:
+	/**
+	 * Lock the focus object, which the focus object can't be changed;
+	 * This API will keep the current focus object and won't change
+	 */
+	virtual void LockFocus();
+	/**
+	 * Release the focus locking status
+	 */
+	virtual void UnlockFocus();
+	/**
+	 * Get the focus locking status
+	 * @return If the focus is locking, returning true, nor returning false
+	 */
+	virtual bool GetFocus();
+	/**
+	 * Raise up an object as a focusing object
+	 * @param Object The object to be raised up as a focusing object
+	 */
+	virtual void RaiseUpAsFocus(VObject *Object);
+	/**
+	 * Get the object in focus
+	 * @return The object which is in focus
+	 */
+	virtual VObject *GetFocusingObject();
+
 private:
 	/**
 	 * Remove the old pointer in the object parent object

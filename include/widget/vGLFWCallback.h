@@ -36,6 +36,7 @@ class VGLFWWidget {
 public:
 	virtual void OnGLFWRepaint(const int &Width, const int &Height) = 0;
 	virtual void OnGLFWMouseMove(const int &X, const int &Y) = 0;
+	virtual void OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) = 0;
 };
 
 void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window);

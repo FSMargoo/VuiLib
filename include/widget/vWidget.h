@@ -104,6 +104,13 @@ public:
 public:
 	void OnGLFWRepaint(const int &Width, const int &Height) override;
 	void OnGLFWMouseMove(const int &X, const int &Y) override;
+	void OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) override;
+
+protected:
+	void RaiseUpAsFocus(VObject *Object) override;
+	void LockFocus() override;
+	void UnlockFocus() override;
+	bool GetFocus() override;
 
 private:
 	/**
@@ -115,6 +122,13 @@ private:
 private:
 	void OnFinalMessage(VBaseMessage *Message) override;
 	void OnPaint(sk_sp<VSurface> &Surface) override;
+
+private:
+	/**
+	 * Process the message
+	 * @param Message The message to be processed
+	 */
+	void ProcessMessage(VBaseMessage *Message);
 
 private:
 	/**
@@ -131,16 +145,17 @@ private:
 	 * in the full widget
 	 */
 	void FlushWidget();
-	/**
-	 * Process the message queue
-	 */
-	void ProcessMessageQueue();
 
 protected:
-	VApplication                *_application;
-	GLFWwindow                  *_glfwWindow;
-	std::queue<VBaseMessage*>    _messageQueue;
-	VStringProperty             *_title;
+	GLFWwindow *_glfwWindow;
+
+protected:
+	VStringProperty *_title;
+
+private:
+	bool             _focusLocking;
+	VObject         *_focusingObject;
+	VApplication    *_application;
 
 private:
 	sk_sp<VRenderInterface> GLInterface;
