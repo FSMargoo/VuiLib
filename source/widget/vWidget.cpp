@@ -147,7 +147,7 @@ void VWidget::LockFocus() {
 void VWidget::UnlockFocus() {
 	_focusLocking = false;
 }
-bool VWidget::GetFocus() {
+bool VWidget::GetFocusLocking() {
 	return _focusLocking;
 }
 void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {

@@ -110,7 +110,7 @@ protected:
 	void RaiseUpAsFocus(VObject *Object) override;
 	void LockFocus() override;
 	void UnlockFocus() override;
-	bool GetFocus() override;
+	bool GetFocusLocking() override;
 
 private:
 	/**

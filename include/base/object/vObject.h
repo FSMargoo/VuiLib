@@ -120,6 +120,19 @@ public:
 	 */
 	virtual void Hide();
 
+public:
+	/**
+	 * Set the enabled status of the control
+	 * @param Status If the status is true, this control will be disabled, nor enabled;
+	 * The disabled property won't affect the specified control like the window
+	 */
+	void SetDisabled(const bool &Status);
+	/**
+	 * Get the disabled status of the control
+	 * @return If the value is true, this control is disabled, nor enabled
+	 */
+	[[nodiscard]] bool SetDisabled() const;
+
 protected:
 	/**
 	 * Upload the message into the parent object if the parent object
@@ -213,9 +226,11 @@ protected:
 	virtual void UnlockFocus();
 	/**
 	 * Get the focus locking status
-	 * @return If the focus is locking, returning true, nor returning false
+	 * @return If the focus is locking, returning true, nor returning false;
+	 * Although the focus is locking, the control will still process the user
+	 * input if it can
 	 */
-	virtual bool GetFocus();
+	virtual bool GetFocusLocking();
 	/**
 	 * Raise up an object as a focusing object
 	 * @param Object The object to be raised up as a focusing object
@@ -249,6 +264,7 @@ protected:
 protected:
 	VRectProperty           *_bound;
 	VBooleanProperty        *_visible;
+	VBooleanProperty        *_disable;
 	VObject                 *_parent;
 	std::vector<VObject *>   _childList;
 };

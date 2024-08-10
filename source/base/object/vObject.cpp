@@ -154,6 +154,12 @@ void VObject::Hide() {
 
 	RepaintOnySelf();
 }
+void VObject::SetDisabled(const bool &Status) {
+	_disable->_value = Status;
+}
+bool VObject::SetDisabled() const {
+	return _disable->_value;
+}
 void VObject::UploadMessage(VBaseMessage *Message) {
 	if (_parent != nullptr) {
 		_parent->UploadMessage(Message);
@@ -215,9 +221,9 @@ void VObject::UnlockFocus() {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
-bool VObject::GetFocus() {
+bool VObject::GetFocusLocking() {
 	if (_parent != nullptr) {
-		return _parent->GetFocus();
+		return _parent->GetFocusLocking();
 	}
 	else {
 		throw std::logic_error("Object should have a legal parent objects");
@@ -270,11 +276,14 @@ void VObject::AdaptParent(VObject *Parent) {
 }
 void VObject::InitGeneralProperty() {
 	auto visible = std::make_unique<VBooleanProperty>(true);
+	auto disable = std::make_unique<VBooleanProperty>(false);
 	auto bound = std::make_unique<VRectProperty>();
 
 	RegisterProperty("visible", std::move(visible));
 	RegisterProperty("bound", std::move(bound));
+	RegisterProperty("disable", std::move(bound));
 
 	_bound   = GetPropertyValue<VRectProperty>("bound");
 	_visible = GetPropertyValue<VBooleanProperty>("visible");
+	_disable = GetPropertyValue<VBooleanProperty>("disable");
 }

@@ -103,11 +103,12 @@ add_executable(VCommit tool/vcommit/main.cpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp)
 
+# Enable/Disable the Windows Toast Feature
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-    message("VTest : Under Windows using win toast")
+    message("[NOTICE] VUILib.VTest : You are now currently building VUILib.VTest under Windows, the test result will be displayed in Windows Toast")
     target_link_libraries(UnitTest WinToast)
 elseif()
-    message("VTest : Under Linux/Unix discard win toast")
+   message("[NOTICE] VUILib.VTest : You are now currently building VUILib.VTest under Linux/Unix, the Windows Toast will be disabled")
 endif()
 
 target_include_directories(UnitTest PUBLIC ./include)
