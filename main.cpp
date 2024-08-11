@@ -6,6 +6,7 @@
 #include <unitTest/renderer/renderer.color.factory.h>
 
 int main() {
+	// Start VTest
 	VTestTask baseEventTest(VUnitTestM(BaseEvent, Recall), "base.event.free_function.recall");
 	VTestTask baseEventBlockTest(VUnitTestM(BaseEvent, Block), "base.event.free_function.block");
 	VTestTask baseEventRemoveTest(VUnitTestM(BaseEvent, Remove), "base.event.free_function.remove");
