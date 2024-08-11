@@ -159,7 +159,7 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 	OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
-	auto mouseMoveMessage = std::make_unique<VMouseMoveMessage>(_glfwWindow, X, Y);
+	auto mouseMoveMessage = std::make_unique<VMouseMovedMessage>(_glfwWindow, X, Y);
 	ProcessMessage(mouseMoveMessage.get());
 }
 void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
@@ -200,7 +200,7 @@ void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, co
 		}
 	}
 
-	auto mouseClickMessage = std::make_unique<VMouseClickMessage>(_glfwWindow, X, Y, button, clickType);
+	auto mouseClickMessage = std::make_unique<VMouseClickedMessage>(_glfwWindow, X, Y, button, clickType);
 	ProcessMessage(mouseClickMessage.get());
 }
 void VWidget::ProcessMessage(VBaseMessage *Message) {

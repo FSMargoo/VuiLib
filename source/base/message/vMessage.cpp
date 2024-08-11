@@ -30,11 +30,11 @@
 VBaseMessage::VBaseMessage(Window Trigger) : Target(Trigger) {
 
 }
-VMouseMoveMessage::VMouseMoveMessage(Window Trigger, const int &IX, const int &IY)
+VMouseMovedMessage::VMouseMovedMessage(Window Trigger, const int &IX, const int &IY)
     : VBaseMessage(Trigger), Point(IX, IY) {
 
 }
-VMouseClickMessage::VMouseClickMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick)
+VMouseClickedMessage::VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick)
     : VBaseMessage(Trigger), Point(IX, IY), Button(IButton), Click(IClick) {
 
 }

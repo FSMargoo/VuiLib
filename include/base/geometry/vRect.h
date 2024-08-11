@@ -208,6 +208,34 @@ public:
 		return _bottom - _top;
 	}
 	/**
+	 * Get the left position value of the rectangle
+	 * @return The left position value of the rectangle
+	 */
+	DataType GetLeft() const {
+		return _left;
+	}
+	/**
+	 * Get the top position value of the rectangle
+	 * @return The left position value of the rectangle
+	 */
+	DataType GetTop() const {
+		return _top;
+	}
+	/**
+	 * Get the right position value of the rectangle
+	 * @return The left position value of the rectangle
+	 */
+	DataType GetRight() const {
+		return _right;
+	}
+	/**
+	 * Get the bottom position value of the rectangle
+	 * @return The left position value of the rectangle
+	 */
+	DataType GetBottom() const {
+		return _bottom;
+	}
+	/**
 	 * Get the point on the left-up corner
 	 * @return The point location on the left-up corner
 	 */
@@ -245,6 +273,34 @@ public:
 	 */
 	void SetHeight(const int &Height) {
 		_bottom = _top + Height;
+	}
+	/**
+	 * Set the left position value of the rectangle
+	 * @param Value The new left position value of the rectangle
+	 */
+	void SetLeft(const int &Value) {
+		_left = Value;
+	}
+	/**
+	 * Set the top position value of the rectangle
+	 * @param Value The new top position value of the rectangle
+	 */
+	void SetTop(const int &Value) {
+		_top = Value;
+	}
+	/**
+	 * Set the right position value of the rectangle
+	 * @param Value The new right position value of the rectangle
+	 */
+	void SetRight(const int &Value) {
+		_right = Value;
+	}
+	/**
+	 * Set the bottom position value of the rectangle
+	 * @param Value The new bottom position value of the rectangle
+	 */
+	void SetBottom(const int &Value) {
+		_bottom = Value;
 	}
 	/**
 	 * Set the geometry information of the rectangle, it will calculate the new position

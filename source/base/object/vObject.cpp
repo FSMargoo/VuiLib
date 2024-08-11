@@ -157,8 +157,20 @@ void VObject::Hide() {
 void VObject::SetDisabled(const bool &Status) {
 	_disable->_value = Status;
 }
-bool VObject::SetDisabled() const {
+bool VObject::GetDisabled() const {
 	return _disable->_value;
+}
+void VObject::SetX(const int &X) {
+	_bound->_value.SetLeft(X);
+}
+void VObject::SetY(const int &Y) {
+	_bound->_value.SetTop(Y);
+}
+const int& VObject::GetX() const {
+	return _bound->_value.GetLeft();
+}
+const int& VObject::GetY() const {
+	return _bound->_value.GetTop();
 }
 void VObject::UploadMessage(VBaseMessage *Message) {
 	if (_parent != nullptr) {
@@ -173,34 +185,67 @@ void VObject::RepaintOnySelf() {
 	UploadMessage(message);
 }
 bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
+	const auto bound = _bound->_value;
+	sk_sp<VSurface> subSurface;
+	if (Message->GetType() == VMessageType::Repaint) {
+		auto repaintMessage = Message->Cast<VRepaintMessage>();
+		if (Surface == nullptr) {
+			throw std::logic_error("Surface should not be nullptr!");
+		}
+		if (bound.IsOverlap(repaintMessage->DirtyRectangle)) {
+			/**
+			  * Draw the context the relative surface
+			  */
+			subSurface = sk_make_sp<VSurface, const int &, const int &>(bound.GetWidth(), bound.GetHeight());
+
+			OnPaint(subSurface);
+		}
+		else {
+			subSurface = nullptr;
+		}
+	}
+	else {
+		subSurface = nullptr;
+	}
+
+	/**
+	 * Sent the message to children object first
+	 */
+	for (auto& object : _childList) {
+		auto result = object->OnMessage(Message, subSurface);
+		if (Message->GetType() == VMessageType::Repaint) {
+			const auto leftTop = object->_bound->_value.GetLeftTopPoint();
+			Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), leftTop.GetX(), leftTop.GetY());
+		}
+		if (result) {
+			return true;
+		}
+	}
 	switch (Message->GetType()) {
 		case VMessageType::Repaint: {
 			auto repaintMessage = Message->Cast<VRepaintMessage>();
-			if (Surface == nullptr) {
-				throw std::logic_error("Surface should not be nullptr!");
-			}
-			if (_bound->_value.IsOverlap(repaintMessage->DirtyRectangle)) {
-				/**
-				 * Draw the context the relative surface
-				 */
-				sk_sp<VSurface> objectSurface = sk_make_sp<VSurface, const int &, const int &>(_bound->_value.GetWidth(), _bound->_value.GetHeight());
-
-				OnPaint(objectSurface);
-				auto point = _bound->_value.GetLeftTopPoint();
-
-				Surface->GetNativeSurface()->draw(objectSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
-
+			if (bound.IsOverlap(repaintMessage->DirtyRectangle)) {
+				Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
 			}
 
 			return false;
 		}
 		case VMessageType::MouseMove: {
-			auto mouseMoveMessage = Message->Cast<VMouseMoveMessage>();
-			if (_bound->_value.IsPointInside(mouseMoveMessage->Point)) {
-				return OnMouseMove(mouseMoveMessage);
+			auto mouseMoveMessage = Message->Cast<VMouseMovedMessage>();
+			if (bound.IsPointInside(mouseMoveMessage->Point)) {
+				return OnMouseMoved(mouseMoveMessage);
 			}
-		}
 
+			break;
+		}
+		case VMessageType::MouseClicked: {
+			auto mouseClickedMessage = Message->Cast<VMouseClickedMessage>();
+			if (bound.IsPointInside(mouseClickedMessage->Point)) {
+				return OnMouseClicked(mouseClickedMessage);
+			}
+
+			break;
+		}
 	}
 
 	return false;

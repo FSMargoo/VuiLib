@@ -131,7 +131,27 @@ public:
 	 * Get the disabled status of the control
 	 * @return If the value is true, this control is disabled, nor enabled
 	 */
-	[[nodiscard]] bool SetDisabled() const;
+	[[nodiscard]] bool GetDisabled() const;
+	/**
+	 * Set the X position of the object
+	 * @param X The X position of the object
+	 */
+	void SetX(const int &X);
+	/**
+	 * Get the X position of the object;
+	 * @return The X position of the object
+	 */
+	const int& GetX() const;
+	/**
+	 * Set the Y position of the object
+	 * @param Y The Y position of the object
+	 */
+	void SetY(const int &Y);
+	/**
+	 * Get the Y position of the object;
+	 * @return The Y position of the object
+	 */
+	 const int& GetY() const;
 
 protected:
 	/**
@@ -177,11 +197,21 @@ protected:
 
 	}
 	/**
-	 * When the mouse moves over this object, this function will be called
+	 * When the mouse moved over this object, this function will be called
 	 * @param Message The mouse message
-	 * @return
+	 * @return If return false, this control will not take over the focus of
+	 * the widget, nor it will take over the focus of the widget
 	 */
-	virtual bool OnMouseMove(VMouseMoveMessage *Message) {
+	virtual bool OnMouseMoved(VMouseMovedMessage *Message) {
+		return false;
+	}
+	/**
+	 * When the mouse clicked over this object, this function will be called
+	 * @param Message The mouse message
+	 * @return If return false, this control will not take over the focus of
+	 * the widget, nor it will take over the focus of the widget
+	 */
+	virtual bool OnMouseClicked(VMouseClickedMessage *Message) {
 		return false;
 	}
 

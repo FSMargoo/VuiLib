@@ -100,7 +100,7 @@ public:
 /**
  * When the user's mouse moved, this message will be triggered
  */
-class VMouseMoveMessage : public VBaseMessage {
+class VMouseMovedMessage : public VBaseMessage {
 public:
 	/**
 	 * Construct the message with the message trigger window
@@ -110,7 +110,7 @@ public:
 	 * @param IX The X of the mouse
 	 * @param IY The Y of the mouse
 	 */
-	VMouseMoveMessage(Window Trigger, const int &IX, const int &IY);
+	VMouseMovedMessage(Window Trigger, const int &IX, const int &IY);
 
 public:
 	VMessageType GetType() override {
@@ -124,7 +124,7 @@ public:
 /**
  * When the user's mouse clicked, the message wil be triggered
  */
-class VMouseClickMessage : public VBaseMessage {
+class VMouseClickedMessage : public VBaseMessage {
 public:
 	/**
 	 * Construct the message with the message trigger window
@@ -134,7 +134,7 @@ public:
 	 * @param IX The X of the mouse
 	 * @param IY The Y of the mouse
 	 */
-	VMouseClickMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick);
+	VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick);
 
 public:
 	VMessageType GetType() override {
