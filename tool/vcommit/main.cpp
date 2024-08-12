@@ -229,6 +229,12 @@ int main(int argc, const char **argv) {
 	auto repository = parser.get<std::string>("r");
 	branch			= branch.empty() ? "main" : branch;
 
+#ifdef _WIN32
+	printf("VCommit under Windows");
+#else
+	printf("VCommit under Linux/Unix");
+#endif
+
 	// Check for abbreviation
 	if (AbbreviationToFullName.find(type) == AbbreviationToFullName.end()) {
 		printf("%s", std::format("Invalid commit type {}!", type).c_str());

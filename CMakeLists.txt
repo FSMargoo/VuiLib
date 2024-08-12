@@ -101,7 +101,8 @@ add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp
         tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
-        third/SimpleJson/sJSON.cpp)
+        third/SimpleJson/sJSON.cpp
+)
 
 # Enable/Disable the Windows Toast Feature
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")

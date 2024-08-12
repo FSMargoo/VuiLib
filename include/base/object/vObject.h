@@ -215,6 +215,22 @@ protected:
 		return false;
 	}
 
+private:
+	/**
+	 * When the object received a repaint message that this object can deal with,
+	 * this function will be called
+	 * @param Message The pointer of the repaint message
+	 * @param Surface The surface reference
+	 */
+	virtual void OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surface);
+	/**
+	 * When the object received a general message, this function will be called
+	 * @param Message The general message pointer
+	 * @return If the object can handle this message and determined to cut off it from
+	 * spreading to another object, the return value will be true nor false
+	 */
+	virtual bool OnGeneralMessage(VBaseMessage *Message);
+
 protected:
 	/**
 	 * Add a property to the object

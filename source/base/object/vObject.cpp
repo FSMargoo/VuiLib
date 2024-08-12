@@ -185,55 +185,61 @@ void VObject::RepaintOnySelf() {
 	UploadMessage(message);
 }
 bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
-	const auto bound = _bound->_value;
-	sk_sp<VSurface> subSurface;
 	if (Message->GetType() == VMessageType::Repaint) {
-		auto repaintMessage = Message->Cast<VRepaintMessage>();
-		if (Surface == nullptr) {
-			throw std::logic_error("Surface should not be nullptr!");
-		}
-		if (bound.IsOverlap(repaintMessage->DirtyRectangle)) {
-			/**
-			  * Draw the context the relative surface
-			  */
-			subSurface = sk_make_sp<VSurface, const int &, const int &>(bound.GetWidth(), bound.GetHeight());
-
-			OnPaint(subSurface);
-		}
-		else {
-			subSurface = nullptr;
-		}
+		OnRepaintMessage(Message->Cast<VRepaintMessage>(), Surface);
 	}
 	else {
-		subSurface = nullptr;
+		return OnGeneralMessage(Message);
 	}
 
+	return false;
+}
+void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surface) {
+	const auto bound    = _bound->_value;
+	auto repaintMessage = Message->Cast<VRepaintMessage>();
+	if (Surface == nullptr) {
+		throw std::logic_error("Surface should not be nullptr!");
+	}
+	/**
+	  * Draw the context the relative surface
+	  */
+	auto subSurface = sk_make_sp<VSurface, const int &, const int &>(bound.GetWidth(), bound.GetHeight());
+
+	OnPaint(subSurface);
+
+	for (auto& object : _childList) {
+		const auto leftTop = object->_bound->_value.GetLeftTopPoint();
+		Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), leftTop.GetX(), leftTop.GetY());
+	}
+
+	auto point = bound.GetLeftTopPoint();
+	Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
+}
+bool VObject::OnGeneralMessage(VBaseMessage *Message) {
+	const auto bound = _bound->_value;
 	/**
 	 * Sent the message to children object first
 	 */
+	sk_sp<VSurface> nullSurface = nullptr;
 	for (auto& object : _childList) {
-		auto result = object->OnMessage(Message, subSurface);
-		if (Message->GetType() == VMessageType::Repaint) {
-			const auto leftTop = object->_bound->_value.GetLeftTopPoint();
-			Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), leftTop.GetX(), leftTop.GetY());
-		}
+		auto result = object->OnMessage(Message, nullSurface);
 		if (result) {
 			return true;
 		}
 	}
 	switch (Message->GetType()) {
 		case VMessageType::Repaint: {
-			auto repaintMessage = Message->Cast<VRepaintMessage>();
-			if (bound.IsOverlap(repaintMessage->DirtyRectangle)) {
-				Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
-			}
-
 			return false;
 		}
 		case VMessageType::MouseMove: {
 			auto mouseMoveMessage = Message->Cast<VMouseMovedMessage>();
 			if (bound.IsPointInside(mouseMoveMessage->Point)) {
-				return OnMouseMoved(mouseMoveMessage);
+				auto result = OnMouseMoved(mouseMoveMessage);
+				if (result) {
+					RaiseUpAsFocus(this);
+				}
+
+				return result;
 			}
 
 			break;
@@ -241,14 +247,17 @@ bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 		case VMessageType::MouseClicked: {
 			auto mouseClickedMessage = Message->Cast<VMouseClickedMessage>();
 			if (bound.IsPointInside(mouseClickedMessage->Point)) {
-				return OnMouseClicked(mouseClickedMessage);
+				auto result = OnMouseClicked(mouseClickedMessage);
+				if (result) {
+					RaiseUpAsFocus(this);
+				}
+
+				return result;
 			}
 
 			break;
 		}
 	}
-
-	return false;
 }
 void VObject::LockFocus() {
 	if (_parent != nullptr) {
