@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[Feature Enchance]"
+title: "[Feature Enhance]"
 labels: enhancement
 assignees: FSMargoo
 
@@ -15,3 +15,6 @@ A clear and concise description of what you want to happen.
 
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
+
+**Dose your feature can be implemented using existing API**
+If answer is yes, provide a simple demo to implement it with existing API. It is very **important** since it will directly determine how quickly your feature can be implemented.
