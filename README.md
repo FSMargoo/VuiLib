@@ -7,8 +7,8 @@
 <h3>Auto Commit Status</h3>
 
 ![Static Badge](https://img.shields.io/badge/Unit%20Test-Pass-green)
-![Static Badge](https://img.shields.io/badge/Last%20Commit-nf:66b9fb5b-blue)
-![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/12/20:09:05-purple)
+![Static Badge](https://img.shields.io/badge/Last%20Commit-pf:66b9fe1e-blue)
+![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/12/20:20:51-purple)
 
 
 <h3 align="center">VUILib3.x</h3>

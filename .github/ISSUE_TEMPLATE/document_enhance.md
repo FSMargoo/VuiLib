@@ -1,6 +1,6 @@
 ---
 name: Document enhance
-about: Suggest an idea for this project
+about: Suggest a document enhancement for this project
 title: "[Document Enhance]"
 labels: documentation
 assignees: FSMargoo
