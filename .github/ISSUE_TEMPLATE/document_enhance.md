@@ -2,7 +2,7 @@
 name: Document enhance
 about: Suggest an idea for this project
 title: "[Document Enhance]"
-labels: document
+labels: documentation
 assignees: FSMargoo
 
 ---
