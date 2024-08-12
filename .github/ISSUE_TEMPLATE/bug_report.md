@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows]
  - Release Version [e.g. 3.0.0]
- - Commit Info [e.g. wi:669a42c2]
+ - Commit Info [e.g. *wi:669a42c2*(On GitHub *410fb41*)] (It is quite necessary since it is very helpful in our fixing progress!)
 
 **Additional context**
-Please search in the open/closed issues to check out whether your problem has been be committed.
+Please search in the open/closed issues to check out whether your problem has been be committed. A issue which dose not obey above requirement will be marked as label **Incomprehensible** and hard to received a useful respond.
