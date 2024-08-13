@@ -1,0 +1,101 @@
+name: 🐛Bug report
+description: Report the bugs you found in library
+title: '[Bug Report]: '
+labels:
+  - bug
+assignees:
+  - FSMargoo
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        ## 👋Welcome to the VUILib bug report page
+
+
+        Please answer the following questions to let us know about the bug your
+        found.
+
+
+        Thanks of your contribution of making VUILib greater!
+  - type: checkboxes
+    id: bug_progress
+    attributes:
+      label: ✔️Things you need to do
+      description: >-
+        Before submitting your issue to us, please make sure that you have done
+        following things.
+      options:
+        - label: I've checked that I am using VUILib in right way
+          required: true
+        - label: I've chcekd that the newest VUILib still have the bug
+          required: true
+        - label: I've checked that this bug is caused by VUILib
+          required: true
+        - label: I've checked that my bug wasn't found by another user
+          required: true
+        - label: I can provide a simplest demo to reproduce this bug
+          required: true
+  - type: dropdown
+    id: type_of_bug
+    attributes:
+      label: 🖥️Host Operating System
+      description: What operating system your test platform using?
+      options:
+        - Windows
+        - Mac OS
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: what_wrong
+    attributes:
+      label: ❓What went wrong
+      description: What exactly went wrong of what bug did you encounter?
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behaviour
+    attributes:
+      label: 🤔Expected behaviour
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: bug_reproduction
+    attributes:
+      label: 📃How can we reproduce the bug?
+      description: How to reproduce the bug you met?
+    validations:
+      required: true
+  - type: dropdown
+    id: compiler
+    attributes:
+      label: 🧮Compiler
+      description: Which compiler you are currently using?
+      options:
+        - clang
+        - MSVC
+        - gcc
+        - other
+    validations:
+      required: true
+  - type: input
+    id: vuilib_version
+    attributes:
+      label: Your VUILib version?
+      description: >-
+        Let us know the VUILib release version you are currently using. If you
+        are not using the release version, please provide the version in format
+        like: "Lasted commit at *wi:669a42c2*(On GitHub commit *410fb41*)"
+    validations:
+      required: true
+  - type: textarea
+    id: error_message
+    attributes:
+      label: ✉️Error message(optional)
+      description: Please provide the error message library may give you.
+  - type: markdown
+    attributes:
+      value: >-
+        This template was generated with [Issue Forms
+        Creator](https://issue-forms-creator.netlify.app)

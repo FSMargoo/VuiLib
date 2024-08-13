@@ -239,7 +239,12 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 					RaiseUpAsFocus(this);
 				}
 
+				_onHover = true;
+
 				return result;
+			}
+			else if (_onHover) {
+				_onHover = false;
 			}
 
 			break;
@@ -340,4 +345,5 @@ void VObject::InitGeneralProperty() {
 	_bound   = GetPropertyValue<VRectProperty>("bound");
 	_visible = GetPropertyValue<VBooleanProperty>("visible");
 	_disable = GetPropertyValue<VBooleanProperty>("disable");
+	_onHover = false;
 }

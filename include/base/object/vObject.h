@@ -206,6 +206,15 @@ protected:
 		return false;
 	}
 	/**
+	 * When the mouse moved out the bound of this object, this function will be called
+	 * @param Message The mouse message
+	 * @return If return false, this control will not take over the focus of
+	 * the widget, nor it will take over the focus of the widget
+	 */
+	virtual bool OnMouseLeft(VMouseMovedMessage *Message) {
+		return false;
+	}
+	/**
 	 * When the mouse clicked over this object, this function will be called
 	 * @param Message The mouse message
 	 * @return If return false, this control will not take over the focus of
@@ -303,6 +312,9 @@ private:
 	 * Init the general property of every object
 	 */
 	void InitGeneralProperty();
+
+protected:
+	bool _onHover;
 
 protected:
 	VPropertyList _propertyList;
