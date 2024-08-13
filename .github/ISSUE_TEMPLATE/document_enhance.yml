@@ -1,0 +1,37 @@
+name: 📄Document enhance
+description: Suggest a document enhancement for this project
+title: '[Document Enhance]: '
+labels:
+  - documentation
+body:
+  - type: dropdown
+    attributes:
+      label: Enhancement type
+      description: Describe which your enhancement type is
+      options:
+        - Typo
+        - Missing
+        - Error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe where the document should be modified
+      description: Like typo or the wrong description about one API.
+      placeholder: >-
+        for example: > In the document about *VPushButton::OnClicked* event is
+        incorrect, this event will only be emitted after the user's mouse button
+        is up.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Where the document is
+      description: Paste a URL to our document website or file path to the document folde
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: >-
+        This template was generated with [Issue Forms
+        Creator](https://issue-forms-creator.netlify.app)
