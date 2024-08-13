@@ -64,7 +64,9 @@ body:
     id: bug_reproduction
     attributes:
       label: 📃How can we reproduce the bug?
-      description: How to reproduce the bug you met?
+      description: >-
+        How to reproduce the bug you met? A answer with a simple demo code are
+        more likely to be accpeted.
     validations:
       required: true
   - type: dropdown
