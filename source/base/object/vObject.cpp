@@ -245,6 +245,7 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 			}
 			else if (_onHover) {
 				_onHover = false;
+				OnMouseLeft(mouseMoveMessage);
 			}
 
 			break;
@@ -263,6 +264,8 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 			break;
 		}
 	}
+
+	return false;
 }
 void VObject::LockFocus() {
 	if (_parent != nullptr) {

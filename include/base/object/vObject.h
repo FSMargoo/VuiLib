@@ -206,13 +206,13 @@ protected:
 		return false;
 	}
 	/**
-	 * When the mouse moved out the bound of this object, this function will be called
+	 * When the mouse moved out the bound of this object, this function will be called;
+	 * This function dose not allows any return value, since it shouldn't change the focus
+	 * object in this function
 	 * @param Message The mouse message
-	 * @return If return false, this control will not take over the focus of
-	 * the widget, nor it will take over the focus of the widget
 	 */
-	virtual bool OnMouseLeft(VMouseMovedMessage *Message) {
-		return false;
+	virtual void OnMouseLeft(VMouseMovedMessage *Message) {
+		return;
 	}
 	/**
 	 * When the mouse clicked over this object, this function will be called

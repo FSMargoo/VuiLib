@@ -165,6 +165,7 @@ void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
 	VMouseButton button;
 	VClickType   clickType;
+	VAdditionKey additionKey;
 	switch (Button) {
 		case GLFW_MOUSE_BUTTON_LEFT: {
 			button = VMouseButton::Left;
@@ -199,8 +200,35 @@ void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, co
 			break;
 		}
 	}
+	switch (Mods) {
+		case GLFW_MOD_ALT: {
+			additionKey = VAdditionKey::Alt;
+			break;
+		}
+		case GLFW_MOD_CONTROL: {
+			additionKey = VAdditionKey::Ctrl;
+			break;
+		}
+		case GLFW_MOD_CAPS_LOCK: {
+			additionKey = VAdditionKey::CapsLock;
+			break;
+		}
+		case GLFW_MOD_NUM_LOCK: {
+			additionKey = VAdditionKey::NumberLock;
+			break;
+		}
+		case GLFW_MOD_SHIFT: {
+			additionKey = VAdditionKey::Shift;
+			break;
+		}
+		case GLFW_MOD_SUPER: {
+			additionKey = VAdditionKey::Super;
+			break;
+		}
+	}
 
 	auto mouseClickMessage = std::make_unique<VMouseClickedMessage>(_glfwWindow, X, Y, button, clickType);
+	mouseClickMessage->AdditionKey = additionKey;
 	ProcessMessage(mouseClickMessage.get());
 }
 void VWidget::ProcessMessage(VBaseMessage *Message) {

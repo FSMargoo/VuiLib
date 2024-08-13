@@ -75,6 +75,7 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/renderer/vGLHeader.h
         include/widget/vMainWindow.h
         source/widget/vMainWindow.cpp
+        include/base/message/vKeyMap.h
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h

@@ -28,6 +28,7 @@
 #pragma once
 
 #include <include/base/geometry/vPoint.h>
+#include <include/base/message/vKeyMap.h>
 #include <include/base/geometry/vRect.h>
 
 #include <include/renderer/vGLHeader.h>
@@ -36,7 +37,7 @@
  * The type of the message
  */
 enum class VMessageType {
-	MouseMove, MouseClicked, Repaint
+	KeyDown, KeyUp, MouseMove, MouseClicked, Repaint
 };
 /**
  * The button type of the mouse
@@ -49,6 +50,9 @@ enum class VMouseButton {
  */
 enum class VClickType {
 	Release, Press, Repeat
+};
+enum class VAdditionKey {
+	Ctrl, Super, CapsLock, Alt, Shift, NumberLock
 };
 
 /**
@@ -134,7 +138,7 @@ public:
 	 * @param IX The X of the mouse
 	 * @param IY The Y of the mouse
 	 */
-	VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick);
+	VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick, const VAdditionKey &IAdditionKey);
 
 public:
 	VMessageType GetType() override {
@@ -144,6 +148,7 @@ public:
 public:
 	VPoint       Point;
 	VMouseButton Button;
+	VAdditionKey AdditionKey;
 	VClickType   Click;
 };
 
@@ -171,4 +176,41 @@ public:
 	 * The dirty rectangle to be repainted
 	 */
 	VRect DirtyRectangle;
+};
+
+/**
+ * When the user's keyboard's key down, the message wil be triggered
+ */
+class VKeyDownMessage : public VBaseMessage {
+public:
+	/**
+	 * Construct the message with the message trigger window
+	 * @param Trigger The trigger window, if the pointer is nullptr, meaning
+	 * this message is spread in only one window which will not join the message
+	 * @param IKey The key that was pressed
+	 * @param IAdditionKey The addition key pressed
+	 */
+	VKeyDownMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
+
+private:
+	int             Key;
+	VAdditionKey    AdditionKey;
+};
+/**
+ * When the user's keyboard's key up, the message wil be triggered
+ */
+class VKeyUpMessage : public VBaseMessage {
+public:
+	/**
+	 * Construct the message with the message trigger window
+	 * @param Trigger The trigger window, if the pointer is nullptr, meaning
+	 * this message is spread in only one window which will not join the message
+	 * @param IKey The key that was pressed
+	 * @param IAdditionKey The addition key pressed
+	 */
+	VKeyUpMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
+
+private:
+	int             Key;
+	VAdditionKey    AdditionKey;
 };

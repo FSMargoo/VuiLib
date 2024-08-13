@@ -34,10 +34,18 @@ VMouseMovedMessage::VMouseMovedMessage(Window Trigger, const int &IX, const int 
     : VBaseMessage(Trigger), Point(IX, IY) {
 
 }
-VMouseClickedMessage::VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick)
-    : VBaseMessage(Trigger), Point(IX, IY), Button(IButton), Click(IClick) {
+VMouseClickedMessage::VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick, const VAdditionKey &IAdditionKey)
+    : VBaseMessage(Trigger), Point(IX, IY), Button(IButton), Click(IClick), AdditionKey(IAdditionKey) {
 
 }
 VRepaintMessage::VRepaintMessage(Window Trigger, const VRect &Rectangle) : VBaseMessage(Trigger), DirtyRectangle(Rectangle) {
+
+}
+VKeyDownMessage::VKeyDownMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey) : VBaseMessage(Trigger),
+	Key(IKey), AdditionKey(IAdditionKey) {
+
+}
+VKeyUpMessage::VKeyUpMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey) : VBaseMessage(Trigger),
+	Key(IKey), AdditionKey(IAdditionKey) {
 
 }
