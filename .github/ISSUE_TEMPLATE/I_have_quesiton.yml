@@ -1,0 +1,36 @@
+name: ❓ I have a question
+description: Ask about the questions you met while using this project
+title: '[QA]: '
+labels:
+  - QA
+body:
+  - type: textarea
+    attributes:
+      label: Describe your question
+      description: A clear and concise description of what your question is.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Write a title that summarizes the specific problem
+      description: >-
+        The title is the first thing that potential answerers will see. If your
+        title isn't interesting, they won't read the rest. Also, without a good
+        title, people may not even be able to find your question
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected answer
+      description: A clear and concise description of what answer you want.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots URL(Optional)
+      description: If applicable, add screenshots to help explain your problem.
+  - type: markdown
+    attributes:
+      value: >-
+        This template was generated with [Issue Forms
+        Creator](https://issue-forms-creator.netlify.app)
