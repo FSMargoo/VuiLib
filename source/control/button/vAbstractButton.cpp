@@ -21,34 +21,21 @@
  */
 
 /**
- * \file vBase.h
- * \brief The base library in VUILib
+ * \file vAbstractButton.cpp
+ * \brief The abstract button of the button control in VUILib
  */
 
-#pragma once
+#include <include/control/button/vAbstractButton.h>
 
-#include <base/binding/vBindingType.h>
-#include <base/command/vCommand.h>
-#include <base/test/vTest.h>
-
-namespace VConcept {
-template <template <typename...> class C, typename... Ts>
-std::true_type IsBaseOfImpl(const C<Ts...> *);
-
-template <template <typename...> class C>
-std::false_type IsBaseOfImpl(...);
-
-template <template <typename...> class C, typename T>
-using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
+VAbstractButton::VAbstractButton(VObject *Parent) : VObject(Parent) {
+	InitAbstractButton(Parent, 80, 20);
 }
-
-template<class RangeType>
-	requires std::is_integral_v<RangeType> or std::is_floating_point_v<RangeType>
-std::vector<RangeType> VRange(const RangeType &Start, const RangeType &End, const RangeType &Step = RangeType(1)) {
-	std::vector<RangeType> result;
-	for (RangeType count = Start; count < End; count += Step) {
-		result.emplace_back(count);
+VAbstractButton::VAbstractButton(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
+	InitAbstractButton(Parent, Width, Height);
+}
+void VAbstractButton::InitAbstractButton(VObject *Parent, const int &Width, const int &Height) {
+	Resize(Width, Height);
+	if (Parent == nullptr) {
+		throw std::logic_error("The parent should not be nullptr!");
 	}
-
-	return result;
 }

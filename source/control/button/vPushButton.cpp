@@ -21,34 +21,26 @@
  */
 
 /**
- * \file vBase.h
- * \brief The base library in VUILib
+ * \file vPushButton.cpp
+ * \brief The push button class in VUILib
  */
 
-#pragma once
+#include <include/control/button/vPushButton.h>
 
-#include <base/binding/vBindingType.h>
-#include <base/command/vCommand.h>
-#include <base/test/vTest.h>
-
-namespace VConcept {
-template <template <typename...> class C, typename... Ts>
-std::true_type IsBaseOfImpl(const C<Ts...> *);
-
-template <template <typename...> class C>
-std::false_type IsBaseOfImpl(...);
-
-template <template <typename...> class C, typename T>
-using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
+VPushButton::VPushButton(VObject *Parent, const std::string &Text) : VAbstractButton(Parent) {
+	InitProperty(Text);
 }
-
-template<class RangeType>
-	requires std::is_integral_v<RangeType> or std::is_floating_point_v<RangeType>
-std::vector<RangeType> VRange(const RangeType &Start, const RangeType &End, const RangeType &Step = RangeType(1)) {
-	std::vector<RangeType> result;
-	for (RangeType count = Start; count < End; count += Step) {
-		result.emplace_back(count);
-	}
-
-	return result;
+VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const std::string &Text) : VAbstractButton(Parent, Width, Height) {
+	InitProperty(Text);
+}
+void VPushButton::SetPlainText(const std::string &Text) {
+	_text->_value = Text;
+}
+std::string VPushButton::GetPlainText() const {
+	return _text->_value;
+}
+void VPushButton::InitProperty(const std::string &Text) {
+	auto text = std::make_unique<VStringProperty>(Text);
+	RegisterProperty("text", std::move(text));
+	_text = GetPropertyValue<VStringProperty>("text");
 }

@@ -76,6 +76,7 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::s
 
 	glfwSetFramebufferSizeCallback(_glfwWindow, VGLFWFramebufferSizeCallback);
 	glfwSetCursorPosCallback(_glfwWindow, VGLFWMouseMoveCallback);
+	glfwSetMouseButtonCallback(_glfwWindow, VGLFWMouseClickCallback);
 
 	FlushWidget();
 }
@@ -227,7 +228,7 @@ void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, co
 		}
 	}
 
-	auto mouseClickMessage = std::make_unique<VMouseClickedMessage>(_glfwWindow, X, Y, button, clickType);
+	auto mouseClickMessage = std::make_unique<VMouseClickedMessage>(_glfwWindow, X, Y, button, clickType, additionKey);
 	mouseClickMessage->AdditionKey = additionKey;
 	ProcessMessage(mouseClickMessage.get());
 }

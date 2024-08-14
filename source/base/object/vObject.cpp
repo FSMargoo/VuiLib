@@ -55,7 +55,7 @@ void VObject::RaiseTop() {
 			                                    return Object == this;
 		                                    }),
 		                          _parent->_childList.end());
-		_parent->_childList.push_back(this);
+		_parent->_childList.emplace_back(this);
 
 		RepaintOnySelf();
 	}
@@ -331,7 +331,7 @@ void VObject::RemoveParent(VObject *OldParent) {
 }
 void VObject::AdaptParent(VObject *Parent) {
 	if (Parent != nullptr) {
-		Parent->_childList.push_back(this);
+		Parent->_childList.emplace_back(this);
 
 		RepaintOnySelf();
 	}

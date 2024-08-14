@@ -76,7 +76,7 @@ VTestTask::VTestTask(std::function<bool()> Function, const std::string &TaskName
 	: _task(std::move(Function)), TaskID(TaskName) {
 }
 void VTestConductor::AddTask(const VTestTask &Task) {
-	_taskList.push_back(Task);
+	_taskList.emplace_back(Task);
 }
 void VTestConductor::StartTasks() {
 #ifdef _WIN32
@@ -106,7 +106,7 @@ void VTestConductor::StartTasks() {
 		sJSONElementNode *subElement = new sJSONElementNode;
 		subElement->InsertChildrenNode(new sJSONElementNode("taskID", new sJSONRealValue<std::string>(task.TaskID)));
 		subElement->InsertChildrenNode(new sJSONElementNode("status", new sJSONRealValue<int>(flag ? 1 : 0)));
-		arrayNode->ValueSet.push_back(subElement);
+		arrayNode->ValueSet.emplace_back(subElement);
 
 		if (flag) {
 			printf("passed! \t[√]\n");

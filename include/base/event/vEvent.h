@@ -202,7 +202,7 @@ public:
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Function, VEventOperation::Lookup)) {
 			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VFunctionConnection(Function));
-			_slots->push_back(pointer);
+			_slots->emplace_back(pointer);
 		}
 	}
 	/***
@@ -216,7 +216,7 @@ public:
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Object, Function, VEventOperation::Lookup)) {
 			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VClassConnection<ObjectType, Parameters...>(Object, Function));
-			_slots->push_back(pointer);
+			_slots->emplace_back(pointer);
 		}
 	}
 	/***

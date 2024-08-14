@@ -76,6 +76,9 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/widget/vMainWindow.h
         source/widget/vMainWindow.cpp
         include/base/message/vKeyMap.h
+        source/control/button/vPushButton.cpp
+        include/control/button/vAbstractButton.h
+        source/control/button/vAbstractButton.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
@@ -103,6 +106,7 @@ add_executable(VCommit tool/vcommit/main.cpp
         tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp
+        include/control/button/vPushButton.h
 )
 
 # Enable/Disable the Windows Toast Feature
