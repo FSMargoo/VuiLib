@@ -41,7 +41,7 @@ bool VUnitTest(HTMLParser, Lexer) {
 	OString result;
 	while (!lexer.End()) {
 		auto token = lexer.NextToken();
-		token.String.append("\n");
+		token.String = ostr::format("\"{}\",\n", token.String);
 		result += token.String;
 	}
 

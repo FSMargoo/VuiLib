@@ -85,7 +85,7 @@
 			"taskID":"renderer.color.hexCreate"
 		},
 		{
-			"status":0,
+			"status":1,
 			"taskID":"parser.html.lexer"
 		}
 	]
