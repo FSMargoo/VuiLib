@@ -27,19 +27,19 @@
 
 #include <include/control/button/vPushButton.h>
 
-VPushButton::VPushButton(VObject *Parent, const std::string &Text) : VAbstractButton(Parent) {
+VPushButton::VPushButton(VObject *Parent, const OString &Text) : VAbstractButton(Parent) {
 	InitProperty(Text);
 }
-VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const std::string &Text) : VAbstractButton(Parent, Width, Height) {
+VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const OString &Text) : VAbstractButton(Parent, Width, Height) {
 	InitProperty(Text);
 }
-void VPushButton::SetPlainText(const std::string &Text) {
+void VPushButton::SetPlainText(const OString &Text) {
 	_text->_value = Text;
 }
-std::string VPushButton::GetPlainText() const {
+OString VPushButton::GetPlainText() const {
 	return _text->_value;
 }
-void VPushButton::InitProperty(const std::string &Text) {
+void VPushButton::InitProperty(const OString &Text) {
 	auto text = std::make_unique<VStringProperty>(Text);
 	RegisterProperty("text", std::move(text));
 	_text = GetPropertyValue<VStringProperty>("text");

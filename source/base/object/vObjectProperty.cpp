@@ -66,7 +66,7 @@ VStringProperty::VStringProperty()
     : VPropertyValueBase(VPropertyType::String), _value() {
 
 }
-VStringProperty::VStringProperty(const std::string &Value)
+VStringProperty::VStringProperty(const OString &Value)
     : VPropertyValueBase(VPropertyType::String), _value(Value) {
 
 }
@@ -94,11 +94,11 @@ VColorProperty::VColorProperty(const SkColor &Value)
     : VPropertyValueBase(VPropertyType::Color), _value(Value) {
 
 }
-VObjectProperty::VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Value)
+VObjectProperty::VObjectProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Value)
 	: _name(Name), _value(std::move(Value)) {
 
 }
-std::string VObjectProperty::GetName() const {
+OString VObjectProperty::GetName() const {
 	return _name;
 }
 std::unique_ptr<VPropertyValueBase>& VObjectProperty::GetValue() {

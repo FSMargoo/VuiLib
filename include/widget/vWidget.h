@@ -52,7 +52,7 @@ public:
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 */
-	VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title);
+	VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title);
 	/**
 	 * Create a widget with geometry information on a specified monitor,
 	 * it will create a full-screen window by the specified geometry information.
@@ -62,7 +62,7 @@ public:
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
-	VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
+	VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor &Monitor);
 	~VWidget() override;
 
 public:
@@ -86,12 +86,12 @@ public:
 	 * Get the title of the widget
 	 * @return The title of the widget
 	 */
-	[[nodiscard]] std::string GetTitle() const;
+	[[nodiscard]] OString GetTitle() const;
 	/**
 	 * Set the title of the object
 	 * @param Title The new title of the object
 	 */
-	void SetTitle(const std::string &Title);
+	void SetTitle(const OString &Title);
 
 public:
 	/**
@@ -137,7 +137,7 @@ private:
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 */
-	void InitWidgetObject(const int &Width, const int &Height, const std::string &Title);
+	void InitWidgetObject(const int &Width, const int &Height, const OString &Title);
 
 private:
 	/**

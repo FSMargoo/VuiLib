@@ -40,5 +40,5 @@ public:
 	VStyleCollection();
 
 private:
-	std::unordered_map<std::string, VStyleFunction> _collection;
+	std::unordered_map<OString, VStyleFunction> _collection;
 };

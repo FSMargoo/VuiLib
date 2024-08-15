@@ -27,7 +27,7 @@
 
 #include <include/widget/vWidget.h>
 
-VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const std::string& Title)
+VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString& Title)
     : VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
 	if (!_glfwWindow) {
@@ -36,7 +36,7 @@ VWidget::VWidget(VApplication *Application, const int &Width, const int &Height,
 
 	InitWidgetObject(Width, Height, Title);
 }
-VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor& Monitor)
+VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor& Monitor)
 	: VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	/**
 	 * If the monitor is disconnected, it will be marked as invalid
@@ -61,8 +61,7 @@ void VWidget::FlushWidget() {
 	auto flushMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
 	ProcessMessage(flushMessage.get());
 }
-void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::string &Title) {
-	VObject::Resize(Width, Height);
+void VWidget::InitWidgetObject(const int &Width, const int &Height, const OString &Title) {
 	auto title  = std::make_unique<VStringProperty>(Title);
 
 	RegisterProperty("title", std::move(title));
@@ -78,7 +77,7 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const std::s
 	glfwSetCursorPosCallback(_glfwWindow, VGLFWMouseMoveCallback);
 	glfwSetMouseButtonCallback(_glfwWindow, VGLFWMouseClickCallback);
 
-	FlushWidget();
+	VObject::Resize(Width, Height);
 }
 void VWidget::Show() {
 	glfwShowWindow(_glfwWindow);
@@ -95,10 +94,10 @@ void VWidget::Resize(const int &Width, const int &Height) {
 
 	VObject::Resize(Width, Height);
 }
-std::string VWidget::GetTitle() const {
+OString VWidget::GetTitle() const {
 	return _title->_value;
 }
-void VWidget::SetTitle(const std::string &Title) {
+void VWidget::SetTitle(const OString &Title) {
 	_title->_value = Title;
 
 	glfwSetWindowTitle(_glfwWindow, Title.c_str());
@@ -156,8 +155,8 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 		VObject::Resize(Width, Height);
 	}
 
-	auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
-	OnWidgetRepaint(repaintMessage.get());
+	// auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
+	// OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 	auto mouseMoveMessage = std::make_unique<VMouseMovedMessage>(_glfwWindow, X, Y);

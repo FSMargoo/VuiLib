@@ -27,16 +27,16 @@
 
 #include <include/parser/html/vHTMLLexer.h>
 
-VHTMLLexerInvalidToken::VHTMLLexerInvalidToken(const ostr::text &What, const int &Line, const int &Position) {
+VHTMLLexerInvalidToken::VHTMLLexerInvalidToken(const OString &What, const int &Line, const int &Position) {
 	_info = ostr::format("VHTMLLexer Syntax Error : Invalid token \"{}\" at {}:{}.", What, Line, Position);
 	printf("%s", _info.c_str());
 }
-VHTMLLexerMissingToken::VHTMLLexerMissingToken(const ostr::text &What, const int &Line, const int &Position) {
+VHTMLLexerMissingToken::VHTMLLexerMissingToken(const OString &What, const int &Line, const int &Position) {
 	_info = ostr::format("VHTMLLexer Syntax Error : Missing pairing token for \"{}\" at {}:{}.", What, Line, Position);
 	printf("%s", _info.c_str());
 }
 
-VHTMLLexer::VHTMLLexer(const ostr::text &Code) : _code(Code) {
+VHTMLLexer::VHTMLLexer(const OString &Code) : _code(Code) {
 
 }
 void VHTMLLexer::InitLexer() {
@@ -45,7 +45,7 @@ void VHTMLLexer::InitLexer() {
 	_linePosition = 0;
 }
 VHTMLLexerToken VHTMLLexer::NextToken() {
-	ostr::text	 	string;
+	OString	 	string;
 	VHTMLTokenType	type;
 	while (true) {
 		auto character = _code[_position];
@@ -80,7 +80,7 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 	int 		line     = _linePosition;
 	int 		position = _position;
-	ostr::text  string;
+	OString  string;
 	while (true) {
 		if (_code[_position] == '\\') {
 
@@ -90,7 +90,7 @@ VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 		++_position;
 	}
 }
-ostr::text VHTMLLexer::ProcessStringEscaping() {
+OString VHTMLLexer::ProcessStringEscaping() {
 	++_position;
 	MissTokenIfOutRange("\\", _line, _position - 1);
 
@@ -117,7 +117,7 @@ ostr::text VHTMLLexer::ProcessStringEscaping() {
 			return "\v";
 		}
 		case 'u': {
-			ostr::text hexString;
+			OString hexString;
 			for (auto count = 0; count < 4; ++count) {
 				++_position;
 				MissTokenIfOutRange("Number of hex string", _line, _position - 1);
@@ -139,7 +139,7 @@ ostr::text VHTMLLexer::ProcessStringEscaping() {
 		}
 	}
 }
-void VHTMLLexer::MissTokenIfOutRange(const ostr::text &What, const int &Line, const int &Position) {
+void VHTMLLexer::MissTokenIfOutRange(const OString &What, const int &Line, const int &Position) {
 	if (_position >= _code.size()) {
 		throw new VHTMLLexerMissingToken(What, Line, Position);
 	}

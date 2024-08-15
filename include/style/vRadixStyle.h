@@ -48,9 +48,9 @@ public:
 			throw std::logic_error("Gradient level shouldn't greater than 12!");
 		}
 		auto alpha = Level / 12 * 255;
-		auto r = (VColorFactory::GetRValue(ThemeColor) * alpha + VColorFactory::GetRValue(BackgroundColor) * 256) / 256;
-		auto g = (VColorFactory::GetGValue(ThemeColor) * alpha + VColorFactory::GetGValue(BackgroundColor) * 256) / 256;
-		auto b = (VColorFactory::GetBValue(ThemeColor) * alpha + VColorFactory::GetBValue(BackgroundColor) * 256) / 256;
+		auto r = (VColorFactory::GetR(ThemeColor) * alpha + VColorFactory::GetR(BackgroundColor) * 256) / 256;
+		auto g = (VColorFactory::GetG(ThemeColor) * alpha + VColorFactory::GetG(BackgroundColor) * 256) / 256;
+		auto b = (VColorFactory::GetB(ThemeColor) * alpha + VColorFactory::GetB(BackgroundColor) * 256) / 256;
 
 		return VColorFactory::MakeRGB(r, g, b);
 	}

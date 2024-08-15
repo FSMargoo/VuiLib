@@ -30,6 +30,8 @@
 #include <string>
 #include <format>
 
+#include <include/base/vBase.h>
+
 #include <OpenString-CMake/include/text.h>
 #include <OpenString-CMake/include/format.h>
 
@@ -40,7 +42,7 @@
  */
 class VHTMLLexerInvalidToken : public std::exception {
 public:
-	VHTMLLexerInvalidToken(const ostr::text &What, const int &Line, const int &Position);
+	VHTMLLexerInvalidToken(const OString &What, const int &Line, const int &Position);
 
 public:
 	const char* what() const {
@@ -48,7 +50,7 @@ public:
 	}
 
 private:
-	ostr::text _info;
+	OString _info;
 };
 /**
  * The exception for missing token in HTML lexer, it provides a format
@@ -57,7 +59,7 @@ private:
  */
 class VHTMLLexerMissingToken {
 public:
-	VHTMLLexerMissingToken(const ostr::text &What, const int &Line, const int &Position);
+	VHTMLLexerMissingToken(const OString &What, const int &Line, const int &Position);
 
 public:
 	const char* what() const {
@@ -65,7 +67,7 @@ public:
 	}
 
 private:
-	ostr::text _info;
+	OString _info;
 };
 
 /**
@@ -80,7 +82,7 @@ enum class VHTMLTokenType {
  */
 struct VHTMLLexerToken {
 	VHTMLTokenType  Type;
-	ostr::text_view	String;
+	OStringView		String;
 };
 
 /**
@@ -92,7 +94,7 @@ public:
 	 * Construct the lexer with specified HTML code
 	 * @param Code The HTML code in string format
 	 */
-	explicit VHTMLLexer(const ostr::text &Code);
+	explicit VHTMLLexer(const OString &Code);
 
 public:
 	/**
@@ -117,17 +119,17 @@ private:
 	 * Convert the escaping in string into real string
 	 * @return The converted escaping string
 	 */
-	ostr::text ProcessStringEscaping();
+	OString ProcessStringEscaping();
 
 private:
 	/**
 	 * Check whether local position run out of the string range,
 	 * if it is, a missing token exception will be thrown
 	 */
-	void MissTokenIfOutRange(const ostr::text &What, const int &Line, const int &Position);
+	void MissTokenIfOutRange(const OString &What, const int &Line, const int &Position);
 
 private:
-	ostr::text 			_code;
+	OString 			_code;
 	int 				_position;
 	int 				_line;
 	int 				_linePosition;

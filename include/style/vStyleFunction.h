@@ -45,7 +45,7 @@ public:
 	 * @param Name The name of the property
 	 * @return The reference of the property instance
 	 */
-	VStyleProperty& GetProperty(const std::string &Name);
+	VStyleProperty& GetProperty(const OString &Name);
 
 protected:
 	/**
@@ -56,7 +56,7 @@ protected:
 	 */
 	template<class Type>
 	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	void RegisterProperty(const std::string &Name, std::unique_ptr<Type> &&Pointer) {
+	void RegisterProperty(const OString &Name, std::unique_ptr<Type> &&Pointer) {
 		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase>&&>(Pointer)));
 	}
 	/**
@@ -64,7 +64,7 @@ protected:
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	void RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer);
+	void RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer);
 	/**
 	 * Get the property value in specified type format
 	 * @tparam Type The type of the target value
@@ -72,7 +72,7 @@ protected:
 	 */
 	template<class Type>
 	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	Type* GetPropertyValue(const std::string &Name) {
+	Type* GetPropertyValue(const OString &Name) {
 		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
 

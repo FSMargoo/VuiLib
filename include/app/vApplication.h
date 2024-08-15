@@ -47,7 +47,7 @@ public:
 	 * @param Name The id of the theme property
 	 * @return The reference of the property instance
 	 */
-	VStyleProperty& GetThemeProperty(const std::string &Name);
+	VStyleProperty& GetThemeProperty(const OString &Name);
 	/**
 	 * Get the value of the specified name in specified type
 	 * @tparam Type The type of the property
@@ -55,7 +55,7 @@ public:
 	 * @return The value of the property in the specified name
 	 */
 	template<class Type>
-	Type* GetThemePropertyValue(const std::string &Name) {
+	Type* GetThemePropertyValue(const OString &Name) {
 		return _style.GetPropertyValue<Type>(Name);
 	}
 

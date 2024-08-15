@@ -48,7 +48,7 @@ public:
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 */
-	VWindowView(const int &Width, const int &Height, const std::string &Title, Parameter... ModelParameter)
+	VWindowView(const int &Width, const int &Height, const OString &Title, Parameter... ModelParameter)
 		: VViewBase<ViewModel>(ModelParameter...), VWidget(Width, Height, Title) {
 	}
 	/**
@@ -60,7 +60,7 @@ public:
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
-	VWindowView(const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor,
+	VWindowView(const int &Width, const int &Height, const OString &Title, VMonitor &Monitor,
 	            Parameter... ModelParameter)
 	    : VViewBase<ViewModel>(ModelParameter...) {
 

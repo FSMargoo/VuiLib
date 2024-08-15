@@ -34,6 +34,23 @@
 #include <OpenString-CMake/include/text.h>
 #include <OpenString-CMake/include/format.h>
 
+#pragma warning(disable:4244)
+
+namespace std {
+	/**
+	 * The template specialization for std::hash in order to provide for unordered_map key
+	 */
+	template <>
+	struct hash<ostr::text> {
+		_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef ostr::text argument_type;
+		_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef size_t result_type;
+		_NODISCARD size_t operator()(const ostr::text _Keyval) const
+		        noexcept {
+			return hash<string>().operator()(_Keyval.c_str());
+		}
+	};
+}
+
 using OString     = ostr::text;
 using OStringView = ostr::text_view;
 

@@ -28,6 +28,7 @@
 #pragma once
 
 #include <include/renderer/vRendererBase.h>
+#include <include/base/vBase.h>
 
 #include <bitset>
 
@@ -41,19 +42,22 @@ public:
 	 * @param Color The hex color string, which can start with '#' or not
 	 * @return The SkColor object formatted from the hex string
 	 */
-	static SkColor MakeFromHexString(const std::string &Color) {
+	static SkColor MakeFromHexString(const OString &Color) {
 		auto length = Color.size();
 		if ((length < 6 || length > 7) || Color[0] == '#' && length == 6) {
 			throw std::logic_error("Error hex string format!");
 		}
 		if (Color[0] != '#' && length == 7) {
-			throw std::logic_error(std::format("Error hex string, do you mean #{}?", Color.substr(1, 6)));
+			auto str = ostr::format("Error hex string, do you mean #{}?", Color.subview(1, 6));
+			auto errorFormat = new char[str.size() + 1];
+			strcpy_s(errorFormat, str.size(), str.c_str());
+			throw std::logic_error(errorFormat);
 		}
-		auto hexString = length == 7 ? Color.substr(1, 6) : Color;
+		auto hexString = length == 7 ? Color.subview(1, 6) : Color;
 
-		auto rString = hexString.substr(0, 2);
-		auto gString = hexString.substr(2, 2);
-		auto bString = hexString.substr(4, 2);
+		auto rString = hexString.subview(0, 2);
+		auto gString = hexString.subview(2, 2);
+		auto bString = hexString.subview(4, 2);
 
 		auto r = toDecimal(rString, 16);
 		auto g = toDecimal(gString, 16);
@@ -87,7 +91,7 @@ public:
 	 * @param Color The target color
 	 * @return The alpha value of the color
 	 */
-	static short GetAValue(const SkColor &Color) {
+	static short GetA(const SkColor &Color) {
 		return SkColorGetA(Color);
 	}
 	/**
@@ -95,7 +99,7 @@ public:
 	 * @param Color The target color
 	 * @return The red value of the color
 	 */
-	static short GetRValue(const SkColor &Color) {
+	static short GetR(const SkColor &Color) {
 		return SkColorGetR(Color);
 	}
 	/**
@@ -103,7 +107,7 @@ public:
 	 * @param Color The target color
 	 * @return The blue value of the color
 	 */
-	static short GetBValue(const SkColor &Color) {
+	static short GetB(const SkColor &Color) {
 		return SkColorGetB(Color);
 	}
 	/**
@@ -111,7 +115,7 @@ public:
 	 * @param Color The target color
 	 * @return The green value of the color
 	 */
-	static short GetGValue(const SkColor &Color) {
+	static short GetG(const SkColor &Color) {
 		return SkColorGetG(Color);
 	}
 
@@ -122,10 +126,10 @@ private:
 	 * @param radix The target radix
 	 * @return The number in decimal number converted from the radix
 	 */
-	static int toDecimal(std::string string, int radix) {
+	static int toDecimal(OString string, int radix) {
 		int result = 0;
 		for (int count = 0; count < string.size(); count++) {
-			char ch = string[count];
+			auto ch = char32_t(string[count]);
 
 			if(ch >= '0' && ch <= '9') {
 				result = result * radix + (ch - '0');

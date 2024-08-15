@@ -44,7 +44,7 @@ public:
 	 * @param Height The height of the widget
 	 * @param Title The title of the widget
 	 */
-	VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title);
+	VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title);
 	/**
 	 * Create a widget with geometry information on a specified monitor,
 	 * it will create a full-screen window by the specified geometry information.
@@ -54,5 +54,5 @@ public:
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
-	VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor);
+	VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor &Monitor);
 };

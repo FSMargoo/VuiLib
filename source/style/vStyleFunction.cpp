@@ -27,10 +27,10 @@
 
 #include <include/style/vStyleFunction.h>
 
-VStyleProperty& VStyleFunction::GetProperty(const std::string &Name) {
+VStyleProperty& VStyleFunction::GetProperty(const OString &Name) {
 	return _propertyList.find(Name)->second;
 }
-void VStyleFunction::RegisterProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
+void VStyleFunction::RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
 	if (_propertyList.find(Name) != _propertyList.end()) {
 		throw std::logic_error("VProperty should not be redefined");
 	}

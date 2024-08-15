@@ -16,6 +16,7 @@ set(MSVC_USE_MTd_RUNTIME_LIBRARY OFF)
 set(MSVC_USE_MDd_RUNTIME_LIBRARY ON)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    add_compile_options(/wd4244 /wd4819 /wd4005)
     message("VUILib : Building under Windows")
 elseif()
     message("VUILib : Building under Linux/Unix")
@@ -244,7 +245,7 @@ else()
     )
 endif()
 
-target_link_libraries(UnitTest VStaticLib)
+target_link_libraries(UnitTest VStaticLib libostr)
 
 add_executable(Demo_TestSkia demo/TestSkia/main.cpp)
 

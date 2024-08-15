@@ -28,11 +28,11 @@
 
 #include <include/widget/vMainWindow.h>
 
-VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title)
+VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title)
 	: VWidget(Application, Width, Height, Title) {
 	Application->_mainWindow = _glfwWindow;
 }
-VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const std::string &Title, VMonitor &Monitor)
+VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor &Monitor)
     : VWidget(Application, Width, Height, Title, Monitor) {
 	Application->_mainWindow = _glfwWindow;
 }

@@ -160,7 +160,7 @@ public:
 class VStringProperty : public VPropertyValueBase {
 public:
 	VStringProperty();
-	explicit VStringProperty(const std::string &Value);
+	explicit VStringProperty(const OString &Value);
 
 public:
 	/**
@@ -172,7 +172,7 @@ public:
 	}
 
 public:
-	std::string _value;
+	OString _value;
 };
 /**
  * The rect property of the property value
@@ -245,15 +245,15 @@ public:
 	 * @param Name The name of the property
 	 * @param Value The pointer to the property value format in std::unique_ptr
 	 */
-	VObjectProperty(const std::string &Name, std::unique_ptr<VPropertyValueBase> &&Value);
+	VObjectProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Value);
 
 public:
-	[[nodiscard]] std::string GetName() const;
+	[[nodiscard]] OString GetName() const;
 	std::unique_ptr<VPropertyValueBase>& GetValue();
 
 public:
-	std::string                         _name;
+	OString                         _name;
 	std::unique_ptr<VPropertyValueBase> _value;
 };
 
-using VPropertyList = std::unordered_map<std::string, VObjectProperty>;
+using VPropertyList = std::unordered_map<OString, VObjectProperty>;

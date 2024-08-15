@@ -28,6 +28,9 @@
 #pragma once
 
 #include <base/event/vEvent.h>
+#include <base/vBase.h>
+
+#include <functional>
 
 #define VUnitTest(MODULE, X)  __VTest_MARCO_##MODULE##X()
 #define VUnitTestM(MODULE, X) __VTest_MARCO_##MODULE##X

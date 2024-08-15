@@ -40,7 +40,7 @@ public:
 	 * @param Parent The parent of the button object
 	 * @param Text The text on the button
 	 */
-	VPushButton(VObject *Parent, const std::string &Text);
+	VPushButton(VObject *Parent, const OString &Text);
 	/**
 	 * Create the button in default size with the specified parent and
 	 * geometry size
@@ -49,27 +49,27 @@ public:
 	 * @param Height The height of the button object
 	 * @param Text The text on the button
 	 */
-	VPushButton(VObject *Parent, const int &Width, const int &Height, const std::string &Text);
+	VPushButton(VObject *Parent, const int &Width, const int &Height, const OString &Text);
 
 public:
 	/**
 	 * Set the plain text of the button, which does not support the rich text
 	 * @param Text The text in plain form
 	 */
-	void SetPlainText(const std::string &Text);
+	void SetPlainText(const OString &Text);
 	/**
 	 * Get the plain text of the button, which will format every rich text control
 	 * symbol
 	 * @return The text in plain form
 	 */
-	[[nodiscard]] std::string GetPlainText() const;
+	[[nodiscard]] OString GetPlainText() const;
 
 private:
 	/**
 	 * Init the property of the button
 	 * @param Text The text display on the button
 	 */
-	void InitProperty(const std::string &Text);
+	void InitProperty(const OString &Text);
 
 private:
 	VStringProperty *_text;
