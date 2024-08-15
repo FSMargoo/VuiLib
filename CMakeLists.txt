@@ -84,6 +84,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/parser/html/vHTMLParser.h
         include/parser/html/vHTMLEscapeCharacter.h
         source/parser/html/vHTMLEscapeCharacter.cpp
+        include/parser/html/vHTMLLexer.h
+        source/parser/html/vHTMLLexer.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
@@ -115,8 +117,6 @@ add_executable(VCommit tool/vcommit/main.cpp
         third/SimpleJson/sJSON.cpp
         include/control/button/vPushButton.h
         source/parser/html/vHTMLParser.cpp
-        include/parser/html/vHTMLLexer.h
-        source/parser/html/vHTMLLexer.cpp
 )
 
 # Enable/Disable the Windows Toast Feature

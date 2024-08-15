@@ -49,7 +49,7 @@ bool VUnitTest(ObjectProperty, Create) {
 	};
 	for (auto count : VRange<int>(0, 12)) {
 		auto name = std::to_string(count);
-		list.insert({name, VObjectProperty(name, std::move(ptrList[count]))});
+		list.insert({name.data(), VObjectProperty(name.data(), std::move(ptrList[count]))});
 	}
 
 	return true;
