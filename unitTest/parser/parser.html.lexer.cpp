@@ -21,16 +21,24 @@
  */
 
 /**
- * \file renderer.color.factory.cpp
- * \brief The unit test for style color factory
+ * \file parser.html.lexer.cpp
+ * \brief The HTML parser lexer test
  */
 
-#include <unitTest/renderer/renderer.color.factory.h>
+#include <unitTest/parser/parser.html.lexer.h>
 
-bool VUnitTest(RendererColorFactory, HexCreate) {
-	auto result1 = VColorFactory::MakeFromHexString("#1e1f22");
-	auto result2 = VColorFactory::MakeFromHexString("1e1f22");
+bool VUnitTest(HTMLParser, Lexer) {
+	VHTMLLexer lexer(R"(<html>
+<head>
+    <title>My First Web Page</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>)");
+	while (!lexer.End()) {
+		printf("%s ", lexer.NextToken().String.raw().data());
+	}
 
-	return result1 == result2 && VColorFactory::GetR(result1) == 30 &&
-	       VColorFactory::GetG(result1) == 31 && VColorFactory::GetB(result1) == 34;
+	return true;
 }

@@ -59,9 +59,9 @@ public:
 		auto gString = hexString.subview(2, 2);
 		auto bString = hexString.subview(4, 2);
 
-		auto r = toDecimal(rString, 16);
-		auto g = toDecimal(gString, 16);
-		auto b = toDecimal(bString, 16);
+		auto r = ToDecimal(rString, 16);
+		auto g = ToDecimal(gString, 16);
+		auto b = ToDecimal(bString, 16);
 
 		return VColorFactory::MakeRGB(r, g, b);
 	}
@@ -123,10 +123,10 @@ private:
 	/**
 	 * Convert the string from specified radix to the decimal number
 	 * @param string The origin string
-	 * @param radix The target radix
+	 * @param radix The source radix
 	 * @return The number in decimal number converted from the radix
 	 */
-	static int toDecimal(OString string, int radix) {
+	static int ToDecimal(OString string, int radix) {
 		int result = 0;
 		for (int count = 0; count < string.size(); count++) {
 			auto ch = char32_t(string[count]);

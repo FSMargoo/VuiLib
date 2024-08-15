@@ -82,6 +82,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/control/button/vAbstractButton.h
         source/control/button/vAbstractButton.cpp
         include/parser/html/vHTMLParser.h
+        include/parser/html/vHTMLEscapeCharacter.h
+        source/parser/html/vHTMLEscapeCharacter.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
@@ -102,7 +104,9 @@ set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         unitTest/base/base.object.property.h
         unitTest/base/base.object.property.cpp
         unitTest/renderer/renderer.color.factory.h
-        unitTest/renderer/renderer.color.factory.cpp)
+        unitTest/renderer/renderer.color.factory.cpp
+        unitTest/parser/parser.html.lexer.h
+        unitTest/parser/parser.html.lexer.cpp)
 
 add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp

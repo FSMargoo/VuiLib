@@ -4,6 +4,7 @@
 #include <unitTest/base/base.event.h>
 #include <unitTest/base/base.object.property.h>
 #include <unitTest/renderer/renderer.color.factory.h>
+#include <unitTest/parser/parser.html.lexer.h>
 
 int main() {
 	// Start VTest
@@ -28,6 +29,8 @@ int main() {
 	VTestTask baseObjectRead(VUnitTestM(ObjectProperty, Read), "base.object.read");
 	VTestTask baseObjectMemoryLeak(VUnitTestM(ObjectProperty, Read), "base.object.memory.leak");
 	VTestTask rendererColorFactoryHexCreate(VUnitTestM(RendererColorFactory, HexCreate), "renderer.color.hexCreate");
+	VTestTask parserHTMLLexer(VUnitTestM(HTMLParser, Lexer), "parser.html.lexer");
+
 
 	VTestConductor conductor;
 
@@ -52,6 +55,7 @@ int main() {
 	conductor.AddTask(baseObjectRead);
 	conductor.AddTask(baseObjectMemoryLeak);
 	conductor.AddTask(rendererColorFactoryHexCreate);
+	conductor.AddTask(parserHTMLLexer);
 
 	conductor.StartTasks();
 

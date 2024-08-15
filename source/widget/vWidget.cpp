@@ -155,8 +155,8 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 		VObject::Resize(Width, Height);
 	}
 
-	// auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
-	// OnWidgetRepaint(repaintMessage.get());
+	auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
+	OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 	auto mouseMoveMessage = std::make_unique<VMouseMovedMessage>(_glfwWindow, X, Y);

@@ -21,16 +21,36 @@
  */
 
 /**
- * \file renderer.color.factory.cpp
- * \brief The unit test for style color factory
+ * \file vHTMLEscapeCharacter.h
+ * \brief The escape character in the HTML language for the VUILib HTML parser
  */
 
-#include <unitTest/renderer/renderer.color.factory.h>
+#pragma once
 
-bool VUnitTest(RendererColorFactory, HexCreate) {
-	auto result1 = VColorFactory::MakeFromHexString("#1e1f22");
-	auto result2 = VColorFactory::MakeFromHexString("1e1f22");
+#include <include/base/vBase.h>
 
-	return result1 == result2 && VColorFactory::GetR(result1) == 30 &&
-	       VColorFactory::GetG(result1) == 31 && VColorFactory::GetB(result1) == 34;
-}
+class VHTMLInvalidEscapeCharacter {
+public:
+	VHTMLInvalidEscapeCharacter(const OString &Character);
+
+public:
+	const char* what() const {
+		return reinterpret_cast<const char*>(_info.c_str());
+	}
+
+private:
+	OString _info;
+};
+
+/**
+ * The helper class for escape character mapping
+ */
+class VHTMLEscapeMap {
+public:
+	/**
+	 * Convert the escape character into the specified
+	 * @param Character The escape character with & control symbol and ; end symbol
+	 * @return The converted string from escape symbol
+	 */
+	static OString EscapeConvert(const OString &Character);
+};

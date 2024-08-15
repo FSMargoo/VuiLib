@@ -31,9 +31,7 @@
 #include <format>
 
 #include <include/base/vBase.h>
-
-#include <OpenString-CMake/include/text.h>
-#include <OpenString-CMake/include/format.h>
+#include <include/parser/html/vHTMLEscapeCharacter.h>
 
 /**
  * The exception for invalid token in HTML lexer, it provides a format
@@ -102,6 +100,11 @@ public:
 	 * @return The next token of the lexer
 	 */
 	VHTMLLexerToken NextToken();
+	/**
+	 * Judge whether the lexer met the end of the code
+	 * @return If true, the lexer meeting the end of the code, nor false
+	 */
+	bool End();
 
 private:
 	/**
@@ -127,8 +130,31 @@ private:
 	 * if it is, a missing token exception will be thrown
 	 */
 	void MissTokenIfOutRange(const OString &What, const int &Line, const int &Position);
+	/**
+	 * Convert the string from specified radix to the decimal number
+	 * @param string The origin string
+	 * @param radix The source radix
+	 * @return The number in decimal number converted from the radix
+	 */
+	static int ToDecimal(OString string, int radix) {
+		int result = 0;
+		for (int count = 0; count < string.size(); count++) {
+			auto ch = char32_t(string[count]);
+
+			if(ch >= '0' && ch <= '9') {
+				result = result * radix + (ch - '0');
+			}
+			else {
+				result = result * radix + (ch - 'a' + 10);
+			}
+		}
+
+		return result;
+	}
 
 private:
+	bool				_inSlash;
+	bool				_inContext;
 	OString 			_code;
 	int 				_position;
 	int 				_line;

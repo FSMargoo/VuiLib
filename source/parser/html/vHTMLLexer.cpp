@@ -43,23 +43,41 @@ void VHTMLLexer::InitLexer() {
 	_position     = 0;
 	_line         = 0;
 	_linePosition = 0;
+	_inSlash	  = false;
+	_inContext	  = false;
 }
 VHTMLLexerToken VHTMLLexer::NextToken() {
-	OString	 	string;
-	VHTMLTokenType	type;
+	if (_position >= _code.size()) {
+		return { .Type = VHTMLTokenType::End, .String = "" };
+	}
+
+	OString	 		string;
+	VHTMLTokenType	type = VHTMLTokenType::Invalid;
 	while (true) {
-		auto character = _code[_position];
-		switch (char32_t(character)) {
+		auto character = char32_t(_code[_position]);
+		switch (character) {
 			case u8' ':
 			case u8'\t': {
+				if (_inContext) {
+					type 	= VHTMLTokenType::Id;
+					string += _code[_position];
+				}
+				else {
+					if (type != VHTMLTokenType::Invalid) {
+						return { .Type = type, .String = string.view() };
+					}
+				}
 				++_linePosition;
+				_linePosition += 2;
 
 				break;
 			}
 			case u8'\"': {
-				type = VHTMLTokenType::String;
+				if (type != VHTMLTokenType::Invalid) {
+					return { .Type = type, .String = string.view() };
+				}
 
-				break;
+				return FetchStringToken();
 			}
 			case u8'\n': {
 				++_line;
@@ -72,6 +90,57 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 				break;
 			}
 			case u8'&': {
+				OString escape = "&";
+				while (true) {
+					++_position;
+					MissTokenIfOutRange("&", _line, _position);
+
+					escape += _code[_position];
+					if (_code[_position] == u8';') {
+						break;
+					}
+				}
+
+				string += VHTMLEscapeMap::EscapeConvert(escape);
+
+				break;
+			}
+			case u8'<': {
+				if (type != VHTMLTokenType::Invalid) {
+					return { .Type = type, .String = string.view() };
+				}
+
+				_inContext = false;
+				return { .Type = VHTMLTokenType::LeftBracket, .String = "<" };
+			}
+			case u8'>': {
+				if (type != VHTMLTokenType::Invalid) {
+					return { .Type = type, .String = string.view() };
+				}
+
+				if (_inSlash) {
+					_inSlash = false;
+				}
+				else {
+					_inContext = true;
+				}
+
+				return { .Type = VHTMLTokenType::RightBracket, .String = ">" };
+			}
+			case u8'/': {
+				if (type != VHTMLTokenType::Invalid) {
+					return { .Type = type, .String = string.view() };
+				}
+
+				_inSlash = true;
+				return { .Type = VHTMLTokenType::Slash, .String = "/" };
+			}
+			default: {
+				type 	= VHTMLTokenType::Id;
+				string += _code[character];
+
+				++_position;
+
 				break;
 			}
 		}
@@ -82,19 +151,29 @@ VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 	int 		position = _position;
 	OString  string;
 	while (true) {
-		if (_code[_position] == '\\') {
+		MissTokenIfOutRange("\"", _line, _position);
 
+		if (_code[_position] == u8'\"') {
+			break;
 		}
-		string += _code[_position];
+		if (_code[_position] == u8'\\') {
+			string += ProcessStringEscaping();
+		}
+		else {
+			string += _code[_position];
+		}
 
 		++_position;
 	}
+
+	return { .Type = VHTMLTokenType::String, .String = string.view() };
 }
 OString VHTMLLexer::ProcessStringEscaping() {
 	++_position;
 	MissTokenIfOutRange("\\", _line, _position - 1);
+	auto controlCharacter = char32_t(_code[_position]);
 
-	switch (char32_t(_code[_position])) {
+	switch (controlCharacter) {
 		case 'a': {
 			return "\a";
 		}
@@ -125,8 +204,9 @@ OString VHTMLLexer::ProcessStringEscaping() {
 				hexString += _code[_position];
 			}
 
+			char32_t character =  ToDecimal(hexString, 16);
 
-			return "\u0014";
+			return ostr::codeunit_sequence(character);
 		}
 		case '\'': {
 			return "'";
@@ -137,7 +217,14 @@ OString VHTMLLexer::ProcessStringEscaping() {
 		case '\\': {
 			return "\\";
 		}
+		default: {
+			throw new VHTMLLexerInvalidToken(ostr::codeunit_sequence(controlCharacter), _position, _line);
+
+			break;
+		}
 	}
+
+	return "";
 }
 void VHTMLLexer::MissTokenIfOutRange(const OString &What, const int &Line, const int &Position) {
 	if (_position >= _code.size()) {

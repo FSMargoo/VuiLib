@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third/OpenString-CMake" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third/SkiaM101Binary" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third/glfw" vcs="Git" />
   </component>
