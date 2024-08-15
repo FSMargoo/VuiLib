@@ -29,8 +29,8 @@
 #include <third/SimpleJson/sJSON.h>
 
 #ifdef _WIN32
-#include <shellapi.h>
 #include <Windows.h>
+#include <shellapi.h>
 #endif
 #include <chrono>
 #include <cstdlib>
@@ -91,6 +91,8 @@ Thanks for $GLFW$ project
 
 Thanks for $Radix$ $Themes$ project
 
+Thanks for $Hoshizora Ming$'s project $OpenString$
+
 
 <div align="center">
 
@@ -111,6 +113,8 @@ Thanks for $Radix$ $Themes$ project
 [Skia](https://www.skia.org)
 
 [GLFW](https://github.com/GLFW/glfw)
+
+[Hoshizora Ming-OpenString](https://github.com/FSMargoo/OpenString-CMake)
 
 </div>
 

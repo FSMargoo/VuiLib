@@ -39,6 +39,8 @@ VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 
 感谢 $GLFW$ 项目
 
+感谢 $Hoshizora Ming$ 的开源项目 $OpenString$
+
 ## 第三方库列表
 
 <div align="center">
@@ -52,5 +54,7 @@ VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 [Skia](skia.org)
 
 [GLFW](https://github.com/GLFW/glfw)
+
+[Hoshizora Ming-OpenString](https://github.com/FSMargoo/OpenString-CMake)
 
 </div>

@@ -7,8 +7,8 @@
 <h3>Auto Commit Status</h3>
 
 ![Static Badge](https://img.shields.io/badge/Unit%20Test-Pass-green)
-![Static Badge](https://img.shields.io/badge/Last%20Commit-tp:66be16e8-blue)
-![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/15/22:55:41-purple)
+![Static Badge](https://img.shields.io/badge/Last%20Commit-pf:66be18bb-blue)
+![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-2024/08/15/23:03:28-purple)
 
 
 <h3 align="center">VUILib3.x</h3>
@@ -50,6 +50,8 @@ Thanks for $GLFW$ project
 
 Thanks for $Radix$ $Themes$ project
 
+Thanks for $Hoshizora Ming$'s project $OpenString$
+
 
 <div align="center">
 
@@ -70,6 +72,8 @@ Thanks for $Radix$ $Themes$ project
 [Skia](https://www.skia.org)
 
 [GLFW](https://github.com/GLFW/glfw)
+
+[Hoshizora Ming-OpenString](https://github.com/FSMargoo/OpenString-CMake)
 
 </div>
 
