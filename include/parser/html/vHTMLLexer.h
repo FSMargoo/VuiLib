@@ -80,7 +80,7 @@ enum class VHTMLTokenType {
  */
 struct VHTMLLexerToken {
 	VHTMLTokenType  Type;
-	OStringView		String;
+	OString			String;
 };
 
 /**
@@ -129,14 +129,14 @@ private:
 	 * Check whether local position run out of the string range,
 	 * if it is, a missing token exception will be thrown
 	 */
-	void MissTokenIfOutRange(const OString &What, const int &Line, const int &Position);
+	void _missTokenIfOutRange(const OString &What, const int &Line, const int &Position);
 	/**
 	 * Convert the string from specified radix to the decimal number
 	 * @param string The origin string
 	 * @param radix The source radix
 	 * @return The number in decimal number converted from the radix
 	 */
-	static int ToDecimal(OString string, int radix) {
+	static int _toDecimal(const OString &string, int radix) {
 		int result = 0;
 		for (int count = 0; count < string.size(); count++) {
 			auto ch = char32_t(string[count]);
@@ -150,6 +150,20 @@ private:
 		}
 
 		return result;
+	}
+	/**
+	 * Judge whether the specified is a empty string (Only contains blank character)
+	 * @param String The specified string tobe judged
+	 * @return If the string is empty, return true, nor false
+	 */
+	static bool _isEmptyString(const OString &String) {
+		for (auto Character : String) {
+			if (Character != ' ' || Character != '\t') {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 private:

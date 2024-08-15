@@ -37,7 +37,7 @@ VHTMLLexerMissingToken::VHTMLLexerMissingToken(const OString &What, const int &L
 }
 
 VHTMLLexer::VHTMLLexer(const OString &Code) : _code(Code) {
-
+	InitLexer();
 }
 void VHTMLLexer::InitLexer() {
 	_position     = 0;
@@ -64,27 +64,31 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 				}
 				else {
 					if (type != VHTMLTokenType::Invalid) {
-						return { .Type = type, .String = string.view() };
+						return { .Type = type, .String = string };
 					}
 				}
+				++_position;
 				++_linePosition;
-				_linePosition += 2;
 
 				break;
 			}
 			case u8'\"': {
 				if (type != VHTMLTokenType::Invalid) {
-					return { .Type = type, .String = string.view() };
+					return { .Type = type, .String = string };
 				}
 
-				return FetchStringToken();
+				auto token = FetchStringToken();
+				++_position;
+
+				return token;
 			}
 			case u8'\n': {
 				++_line;
+				++_position;
 				_linePosition = 0;
 
 				if (!string.is_empty()) {
-					return { .Type = type, .String = string.view() };
+					return { .Type = type, .String = string };
 				}
 
 				break;
@@ -93,7 +97,7 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 				OString escape = "&";
 				while (true) {
 					++_position;
-					MissTokenIfOutRange("&", _line, _position);
+					_missTokenIfOutRange("&", _line, _position);
 
 					escape += _code[_position];
 					if (_code[_position] == u8';') {
@@ -103,19 +107,24 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 
 				string += VHTMLEscapeMap::EscapeConvert(escape);
 
+				++_position;
+
 				break;
 			}
 			case u8'<': {
-				if (type != VHTMLTokenType::Invalid) {
-					return { .Type = type, .String = string.view() };
+				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+					return { .Type = type, .String = string };
 				}
 
 				_inContext = false;
+
+				++_position;
+
 				return { .Type = VHTMLTokenType::LeftBracket, .String = "<" };
 			}
 			case u8'>': {
-				if (type != VHTMLTokenType::Invalid) {
-					return { .Type = type, .String = string.view() };
+				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+					return { .Type = type, .String = string };
 				}
 
 				if (_inSlash) {
@@ -125,19 +134,22 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 					_inContext = true;
 				}
 
+				++_position;
+
 				return { .Type = VHTMLTokenType::RightBracket, .String = ">" };
 			}
 			case u8'/': {
-				if (type != VHTMLTokenType::Invalid) {
-					return { .Type = type, .String = string.view() };
+				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+					return { .Type = type, .String = string };
 				}
 
 				_inSlash = true;
+				++_position;
 				return { .Type = VHTMLTokenType::Slash, .String = "/" };
 			}
 			default: {
 				type 	= VHTMLTokenType::Id;
-				string += _code[character];
+				string += character;
 
 				++_position;
 
@@ -146,12 +158,15 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 		}
 	}
 }
+bool VHTMLLexer::End() {
+	return _position >= _code.size();
+}
 VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 	int 		line     = _linePosition;
 	int 		position = _position;
 	OString  string;
 	while (true) {
-		MissTokenIfOutRange("\"", _line, _position);
+		_missTokenIfOutRange("\"", _line, _position);
 
 		if (_code[_position] == u8'\"') {
 			break;
@@ -166,11 +181,11 @@ VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 		++_position;
 	}
 
-	return { .Type = VHTMLTokenType::String, .String = string.view() };
+	return { .Type = VHTMLTokenType::String, .String = string };
 }
 OString VHTMLLexer::ProcessStringEscaping() {
 	++_position;
-	MissTokenIfOutRange("\\", _line, _position - 1);
+	_missTokenIfOutRange("\\", _line, _position - 1);
 	auto controlCharacter = char32_t(_code[_position]);
 
 	switch (controlCharacter) {
@@ -199,12 +214,12 @@ OString VHTMLLexer::ProcessStringEscaping() {
 			OString hexString;
 			for (auto count = 0; count < 4; ++count) {
 				++_position;
-				MissTokenIfOutRange("Number of hex string", _line, _position - 1);
+				_missTokenIfOutRange("Number of hex string", _line, _position - 1);
 
 				hexString += _code[_position];
 			}
 
-			char32_t character =  ToDecimal(hexString, 16);
+			char32_t character = _toDecimal(hexString, 16);
 
 			return ostr::codeunit_sequence(character);
 		}
@@ -226,7 +241,7 @@ OString VHTMLLexer::ProcessStringEscaping() {
 
 	return "";
 }
-void VHTMLLexer::MissTokenIfOutRange(const OString &What, const int &Line, const int &Position) {
+void VHTMLLexer::_missTokenIfOutRange(const OString &What, const int &Line, const int &Position) {
 	if (_position >= _code.size()) {
 		throw new VHTMLLexerMissingToken(What, Line, Position);
 	}

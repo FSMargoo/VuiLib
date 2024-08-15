@@ -83,6 +83,10 @@
 		{
 			"status":1,
 			"taskID":"renderer.color.hexCreate"
+		},
+		{
+			"status":0,
+			"taskID":"parser.html.lexer"
 		}
 	]
 }

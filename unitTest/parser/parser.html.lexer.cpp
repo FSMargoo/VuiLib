@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2023~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,6 +27,8 @@
 
 #include <unitTest/parser/parser.html.lexer.h>
 
+#include <fstream>
+
 bool VUnitTest(HTMLParser, Lexer) {
 	VHTMLLexer lexer(R"(<html>
 <head>
@@ -36,9 +38,51 @@ bool VUnitTest(HTMLParser, Lexer) {
     <h1>Hello, World!</h1>
 </body>
 </html>)");
+	OString result;
 	while (!lexer.End()) {
-		printf("%s ", lexer.NextToken().String.raw().data());
+		auto token = lexer.NextToken();
+		token.String.append("\n");
+		result += token.String;
 	}
 
-	return true;
+	return result == R"("<",
+"html",
+">",
+"<",
+"head",
+">",
+"    ",
+"<",
+"title",
+">",
+"My First Web Page",
+"<",
+"/",
+"title",
+">",
+"<",
+"/",
+"head",
+">",
+"<",
+"body",
+">",
+"    ",
+"<",
+"h1",
+">",
+"Hello, World!",
+"<",
+"/",
+"h1",
+">",
+"<",
+"/",
+"body",
+">",
+"<",
+"/",
+"html",
+">",
+)";
 }
