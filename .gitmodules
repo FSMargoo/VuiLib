@@ -4,3 +4,6 @@
 [submodule "third/SkiaM101Binary"]
 	path = third/SkiaM101Binary
 	url = https://github.com/FSMargoo/SkiaM101Binary
+[submodule "third/OpenString-CMake"]
+	path = third/OpenString-CMake
+	url = https://github.com/FSMargoo/OpenString-CMake.git

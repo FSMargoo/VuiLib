@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Include GLFW library
 add_subdirectory(third/glfw)
+add_subdirectory(third/OpenString-CMake)
 
 SET(CMAKE_C_FLAGS_DEBUG "-D_DEBUG")
 
@@ -79,6 +80,7 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/control/button/vPushButton.cpp
         include/control/button/vAbstractButton.h
         source/control/button/vAbstractButton.cpp
+        include/parser/html/vHTMLParser.h
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
@@ -107,6 +109,9 @@ add_executable(VCommit tool/vcommit/main.cpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp
         include/control/button/vPushButton.h
+        source/parser/html/vHTMLParser.cpp
+        include/parser/html/vHTMLLexer.h
+        source/parser/html/vHTMLLexer.cpp
 )
 
 # Enable/Disable the Windows Toast Feature
@@ -128,6 +133,7 @@ target_include_directories(VStaticLib PUBLIC ./)
 target_include_directories(VStaticLib PUBLIC ./third)
 target_include_directories(VStaticLib PUBLIC ./third/SkiaM101Binary)
 target_include_directories(VStaticLib PUBLIC ./third/glad/include)
+target_include_directories(VStaticLib PUBLIC ./third/OpenString-CMake)
 
 # Judge MSVC compile runtime
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
@@ -202,6 +208,7 @@ if(WIN32)
             zlib
             opengl32
             glfw
+            libostr
     )
 else()
     message("Link Skia Under Linux/UNix")
@@ -233,6 +240,7 @@ else()
             GL
             GLX
             glfw
+            libostr
     )
 endif()
 

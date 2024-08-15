@@ -21,40 +21,6 @@
  */
 
 /**
- * \file vBase.h
- * \brief The base library in VUILib
+ * \file vHTMLParser.cpp
+ * \brief The HTML parser in the VUILib for rich text parsing
  */
-
-#pragma once
-
-#include <base/binding/vBindingType.h>
-#include <base/command/vCommand.h>
-#include <base/test/vTest.h>
-
-#include <OpenString-CMake/include/text.h>
-#include <OpenString-CMake/include/format.h>
-
-using OString     = ostr::text;
-using OStringView = ostr::text_view;
-
-namespace VConcept {
-template <template <typename...> class C, typename... Ts>
-std::true_type IsBaseOfImpl(const C<Ts...> *);
-
-template <template <typename...> class C>
-std::false_type IsBaseOfImpl(...);
-
-template <template <typename...> class C, typename T>
-using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
-}
-
-template<class RangeType>
-	requires std::is_integral_v<RangeType> or std::is_floating_point_v<RangeType>
-std::vector<RangeType> VRange(const RangeType &Start, const RangeType &End, const RangeType &Step = RangeType(1)) {
-	std::vector<RangeType> result;
-	for (RangeType count = Start; count < End; count += Step) {
-		result.emplace_back(count);
-	}
-
-	return result;
-}
