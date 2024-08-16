@@ -67,6 +67,23 @@ public:
 private:
 	OString _info;
 };
+/**
+ * The exception for missing token in HTML lexer, it provides a format
+ * function for exception info and will directly print the information
+ * on the console whether in debug mode or not
+ */
+class VHTMLUnexpectedToken {
+public:
+	VHTMLUnexpectedToken(const OString &What, const int &Line, const int &Position);
+
+public:
+	const char* what() const {
+		return reinterpret_cast<const char*>(_info.c_str());
+	}
+
+private:
+	OString _info;
+};
 
 /**
  * The token type of HTML language
@@ -96,15 +113,43 @@ public:
 
 public:
 	/**
+	 * Get the current line of the lexer
+	 * @return The line count of the lexer
+	 */
+	[[nodiscard]] int GetLine() const;
+	/**
+	 * Get the current line position of the lexer
+	 * @return The line position of the lexer
+	 */
+	[[nodiscard]] int GetLinePosition() const;
+	/**
+	 * Get the current cursor of the lexer in code string
+	 * @return The cursor of the lexer in code string
+	 */
+	[[nodiscard]] int GetCursor() const;
+	/**
+	 * Get the token with except type, if the NextToken function return a
+	 * token that type was not excepted, this function will throw a VHTMLLexerUnexpectedToken
+	 * error
+	 * @param Type The type of token
+	 * @return The token in except type
+	 */
+	VHTMLLexerToken ExceptToken(const VHTMLTokenType &Type);
+	/**
 	 * Get the next token of lexer
 	 * @return The next token of the lexer
 	 */
 	VHTMLLexerToken NextToken();
 	/**
+	 * Get the current token of the lexer
+	 * @return The current token of the lexer, this function won't step
+	 */
+	[[nodiscard]] VHTMLLexerToken SeekToken() const;
+	/**
 	 * Judge whether the lexer met the end of the code
 	 * @return If true, the lexer meeting the end of the code, nor false
 	 */
-	bool End();
+	[[nodiscard]] bool End() const;
 
 private:
 	/**

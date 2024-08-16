@@ -86,6 +86,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/parser/html/vHTMLEscapeCharacter.cpp
         include/parser/html/vHTMLLexer.h
         source/parser/html/vHTMLLexer.cpp
+        include/parser/html/vHTMLAST.h
+        source/parser/html/vHTMLAST.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
