@@ -55,10 +55,13 @@ const VHTMLASTNode* VHTMLASTNode::GetChild(const OString &Id) const {
 	return nullptr;
 }
 VHTMLAST::VHTMLAST(const OString &Code) : _lexer(Code) {
-
+	GenerateAST();
 }
 VHTMLAST::~VHTMLAST() {
 	delete _root;
+}
+VHTMLASTNode *VHTMLAST::GetRoot() const {
+	return _root;
 }
 VHTMLASTNode *VHTMLAST::GenerateAST() {
 	_root = new VHTMLASTNode;
@@ -102,30 +105,50 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			}
 
 			OString context = token.String;
-			int 	level   = 0;
+			int 	level   = 1;
+			bool	inEnd	= false;
+			std::vector<VHTMLLexerToken> tokenList;
 			while (true) {
 				token = _lexer.NextToken();
 				if (token.Type == VHTMLTokenType::End) {
 					throw new VHTMLASTMissingComparison(node->_id, idLine, idLinePosition);
+				}
+				if (token.Type == VHTMLTokenType::Slash) {
+					--level;
+					inEnd = true;
 
-					break;
+					if (level == 0) {
+						if (!tokenList.empty()) {
+							tokenList.erase(tokenList.end() - 1);
+						}
+						break;
+					}
 				}
-				if (token.Type == VHTMLTokenType::RightBracket && (level--) == 0) {
-					break;
-				}
-				if (token.Type == VHTMLTokenType::LeftBracket) {
-					++level;
+				if (token.Type == VHTMLTokenType::RightBracket) {
+					if (inEnd) {
+						inEnd = false;
+					}
+					else {
+						++level;
+					}
 				}
 
-				context.append(token.String);
+				tokenList.emplace_back(token);
 			}
 
-			_lexer.ExceptToken(VHTMLTokenType::Slash);
+			for (auto &slice : tokenList) {
+				context.append(slice.String);
+			}
+
 			_lexer.ExceptToken(VHTMLTokenType::Id);
 			_lexer.ExceptToken(VHTMLTokenType::RightBracket);
 
-			std::unique_ptr<VHTMLAST> AST = std::make_unique<VHTMLAST>(context);
-			node->_childNode              = AST->GenerateAST()->_childNode;
+			if (context != "<") {
+				printf("\n%s\n", context.c_str());
+				_flushall();
+				std::unique_ptr<VHTMLAST> AST = std::make_unique<VHTMLAST>(context);
+				node->_childNode              = std::move(AST->_root->_childNode);
+			}
 		}
 
 		_root->_childNode.emplace_back(node);

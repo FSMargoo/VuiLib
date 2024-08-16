@@ -103,6 +103,13 @@ public:
 	explicit VHTMLAST(const OString &Code);
 	~VHTMLAST();
 
+public:
+	/**
+	 * Get the root node of the AST tree
+	 * @return The pointer referred to root node
+	 */
+	[[nodiscard]] VHTMLASTNode *GetRoot() const;
+
 private:
 	/**
 	 * Generate the AST

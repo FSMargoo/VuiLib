@@ -30,6 +30,7 @@ int main() {
 	VTestTask baseObjectMemoryLeak(VUnitTestM(ObjectProperty, Read), "base.object.memory.leak");
 	VTestTask rendererColorFactoryHexCreate(VUnitTestM(RendererColorFactory, HexCreate), "renderer.color.hexCreate");
 	VTestTask parserHTMLLexer(VUnitTestM(HTMLParser, Lexer), "parser.html.lexer");
+	VTestTask parserHTMLAST(VUnitTestM(HTMLParser, AST), "parser.html.AST");
 
 
 	VTestConductor conductor;
@@ -56,6 +57,7 @@ int main() {
 	conductor.AddTask(baseObjectMemoryLeak);
 	conductor.AddTask(rendererColorFactoryHexCreate);
 	conductor.AddTask(parserHTMLLexer);
+	conductor.AddTask(parserHTMLAST);
 
 	conductor.StartTasks();
 

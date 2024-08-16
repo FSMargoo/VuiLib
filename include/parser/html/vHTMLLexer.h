@@ -201,13 +201,18 @@ private:
 	 * @param String The specified string tobe judged
 	 * @return If the string is empty, return true, nor false
 	 */
-	static bool _isEmptyString(const OString &String) {
+	static bool _isEmptyString(OString &String) {
 		for (auto Character : String) {
-			if (Character != ' ' || Character != '\t') {
+			auto codepoint = (char32_t )(Character.get_codepoint());
+			if (codepoint == u'\0') {
+				break;
+			}
+			if ((codepoint != u' ' && codepoint != u'\t') || (codepoint != u'\t' && codepoint != u' ')) {
 				return false;
 			}
 		}
 
+		String = "";
 		return true;
 	}
 

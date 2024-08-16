@@ -51,7 +51,6 @@ bool VUnitTest(HTMLParser, Lexer) {
 "<",
 "head",
 ">",
-"    ",
 "<",
 "title",
 ">",
@@ -67,7 +66,6 @@ bool VUnitTest(HTMLParser, Lexer) {
 "<",
 "body",
 ">",
-"    ",
 "<",
 "h1",
 ">",
@@ -85,4 +83,18 @@ bool VUnitTest(HTMLParser, Lexer) {
 "html",
 ">",
 )";
+}
+bool VUnitTest(HTMLParser, AST) {
+	VHTMLAST AST(R"(<html>
+<head>
+    <title>My First Web Page</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>)");
+	auto root      = AST.GetRoot();
+	auto headLabel = root->GetChild("html")->GetChild("head");
+	auto bodyLabel = root->GetChild("html")->GetChild("body");
+	return root->ExistChild("html") && headLabel->ExistChild("title") && bodyLabel->ExistChild("h1");
 }

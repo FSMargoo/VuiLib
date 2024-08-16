@@ -87,6 +87,10 @@
 		{
 			"status":1,
 			"taskID":"parser.html.lexer"
+		},
+		{
+			"status":1,
+			"taskID":"parser.html.AST"
 		}
 	]
 }
