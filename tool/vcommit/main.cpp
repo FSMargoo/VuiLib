@@ -51,7 +51,7 @@
 ![Static Badge](https://img.shields.io/badge/Last%20Commit-{}-blue)
 ![Static Badge](https://img.shields.io/badge/Last%20Commit%20Date-{}-purple)
 
-![简体中文版](./README_ZH_CN.md)
+[简体中文版](./README_ZH_CN.md)
 
 
 <h3 align="center">VUILib3.x</h3>
