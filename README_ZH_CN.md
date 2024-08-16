@@ -12,8 +12,10 @@
 专为灵活和高效而生的跨平台 UI 库。使用以下工具构造：
 
 <br>
-
 <img src="https://skillicons.dev/icons?i=cpp,cmake,clion,figma" />
+
+<div align="center">
+<img src="./readme/radix logo.svg" alt="Radix logo." width="150">
 
 <br>
 
@@ -31,6 +33,8 @@ VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 
 </div>
 
+</div>
+
 感谢 $mohabouje$ 的开源项目 $WinToast$.
 
 感谢 $FlorianRappl$ 的开源项目 $CmdParser$.
@@ -40,6 +44,8 @@ VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 感谢 $GLFW$ 项目
 
 感谢 $Hoshizora Ming$ 的开源项目 $OpenString$
+
+感谢 $Radix$ $Themes$ 项目
 
 ## 第三方库列表
 
@@ -56,5 +62,15 @@ VUILib 3 依然在开发中请耐心等待我们的第一个正式版本
 [GLFW](https://github.com/GLFW/glfw)
 
 [Hoshizora Ming-OpenString](https://github.com/FSMargoo/OpenString-CMake)
+
+</div>
+
+## UI 设计语言
+
+VUILib 的 UI 设计语言基于 $Radix$ $Theme$ 项目 [了解 Radix Theme 项目](https://www.radix-ui.com/).
+
+<div align="center">
+
+<img src="./readme/radix logo.svg" alt="Radix logo." width="100">
 
 </div>
