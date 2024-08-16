@@ -28,8 +28,6 @@
 #pragma once
 
 #include <include/base/test/vTest.h>
-#include <include/parser/html/vHTMLAST.h>
 #include <include/parser/html/vHTMLLexer.h>
 
 bool VUnitTest(HTMLParser, Lexer);
-bool VUnitTest(HTMLParser, AST);

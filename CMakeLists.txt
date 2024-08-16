@@ -110,7 +110,9 @@ set(UnitTestSrc tool/vcommit/third/include/cmdparser.hpp
         unitTest/renderer/renderer.color.factory.h
         unitTest/renderer/renderer.color.factory.cpp
         unitTest/parser/parser.html.lexer.h
-        unitTest/parser/parser.html.lexer.cpp)
+        unitTest/parser/parser.html.lexer.cpp
+        unitTest/parser/parser.html.ast.h
+        unitTest/parser/pasrser.html.ast.cpp)
 
 add_executable(UnitTest main.cpp ${UnitTestSrc})
 add_executable(VCommit tool/vcommit/main.cpp

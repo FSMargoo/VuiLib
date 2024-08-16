@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2023~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,66 +21,13 @@
  */
 
 /**
- * \file parser.html.lexer.cpp
- * \brief The HTML parser lexer test
+ * \file parser.html.ast.h
+ * \brief The HTML AST generator test
  */
 
-#include <unitTest/parser/parser.html.lexer.h>
+#pragma once
 
-#include <fstream>
+#include <include/base/test/vTest.h>
+#include <include/parser/html/vHTMLAST.h>
 
-bool VUnitTest(HTMLParser, Lexer) {
-	VHTMLLexer lexer(R"(<html>
-<head>
-    <title>My First Web Page</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-</body>
-</html>)");
-	OString result;
-	while (!lexer.End()) {
-		auto token = lexer.NextToken();
-		token.String = ostr::format("\"{}\",\n", token.String);
-		result += token.String;
-	}
-
-	return result == R"("<",
-"html",
-">",
-"<",
-"head",
-">",
-"<",
-"title",
-">",
-"My First Web Page",
-"<",
-"/",
-"title",
-">",
-"<",
-"/",
-"head",
-">",
-"<",
-"body",
-">",
-"<",
-"h1",
-">",
-"Hello, World!",
-"<",
-"/",
-"h1",
-">",
-"<",
-"/",
-"body",
-">",
-"<",
-"/",
-"html",
-">",
-)";
-}
+bool VUnitTest(HTMLParser, AST);

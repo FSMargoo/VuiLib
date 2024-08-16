@@ -1,10 +1,11 @@
+#include <unitTest/base/base.event.h>
 #include <unitTest/base/base.binding.h>
 #include <unitTest/base/base.command.h>
 #include <unitTest/base/base.geometry.h>
-#include <unitTest/base/base.event.h>
+#include <unitTest/parser/parser.html.AST.h>
+#include <unitTest/parser/parser.html.lexer.h>
 #include <unitTest/base/base.object.property.h>
 #include <unitTest/renderer/renderer.color.factory.h>
-#include <unitTest/parser/parser.html.lexer.h>
 
 int main() {
 	// Start VTest
@@ -28,7 +29,7 @@ int main() {
 	VTestTask baseObjectCreate(VUnitTestM(ObjectProperty, Create), "base.object.create");
 	VTestTask baseObjectRead(VUnitTestM(ObjectProperty, Read), "base.object.read");
 	VTestTask baseObjectMemoryLeak(VUnitTestM(ObjectProperty, Read), "base.object.memory.leak");
-	VTestTask rendererColorFactoryHexCreate(VUnitTestM(RendererColorFactory, HexCreate), "renderer.color.hexCreate");
+	VTestTask rendererColorFactoryHexCreate(VUnitTestM(RendererColorFactory, HexCreate), "renderer.color.hex_create");
 	VTestTask parserHTMLLexer(VUnitTestM(HTMLParser, Lexer), "parser.html.lexer");
 	VTestTask parserHTMLAST(VUnitTestM(HTMLParser, AST), "parser.html.AST");
 

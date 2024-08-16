@@ -144,8 +144,6 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			_lexer.ExceptToken(VHTMLTokenType::RightBracket);
 
 			if (context != "<") {
-				printf("\n%s\n", context.c_str());
-				_flushall();
 				std::unique_ptr<VHTMLAST> AST = std::make_unique<VHTMLAST>(context);
 				node->_childNode              = std::move(AST->_root->_childNode);
 			}

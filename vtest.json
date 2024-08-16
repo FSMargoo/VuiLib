@@ -82,7 +82,7 @@
 		},
 		{
 			"status":1,
-			"taskID":"renderer.color.hexCreate"
+			"taskID":"renderer.color.hex_create"
 		},
 		{
 			"status":1,
