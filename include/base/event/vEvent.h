@@ -28,9 +28,9 @@
 #pragma once
 
 #include <functional>
-#include <list>
 #include <memory>
 #include <mutex>
+#include <list>
 
 /***
  * The wrapper of std::function
