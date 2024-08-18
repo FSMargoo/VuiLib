@@ -29,5 +29,5 @@
 
 VRichTextRenderer::VRichTextRenderer(VHTMLAST *AST) : _ast(AST)
 {
-
+	auto root = _ast->GetRoot();
 }

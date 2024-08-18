@@ -62,7 +62,7 @@ public:
 	/**
 	 * Judge whether this node exist a child node with specified ID
 	 * @param Id The specified ID of the child node
-	 * @return If the return value is true, it existing, nor not exist
+	 * @return If the return value is true, it's existing, nor not exist
 	 */
 	[[nodiscard]] bool ExistChild(const OString &Id) const;
 	/**
@@ -72,6 +72,20 @@ public:
 	 * returning the readonly pointer to children
 	 */
 	[[nodiscard]] const VHTMLASTNode* GetChild(const OString &Id) const;
+	/**
+	 * Get the beginning iterator of the children list
+	 * @return The beginning iterator
+	 */
+	[[nodiscard]] auto begin() const {
+		return Property.begin();
+	}
+	/**
+	 * Get the end iterator of the children list
+	 * @return The end iterator
+	 */
+	[[nodiscard]] auto end() const {
+		return Property.end();
+	}
 
 public:
 	/**
