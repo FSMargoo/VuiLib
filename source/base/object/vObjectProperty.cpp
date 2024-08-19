@@ -28,79 +28,45 @@
 #include <include/base/object/vObjectProperty.h>
 
 VPropertyValueBase::VPropertyValueBase(VPropertyType Type) : _type(Type) {
-
 }
-VIntProperty::VIntProperty()
-    : VPropertyValueBase(VPropertyType::Int), _value(0) {
-
+VIntProperty::VIntProperty() : VPropertyValueBase(VPropertyType::Int), _value(0) {
 }
-VIntProperty::VIntProperty(const int &Value)
-    : VPropertyValueBase(VPropertyType::Int), _value(Value) {
-
+VIntProperty::VIntProperty(const int &Value) : VPropertyValueBase(VPropertyType::Int), _value(Value) {
 }
-VLongProperty::VLongProperty()
-    : VPropertyValueBase(VPropertyType::Long), _value(0) {
-
+VLongProperty::VLongProperty() : VPropertyValueBase(VPropertyType::Long), _value(0) {
 }
-VLongProperty::VLongProperty(const long &Value)
-    : VPropertyValueBase(VPropertyType::Long), _value(Value) {
-
+VLongProperty::VLongProperty(const long &Value) : VPropertyValueBase(VPropertyType::Long), _value(Value) {
 }
-VFloatProperty::VFloatProperty()
-    : VPropertyValueBase(VPropertyType::Float), _value(0.f) {
-
+VFloatProperty::VFloatProperty() : VPropertyValueBase(VPropertyType::Float), _value(0.f) {
 }
-VFloatProperty::VFloatProperty(const float &Value)
-    : VPropertyValueBase(VPropertyType::Long), _value(Value) {
-
+VFloatProperty::VFloatProperty(const float &Value) : VPropertyValueBase(VPropertyType::Long), _value(Value) {
 }
-VBooleanProperty::VBooleanProperty()
-    : VPropertyValueBase(VPropertyType::Boolean), _value() {
-
+VBooleanProperty::VBooleanProperty() : VPropertyValueBase(VPropertyType::Boolean), _value() {
 }
-VBooleanProperty::VBooleanProperty(const bool &Value)
-    : VPropertyValueBase(VPropertyType::Boolean), _value(Value) {
-
+VBooleanProperty::VBooleanProperty(const bool &Value) : VPropertyValueBase(VPropertyType::Boolean), _value(Value) {
 }
-VStringProperty::VStringProperty()
-    : VPropertyValueBase(VPropertyType::String), _value() {
-
+VStringProperty::VStringProperty() : VPropertyValueBase(VPropertyType::String), _value() {
 }
-VStringProperty::VStringProperty(const OString &Value)
-    : VPropertyValueBase(VPropertyType::String), _value(Value) {
-
+VStringProperty::VStringProperty(const OString &Value) : VPropertyValueBase(VPropertyType::String), _value(Value) {
 }
-VRectProperty::VRectProperty()
-    : VPropertyValueBase(VPropertyType::Rect), _value() {
-
+VRectProperty::VRectProperty() : VPropertyValueBase(VPropertyType::Rect), _value() {
 }
-VRectProperty::VRectProperty(const VRect &Value)
-    : VPropertyValueBase(VPropertyType::Rect), _value(Value) {
-
+VRectProperty::VRectProperty(const VRect &Value) : VPropertyValueBase(VPropertyType::Rect), _value(Value) {
 }
-VPointProperty::VPointProperty()
-    : VPropertyValueBase(VPropertyType::Point), _value() {
-
+VPointProperty::VPointProperty() : VPropertyValueBase(VPropertyType::Point), _value() {
 }
-VPointProperty::VPointProperty(const VPoint &Value)
-    : VPropertyValueBase(VPropertyType::Point), _value(Value) {
-
+VPointProperty::VPointProperty(const VPoint &Value) : VPropertyValueBase(VPropertyType::Point), _value(Value) {
 }
-VColorProperty::VColorProperty()
-    : VPropertyValueBase(VPropertyType::Color), _value() {
-
+VColorProperty::VColorProperty() : VPropertyValueBase(VPropertyType::Color), _value() {
 }
-VColorProperty::VColorProperty(const SkColor &Value)
-    : VPropertyValueBase(VPropertyType::Color), _value(Value) {
-
+VColorProperty::VColorProperty(const SkColor &Value) : VPropertyValueBase(VPropertyType::Color), _value(Value) {
 }
 VObjectProperty::VObjectProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Value)
 	: _name(Name), _value(std::move(Value)) {
-
 }
 OString VObjectProperty::GetName() const {
 	return _name;
 }
-std::unique_ptr<VPropertyValueBase>& VObjectProperty::GetValue() {
+std::unique_ptr<VPropertyValueBase> &VObjectProperty::GetValue() {
 	return _value;
 }

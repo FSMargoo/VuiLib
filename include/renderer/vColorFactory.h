@@ -27,8 +27,8 @@
 
 #pragma once
 
-#include <include/renderer/vRendererBase.h>
 #include <include/base/vBase.h>
+#include <include/renderer/vRendererBase.h>
 
 #include <bitset>
 
@@ -48,7 +48,7 @@ public:
 			throw std::logic_error("Error hex string format!");
 		}
 		if (Color[0] != '#' && length == 7) {
-			auto str = ostr::format("Error hex string, do you mean #{}?", Color.subview(1, 6));
+			auto str		 = ostr::format("Error hex string, do you mean #{}?", Color.subview(1, 6));
 			auto errorFormat = new char[str.size() + 1];
 			strcpy_s(errorFormat, str.size(), str.c_str());
 			throw std::logic_error(errorFormat);
@@ -131,10 +131,9 @@ private:
 		for (int count = 0; count < string.size(); count++) {
 			auto ch = char32_t(string[count]);
 
-			if(ch >= '0' && ch <= '9') {
+			if (ch >= '0' && ch <= '9') {
 				result = result * radix + (ch - '0');
-			}
-			else {
+			} else {
 				result = result * radix + (ch - 'a' + 10);
 			}
 		}

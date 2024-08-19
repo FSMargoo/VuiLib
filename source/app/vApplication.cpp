@@ -33,7 +33,7 @@ VApplication::VApplication() : _mainWindow(nullptr) {
 	glfwInit();
 }
 
-VStyleProperty& VApplication::GetThemeProperty(const OString &Name) {
+VStyleProperty &VApplication::GetThemeProperty(const OString &Name) {
 	return _style.GetProperty(Name);
 }
 int VApplication::Run() {

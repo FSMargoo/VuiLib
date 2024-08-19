@@ -27,8 +27,8 @@
 
 #pragma once
 
-#include <string>
 #include <format>
+#include <string>
 
 #include <include/base/vBase.h>
 #include <include/parser/html/vHTMLEscapeCharacter.h>
@@ -43,8 +43,8 @@ public:
 	VHTMLLexerInvalidToken(const OString &What, const int &Line, const int &Position);
 
 public:
-	const char* what() const {
-		return reinterpret_cast<const char*>(_info.c_str());
+	const char *what() const {
+		return reinterpret_cast<const char *>(_info.c_str());
 	}
 
 private:
@@ -60,8 +60,8 @@ public:
 	VHTMLLexerMissingToken(const OString &What, const int &Line, const int &Position);
 
 public:
-	const char* what() const {
-		return reinterpret_cast<const char*>(_info.c_str());
+	const char *what() const {
+		return reinterpret_cast<const char *>(_info.c_str());
 	}
 
 private:
@@ -77,8 +77,8 @@ public:
 	VHTMLUnexpectedToken(const OString &What, const int &Line, const int &Position);
 
 public:
-	const char* what() const {
-		return reinterpret_cast<const char*>(_info.c_str());
+	const char *what() const {
+		return reinterpret_cast<const char *>(_info.c_str());
 	}
 
 private:
@@ -89,15 +89,23 @@ private:
  * The token type of HTML language
  */
 enum class VHTMLTokenType {
-	Text, LeftBracket, RightBracket, Equal, String, Slash, End, Id, Invalid
+	Text,
+	LeftBracket,
+	RightBracket,
+	Equal,
+	String,
+	Slash,
+	End,
+	Id,
+	Invalid
 };
 
 /**
  * One single token type in HTML lexer
  */
 struct VHTMLLexerToken {
-	VHTMLTokenType  Type;
-	OString			String;
+	VHTMLTokenType Type;
+	OString		   String;
 };
 
 /**
@@ -186,10 +194,9 @@ private:
 		for (int count = 0; count < string.size(); count++) {
 			auto ch = char32_t(string[count]);
 
-			if(ch >= '0' && ch <= '9') {
+			if (ch >= '0' && ch <= '9') {
 				result = result * radix + (ch - '0');
-			}
-			else {
+			} else {
 				result = result * radix + (ch - 'a' + 10);
 			}
 		}
@@ -203,7 +210,7 @@ private:
 	 */
 	static bool _isEmptyString(OString &String) {
 		for (auto Character : String) {
-			auto codepoint = (char32_t )(Character.get_codepoint());
+			auto codepoint = (char32_t)(Character.get_codepoint());
 			if (codepoint == u'\0') {
 				break;
 			}
@@ -217,11 +224,11 @@ private:
 	}
 
 private:
-	bool				_inSlash;
-	bool				_inContext;
-	OString 			_code;
-	int 				_position;
-	int 				_line;
-	int 				_linePosition;
-	VHTMLLexerToken		_localToken;
+	bool			_inSlash;
+	bool			_inContext;
+	OString			_code;
+	int				_position;
+	int				_line;
+	int				_linePosition;
+	VHTMLLexerToken _localToken;
 };

@@ -28,11 +28,12 @@
 #include <include/parser/HTML/vHTMLAST.h>
 
 VHTMLASTMissingComparison::VHTMLASTMissingComparison(const OString &What, const int &Line, const int &Position) {
-	_info = ostr::format("VHTMLAST Error : The label \"{}\" missing close label to be compared at {}:{}.", What, Line, Position);
+	_info = ostr::format("VHTMLAST Error : The label \"{}\" missing close label to be compared at {}:{}.", What, Line,
+						 Position);
 	printf("%s", _info.c_str());
 }
 VHTMLASTNode::~VHTMLASTNode() {
-	for (auto &object: _childNode) {
+	for (auto &object : _childNode) {
 		delete object;
 	}
 }
@@ -45,8 +46,8 @@ bool VHTMLASTNode::ExistChild(const OString &Id) const {
 
 	return false;
 }
-const VHTMLASTNode* VHTMLASTNode::GetChild(const OString &Id) const {
-	for (auto &object: _childNode) {
+const VHTMLASTNode *VHTMLASTNode::GetChild(const OString &Id) const {
+	for (auto &object : _childNode) {
 		if (object->_id == Id) {
 			return object;
 		}
@@ -69,14 +70,14 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 		auto node = new VHTMLASTNode;
 
 		_lexer.ExceptToken(VHTMLTokenType::LeftBracket);
-		auto id = _lexer.ExceptToken(VHTMLTokenType::Id);
+		auto id	  = _lexer.ExceptToken(VHTMLTokenType::Id);
 		node->_id = id.String;
 
-		auto idLine         = _lexer.GetLine();
+		auto idLine			= _lexer.GetLine();
 		auto idLinePosition = _lexer.GetLinePosition();
 
 		std::unordered_map<OString, OString> property;
-		bool slashEnd = false;
+		bool								 slashEnd = false;
 		while (!_lexer.End()) {
 			auto token = _lexer.NextToken();
 			if (token.Type == VHTMLTokenType::Slash) {
@@ -92,7 +93,7 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			_lexer.ExceptToken(VHTMLTokenType::Equal);
 			auto value = _lexer.ExceptToken(VHTMLTokenType::String);
 
-			property.insert({ token.String, value.String });
+			property.insert({token.String, value.String});
 		}
 
 		node->Property = property;
@@ -101,12 +102,12 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			auto token = _lexer.NextToken();
 			if (token.Type == VHTMLTokenType::Text) {
 				node->Context = token.String;
-				token         = _lexer.ExceptToken(VHTMLTokenType::LeftBracket);
+				token		  = _lexer.ExceptToken(VHTMLTokenType::LeftBracket);
 			}
 
-			OString context = token.String;
-			int 	level   = 1;
-			bool	inEnd	= false;
+			OString						 context = token.String;
+			int							 level	 = 1;
+			bool						 inEnd	 = false;
 			std::vector<VHTMLLexerToken> tokenList;
 			while (true) {
 				token = _lexer.NextToken();
@@ -127,8 +128,7 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 				if (token.Type == VHTMLTokenType::RightBracket) {
 					if (inEnd) {
 						inEnd = false;
-					}
-					else {
+					} else {
 						++level;
 					}
 				}
@@ -145,7 +145,7 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 
 			if (context != "<") {
 				std::unique_ptr<VHTMLAST> AST = std::make_unique<VHTMLAST>(context);
-				node->_childNode              = std::move(AST->_root->_childNode);
+				node->_childNode			  = std::move(AST->_root->_childNode);
 			}
 		}
 

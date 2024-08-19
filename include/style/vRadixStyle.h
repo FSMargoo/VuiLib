@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2023~Now Margoo
  *
- * Permission is hereby granted, free of charge, to any person obtaining af this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining af this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to
+ * whom the Software is furnished to do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
@@ -43,14 +42,14 @@ public:
 	 * @param ThemeColor The theme color
 	 * @return The color in specified color level
 	 */
-	static SkColor GetGradientColor(const int &Level, const SkColor &BackgroundColor, const SkColor &ThemeColor)  {
+	static SkColor GetGradientColor(const int &Level, const SkColor &BackgroundColor, const SkColor &ThemeColor) {
 		if (Level > 12) {
 			throw std::logic_error("Gradient level shouldn't greater than 12!");
 		}
 		auto alpha = Level / 12 * 255;
-		auto r = (VColorFactory::GetR(ThemeColor) * alpha + VColorFactory::GetR(BackgroundColor) * 256) / 256;
-		auto g = (VColorFactory::GetG(ThemeColor) * alpha + VColorFactory::GetG(BackgroundColor) * 256) / 256;
-		auto b = (VColorFactory::GetB(ThemeColor) * alpha + VColorFactory::GetB(BackgroundColor) * 256) / 256;
+		auto r	   = (VColorFactory::GetR(ThemeColor) * alpha + VColorFactory::GetR(BackgroundColor) * 256) / 256;
+		auto g	   = (VColorFactory::GetG(ThemeColor) * alpha + VColorFactory::GetG(BackgroundColor) * 256) / 256;
+		auto b	   = (VColorFactory::GetB(ThemeColor) * alpha + VColorFactory::GetB(BackgroundColor) * 256) / 256;
 
 		return VColorFactory::MakeRGB(r, g, b);
 	}
@@ -60,7 +59,8 @@ public:
  * VUILib provide two types of style
  */
 enum class VRadixStyleType {
-	light, dark
+	light,
+	dark
 };
 
 /**
@@ -76,26 +76,28 @@ public:
 	 */
 	static VStyleFunction GetStyle(const VRadixStyleType &Style, const SkColor &ThemeColor) {
 		switch (Style) {
-			case VRadixStyleType::light: {
-				auto backgroundColor = VColorFactory::MakeRGB(255, 255, 255);
+		case VRadixStyleType::light: {
+			auto backgroundColor = VColorFactory::MakeRGB(255, 255, 255);
 
-				VStyleFunction style;
-				auto windowBackgroundColor = std::make_unique<VColorProperty>(VRadixColorHelper::GetGradientColor(0, backgroundColor, ThemeColor));
+			VStyleFunction style;
+			auto		   windowBackgroundColor =
+				std::make_unique<VColorProperty>(VRadixColorHelper::GetGradientColor(0, backgroundColor, ThemeColor));
 
-				style.RegisterProperty("window.background.color", std::move(windowBackgroundColor));
+			style.RegisterProperty("window.background.color", std::move(windowBackgroundColor));
 
-				return style;
-			}
-			case VRadixStyleType::dark: {
-				auto backgroundColor = VColorFactory::MakeRGB(11, 11, 11);
+			return style;
+		}
+		case VRadixStyleType::dark: {
+			auto backgroundColor = VColorFactory::MakeRGB(11, 11, 11);
 
-				VStyleFunction style;
-				auto windowBackgroundColor = std::make_unique<VColorProperty>(VRadixColorHelper::GetGradientColor(0, backgroundColor, ThemeColor));
+			VStyleFunction style;
+			auto		   windowBackgroundColor =
+				std::make_unique<VColorProperty>(VRadixColorHelper::GetGradientColor(0, backgroundColor, ThemeColor));
 
-				style.RegisterProperty("window.background.color", std::move(windowBackgroundColor));
+			style.RegisterProperty("window.background.color", std::move(windowBackgroundColor));
 
-				return style;
-			}
+			return style;
+		}
 		}
 	}
 };

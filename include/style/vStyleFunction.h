@@ -27,8 +27,8 @@
 
 #pragma once
 
-#include <include/renderer/vColorFactory.h>
 #include <include/base/object/vObject.h>
+#include <include/renderer/vColorFactory.h>
 
 using VStyleProperty = VObjectProperty;
 
@@ -45,7 +45,7 @@ public:
 	 * @param Name The name of the property
 	 * @return The reference of the property instance
 	 */
-	VStyleProperty& GetProperty(const OString &Name);
+	VStyleProperty &GetProperty(const OString &Name);
 
 protected:
 	/**
@@ -54,10 +54,10 @@ protected:
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	template<class Type>
-	    requires std::is_base_of_v<VPropertyValueBase, Type>
+	template <class Type>
+		requires std::is_base_of_v<VPropertyValueBase, Type>
 	void RegisterProperty(const OString &Name, std::unique_ptr<Type> &&Pointer) {
-		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase>&&>(Pointer)));
+		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase> &&>(Pointer)));
 	}
 	/**
 	 * Add a property to the object
@@ -70,9 +70,9 @@ protected:
 	 * @tparam Type The type of the target value
 	 * @param Name The property name
 	 */
-	template<class Type>
-	    requires std::is_base_of_v<VPropertyValueBase, Type>
-	Type* GetPropertyValue(const OString &Name) {
+	template <class Type>
+		requires std::is_base_of_v<VPropertyValueBase, Type>
+	Type *GetPropertyValue(const OString &Name) {
 		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
 

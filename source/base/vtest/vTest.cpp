@@ -32,10 +32,10 @@
 #include <third/winToast/include/wintoastlib.h>
 #endif
 
-#include <fstream>
 #include <chrono>
 #include <ctime>
 #include <format>
+#include <fstream>
 #include <thread>
 #include <utility>
 
@@ -98,7 +98,7 @@ void VTestConductor::StartTasks() {
 	for (VTestTask task : _taskList) {
 		printf("%s", std::format("Task [{}] ", task.TaskID).c_str());
 
-		bool flag = false;
+		bool		flag = false;
 		std::thread taskThread([task, &flag]() mutable -> void { flag = task.Conduct(); });
 
 		taskThread.join();

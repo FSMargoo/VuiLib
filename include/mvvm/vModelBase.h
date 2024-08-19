@@ -44,5 +44,5 @@ public:
 	VEvent<void()> OnChange;
 };
 
-template<class Type>
+template <class Type>
 concept VIsModelClass = std::is_base_of<VModelBase, Type>::value;

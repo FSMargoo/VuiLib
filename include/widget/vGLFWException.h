@@ -38,16 +38,14 @@ public:
 };
 class VGLFWInstanceCreationFailed : public std::exception {
 public:
-	VGLFWInstanceCreationFailed(const char *InstanceType)
-		: std::exception() {
+	VGLFWInstanceCreationFailed(const char *InstanceType) : std::exception() {
 		const auto message = std::format("Failed to create GLFW instance(type:{})", InstanceType);
 		printf("VUILib Exception : GLFW Failure. %s", message.c_str());
 	}
 };
 class VGLFWInvalidInstance : public std::exception {
 public:
-	VGLFWInvalidInstance(const char *InstanceType)
-		: std::exception() {
+	VGLFWInvalidInstance(const char *InstanceType) : std::exception() {
 		const auto message = std::format("Invalid instance(type:{})", InstanceType);
 		printf("VUILib Exception : GLFW Failure. %s", message.c_str());
 	}

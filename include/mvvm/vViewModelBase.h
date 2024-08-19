@@ -50,8 +50,7 @@ public:
 	 * will take over the life cycle of model pointer
 	 * @param ModelPointer
 	 */
-	explicit VViewModel(Model* ModelPointer) : _modelPointer(ModelPointer) {
-
+	explicit VViewModel(Model *ModelPointer) : _modelPointer(ModelPointer) {
 	}
 	~VViewModel() {
 		// Make sure every model pointer are directly deletable.
@@ -71,5 +70,5 @@ protected:
 	Model *_modelPointer;
 };
 
-template<class Type>
+template <class Type>
 concept VIsViewModel = VConcept::IsBaseOf<VViewModel, Type>::value;

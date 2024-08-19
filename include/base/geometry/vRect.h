@@ -38,8 +38,7 @@
  * The abstract class for the rectangle data.
  * @tparam DataType The type of the data, int, double, float e.t.c
  */
-template<class DataType>
-class VRectBase {
+template <class DataType> class VRectBase {
 public:
 	/**
 	 * The point alias class for shortcut name
@@ -73,7 +72,7 @@ public:
 	 * Basically is { (x1, y1), (x2, y2) }
 	 */
 	explicit VRectBase(const GeometryTuple &Tuple)
-	    : _left(std::get<0>(Tuple)), _top(std::get<1>(Tuple)), _right(std::get<2>(Tuple)), _bottom(std::get<3>(Tuple)) {
+		: _left(std::get<0>(Tuple)), _top(std::get<1>(Tuple)), _right(std::get<2>(Tuple)), _bottom(std::get<3>(Tuple)) {
 	}
 	/**
 	 * Create a rectangle by two points geometry data
@@ -81,7 +80,7 @@ public:
 	 * @param RightBottom The point located on the right corner of the rectangle
 	 */
 	VRectBase(const Point &LeftTop, const Point &RightBottom)
-	    : _left(LeftTop._x), _top(LeftTop._y), _right(RightBottom._x), _bottom(RightBottom._y) {
+		: _left(LeftTop._x), _top(LeftTop._y), _right(RightBottom._x), _bottom(RightBottom._y) {
 	}
 	/**
 	 * Construct the rectangle with specified geometry data
@@ -91,7 +90,7 @@ public:
 	 * @param Bottom The bottom position of the rectangle
 	 */
 	VRectBase(const DataType &Left, const DataType &Top, const DataType &Right, const DataType &Bottom)
-	    : _left(Left), _top(Top), _right(Right), _bottom(Bottom) {
+		: _left(Left), _top(Top), _right(Right), _bottom(Bottom) {
 	}
 	/**
 	 * Construct the point in default, it will create a rect
@@ -181,7 +180,7 @@ public:
 	 */
 	bool IsOverlap(const VRectBase<DataType> &Targets) const {
 		return std::max(_left, Targets._left) < std::min(_right, Targets._right) &&
-		       std::max(_top, Targets._top) < std::min(_bottom, Targets._bottom);
+			   std::max(_top, Targets._top) < std::min(_bottom, Targets._bottom);
 	}
 	/**
 	 * Judge whether a point inside this rectangle
@@ -325,7 +324,7 @@ public:
 	 * @param RightBottom The point location on the left-up corner
 	 */
 	void SetRightBottomPoint(const Point &RightBottom) const {
-		_right  = RightBottom._x;
+		_right	= RightBottom._x;
 		_bottom = RightBottom._y;
 	}
 	/**
@@ -337,10 +336,10 @@ public:
 	 * @param Bottom The offset of bottom
 	 */
 	void Extend(const DataType &Left, const DataType &Top, const DataType &Right, const DataType &Bottom) {
-		_left   -= Left;
-		_top    -= Top;
+		_left -= Left;
+		_top -= Top;
 		_bottom += Bottom;
-		_right  += Right;
+		_right += Right;
 	}
 	/**
 	 * This function will fusion the target rectangle with THIS rectangle, the
@@ -350,9 +349,9 @@ public:
 	 * @param Target The target rectangle to be fusion with
 	 */
 	void FusionWith(const VRectBase<DataType> &Target) {
-		_left   = std::min(_left, Target._left);
-		_top    = std::min(_top, Target._top);
-		_right  = std::max(_right, Target._right);
+		_left	= std::min(_left, Target._left);
+		_top	= std::min(_top, Target._top);
+		_right	= std::max(_right, Target._right);
 		_bottom = std::max(_bottom, Target._bottom);
 	}
 
@@ -364,7 +363,8 @@ public:
 	 * @return Whether two rectangles are equaled
 	 */
 	friend bool operator==(const VRectBase<DataType> &Left, const VRectBase<DataType> &Right) {
-		return Left._left == Right._left && Left._top == Right._top && Left._right == Right._right && Left._bottom == Right._bottom;
+		return Left._left == Right._left && Left._top == Right._top && Left._right == Right._right &&
+			   Left._bottom == Right._bottom;
 	}
 	/**
 	 * The operation of equal judgement for rectangle between geometry tuple
@@ -376,7 +376,8 @@ public:
 	 */
 	friend bool operator==(const VRectBase<DataType> &Rectangle, const GeometryTuple &Tuple) {
 		auto [left, top, right, bottom] = Tuple;
-		return Rectangle._left == left && Rectangle._top == top && Rectangle._right == right && Rectangle._bottom == bottom;
+		return Rectangle._left == left && Rectangle._top == top && Rectangle._right == right &&
+			   Rectangle._bottom == bottom;
 	}
 	/**
 	 * The operation of equal judgement for rectangle between point tuple
@@ -387,7 +388,8 @@ public:
 	 */
 	friend bool operator==(const VRectBase<DataType> &Rectangle, const PointTuple &Tuple) {
 		auto [leftTop, rightBottom] = Tuple;
-		return Rectangle._left == leftTop._x && Rectangle._top == leftTop._y && Rectangle._right == rightBottom._x && Rectangle._bottom == rightBottom._y;
+		return Rectangle._left == leftTop._x && Rectangle._top == leftTop._y && Rectangle._right == rightBottom._x &&
+			   Rectangle._bottom == rightBottom._y;
 	}
 
 	/**
@@ -397,7 +399,8 @@ public:
 	 * @return Whether two rectangles are equaled
 	 */
 	friend bool operator!=(const VRectBase<DataType> &Left, const VRectBase<DataType> &Right) {
-		return Left._left != Right._left && Left._top != Right._top && Left._right != Right._right && Left._bottom != Right._bottom;
+		return Left._left != Right._left && Left._top != Right._top && Left._right != Right._right &&
+			   Left._bottom != Right._bottom;
 	}
 	/**
 	 * The operation of unequal judgement for rectangle between geometry tuple
@@ -409,7 +412,8 @@ public:
 	 */
 	friend bool operator!=(const VRectBase<DataType> &Rectangle, const GeometryTuple &Tuple) {
 		auto [left, top, right, bottom] = Tuple;
-		return Rectangle._left != left && Rectangle._top != top && Rectangle._right != right && Rectangle._bottom != bottom;
+		return Rectangle._left != left && Rectangle._top != top && Rectangle._right != right &&
+			   Rectangle._bottom != bottom;
 	}
 	/**
 	 * The operation of unequal judgement for rectangle between point tuple
@@ -420,7 +424,8 @@ public:
 	 */
 	friend bool operator!=(const VRectBase<DataType> &Rectangle, const PointTuple &Tuple) {
 		auto [leftTop, rightBottom] = Tuple;
-		return Rectangle._left != leftTop._x && Rectangle._top != leftTop._y && Rectangle._right != rightBottom._x && Rectangle._bottom != rightBottom._y;
+		return Rectangle._left != leftTop._x && Rectangle._top != leftTop._y && Rectangle._right != rightBottom._x &&
+			   Rectangle._bottom != rightBottom._y;
 	}
 
 private:

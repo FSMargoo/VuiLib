@@ -27,8 +27,8 @@
 
 #pragma once
 
-#include <include/renderer/vRendererBase.h>
 #include <include/renderer/vRenderInterface.h>
+#include <include/renderer/vRendererBase.h>
 
 /**
  * The render context wrapper of Skia
@@ -39,7 +39,7 @@ public:
 	 * Construct the render context by interface
 	 * @param Interface The interface's pointer
 	 */
-	explicit VRenderContext(const sk_sp<VRenderInterface>& Interface);
+	explicit VRenderContext(const sk_sp<VRenderInterface> &Interface);
 	~VRenderContext() = default;
 
 public:
@@ -47,7 +47,7 @@ public:
 	 * Get the native object(Skia object) of render context
 	 * @return The skia render context object
 	 */
-	auto& GetNativeContext() {
+	auto &GetNativeContext() {
 		return _context;
 	}
 

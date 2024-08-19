@@ -39,8 +39,8 @@ public:
 	VHTMLASTMissingComparison(const OString &What, const int &Line, const int &Position);
 
 public:
-	const char* what() const {
-		return reinterpret_cast<const char*>(_info.c_str());
+	const char *what() const {
+		return reinterpret_cast<const char *>(_info.c_str());
 	}
 
 private:
@@ -71,7 +71,7 @@ public:
 	 * @return If the child dose not existing, it will return nullptr, nor
 	 * returning the readonly pointer to children
 	 */
-	[[nodiscard]] const VHTMLASTNode* GetChild(const OString &Id) const;
+	[[nodiscard]] const VHTMLASTNode *GetChild(const OString &Id) const;
 	/**
 	 * Get the beginning iterator of the children list
 	 * @return The beginning iterator
@@ -95,14 +95,14 @@ public:
 	/**
 	 * The context of the node
 	 */
-	OString 							 Context;
+	OString Context;
 
 private:
 	friend class VHTMLAST;
 
 private:
 	std::vector<VHTMLASTNode *> _childNode;
-	OString 					_id;
+	OString						_id;
 };
 
 /**
@@ -134,5 +134,5 @@ private:
 
 private:
 	VHTMLASTNode *_root;
-	VHTMLLexer 	  _lexer;
+	VHTMLLexer	  _lexer;
 };

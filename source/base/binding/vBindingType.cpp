@@ -26,4 +26,3 @@
  */
 
 #include <base/binding/vBindingType.h>
-

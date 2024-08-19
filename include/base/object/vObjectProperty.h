@@ -27,20 +27,27 @@
 
 #pragma once
 
-#include <include/renderer/vColorFactory.h>
 #include <include/base/geometry/vPoint.h>
 #include <include/base/geometry/vRect.h>
 #include <include/base/vBase.h>
+#include <include/renderer/vColorFactory.h>
 
-#include <unordered_map>
-#include <string>
 #include <memory>
+#include <string>
+#include <unordered_map>
 
 /**
  * The type of the property
  */
 enum class VPropertyType {
-	Int, Long, Float, String, Boolean, Rect, Point, Color
+	Int,
+	Long,
+	Float,
+	String,
+	Boolean,
+	Rect,
+	Point,
+	Color
 };
 
 /**
@@ -53,10 +60,10 @@ public:
 	 * @tparam Type The type to be converted which is base of VPropertyValueBase
 	 * @return The converted pointer
 	 */
-	template<class Type>
+	template <class Type>
 		requires std::is_base_of_v<VPropertyValueBase, Type>
 	Type *Cast() {
-		return static_cast<Type*>(this);
+		return static_cast<Type *>(this);
 	}
 
 protected:
@@ -248,11 +255,11 @@ public:
 	VObjectProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Value);
 
 public:
-	[[nodiscard]] OString GetName() const;
-	std::unique_ptr<VPropertyValueBase>& GetValue();
+	[[nodiscard]] OString				 GetName() const;
+	std::unique_ptr<VPropertyValueBase> &GetValue();
 
 public:
-	OString                         _name;
+	OString								_name;
 	std::unique_ptr<VPropertyValueBase> _value;
 };
 

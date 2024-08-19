@@ -45,14 +45,14 @@ public:
 	 * Construct the render target by viewport
 	 * @param Viewport The viewport of render target
 	 */
-	explicit VRenderTarget(const VRenderTargetViewport& Viewport);
+	explicit VRenderTarget(const VRenderTargetViewport &Viewport);
 
 public:
 	/**
 	 * Get the native object(Skia object) of render target
 	 * @return The skia render target object
 	 */
-	auto& GetNativeRenderTarget() {
+	auto &GetNativeRenderTarget() {
 		return _renderTarget;
 	}
 

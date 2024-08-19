@@ -27,7 +27,7 @@
 
 #include <include/style/vStyleFunction.h>
 
-VStyleProperty& VStyleFunction::GetProperty(const OString &Name) {
+VStyleProperty &VStyleFunction::GetProperty(const OString &Name) {
 	return _propertyList.find(Name)->second;
 }
 void VStyleFunction::RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
@@ -35,5 +35,5 @@ void VStyleFunction::RegisterProperty(const OString &Name, std::unique_ptr<VProp
 		throw std::logic_error("VProperty should not be redefined");
 	}
 
-	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
+	_propertyList.insert({Name, VObjectProperty(Name, std::move(Pointer))});
 }

@@ -48,49 +48,35 @@ const VObject *VObject::GetParent() const {
 }
 void VObject::RaiseTop() {
 	if (_parent != nullptr) {
-		_parent->_childList.erase(std::remove_if(
-		                                  _parent->_childList.begin(),
-		                                  _parent->_childList.end(),
-		                                    [this](VObject *Object) {
-			                                    return Object == this;
-		                                    }),
-		                          _parent->_childList.end());
+		_parent->_childList.erase(std::remove_if(_parent->_childList.begin(), _parent->_childList.end(),
+												 [this](VObject *Object) { return Object == this; }),
+								  _parent->_childList.end());
 		_parent->_childList.emplace_back(this);
 
 		RepaintOnySelf();
-	}
-	else {
+	} else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
 	}
 }
 void VObject::RaiseLowest() {
 	if (_parent != nullptr) {
-		_parent->_childList.erase(std::remove_if(
-		                                  _parent->_childList.begin(),
-		                                  _parent->_childList.end(),
-		                                  [this](VObject *Object) {
-			                                  return Object == this;
-		                                  }),
-		                          _parent->_childList.end());
+		_parent->_childList.erase(std::remove_if(_parent->_childList.begin(), _parent->_childList.end(),
+												 [this](VObject *Object) { return Object == this; }),
+								  _parent->_childList.end());
 		_parent->_childList.insert(_parent->_childList.begin(), this);
 
 		RepaintOnySelf();
-	}
-	else {
+	} else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
 	}
 }
 void VObject::RaiseUnder(const VObject *Target) {
 	if (_parent != nullptr && Target->GetParent() == _parent) {
-		_parent->_childList.erase(std::remove_if(
-		                                  _parent->_childList.begin(),
-		                                  _parent->_childList.end(),
-		                                  [this](VObject *Object) {
-			                                  return Object == this;
-		                                  }),
-		                          _parent->_childList.end());
+		_parent->_childList.erase(std::remove_if(_parent->_childList.begin(), _parent->_childList.end(),
+												 [this](VObject *Object) { return Object == this; }),
+								  _parent->_childList.end());
 		auto where = _parent->_childList.begin();
-		for (auto& object : _parent->_childList) {
+		for (auto &object : _parent->_childList) {
 			if (object == Target) {
 				break;
 			}
@@ -101,22 +87,18 @@ void VObject::RaiseUnder(const VObject *Target) {
 		_parent->_childList.insert(where, this);
 
 		RepaintOnySelf();
-	}
-	else {
-		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same parent with this object!");
+	} else {
+		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same "
+							   "parent with this object!");
 	}
 }
 void VObject::RaiseUpper(const VObject *Target) {
 	if (_parent != nullptr && Target->GetParent() == _parent) {
-		_parent->_childList.erase(std::remove_if(
-		                                  _parent->_childList.begin(),
-		                                  _parent->_childList.end(),
-		                                  [this](VObject *Object) {
-			                                  return Object == this;
-		                                  }),
-		                          _parent->_childList.end());
+		_parent->_childList.erase(std::remove_if(_parent->_childList.begin(), _parent->_childList.end(),
+												 [this](VObject *Object) { return Object == this; }),
+								  _parent->_childList.end());
 		auto where = _parent->_childList.begin();
-		for (auto& object : _parent->_childList) {
+		for (auto &object : _parent->_childList) {
 			++where;
 
 			if (object == Target) {
@@ -126,9 +108,9 @@ void VObject::RaiseUpper(const VObject *Target) {
 		_parent->_childList.insert(where, this);
 
 		RepaintOnySelf();
-	}
-	else {
-		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same parent with this object!");
+	} else {
+		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same "
+							   "parent with this object!");
 	}
 }
 void VObject::Resize(const int &Width, const int &Height) {
@@ -137,10 +119,10 @@ void VObject::Resize(const int &Width, const int &Height) {
 	RepaintOnySelf();
 }
 void VObject::Move(const int &X, const int &Y) {
-	auto width  = _bound->_value.GetWidth();
+	auto width	= _bound->_value.GetWidth();
 	auto height = _bound->_value.GetHeight();
 
-	_bound->_value = { X, Y, X + width, Y + height };
+	_bound->_value = {X, Y, X + width, Y + height};
 
 	RepaintOnySelf();
 }
@@ -166,17 +148,16 @@ void VObject::SetX(const int &X) {
 void VObject::SetY(const int &Y) {
 	_bound->_value.SetTop(Y);
 }
-const int& VObject::GetX() const {
+const int &VObject::GetX() const {
 	return _bound->_value.GetLeft();
 }
-const int& VObject::GetY() const {
+const int &VObject::GetY() const {
 	return _bound->_value.GetTop();
 }
 void VObject::UploadMessage(VBaseMessage *Message) {
 	if (_parent != nullptr) {
 		_parent->UploadMessage(Message);
-	}
-	else {
+	} else {
 		OnFinalMessage(Message);
 	}
 }
@@ -187,27 +168,26 @@ void VObject::RepaintOnySelf() {
 bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 	if (Message->GetType() == VMessageType::Repaint) {
 		OnRepaintMessage(Message->Cast<VRepaintMessage>(), Surface);
-	}
-	else {
+	} else {
 		return OnGeneralMessage(Message);
 	}
 
 	return false;
 }
 void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surface) {
-	const auto bound    = _bound->_value;
-	auto repaintMessage = Message->Cast<VRepaintMessage>();
+	const auto bound		  = _bound->_value;
+	auto	   repaintMessage = Message->Cast<VRepaintMessage>();
 	if (Surface == nullptr) {
 		throw std::logic_error("Surface should not be nullptr!");
 	}
 	/**
-	  * Draw the context the relative surface
-	  */
+	 * Draw the context the relative surface
+	 */
 	auto subSurface = sk_make_sp<VSurface, const int &, const int &>(bound.GetWidth(), bound.GetHeight());
 
 	OnPaint(subSurface);
 
-	for (auto& object : _childList) {
+	for (auto &object : _childList) {
 		const auto leftTop = object->_bound->_value.GetLeftTopPoint();
 		Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), leftTop.GetX(), leftTop.GetY());
 	}
@@ -221,48 +201,47 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 	 * Sent the message to children object first
 	 */
 	sk_sp<VSurface> nullSurface = nullptr;
-	for (auto& object : _childList) {
+	for (auto &object : _childList) {
 		auto result = object->OnMessage(Message, nullSurface);
 		if (result) {
 			return true;
 		}
 	}
 	switch (Message->GetType()) {
-		case VMessageType::Repaint: {
-			return false;
-		}
-		case VMessageType::MouseMove: {
-			auto mouseMoveMessage = Message->Cast<VMouseMovedMessage>();
-			if (bound.IsPointInside(mouseMoveMessage->Point)) {
-				auto result = OnMouseMoved(mouseMoveMessage);
-				if (result) {
-					RaiseUpAsFocus(this);
-				}
-
-				_onHover = true;
-
-				return result;
-			}
-			else if (_onHover) {
-				_onHover = false;
-				OnMouseLeft(mouseMoveMessage);
+	case VMessageType::Repaint: {
+		return false;
+	}
+	case VMessageType::MouseMove: {
+		auto mouseMoveMessage = Message->Cast<VMouseMovedMessage>();
+		if (bound.IsPointInside(mouseMoveMessage->Point)) {
+			auto result = OnMouseMoved(mouseMoveMessage);
+			if (result) {
+				RaiseUpAsFocus(this);
 			}
 
-			break;
-		}
-		case VMessageType::MouseClicked: {
-			auto mouseClickedMessage = Message->Cast<VMouseClickedMessage>();
-			if (bound.IsPointInside(mouseClickedMessage->Point)) {
-				auto result = OnMouseClicked(mouseClickedMessage);
-				if (result) {
-					RaiseUpAsFocus(this);
-				}
+			_onHover = true;
 
-				return result;
+			return result;
+		} else if (_onHover) {
+			_onHover = false;
+			OnMouseLeft(mouseMoveMessage);
+		}
+
+		break;
+	}
+	case VMessageType::MouseClicked: {
+		auto mouseClickedMessage = Message->Cast<VMouseClickedMessage>();
+		if (bound.IsPointInside(mouseClickedMessage->Point)) {
+			auto result = OnMouseClicked(mouseClickedMessage);
+			if (result) {
+				RaiseUpAsFocus(this);
 			}
 
-			break;
+			return result;
 		}
+
+		break;
+	}
 	}
 
 	return false;
@@ -270,44 +249,39 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 void VObject::LockFocus() {
 	if (_parent != nullptr) {
 		return _parent->LockFocus();
-	}
-	else {
+	} else {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
 void VObject::UnlockFocus() {
 	if (_parent != nullptr) {
 		return _parent->UnlockFocus();
-	}
-	else {
+	} else {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
 bool VObject::GetFocusLocking() {
 	if (_parent != nullptr) {
 		return _parent->GetFocusLocking();
-	}
-	else {
+	} else {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
 void VObject::RaiseUpAsFocus(VObject *Object) {
 	if (_parent != nullptr) {
 		return _parent->RaiseUpAsFocus(Object);
-	}
-	else {
+	} else {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
 VObject *VObject::GetFocusingObject() {
 	if (_parent != nullptr) {
 		return _parent->GetFocusingObject();
-	}
-	else {
+	} else {
 		throw std::logic_error("Object parent dose not suitable");
 	}
 }
-VObjectProperty& VObject::GetProperty(const OString &Name) {
+VObjectProperty &VObject::GetProperty(const OString &Name) {
 	return _propertyList.find(Name)->second;
 }
 void VObject::RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
@@ -315,17 +289,13 @@ void VObject::RegisterProperty(const OString &Name, std::unique_ptr<VPropertyVal
 		throw std::logic_error("VProperty should not be redefined");
 	}
 
-	_propertyList.insert({ Name, VObjectProperty(Name, std::move(Pointer)) });
+	_propertyList.insert({Name, VObjectProperty(Name, std::move(Pointer))});
 }
 void VObject::RemoveParent(VObject *OldParent) {
 	if (OldParent != nullptr) {
-		OldParent->_childList.erase(std::remove_if(
-		                                    OldParent->_childList.begin(),
-		                                    OldParent->_childList.end(),
-		                                    [this](VObject *Object) {
-			                                    return Object == this;
-		                                    }),
-		                            OldParent->_childList.end());
+		OldParent->_childList.erase(std::remove_if(OldParent->_childList.begin(), OldParent->_childList.end(),
+												   [this](VObject *Object) { return Object == this; }),
+									OldParent->_childList.end());
 		RepaintOnySelf();
 	}
 }
@@ -339,13 +309,13 @@ void VObject::AdaptParent(VObject *Parent) {
 void VObject::InitGeneralProperty() {
 	auto visible = std::make_unique<VBooleanProperty>(true);
 	auto disable = std::make_unique<VBooleanProperty>(false);
-	auto bound = std::make_unique<VRectProperty>();
+	auto bound	 = std::make_unique<VRectProperty>();
 
 	RegisterProperty("visible", std::move(visible));
 	RegisterProperty("bound", std::move(bound));
 	RegisterProperty("disable", std::move(bound));
 
-	_bound   = GetPropertyValue<VRectProperty>("bound");
+	_bound	 = GetPropertyValue<VRectProperty>("bound");
 	_visible = GetPropertyValue<VBooleanProperty>("visible");
 	_disable = GetPropertyValue<VBooleanProperty>("disable");
 	_onHover = false;

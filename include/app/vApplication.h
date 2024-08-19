@@ -47,15 +47,14 @@ public:
 	 * @param Name The id of the theme property
 	 * @return The reference of the property instance
 	 */
-	VStyleProperty& GetThemeProperty(const OString &Name);
+	VStyleProperty &GetThemeProperty(const OString &Name);
 	/**
 	 * Get the value of the specified name in specified type
 	 * @tparam Type The type of the property
 	 * @param Name The name of the property
 	 * @return The value of the property in the specified name
 	 */
-	template<class Type>
-	Type* GetThemePropertyValue(const OString &Name) {
+	template <class Type> Type *GetThemePropertyValue(const OString &Name) {
 		return _style.GetPropertyValue<Type>(Name);
 	}
 
@@ -70,7 +69,7 @@ private:
 	friend class VMainWindow;
 
 protected:
-	GLFWwindow     *_mainWindow;
+	GLFWwindow	   *_mainWindow;
 	VRadixStyleType _styleType;
-	VStyleFunction  _style;
+	VStyleFunction	_style;
 };

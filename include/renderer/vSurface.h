@@ -27,9 +27,9 @@
 
 #pragma once
 
-#include <include/renderer/vRendererBase.h>
-#include <include/renderer/vRenderTarget.h>
 #include <include/renderer/vRenderContext.h>
+#include <include/renderer/vRenderTarget.h>
+#include <include/renderer/vRendererBase.h>
 
 /**
  * The surface wrapper of Skia surface class
@@ -48,7 +48,7 @@ public:
 	 * @param RenderTarget The render target object
 	 * @param Context The render context object.
 	 */
-	explicit VSurface(const sk_sp<VRenderTarget>& RenderTarget, const sk_sp<VRenderContext>& Context);
+	explicit VSurface(const sk_sp<VRenderTarget> &RenderTarget, const sk_sp<VRenderContext> &Context);
 	~VSurface() = default;
 
 public:
@@ -56,7 +56,7 @@ public:
 	 * Get the native surface object
 	 * @return The SkSurface object in a smart pointer
 	 */
-	auto& GetNativeSurface() {
+	auto &GetNativeSurface() {
 		return _surface;
 	}
 

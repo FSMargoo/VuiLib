@@ -32,7 +32,8 @@ VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int 
 	: VWidget(Application, Width, Height, Title) {
 	Application->_mainWindow = _glfwWindow;
 }
-VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor &Monitor)
-    : VWidget(Application, Width, Height, Title, Monitor) {
+VMainWindow::VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title,
+						 VMonitor &Monitor)
+	: VWidget(Application, Width, Height, Title, Monitor) {
 	Application->_mainWindow = _glfwWindow;
 }

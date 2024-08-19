@@ -33,8 +33,7 @@
  * The abstract class for the point data.
  * @tparam DataType The type of the data, int, double, float e.t.c
  */
-template <class DataType>
-class VPointBase {
+template <class DataType> class VPointBase {
 public:
 	/**
 	 * The axis tuple alias, the first element of axis tuple
@@ -49,7 +48,6 @@ public:
 	 * is X, the second element of the axis tuple is Y
 	 */
 	explicit VPointBase(const AxisTuple &Tuple) : _x(std::get<0>(Tuple)), _y(std::get<1>(Tuple)) {
-
 	}
 	/**
 	 * Construct the point with specified geometry data
@@ -120,7 +118,7 @@ public:
 	 * @param Right The point in the right of the expression
 	 * @return Whether two points are equaled
 	 */
-	friend bool operator==(const VPointBase<DataType>& Left, const VPointBase<DataType> &Right) {
+	friend bool operator==(const VPointBase<DataType> &Left, const VPointBase<DataType> &Right) {
 		return Left._x == Right._x && Left._y == Right._y;
 	}
 	/**
@@ -130,7 +128,7 @@ public:
 	 * @param Point The point to be judged
 	 * @return Whether the tuple is equaled to the point
 	 */
-	friend bool operator==(const AxisTuple& Tuple, const VPointBase<DataType> &Point) {
+	friend bool operator==(const AxisTuple &Tuple, const VPointBase<DataType> &Point) {
 		auto [x, y] = Tuple;
 		return Point._x == x && Point._y == y;
 	}
@@ -141,7 +139,7 @@ public:
 	 * @param Point The point to be judged
 	 * @return Whether the tuple is equaled to the point
 	 */
-	friend bool operator==(const VPointBase<DataType> &Point, const AxisTuple& Tuple) {
+	friend bool operator==(const VPointBase<DataType> &Point, const AxisTuple &Tuple) {
 		auto [x, y] = Tuple;
 		return Point._x == x && Point._y == y;
 	}
@@ -152,7 +150,7 @@ public:
 	 * @param Right The point in the right of the expression
 	 * @return Whether two points are equaled
 	 */
-	friend bool operator!=(const VPointBase<DataType>& Left, const VPointBase<DataType> &Right) {
+	friend bool operator!=(const VPointBase<DataType> &Left, const VPointBase<DataType> &Right) {
 		return Left._x != Right._x || Left._y != Right._y;
 	}
 	/**
@@ -162,7 +160,7 @@ public:
 	 * @param Point The point to be judged
 	 * @return Whether the tuple is equaled to the point
 	 */
-	friend bool operator!=(const AxisTuple& Tuple, const VPointBase<DataType> &Point) {
+	friend bool operator!=(const AxisTuple &Tuple, const VPointBase<DataType> &Point) {
 		auto [x, y] = Tuple;
 		return Point._x != x || Point._y != y;
 	}
@@ -173,7 +171,7 @@ public:
 	 * @param Point The point to be judged
 	 * @return Whether the tuple is equaled to the point
 	 */
-	friend bool operator!=(const VPointBase<DataType> &Point, const AxisTuple& Tuple) {
+	friend bool operator!=(const VPointBase<DataType> &Point, const AxisTuple &Tuple) {
 		auto [x, y] = Tuple;
 		return Point._x != x || Point._y != y;
 	}
@@ -282,7 +280,7 @@ public:
 		auto [x, y] = Tuple;
 		return VPointBase<DataType>(Point._x + x, Point._y + y);
 	}
-	
+
 	/**
 	 * Subtracting two point, basically, it will subtract the X,Y axis of two points
 	 * @param Left The point in the left of the expression
@@ -314,7 +312,7 @@ public:
 		auto [x, y] = Tuple;
 		return VPointBase<DataType>(x - Point._x, y - Point._y);
 	}
-	
+
 	/**
 	 * Multiplying two point, basically, it will multiply the X,Y axis of two points
 	 * @param Left The point in the left of the expression
@@ -346,7 +344,7 @@ public:
 		auto [x, y] = Tuple;
 		return VPointBase<DataType>(Point._x * x, Point._y * y);
 	}
-	
+
 	/**
 	 * Dividing two point, basically, it will divide the X,Y axis of two points
 	 * @param Left The point in the left of the expression
@@ -380,8 +378,7 @@ public:
 	}
 
 private:
-	template<class T>
-	friend class VRectBase;
+	template <class T> friend class VRectBase;
 
 private:
 	DataType _x;

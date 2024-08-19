@@ -27,6 +27,6 @@
 
 #include <include/renderer/vRenderContext.h>
 
-VRenderContext::VRenderContext(const sk_sp<VRenderInterface>& Interface) {
+VRenderContext::VRenderContext(const sk_sp<VRenderInterface> &Interface) {
 	_context = GrDirectContext::MakeGL(Interface->GetNativeInterface());
 }

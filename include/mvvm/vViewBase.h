@@ -34,7 +34,7 @@
  * @tparam Model The model layer class type, make sure the class can be directly free
  * @tparam Parameter The init parameter for the model class
  */
-template<class ViewModel, class... Parameter>
+template <class ViewModel, class... Parameter>
 	requires VIsViewModel<ViewModel>
 class VViewBase : public VViewModel<ViewModel> {
 public:
@@ -50,8 +50,7 @@ public:
 	 * will take over the life cycle of a model pointer
 	 * @param ModelPointer
 	 */
-	explicit VViewBase(ViewModel* ViewModelPointer) : _viewModelPointer(ViewModelPointer) {
-
+	explicit VViewBase(ViewModel *ViewModelPointer) : _viewModelPointer(ViewModelPointer) {
 	}
 	~VViewBase() {
 		// Make sure every model pointer is directly deletable.

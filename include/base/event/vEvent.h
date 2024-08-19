@@ -28,22 +28,20 @@
 #pragma once
 
 #include <functional>
+#include <list>
 #include <memory>
 #include <mutex>
-#include <list>
 
 /***
  * The wrapper of std::function
  */
-template <class... Parameters>
-using VDelegate = std::function<void(Parameters...)>;
+template <class... Parameters> using VDelegate = std::function<void(Parameters...)>;
 
 /***
  * The connection unit of VSignal
  * @tparam Parameters The function parameters
  */
-template <class... Parameters>
-class VConnectUnit {
+template <class... Parameters> class VConnectUnit {
 public:
 	/**
 	 * Construct the connect unit with the function delegate
@@ -58,7 +56,7 @@ public:
 	 * Get the function delegate instance of the object
 	 * @return The delegate instance
 	 */
-	inline VDelegate<Parameters...>* GetFunction() {
+	inline VDelegate<Parameters...> *GetFunction() {
 		return &_function;
 	}
 	/**
@@ -86,8 +84,7 @@ private:
  * The function connection unit
  * @tparam Parameters The function parameters
  */
-template <class... Parameters>
-class VFunctionConnection : public VConnectUnit<Parameters...> {
+template <class... Parameters> class VFunctionConnection : public VConnectUnit<Parameters...> {
 public:
 	/**
 	 * Alias of raw function pointer
@@ -119,8 +116,7 @@ private:
  * The class based function connection unit
  * @tparam Parameters The function parameters
  */
-template <class ObjectClass, class... Parameter>
-class VClassConnection : public VConnectUnit<Parameter...> {
+template <class ObjectClass, class... Parameter> class VClassConnection : public VConnectUnit<Parameter...> {
 public:
 	/**
 	 * The alisa for member function pointer
@@ -174,12 +170,10 @@ enum class VEventOperation {
  * The event class (Observer mode)
  * @tparam Parameters The event calling parameters type
  */
-template <class... Parameters>
-class VEvent {
+template <class... Parameters> class VEvent {
 public:
-	using FunctionPointer = void (*)(Parameters...);
-	template <class ObjectClass>
-	using ClassFunctionPointer = void (ObjectClass::*)(Parameters...);
+	using FunctionPointer									= void (*)(Parameters...);
+	template <class ObjectClass> using ClassFunctionPointer = void (ObjectClass::*)(Parameters...);
 
 public:
 	/**
@@ -201,7 +195,7 @@ public:
 	inline void Connect(FunctionPointer Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Function, VEventOperation::Lookup)) {
-			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VFunctionConnection(Function));
+			std::shared_ptr<VConnectUnit<Parameters...>> pointer(new VFunctionConnection(Function));
 			_slots->emplace_back(pointer);
 		}
 	}
@@ -211,11 +205,11 @@ public:
 	 * @param Object The object instance for function emit
 	 * @param Function The class function
 	 */
-	template<class ObjectType>
-	inline void Connect(ObjectType* Object, ClassFunctionPointer<ObjectType> Function) {
+	template <class ObjectType> inline void Connect(ObjectType *Object, ClassFunctionPointer<ObjectType> Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		if (!Operation(Object, Function, VEventOperation::Lookup)) {
-			std::shared_ptr<VConnectUnit<Parameters...> > pointer(new VClassConnection<ObjectType, Parameters...>(Object, Function));
+			std::shared_ptr<VConnectUnit<Parameters...>> pointer(
+				new VClassConnection<ObjectType, Parameters...>(Object, Function));
 			_slots->emplace_back(pointer);
 		}
 	}
@@ -233,8 +227,7 @@ public:
 	 * @param Object The object instance for function emit
 	 * @param Function The class function
 	 */
-	template<class ObjectType>
-	inline void Disconnect(ObjectType* Object, ClassFunctionPointer<ObjectType> Function) {
+	template <class ObjectType> inline void Disconnect(ObjectType *Object, ClassFunctionPointer<ObjectType> Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		Operation(Object, Function, VEventOperation::Delete);
 	}
@@ -252,8 +245,7 @@ public:
 	 * @param Object The object instance for function emit
 	 * @param Function The class function
 	 */
-	template<class ObjectType>
-	inline void Block(ObjectType* Object, ClassFunctionPointer<ObjectType> Function) {
+	template <class ObjectType> inline void Block(ObjectType *Object, ClassFunctionPointer<ObjectType> Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		Operation(Object, Function, VEventOperation::Block);
 	}
@@ -271,8 +263,7 @@ public:
 	 * @param Object The object instance for function emit
 	 * @param Function The class function
 	 */
-	template<class ObjectType>
-	inline void Unblock(ObjectType* Object, ClassFunctionPointer<ObjectType> Function) {
+	template <class ObjectType> inline void Unblock(ObjectType *Object, ClassFunctionPointer<ObjectType> Function) {
 		std::lock_guard<std::mutex> guard(_lock);
 		Operation(Object, Function, VEventOperation::Unblock);
 	}
@@ -334,8 +325,7 @@ private:
 				}
 
 				return true;
-			}
-			else {
+			} else {
 				++iterator;
 			}
 		}
@@ -345,8 +335,8 @@ private:
 	 * Conduct Operation of slots for class connection
 	 * @return If the target exists in slots, return true.
 	 */
- 	template<class ObjectType>
-	bool Operation(ObjectType* Object, ClassFunctionPointer<ObjectType> Function, const VEventOperation &Operation) {
+	template <class ObjectType>
+	bool Operation(ObjectType *Object, ClassFunctionPointer<ObjectType> Function, const VEventOperation &Operation) {
 		for (auto iterator = _slots->begin(); iterator != _slots->end();) {
 			auto connectFunction = static_cast<VClassConnection<ObjectType, Parameters...> *>((*iterator).get());
 			if (connectFunction->GetPointer() == Function && connectFunction->GetObject() == Object) {
@@ -374,8 +364,7 @@ private:
 				}
 
 				return true;
-			}
-			else {
+			} else {
 				++iterator;
 			}
 		}

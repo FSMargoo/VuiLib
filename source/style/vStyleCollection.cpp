@@ -29,5 +29,4 @@
 #include <include/style/vStyleCollection.h>
 
 VStyleCollection::VStyleCollection() {
-
 }

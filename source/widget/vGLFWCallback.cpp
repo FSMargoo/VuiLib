@@ -29,10 +29,10 @@
 
 #include <unordered_map>
 
-std::unordered_map<GLFWwindow*, VGLFWWidget*> ObjectMapping;
+std::unordered_map<GLFWwindow *, VGLFWWidget *> ObjectMapping;
 
 void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window) {
-	ObjectMapping.insert({ Window, Widget });
+	ObjectMapping.insert({Window, Widget});
 }
 void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height) {
 	ObjectMapping[Window]->OnGLFWRepaint(Width, Height);

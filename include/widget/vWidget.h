@@ -27,12 +27,12 @@
 
 #pragma once
 
-#include <include/widget/vGLFWCallback.h>
-#include <include/base/object/vObject.h>
-#include <include/base/event/vEvent.h>
 #include <include/app/vApplication.h>
-#include <include/widget/vMonitor.h>
+#include <include/base/event/vEvent.h>
+#include <include/base/object/vObject.h>
 #include <include/mvvm/vViewBase.h>
+#include <include/widget/vGLFWCallback.h>
+#include <include/widget/vMonitor.h>
 
 #include <include/renderer/vGLHeader.h>
 
@@ -153,9 +153,9 @@ protected:
 	VStringProperty *_title;
 
 private:
-	bool             _focusLocking;
-	VObject         *_focusingObject;
-	VApplication    *_application;
+	bool		  _focusLocking;
+	VObject		 *_focusingObject;
+	VApplication *_application;
 
 private:
 	sk_sp<VRenderInterface> GLInterface;

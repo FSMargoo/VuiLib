@@ -28,8 +28,8 @@
 #pragma once
 
 #include <include/base/geometry/vPoint.h>
-#include <include/base/message/vKeyMap.h>
 #include <include/base/geometry/vRect.h>
+#include <include/base/message/vKeyMap.h>
 
 #include <include/renderer/vGLHeader.h>
 
@@ -37,22 +37,35 @@
  * The type of the message
  */
 enum class VMessageType {
-	KeyDown, KeyUp, MouseMove, MouseClicked, Repaint
+	KeyDown,
+	KeyUp,
+	MouseMove,
+	MouseClicked,
+	Repaint
 };
 /**
  * The button type of the mouse
  */
 enum class VMouseButton {
-	Right, Left, Middle
+	Right,
+	Left,
+	Middle
 };
 /**
  * The click method type of the button
  */
 enum class VClickType {
-	Release, Press, Repeat
+	Release,
+	Press,
+	Repeat
 };
 enum class VAdditionKey {
-	Ctrl, Super, CapsLock, Alt, Shift, NumberLock
+	Ctrl,
+	Super,
+	CapsLock,
+	Alt,
+	Shift,
+	NumberLock
 };
 
 /**
@@ -63,7 +76,7 @@ public:
 	/**
 	 * The alias for GLFW API
 	 */
-	using Window = GLFWwindow*;
+	using Window = GLFWwindow *;
 
 public:
 	/**
@@ -81,10 +94,10 @@ public:
 	 * @tparam Type The target type of the pointer
 	 * @return The pointer in specified type format
 	 */
-	template<class Type>
+	template <class Type>
 		requires std::is_base_of_v<VBaseMessage, Type>
-	Type* Cast() {
-		return static_cast<Type*>(this);
+	Type *Cast() {
+		return static_cast<Type *>(this);
 	}
 
 public:
@@ -138,7 +151,8 @@ public:
 	 * @param IX The X of the mouse
 	 * @param IY The Y of the mouse
 	 */
-	VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton, const VClickType &IClick, const VAdditionKey &IAdditionKey);
+	VMouseClickedMessage(Window Trigger, const int &IX, const int &IY, const VMouseButton &IButton,
+						 const VClickType &IClick, const VAdditionKey &IAdditionKey);
 
 public:
 	VMessageType GetType() override {
@@ -146,10 +160,10 @@ public:
 	}
 
 public:
-	VPoint       Point;
+	VPoint		 Point;
 	VMouseButton Button;
 	VAdditionKey AdditionKey;
-	VClickType   Click;
+	VClickType	 Click;
 };
 
 /**
@@ -193,8 +207,8 @@ public:
 	VKeyDownMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
 
 private:
-	int             Key;
-	VAdditionKey    AdditionKey;
+	int			 Key;
+	VAdditionKey AdditionKey;
 };
 /**
  * When the user's keyboard's key up, the message wil be triggered
@@ -211,6 +225,6 @@ public:
 	VKeyUpMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
 
 private:
-	int             Key;
-	VAdditionKey    AdditionKey;
+	int			 Key;
+	VAdditionKey AdditionKey;
 };

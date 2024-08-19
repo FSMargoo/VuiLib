@@ -39,8 +39,7 @@ struct VPlaceHolderObject {};
  * @tparam ObjectType The object type for class function, if not use the VPlaceHolderObject type
  * @tparam Parameter The parameter list of command
  */
-template <class ObjectType, class... Parameter>
-class VCommand {
+template <class ObjectType, class... Parameter> class VCommand {
 public:
 	/**
 	 * The alias to VEvent class

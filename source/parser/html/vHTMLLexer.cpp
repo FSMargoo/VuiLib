@@ -44,8 +44,8 @@ VHTMLLexer::VHTMLLexer(const OString &Code) : _code(Code) {
 	InitLexer();
 }
 void VHTMLLexer::InitLexer() {
-	_position     = 0;
-	_line         = 0;
+	_position	  = 0;
+	_line		  = 0;
 	_linePosition = 0;
 	_inSlash	  = false;
 	_inContext	  = false;
@@ -69,146 +69,143 @@ VHTMLLexerToken VHTMLLexer::ExceptToken(const VHTMLTokenType &Type) {
 }
 VHTMLLexerToken VHTMLLexer::NextToken() {
 	if (_position >= _code.size()) {
-		return { .Type = VHTMLTokenType::End, .String = "" };
+		return {.Type = VHTMLTokenType::End, .String = ""};
 	}
 
-	OString	 		string;
-	VHTMLTokenType	type = VHTMLTokenType::Invalid;
+	OString		   string;
+	VHTMLTokenType type = VHTMLTokenType::Invalid;
 	while (true) {
 		auto character = char32_t(_code[_position]);
 		switch (character) {
-			case u8' ':
-			case u8'\t': {
-				if (_inContext) {
-					type 	= VHTMLTokenType::Text;
-					string += _code[_position];
-				}
-				else {
-					if (type != VHTMLTokenType::Invalid) {
-						_localToken = { .Type = type, .String = string };
-						return _localToken;
-					}
-				}
-				++_position;
-				++_linePosition;
-
-				break;
-			}
-			case u8'\"': {
+		case u8' ':
+		case u8'\t': {
+			if (_inContext) {
+				type = VHTMLTokenType::Text;
+				string += _code[_position];
+			} else {
 				if (type != VHTMLTokenType::Invalid) {
-					_localToken = { .Type = type, .String = string };
+					_localToken = {.Type = type, .String = string};
 					return _localToken;
 				}
+			}
+			++_position;
+			++_linePosition;
 
-				_localToken = FetchStringToken();
-				++_position;
-				++_linePosition;
-
+			break;
+		}
+		case u8'\"': {
+			if (type != VHTMLTokenType::Invalid) {
+				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
-			case u8'\n': {
-				++_line;
-				++_position;
-				_linePosition = 0;
 
-				if (!string.is_empty()) {
-					_localToken = { .Type = type, .String = string };
-					return _localToken;
-				}
+			_localToken = FetchStringToken();
+			++_position;
+			++_linePosition;
 
-				break;
-			}
-			case u8'&': {
-				OString escape = "&";
-				while (true) {
-					++_position;
-					_missTokenIfOutRange("&", _line, _linePosition);
+			return _localToken;
+		}
+		case u8'\n': {
+			++_line;
+			++_position;
+			_linePosition = 0;
 
-					escape += _code[_position];
-					if (_code[_position] == u8';') {
-						break;
-					}
-				}
-
-				string += VHTMLEscapeMap::EscapeConvert(escape);
-
-				++_position;
-				++_linePosition;
-
-				break;
-			}
-			case u8'<': {
-				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
-					_localToken = { .Type = type, .String = string };
-					return _localToken;
-				}
-
-				_inContext = false;
-
-				++_position;
-				++_linePosition;
-
-				_localToken = { .Type = VHTMLTokenType::LeftBracket, .String = "<" };
+			if (!string.is_empty()) {
+				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
-			case u8'>': {
-				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
-					_localToken = { .Type = type, .String = string };
-					return _localToken;
-				}
 
-				if (_inSlash) {
-					_inSlash = false;
-				}
-				else {
-					_inContext = true;
-				}
-
+			break;
+		}
+		case u8'&': {
+			OString escape = "&";
+			while (true) {
 				++_position;
-				++_linePosition;
+				_missTokenIfOutRange("&", _line, _linePosition);
 
-				_localToken = { .Type = VHTMLTokenType::RightBracket, .String = ">" };
+				escape += _code[_position];
+				if (_code[_position] == u8';') {
+					break;
+				}
+			}
+
+			string += VHTMLEscapeMap::EscapeConvert(escape);
+
+			++_position;
+			++_linePosition;
+
+			break;
+		}
+		case u8'<': {
+			if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
-			case u8'=': {
-				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
-					_localToken = { .Type = type, .String = string };
-					return _localToken;
-				}
 
-				++_position;
-				++_linePosition;
+			_inContext = false;
 
-				_localToken = { .Type = VHTMLTokenType::Equal, .String = "=" };
+			++_position;
+			++_linePosition;
+
+			_localToken = {.Type = VHTMLTokenType::LeftBracket, .String = "<"};
+			return _localToken;
+		}
+		case u8'>': {
+			if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
-			case u8'/': {
-				if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
-					_localToken = { .Type = type, .String = string };
-					return _localToken;
-				}
 
-				_inSlash = true;
-				++_position;
-				++_linePosition;
+			if (_inSlash) {
+				_inSlash = false;
+			} else {
+				_inContext = true;
+			}
 
-				_localToken = { .Type = VHTMLTokenType::Slash, .String = "/" };
+			++_position;
+			++_linePosition;
+
+			_localToken = {.Type = VHTMLTokenType::RightBracket, .String = ">"};
+			return _localToken;
+		}
+		case u8'=': {
+			if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
-			default: {
-				if (_inContext) {
-					type 	= VHTMLTokenType::Text;
-				}
-				else {
-					type = VHTMLTokenType::Id;
-				}
-				string += character;
 
-				++_position;
-				++_linePosition;
+			++_position;
+			++_linePosition;
 
-				break;
+			_localToken = {.Type = VHTMLTokenType::Equal, .String = "="};
+			return _localToken;
+		}
+		case u8'/': {
+			if (type != VHTMLTokenType::Invalid && !_isEmptyString(string)) {
+				_localToken = {.Type = type, .String = string};
+				return _localToken;
 			}
+
+			_inSlash = true;
+			++_position;
+			++_linePosition;
+
+			_localToken = {.Type = VHTMLTokenType::Slash, .String = "/"};
+			return _localToken;
+		}
+		default: {
+			if (_inContext) {
+				type = VHTMLTokenType::Text;
+			} else {
+				type = VHTMLTokenType::Id;
+			}
+			string += character;
+
+			++_position;
+			++_linePosition;
+
+			break;
+		}
 		}
 	}
 }
@@ -219,9 +216,9 @@ bool VHTMLLexer::End() const {
 	return _position >= _code.size();
 }
 VHTMLLexerToken VHTMLLexer::FetchStringToken() {
-	int 		line     = _linePosition;
-	int 		position = _position;
-	OString  string;
+	int		line	 = _linePosition;
+	int		position = _position;
+	OString string;
 	while (true) {
 		_missTokenIfOutRange("\"", _line, _linePosition);
 
@@ -230,15 +227,14 @@ VHTMLLexerToken VHTMLLexer::FetchStringToken() {
 		}
 		if (_code[_position] == u8'\\') {
 			string += ProcessStringEscaping();
-		}
-		else {
+		} else {
 			string += _code[_position];
 		}
 
 		++_position;
 	}
 
-	return { .Type = VHTMLTokenType::String, .String = string };
+	return {.Type = VHTMLTokenType::String, .String = string};
 }
 OString VHTMLLexer::ProcessStringEscaping() {
 	++_position;
@@ -246,54 +242,54 @@ OString VHTMLLexer::ProcessStringEscaping() {
 	auto controlCharacter = char32_t(_code[_position]);
 
 	switch (controlCharacter) {
-		case 'a': {
-			return "\a";
-		}
-		case 'n': {
-			return "\n";
-		}
-		case 'b': {
-			return "\b";
-		}
-		case 't': {
-			return "\t";
-		}
-		case 'f': {
-			return "\f";
-		}
-		case 'r': {
-			return "\rf";
-		}
-		case 'v': {
-			return "\v";
-		}
-		case 'u': {
-			OString hexString;
-			for (auto count = 0; count < 4; ++count) {
-				++_position;
-				_missTokenIfOutRange("Number of hex string", _line, _position - 1);
+	case 'a': {
+		return "\a";
+	}
+	case 'n': {
+		return "\n";
+	}
+	case 'b': {
+		return "\b";
+	}
+	case 't': {
+		return "\t";
+	}
+	case 'f': {
+		return "\f";
+	}
+	case 'r': {
+		return "\rf";
+	}
+	case 'v': {
+		return "\v";
+	}
+	case 'u': {
+		OString hexString;
+		for (auto count = 0; count < 4; ++count) {
+			++_position;
+			_missTokenIfOutRange("Number of hex string", _line, _position - 1);
 
-				hexString += _code[_position];
-			}
+			hexString += _code[_position];
+		}
 
-			char32_t character = _toDecimal(hexString, 16);
+		char32_t character = _toDecimal(hexString, 16);
 
-			return ostr::codeunit_sequence(character);
-		}
-		case '\'': {
-			return "'";
-		}
-		case '"': {
-			return "\"";
-		}
-		case '\\': {
-			return "\\";
-		}
-		default: {
-			throw new VHTMLLexerInvalidToken(ostr::codeunit_sequence(controlCharacter), _position, _linePosition);
+		return ostr::codeunit_sequence(character);
+	}
+	case '\'': {
+		return "'";
+	}
+	case '"': {
+		return "\"";
+	}
+	case '\\': {
+		return "\\";
+	}
+	default: {
+		throw new VHTMLLexerInvalidToken(ostr::codeunit_sequence(controlCharacter), _position, _linePosition);
 
-			break;
-		}
+		break;
+	}
 	}
 
 	return "";

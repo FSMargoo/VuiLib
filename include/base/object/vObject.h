@@ -26,11 +26,11 @@
 
 #pragma once
 
-#include <include/base/object/vObjectProperty.h>
-#include <include/renderer/vRenderTarget.h>
 #include <include/base/message/vMessage.h>
-#include <include/renderer/vSurface.h>
+#include <include/base/object/vObjectProperty.h>
 #include <include/base/vBase.h>
+#include <include/renderer/vRenderTarget.h>
+#include <include/renderer/vSurface.h>
 
 /**
  * The base class object for the drawable class in VUILib
@@ -57,7 +57,7 @@ public:
 	 * @param Name The name of the property
 	 * @return The reference of the property instance
 	 */
-	VObjectProperty& GetProperty(const OString &Name);
+	VObjectProperty &GetProperty(const OString &Name);
 
 public:
 	/**
@@ -141,7 +141,7 @@ public:
 	 * Get the X position of the object;
 	 * @return The X position of the object
 	 */
-	const int& GetX() const;
+	const int &GetX() const;
 	/**
 	 * Set the Y position of the object
 	 * @param Y The Y position of the object
@@ -151,7 +151,7 @@ public:
 	 * Get the Y position of the object;
 	 * @return The Y position of the object
 	 */
-	 const int& GetY() const;
+	const int &GetY() const;
 
 protected:
 	/**
@@ -181,7 +181,6 @@ protected:
 	 * @param Message The message to be processed
 	 */
 	virtual void OnFinalMessage(VBaseMessage *Message) {
-
 	}
 	/**
 	 * When the control received the repaint message, the virtual function will
@@ -194,7 +193,6 @@ protected:
 	 * The virtual function that to be called when the property was changed
 	 */
 	virtual void OnPropertyChange() {
-
 	}
 	/**
 	 * When the mouse moved over this object, this function will be called
@@ -247,10 +245,10 @@ protected:
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	template<class Type>
+	template <class Type>
 		requires std::is_base_of_v<VPropertyValueBase, Type>
 	void RegisterProperty(const OString &Name, std::unique_ptr<Type> &&Pointer) {
-		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase>&&>(Pointer)));
+		return RegisterProperty(Name, std::move(reinterpret_cast<std::unique_ptr<VPropertyValueBase> &&>(Pointer)));
 	}
 	/**
 	 * Add a property to the object
@@ -263,8 +261,8 @@ protected:
 	 * @tparam Type The type of the target value
 	 * @param Name The property name
 	 */
-	template<class Type>
-	    requires std::is_base_of_v<VPropertyValueBase, Type>
+	template <class Type>
+		requires std::is_base_of_v<VPropertyValueBase, Type>
 	Type *GetPropertyValue(const OString &Name) {
 		return GetProperty(Name).GetValue()->Cast<Type>();
 	}
@@ -320,9 +318,9 @@ protected:
 	VPropertyList _propertyList;
 
 protected:
-	VRectProperty           *_bound;
-	VBooleanProperty        *_visible;
-	VBooleanProperty        *_disable;
-	VObject                 *_parent;
-	std::vector<VObject *>   _childList;
+	VRectProperty		  *_bound;
+	VBooleanProperty	  *_visible;
+	VBooleanProperty	  *_disable;
+	VObject				  *_parent;
+	std::vector<VObject *> _childList;
 };

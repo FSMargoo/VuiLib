@@ -27,17 +27,17 @@
 
 #pragma once
 
+#include <include/base/object/vObject.h>
 #include <include/mvvm/vViewBase.h>
 #include <include/widget/vWidget.h>
-#include <include/base/object/vObject.h>
 
 /**
  * To inherit of the view base class in window form
  * @tparam ViewModel The view model class type
  * @tparam Parameter The construction parameter of the view mode class
  */
-template<class ViewModel, class... Parameter>
-    requires VIsViewModel<ViewModel>
+template <class ViewModel, class... Parameter>
+	requires VIsViewModel<ViewModel>
 class VWindowView : public VViewBase<ViewModel>, VWidget {
 public:
 	/**
@@ -61,9 +61,8 @@ public:
 	 * @param Monitor The specified monitor where window to be shown
 	 */
 	VWindowView(const int &Width, const int &Height, const OString &Title, VMonitor &Monitor,
-	            Parameter... ModelParameter)
-	    : VViewBase<ViewModel>(ModelParameter...) {
-
+				Parameter... ModelParameter)
+		: VViewBase<ViewModel>(ModelParameter...) {
 	}
 	~VWindowView() override = default;
 };

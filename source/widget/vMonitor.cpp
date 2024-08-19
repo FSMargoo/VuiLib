@@ -70,7 +70,7 @@ int VMonitor::GetWidth() const {
 	return _glfwVideoMode->width;
 }
 int VMonitor::GetHeight() const {
-	return  _glfwVideoMode->height;
+	return _glfwVideoMode->height;
 }
 [[nodiscard]] VMonitorStatus VMonitor::GetStatus() const {
 	return _status;

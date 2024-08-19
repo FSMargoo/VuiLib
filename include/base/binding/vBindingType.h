@@ -36,8 +36,7 @@
  * @tparam Type The data type
  * @tparam Parameter The constructor parameter for the data type
  */
-template <class Type, class... Parameter>
-class VBindingType {
+template <class Type, class... Parameter> class VBindingType {
 public:
 	/**
 	 * In default, VBindingType will create an empty pointer
@@ -73,7 +72,7 @@ public:
 	 * Spaceship operator
 	 * @param Value The value for judgement
 	 */
-	std::strong_ordering friend operator<=>(const VBindingType& Object, const Type& Value) {
+	std::strong_ordering friend operator<=>(const VBindingType &Object, const Type &Value) {
 		if (Object._pointer != nullptr) {
 			return *(Object._pointer) <=> Value;
 		}
@@ -84,14 +83,14 @@ public:
 	 * Spaceship operator
 	 * @param Value The value for judgement
 	 */
-	std::strong_ordering friend operator<=>(const Type& Value, const VBindingType& Object) {
+	std::strong_ordering friend operator<=>(const Type &Value, const VBindingType &Object) {
 		if (Object._pointer != nullptr) {
 			return Value <=> *(Object._pointer);
 		}
 
 		return Value <=> Object._instance;
 	}
-	bool operator==(const Type& Value) {
+	bool operator==(const Type &Value) {
 		if (_pointer != nullptr) {
 			return Value == *_pointer;
 		}

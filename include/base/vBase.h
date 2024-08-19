@@ -31,41 +31,36 @@
 #include <base/command/vCommand.h>
 #include <base/test/vTest.h>
 
-#include <OpenString-CMake/include/text.h>
 #include <OpenString-CMake/include/format.h>
+#include <OpenString-CMake/include/text.h>
 
-#pragma warning(disable:4244)
+#pragma warning(disable : 4244)
 
 namespace std {
-	/**
-	 * The template specialization for std::hash in order to provide for unordered_map key
-	 */
-	template <>
-	struct hash<ostr::text> {
-		_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef ostr::text argument_type;
-		_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef size_t result_type;
-		_NODISCARD size_t operator()(const ostr::text _Keyval) const
-		        noexcept {
-			return hash<string>().operator()(_Keyval.c_str());
-		}
-	};
-}
+/**
+ * The template specialization for std::hash in order to provide for unordered_map key
+ */
+template <> struct hash<ostr::text> {
+	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef ostr::text argument_type;
+	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef size_t	 result_type;
+	_NODISCARD size_t									 operator()(const ostr::text _Keyval) const noexcept {
+		   return hash<string>().operator()(_Keyval.c_str());
+	}
+};
+} // namespace std
 
-using OString     = ostr::text;
+using OString	  = ostr::text;
 using OStringView = ostr::text_view;
 
 namespace VConcept {
-template <template <typename...> class C, typename... Ts>
-std::true_type IsBaseOfImpl(const C<Ts...> *);
+template <template <typename...> class C, typename... Ts> std::true_type IsBaseOfImpl(const C<Ts...> *);
 
-template <template <typename...> class C>
-std::false_type IsBaseOfImpl(...);
+template <template <typename...> class C> std::false_type IsBaseOfImpl(...);
 
-template <template <typename...> class C, typename T>
-using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
-}
+template <template <typename...> class C, typename T> using IsBaseOf = decltype(IsBaseOfImpl<C>(std::declval<T *>()));
+} // namespace VConcept
 
-template<class RangeType>
+template <class RangeType>
 	requires std::is_integral_v<RangeType> or std::is_floating_point_v<RangeType>
 std::vector<RangeType> VRange(const RangeType &Start, const RangeType &End, const RangeType &Step = RangeType(1)) {
 	std::vector<RangeType> result;

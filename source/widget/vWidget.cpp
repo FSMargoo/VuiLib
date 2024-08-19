@@ -27,8 +27,8 @@
 
 #include <include/widget/vWidget.h>
 
-VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString& Title)
-    : VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
+VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title)
+	: VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
 	if (!_glfwWindow) {
 		throw VGLFWFailure("Failed to create GLFW window!");
@@ -36,7 +36,8 @@ VWidget::VWidget(VApplication *Application, const int &Width, const int &Height,
 
 	InitWidgetObject(Width, Height, Title);
 }
-VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor& Monitor)
+VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title,
+				 VMonitor &Monitor)
 	: VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
 	/**
 	 * If the monitor is disconnected, it will be marked as invalid
@@ -58,11 +59,12 @@ VWidget::~VWidget() {
 	}
 }
 void VWidget::FlushWidget() {
-	auto flushMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
+	auto flushMessage = std::make_unique<VRepaintMessage>(
+		_glfwWindow, VRect{0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight()});
 	ProcessMessage(flushMessage.get());
 }
 void VWidget::InitWidgetObject(const int &Width, const int &Height, const OString &Title) {
-	auto title  = std::make_unique<VStringProperty>(Title);
+	auto title = std::make_unique<VStringProperty>(Title);
 
 	RegisterProperty("title", std::move(title));
 	_title = GetPropertyValue<VStringProperty>("title");
@@ -119,13 +121,13 @@ void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
 	int height = static_cast<int>(_bound->_value.GetHeight());
 
 	sk_sp<VRenderTarget> glRenderTarget =
-	        sk_make_sp<VRenderTarget, VRenderTargetViewport>({.Width = width, .Height = height, .X = 0, .Y = 0});
+		sk_make_sp<VRenderTarget, VRenderTargetViewport>({.Width = width, .Height = height, .X = 0, .Y = 0});
 	sk_sp<VRenderContext> glContext = sk_make_sp<VRenderContext, const sk_sp<VRenderInterface> &>(GLInterface);
 	sk_sp<VSurface>		  glSurface =
-	        sk_make_sp<VSurface, const sk_sp<VRenderTarget> &, const sk_sp<VRenderContext> &>(glRenderTarget, glContext);
+		sk_make_sp<VSurface, const sk_sp<VRenderTarget> &, const sk_sp<VRenderContext> &>(glRenderTarget, glContext);
 	OnPaint(glSurface);
-	for (auto& object : _childList) {
-		auto accessibleObject = dynamic_cast<VWidget*>(object);
+	for (auto &object : _childList) {
+		auto accessibleObject = dynamic_cast<VWidget *>(object);
 		accessibleObject->OnMessage(Message, glSurface);
 	}
 
@@ -155,7 +157,8 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 		VObject::Resize(Width, Height);
 	}
 
-	auto repaintMessage = std::make_unique<VRepaintMessage>(_glfwWindow, VRect{ 0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight() });
+	auto repaintMessage = std::make_unique<VRepaintMessage>(
+		_glfwWindow, VRect{0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight()});
 	OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
@@ -164,67 +167,67 @@ void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 }
 void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
 	VMouseButton button;
-	VClickType   clickType;
+	VClickType	 clickType;
 	VAdditionKey additionKey;
 	switch (Button) {
-		case GLFW_MOUSE_BUTTON_LEFT: {
-			button = VMouseButton::Left;
+	case GLFW_MOUSE_BUTTON_LEFT: {
+		button = VMouseButton::Left;
 
-			break;
-		}
-		case GLFW_MOUSE_BUTTON_RIGHT: {
-			button = VMouseButton::Right;
+		break;
+	}
+	case GLFW_MOUSE_BUTTON_RIGHT: {
+		button = VMouseButton::Right;
 
-			break;
-		}
-		case GLFW_MOUSE_BUTTON_MIDDLE: {
-			button = VMouseButton::Middle;
+		break;
+	}
+	case GLFW_MOUSE_BUTTON_MIDDLE: {
+		button = VMouseButton::Middle;
 
-			break;
-		}
+		break;
+	}
 	}
 	switch (Action) {
-		case GLFW_RELEASE: {
-			clickType = VClickType::Release;
+	case GLFW_RELEASE: {
+		clickType = VClickType::Release;
 
-			break;
-		}
-		case GLFW_REPEAT: {
-			clickType = VClickType::Repeat;
+		break;
+	}
+	case GLFW_REPEAT: {
+		clickType = VClickType::Repeat;
 
-			break;
-		}
-		case GLFW_PRESS: {
-			clickType = VClickType::Press;
+		break;
+	}
+	case GLFW_PRESS: {
+		clickType = VClickType::Press;
 
-			break;
-		}
+		break;
+	}
 	}
 	switch (Mods) {
-		case GLFW_MOD_ALT: {
-			additionKey = VAdditionKey::Alt;
-			break;
-		}
-		case GLFW_MOD_CONTROL: {
-			additionKey = VAdditionKey::Ctrl;
-			break;
-		}
-		case GLFW_MOD_CAPS_LOCK: {
-			additionKey = VAdditionKey::CapsLock;
-			break;
-		}
-		case GLFW_MOD_NUM_LOCK: {
-			additionKey = VAdditionKey::NumberLock;
-			break;
-		}
-		case GLFW_MOD_SHIFT: {
-			additionKey = VAdditionKey::Shift;
-			break;
-		}
-		case GLFW_MOD_SUPER: {
-			additionKey = VAdditionKey::Super;
-			break;
-		}
+	case GLFW_MOD_ALT: {
+		additionKey = VAdditionKey::Alt;
+		break;
+	}
+	case GLFW_MOD_CONTROL: {
+		additionKey = VAdditionKey::Ctrl;
+		break;
+	}
+	case GLFW_MOD_CAPS_LOCK: {
+		additionKey = VAdditionKey::CapsLock;
+		break;
+	}
+	case GLFW_MOD_NUM_LOCK: {
+		additionKey = VAdditionKey::NumberLock;
+		break;
+	}
+	case GLFW_MOD_SHIFT: {
+		additionKey = VAdditionKey::Shift;
+		break;
+	}
+	case GLFW_MOD_SUPER: {
+		additionKey = VAdditionKey::Super;
+		break;
+	}
 	}
 
 	auto mouseClickMessage = std::make_unique<VMouseClickedMessage>(_glfwWindow, X, Y, button, clickType, additionKey);
@@ -235,8 +238,7 @@ void VWidget::ProcessMessage(VBaseMessage *Message) {
 	sk_sp<VSurface> nullSurface = nullptr;
 	if (Message->GetType() != VMessageType::Repaint) {
 		OnMessage(Message, nullSurface);
-	}
-	else {
+	} else {
 		OnWidgetRepaint(Message->Cast<VRepaintMessage>());
 	}
 }
@@ -249,7 +251,7 @@ void VWidget::OnFinalMessage(VBaseMessage *Message) {
 		 */
 		for (auto &object : _childList) {
 			// To access the bound of the object
-			auto accessibleObject = static_cast<VWidget*>(object);
+			auto accessibleObject = static_cast<VWidget *>(object);
 			if (repaintMessage->DirtyRectangle.IsOverlap(accessibleObject->_bound->_value)) {
 				repaintMessage->DirtyRectangle.FusionWith(accessibleObject->_bound->_value);
 			}

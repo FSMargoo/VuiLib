@@ -54,5 +54,6 @@ public:
 	 * @param Title The title of the widget
 	 * @param Monitor The specified monitor where window to be shown
 	 */
-	VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title, VMonitor &Monitor);
+	VMainWindow(VApplication *Application, const int &Width, const int &Height, const OString &Title,
+				VMonitor &Monitor);
 };

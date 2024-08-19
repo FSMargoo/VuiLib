@@ -30,7 +30,8 @@
 VPushButton::VPushButton(VObject *Parent, const OString &Text) : VAbstractButton(Parent) {
 	InitProperty(Text);
 }
-VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const OString &Text) : VAbstractButton(Parent, Width, Height) {
+VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const OString &Text)
+	: VAbstractButton(Parent, Width, Height) {
 	InitProperty(Text);
 }
 void VPushButton::SetPlainText(const OString &Text) {

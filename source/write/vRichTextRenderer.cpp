@@ -27,7 +27,6 @@
 
 #include <include/write/vRichTextRenderer.h>
 
-VRichTextRenderer::VRichTextRenderer(VHTMLAST *AST) : _ast(AST)
-{
+VRichTextRenderer::VRichTextRenderer(VHTMLAST *AST) : _ast(AST) {
 	auto root = _ast->GetRoot();
 }

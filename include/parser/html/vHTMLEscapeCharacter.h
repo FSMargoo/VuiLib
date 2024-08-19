@@ -34,8 +34,8 @@ public:
 	VHTMLInvalidEscapeCharacter(const OString &Character);
 
 public:
-	const char* what() const {
-		return reinterpret_cast<const char*>(_info.c_str());
+	const char *what() const {
+		return reinterpret_cast<const char *>(_info.c_str());
 	}
 
 private:

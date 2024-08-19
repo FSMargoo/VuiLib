@@ -46,7 +46,7 @@ public:
 	 * Get the native object(Skia object) of render interface
 	 * @return The skia render interface object
 	 */
-	auto& GetNativeInterface() {
+	auto &GetNativeInterface() {
 		return _interface;
 	}
 
