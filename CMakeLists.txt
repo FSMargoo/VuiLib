@@ -121,8 +121,6 @@ add_executable(VCommit tool/vcommit/main.cpp
         tool/vcommit/third/include/cmdparser.hpp
         third/SimpleJson/sJSON.h
         third/SimpleJson/sJSON.cpp
-        include/control/button/vPushButton.h
-        source/parser/html/vHTMLParser.cpp
 )
 
 # Enable/Disable the Windows Toast Feature
