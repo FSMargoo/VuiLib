@@ -29,6 +29,9 @@
 
 VSurface::VSurface(const int &Width, const int &Height) : _surface(SkSurface::MakeRasterN32Premul(Width, Height)) {
 }
+VSurface::VSurface(sk_sp<SkSurface> &Surface) : _surface(Surface) {
+
+}
 VSurface::VSurface(const sk_sp<VRenderTarget> &RenderTarget, const sk_sp<VRenderContext> &Context) {
 	// By default, we enable MSAA flag.
 	SkColorType	   colorType = kRGBA_8888_SkColorType;

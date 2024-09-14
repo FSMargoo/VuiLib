@@ -27,6 +27,7 @@
 
 #pragma once
 
+#include <include/renderer/vRendererBase.h>
 #include <include/parser/html/vHTMLAST.h>
 
 /**
@@ -36,9 +37,12 @@ class VRichTextRenderer {
 public:
 	/**
 	 * Construct the rich text renderer with the HTML AST
-	 * @param AST
+	 * @param AST The HTML AST tree of the rich text
 	 */
 	explicit VRichTextRenderer(VHTMLAST *AST);
+
+public:
+	
 
 private:
 	VHTMLAST *_ast;

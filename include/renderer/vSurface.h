@@ -44,6 +44,11 @@ public:
 	 */
 	VSurface(const int &Width, const int &Height);
 	/**
+	 * Create a new surface object with an existed skia surface pointer
+	 * @param Surface The sk_sp pointer referred to the surface object
+	 */
+	VSurface(sk_sp<SkSurface> &Surface);
+	/**
 	 * Construct the surface by render target and render a context object.
 	 * @param RenderTarget The render target object
 	 * @param Context The render context object.
