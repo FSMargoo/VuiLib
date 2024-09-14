@@ -183,7 +183,8 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surfac
 	/**
 	 * Draw the context the relative surface
 	 */
-	auto subSurface = sk_sp<VSurface>(Surface->GetNativeSurface()->makeSurface(bound.GetWidth(), bound.GetHeight()));
+	auto subSksurface = Surface->GetNativeSurface()->makeSurface(bound.GetWidth(), bound.GetHeight());
+	auto subSurface = sk_make_sp<VSurface, sk_sp<SkSurface> &>(subSksurface);
 
 	OnPaint(subSurface);
 
