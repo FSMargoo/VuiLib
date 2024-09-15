@@ -1,4 +1,4 @@
-#include <unitTest/base/base.event.h>
+﻿#include <unitTest/base/base.event.h>
 #include <unitTest/base/base.binding.h>
 #include <unitTest/base/base.command.h>
 #include <unitTest/base/base.geometry.h>

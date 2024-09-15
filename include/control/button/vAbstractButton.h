@@ -31,23 +31,22 @@
 
 /**
  * The abstract button in the VUILib, which provide a set of the
- * signals of the button which is general used
+ * signals of the button which is generally used
  */
 class VAbstractButton : public VObject {
 public:
 	/**
 	 * Construct the button with default size (generally is 80x20), with the
 	 * specified parent object
-	 * @param Parent The parent object pointer
 	 */
-	VAbstractButton(VObject *Parent);
+	explicit VAbstractButton();
 	/**
 	 * Construct the button with specified size, with the specified parent object
 	 * @param Parent The parent object pointer
 	 * @param Width The specified width size
 	 * @param Height The specified height size
 	 */
-	VAbstractButton(VObject *Parent, const int &Width, const int &Height);
+	VAbstractButton(const int &Width, const int &Height);
 
 public:
 	/**
@@ -70,5 +69,5 @@ private:
 	 * @param Width The width of the button
 	 * @param Height The height of the button
 	 */
-	void InitAbstractButton(VObject *Parent, const int &Width, const int &Height);
+	void InitAbstractButton(const int &Width, const int &Height);
 };

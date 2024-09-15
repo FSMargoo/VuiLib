@@ -27,6 +27,9 @@
 
 #pragma once
 
+#include <include/parser/html/vHTMLAST.h>
+#include <include/write/vRichTextRenderer.h>
+
 #include <include/control/button/vAbstractButton.h>
 
 /**
@@ -64,6 +67,9 @@ public:
 	 */
 	[[nodiscard]] OString GetPlainText() const;
 
+public:
+	void OnPaint(sk_sp<SkSurface> &Surface) override;
+
 private:
 	/**
 	 * Init the property of the button
@@ -73,4 +79,5 @@ private:
 
 private:
 	VStringProperty *_text;
+	VHTMLAST		*_AST;
 };

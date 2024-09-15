@@ -27,6 +27,7 @@
 
 #pragma once
 
+#include <include/base/geometry/vRect.h>
 #include <include/parser/html/vHTMLAST.h>
 #include <include/renderer/vRendererBase.h>
 
@@ -47,7 +48,7 @@ public:
 	 * @param Canvas The reference of the canvas
 	 * @param Bound The bound of the text area
 	 */
-	void Render(sk_sp<SkCanvas> &Canvas, const SkRect &Bound);
+	void Render(SkCanvas *Canvas, const VRect &Bound);
 
 private:
 	/**
@@ -61,9 +62,10 @@ private:
 	 * @param EnglishFont The English font style
 	 * @param OtherFont The other font style
 	 * @param Color The text color
+	 * @param MeasureMode Return the M
 	 * @return The new marching position
 	 */
-	std::tuple<SkScalar, SkScalar> RenderNode(VHTMLASTNode *Node, sk_sp<SkCanvas> &Canvas, const SkRect &Bound,
+	std::tuple<SkScalar, SkScalar> RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas, const VRect &Bound,
 											  const SkScalar &X, const SkScalar &Y, const SkScalar &Size,
 											  SkFont &EnglishFont, SkFont &OtherFont, const SkColor &Color);
 
@@ -75,6 +77,10 @@ private:
 
 private:
 	VHTMLAST *_ast;
+
+private:
+	int _lineSpacing;
+	int _wordSpacing;
 
 private:
 	sk_sp<SkTypeface> _otherTypeFace;

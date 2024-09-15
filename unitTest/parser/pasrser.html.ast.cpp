@@ -37,7 +37,7 @@ bool VUnitTest(HTMLParser, AST) {
 </body>
 </html>)");
 	auto root      = AST.GetRoot();
-	auto headLabel = root->GetChild("html")->GetChild("head");
-	auto bodyLabel = root->GetChild("html")->GetChild("body");
-	return root->ExistChild("html") && headLabel->ExistChild("title") && bodyLabel->ExistChild("h1");
+	auto headLabel = root->GetChild("html").value()->GetChild("head");
+	auto bodyLabel = root->GetChild("html").value()->GetChild("body");
+	return root->ExistChild("html") && headLabel.value()->ExistChild("title") && bodyLabel.value()->ExistChild("h1");
 }

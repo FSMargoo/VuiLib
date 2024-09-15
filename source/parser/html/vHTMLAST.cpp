@@ -69,7 +69,19 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 	while (!_lexer.End()) {
 		auto node = new VHTMLASTNode;
 
-		_lexer.ExceptToken(VHTMLTokenType::LeftBracket);
+		auto peekToken = _lexer.NextToken();
+		if (peekToken.Type == VHTMLTokenType::Text || peekToken.Type == VHTMLTokenType::Id) {
+			auto contextNode = new VHTMLASTNode;
+			contextNode->_id = "$context";
+			contextNode->Context = peekToken.String;
+			node->_childNode.push_back(contextNode);
+			_root->_childNode.emplace_back(node);
+			continue;
+		}
+		else if (peekToken.Type != VHTMLTokenType::LeftBracket) {
+			throw VHTMLUnexpectedToken(peekToken.String, _lexer.GetLine(), _lexer.GetLine());
+		}
+
 		auto id	  = _lexer.ExceptToken(VHTMLTokenType::Id);
 		node->_id = id.String;
 
@@ -80,6 +92,9 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 		bool								 slashEnd = false;
 		while (!_lexer.End()) {
 			auto token = _lexer.NextToken();
+			if (token.Type == VHTMLTokenType::Split) {
+				continue;
+			}
 			if (token.Type == VHTMLTokenType::Slash) {
 				slashEnd = true;
 				break;
@@ -93,22 +108,27 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			_lexer.ExceptToken(VHTMLTokenType::Equal);
 			auto value = _lexer.ExceptToken(VHTMLTokenType::String);
 
-			property.insert({token.String, value.String});
+			property.insert({token.String, value.String.subtext(1, value.String.size() - 2)});
 		}
 
 		node->Property = property;
 
 		if (!slashEnd) {
 			auto token = _lexer.NextToken();
+			VHTMLASTNode* contextNode = nullptr;
 			if (token.Type == VHTMLTokenType::Text) {
-				node->Context = token.String;
-				token		  = _lexer.ExceptToken(VHTMLTokenType::LeftBracket);
+				contextNode = new VHTMLASTNode;
+				contextNode->_id = "$context";
+				contextNode->Context = token.String;
+				token = _lexer.ExceptToken(VHTMLTokenType::LeftBracket);
 			}
 
 			OString						 context = token.String;
 			int							 level	 = 1;
 			bool						 inEnd	 = false;
 			std::vector<VHTMLLexerToken> tokenList;
+
+			_lexer.SetCastingIgnore(true);
 			while (true) {
 				token = _lexer.NextToken();
 				if (token.Type == VHTMLTokenType::End) {
@@ -135,6 +155,7 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 
 				tokenList.emplace_back(token);
 			}
+			_lexer.SetCastingIgnore(false);
 
 			for (auto &slice : tokenList) {
 				context.append(slice.String);
@@ -146,6 +167,9 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 			if (context != "<") {
 				std::unique_ptr<VHTMLAST> AST = std::make_unique<VHTMLAST>(context);
 				node->_childNode			  = std::move(AST->_root->_childNode);
+			}
+			if (contextNode != nullptr) {
+				node->_childNode.insert(node->_childNode.begin(), contextNode);
 			}
 		}
 

@@ -29,7 +29,7 @@
 
 #include <include/base/vBase.h>
 
-class VHTMLInvalidEscapeCharacter {
+class VHTMLInvalidEscapeCharacter : public std::exception {
 public:
 	VHTMLInvalidEscapeCharacter(const OString &Character);
 

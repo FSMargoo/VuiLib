@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2023~Now Margoo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,15 +27,21 @@
 
 #include <include/control/button/vPushButton.h>
 
-VPushButton::VPushButton(VObject *Parent, const OString &Text) : VAbstractButton(Parent) {
+VPushButton::VPushButton(VObject *Parent, const OString &Text) : VAbstractButton() {
 	InitProperty(Text);
+
+	SetParent(Parent);
 }
 VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, const OString &Text)
-	: VAbstractButton(Parent, Width, Height) {
+	: VAbstractButton(Width, Height) {
 	InitProperty(Text);
+
+	SetParent(Parent);
 }
 void VPushButton::SetPlainText(const OString &Text) {
-	_text->_value = Text;
+	_text->_value = ostr::format("<html>{}</html>", Text);
+	delete _AST;
+	_AST = new VHTMLAST(_text->_value);
 }
 OString VPushButton::GetPlainText() const {
 	return _text->_value;
@@ -44,4 +50,40 @@ void VPushButton::InitProperty(const OString &Text) {
 	auto text = std::make_unique<VStringProperty>(Text);
 	RegisterProperty("text", std::move(text));
 	_text = GetPropertyValue<VStringProperty>("text");
+
+	// <font|color="#ff0000"|face="Times New Roman">{}</font>
+	_text->_value = ostr::format(OString::from_wide(LR"(
+	<html>
+		Let&nbsp;test&nbsp;the&nbsp;rendering:<font|face="Times New Roman"><br></br>
+			<h1>
+				<center>
+					<italic>
+						g
+					</italic>
+					(
+					<italic>
+						x,y
+					</italic>
+					)
+					=
+					<italic>
+						<font|color="#00ffff"|face="Times New Roman">
+							xy
+						</font>
+					</italic>
+				</center>
+			</h1>
+		</font>
+	</html>)"), Text);
+	_AST = new VHTMLAST(_text->_value);
+}
+void VPushButton::OnPaint(sk_sp<SkSurface> &Surface) {
+	VRect bound{ 0, 0, GetWidth(), GetHeight() };
+
+	auto canvas = Surface->getCanvas();
+	VRichTextRenderer renderer(_AST);
+
+	renderer.Render(canvas, bound);
+
+	canvas->flush();
 }

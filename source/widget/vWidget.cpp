@@ -125,20 +125,20 @@ void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
 	sk_sp<VRenderContext> glContext = sk_make_sp<VRenderContext, const sk_sp<VRenderInterface> &>(GLInterface);
 	sk_sp<VSurface>		  glSurface =
 		sk_make_sp<VSurface, const sk_sp<VRenderTarget> &, const sk_sp<VRenderContext> &>(glRenderTarget, glContext);
-	OnPaint(glSurface);
+	OnPaint(glSurface->GetNativeSurface());
 	for (auto &object : _childList) {
-		auto accessibleObject = dynamic_cast<VWidget *>(object);
+		auto accessibleObject = dynamic_cast<VObject *>(object);
 		accessibleObject->OnMessage(Message, glSurface);
 	}
 
-	auto canvas = glSurface->GetNativeSurface()->getCanvas();
-	glSurface->GetNativeSurface()->draw(canvas, 0, 0);
+	// auto canvas = glSurface->GetNativeSurface()->getCanvas();
+	// glSurface->GetNativeSurface()->draw(canvas, 0, 0);
 	glContext->GetNativeContext()->flushAndSubmit();
 
 	glfwSwapBuffers(_glfwWindow);
 }
-void VWidget::OnPaint(sk_sp<VSurface> &Surface) {
-	auto canvas = Surface->GetNativeSurface()->getCanvas();
+void VWidget::OnPaint(sk_sp<SkSurface> &Surface) {
+	auto canvas = Surface->getCanvas();
 
 	canvas->clear(_windowBackgroundColor->_value);
 	canvas->flush();

@@ -121,7 +121,7 @@ private:
 
 private:
 	void OnFinalMessage(VBaseMessage *Message) override;
-	void OnPaint(sk_sp<VSurface> &Surface) override;
+	void OnPaint(sk_sp<SkSurface> &Surface) override;
 
 private:
 	/**

@@ -27,15 +27,12 @@
 
 #include <include/control/button/vAbstractButton.h>
 
-VAbstractButton::VAbstractButton(VObject *Parent) : VObject(Parent) {
-	InitAbstractButton(Parent, 80, 20);
+VAbstractButton::VAbstractButton() {
+	InitAbstractButton(80, 20);
 }
-VAbstractButton::VAbstractButton(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
-	InitAbstractButton(Parent, Width, Height);
+VAbstractButton::VAbstractButton(const int &Width, const int &Height) : VObject(nullptr) {
+	InitAbstractButton(Width, Height);
 }
-void VAbstractButton::InitAbstractButton(VObject *Parent, const int &Width, const int &Height) {
+void VAbstractButton::InitAbstractButton(const int &Width, const int &Height) {
 	Resize(Width, Height);
-	if (Parent == nullptr) {
-		throw std::logic_error("The parent should not be nullptr!");
-	}
 }

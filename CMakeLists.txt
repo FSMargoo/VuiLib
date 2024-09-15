@@ -78,6 +78,7 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         include/widget/vMainWindow.h
         source/widget/vMainWindow.cpp
         include/base/message/vKeyMap.h
+        include/control/button/vPushButton.h
         source/control/button/vPushButton.cpp
         include/control/button/vAbstractButton.h
         source/control/button/vAbstractButton.cpp
@@ -291,3 +292,13 @@ include_directories(./third/SkiaM101Binary)
 include_directories(./third/glad/include)
 
 target_link_libraries(Demo_CreateWidget VStaticLib)
+
+add_executable(Demo_SimpleButton demo/SimpleButton/main.cpp)
+
+target_include_directories(Demo_SimpleButton PUBLIC ./include)
+target_include_directories(Demo_SimpleButton PUBLIC ./)
+target_include_directories(Demo_SimpleButton PUBLIC ./third)
+target_include_directories(Demo_SimpleButton PUBLIC ./third/SkiaM101Binary)
+target_include_directories(Demo_SimpleButton PUBLIC ./third/glad/include)
+
+target_link_libraries(Demo_SimpleButton VStaticLib)

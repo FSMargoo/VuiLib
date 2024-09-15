@@ -21,35 +21,18 @@
  */
 
 /**
- * \file base.object.property.h
- * \brief The unit test module for object property module
+ * \file main.cpp
+ * \brief A demo in VUILib for just a simple button creation
  */
 
-#pragma once
+#include <include/widget/vMainWindow.h>
+#include <include/control/button/vPushButton.h>
 
-#include <include/base/object/vObjectProperty.h>
-#include <include/base/object/vObject.h>
-#include <include/base/test/vTest.h>
+int main() {
+	VApplication application;
+	VMainWindow  window(&application, 640, 480, "Hello, VUILib");
 
-class __VObjectTestObject : public VObject {
-public:
-	__VObjectTestObject() {
-		auto intDefaultPtr = std::make_unique<VIntProperty>();
-		auto intValuePtr = std::make_unique<VIntProperty>(1);
+	VPushButton button(&window, 400, 100, "Hello World!");
 
-		RegisterProperty<VIntProperty>("intDefault", std::move(intDefaultPtr));
-		RegisterProperty<VIntProperty>("intValue", std::move(intValuePtr));
-	}
-	~__VObjectTestObject() override {
-
-	}
-
-public:
-	void OnPaint(sk_sp<SkSurface> &Surface) override {
-
-	}
-};
-
-bool VUnitTest(ObjectProperty, Create);
-bool VUnitTest(ObjectProperty, Read);
-bool VUnitTest(ObjectProperty, MemoryLeak);
+	return application.Run();
+}

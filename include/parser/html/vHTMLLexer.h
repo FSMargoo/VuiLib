@@ -97,7 +97,8 @@ enum class VHTMLTokenType {
 	Slash,
 	End,
 	Id,
-	Invalid
+	Invalid,
+	Split
 };
 
 /**
@@ -158,6 +159,11 @@ public:
 	 * @return If true, the lexer meeting the end of the code, nor false
 	 */
 	[[nodiscard]] bool End() const;
+	/**
+	 * Set the casting ignore status
+	 * @param Status If the status is true, ignore any casting
+	 */
+	void SetCastingIgnore(const bool &Status);
 
 private:
 	/**
@@ -224,8 +230,10 @@ private:
 	}
 
 private:
+	bool			_ignoreCasting;
 	bool			_inSlash;
 	bool			_inContext;
+	bool 			_inLabelLexer;
 	OString			_code;
 	int				_position;
 	int				_line;

@@ -31,9 +31,11 @@ VObject::VObject() : _parent(nullptr) {
 	InitGeneralProperty();
 }
 VObject::VObject(VObject *Parent) : _parent(Parent) {
-	AdaptParent(Parent);
-
 	InitGeneralProperty();
+
+	if (Parent != nullptr) {
+		Parent->_childList.emplace_back(this);
+	}
 }
 void VObject::SetParent(VObject *Parent) {
 	if (Parent == _parent) {
@@ -53,7 +55,7 @@ void VObject::RaiseTop() {
 								  _parent->_childList.end());
 		_parent->_childList.emplace_back(this);
 
-		RepaintOnySelf();
+		RepaintOnSelf();
 	} else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
 	}
@@ -65,7 +67,7 @@ void VObject::RaiseLowest() {
 								  _parent->_childList.end());
 		_parent->_childList.insert(_parent->_childList.begin(), this);
 
-		RepaintOnySelf();
+		RepaintOnSelf();
 	} else {
 		throw std::logic_error("The parent pointer should not be nullptr!");
 	}
@@ -86,7 +88,7 @@ void VObject::RaiseUnder(const VObject *Target) {
 
 		_parent->_childList.insert(where, this);
 
-		RepaintOnySelf();
+		RepaintOnSelf();
 	} else {
 		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same "
 							   "parent with this object!");
@@ -107,7 +109,7 @@ void VObject::RaiseUpper(const VObject *Target) {
 		}
 		_parent->_childList.insert(where, this);
 
-		RepaintOnySelf();
+		RepaintOnSelf();
 	} else {
 		throw std::logic_error("The parent pointer should not be nullptr, and the target object should have the same "
 							   "parent with this object!");
@@ -116,7 +118,7 @@ void VObject::RaiseUpper(const VObject *Target) {
 void VObject::Resize(const int &Width, const int &Height) {
 	_bound->_value.Resize(Width, Height);
 
-	RepaintOnySelf();
+	RepaintOnSelf();
 }
 void VObject::Move(const int &X, const int &Y) {
 	auto width	= _bound->_value.GetWidth();
@@ -124,17 +126,17 @@ void VObject::Move(const int &X, const int &Y) {
 
 	_bound->_value = {X, Y, X + width, Y + height};
 
-	RepaintOnySelf();
+	RepaintOnSelf();
 }
 void VObject::Show() {
 	_visible->_value = true;
 
-	RepaintOnySelf();
+	RepaintOnSelf();
 }
 void VObject::Hide() {
 	_visible->_value = false;
 
-	RepaintOnySelf();
+	RepaintOnSelf();
 }
 void VObject::SetDisabled(const bool &Status) {
 	_disable->_value = Status;
@@ -154,6 +156,18 @@ const int &VObject::GetX() const {
 const int &VObject::GetY() const {
 	return _bound->_value.GetTop();
 }
+void VObject::SetWidth(const int &Width) {
+	_bound->_value.SetWidth(Width);
+}
+const int &VObject::GetWidth() const {
+	return _bound->_value.GetWidth();
+}
+void VObject::SetHeight(const int &Height) {
+	return _bound->_value.SetHeight(Height);
+}
+const int &VObject::GetHeight() const {
+	return _bound->_value.GetHeight();
+}
 void VObject::UploadMessage(VBaseMessage *Message) {
 	if (_parent != nullptr) {
 		_parent->UploadMessage(Message);
@@ -161,7 +175,7 @@ void VObject::UploadMessage(VBaseMessage *Message) {
 		OnFinalMessage(Message);
 	}
 }
-void VObject::RepaintOnySelf() {
+void VObject::RepaintOnSelf() {
 	auto message = new VRepaintMessage(nullptr, _bound->_value);
 	UploadMessage(message);
 }
@@ -183,18 +197,19 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surfac
 	/**
 	 * Draw the context the relative surface
 	 */
-	auto subSkSurface = Surface->GetNativeSurface()->makeSurface(bound.GetWidth(), bound.GetHeight());
-	auto subSurface = sk_make_sp<VSurface, sk_sp<SkSurface> &>(subSkSurface);
+	auto subSurface = Surface->GetNativeSurface()->makeSurface(bound.GetWidth(), bound.GetHeight());
 
 	OnPaint(subSurface);
 
 	for (auto &object : _childList) {
 		const auto leftTop = object->_bound->_value.GetLeftTopPoint();
-		Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), leftTop.GetX(), leftTop.GetY());
+		Surface->GetNativeSurface()->draw(subSurface->getCanvas(), leftTop.GetX(), leftTop.GetY());
 	}
 
 	auto point = bound.GetLeftTopPoint();
-	Surface->GetNativeSurface()->draw(subSurface->GetNativeSurface()->getCanvas(), point.GetX(), point.GetY());
+	auto image = subSurface->makeImageSnapshot();
+	Surface->GetNativeSurface()->getCanvas()->drawImage(image, point.GetX(), point.GetY());
+	// Surface->GetNativeSurface()->draw(subSurface->getCanvas(), point.GetX(), point.GetY());
 }
 bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 	const auto bound = _bound->_value;
@@ -297,14 +312,14 @@ void VObject::RemoveParent(VObject *OldParent) {
 		OldParent->_childList.erase(std::remove_if(OldParent->_childList.begin(), OldParent->_childList.end(),
 												   [this](VObject *Object) { return Object == this; }),
 									OldParent->_childList.end());
-		RepaintOnySelf();
+		RepaintOnSelf();
 	}
 }
 void VObject::AdaptParent(VObject *Parent) {
 	if (Parent != nullptr) {
 		Parent->_childList.emplace_back(this);
 
-		RepaintOnySelf();
+		RepaintOnSelf();
 	}
 }
 void VObject::InitGeneralProperty() {

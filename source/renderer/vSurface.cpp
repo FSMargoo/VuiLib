@@ -29,7 +29,7 @@
 
 VSurface::VSurface(const int &Width, const int &Height) : _surface(SkSurface::MakeRasterN32Premul(Width, Height)) {
 }
-VSurface::VSurface(sk_sp<SkSurface> &Surface) : _surface(Surface) {
+VSurface::VSurface(sk_sp<SkSurface> &&Surface) : _surface(std::move(Surface)) {
 
 }
 VSurface::VSurface(const sk_sp<VRenderTarget> &RenderTarget, const sk_sp<VRenderContext> &Context) {

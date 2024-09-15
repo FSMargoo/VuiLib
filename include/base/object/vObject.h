@@ -32,6 +32,8 @@
 #include <include/renderer/vRenderTarget.h>
 #include <include/renderer/vSurface.h>
 
+class VPushButton;
+
 /**
  * The base class object for the drawable class in VUILib
  * Every object that is drawable in the user interface should inherit this class
@@ -152,6 +154,26 @@ public:
 	 * @return The Y position of the object
 	 */
 	const int &GetY() const;
+	/**
+	 * Set the width of the object
+	 * @param Get The width of the object
+	 */
+	void SetWidth(const int &Width);
+	/**
+	 * Get the width of the object;
+	 * @return The width of the object
+	 */
+	const int &GetWidth() const;
+	/**
+	 * Set the height of the object
+	 * @param Height The height of the object
+	 */
+	void SetHeight(const int &Height);
+	/**
+	 * Get the height of the object;
+	 * @return The height of the object
+	 */
+	const int &GetHeight() const;
 
 protected:
 	/**
@@ -163,11 +185,11 @@ protected:
 	 */
 	void UploadMessage(VBaseMessage *Message);
 	/**
-	 * Upload repaint message by the current object's geometery information
+	 * Upload repaint message by the current object's geometry information
 	 */
-	void RepaintOnySelf();
+	void RepaintOnSelf();
 
-protected:
+public:
 	/**
 	 * When the object received message, this function will be called
 	 * @param Message The message to be processed
@@ -188,7 +210,7 @@ protected:
 	 * @param Surface The surface will be created by the parent class and provide it
 	 * to this sub object.
 	 */
-	virtual void OnPaint(sk_sp<VSurface> &Surface) = 0;
+	virtual void OnPaint(sk_sp<SkSurface> &Surface) = 0;
 	/**
 	 * The virtual function that to be called when the property was changed
 	 */
