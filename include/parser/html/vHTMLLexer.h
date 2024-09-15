@@ -220,7 +220,7 @@ private:
 			if (codepoint == u'\0') {
 				break;
 			}
-			if ((codepoint != u' ' && codepoint != u'\t') || (codepoint != u'\t' && codepoint != u' ')) {
+			if (codepoint != u'\n' && codepoint != u'\t') {
 				return false;
 			}
 		}
@@ -229,7 +229,7 @@ private:
 		return true;
 	}
 
-private:
+public:
 	bool			_ignoreCasting;
 	bool			_inSlash;
 	bool			_inContext;

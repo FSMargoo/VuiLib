@@ -52,10 +52,21 @@ void VPushButton::InitProperty(const OString &Text) {
 	_text = GetPropertyValue<VStringProperty>("text");
 
 	// <font|color="#ff0000"|face="Times New Roman">{}</font>
-	_text->_value = ostr::format(OString::from_wide(LR"(
+	_text->_value = ostr::format(OString::from_utf8(R"(
 	<html>
-		Let&nbsp;test&nbsp;the&nbsp;rendering:<font|face="Times New Roman"><br></br>
-			<h1>
+		<h1>Let</h1>&nbsp;<font|face="Consolas"|size="29"|color="#e6c442">test</font>&nbsp;the&nbsp;
+		<font|color="#7dd0ff"|size="36"|face="Blackadder ITC">
+			<italic>
+				R
+			</italic>
+			ich&nbsp;<bold-italic>T</bold-italic>ext&nbsp;
+			<italic>
+				R
+			</italic>
+			endering:
+		</font>
+		<font|face="Times New Roman"><br></br>
+			<h2>
 				<center>
 					<italic>
 						g

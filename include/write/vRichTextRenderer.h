@@ -62,12 +62,22 @@ private:
 	 * @param EnglishFont The English font style
 	 * @param OtherFont The other font style
 	 * @param Color The text color
-	 * @param MeasureMode Return the M
+	 * @param LineCount The count of the paragraph
 	 * @return The new marching position
 	 */
-	std::tuple<SkScalar, SkScalar> RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas, const VRect &Bound,
+	std::tuple<SkScalar, SkScalar, int> RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas, const VRect &Bound,
 											  const SkScalar &X, const SkScalar &Y, const SkScalar &Size,
-											  SkFont &EnglishFont, SkFont &OtherFont, const SkColor &Color);
+											  SkFont &EnglishFont, SkFont &OtherFont, const SkColor &Color,
+											  const int &LineCount);
+
+private:
+	/**
+	 * Calculating the parameter which will be used in rendering process
+	 */
+	std::tuple<SkScalar, std::optional<int>> CalculatingRendering(VHTMLASTNode *Node, const VRect &Bound,
+																  const SkScalar &X, const SkScalar &Y,
+																  const SkScalar &Size, SkFont &EnglishFont,
+																  SkFont &OtherFont, const SkScalar &MaxHeight);
 
 private:
 	/**
@@ -81,6 +91,10 @@ private:
 private:
 	int _lineSpacing;
 	int _wordSpacing;
+
+private:
+	std::vector<int> _lineWidths;
+	std::vector<int> _lineHeights;
 
 private:
 	sk_sp<SkTypeface> _otherTypeFace;

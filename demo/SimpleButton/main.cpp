@@ -32,7 +32,7 @@ int main() {
 	VApplication application;
 	VMainWindow  window(&application, 640, 480, "Hello, VUILib");
 
-	VPushButton button(&window, 400, 100, "Hello World!");
+	VPushButton button(&window, 400, 400, "Hello World!");
 
 	return application.Run();
 }

@@ -25,8 +25,8 @@
  * \brief The HTML AST based rich text renderer in VUILib
  */
 
-#include <include/write/vRichTextRenderer.h>
 #include <include/renderer/vColorFactory.h>
+#include <include/write/vRichTextRenderer.h>
 
 #include <iostream>
 
@@ -51,42 +51,35 @@ void VRichTextRenderer::InitFontSet() {
 	_englishFont.setEdging(SkFont::Edging::kAntiAlias);
 	_otherFont.setEdging(SkFont::Edging::kAntiAlias);
 }
-void VRichTextRenderer::Render(SkCanvas *Canvas, const VRect &Bound) {
-	RenderNode(_ast->GetRoot(), Canvas, Bound, Bound.GetLeft(), Bound.GetTop(), 18, _englishFont, _otherFont,
-			   SkColorSetARGB(255, 255, 255, 255));
-}
-std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas,
-															 const VRect &Bound, const SkScalar &X, const SkScalar &Y,
-															 const SkScalar &Size, SkFont &EnglishFont,
-															 SkFont &OtherFont, const SkColor &Color) {
-	SkScalar x		   = X;
-	SkScalar y		   = Y;
-	SkScalar size	   = Size;
-	SkColor	 color	   = Color;
-	SkFont	 ENGFont   = EnglishFont;
-	SkFont	 otherFont = OtherFont;
-	sk_sp<SkTypeface> ENGTypeFace = ENGFont.refTypeface();
+std::tuple<SkScalar, std::optional<int>> VRichTextRenderer::CalculatingRendering(VHTMLASTNode *Node, const VRect &Bound,
+																				 const SkScalar &X, const SkScalar &Y,
+																				 const SkScalar &Size,
+																				 SkFont &EnglishFont, SkFont &OtherFont,
+																				 const SkScalar &MaxHeight) {
+	SkScalar		  x				= X;
+	SkScalar		  y				= Y;
+	SkScalar		  size			= Size;
+	SkFont			  ENGFont		= EnglishFont;
+	SkFont			  otherFont		= OtherFont;
+	sk_sp<SkTypeface> ENGTypeFace	= ENGFont.refTypeface();
 	sk_sp<SkTypeface> otherTypeFace = otherFont.refTypeface();
 
-	bool inCentering = false;
-
-	SkPaint	 textColor;
-	textColor.setColor(Color);
-	textColor.setAntiAlias(true);
 	if (Node->GetId() == "h1") {
-		size = 26;
+		size = 40;
 	}
 	if (Node->GetId() == "h2") {
-		size = 20;
+		size = 32;
 	}
 	if (Node->GetId() == "h3") {
-		size = 18;
+		size = 26;
 	}
 	if (Node->GetId() == "h4") {
-		size = 16;
+		size = 18;
 	}
 	if (Node->GetId() == "br") {
 		y += Size + _lineSpacing;
+		_lineWidths.push_back(x - Bound.GetLeft());
+		_lineHeights.push_back(MaxHeight);
 		x = Bound.GetLeft();
 	}
 	if (Node->GetId() == "bold") {
@@ -94,9 +87,10 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 		SkString otherFamilyName;
 		ENGTypeFace->getFamilyName(&familyName);
 		otherTypeFace->getFamilyName(&otherFamilyName);
-		SkFontStyle fontStyle = SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kUpright_Slant);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kUpright_Slant);
 
-		ENGTypeFace = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
 		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
 	}
 	if (Node->GetId() == "italic") {
@@ -104,9 +98,10 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 		SkString otherFamilyName;
 		ENGTypeFace->getFamilyName(&familyName);
 		otherTypeFace->getFamilyName(&otherFamilyName);
-		SkFontStyle fontStyle = SkFontStyle(SkFontStyle::kNormal_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kNormal_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
 
-		ENGTypeFace = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
 		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
 
 		ENGFont.setTypeface(ENGTypeFace);
@@ -117,9 +112,182 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 		SkString otherFamilyName;
 		ENGTypeFace->getFamilyName(&familyName);
 		otherTypeFace->getFamilyName(&otherFamilyName);
-		SkFontStyle fontStyle = SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
 
-		ENGTypeFace = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
+	}
+	if (Node->GetId() == "font") {
+		auto newSize		= Node->Property.find("size");
+		auto newFace		= Node->Property.find("face");
+		auto newEnglishFace = Node->Property.find("en-face");
+		auto newOtherFace	= Node->Property.find("otr-face");
+
+		auto ENGFontStyle	= ENGTypeFace->fontStyle();
+		auto otherFontStyle = ENGTypeFace->fontStyle();
+		if (newSize != Node->Property.end()) {
+			size = atoi(newSize->second.c_str());
+		}
+		if (newFace != Node->Property.end()) {
+			ENGTypeFace	  = SkTypeface::MakeFromName(newFace->second.c_str(), ENGFontStyle);
+			otherTypeFace = SkTypeface::MakeFromName(newFace->second.c_str(), otherFontStyle);
+
+			ENGFont.setTypeface(ENGTypeFace);
+			otherFont.setTypeface(otherTypeFace);
+		}
+		if (newEnglishFace != Node->Property.end()) {
+			ENGTypeFace = SkTypeface::MakeFromName(newEnglishFace->second.c_str(), ENGFontStyle);
+			ENGFont.setTypeface(ENGTypeFace);
+		}
+		if (newOtherFace != Node->Property.end()) {
+			otherTypeFace = SkTypeface::MakeFromName(newOtherFace->second.c_str(), otherFontStyle);
+			otherFont.setTypeface(otherTypeFace);
+		}
+	}
+
+	auto maxSize = std::max(size, MaxHeight);
+
+	ENGFont.setSize(size);
+	otherFont.setSize(size);
+
+	for (auto &node : *Node) {
+		if (node->GetId() == "$context") {
+			for (auto character : node->Context) {
+				if (y >= Bound.GetBottom()) {
+					_lineWidths.push_back(x - Bound.GetLeft());
+					_lineHeights.push_back(maxSize);
+
+					return {};
+				}
+
+				auto codePoint = (char32_t)character.get_codepoint();
+				if (codePoint == U'\0') {
+					break;
+				}
+				if (codePoint == U'\n' || codePoint == U'\t') {
+					y += Size;
+					_lineWidths.push_back(x - Bound.GetLeft());
+					_lineHeights.push_back(maxSize);
+					x = Bound.GetLeft();
+
+					continue;
+				}
+
+				SkFont font;
+				if ((codePoint >= U'a' && codePoint <= U'z') || (codePoint >= U'A' && codePoint <= U'Z')) {
+					font = ENGFont;
+				} else {
+					font = otherFont;
+				}
+
+				auto marchX = x + font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32);
+				if (marchX >= Bound.GetRight()) {
+					_lineWidths.push_back(x - Bound.GetLeft());
+					_lineHeights.push_back(maxSize);
+					maxSize = size;
+
+					x = Bound.GetLeft();
+					y += Size + _lineSpacing;
+				}
+
+				x += font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32) + _wordSpacing;
+			}
+
+			continue;
+		}
+
+		auto value = CalculatingRendering(node, Bound, x, y, size, ENGFont, otherFont, maxSize);
+		if (!std::get<1>(value).has_value()) {
+			return {};
+		}
+		x = std::get<1>(value).value();
+
+		maxSize = std::max(std::get<0>(value), maxSize);
+	}
+
+	return {maxSize, x};
+}
+void VRichTextRenderer::Render(SkCanvas *Canvas, const VRect &Bound) {
+	auto value =
+		CalculatingRendering(_ast->GetRoot(), Bound, Bound.GetLeft(), Bound.GetTop(), 18, _englishFont, _otherFont, 0);
+	if (std::get<1>(value).has_value()) {
+		_lineWidths.push_back(std::get<1>(value).value());
+		_lineHeights.push_back(std::get<0>(value));
+	}
+	RenderNode(_ast->GetRoot(), Canvas, Bound, Bound.GetLeft(), Bound.GetTop(), 18, _englishFont, _otherFont,
+			   SkColorSetARGB(255, 255, 255, 255), 0);
+}
+std::tuple<SkScalar, SkScalar, int> VRichTextRenderer::RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas, const VRect &Bound,
+															 const SkScalar &X, const SkScalar &Y, const SkScalar &Size,
+															 SkFont &EnglishFont, SkFont &OtherFont,
+															 const SkColor &Color, const int &LineCount) {
+	SkScalar		  x				= X;
+	SkScalar		  y				= Y;
+	SkScalar		  size			= Size;
+	SkColor			  color			= Color;
+	SkFont			  ENGFont		= EnglishFont;
+	SkFont			  otherFont		= OtherFont;
+	int				  lineCount		= LineCount;
+	sk_sp<SkTypeface> ENGTypeFace	= ENGFont.refTypeface();
+	sk_sp<SkTypeface> otherTypeFace = otherFont.refTypeface();
+
+	auto baseHeight = _lineHeights[lineCount];
+
+	SkPaint textColor;
+	textColor.setColor(Color);
+	textColor.setAntiAlias(true);
+	if (Node->GetId() == "h1") {
+		size = 40;
+	}
+	if (Node->GetId() == "h2") {
+		size = 32;
+	}
+	if (Node->GetId() == "h3") {
+		size = 26;
+	}
+	if (Node->GetId() == "h4") {
+		size = 18;
+	}
+	if (Node->GetId() == "br") {
+		y += baseHeight + _lineSpacing;
+		x = Bound.GetLeft();
+		++lineCount;
+	}
+	if (Node->GetId() == "bold") {
+		SkString familyName;
+		SkString otherFamilyName;
+		ENGTypeFace->getFamilyName(&familyName);
+		otherTypeFace->getFamilyName(&otherFamilyName);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kUpright_Slant);
+
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
+	}
+	if (Node->GetId() == "italic") {
+		SkString familyName;
+		SkString otherFamilyName;
+		ENGTypeFace->getFamilyName(&familyName);
+		otherTypeFace->getFamilyName(&otherFamilyName);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kNormal_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
+
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
+		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
+
+		ENGFont.setTypeface(ENGTypeFace);
+		otherFont.setTypeface(otherTypeFace);
+	}
+	if (Node->GetId() == "bold-italic") {
+		SkString familyName;
+		SkString otherFamilyName;
+		ENGTypeFace->getFamilyName(&familyName);
+		otherTypeFace->getFamilyName(&otherFamilyName);
+		SkFontStyle fontStyle =
+			SkFontStyle(SkFontStyle::kBold_Weight, SkFontStyle::kNormal_Width, SkFontStyle::kItalic_Slant);
+
+		ENGTypeFace	  = SkTypeface::MakeFromName(familyName.c_str(), fontStyle);
 		otherTypeFace = SkTypeface::MakeFromName(otherFamilyName.c_str(), fontStyle);
 	}
 	if (Node->GetId() == "font") {
@@ -129,7 +297,7 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 		auto newEnglishFace = Node->Property.find("en-face");
 		auto newOtherFace	= Node->Property.find("otr-face");
 
-		auto ENGFontStyle = ENGTypeFace->fontStyle();
+		auto ENGFontStyle	= ENGTypeFace->fontStyle();
 		auto otherFontStyle = ENGTypeFace->fontStyle();
 		if (newSize != Node->Property.end()) {
 			size = atoi(newSize->second.c_str());
@@ -139,7 +307,7 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 			textColor.setColor(color);
 		}
 		if (newFace != Node->Property.end()) {
-			ENGTypeFace = SkTypeface::MakeFromName(newFace->second.c_str(), ENGFontStyle);
+			ENGTypeFace	  = SkTypeface::MakeFromName(newFace->second.c_str(), ENGFontStyle);
 			otherTypeFace = SkTypeface::MakeFromName(newFace->second.c_str(), otherFontStyle);
 
 			ENGFont.setTypeface(ENGTypeFace);
@@ -155,7 +323,7 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 		}
 	}
 	if (Node->GetId() == "center") {
-		inCentering = true;
+		x = Bound.GetWidth() / 2 - _lineWidths[lineCount] / 2;
 	}
 
 	ENGFont.setSize(size);
@@ -173,7 +341,8 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 					break;
 				}
 				if (codePoint == U'\n' || codePoint == U'\t') {
-					y += Size;
+					y += baseHeight + _lineSpacing;
+					++lineCount;
 					continue;
 				}
 
@@ -184,21 +353,23 @@ std::tuple<SkScalar, SkScalar> VRichTextRenderer::RenderNode(VHTMLASTNode *Node,
 					font = otherFont;
 				}
 
-				auto testX = x + font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32);
+				auto testX = x + font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32) + _wordSpacing;
 				if (testX >= Bound.GetRight()) {
 					x = Bound.GetLeft();
-					y += Size + _lineSpacing;
+					y += baseHeight + _lineSpacing;
+					++lineCount;
 				}
 
-				Canvas->drawSimpleText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32, x, y + font.getSize(), font, textColor);
+				Canvas->drawSimpleText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32, x, y + baseHeight,
+									   font, textColor);
 				x += font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32) + _wordSpacing;
 			}
 
 			continue;
 		}
 
-		std::tie(x, y) = RenderNode(node, Canvas, Bound, x, y, size, ENGFont, otherFont, color);
+		std::tie(x, y, lineCount) = RenderNode(node, Canvas, Bound, x, y, size, ENGFont, otherFont, color, lineCount);
 	}
 
-	return {x, y};
+	return {x, y, lineCount};
 }

@@ -78,6 +78,9 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 	VHTMLTokenType type = VHTMLTokenType::Invalid;
 	while (true) {
 		auto character = char32_t(_code[_position]);
+		if (_position >= _code.size()) {
+			return {.Type = type, .String = string};
+		}
 		switch (character) {
 		case u8'|': {
 			if (type != VHTMLTokenType::Invalid) {
@@ -115,6 +118,11 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 			break;
 		}
 		case u8'&': {
+			if (_inContext) {
+				type = VHTMLTokenType::Text;
+			} else {
+				type = VHTMLTokenType::Id;
+			}
 			OString escape = "&";
 			while (true) {
 				++_position;

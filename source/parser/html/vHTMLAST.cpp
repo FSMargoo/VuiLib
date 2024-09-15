@@ -116,7 +116,7 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 		if (!slashEnd) {
 			auto token = _lexer.NextToken();
 			VHTMLASTNode* contextNode = nullptr;
-			if (token.Type == VHTMLTokenType::Text) {
+			if (token.Type == VHTMLTokenType::Text || token.Type == VHTMLTokenType::Id) {
 				contextNode = new VHTMLASTNode;
 				contextNode->_id = "$context";
 				contextNode->Context = token.String;
