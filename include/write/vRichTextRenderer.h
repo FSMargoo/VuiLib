@@ -27,8 +27,8 @@
 
 #pragma once
 
-#include <include/renderer/vRendererBase.h>
 #include <include/parser/html/vHTMLAST.h>
+#include <include/renderer/vRendererBase.h>
 
 /**
  * The rich text renderer in VUILib
@@ -42,8 +42,43 @@ public:
 	explicit VRichTextRenderer(VHTMLAST *AST);
 
 public:
-	
+	/**
+	 * Render the rich text on the canvas
+	 * @param Canvas The reference of the canvas
+	 * @param Bound The bound of the text area
+	 */
+	void Render(sk_sp<SkCanvas> &Canvas, const SkRect &Bound);
+
+private:
+	/**
+	 * Render the node on the specified position
+	 * @param Node The AST node to be rendered
+	 * @param Canvas The target canvas to be rendered on
+	 * @param Bound The bound of the text area
+	 * @param X The specified X position
+	 * @param Y The specified Y position
+	 * @param Size The text size
+	 * @param EnglishFont The English font style
+	 * @param OtherFont The other font style
+	 * @param Color The text color
+	 * @return The new marching position
+	 */
+	std::tuple<SkScalar, SkScalar> RenderNode(VHTMLASTNode *Node, sk_sp<SkCanvas> &Canvas, const SkRect &Bound,
+											  const SkScalar &X, const SkScalar &Y, const SkScalar &Size,
+											  SkFont &EnglishFont, SkFont &OtherFont, const SkColor &Color);
+
+private:
+	/**
+	 * Init the renderer default font set
+	 */
+	void InitFontSet();
 
 private:
 	VHTMLAST *_ast;
+
+private:
+	sk_sp<SkTypeface> _otherTypeFace;
+	sk_sp<SkTypeface> _englishTypeFace;
+	SkFont			  _englishFont;
+	SkFont			  _otherFont;
 };

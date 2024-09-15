@@ -71,20 +71,27 @@ public:
 	 * @return If the child dose not existing, it will return nullptr, nor
 	 * returning the readonly pointer to children
 	 */
-	[[nodiscard]] const VHTMLASTNode *GetChild(const OString &Id) const;
+	[[nodiscard]] std::optional<const VHTMLASTNode*> GetChild(const OString &Id) const;
 	/**
 	 * Get the beginning iterator of the children list
 	 * @return The beginning iterator
 	 */
 	[[nodiscard]] auto begin() const {
-		return Property.begin();
+		return _childNode.begin();
 	}
 	/**
 	 * Get the end iterator of the children list
 	 * @return The end iterator
 	 */
 	[[nodiscard]] auto end() const {
-		return Property.end();
+		return _childNode.end();
+	}
+	/**
+	 * Get the id of the HTML AST node
+	 * @return The id of the HTML AST node
+	 */
+	[[nodiscard]] const OString GetId() const {
+		return _id;
 	}
 
 public:

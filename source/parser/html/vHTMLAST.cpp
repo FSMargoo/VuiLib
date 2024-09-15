@@ -46,14 +46,14 @@ bool VHTMLASTNode::ExistChild(const OString &Id) const {
 
 	return false;
 }
-const VHTMLASTNode *VHTMLASTNode::GetChild(const OString &Id) const {
+std::optional<const VHTMLASTNode*> VHTMLASTNode::GetChild(const OString &Id) const {
 	for (auto &object : _childNode) {
 		if (object->_id == Id) {
 			return object;
 		}
 	}
 
-	return nullptr;
+	return {};
 }
 VHTMLAST::VHTMLAST(const OString &Code) : _lexer(Code) {
 	GenerateAST();
