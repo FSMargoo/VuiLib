@@ -29,6 +29,7 @@
 
 VWidget::VWidget(VApplication *Application, const int &Width, const int &Height, const OString &Title)
 	: VObject(nullptr), _application(Application), _focusingObject(nullptr), _focusLocking(false) {
+	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), nullptr, nullptr);
 	if (!_glfwWindow) {
 		throw VGLFWFailure("Failed to create GLFW window!");
@@ -46,6 +47,7 @@ VWidget::VWidget(VApplication *Application, const int &Width, const int &Height,
 		throw VGLFWInvalidInstance("VMonitor");
 	}
 
+	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 	_glfwWindow = glfwCreateWindow(Width, Height, Title.c_str(), Monitor._glfwMonitor, nullptr);
 	if (!_glfwWindow) {
 		throw VGLFWFailure("Failed to create GLFW window!");

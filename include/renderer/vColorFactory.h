@@ -54,6 +54,15 @@ public:
 			throw std::logic_error(errorFormat);
 		}
 		auto hexString = length == 7 ? Color.subview(1, 6) : Color;
+		OString standardString;
+		for (auto count = 0; count < hexString.size(); ++count) {
+			auto character = char32_t(hexString[count]);
+			if (character >= 'A' && character <= 'Z') {
+				character += 32;
+			}
+
+			standardString += character;
+		}
 
 		auto rString = hexString.subview(0, 2);
 		auto gString = hexString.subview(2, 2);

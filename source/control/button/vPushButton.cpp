@@ -38,10 +38,19 @@ VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, c
 
 	SetParent(Parent);
 }
-void VPushButton::SetPlainText(const OString &Text) {
-	_text->_value = ostr::format("<html><center>{}</center></html>", VHTMLLexer::ConvertToPlainText(Text));
+void VPushButton::SetRichText(const OString &Text) {
+	_text->_value = ostr::format("<html><vcenter><center>{}</center></vcenter></html>", Text);
 	delete _AST;
 	_AST = new VHTMLAST(_text->_value);
+
+	RepaintOnSelf();
+}
+void VPushButton::SetPlainText(const OString &Text) {
+	_text->_value = ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
+	delete _AST;
+	_AST = new VHTMLAST(_text->_value);
+
+	RepaintOnSelf();
 }
 OString VPushButton::GetPlainText() const {
 	return _text->_value;

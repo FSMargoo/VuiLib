@@ -56,7 +56,12 @@ public:
 
 public:
 	/**
-	 * Set the plain text of the button, which does not support the rich text
+	 * Set the rich text context of the button
+	 * @param Text The rich text code
+	 */
+	void SetRichText(const OString &Text);
+	/**
+	 * Set the plain text of the button, which doesn't support the rich text
 	 * @param Text The text in plain form
 	 */
 	void SetPlainText(const OString &Text);

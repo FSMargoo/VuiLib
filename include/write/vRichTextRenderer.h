@@ -27,9 +27,7 @@
 
 #pragma once
 
-#include <include/base/geometry/vRect.h>
-#include <include/parser/html/vHTMLAST.h>
-#include <include/renderer/vRendererBase.h>
+#include <include/write/vRichTextNativeLabel.h>
 
 /**
  * The rich text renderer in VUILib
@@ -50,61 +48,49 @@ public:
 	 */
 	void Render(SkCanvas *Canvas, const VRect &Bound);
 
-private:
+public:
 	/**
-	 * Render the node on the specified position
-	 * @param Node The AST node to be rendered
-	 * @param Canvas The target canvas to be rendered on
-	 * @param Bound The bound of the text area
-	 * @param X The specified X position
-	 * @param Y The specified Y position
-	 * @param Size The text size
-	 * @param EnglishFont The English font style
-	 * @param OtherFont The other font style
-	 * @param Color The text color
-	 * @param LineCount The count of the paragraph
-	 * @return The new marching position
+	 * Register a specified type label into the renderer
+	 * @tparam Type The type of the label interface
 	 */
-	std::tuple<SkScalar, SkScalar, int> RenderNode(VHTMLASTNode *Node, SkCanvas *Canvas, const VRect &Bound,
-											  const SkScalar &X, const SkScalar &Y, const SkScalar &Size,
-											  SkFont &EnglishFont, SkFont &OtherFont, const SkColor &Color,
-											  const int &LineCount);
-
-private:
-	/**
-	 * Calculating the parameter which will be used in rendering process
-	 */
-	std::tuple<SkScalar, std::optional<int>> CalculatingRendering(VHTMLASTNode *Node, const VRect &Bound,
-																  const SkScalar &X, const SkScalar &Y,
-																  const SkScalar &Size, SkFont &EnglishFont,
-																  SkFont &OtherFont, const SkScalar &MaxHeight);
+	template <class Type>
+		requires std::is_base_of_v<VRichTextLabelRendererInterface, Type>
+	void RegisterLabel() {
+		auto instance = new Type();
+		if (!_interfaceManager.contains(instance->GetID())) {
+			_interfaceManager.insert({instance->GetID(), instance});
+		}
+	}
 
 private:
 	/**
 	 * Init the renderer default font set
 	 */
 	void InitFontSet();
+	/**
+	 * Init the native label interface
+	 */
+	void InitLabels();
 
 private:
 	VHTMLAST *_ast;
 
 private:
-	int _lineSpacing;
-	int _wordSpacing;
+	SkScalar _lineSpace;
+	SkScalar _wordSpace;
 
 private:
-	std::vector<int> _lineWidths;
-	std::vector<int> _lineHeights;
+	std::vector<SkScalar> _lineWidths;
+	std::vector<SkScalar> _lineHeights;
 
 private:
 	sk_sp<SkTypeface> _otherTypeFace;
 	sk_sp<SkTypeface> _englishTypeFace;
 	SkFont			  _englishFont;
 	SkFont			  _otherFont;
+	SkColor			  _color;
+	SkScalar		  _size;
 
 private:
-	static constexpr SkScalar _H1Size = 40;
-	static constexpr SkScalar _H2Size = 32;
-	static constexpr SkScalar _H3Size = 26;
-	static constexpr SkScalar _H4Size = 18;
+	VRichTextLabelInterfaceManager _interfaceManager;
 };
