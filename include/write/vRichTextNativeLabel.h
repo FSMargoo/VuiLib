@@ -29,8 +29,8 @@
 
 #include <include/base/geometry/vRect.h>
 #include <include/parser/html/vHTMLAST.h>
-#include <include/renderer/vRendererBase.h>
 #include <include/renderer/vColorFactory.h>
+#include <include/renderer/vRendererBase.h>
 
 /**
  * The context structure for rich text renderer
@@ -53,6 +53,7 @@ struct VRichTextRendererContext {
 		Color			  = Object.Color;
 		WidthCollections  = Object.WidthCollections;
 		HeightCollections = Object.HeightCollections;
+		TempWidth		  = Object.TempWidth;
 
 		return *this;
 	}
@@ -62,6 +63,7 @@ struct VRichTextRendererContext {
 	SkScalar Y				= 0;
 	SkScalar Size			= 0;
 	SkScalar WordSpace		= 0;
+	SkScalar TempWidth		= 0;
 	SkScalar LineSpace		= 0;
 	SkScalar BaseLineHeight = 0;
 	VRect	 Bound{};
@@ -125,7 +127,7 @@ public:
 class VRichTextGeneralRenderer : public VRichTextLabelRendererInterface {
 public:
 	VRichTextRendererContext Render(VHTMLASTNode *Node, SkCanvas *Canvas, VRichTextRendererContext &Context,
-												   VRichTextLabelInterfaceManager &Manager) override;
+									VRichTextLabelInterfaceManager &Manager) override;
 	std::optional<VRichTextRendererContext> WidthMeasure(VHTMLASTNode *Node, const VRichTextRendererContext &Context,
 														 VRichTextLabelInterfaceManager &Manager) override;
 };
@@ -174,6 +176,32 @@ public:
 public:
 	OString GetID() override {
 		return "h4";
+	}
+};
+class VRichTextULabel : public VRichTextGeneralRenderer {
+public:
+	VRichTextRendererContext Render(VHTMLASTNode *Node, SkCanvas *Canvas, VRichTextRendererContext &Context,
+									VRichTextLabelInterfaceManager &Manager) override;
+	VRichTextRendererContext ContextMeasure(VHTMLASTNode *Node, const VRichTextRendererContext &Context) override {
+		return Context;
+	}
+
+public:
+	OString GetID() override {
+		return "u";
+	}
+};
+class VRichTextStrikeLabel : public VRichTextGeneralRenderer {
+public:
+	VRichTextRendererContext Render(VHTMLASTNode *Node, SkCanvas *Canvas, VRichTextRendererContext &Context,
+									VRichTextLabelInterfaceManager &Manager) override;
+	VRichTextRendererContext ContextMeasure(VHTMLASTNode *Node, const VRichTextRendererContext &Context) override {
+		return Context;
+	}
+
+public:
+	OString GetID() override {
+		return "strike";
 	}
 };
 class VRichTextBRLabel : public VRichTextGeneralRenderer {
@@ -228,6 +256,24 @@ public:
 public:
 	OString GetID() override {
 		return "center";
+	}
+};
+class VRichTextLeftLabel : public VRichTextGeneralRenderer {
+public:
+	VRichTextRendererContext ContextMeasure(VHTMLASTNode *Node, const VRichTextRendererContext &Context) override;
+
+public:
+	OString GetID() override {
+		return "left";
+	}
+};
+class VRichTextRightLabel : public VRichTextGeneralRenderer {
+public:
+	VRichTextRendererContext ContextMeasure(VHTMLASTNode *Node, const VRichTextRendererContext &Context) override;
+
+public:
+	OString GetID() override {
+		return "right";
 	}
 };
 class VRichTextVCenterLabel : public VRichTextGeneralRenderer {

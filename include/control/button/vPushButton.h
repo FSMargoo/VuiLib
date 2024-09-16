@@ -29,7 +29,6 @@
 
 #include <include/parser/html/vHTMLAST.h>
 #include <include/write/vRichTextRenderer.h>
-
 #include <include/control/button/vAbstractButton.h>
 
 /**

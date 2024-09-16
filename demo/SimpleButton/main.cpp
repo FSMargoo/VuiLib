@@ -32,8 +32,8 @@ int main() {
 	VApplication application;
 	VMainWindow  window(&application, 640, 480, "Hello, VUILib");
 
-	VPushButton button(&window, 400, 400, "Hello World!");
-	button.SetRichText(R"(<h2><font color="#23d96e" face="Times New Roman"><italic><h1>Hello</h1></italic>&nbsp;<bold>World</bold>&nbsp;<bold-italic>in</bold-italic>&nbsp;Rich&nbsp;Text!</font></h2>)");
+	VPushButton button(&window, 640, 400, "Hello World!");
+	button.SetRichText(R"(<h2><font color="#23d96e" face="Times New Roman"><italic><h1><left><strike border="4" color="#fdb9a2">Hello</strike></left></h1></italic>&nbsp;<center><bold><u color="#ff0000" border="3">World</u></bold>&nbsp;<bold-italic><strike>in</strike></bold-italic>&nbsp;Rich&nbsp;Text!</center></font></h2>)");
 
 	window.Show();
 

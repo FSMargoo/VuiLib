@@ -115,6 +115,10 @@ void VRichTextRenderer::InitLabels() {
 	RegisterLabel<VRichTextBoldLabel>();
 	RegisterLabel<VRichTextBoldItalicLabel>();
 	RegisterLabel<VRichTextFontLabel>();
+	RegisterLabel<VRichTextULabel>();
+	RegisterLabel<VRichTextStrikeLabel>();
 	RegisterLabel<VRichTextCenterLabel>();
+	RegisterLabel<VRichTextLeftLabel>();
+	RegisterLabel<VRichTextRightLabel>();
 	RegisterLabel<VRichTextVCenterLabel>();
 }
