@@ -82,19 +82,17 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 			return {.Type = type, .String = string};
 		}
 		switch (character) {
-		case u8'|': {
-			if (type != VHTMLTokenType::Invalid) {
+		case u8' ':
+		case u8'\t': {
+			if (_inLabelLexer && _ignoreCasting) {
+				string += character;
+			}
+			++_position;
+			if (type != VHTMLTokenType::Invalid && _inLabelLexer) {
 				_localToken = {.Type = type, .String = string};
 				return _localToken;
 			}
 
-			++_position;
-
-			return {.Type = VHTMLTokenType::Split, .String = "|"};
-		}
-		case u8' ':
-		case u8'\t': {
-			++_position;
 			break;
 		}
 		case u8'\"': {

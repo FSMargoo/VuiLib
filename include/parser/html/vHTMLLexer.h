@@ -165,6 +165,46 @@ public:
 	 */
 	void SetCastingIgnore(const bool &Status);
 
+public:
+	/**
+	 * Convert the specified text into plain text
+	 * @param Text The text to be converted
+	 * @return The text converted to the plain text
+	 */
+	static OString ConvertToPlainText(const OString &Text) {
+		OString string;
+		for (auto character : Text) {
+			switch (char32_t(character)) {
+			case u' ': {
+				string += "&nbsp;";
+				break;
+			}
+			case u'<': {
+				string += "&lt;";
+				break;
+			}
+			case u'>': {
+				string += "&gt;";
+				break;
+			}
+			case u'"': {
+				string += "&quot;";
+				break;
+			}
+			case u'\'': {
+				string += "&apos;";
+				break;
+			}
+			default: {
+				string += character;
+				break;
+			}
+			}
+		}
+
+		return string;
+	}
+
 private:
 	/**
 	 * Init the lexer status
@@ -229,7 +269,7 @@ private:
 		return true;
 	}
 
-public:
+private:
 	bool			_ignoreCasting;
 	bool			_inSlash;
 	bool			_inContext;

@@ -92,9 +92,6 @@ VHTMLASTNode *VHTMLAST::GenerateAST() {
 		bool								 slashEnd = false;
 		while (!_lexer.End()) {
 			auto token = _lexer.NextToken();
-			if (token.Type == VHTMLTokenType::Split) {
-				continue;
-			}
 			if (token.Type == VHTMLTokenType::Slash) {
 				slashEnd = true;
 				break;

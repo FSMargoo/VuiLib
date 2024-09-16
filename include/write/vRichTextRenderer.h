@@ -101,4 +101,10 @@ private:
 	sk_sp<SkTypeface> _englishTypeFace;
 	SkFont			  _englishFont;
 	SkFont			  _otherFont;
+
+private:
+	static constexpr SkScalar _H1Size = 40;
+	static constexpr SkScalar _H2Size = 32;
+	static constexpr SkScalar _H3Size = 26;
+	static constexpr SkScalar _H4Size = 18;
 };

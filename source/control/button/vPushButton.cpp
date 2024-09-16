@@ -39,7 +39,7 @@ VPushButton::VPushButton(VObject *Parent, const int &Width, const int &Height, c
 	SetParent(Parent);
 }
 void VPushButton::SetPlainText(const OString &Text) {
-	_text->_value = ostr::format("<html>{}</html>", Text);
+	_text->_value = ostr::format("<html><center>{}</center></html>", VHTMLLexer::ConvertToPlainText(Text));
 	delete _AST;
 	_AST = new VHTMLAST(_text->_value);
 }
@@ -51,47 +51,13 @@ void VPushButton::InitProperty(const OString &Text) {
 	RegisterProperty("text", std::move(text));
 	_text = GetPropertyValue<VStringProperty>("text");
 
-	// <font|color="#ff0000"|face="Times New Roman">{}</font>
-	_text->_value = ostr::format(OString::from_utf8(R"(
-	<html>
-		<h1>Let</h1>&nbsp;<font|face="Consolas"|size="29"|color="#e6c442">test</font>&nbsp;the&nbsp;
-		<font|color="#7dd0ff"|size="36"|face="Blackadder ITC">
-			<italic>
-				R
-			</italic>
-			ich&nbsp;<bold-italic>T</bold-italic>ext&nbsp;
-			<italic>
-				R
-			</italic>
-			endering:
-		</font>
-		<font|face="Times New Roman"><br></br>
-			<h2>
-				<center>
-					<italic>
-						g
-					</italic>
-					(
-					<italic>
-						x,y
-					</italic>
-					)
-					=
-					<italic>
-						<font|color="#00ffff"|face="Times New Roman">
-							xy
-						</font>
-					</italic>
-				</center>
-			</h1>
-		</font>
-	</html>)"), Text);
-	_AST = new VHTMLAST(_text->_value);
+	_text->_value = ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
+	_AST		  = new VHTMLAST(_text->_value);
 }
 void VPushButton::OnPaint(sk_sp<SkSurface> &Surface) {
-	VRect bound{ 0, 0, GetWidth(), GetHeight() };
+	VRect bound{0, 0, GetWidth(), GetHeight()};
 
-	auto canvas = Surface->getCanvas();
+	auto			  canvas = Surface->getCanvas();
 	VRichTextRenderer renderer(_AST);
 
 	renderer.Render(canvas, bound);

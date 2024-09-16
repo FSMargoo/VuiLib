@@ -65,16 +65,16 @@ std::tuple<SkScalar, std::optional<int>> VRichTextRenderer::CalculatingRendering
 	sk_sp<SkTypeface> otherTypeFace = otherFont.refTypeface();
 
 	if (Node->GetId() == "h1") {
-		size = 40;
+		size = _H1Size;
 	}
 	if (Node->GetId() == "h2") {
-		size = 32;
+		size = _H2Size;
 	}
 	if (Node->GetId() == "h3") {
-		size = 26;
+		size = _H3Size;
 	}
 	if (Node->GetId() == "h4") {
-		size = 18;
+		size = _H4Size;
 	}
 	if (Node->GetId() == "br") {
 		y += Size + _lineSpacing;
@@ -238,16 +238,16 @@ std::tuple<SkScalar, SkScalar, int> VRichTextRenderer::RenderNode(VHTMLASTNode *
 	textColor.setColor(Color);
 	textColor.setAntiAlias(true);
 	if (Node->GetId() == "h1") {
-		size = 40;
+		size = _H1Size;
 	}
 	if (Node->GetId() == "h2") {
-		size = 32;
+		size = _H2Size;
 	}
 	if (Node->GetId() == "h3") {
-		size = 26;
+		size = _H3Size;
 	}
 	if (Node->GetId() == "h4") {
-		size = 18;
+		size = _H4Size;
 	}
 	if (Node->GetId() == "br") {
 		y += baseHeight + _lineSpacing;
@@ -321,6 +321,14 @@ std::tuple<SkScalar, SkScalar, int> VRichTextRenderer::RenderNode(VHTMLASTNode *
 			otherTypeFace = SkTypeface::MakeFromName(newOtherFace->second.c_str(), otherFontStyle);
 			otherFont.setTypeface(otherTypeFace);
 		}
+	}
+	if (Node->GetId() == "vcenter") {
+		int heightSum = 0;
+		for (auto count = lineCount; count < _lineWidths.size(); ++count) {
+			heightSum += _lineHeights[count] + _lineSpacing;
+		}
+
+		y = y +  (Bound.GetBottom() - y) / 2 - heightSum / 2;
 	}
 	if (Node->GetId() == "center") {
 		x = Bound.GetWidth() / 2 - _lineWidths[lineCount] / 2;

@@ -82,7 +82,6 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/control/button/vPushButton.cpp
         include/control/button/vAbstractButton.h
         source/control/button/vAbstractButton.cpp
-        include/parser/html/vHTMLParser.h
         include/parser/html/vHTMLEscapeCharacter.h
         source/parser/html/vHTMLEscapeCharacter.cpp
         include/parser/html/vHTMLLexer.h
