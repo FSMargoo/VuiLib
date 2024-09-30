@@ -1,6 +1,0 @@
-# CMake generation dependency list for this directory.
-D:/.vcpkg-clion/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/share/cmake-3.29/Modules/FindDoxygen.cmake
-D:/.vcpkg-clion/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake
-D:/.vcpkg-clion/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/share/cmake-3.29/Modules/FindPackageMessage.cmake
-D:/VUILib/third/glfw/docs/CMakeLists.txt
-D:/VUILib/third/glfw/docs/Doxyfile.in
