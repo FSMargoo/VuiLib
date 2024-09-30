@@ -572,8 +572,8 @@ VRichTextRendererContext VRichTextLeftLabel::ContextMeasure(VHTMLASTNode				   *
 	++context.LineCount;
 	context.Y += context.BaseLineHeight + context.LineSpace;
 	context.X = context.Bound.GetLeft();
-
-	if (context.LineCount < context.WidthCollections.size() && !context.WidthCollections.empty()) {
+	// Make sure that there the layout data won't be changed in the measured mode
+	if (!(context.LineCount < context.WidthCollections.size() && !context.WidthCollections.empty())) {
 		context.WidthCollections.emplace_back(context.TempWidth);
 		context.HeightCollections.emplace_back(context.MaxHeight);
 		context.MaxHeight = 0;
