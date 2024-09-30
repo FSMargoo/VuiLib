@@ -89,6 +89,18 @@ void VRichTextRenderer::Render(SkCanvas *Canvas, const VRect &Bound) {
 		}
 	}
 }
+void VRichTextRenderer::SetLineSpace(const int &Value) {
+	_lineSpace = Value;
+}
+[[nodiscard]] const int VRichTextRenderer::GetLineSpace() const {
+	return _lineSpace;
+}
+void VRichTextRenderer::SetWordSpace(const int &Value) {
+	_wordSpace = Value;
+}
+[[nodiscard]] const int VRichTextRenderer::GetWordSpace() const {
+	return _wordSpace;
+}
 void VRichTextRenderer::InitFontSet() {
 	_size = 18;
 

@@ -1,0 +1,70 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "UnitTest::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "WinToast::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "VStaticLib::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Demo_TestSkia::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Demo_TestSkiaShader::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Demo_CreateWidget::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Demo_SimpleButton::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "VCommit::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "glfw::@d9b34ad674966aa74dba"
+		},
+		{
+			"id" : "docs::@93f15ec043a0d0475f20"
+		},
+		{
+			"id" : "libostr::@c12909b0d7de39af573e"
+		},
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "CMakePredefinedTargets"
+	},
+	"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+	"isGeneratorProvided" : true,
+	"name" : "ALL_BUILD",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

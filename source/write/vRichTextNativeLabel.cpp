@@ -47,8 +47,8 @@ std::optional<VRichTextRendererContext> VRichTextGeneralRenderer::WidthMeasure(
 		if (node->GetId() == "$context") {
 			for (auto character : node->Context) {
 				if (context.Y >= context.Bound.GetBottom()) {
-					context.WidthCollections.push_back(context.X - context.Bound.GetLeft());
-					context.HeightCollections.push_back(context.MaxHeight);
+					context.WidthCollections.emplace_back(context.X - context.Bound.GetLeft());
+					context.HeightCollections.emplace_back(context.MaxHeight);
 
 					return {};
 				}
@@ -59,8 +59,8 @@ std::optional<VRichTextRendererContext> VRichTextGeneralRenderer::WidthMeasure(
 				}
 				if (codePoint == U'\n' || codePoint == U'\t') {
 					context.Y += context.Size;
-					context.WidthCollections.push_back(context.X - context.Bound.GetLeft());
-					context.HeightCollections.push_back(context.MaxHeight);
+					context.WidthCollections.emplace_back(context.X - context.Bound.GetLeft());
+					context.HeightCollections.emplace_back(context.MaxHeight);
 					context.X = context.Bound.GetLeft();
 
 					continue;
@@ -75,8 +75,8 @@ std::optional<VRichTextRendererContext> VRichTextGeneralRenderer::WidthMeasure(
 
 				auto marchX = context.X + font.measureText(&codePoint, sizeof(codePoint), SkTextEncoding::kUTF32);
 				if (marchX >= context.Bound.GetRight()) {
-					context.WidthCollections.push_back(context.X - context.Bound.GetLeft());
-					context.HeightCollections.push_back(context.MaxHeight);
+					context.WidthCollections.emplace_back(context.X - context.Bound.GetLeft());
+					context.HeightCollections.emplace_back(context.MaxHeight);
 					context.MaxHeight = context.Size;
 
 					context.X = context.Bound.GetLeft();
@@ -223,8 +223,9 @@ VRichTextRendererContext VRichTextH4Label::ContextMeasure(VHTMLASTNode *Node, co
 
 	return context;
 }
-VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *Canvas, VRichTextRendererContext &Context,
-								VRichTextLabelInterfaceManager &Manager) {
+VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *Canvas,
+												 VRichTextRendererContext		&Context,
+												 VRichTextLabelInterfaceManager &Manager) {
 	auto			  context		= Context;
 	sk_sp<SkTypeface> enTypeFace	= Context.EnglishFont.refTypeface();
 	sk_sp<SkTypeface> otherTypeFace = Context.OtherFont.refTypeface();
@@ -234,7 +235,7 @@ VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *C
 	context.EnglishFont.setSize(context.Size);
 	context.OtherFont.setSize(context.Size);
 
-	SkColor underline = context.Color;
+	SkColor	 underline		 = context.Color;
 	SkScalar underlineBorder = 1;
 	if (Node->Property.contains("color")) {
 		underline = VColorFactory::MakeFromHexString(Node->Property["color"]);
@@ -262,7 +263,8 @@ VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *C
 					break;
 				}
 				if (codePoint == U'\n' || codePoint == U'\t') {
-					Canvas->drawLine(startX, context.Y + context.BaseLineHeight, context.X, context.Y + context.BaseLineHeight, underlineColor);
+					Canvas->drawLine(startX, context.Y + context.BaseLineHeight, context.X,
+									 context.Y + context.BaseLineHeight, underlineColor);
 
 					context.Y += context.BaseLineHeight + context.LineSpace;
 
@@ -301,7 +303,8 @@ VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *C
 				context.X += fontMeasure;
 			}
 
-			Canvas->drawLine(startX, context.Y + context.BaseLineHeight, context.X, context.Y + context.BaseLineHeight, underlineColor);
+			Canvas->drawLine(startX, context.Y + context.BaseLineHeight, context.X, context.Y + context.BaseLineHeight,
+							 underlineColor);
 
 			continue;
 		}
@@ -329,8 +332,9 @@ VRichTextRendererContext VRichTextULabel::Render(VHTMLASTNode *Node, SkCanvas *C
 
 	return context;
 }
-VRichTextRendererContext VRichTextStrikeLabel::Render(VHTMLASTNode *Node, SkCanvas *Canvas, VRichTextRendererContext &Context,
-												 VRichTextLabelInterfaceManager &Manager) {
+VRichTextRendererContext VRichTextStrikeLabel::Render(VHTMLASTNode *Node, SkCanvas *Canvas,
+													  VRichTextRendererContext		 &Context,
+													  VRichTextLabelInterfaceManager &Manager) {
 	auto			  context		= Context;
 	sk_sp<SkTypeface> enTypeFace	= Context.EnglishFont.refTypeface();
 	sk_sp<SkTypeface> otherTypeFace = Context.OtherFont.refTypeface();
@@ -340,7 +344,7 @@ VRichTextRendererContext VRichTextStrikeLabel::Render(VHTMLASTNode *Node, SkCanv
 	context.EnglishFont.setSize(context.Size);
 	context.OtherFont.setSize(context.Size);
 
-	SkColor underline = context.Color;
+	SkColor	 underline		 = context.Color;
 	SkScalar underlineBorder = 1;
 	if (Node->Property.contains("color")) {
 		underline = VColorFactory::MakeFromHexString(Node->Property["color"]);
@@ -359,7 +363,7 @@ VRichTextRendererContext VRichTextStrikeLabel::Render(VHTMLASTNode *Node, SkCanv
 		if (node->GetId() == "$context") {
 			for (auto character : node->Context) {
 				auto startX = context.X;
-				auto y = context.Y + context.BaseLineHeight - context.Size / 3;
+				auto y		= context.Y + context.BaseLineHeight - context.Size / 3;
 				if (context.Y >= context.Bound.GetBottom()) {
 					break;
 				}
@@ -369,7 +373,8 @@ VRichTextRendererContext VRichTextStrikeLabel::Render(VHTMLASTNode *Node, SkCanv
 					break;
 				}
 				if (codePoint == U'\n' || codePoint == U'\t') {
-					Canvas->drawLine(startX, context.Y + context.BaseLineHeight / 2, context.X, context.Y + context.BaseLineHeight / 2, underlineColor);
+					Canvas->drawLine(startX, context.Y + context.BaseLineHeight / 2, context.X,
+									 context.Y + context.BaseLineHeight / 2, underlineColor);
 
 					context.Y += context.BaseLineHeight + context.LineSpace;
 
@@ -438,7 +443,10 @@ VRichTextRendererContext VRichTextBRLabel::ContextMeasure(VHTMLASTNode *Node, co
 	VRichTextRendererContext context = Context;
 
 	context.Y += context.BaseLineHeight + context.LineSpace;
-	context.X		  = context.Bound.GetLeft();
+	context.X = context.Bound.GetLeft();
+	context.WidthCollections.emplace_back(context.TempWidth);
+	context.HeightCollections.emplace_back(context.MaxHeight);
+	context.MaxHeight = 0;
 	context.TempWidth = 0;
 	++context.LineCount;
 
@@ -541,8 +549,18 @@ VRichTextRendererContext VRichTextCenterLabel::ContextMeasure(VHTMLASTNode					 
 															  const VRichTextRendererContext &Context) {
 	VRichTextRendererContext context = Context;
 
+	++context.LineCount;
+	context.Y += context.BaseLineHeight + context.LineSpace;
+	// Make sure that there the X won't be changed in the measured mode
 	if (context.LineCount < context.WidthCollections.size() && !context.WidthCollections.empty()) {
-		context.X = context.Bound.GetWidth() / 2 - (context.WidthCollections[context.LineCount] - context.TempWidth) / 2;
+		context.X =
+			context.Bound.GetWidth() / 2 - (context.WidthCollections[context.LineCount] - context.TempWidth) / 2;
+	}
+	else {
+		context.WidthCollections.emplace_back(context.TempWidth);
+		context.HeightCollections.emplace_back(context.MaxHeight);
+		context.MaxHeight = 0;
+		context.TempWidth = 0;
 	}
 
 	return context;
@@ -551,7 +569,16 @@ VRichTextRendererContext VRichTextLeftLabel::ContextMeasure(VHTMLASTNode				   *
 															const VRichTextRendererContext &Context) {
 	VRichTextRendererContext context = Context;
 
+	++context.LineCount;
+	context.Y += context.BaseLineHeight + context.LineSpace;
 	context.X = context.Bound.GetLeft();
+
+	if (context.LineCount < context.WidthCollections.size() && !context.WidthCollections.empty()) {
+		context.WidthCollections.emplace_back(context.TempWidth);
+		context.HeightCollections.emplace_back(context.MaxHeight);
+		context.MaxHeight = 0;
+		context.TempWidth = 0;
+	}
 
 	return context;
 }
@@ -559,8 +586,17 @@ VRichTextRendererContext VRichTextRightLabel::ContextMeasure(VHTMLASTNode					*N
 															 const VRichTextRendererContext &Context) {
 	VRichTextRendererContext context = Context;
 
+	++context.LineCount;
+	context.Y += context.BaseLineHeight + context.LineSpace;
+	// Make sure that there the X won't be changed in the measured mode
 	if (context.LineCount < context.WidthCollections.size() && !context.WidthCollections.empty()) {
 		context.X = context.Bound.GetWidth() - (context.WidthCollections[context.LineCount] - context.TempWidth);
+	}
+	else {
+		context.WidthCollections.emplace_back(context.TempWidth);
+		context.HeightCollections.emplace_back(context.MaxHeight);
+		context.MaxHeight = 0;
+		context.TempWidth = 0;
 	}
 
 	return context;

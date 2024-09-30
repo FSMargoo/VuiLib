@@ -1,0 +1,1164 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"build" : "third/glfw",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw-Debug-f10dfe4d0c61f2149bd6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "third/glfw",
+					"targetIndexes" : 
+					[
+						1,
+						15
+					]
+				},
+				{
+					"build" : "third/glfw/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.src-Debug-8e0e49da0961c154826a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/src",
+					"targetIndexes" : 
+					[
+						13,
+						16
+					]
+				},
+				{
+					"build" : "third/glfw/docs",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.docs-Debug-f75b321b0b3e7c630594.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/docs",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "third/OpenString-CMake",
+					"jsonFile" : "directory-third.OpenString-CMake-Debug-b544d1fefbeb00a522d1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "third/OpenString-CMake",
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "VUILib",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						12,
+						13,
+						15,
+						16
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "libostr",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Debug-d4e6a3b7350902879767.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-ALL_BUILD-Debug-2aebd6d275d3899a1719.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ALL_BUILD::@c12909b0d7de39af573e",
+					"jsonFile" : "target-ALL_BUILD-Debug-1b78658180cef3005f29.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_CreateWidget::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_CreateWidget-Debug-a878d6b2025070fdee7f.json",
+					"name" : "Demo_CreateWidget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_SimpleButton::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_SimpleButton-Debug-736e2dcc20cfb260321b.json",
+					"name" : "Demo_SimpleButton",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkia::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkia-Debug-bb9c5b95c56c1fa910da.json",
+					"name" : "Demo_TestSkia",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkiaShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkiaShader-Debug-171e47cea58ed620d09c.json",
+					"name" : "Demo_TestSkiaShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UnitTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UnitTest-Debug-4bb81b065085197f1657.json",
+					"name" : "UnitTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VCommit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VCommit-Debug-6e79386420583e9f2720.json",
+					"name" : "VCommit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VStaticLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VStaticLib-Debug-1f7491fad91b02b1e1c2.json",
+					"name" : "VStaticLib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WinToast::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WinToast-Debug-43d704b02f6c65b2785e.json",
+					"name" : "WinToast",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Debug-6eda728e3ab50988d3ad.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "docs::@93f15ec043a0d0475f20",
+					"jsonFile" : "target-docs-Debug-8eacaf285a503c994052.json",
+					"name" : "docs",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "glfw::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-glfw-Debug-621d6972316a14965a91.json",
+					"name" : "glfw",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "libostr::@c12909b0d7de39af573e",
+					"jsonFile" : "target-libostr-Debug-12931b8aee3eb9a83922.json",
+					"name" : "libostr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-uninstall-Debug-73ebc5dce57fc5fd3423.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "update_mappings::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-update_mappings-Debug-30663e89bbc0b8b0ef9c.json",
+					"name" : "update_mappings",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"build" : "third/glfw",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw-Release-f10dfe4d0c61f2149bd6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "third/glfw",
+					"targetIndexes" : 
+					[
+						1,
+						15
+					]
+				},
+				{
+					"build" : "third/glfw/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.src-Release-02f53ab60b76e51bc996.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/src",
+					"targetIndexes" : 
+					[
+						13,
+						16
+					]
+				},
+				{
+					"build" : "third/glfw/docs",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.docs-Release-f75b321b0b3e7c630594.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/docs",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "third/OpenString-CMake",
+					"jsonFile" : "directory-third.OpenString-CMake-Release-b544d1fefbeb00a522d1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "third/OpenString-CMake",
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "VUILib",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						12,
+						13,
+						15,
+						16
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "libostr",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Release-d4e6a3b7350902879767.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-ALL_BUILD-Release-2aebd6d275d3899a1719.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ALL_BUILD::@c12909b0d7de39af573e",
+					"jsonFile" : "target-ALL_BUILD-Release-1b78658180cef3005f29.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_CreateWidget::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_CreateWidget-Release-4f8f28b905894b6ced80.json",
+					"name" : "Demo_CreateWidget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_SimpleButton::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_SimpleButton-Release-4d0db69c9e8d49cbc6a0.json",
+					"name" : "Demo_SimpleButton",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkia::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkia-Release-36c41e9526a82bd6baf9.json",
+					"name" : "Demo_TestSkia",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkiaShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkiaShader-Release-0ba3f77471c030ec1177.json",
+					"name" : "Demo_TestSkiaShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UnitTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UnitTest-Release-1926d4becb618b5d26e4.json",
+					"name" : "UnitTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VCommit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VCommit-Release-a48cb9e6c5ed03037344.json",
+					"name" : "VCommit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VStaticLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VStaticLib-Release-1337d5ba2983e18461f0.json",
+					"name" : "VStaticLib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WinToast::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WinToast-Release-2965e7452ad13cee6a73.json",
+					"name" : "WinToast",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Release-6eda728e3ab50988d3ad.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "docs::@93f15ec043a0d0475f20",
+					"jsonFile" : "target-docs-Release-8eacaf285a503c994052.json",
+					"name" : "docs",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "glfw::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-glfw-Release-1240d52d12eb515ce909.json",
+					"name" : "glfw",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "libostr::@c12909b0d7de39af573e",
+					"jsonFile" : "target-libostr-Release-dc75f6962af20da4f6a7.json",
+					"name" : "libostr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-uninstall-Release-73ebc5dce57fc5fd3423.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "update_mappings::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-update_mappings-Release-30663e89bbc0b8b0ef9c.json",
+					"name" : "update_mappings",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-MinSizeRel-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"build" : "third/glfw",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw-MinSizeRel-f10dfe4d0c61f2149bd6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "third/glfw",
+					"targetIndexes" : 
+					[
+						1,
+						15
+					]
+				},
+				{
+					"build" : "third/glfw/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.src-MinSizeRel-739195d21268b8147299.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/src",
+					"targetIndexes" : 
+					[
+						13,
+						16
+					]
+				},
+				{
+					"build" : "third/glfw/docs",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.docs-MinSizeRel-f75b321b0b3e7c630594.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/docs",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "third/OpenString-CMake",
+					"jsonFile" : "directory-third.OpenString-CMake-MinSizeRel-b544d1fefbeb00a522d1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "third/OpenString-CMake",
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"name" : "MinSizeRel",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "VUILib",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						12,
+						13,
+						15,
+						16
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "libostr",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-d4e6a3b7350902879767.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-2aebd6d275d3899a1719.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ALL_BUILD::@c12909b0d7de39af573e",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-1b78658180cef3005f29.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_CreateWidget::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_CreateWidget-MinSizeRel-a2860169fc48d43a9195.json",
+					"name" : "Demo_CreateWidget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_SimpleButton::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_SimpleButton-MinSizeRel-0355f6149d46453e5d9a.json",
+					"name" : "Demo_SimpleButton",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkia::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkia-MinSizeRel-2dcac12e5dc567e0780d.json",
+					"name" : "Demo_TestSkia",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkiaShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkiaShader-MinSizeRel-2ec32e3380f9c0c4427f.json",
+					"name" : "Demo_TestSkiaShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UnitTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UnitTest-MinSizeRel-38881c3a427da6cc5326.json",
+					"name" : "UnitTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VCommit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VCommit-MinSizeRel-6096261bf40469381d67.json",
+					"name" : "VCommit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VStaticLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VStaticLib-MinSizeRel-fc93caaf53871208243c.json",
+					"name" : "VStaticLib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WinToast::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WinToast-MinSizeRel-fc2a29be789b98458000.json",
+					"name" : "WinToast",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-MinSizeRel-6eda728e3ab50988d3ad.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "docs::@93f15ec043a0d0475f20",
+					"jsonFile" : "target-docs-MinSizeRel-8eacaf285a503c994052.json",
+					"name" : "docs",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "glfw::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-glfw-MinSizeRel-08983d229006d2ae0d44.json",
+					"name" : "glfw",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "libostr::@c12909b0d7de39af573e",
+					"jsonFile" : "target-libostr-MinSizeRel-60932e5267c473a74402.json",
+					"name" : "libostr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-uninstall-MinSizeRel-73ebc5dce57fc5fd3423.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "update_mappings::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-update_mappings-MinSizeRel-30663e89bbc0b8b0ef9c.json",
+					"name" : "update_mappings",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"build" : "third/glfw",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw-RelWithDebInfo-f10dfe4d0c61f2149bd6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "third/glfw",
+					"targetIndexes" : 
+					[
+						1,
+						15
+					]
+				},
+				{
+					"build" : "third/glfw/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.src-RelWithDebInfo-8066dc3a0ce323d9a352.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/src",
+					"targetIndexes" : 
+					[
+						13,
+						16
+					]
+				},
+				{
+					"build" : "third/glfw/docs",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third.glfw.docs-RelWithDebInfo-f75b321b0b3e7c630594.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third/glfw/docs",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "third/OpenString-CMake",
+					"jsonFile" : "directory-third.OpenString-CMake-RelWithDebInfo-b544d1fefbeb00a522d1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "third/OpenString-CMake",
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "VUILib",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						12,
+						13,
+						15,
+						16
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "libostr",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						14
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-d4e6a3b7350902879767.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-2aebd6d275d3899a1719.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ALL_BUILD::@c12909b0d7de39af573e",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-1b78658180cef3005f29.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_CreateWidget::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_CreateWidget-RelWithDebInfo-1dac9ccc04bdbfd7240e.json",
+					"name" : "Demo_CreateWidget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_SimpleButton::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_SimpleButton-RelWithDebInfo-a407a3fd9b8a8b9c1709.json",
+					"name" : "Demo_SimpleButton",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkia::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkia-RelWithDebInfo-e0511a3207594ca4ae46.json",
+					"name" : "Demo_TestSkia",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Demo_TestSkiaShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Demo_TestSkiaShader-RelWithDebInfo-d675a3fca1285fc97d0f.json",
+					"name" : "Demo_TestSkiaShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UnitTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UnitTest-RelWithDebInfo-02fe5dd251286e171150.json",
+					"name" : "UnitTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VCommit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VCommit-RelWithDebInfo-7c63c2defc56ba1bb3d9.json",
+					"name" : "VCommit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VStaticLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VStaticLib-RelWithDebInfo-133379518f1b9eab8ab9.json",
+					"name" : "VStaticLib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WinToast::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WinToast-RelWithDebInfo-1efff7836b45b14f825d.json",
+					"name" : "WinToast",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-RelWithDebInfo-6eda728e3ab50988d3ad.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "docs::@93f15ec043a0d0475f20",
+					"jsonFile" : "target-docs-RelWithDebInfo-8eacaf285a503c994052.json",
+					"name" : "docs",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "glfw::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-glfw-RelWithDebInfo-fd262353dd349fdd4acc.json",
+					"name" : "glfw",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "libostr::@c12909b0d7de39af573e",
+					"jsonFile" : "target-libostr-RelWithDebInfo-5044448b788ff26abacd.json",
+					"name" : "libostr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@c09c3cdc0df95a0c76a4",
+					"jsonFile" : "target-uninstall-RelWithDebInfo-73ebc5dce57fc5fd3423.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "update_mappings::@d9b34ad674966aa74dba",
+					"jsonFile" : "target-update_mappings-RelWithDebInfo-30663e89bbc0b8b0ef9c.json",
+					"name" : "update_mappings",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/VUILib/build",
+		"source" : "D:/VUILib"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

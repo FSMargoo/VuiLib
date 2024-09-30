@@ -62,6 +62,12 @@ public:
 		}
 	}
 
+public:
+	void SetLineSpace(const int &Value);
+	[[nodiscard]] const int GetLineSpace() const;
+	void SetWordSpace(const int &Value);
+	[[nodiscard]] const int GetWordSpace() const;
+
 private:
 	/**
 	 * Init the renderer default font set
