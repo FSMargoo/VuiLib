@@ -83,7 +83,8 @@ VHTMLLexerToken VHTMLLexer::NextToken() {
 		}
 		switch (character) {
 		case u8' ':
-		case u8'\t': {
+		case u8'\t':
+		case u8'.': {
 			if (_inLabelLexer && _ignoreCasting) {
 				string += character;
 			}
