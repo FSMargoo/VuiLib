@@ -105,6 +105,7 @@ public:
 	void OnGLFWRepaint(const int &Width, const int &Height) override;
 	void OnGLFWMouseMove(const int &X, const int &Y) override;
 	void OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) override;
+	void OnGLFWLayoutRearranging(const int &Width, const int &Height) override;
 
 protected:
 	void RaiseUpAsFocus(VObject *Object) override;

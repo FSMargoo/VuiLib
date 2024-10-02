@@ -144,28 +144,28 @@ void VObject::SetDisabled(const bool &Status) {
 bool VObject::GetDisabled() const {
 	return _disable->_value;
 }
-void VObject::SetX(const int &X) {
+void VObject::SetX(const int X) {
 	_bound->_value.SetLeft(X);
 }
-void VObject::SetY(const int &Y) {
+void VObject::SetY(const int Y) {
 	_bound->_value.SetTop(Y);
 }
-const int &VObject::GetX() const {
+const int VObject::GetX() const {
 	return _bound->_value.GetLeft();
 }
-const int &VObject::GetY() const {
+const int VObject::GetY() const {
 	return _bound->_value.GetTop();
 }
-void VObject::SetWidth(const int &Width) {
+void VObject::SetWidth(const int Width) {
 	_bound->_value.SetWidth(Width);
 }
-const int &VObject::GetWidth() const {
+const int VObject::GetWidth() const {
 	return _bound->_value.GetWidth();
 }
-void VObject::SetHeight(const int &Height) {
+void VObject::SetHeight(const int Height) {
 	return _bound->_value.SetHeight(Height);
 }
-const int &VObject::GetHeight() const {
+const int VObject::GetHeight() const {
 	return _bound->_value.GetHeight();
 }
 void VObject::UploadMessage(VBaseMessage *Message) {
@@ -181,14 +181,14 @@ void VObject::RepaintOnSelf() {
 }
 bool VObject::OnMessage(VBaseMessage *Message, sk_sp<VSurface> &Surface) {
 	if (Message->GetType() == VMessageType::Repaint) {
-		OnRepaintMessage(Message->Cast<VRepaintMessage>(), Surface);
+		OnRepaintMessage(Message->Cast<VRepaintMessage>(), Surface->GetNativeSurface());
 	} else {
 		return OnGeneralMessage(Message);
 	}
 
 	return false;
 }
-void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surface) {
+void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<SkSurface> &Surface) {
 	const auto bound		  = _bound->_value;
 	auto	   repaintMessage = Message->Cast<VRepaintMessage>();
 	if (Surface == nullptr) {
@@ -197,19 +197,27 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surfac
 	/**
 	 * Draw the context the relative surface
 	 */
-	auto subSurface = Surface->GetNativeSurface()->makeSurface(bound.GetWidth(), bound.GetHeight());
+	auto subSurface = Surface->makeSurface(bound.GetWidth(), bound.GetHeight());
 
 	OnPaint(subSurface);
 
 	for (auto &object : _childList) {
-		const auto leftTop = object->_bound->_value.GetLeftTopPoint();
-		Surface->GetNativeSurface()->draw(subSurface->getCanvas(), leftTop.GetX(), leftTop.GetY());
+		object->OnRepaintMessage(Message, subSurface);
 	}
 
 	auto point = bound.GetLeftTopPoint();
 	auto image = subSurface->makeImageSnapshot();
-	Surface->GetNativeSurface()->getCanvas()->drawImage(image, point.GetX(), point.GetY());
-	// Surface->GetNativeSurface()->draw(subSurface->getCanvas(), point.GetX(), point.GetY());
+
+	SkPaint opacityPaint;
+	opacityPaint.setAlpha(static_cast<uint8_t>(1.f * 255));
+
+	Surface->getCanvas()->drawImageRect(
+		image, SkRect(point.GetX(), point.GetY(), point.GetX() + image->width(), point.GetY() + image->height()), SkSamplingOptions(), &opacityPaint);
+}
+void VObject::SetOpacity(const float &Value) {
+	_opacity->_value = Value;
+
+	RepaintOnSelf();
 }
 bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 	const auto bound = _bound->_value;
@@ -224,6 +232,11 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 		}
 	}
 	switch (Message->GetType()) {
+	case VMessageType::RearrangeLayout: {
+		OnLayoutRearrange();
+
+		break;
+	}
 	case VMessageType::Repaint: {
 		return false;
 	}
@@ -332,14 +345,17 @@ void VObject::AdaptParent(VObject *Parent) {
 void VObject::InitGeneralProperty() {
 	auto visible = std::make_unique<VBooleanProperty>(true);
 	auto disable = std::make_unique<VBooleanProperty>(false);
+	auto opacity = std::make_unique<VFloatProperty>(1.f);
 	auto bound	 = std::make_unique<VRectProperty>();
 
 	RegisterProperty("visible", std::move(visible));
 	RegisterProperty("bound", std::move(bound));
-	RegisterProperty("disable", std::move(bound));
+	RegisterProperty("disable", std::move(disable));
+	RegisterProperty("opacity", std::move(opacity));
 
 	_bound	 = GetPropertyValue<VRectProperty>("bound");
 	_visible = GetPropertyValue<VBooleanProperty>("visible");
 	_disable = GetPropertyValue<VBooleanProperty>("disable");
+	_opacity = GetPropertyValue<VFloatProperty>("opacity");
 	_onHover = false;
 }

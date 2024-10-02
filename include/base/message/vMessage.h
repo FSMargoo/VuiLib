@@ -41,7 +41,8 @@ enum class VMessageType {
 	KeyUp,
 	MouseMove,
 	MouseClicked,
-	Repaint
+	Repaint,
+	RearrangeLayout
 };
 /**
  * The button type of the mouse
@@ -206,7 +207,7 @@ public:
 	 */
 	VKeyDownMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
 
-private:
+public:
 	int			 Key;
 	VAdditionKey AdditionKey;
 };
@@ -224,7 +225,31 @@ public:
 	 */
 	VKeyUpMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey);
 
-private:
+public:
 	int			 Key;
 	VAdditionKey AdditionKey;
+};
+/**
+ * When the UI needs to rearrange the layout this message will be triggered
+ */
+class VLayoutMessage : public VBaseMessage {
+public:
+	/**
+	 * Construct the message with the message trigger window
+	 * @param Trigger The trigger window, if the pointer is nullptr, meaning
+	 * this message is spread in only one window which will not join the message
+	 * broadcast
+	 * @param IWidth The new width
+	 * @param IHeight The new height
+	 */
+	VLayoutMessage(Window Trigger, const int &IWidth, const int &IHeight);
+
+public:
+	VMessageType GetType() override {
+		return VMessageType::RearrangeLayout;
+	}
+
+public:
+	int Width;
+	int Height;
 };

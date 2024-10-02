@@ -28,11 +28,15 @@
 #include <include/layout/vPanelLayout.h>
 
 VPanel::VPanel(VObject *Parent) : VObject(Parent) {
-	Move(0, 0);
 	Resize(Parent->GetWidth(), Parent->GetHeight());
 }
 VPanel::VPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
 	Resize(Width, Height);
+}
+void VPanel::OnLayoutRearrange() {
+	Resize(_parent->GetWidth(), _parent->GetHeight());
+
+	Arrange();
 }
 VRect VPanel::SizeMeasure() {
 	return { 0, 0, GetWidth(), GetHeight() };
@@ -50,10 +54,10 @@ void VPanel::Arrange() {
 					object->Move(GetWidth() - object->GetWidth(), GetHeight() / 2 - object->GetHeight() / 2);
 				}
 				if (align == "top") {
-					object->Move(GetWidth() - object->GetWidth(), 0);
+					object->Move(GetWidth() / 2 - object->GetWidth() / 2, 0);
 				}
 				if (align == "bottom") {
-					object->Move(GetWidth() - object->GetWidth(), GetHeight() - object->GetHeight());
+					object->Move(GetWidth() / 2 - object->GetWidth() / 2, GetHeight() - object->GetHeight());
 				}
 			}
 		}

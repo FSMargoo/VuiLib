@@ -34,13 +34,16 @@
  */
 class VGLFWWidget {
 public:
-	virtual void OnGLFWRepaint(const int &Width, const int &Height) = 0;
-	virtual void OnGLFWMouseMove(const int &X, const int &Y)		= 0;
+	// "Repainting" dose not means "RearrangeLayout Rearranging" but "RearrangeLayout Rearranging" means "Repainting"
+	virtual void OnGLFWLayoutRearranging(const int &Width, const int &Height) = 0;
+	virtual void OnGLFWRepaint(const int &Width, const int &Height)			  = 0;
+	virtual void OnGLFWMouseMove(const int &X, const int &Y)				  = 0;
 	virtual void OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action,
-								  const int &Mods)					= 0;
+								  const int &Mods)							  = 0;
 };
 
 void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window);
+void VGLFWLayoutRearrangingCallback(GLFWwindow *Window, int Width, int Height);
 void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height);
 void VGLFWMouseMoveCallback(GLFWwindow *Window, double X, double Y);
 void VGLFWMouseClickCallback(GLFWwindow *Window, int Button, int Action, int Mods);

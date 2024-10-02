@@ -94,6 +94,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/write/vRichTextNativeLabel.cpp
         include/layout/vPanelLayout.h
         source/layout/vPanelLayout.cpp
+        include/control/shape/vRectangleControl.h
+        source/control/shape/vRectangleControl.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
@@ -305,3 +307,13 @@ target_include_directories(Demo_SimpleButton PUBLIC ./third/SkiaM101Binary)
 target_include_directories(Demo_SimpleButton PUBLIC ./third/glad/include)
 
 target_link_libraries(Demo_SimpleButton VStaticLib)
+
+add_executable(Demo_PanelTester demo/PanelTester/main.cpp)
+
+target_include_directories(Demo_PanelTester PUBLIC ./include)
+target_include_directories(Demo_PanelTester PUBLIC ./)
+target_include_directories(Demo_PanelTester PUBLIC ./third)
+target_include_directories(Demo_PanelTester PUBLIC ./third/SkiaM101Binary)
+target_include_directories(Demo_PanelTester PUBLIC ./third/glad/include)
+
+target_link_libraries(Demo_PanelTester VStaticLib)

@@ -34,6 +34,9 @@ std::unordered_map<GLFWwindow *, VGLFWWidget *> ObjectMapping;
 void VGLFWRegisterObject(VGLFWWidget *Widget, GLFWwindow *Window) {
 	ObjectMapping.insert({Window, Widget});
 }
+void VGLFWLayoutRearrangingCallback(GLFWwindow *Window, int Width, int Height) {
+	ObjectMapping[Window]->OnGLFWLayoutRearranging(Width, Height);
+}
 void VGLFWFramebufferSizeCallback(GLFWwindow *Window, int Width, int Height) {
 	ObjectMapping[Window]->OnGLFWRepaint(Width, Height);
 }

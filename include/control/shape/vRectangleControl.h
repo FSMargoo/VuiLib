@@ -21,8 +21,8 @@
  */
 
 /**
- * \file vPanelLayout.h
- * \brief The panel layout in VUILib, the basic panel base class
+ * \file vRectangleControl.h
+ * \brief The basic shape control of a rectangle
  */
 
 #pragma once
@@ -30,31 +30,46 @@
 #include <include/base/object/vObject.h>
 
 /**
- * The default panel default class in VUILib, it provides one property for all child class:
- * 	panel.align : Allow "Left" or "Right", "Top", "Bottom"
- * The control will overlap
+ * The rectangle control, the rectangle control will display a rectangle on the screen
  */
-class VPanel : public VObject {
+class VRectangleControl : public VObject {
 public:
-	explicit VPanel(VObject *Parent);
-	VPanel(VObject *Parent, const int &Width, const int &Height);
+	/**
+	 * Init the rectangle control with specified geometry information
+	 * @param Width The width of the rectangle control
+	 * @param Height The height of the rectangle control
+	 * @param Parent The parent of the rectangle control
+	 */
+	VRectangleControl(const int &Width, const int &Height, VObject *Parent);
 
 public:
 	/**
-	 * Measure the rectangle size of the panel, return the rectangle related to the origin point (0, 0)
-	 * @return The size rectangle related to the origin point (0, 0)
+	 * Set the radius of the border
+	 * @param Radius The border radius
 	 */
-	virtual VRect SizeMeasure();
+	void SetBorderRadius(const float &Radius);
 	/**
-	 * Arrange the panel child objects
+	 * Set the background color
+	 * @param Color The color of the background
 	 */
-	virtual void Arrange();
+	void SetBackgroundColor(const SkColor &Color);
+	/**
+	 * Set the border color
+	 * @param Color The color of the border
+	 */
+	void SetBorderColor(const SkColor &Color);
 
 public:
-	void OnLayoutRearrange() override;
+	void OnPaint(sk_sp<SkSurface> &Surface) override;
 
-public:
-	void OnPaint(sk_sp<SkSurface> &Surface) override {
+private:
+	/**
+	 * Init the property by default with the color in white
+	 */
+	void InitProperty();
 
-	}
+private:
+	VFloatProperty *_borderRadius;
+	VColorProperty *_backgroundColor;
+	VColorProperty *_borderColor;
 };

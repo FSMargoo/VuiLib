@@ -80,6 +80,7 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const OStrin
 	glfwSetFramebufferSizeCallback(_glfwWindow, VGLFWFramebufferSizeCallback);
 	glfwSetCursorPosCallback(_glfwWindow, VGLFWMouseMoveCallback);
 	glfwSetMouseButtonCallback(_glfwWindow, VGLFWMouseClickCallback);
+	glfwSetWindowSizeCallback(_glfwWindow, VGLFWLayoutRearrangingCallback);
 
 	VObject::Resize(Width, Height);
 }
@@ -97,6 +98,9 @@ void VWidget::Resize(const int &Width, const int &Height) {
 	glfwSetWindowSize(_glfwWindow, Width, Height);
 
 	VObject::Resize(Width, Height);
+
+	VLayoutMessage message(nullptr, Width, Height);
+	ProcessMessage(message.Cast<VBaseMessage>());
 }
 OString VWidget::GetTitle() const {
 	return _title->_value;
@@ -166,6 +170,10 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 	auto mouseMoveMessage = std::make_unique<VMouseMovedMessage>(_glfwWindow, X, Y);
 	ProcessMessage(mouseMoveMessage.get());
+}
+void VWidget::OnGLFWLayoutRearranging(const int &Width, const int &Height) {
+	VLayoutMessage message(nullptr, Width, Height);
+	ProcessMessage(message.Cast<VBaseMessage>());
 }
 void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
 	VMouseButton button;

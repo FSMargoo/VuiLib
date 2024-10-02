@@ -45,3 +45,7 @@ VKeyDownMessage::VKeyDownMessage(Window Trigger, const int &IKey, const VAdditio
 VKeyUpMessage::VKeyUpMessage(Window Trigger, const int &IKey, const VAdditionKey &IAdditionKey)
 	: VBaseMessage(Trigger), Key(IKey), AdditionKey(IAdditionKey) {
 }
+VLayoutMessage::VLayoutMessage(Window Trigger, const int &IWidth, const int &IHeight)
+	: VBaseMessage(Trigger), Width(IWidth), Height(IHeight) {
+
+}

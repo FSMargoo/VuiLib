@@ -144,42 +144,50 @@ public:
 	 * Set the X position of the object
 	 * @param X The X position of the object
 	 */
-	void SetX(const int &X);
+	void SetX(const int X);
 	/**
 	 * Get the X position of the object;
 	 * @return The X position of the object
 	 */
-	const int &GetX() const;
+	const int GetX() const;
 	/**
 	 * Set the Y position of the object
 	 * @param Y The Y position of the object
 	 */
-	void SetY(const int &Y);
+	void SetY(const int Y);
 	/**
 	 * Get the Y position of the object;
 	 * @return The Y position of the object
 	 */
-	const int &GetY() const;
+	const int GetY() const;
 	/**
 	 * Set the width of the object
 	 * @param Get The width of the object
 	 */
-	void SetWidth(const int &Width);
+	void SetWidth(const int Width);
 	/**
 	 * Get the width of the object;
 	 * @return The width of the object
 	 */
-	const int &GetWidth() const;
+	const int GetWidth() const;
 	/**
 	 * Set the height of the object
 	 * @param Height The height of the object
 	 */
-	void SetHeight(const int &Height);
+	void SetHeight(const int Height);
 	/**
 	 * Get the height of the object;
 	 * @return The height of the object
 	 */
-	const int &GetHeight() const;
+	const int GetHeight() const;
+
+public:
+	/**
+	 * Set the opacity of the control, the control whose opacity value is 0.f won't be
+	 * removed from the message objects like the Hide method
+	 * @param Value The value of the opacity
+	 */
+	void SetOpacity(const float &Value);
 
 protected:
 	/**
@@ -223,6 +231,11 @@ public:
 	virtual void OnPropertyChange() {
 	}
 	/**
+	 * The virtual function that to be called when the layout needs to be rearranged
+	 */
+	virtual void OnLayoutRearrange() {
+	}
+	/**
 	 * When the mouse moved over this object, this function will be called
 	 * @param Message The mouse message
 	 * @return If return false, this control will not take over the focus of
@@ -257,7 +270,7 @@ private:
 	 * @param Message The pointer of the repaint message
 	 * @param Surface The surface reference
 	 */
-	virtual void OnRepaintMessage(VRepaintMessage *Message, sk_sp<VSurface> &Surface);
+	virtual void OnRepaintMessage(VRepaintMessage *Message, sk_sp<SkSurface> &Surface);
 	/**
 	 * When the object received a general message, this function will be called
 	 * @param Message The general message pointer
@@ -266,7 +279,7 @@ private:
 	 */
 	virtual bool OnGeneralMessage(VBaseMessage *Message);
 
-protected:
+public:
 	/**
 	 * Add a property to the object
 	 * @tparam Type The type of the target value
@@ -349,6 +362,7 @@ protected:
 	VRectProperty		  *_bound;
 	VBooleanProperty	  *_visible;
 	VBooleanProperty	  *_disable;
+	VFloatProperty		  *_opacity;
 	VObject				  *_parent;
 	std::vector<VObject *> _childList;
 };

@@ -46,7 +46,8 @@ void VPushButton::SetRichText(const OString &Text) {
 	RepaintOnSelf();
 }
 void VPushButton::SetPlainText(const OString &Text) {
-	_text->_value = ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
+	_text->_value =
+		ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
 	delete _AST;
 	_AST = new VHTMLAST(_text->_value);
 
@@ -60,8 +61,9 @@ void VPushButton::InitProperty(const OString &Text) {
 	RegisterProperty("text", std::move(text));
 	_text = GetPropertyValue<VStringProperty>("text");
 
-	_text->_value = ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
-	_AST		  = new VHTMLAST(_text->_value);
+	_text->_value =
+		ostr::format("<html><vcenter><center>{}</center></vcenter></html>", VHTMLLexer::ConvertToPlainText(Text));
+	_AST = new VHTMLAST(_text->_value);
 }
 void VPushButton::OnPaint(sk_sp<SkSurface> &Surface) {
 	VRect bound{0, 0, GetWidth(), GetHeight()};
