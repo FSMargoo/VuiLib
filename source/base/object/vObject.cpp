@@ -298,7 +298,14 @@ VObject *VObject::GetFocusingObject() {
 	}
 }
 VObjectProperty &VObject::GetProperty(const OString &Name) {
-	return _propertyList.find(Name)->second;
+	if (_propertyList.contains(Name)) {
+		return _propertyList.find(Name)->second;
+	}
+
+	throw std::out_of_range("No specified property was founded in this object");
+}
+bool VObject::HasProperty(const OString &Name) const {
+	return _propertyList.contains(Name);
 }
 void VObject::RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) {
 	if (_propertyList.find(Name) != _propertyList.end()) {

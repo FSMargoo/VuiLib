@@ -60,6 +60,12 @@ public:
 	 * @return The reference of the property instance
 	 */
 	VObjectProperty &GetProperty(const OString &Name);
+	/**
+	 * Judge whether the property is existed
+	 * @param Name The name of the property
+	 * @return If the property exist, return true, nor false
+	 */
+	bool HasProperty(const OString &Name) const;
 
 public:
 	/**

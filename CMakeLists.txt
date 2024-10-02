@@ -92,6 +92,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/write/vRichTextRenderer.cpp
         include/write/vRichTextNativeLabel.h
         source/write/vRichTextNativeLabel.cpp
+        include/layout/vPanelLayout.h
+        source/layout/vPanelLayout.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h
