@@ -209,7 +209,7 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<SkSurface> &Surfa
 	auto image = subSurface->makeImageSnapshot();
 
 	SkPaint opacityPaint;
-	opacityPaint.setAlpha(static_cast<uint8_t>(1.f * 255));
+	opacityPaint.setAlpha(static_cast<uint8_t>(_opacity->_value * 255));
 
 	Surface->getCanvas()->drawImageRect(
 		image, SkRect(point.GetX(), point.GetY(), point.GetX() + image->width(), point.GetY() + image->height()), SkSamplingOptions(), &opacityPaint);

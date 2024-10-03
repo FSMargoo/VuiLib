@@ -280,6 +280,19 @@ void VWidget::OnFinalMessage(VBaseMessage *Message) {
 				repaintMessage->DirtyRectangle.FusionWith(accessibleObject->_bound->_value);
 			}
 		}
+		/**
+		 * Remove the same repaint message to reduce the rendering pressure
+		 */
+		for (auto &message : _messages) {
+			if (message->GetType() == VMessageType::Repaint) {
+				auto oldMessage = message->Cast<VRepaintMessage>();
+				if (oldMessage->DirtyRectangle.IsOverlap(repaintMessage->DirtyRectangle)) {
+					oldMessage->DirtyRectangle.FusionWith(repaintMessage->DirtyRectangle);
+
+					return;
+				}
+			}
+		}
 	}
 
 	_messages.emplace_back(Message);
