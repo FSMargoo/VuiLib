@@ -56,7 +56,10 @@ int main() {
 	rectangle1.SetOpacity(0.5);
 	rectangle1.SetBackgroundColor(SK_ColorBLUE);
 	rectangle2.SetBackgroundColor(SK_ColorCYAN);
+	rectangle2.SetOpacity(0.5);
 	rectangle3.SetBackgroundColor(SK_ColorGREEN);
+	rectangle3.SetOpacity(0.5);
+	rectangle4.SetOpacity(0.5);
 
 	panel.Arrange();
 

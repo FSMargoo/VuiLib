@@ -125,6 +125,10 @@ void VWidget::RaiseUpAsFocus(VObject *Object) {
 	}
 }
 void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
+	if (Message->DirtyRectangle.GetWidth() == 0 || Message->DirtyRectangle.GetHeight() == 0) {
+		return;
+	}
+
 	glfwMakeContextCurrent(_glfwWindow);
 
 	int width  = static_cast<int>(_bound->_value.GetWidth());
