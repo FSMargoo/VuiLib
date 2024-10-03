@@ -43,6 +43,10 @@ int VApplication::Run() {
 
 	while (!glfwWindowShouldClose(_mainWindow)) {
 		glfwPollEvents();
+
+		for (auto &interface : _interfaces) {
+			interface.second->OnOnceLoop();
+		}
 	}
 
 	return 0;

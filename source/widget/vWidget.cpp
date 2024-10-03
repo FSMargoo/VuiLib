@@ -59,11 +59,13 @@ VWidget::~VWidget() {
 	if (!_glfwWindow) {
 		glfwDestroyWindow(_glfwWindow);
 	}
+
+	_application->_interfaces.erase(this);
 }
 void VWidget::FlushWidget() {
-	auto flushMessage = std::make_unique<VRepaintMessage>(
+	auto flushMessage = new VRepaintMessage(
 		_glfwWindow, VRect{0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight()});
-	ProcessMessage(flushMessage.get());
+	_messages.emplace_back(flushMessage);
 }
 void VWidget::InitWidgetObject(const int &Width, const int &Height, const OString &Title) {
 	auto title = std::make_unique<VStringProperty>(Title);
@@ -83,6 +85,8 @@ void VWidget::InitWidgetObject(const int &Width, const int &Height, const OStrin
 	glfwSetWindowSizeCallback(_glfwWindow, VGLFWLayoutRearrangingCallback);
 
 	VObject::Resize(Width, Height);
+
+	_application->_interfaces.insert({ this, this });
 }
 void VWidget::Show() {
 	glfwShowWindow(_glfwWindow);
@@ -99,8 +103,8 @@ void VWidget::Resize(const int &Width, const int &Height) {
 
 	VObject::Resize(Width, Height);
 
-	VLayoutMessage message(nullptr, Width, Height);
-	ProcessMessage(message.Cast<VBaseMessage>());
+	auto message = std::make_unique<VLayoutMessage>(_glfwWindow, Width, Height);
+	ProcessMessage(message.get());
 }
 OString VWidget::GetTitle() const {
 	return _title->_value;
@@ -137,8 +141,6 @@ void VWidget::OnWidgetRepaint(VRepaintMessage *Message) {
 		accessibleObject->OnMessage(Message, glSurface);
 	}
 
-	// auto canvas = glSurface->GetNativeSurface()->getCanvas();
-	// glSurface->GetNativeSurface()->draw(canvas, 0, 0);
 	glContext->GetNativeContext()->flushAndSubmit();
 
 	glfwSwapBuffers(_glfwWindow);
@@ -165,6 +167,9 @@ void VWidget::OnGLFWRepaint(const int &Width, const int &Height) {
 
 	auto repaintMessage = std::make_unique<VRepaintMessage>(
 		_glfwWindow, VRect{0, 0, _bound->_value.GetWidth(), _bound->_value.GetHeight()});
+	auto layoutMessage = std::make_unique<VLayoutMessage>(_glfwWindow, Width, Height);
+	ProcessMessage(layoutMessage.get());
+
 	OnWidgetRepaint(repaintMessage.get());
 }
 void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
@@ -172,8 +177,7 @@ void VWidget::OnGLFWMouseMove(const int &X, const int &Y) {
 	ProcessMessage(mouseMoveMessage.get());
 }
 void VWidget::OnGLFWLayoutRearranging(const int &Width, const int &Height) {
-	VLayoutMessage message(nullptr, Width, Height);
-	ProcessMessage(message.Cast<VBaseMessage>());
+
 }
 void VWidget::OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) {
 	VMouseButton button;
@@ -252,6 +256,16 @@ void VWidget::ProcessMessage(VBaseMessage *Message) {
 		OnWidgetRepaint(Message->Cast<VRepaintMessage>());
 	}
 }
+void VWidget::OnOnceLoop() {
+	if (!_messages.empty()) {
+		auto messages = _messages;
+		_messages.clear();
+		for (auto message : messages) {
+			ProcessMessage(message);
+			delete message;
+		}
+	}
+}
 void VWidget::OnFinalMessage(VBaseMessage *Message) {
 	if (Message->GetType() == VMessageType::Repaint) {
 		auto repaintMessage = Message->Cast<VRepaintMessage>();
@@ -268,5 +282,5 @@ void VWidget::OnFinalMessage(VBaseMessage *Message) {
 		}
 	}
 
-	ProcessMessage(Message);
+	_messages.emplace_back(Message);
 }

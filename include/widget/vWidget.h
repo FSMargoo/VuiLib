@@ -43,7 +43,7 @@
  * maintain a GLFWwindow pointer, and convert the GLFW
  * event into VUILib VEvent
  */
-class VWidget : public VObject, VGLFWWidget {
+class VWidget : public VObject, VGLFWWidget, VApplicationWidgetInterface {
 public:
 	/**
 	 * Construct the widget with only geometry information
@@ -107,6 +107,9 @@ public:
 	void OnGLFWMouseClick(const int &X, const int &Y, const int &Button, const int &Action, const int &Mods) override;
 	void OnGLFWLayoutRearranging(const int &Width, const int &Height) override;
 
+public:
+	void OnOnceLoop() override;
+
 protected:
 	void RaiseUpAsFocus(VObject *Object) override;
 	void LockFocus() override;
@@ -157,6 +160,9 @@ private:
 	bool		  _focusLocking;
 	VObject		 *_focusingObject;
 	VApplication *_application;
+
+private:
+	std::vector<VBaseMessage *> _messages;
 
 private:
 	sk_sp<VRenderInterface> GLInterface;

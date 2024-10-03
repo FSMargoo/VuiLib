@@ -235,7 +235,7 @@ bool VObject::OnGeneralMessage(VBaseMessage *Message) {
 	case VMessageType::RearrangeLayout: {
 		OnLayoutRearrange();
 
-		break;
+		return false;
 	}
 	case VMessageType::Repaint: {
 		return false;

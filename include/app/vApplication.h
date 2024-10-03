@@ -31,6 +31,17 @@
 #include <include/style/vRadixStyle.h>
 
 /**
+ * The interface for application to call the VUILib's widget event loop
+ */
+class VApplicationWidgetInterface {
+public:
+	/**
+	 * Every time on the event loop this function will be called
+	 */
+	virtual void OnOnceLoop() = 0;
+};
+
+/**
  * The application class in VUILib
  */
 class VApplication {
@@ -66,10 +77,14 @@ public:
 	int Run();
 
 private:
+	friend class VWidget;
 	friend class VMainWindow;
 
 protected:
 	GLFWwindow	   *_mainWindow;
 	VRadixStyleType _styleType;
 	VStyleFunction	_style;
+
+protected:
+	std::unordered_map<VApplicationWidgetInterface*, VApplicationWidgetInterface*> _interfaces;
 };
