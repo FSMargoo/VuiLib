@@ -118,6 +118,8 @@ void VObject::RaiseUpper(const VObject *Target) {
 void VObject::Resize(const int &Width, const int &Height) {
 	_bound->_value.Resize(Width, Height);
 
+	OnLayoutRearrange();
+
 	RepaintOnSelf();
 }
 void VObject::Move(const int &X, const int &Y) {
@@ -201,8 +203,9 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<SkSurface> &Surfa
 
 	OnPaint(subSurface);
 
+	auto subRepaintMessage = std::make_unique<VRepaintMessage>(nullptr, VRect { 0, 0, GetWidth(), GetHeight() });
 	for (auto &object : _childList) {
-		object->OnRepaintMessage(Message, subSurface);
+		object->OnRepaintMessage(subRepaintMessage.get(), subSurface);
 	}
 
 	auto point = bound.GetLeftTopPoint();

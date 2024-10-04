@@ -21,82 +21,114 @@
  */
 
 /**
- * \file vPanelLayout.cpp
- * \brief The panel layout in VUILib, the basic panel base class
+ * \file vStackPanelLayout.cpp
+ * \brief The stack panel, every element in stack panel will be arranged from top to bottom
  */
 
-#include <include/layout/vPanelLayout.h>
+#include <include/layout/vStackPanelLayout.h>
 
-VPanel::VPanel(VObject *Parent) : VObject(Parent) {
+VStackPanel::VStackPanel(VObject *Parent) : VObject(Parent) {
 	Resize(Parent->GetWidth(), Parent->GetHeight());
 }
-VPanel::VPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
+VStackPanel::VStackPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
 	Resize(Width, Height);
 
 	_userSpecifiedSize->_value = true;
 }
-void VPanel::OnLayoutRearrange() {
+void VStackPanel::OnLayoutRearrange() {
 	if (!_userSpecifiedSize->_value && (GetWidth() != _parent->GetWidth() || GetHeight() != _parent->GetHeight())) {
 		Resize(_parent->GetWidth(), _parent->GetHeight());
 	}
 
 	Arrange();
 }
-VRect VPanel::SizeMeasure() {
-	return {0, 0, GetWidth(), GetHeight()};
+VRect VStackPanel::SizeMeasure() {
+	int count = 0;
+	for (auto &object : _childList) {
+		count += object->GetHeight();
+		if (count >= GetHeight()) {
+			count = GetHeight();
+
+			break;
+		}
+	}
+
+	return {0, 0, GetWidth(), count};
 }
-void VPanel::Arrange() {
+void VStackPanel::Arrange() {
+	int count = 0;
 	for (auto &object : _childList) {
 		auto width				  = object->GetWidth();
 		auto height				  = object->GetHeight();
 		auto layoutSizingProperty = object->GetPropertyValue<VBooleanProperty>(PN_UserSpecifiedSize);
 
-		if (object->HasProperty("panel.align")) {
-			auto &value = object->GetProperty("panel.align")._value;
-			if (value->_type == VPropertyType::String) {
-				auto align = value->Cast<VStringProperty>()->GetValue();
-				if (align == "center") {
-					width  = GetWidth();
-					height = GetHeight();
-					if (!layoutSizingProperty->_value) {
-						object->Resize(width, height);
-					}
-
-					object->Move(GetWidth() / 2 - object->GetWidth() / 2, GetHeight() / 2 - object->GetHeight() / 2);
-				}
-				if (align == "left") {
-					height = GetHeight();
-					if (!layoutSizingProperty->_value) {
-						object->Resize(width, height);
-					}
-
-					object->Move(0, GetHeight() / 2 - object->GetHeight() / 2);
-				}
-				if (align == "right") {
-					height = GetHeight();
-					if (!layoutSizingProperty->_value) {
-						object->Resize(width, height);
-					}
-
-					object->Move(GetWidth() - object->GetWidth(), GetHeight() / 2 - object->GetHeight() / 2);
-				}
-				if (align == "top") {
-					width = GetWidth();
-					if (!layoutSizingProperty->_value) {
-						object->Resize(width, height);
-					}
-
-					object->Move(GetWidth() / 2 - object->GetWidth() / 2, 0);
-				}
-				if (align == "bottom") {
-					width = GetWidth();
-					if (!layoutSizingProperty->_value) {
-						object->Resize(width, height);
-					}
-
-					object->Move(GetWidth() / 2 - object->GetWidth() / 2, GetHeight() - object->GetHeight());
+		bool hasBottomMargin = false;
+		int	 bottomMargin	 = 0;
+		if (object->HasProperty("stack.margin")) {
+			auto &value = object->GetProperty("stack.margin")._value;
+			if (value->_type == VPropertyType::Int) {
+				auto margin = value->Cast<VIntProperty>()->GetValue();
+				count += margin;
+				bottomMargin	= margin;
+				hasBottomMargin = true;
+			}
+		} else {
+			if (object->HasProperty("stack.margin.top")) {
+				auto &value = object->GetProperty("stack.margin.top")._value;
+				if (value->_type == VPropertyType::Int) {
+					auto margin = value->Cast<VIntProperty>()->GetValue();
+					count += margin;
 				}
 			}
+			if (object->HasProperty("stack.margin.bottom")) {
+				auto &value = object->GetProperty("stack.margin.bottom")._value;
+				if (value->_type == VPropertyType::Int) {
+					auto margin		= value->Cast<VIntProperty>()->GetValue();
+					bottomMargin	= margin;
+					hasBottomMargin = true;
+				}
+			}
+		}
+		if (object->HasProperty("stack.align")) {
+			auto &value = object->GetProperty("stack.align")._value;
+			if (value->_type == VPropertyType::String) {
+				auto align = value->Cast<VStringProperty>()->GetValue();
+				if (align == "left") {
+					width = GetWidth();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
+					object->Move(0, count);
+				}
+				if (align == "right") {
+					width = GetWidth();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
+					object->Move(GetWidth() - object->GetWidth(), count);
+				} else {
+					width = GetWidth();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
+					object->Move(GetWidth() / 2 - object->GetWidth() / 2, count);
+				}
+			}
+		} else {
+			width = GetWidth();
+			if (!layoutSizingProperty->_value) {
+				object->Resize(width, height);
+			}
+
+			object->Move(GetWidth() / 2 - object->GetWidth() / 2, count);
+		}
+
+		count += object->GetHeight();
+		if (hasBottomMargin) {
+			count += bottomMargin;
 		}
 	}
 }

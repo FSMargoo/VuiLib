@@ -21,8 +21,8 @@
  */
 
 /**
- * \file vPanelLayout.h
- * \brief The panel layout in VUILib, the basic panel base class
+ * \file vStackPanelLayout.h
+ * \brief The stack panel, every element in stack panel will be arranged from top to bottom
  */
 
 #pragma once
@@ -30,14 +30,16 @@
 #include <include/base/object/vObject.h>
 
 /**
- * The default panel default class in VUILib, it provides one property for all child class:
- * 	panel.align : Allow "left" or "right", "top", "bottom", "center"
- * The control will overlap when them share the same position flag
+ * The stack panel, every element in stack panel will be arranged from top to bottom
+ * it provides one property for all child class:
+ * 	stack.align : Allow "left" or "right", "center"
+ * 	stack.margin.top : Allow a number to set the margin related to the top
+ * 	stack.margin.bottom : Allow a number to set the margin related to the bottom
  */
-class VPanel : public VObject {
+class VStackPanel : public VObject {
 public:
-	explicit VPanel(VObject *Parent);
-	VPanel(VObject *Parent, const int &Width, const int &Height);
+	explicit VStackPanel(VObject *Parent);
+	VStackPanel(VObject *Parent, const int &Width, const int &Height);
 
 public:
 	/**
