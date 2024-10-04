@@ -32,6 +32,8 @@ VPanel::VPanel(VObject *Parent) : VObject(Parent) {
 }
 VPanel::VPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
 	Resize(Width, Height);
+
+	SetPropertyValue<VBooleanProperty, bool>(PN_UserSpecifiedSize, true);
 }
 void VPanel::OnLayoutRearrange() {
 	Resize(_parent->GetWidth(), _parent->GetHeight());
@@ -39,24 +41,57 @@ void VPanel::OnLayoutRearrange() {
 	Arrange();
 }
 VRect VPanel::SizeMeasure() {
-	return { 0, 0, GetWidth(), GetHeight() };
+	return {0, 0, GetWidth(), GetHeight()};
 }
 void VPanel::Arrange() {
-	for (auto& object : _childList) {
+	for (auto &object : _childList) {
+		auto width				  = object->GetWidth();
+		auto height				  = object->GetHeight();
+		auto layoutSizingProperty = object->GetPropertyValue<VBooleanProperty>(PN_UserSpecifiedSize);
+
 		if (object->HasProperty("panel.align")) {
-			auto& value = object->GetProperty("panel.align")._value;
+			auto &value = object->GetProperty("panel.align")._value;
 			if (value->_type == VPropertyType::String) {
 				auto align = value->Cast<VStringProperty>()->GetValue();
+				if (align == "center") {
+					width  = GetWidth();
+					height = GetHeight();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
+					object->Move(GetWidth() / 2 - object->GetWidth() / 2, GetHeight() / 2 - object->GetHeight() / 2);
+				}
 				if (align == "left") {
+					height = GetHeight();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
 					object->Move(0, GetHeight() / 2 - object->GetHeight() / 2);
 				}
 				if (align == "right") {
+					height = GetHeight();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
 					object->Move(GetWidth() - object->GetWidth(), GetHeight() / 2 - object->GetHeight() / 2);
 				}
 				if (align == "top") {
+					width = GetWidth();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
 					object->Move(GetWidth() / 2 - object->GetWidth() / 2, 0);
 				}
 				if (align == "bottom") {
+					width = GetWidth();
+					if (!layoutSizingProperty->_value) {
+						object->Resize(width, height);
+					}
+
 					object->Move(GetWidth() / 2 - object->GetWidth() / 2, GetHeight() - object->GetHeight());
 				}
 			}

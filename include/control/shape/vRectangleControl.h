@@ -41,6 +41,11 @@ public:
 	 * @param Parent The parent of the rectangle control
 	 */
 	VRectangleControl(const int &Width, const int &Height, VObject *Parent);
+	/**
+	 * Init the rectangle control with specified parent
+	 * @param Parent The parent of the rectangle control
+	 */
+	explicit VRectangleControl(VObject *Parent);
 
 public:
 	/**

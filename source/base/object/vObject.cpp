@@ -212,7 +212,8 @@ void VObject::OnRepaintMessage(VRepaintMessage *Message, sk_sp<SkSurface> &Surfa
 	opacityPaint.setAlpha(static_cast<uint8_t>(_opacity->_value * 255));
 
 	Surface->getCanvas()->drawImageRect(
-		image, SkRect(point.GetX(), point.GetY(), point.GetX() + image->width(), point.GetY() + image->height()), SkSamplingOptions(), &opacityPaint);
+		image, SkRect(point.GetX(), point.GetY(), point.GetX() + image->width(), point.GetY() + image->height()),
+		SkSamplingOptions(), &opacityPaint);
 }
 void VObject::SetOpacity(const float &Value) {
 	_opacity->_value = Value;
@@ -303,6 +304,12 @@ void VObject::RaiseUpAsFocus(VObject *Object) {
 		throw std::logic_error("Object should have a legal parent objects");
 	}
 }
+void VObject::LockSizing() {
+	_userSpecifiedSize->_value = true;
+}
+void VObject::UnlockSizing() {
+	_userSpecifiedSize->_value = false;
+}
 VObject *VObject::GetFocusingObject() {
 	if (_parent != nullptr) {
 		return _parent->GetFocusingObject();
@@ -343,19 +350,22 @@ void VObject::AdaptParent(VObject *Parent) {
 	}
 }
 void VObject::InitGeneralProperty() {
-	auto visible = std::make_unique<VBooleanProperty>(true);
-	auto disable = std::make_unique<VBooleanProperty>(false);
-	auto opacity = std::make_unique<VFloatProperty>(1.f);
-	auto bound	 = std::make_unique<VRectProperty>();
+	auto visible		   = std::make_unique<VBooleanProperty>(true);
+	auto disable		   = std::make_unique<VBooleanProperty>(false);
+	auto opacity		   = std::make_unique<VFloatProperty>(1.f);
+	auto bound			   = std::make_unique<VRectProperty>();
+	auto userSpecifiedSize = std::make_unique<VBooleanProperty>(false);
 
 	RegisterProperty("visible", std::move(visible));
 	RegisterProperty("bound", std::move(bound));
 	RegisterProperty("disable", std::move(disable));
 	RegisterProperty("opacity", std::move(opacity));
+	RegisterProperty("user-specified-size", std::move(userSpecifiedSize));
 
-	_bound	 = GetPropertyValue<VRectProperty>("bound");
-	_visible = GetPropertyValue<VBooleanProperty>("visible");
-	_disable = GetPropertyValue<VBooleanProperty>("disable");
-	_opacity = GetPropertyValue<VFloatProperty>("opacity");
-	_onHover = false;
+	_bound			   = GetPropertyValue<VRectProperty>("bound");
+	_userSpecifiedSize = GetPropertyValue<VBooleanProperty>("user-specified-size");
+	_visible		   = GetPropertyValue<VBooleanProperty>("visible");
+	_disable		   = GetPropertyValue<VBooleanProperty>("disable");
+	_opacity		   = GetPropertyValue<VFloatProperty>("opacity");
+	_onHover		   = false;
 }

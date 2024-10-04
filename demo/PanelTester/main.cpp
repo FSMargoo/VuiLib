@@ -39,10 +39,12 @@ int main() {
 	VMainWindow  window(&application, 640, 480, "Hello, Panel tester");
 
 	VPanel panel(&window);
-	VRectangleControl rectangle1(100, 200, &panel);
-	VRectangleControl rectangle2(100, 200, &panel);
-	VRectangleControl rectangle3(200, 100, &panel);
-	VRectangleControl rectangle4(200, 100, &panel);
+
+	VRectangleControl rectangleBackground(&panel);
+	VRectangleControl rectangle1(&panel);
+	VRectangleControl rectangle2(&panel);
+	VRectangleControl rectangle3(&panel);
+	VRectangleControl rectangle4(&panel);
 
 	auto property1 = std::make_unique<VStringProperty>("left");
 	rectangle1.RegisterProperty("panel.align", std::move(property1));
@@ -52,6 +54,8 @@ int main() {
 	rectangle3.RegisterProperty("panel.align", std::move(property3));
 	auto property4 = std::make_unique<VStringProperty>("bottom");
 	rectangle4.RegisterProperty("panel.align", std::move(property4));
+	auto property5 = std::make_unique<VStringProperty>("center");
+	rectangleBackground.RegisterProperty("panel.align", std::move(property5));
 
 	rectangle1.SetOpacity(0.5);
 	rectangle1.SetBackgroundColor(SK_ColorBLUE);
@@ -60,6 +64,9 @@ int main() {
 	rectangle3.SetBackgroundColor(SK_ColorGREEN);
 	rectangle3.SetOpacity(0.5);
 	rectangle4.SetOpacity(0.5);
+
+	rectangleBackground.Resize(100, 100);
+	rectangleBackground.LockSizing();
 
 	panel.Arrange();
 

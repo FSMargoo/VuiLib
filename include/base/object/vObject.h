@@ -263,6 +263,16 @@ public:
 		return false;
 	}
 
+public:
+	/**
+	 * Lock the size of the object, which not allows any layout to arrange
+	 */
+	void LockSizing();
+	/**
+	 * Lock the size of the object, which allows any layout to arrange
+	 */
+	void UnlockSizing();
+
 private:
 	/**
 	 * When the object received a repaint message that this object can deal with,
@@ -306,6 +316,21 @@ public:
 		requires std::is_base_of_v<VPropertyValueBase, Type>
 	Type *GetPropertyValue(const OString &Name) {
 		return GetProperty(Name).GetValue()->Cast<Type>();
+	}
+	/**
+	 * Set the specified property with specified value
+	 * @tparam Type The type of the property
+	 * @tparam ValueType The type of the property value
+	 * @param Name The name of the property
+	 * @param Value The value to be set
+	 */
+	template <class Type, class ValueType>
+		requires std::is_base_of_v<VPropertyValueBase, Type>
+	void SetPropertyValue(const OString &Name, const ValueType &Value) {
+		if (HasProperty(Name)) {
+			auto &property						  = GetProperty(Name);
+			property._value->Cast<Type>()->_value = Value;
+		}
 	}
 
 protected:
@@ -359,10 +384,21 @@ protected:
 	VPropertyList _propertyList;
 
 protected:
+	VBooleanProperty	  *_userSpecifiedSize;
 	VRectProperty		  *_bound;
 	VBooleanProperty	  *_visible;
 	VBooleanProperty	  *_disable;
 	VFloatProperty		  *_opacity;
 	VObject				  *_parent;
 	std::vector<VObject *> _childList;
+
+/**
+ * PN means "property name"
+ */
+public:
+	static constexpr const char *PN_UserSpecifiedSize = "user-specified-size";
+	static constexpr const char *PN_Visible			  = "visible";
+	static constexpr const char *PN_Bound			  = "bound";
+	static constexpr const char *PN_Disable			  = "disable";
+	static constexpr const char *PN_Opacity			  = "opacity";
 };

@@ -31,6 +31,13 @@ VRectangleControl::VRectangleControl(const int &Width, const int &Height, VObjec
 	InitProperty();
 
 	Resize(Width, Height);
+
+	SetPropertyValue<VBooleanProperty, bool>(PN_UserSpecifiedSize, true);
+}
+VRectangleControl::VRectangleControl(VObject *Parent) : VObject(Parent) {
+	InitProperty();
+
+	Resize(100, 50);
 }
 void VRectangleControl::SetBorderRadius(const float &Radius) {
 	_borderRadius->_value = Radius;

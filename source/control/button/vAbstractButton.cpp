@@ -32,6 +32,8 @@ VAbstractButton::VAbstractButton() {
 }
 VAbstractButton::VAbstractButton(const int &Width, const int &Height) : VObject(nullptr) {
 	InitAbstractButton(Width, Height);
+
+	SetPropertyValue<VBooleanProperty, bool>(PN_UserSpecifiedSize, true);
 }
 void VAbstractButton::InitAbstractButton(const int &Width, const int &Height) {
 	Resize(Width, Height);
