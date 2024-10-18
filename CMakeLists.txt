@@ -98,6 +98,8 @@ add_library(VStaticLib STATIC include/base/test/vTest.h
         source/control/shape/vRectangleControl.cpp
         source/layout/vStackPanelLayout.cpp
         include/layout/vStackPanelLayout.h
+        include/layout/vWrapPanelLayout.h
+        source/layout/vWrapPanelLayout.cpp
 )
 
 add_library(WinToast STATIC third/winToast/include/wintoastlib.h

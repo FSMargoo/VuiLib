@@ -45,10 +45,10 @@ public:
 	static SkColor MakeFromHexString(const OString &Color) {
 		auto length = Color.size();
 		if ((length < 6 || length > 7) || Color[0] == '#' && length == 6) {
-			throw std::logic_error("Error hex string format!");
+			throw std::logic_error("Wrong hex string format!");
 		}
 		if (Color[0] != '#' && length == 7) {
-			auto str		 = ostr::format("Error hex string, do you mean #{}?", Color.subview(1, 6));
+			auto str		 = ostr::format("Wrong hex string, do you mean #{}?", Color.subview(1, 6));
 			auto errorFormat = new char[str.size() + 1];
 			strcpy_s(errorFormat, str.size(), str.c_str());
 			throw std::logic_error(errorFormat);

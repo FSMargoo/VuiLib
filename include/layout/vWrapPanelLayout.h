@@ -21,8 +21,8 @@
  */
 
 /**
- * \file vStackPanelLayout.h
- * \brief The stack panel, every element in stack panel will be arranged from top to bottom
+ * \file vWrapPanelLayout.h
+ * \brief The wrap panel in VUILib, it arranges elements in the specified direction
  */
 
 #pragma once
@@ -30,16 +30,15 @@
 #include <include/base/object/vObject.h>
 
 /**
- * The stack panel, every element in stack panel will be arranged from top to bottom
- * it provides one property for all child class:
- * 	stack.align : Allow "left" or "right", "center"
- * 	stack.margin.top : Allow a number to set the margin related to the top
- * 	stack.margin.bottom : Allow a number to set the margin related to the bottom
+ * The wrap panel, it arranges elements in the specified direction.
+ * It allows the "direction" property, when the property is "vertical" it
+ * will arrange the elements in vertical direction, by default it will arrange
+ * the elements in horizontal direction
  */
-class VStackPanel : public VObject {
+class VWrapPanel : public VObject {
 public:
-	explicit VStackPanel(VObject *Parent);
-	VStackPanel(VObject *Parent, const int &Width, const int &Height);
+	explicit VWrapPanel(VObject *Parent);
+	VWrapPanel(VObject *Parent, const int &Width, const int &Height);
 
 public:
 	/**
@@ -57,13 +56,15 @@ public:
 
 public:
 	void OnPaint(sk_sp<SkSurface> &Surface) override {
+
 	}
 
-public:
-	static constexpr const char *PN_StackAlign		 = "stack.align";
-	static constexpr const char *PN_StackAlignLeft	 = "left";
-	static constexpr const char *PN_StackAlignCenter = "center";
-	static constexpr const char *PN_StackAlignRight	 = "right";
-	static constexpr const char *PN_MarginTop		 = "margin.top";
-	static constexpr const char *PN_MarginBottom	 = "margin.bottom";
+private:
+	/**
+	 * Init the panel's property
+	 */
+	void InitProperty();
+
+private:
+	VStringProperty *_direction;
 };
