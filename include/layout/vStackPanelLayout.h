@@ -64,6 +64,12 @@ public:
 	static constexpr const char *PN_StackAlignLeft	 = "left";
 	static constexpr const char *PN_StackAlignCenter = "center";
 	static constexpr const char *PN_StackAlignRight	 = "right";
-	static constexpr const char *PN_MarginTop		 = "margin.top";
-	static constexpr const char *PN_MarginBottom	 = "margin.bottom";
+	static constexpr const char *PN_MarginTop		 = "stack.margin.top";
+	static constexpr const char *PN_MarginBottom	 = "stack.margin.bottom";
+
+public:
+	VPropertyRegister<VStringProperty, OString> P_StackAlign;
+	VPropertyRegister<VIntProperty, int>		P_Margin;
+	VPropertyRegister<VIntProperty, int>		P_MarginTop;
+	VPropertyRegister<VIntProperty, int>		P_MarginBottom;
 };

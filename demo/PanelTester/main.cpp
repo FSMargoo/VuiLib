@@ -79,27 +79,20 @@ void CreateStackPanelViewer(VApplication *Target) {
 
 	auto rectangleBackground = new VRectangleControl(panel);
 	auto rectangle1			 = new VRectangleControl(400, 60, panel);
-	auto rectangle2			 = new VRectangleControl(panel);
-	auto rectangle3			 = new VRectangleControl(panel);
-	auto rectangle4			 = new VRectangleControl(panel);
+	auto rectangle2			 = new VRectangleControl(400, 50, panel);
+	auto rectangle3			 = new VRectangleControl(400, 50, panel);
+	auto rectangle4			 = new VRectangleControl(400, 50, panel);
 
-	auto property1 = std::make_unique<VStringProperty>("left");
-	rectangle1->RegisterProperty("stack.align", std::move(property1));
-	auto property2 = std::make_unique<VStringProperty>("right");
-	auto propertyMargin = std::make_unique<VIntProperty>(20);
-	rectangle2->RegisterProperty("stack.align", std::move(property2));
-	rectangle2->RegisterProperty("stack.margin", std::move(propertyMargin));
-	auto property3 = std::make_unique<VStringProperty>("center");
-	rectangle3->RegisterProperty("stack.align", std::move(property3));
-	auto property4 = std::make_unique<VStringProperty>("right");
-	auto propertyTopMargin = std::make_unique<VIntProperty>(12);
-	rectangle4->RegisterProperty("stack.align", std::move(property4));
-	rectangle4->RegisterProperty("stack.margin.top", std::move(propertyTopMargin));
-	auto property5 = std::make_unique<VStringProperty>("center");
-	rectangleBackground->RegisterProperty("stack.align", std::move(property5));
+	panel->P_StackAlign.Register(rectangle1, "left");
+	panel->P_StackAlign.Register(rectangle2, "right");
+	panel->P_Margin.Register(rectangle2, 20);
+	panel->P_StackAlign.Register(rectangle3, "center");
+	panel->P_StackAlign.Register(rectangle4, "right");
+	panel->P_MarginTop.Register(rectangle4, 12);
+	panel->P_StackAlign.Register(rectangleBackground, "center");
 
 	rectangle1->SetOpacity(0.5);
-	rectangle1->SetBackgroundColor(SK_ColorMAGENTA);
+	rectangle1->SetBackgroundColor(SK_ColorGREEN);
 	rectangle2->SetBackgroundColor(SK_ColorCYAN);
 	rectangle2->SetOpacity(0.5);
 	rectangle3->SetBackgroundColor(SK_ColorRED);

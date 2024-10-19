@@ -264,3 +264,45 @@ public:
 };
 
 using VPropertyList = std::unordered_map<OString, VObjectProperty>;
+
+/**
+ * The register interface of the property register
+ */
+class VPropertyRegisterInterface {
+public:
+	/**
+	 * Add a property to the object
+	 * @param Name The property name
+	 * @param Pointer The pointer referred to the pointer
+	 */
+	virtual void RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) = 0;
+};
+
+/**
+ * The register of the property
+ * @tparam PropertyType The property type of the property generator
+ * @tparam ValueType The property value of the property type
+ */
+template<class PropertyType, class ValueType>
+	requires std::is_base_of_v<VPropertyValueBase, PropertyType>
+class VPropertyRegister {
+public:
+	explicit VPropertyRegister(const OString &Name) : _name(Name) {
+
+	}
+
+public:
+	/**
+	 * Register the property by the specified interface base class
+	 * @param Interface The interface pointer
+	 * @param Value The value of the property
+	 */
+	void Register(VPropertyRegisterInterface *Interface, const ValueType &Value) {
+		auto property = std::make_unique<PropertyType>(Value);
+		Interface->RegisterProperty(_name, std::move(property));
+	}
+
+private:
+	OString _name;
+
+};

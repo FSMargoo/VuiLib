@@ -27,10 +27,14 @@
 
 #include <include/layout/vStackPanelLayout.h>
 
-VStackPanel::VStackPanel(VObject *Parent) : VObject(Parent) {
+VStackPanel::VStackPanel(VObject *Parent)
+	: VObject(Parent), P_StackAlign(PN_StackAlign), P_Margin("stack.margin"), P_MarginTop(PN_MarginTop),
+	  P_MarginBottom(PN_MarginBottom) {
 	Resize(Parent->GetWidth(), Parent->GetHeight());
 }
-VStackPanel::VStackPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
+VStackPanel::VStackPanel(VObject *Parent, const int &Width, const int &Height)
+	: VObject(Parent), P_StackAlign(PN_StackAlign), P_Margin("stack.margin"), P_MarginTop(PN_MarginTop),
+	  P_MarginBottom(PN_MarginBottom) {
 	Resize(Width, Height);
 
 	_userSpecifiedSize->_value = true;
@@ -73,15 +77,15 @@ void VStackPanel::Arrange() {
 				hasBottomMargin = true;
 			}
 		} else {
-			if (object->HasProperty("stack.margin.top")) {
-				auto &value = object->GetProperty("stack.margin.top")._value;
+			if (object->HasProperty(PN_MarginTop)) {
+				auto &value = object->GetProperty(PN_MarginTop)._value;
 				if (value->_type == VPropertyType::Int) {
 					auto margin = value->Cast<VIntProperty>()->GetValue();
 					count += margin;
 				}
 			}
-			if (object->HasProperty("stack.margin.bottom")) {
-				auto &value = object->GetProperty("stack.margin.bottom")._value;
+			if (object->HasProperty(PN_MarginBottom)) {
+				auto &value = object->GetProperty(PN_MarginBottom)._value;
 				if (value->_type == VPropertyType::Int) {
 					auto margin		= value->Cast<VIntProperty>()->GetValue();
 					bottomMargin	= margin;
@@ -89,11 +93,11 @@ void VStackPanel::Arrange() {
 				}
 			}
 		}
-		if (object->HasProperty("stack.align")) {
-			auto &value = object->GetProperty("stack.align")._value;
+		if (object->HasProperty(PN_StackAlign)) {
+			auto &value = object->GetProperty(PN_StackAlign)._value;
 			if (value->_type == VPropertyType::String) {
 				auto align = value->Cast<VStringProperty>()->GetValue();
-				if (align == "left") {
+				if (align == PN_StackAlignLeft) {
 					width = GetWidth();
 					if (!layoutSizingProperty->_value) {
 						object->Resize(width, height);
@@ -101,7 +105,7 @@ void VStackPanel::Arrange() {
 
 					object->Move(0, count);
 				}
-				if (align == "right") {
+				else if (align == PN_StackAlignRight) {
 					width = GetWidth();
 					if (!layoutSizingProperty->_value) {
 						object->Resize(width, height);

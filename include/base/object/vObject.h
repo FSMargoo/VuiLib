@@ -39,7 +39,7 @@ class VPushButton;
  * Every object that is drawable in the user interface should inherit this class
  * to ensure that it can join the message loop correctly
  */
-class VObject {
+class VObject : public VPropertyRegisterInterface {
 public:
 	/**
 	 * Create the object with no parent object
@@ -306,7 +306,7 @@ public:
 	 * @param Name The property name
 	 * @param Pointer The pointer referred to the pointer
 	 */
-	void RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer);
+	void RegisterProperty(const OString &Name, std::unique_ptr<VPropertyValueBase> &&Pointer) override;
 	/**
 	 * Get the property value in specified type format
 	 * @tparam Type The type of the target value
