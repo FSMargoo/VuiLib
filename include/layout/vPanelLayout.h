@@ -55,6 +55,14 @@ public:
 
 public:
 	void OnPaint(sk_sp<SkSurface> &Surface) override {
-
 	}
+
+public:
+	static constexpr const char *PN_PanelAlign		 = "panel.align";
+	static constexpr const char *PN_PanelAlignLeft	 = "left";
+	static constexpr const char *PN_PanelAlignCenter = "center";
+	static constexpr const char *PN_PanelAlignRight	 = "right";
+
+public:
+	VPropertyRegister<VStringProperty, OString> P_PanelAlign;
 };

@@ -279,7 +279,8 @@ public:
 };
 
 /**
- * The register of the property
+ * A register wrapper for a property, when an object provides a property input in its
+ * children objects, it can use the register to provide a way to register a property easily
  * @tparam PropertyType The property type of the property generator
  * @tparam ValueType The property value of the property type
  */

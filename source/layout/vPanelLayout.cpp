@@ -27,10 +27,10 @@
 
 #include <include/layout/vPanelLayout.h>
 
-VPanel::VPanel(VObject *Parent) : VObject(Parent) {
+VPanel::VPanel(VObject *Parent) : VObject(Parent), P_PanelAlign(PN_PanelAlign) {
 	Resize(Parent->GetWidth(), Parent->GetHeight());
 }
-VPanel::VPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent) {
+VPanel::VPanel(VObject *Parent, const int &Width, const int &Height) : VObject(Parent), P_PanelAlign(PN_PanelAlign) {
 	Resize(Width, Height);
 
 	_userSpecifiedSize->_value = true;

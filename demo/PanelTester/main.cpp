@@ -46,16 +46,11 @@ void CreatePanelViewer(VApplication *Target) {
 	auto rectangle3			 = new VRectangleControl(panel);
 	auto rectangle4			 = new VRectangleControl(panel);
 
-	auto property1 = std::make_unique<VStringProperty>("left");
-	rectangle1->RegisterProperty("panel.align", std::move(property1));
-	auto property2 = std::make_unique<VStringProperty>("right");
-	rectangle2->RegisterProperty("panel.align", std::move(property2));
-	auto property3 = std::make_unique<VStringProperty>("top");
-	rectangle3->RegisterProperty("panel.align", std::move(property3));
-	auto property4 = std::make_unique<VStringProperty>("bottom");
-	rectangle4->RegisterProperty("panel.align", std::move(property4));
-	auto property5 = std::make_unique<VStringProperty>("center");
-	rectangleBackground->RegisterProperty("panel.align", std::move(property5));
+	panel->P_PanelAlign.Register(rectangle1, "left");
+	panel->P_PanelAlign.Register(rectangle2, "right");
+	panel->P_PanelAlign.Register(rectangle3, "top");
+	panel->P_PanelAlign.Register(rectangle4, "bottom");
+	panel->P_PanelAlign.Register(rectangleBackground, "center");
 
 	rectangle1->SetOpacity(0.5);
 	rectangle1->SetBackgroundColor(SK_ColorBLUE);
